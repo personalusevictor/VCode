@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ejemplos de código | VCode</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script src="assets/js/main.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#contenido">Saltar al contenido</a>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html" aria-label="HTMLab, ir al inicio"
+          ><span class="logo" aria-hidden="true">&lt;/&gt;</span
+          ><span>HTM<em>Lab</em></span></a
+        ><button
+          class="menu-toggle"
+          type="button"
+          aria-label="Abrir o cerrar menú"
+          aria-controls="nav-links"
+          aria-expanded="false">
+          ☰ Menú
+        </button>
+        <nav id="nav-links" class="top-links" aria-label="Navegación principal">
+          <a href="index.html">Inicio</a
+          ><a href="examples.html" aria-current="page">Ejemplos</a
+          ><a href="labels.html">Etiquetas</a><a href="faq.html">FAQ</a
+          ><a href="contact.html">Contacto</a>
+        </nav>
+      </div>
+    </header>
+    <main id="contenido">
+      <div class="container">
+        <div class="page-head">
+          <div class="eyebrow">Aprender haciendo</div>
+          <h1>Del código a la pantalla.</h1>
+          <p>
+            Compara el HTML de la izquierda con la página real de la derecha.
+            Los ejemplos se muestran en una vista aislada dentro del navegador.
+          </p>
+        </div>
+        <article class="example-block" data-example>
+          <div class="example-heading">
+            <h2>Estructura básica</h2>
+            <p>Un título, un párrafo y una llamada a la acción.</p>
+          </div>
+          <div class="split">
+            <div class="code-panel">
+              <div class="panel-label">Código HTML</div>
+              <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;es&quot;&gt;
+&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;title&gt;Ejemplo&lt;/title&gt;&lt;/head&gt;
+&lt;body style=&quot;font-family:Arial;padding:14px&quot;&gt;
+  &lt;h1&gt;¡Hola, HTML!&lt;/h1&gt;
+  &lt;p&gt;Esta es mi primera página.&lt;/p&gt;
+  &lt;a href=&quot;https://developer.mozilla.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Aprender más&lt;/a&gt;
+&lt;/body&gt;&lt;/html&gt;</code></pre>
+            </div>
+            <div class="preview-panel">
+              <div class="panel-label">Resultado visual</div>
+              <iframe
+                class="preview-frame"
+                title="Resultado de Estructura básica"
+                sandbox="allow-scripts allow-popups"
+                loading="lazy"></iframe>
+            </div>
+          </div>
+        </article>
+        <article class="example-block" data-example>
+          <div class="example-heading">
+            <h2>Tarjeta con CSS en línea</h2>
+            <p>
+              El atributo style cambia directamente el aspecto de un elemento
+              (CE2.2).
+            </p>
+          </div>
+          <div class="split">
+            <div class="code-panel">
+              <div class="panel-label">Código HTML</div>
+              <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;es&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;/head&gt;
+&lt;body style=&quot;font-family:Arial;padding:16px&quot;&gt;
+  &lt;article style=&quot;border:2px solid teal;border-radius:12px;padding:16px;background:#ecffff&quot;&gt;
+    &lt;h2 style=&quot;color:teal&quot;&gt;Mi tarjeta&lt;/h2&gt;
+    &lt;p&gt;Un ejemplo visual con estilos directos.&lt;/p&gt;
+  &lt;/article&gt;
+&lt;/body&gt;&lt;/html&gt;</code></pre>
+            </div>
+            <div class="preview-panel">
+              <div class="panel-label">Resultado visual</div>
+              <iframe
+                class="preview-frame"
+                title="Resultado de Tarjeta con CSS en línea"
+                sandbox="allow-scripts allow-popups"
+                loading="lazy"></iframe>
+            </div>
+          </div>
+        </article>
+        <article class="example-block" data-example>
+          <div class="example-heading">
+            <h2>Formulario sencillo</h2>
+            <p>Etiquetas asociadas, campos obligatorios y botón de envío.</p>
+          </div>
+          <div class="split">
+            <div class="code-panel">
+              <div class="panel-label">Código HTML</div>
+              <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;es&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;/head&gt;
+&lt;body style=&quot;font-family:Arial;padding:14px&quot;&gt;
+  &lt;form onsubmit=&quot;event.preventDefault();alert(&#x27;Ejemplo: formulario validado&#x27;)&quot;&gt;
+    &lt;label for=&quot;email&quot;&gt;Tu correo:&lt;/label&gt;&lt;br&gt;
+    &lt;input id=&quot;email&quot; type=&quot;email&quot; required&gt;&lt;br&gt;&lt;br&gt;
+    &lt;button type=&quot;submit&quot;&gt;Comprobar&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/body&gt;&lt;/html&gt;</code></pre>
+            </div>
+            <div class="preview-panel">
+              <div class="panel-label">Resultado visual</div>
+              <iframe
+                class="preview-frame"
+                title="Resultado de Formulario sencillo"
+                sandbox="allow-scripts allow-popups"
+                loading="lazy"></iframe>
+            </div>
+          </div>
+        </article>
+        <article class="example-block" data-example>
+          <div class="example-heading">
+            <h2>Listas y contenido semántico</h2>
+            <p>Una lista ordenada dentro de una sección con título.</p>
+          </div>
+          <div class="split">
+            <div class="code-panel">
+              <div class="panel-label">Código HTML</div>
+              <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;es&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;/head&gt;
+&lt;body style=&quot;font-family:Arial;padding:14px&quot;&gt;
+  &lt;section&gt;&lt;h2&gt;Cómo empezar&lt;/h2&gt;
+    &lt;ol&gt;&lt;li&gt;Aprende las etiquetas.&lt;/li&gt;&lt;li&gt;Escribe HTML.&lt;/li&gt;&lt;li&gt;Abre tu página.&lt;/li&gt;&lt;/ol&gt;
+  &lt;/section&gt;
+&lt;/body&gt;&lt;/html&gt;</code></pre>
+            </div>
+            <div class="preview-panel">
+              <div class="panel-label">Resultado visual</div>
+              <iframe
+                class="preview-frame"
+                title="Resultado de Listas y contenido semántico"
+                sandbox="allow-scripts allow-popups"
+                loading="lazy"></iframe>
+            </div>
+          </div>
+        </article>
+        <div class="strip">
+          <div>
+            <h2>¿Y qué pasa con el audio?</h2>
+            <p>
+              HTML permite añadir reproductores accesibles con la etiqueta
+              &lt;audio&gt;. Escucha este ejemplo original incluido en el
+              proyecto.
+            </p>
+            <audio controls preload="none" src="assets/audio/ejemplo.wav">
+              Tu navegador no admite audio.
+            </audio>
+          </div>
+          <a class="btn" href="labels.html">Consultar &lt;audio&gt; →</a>
+        </div>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <span
+          >© 2026 HTMLab · Proyecto didáctico de Diseño de Interfaces Web</span
+        ><span
+          >Hecho con HTML, CSS y JavaScript ·
+          <a href="contact.html">Contacto</a></span
+        >
+      </div>
+    </footer>
+  </body>
+</html>

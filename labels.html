@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="28 etiquetas HTML agrupadas por categoría con atributos y ejemplos." />
+    <title>Diccionario de etiquetas | HTMLab</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script src="assets/js/main.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Saltar al contenido</a>
+    <header>
+      <div class="container navigation">
+        <a class="brand" href="index.html" aria-label="VCode, ir al inicio">VCode</a>
+        <button class="menu-toggle" type="button" aria-controls="navigation-links" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg> Menú</button>
+        <nav id="navigation-links" class="navigation-links" aria-label="Navegación principal">
+          <a href="index.html">Inicio</a>
+          <a href="examples.html">Ejemplos</a>
+          <a href="labels.html" aria-current="page">Etiquetas</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contacto</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="contenido">
+      <div class="container">
+        <div class="page-head">
+          <div class="eyebrow">Diccionario HTML</div>
+          <h1>Las etiquetas.</h1>
+          <p>Consulta qué hace cada elemento, qué atributos suele utilizar y cómo se escribe. Usa el buscador o filtra por categorías.</p>
+        </div>
+        <div class="search-row">
+          <label for="tag-search">Buscar etiqueta</label>
+          <input id="tag-search" type="search" placeholder="Ej.: img, enlaces, formularios..." />
+        </div>
+        <div class="filter-bar" role="group" aria-label="Filtrar etiquetas">
+          <button class="filter-btn" data-filter="all" aria-pressed="true">Todas</button>
+          <button class="filter-btn" data-filter="Estructura" aria-pressed="false">Estructura</button>
+          <button class="filter-btn" data-filter="Texto" aria-pressed="false">Texto</button>
+          <button class="filter-btn" data-filter="Multimedia" aria-pressed="false"> Multimedia</button>
+          <button class="filter-btn" data-filter="Formularios" aria-pressed="false">Formularios</button>
+        </div>
+        <div class="tag-grid">
+          <article class="tag-card" data-category="Estructura">
+            <div class="eyebrow">Estructura</div>
+            <h2>&lt;html&gt;</h2>
+            <p>Elemento raíz del documento HTML.</p>
+            <p><strong>Atributos principales:</strong> <code>lang</code></p>
+            <p class="tiny">Define el idioma del contenido.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;html lang=&quot;es&quot;&gt;...&lt;/html&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Estructura">
+            <div class="eyebrow">Estructura</div>
+            <h2>&lt;head&gt;</h2>
+            <p>Contiene metadatos y enlaces a recursos, no contenido visible.</p>
+            <p><strong>Atributos principales:</strong> <code>—</code></p>
+            <p class="tiny">No tiene atributos específicos habituales; admite atributos globales.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;head&gt;&lt;title&gt;Mi web&lt;/title&gt;&lt;/head&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Estructura">
+            <div class="eyebrow">Estructura</div>
+            <h2>&lt;title&gt;</h2>
+            <p>Establece el título que aparece en la pestaña del navegador.</p>
+            <p><strong>Atributos principales:</strong> <code>—</code></p>
+            <p class="tiny">No tiene atributos específicos habituales.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;title&gt;Mi página&lt;/title&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Estructura">
+            <div class="eyebrow">Estructura</div>
+            <h2>&lt;meta&gt;</h2>
+            <p>Proporciona metadatos como la codificación o la descripción.</p>
+            <p>
+              <strong>Atributos principales:</strong>
+              <code>charset, name, content</code>
+            </p>
+            <p class="tiny">
+              Permiten definir la codificación y el tipo de metadato.
+            </p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;meta charset=&quot;UTF-8&quot;&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Estructura">
+            <div class="eyebrow">Estructura</div>
+            <h2>&lt;body&gt;</h2>
+            <p>Agrupa todo el contenido visible de la página.</p>
+            <p><strong>Atributos principales:</strong> <code>—</code></p>
+            <p class="tiny">Admite atributos globales como class e id.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;body&gt;&lt;h1&gt;Hola&lt;/h1&gt;&lt;/body&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Estructura">
+            <div class="eyebrow">Estructura</div>
+            <h2>&lt;header&gt;</h2>
+            <p>Define una cabecera de página o de sección.</p>
+            <p>
+              <strong>Atributos principales:</strong> <code>id, class</code>
+            </p>
+            <p class="tiny">Ayudan a identificarla y aplicar estilos.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;header&gt;&lt;h1&gt;Mi sitio&lt;/h1&gt;&lt;/header&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Estructura">
+            <div class="eyebrow">Estructura</div>
+            <h2>&lt;nav&gt;</h2>
+            <p>Identifica un bloque de navegación.</p>
+            <p>
+              <strong>Atributos principales:</strong> <code>aria-label</code>
+            </p>
+            <p class="tiny">
+              Permite nombrar la navegación para lectores de pantalla.
+            </p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;nav aria-label=&quot;Principal&quot;&gt;&lt;a href=&quot;/&quot;&gt;Inicio&lt;/a&gt;&lt;/nav&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Estructura">
+            <div class="eyebrow">Estructura</div>
+            <h2>&lt;main&gt;</h2>
+            <p>Marca el contenido principal único de la página.</p>
+            <p><strong>Atributos principales:</strong> <code>id</code></p>
+            <p class="tiny">Permite crear enlaces para saltar al contenido.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;main id=&quot;contenido&quot;&gt;Texto principal&lt;/main&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Estructura">
+            <div class="eyebrow">Estructura</div>
+            <h2>&lt;section&gt;</h2>
+            <p>Agrupa contenido relacionado temáticamente.</p>
+            <p>
+              <strong>Atributos principales:</strong>
+              <code>aria-labelledby</code>
+            </p>
+            <p class="tiny">Asocia la sección con su encabezado.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;section&gt;&lt;h2&gt;Noticias&lt;/h2&gt;&lt;p&gt;...&lt;/p&gt;&lt;/section&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Estructura">
+            <div class="eyebrow">Estructura</div>
+            <h2>&lt;article&gt;</h2>
+            <p>Representa contenido independiente y reutilizable.</p>
+            <p><strong>Atributos principales:</strong> <code>class</code></p>
+            <p class="tiny">
+              Permite aplicar un diseño de tarjeta u otro estilo.
+            </p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;article&gt;&lt;h2&gt;Entrada&lt;/h2&gt;&lt;p&gt;Resumen&lt;/p&gt;&lt;/article&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Estructura">
+            <div class="eyebrow">Estructura</div>
+            <h2>&lt;footer&gt;</h2>
+            <p>Identifica el pie de página o de una sección.</p>
+            <p><strong>Atributos principales:</strong> <code>class</code></p>
+            <p class="tiny">Permite compartir un estilo entre varios pies.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;footer&gt;&lt;small&gt;© 2026&lt;/small&gt;&lt;/footer&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Texto">
+            <div class="eyebrow">Texto</div>
+            <h2>&lt;h1&gt;</h2>
+            <p>Encabezado principal; h2 a h6 crean niveles subordinados.</p>
+            <p><strong>Atributos principales:</strong> <code>id</code></p>
+            <p class="tiny">Sirve para enlazar directamente a una sección.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;h1&gt;Aprender HTML&lt;/h1&gt;&lt;h2&gt;Primer paso&lt;/h2&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Texto">
+            <div class="eyebrow">Texto</div>
+            <h2>&lt;p&gt;</h2>
+            <p>Representa un párrafo de texto.</p>
+            <p><strong>Atributos principales:</strong> <code>class</code></p>
+            <p class="tiny">Permite aplicar diferentes estilos de párrafo.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;p class=&quot;intro&quot;&gt;Mi primer párrafo.&lt;/p&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Texto">
+            <div class="eyebrow">Texto</div>
+            <h2>&lt;a&gt;</h2>
+            <p>Crea enlaces a otras páginas o ubicaciones.</p>
+            <p>
+              <strong>Atributos principales:</strong>
+              <code>href, target, rel</code>
+            </p>
+            <p class="tiny">
+              Define el destino y cómo abrirlo; usa rel=&quot;noopener&quot; con
+              nuevas pestañas.
+            </p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;a href=&quot;https://developer.mozilla.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;MDN&lt;/a&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Texto">
+            <div class="eyebrow">Texto</div>
+            <h2>&lt;span&gt;</h2>
+            <p>Agrupa texto en línea sin significado semántico propio.</p>
+            <p>
+              <strong>Atributos principales:</strong> <code>class, style</code>
+            </p>
+            <p class="tiny">Permite aplicar estilos a una palabra concreta.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;p&gt;Palabra &lt;span style=&quot;color:teal&quot;&gt;destacada&lt;/span&gt;&lt;/p&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Texto">
+            <div class="eyebrow">Texto</div>
+            <h2>&lt;strong&gt;</h2>
+            <p>Indica importancia especial en el texto.</p>
+            <p><strong>Atributos principales:</strong> <code>class</code></p>
+            <p class="tiny">Permite personalizar el énfasis visual.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;p&gt;&lt;strong&gt;Importante:&lt;/strong&gt; guarda los cambios.&lt;/p&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Texto">
+            <div class="eyebrow">Texto</div>
+            <h2>&lt;ul&gt;</h2>
+            <p>Crea una lista sin orden numérico.</p>
+            <p><strong>Atributos principales:</strong> <code>class</code></p>
+            <p class="tiny">Sirve para cambiar viñetas o espaciado con CSS.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;ul&gt;&lt;li&gt;HTML&lt;/li&gt;&lt;li&gt;CSS&lt;/li&gt;&lt;/ul&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Texto">
+            <div class="eyebrow">Texto</div>
+            <h2>&lt;ol&gt;</h2>
+            <p>Crea una lista ordenada.</p>
+            <p>
+              <strong>Atributos principales:</strong>
+              <code>start, reversed, type</code>
+            </p>
+            <p class="tiny">
+              Cambian el inicio, sentido o estilo de numeración.
+            </p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;ol start=&quot;3&quot;&gt;&lt;li&gt;Tercer paso&lt;/li&gt;&lt;/ol&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Texto">
+            <div class="eyebrow">Texto</div>
+            <h2>&lt;li&gt;</h2>
+            <p>Representa un elemento dentro de una lista.</p>
+            <p><strong>Atributos principales:</strong> <code>value</code></p>
+            <p class="tiny">En listas ordenadas, puede ajustar su número.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;ol&gt;&lt;li value=&quot;4&quot;&gt;Cuarto&lt;/li&gt;&lt;/ol&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Multimedia">
+            <div class="eyebrow">Multimedia</div>
+            <h2>&lt;img&gt;</h2>
+            <p>Inserta imágenes en el documento.</p>
+            <p>
+              <strong>Atributos principales:</strong>
+              <code>src, alt, width, height, loading</code>
+            </p>
+            <p class="tiny">
+              Define el archivo, texto alternativo, dimensiones y carga
+              diferida.
+            </p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;img src=&quot;foto.jpg&quot; alt=&quot;Paisaje&quot; width=&quot;300&quot; loading=&quot;lazy&quot;&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Multimedia">
+            <div class="eyebrow">Multimedia</div>
+            <h2>&lt;audio&gt;</h2>
+            <p>Incorpora reproducción de sonido.</p>
+            <p>
+              <strong>Atributos principales:</strong>
+              <code>controls, autoplay, loop, preload</code>
+            </p>
+            <p class="tiny">Muestra controles y configura la reproducción.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;audio controls src=&quot;sonido.mp3&quot;&gt;Tu navegador no admite audio.&lt;/audio&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Multimedia">
+            <div class="eyebrow">Multimedia</div>
+            <h2>&lt;video&gt;</h2>
+            <p>Incorpora reproducción de vídeo.</p>
+            <p>
+              <strong>Atributos principales:</strong>
+              <code>controls, poster, width, muted</code>
+            </p>
+            <p class="tiny">
+              Controla la interfaz, imagen de portada y reproducción.
+            </p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;video controls width=&quot;320&quot; poster=&quot;portada.jpg&quot;&gt;&lt;source src=&quot;clip.mp4&quot; type=&quot;video/mp4&quot;&gt;&lt;/video&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Formularios">
+            <div class="eyebrow">Formularios</div>
+            <h2>&lt;form&gt;</h2>
+            <p>Agrupa controles que recogen datos del usuario.</p>
+            <p>
+              <strong>Atributos principales:</strong>
+              <code>action, method</code>
+            </p>
+            <p class="tiny">Indican a dónde y cómo enviar la información.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;form action=&quot;/enviar&quot; method=&quot;post&quot;&gt;...&lt;/form&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Formularios">
+            <div class="eyebrow">Formularios</div>
+            <h2>&lt;label&gt;</h2>
+            <p>Asocia un texto descriptivo a un campo.</p>
+            <p><strong>Atributos principales:</strong> <code>for</code></p>
+            <p class="tiny">Vincula la etiqueta con el id del campo.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;label for=&quot;nombre&quot;&gt;Nombre&lt;/label&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Formularios">
+            <div class="eyebrow">Formularios</div>
+            <h2>&lt;input&gt;</h2>
+            <p>Permite introducir datos de distintos tipos.</p>
+            <p>
+              <strong>Atributos principales:</strong>
+              <code>type, name, required, placeholder</code>
+            </p>
+            <p class="tiny">
+              Establecen el dato esperado, la clave y la validación.
+            </p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;input type=&quot;email&quot; name=&quot;correo&quot; required&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Formularios">
+            <div class="eyebrow">Formularios</div>
+            <h2>&lt;textarea&gt;</h2>
+            <p>Permite escribir textos de varias líneas.</p>
+            <p>
+              <strong>Atributos principales:</strong>
+              <code>name, rows, maxlength</code>
+            </p>
+            <p class="tiny">Configuran la clave, altura y longitud máxima.</p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;textarea name=&quot;mensaje&quot; rows=&quot;4&quot;&gt;&lt;/textarea&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Formularios">
+            <div class="eyebrow">Formularios</div>
+            <h2>&lt;button&gt;</h2>
+            <p>Crea un botón interactivo.</p>
+            <p>
+              <strong>Atributos principales:</strong>
+              <code>type, disabled</code>
+            </p>
+            <p class="tiny">
+              Define si envía formularios o ejecuta una acción.
+            </p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;button type=&quot;submit&quot;&gt;Enviar&lt;/button&gt;</code></pre>
+          </article>
+          <article class="tag-card" data-category="Formularios">
+            <div class="eyebrow">Formularios</div>
+            <h2>&lt;select&gt;</h2>
+            <p>Crea un desplegable para elegir opciones.</p>
+            <p>
+              <strong>Atributos principales:</strong>
+              <code>name, required, multiple</code>
+            </p>
+            <p class="tiny">
+              Controlan el dato y la selección requerida o múltiple.
+            </p>
+            <div class="panel-label">Ejemplo de uso</div>
+            <pre><code>&lt;select name=&quot;nivel&quot;&gt;&lt;option&gt;Inicial&lt;/option&gt;&lt;/select&gt;</code></pre>
+          </article>
+        </div>
+        <p class="no-results" id="no-results" hidden>
+          No hay etiquetas que coincidan con tu búsqueda.
+        </p>
+      </div>
+    </main>
+    <footer>
+      <div class="container footer-content">
+        <small>© 2026 VCode</small>
+        <a href="contact.html">Hecho por Víctor Martín Pérez</a>
+      </div>
+    </footer>
+  </body>
+</html>
