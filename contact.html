@@ -1,1 +1,64 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Formulario de consulta de demostración para HTMLab."><title>Contacto | HTMLab</title><link rel="stylesheet" href="assets/css/styles.css"><script src="assets/js/main.js" defer></script></head><body><a class="skip" href="#contenido">Saltar al contenido</a><header class="site-header"><div class="container nav-wrap"><a class="brand" href="index.html" aria-label="HTMLab, ir al inicio"><span class="logo" aria-hidden="true">&lt;/&gt;</span><span>HTM<em>Lab</em></span></a><button class="menu-toggle" type="button" aria-label="Abrir o cerrar menú" aria-controls="nav-links" aria-expanded="false">☰ Menú</button><nav id="nav-links" class="top-links" aria-label="Navegación principal"><a href="index.html" >Inicio</a><a href="examples.html" >Ejemplos</a><a href="labels.html" >Etiquetas</a><a href="faq.html" >FAQ</a><a href="contact.html" aria-current="page">Contacto</a></nav></div></header><main id="contenido"><div class="container"><div class="page-head"><div class="eyebrow">Estamos para ayudarte</div><h1>Hablemos de HTML.</h1><p>¿Tienes una duda o una sugerencia para mejorar las lecciones? Rellena el formulario de demostración.</p></div><div class="contact-grid"><section class="form-card"><h2>Envía tu consulta</h2><form id="contact-form"><div class="field"><label for="name">Nombre *</label><input id="name" name="name" type="text" minlength="2" maxlength="70" autocomplete="name" required placeholder="Tu nombre"></div><div class="field"><label for="email">Correo electrónico *</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="nombre@ejemplo.com"></div><div class="field"><label for="subject">Asunto *</label><select id="subject" name="subject" required style="background:#19191f;border:1px solid #50505a;color:#f3f4f6;border-radius:12px;padding:12px 14px"><option value="">Selecciona un asunto</option><option value="duda">Duda sobre HTML</option><option value="sugerencia">Sugerencia</option><option value="error">Informar de un error</option></select></div><div class="field"><label for="message">Mensaje *</label><textarea id="message" name="message" minlength="10" maxlength="1000" required placeholder="Escribe tu consulta aquí..."></textarea><small>Mínimo 10 caracteres. Los campos con * son obligatorios.</small></div><button class="btn btn-primary" type="submit">Validar mensaje →</button><p class="form-message" id="form-status" role="status" aria-live="polite"></p></form><p class="note">Este proyecto es una demostración académica: el formulario valida los datos en tu navegador, pero no guarda ni envía información.</p></section><aside class="info-card"><span class="badge">Proyecto educativo</span><h2>Aprender también es preguntar.</h2><p>En HTMLab queremos que las primeras experiencias con código sean claras y sin complicaciones.</p><img src="assets/img/aprende-html.svg" alt="Ilustración de una ventana con etiquetas HTML" width="920" height="520" loading="lazy"><p class="note">Imagen vectorial original incluida en los recursos del proyecto.</p></aside></div></div></main><footer class="site-footer"><div class="container footer-inner"><span>© 2026 HTMLab · Proyecto didáctico de Diseño de Interfaces Web</span><span>Hecho con HTML, CSS y JavaScript · <a href="contact.html">Contacto</a></span></div></footer></body></html>
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Víctor Martín Pérez" />
+    <meta name="description" content="Contacta con VCode: comparte tus dudas sobre el contenido, comunica un error o propón una mejora." />
+    <title>Contacto | VCode</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/contact.css" />
+    <link rel="stylesheet" href="assets/css/header.css" />
+    <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/contact.js" defer></script>
+  </head>
+  <body class="contact-page">
+    <a class="skip-link" href="#main-content">Saltar al contenido</a>
+    <header>
+      <div class="container navigation">
+        <a class="brand" href="index.html" aria-label="VCode, ir al inicio">VCode</a>
+        <button class="menu-toggle" type="button" aria-controls="navigation-links" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg> Menú</button>
+        <nav id="navigation-links" class="navigation-links" aria-label="Navegación principal">
+          <a href="index.html">Inicio</a>
+          <a href="examples.html">Ejemplos</a>
+          <a href="labels.html">Etiquetas</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html" aria-current="page">Contacto</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main-content" class="container contact-main">
+      <div class="contact-layout">
+        <section class="contact-intro" aria-labelledby="contact-title">
+          <h1 id="contact-title">Hablemos de <span>VCode.</span></h1>
+          <p class="contact-lead">Una duda, una idea o algo que podemos hacer mejor. Nos gustaría leerte.</p>
+          <ul class="contact-reasons">
+            <li><span class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg></span><div><h2>Pregunta con confianza</h2><p>Si algo del contenido no está claro, cuéntanos dónde te has quedado.</p></div></li>
+            <li><span class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4m0 4h.01"/></svg></span><div><h2>Ayúdanos a corregir</h2><p>¿Un ejemplo que falla o una explicación incorrecta? Indica la página y qué ocurre.</p></div></li>
+            <li><span class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6m-5 3h4m-5-6a6 6 0 1 1 6 0c-.8.6-1 1-1 2h-4c0-1-.2-1.4-1-2Z"/></svg></span><div><h2>Comparte una idea</h2><p>Propón un tema o una mejora que te ayudaría a seguir aprendiendo.</p></div></li>
+          </ul>
+          <a class="contact-back" href="labels.html">Explorar la referencia HTML <span aria-hidden="true">↗</span></a>
+        </section>
+        <section class="contact-panel" aria-labelledby="message-title">
+          <div class="contact-panel-head"><h2 id="message-title">Escríbenos</h2></div>
+          <form class="contact-form" aria-labelledby="message-title">
+            <div class="contact-field-row">
+              <div class="field"><label for="contact-name">Nombre <span class="optional">(opcional)</span></label><input id="contact-name" type="text" autocomplete="name" maxlength="80" placeholder="Cómo te llamas" /></div>
+              <div class="field"><label for="contact-email">Correo electrónico <span aria-hidden="true">*</span></label><input id="contact-email" type="email" autocomplete="email" required maxlength="254" placeholder="tu@correo.com" /></div>
+            </div>
+            <div class="field"><label for="contact-topic">¿Sobre qué quieres hablar? <span aria-hidden="true">*</span></label><select id="contact-topic" required><option value="" disabled selected>Selecciona un tema</option><option value="question">Duda sobre el contenido</option><option value="error">He encontrado un error</option><option value="idea">Una sugerencia</option><option value="other">Otro motivo</option></select></div>
+            <div class="field"><label for="contact-subject">Asunto <span aria-hidden="true">*</span></label><input id="contact-subject" type="text" required maxlength="120" placeholder="Resume el motivo de tu mensaje" /></div>
+            <div class="field contact-message-field"><label for="contact-message">Mensaje <span aria-hidden="true">*</span></label><textarea id="contact-message" required minlength="10" maxlength="2000" rows="6" placeholder="Cuéntanos un poco más…"></textarea></div>
+            <div class="contact-form-actions"><button class="btn btn-primary" type="button">Enviar mensaje <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button></div>
+          </form>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <div class="container footer-content">
+        <small>© 2026 VCode</small>
+        <a href="contact.html">Hecho por Víctor Martín Pérez</a>
+      </div>
+    </footer>
+  </body>
+</html>

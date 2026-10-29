@@ -3,19 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="28 etiquetas HTML agrupadas por categoría con atributos y ejemplos." />
-    <title>Diccionario de etiquetas | HTMLab</title>
+    <meta name="author" content="Víctor Martín Pérez" />
+    <meta name="description" content="Referencia de HTML en español: 27 fichas con atributos, variantes, ejemplos y accesibilidad." />
+    <title>Etiquetas HTML | VCode</title>
     <link rel="stylesheet" href="assets/css/styles.css" />
-    <script src="assets/js/main.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="assets/css/labels.css" />
+    <link rel="stylesheet" href="assets/css/header.css" />
+    <script src="assets/js/labels.js" defer>
+    </script>
   </head>
-  <body>
+
+  <body class="labels-page">
     <a class="skip-link" href="#main-content">Saltar al contenido</a>
     <header>
       <div class="container navigation">
         <a class="brand" href="index.html" aria-label="VCode, ir al inicio">VCode</a>
-        <button class="menu-toggle" type="button" aria-controls="navigation-links" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg> Menú</button>
+        <button class="menu-toggle" type="button" aria-controls="navigation-links" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16" /><path d="M4 12h16" /><path d="M4 18h16" /></svg>Menú
+        </button>
         <nav id="navigation-links" class="navigation-links" aria-label="Navegación principal">
           <a href="index.html">Inicio</a>
           <a href="examples.html">Ejemplos</a>
@@ -26,352 +33,2150 @@
       </div>
     </header>
 
-    <main id="contenido">
-      <div class="container">
-        <div class="page-head">
-          <div class="eyebrow">Diccionario HTML</div>
-          <h1>Las etiquetas.</h1>
-          <p>Consulta qué hace cada elemento, qué atributos suele utilizar y cómo se escribe. Usa el buscador o filtra por categorías.</p>
-        </div>
-        <div class="search-row">
-          <label for="tag-search">Buscar etiqueta</label>
-          <input id="tag-search" type="search" placeholder="Ej.: img, enlaces, formularios..." />
-        </div>
-        <div class="filter-bar" role="group" aria-label="Filtrar etiquetas">
-          <button class="filter-btn" data-filter="all" aria-pressed="true">Todas</button>
-          <button class="filter-btn" data-filter="Estructura" aria-pressed="false">Estructura</button>
-          <button class="filter-btn" data-filter="Texto" aria-pressed="false">Texto</button>
-          <button class="filter-btn" data-filter="Multimedia" aria-pressed="false"> Multimedia</button>
-          <button class="filter-btn" data-filter="Formularios" aria-pressed="false">Formularios</button>
-        </div>
-        <div class="tag-grid">
-          <article class="tag-card" data-category="Estructura">
-            <div class="eyebrow">Estructura</div>
-            <h2>&lt;html&gt;</h2>
-            <p>Elemento raíz del documento HTML.</p>
-            <p><strong>Atributos principales:</strong> <code>lang</code></p>
-            <p class="tiny">Define el idioma del contenido.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;html lang=&quot;es&quot;&gt;...&lt;/html&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Estructura">
-            <div class="eyebrow">Estructura</div>
-            <h2>&lt;head&gt;</h2>
-            <p>Contiene metadatos y enlaces a recursos, no contenido visible.</p>
-            <p><strong>Atributos principales:</strong> <code>—</code></p>
-            <p class="tiny">No tiene atributos específicos habituales; admite atributos globales.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;head&gt;&lt;title&gt;Mi web&lt;/title&gt;&lt;/head&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Estructura">
-            <div class="eyebrow">Estructura</div>
-            <h2>&lt;title&gt;</h2>
-            <p>Establece el título que aparece en la pestaña del navegador.</p>
-            <p><strong>Atributos principales:</strong> <code>—</code></p>
-            <p class="tiny">No tiene atributos específicos habituales.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;title&gt;Mi página&lt;/title&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Estructura">
-            <div class="eyebrow">Estructura</div>
-            <h2>&lt;meta&gt;</h2>
-            <p>Proporciona metadatos como la codificación o la descripción.</p>
-            <p>
-              <strong>Atributos principales:</strong>
-              <code>charset, name, content</code>
-            </p>
-            <p class="tiny">
-              Permiten definir la codificación y el tipo de metadato.
-            </p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;meta charset=&quot;UTF-8&quot;&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Estructura">
-            <div class="eyebrow">Estructura</div>
-            <h2>&lt;body&gt;</h2>
-            <p>Agrupa todo el contenido visible de la página.</p>
-            <p><strong>Atributos principales:</strong> <code>—</code></p>
-            <p class="tiny">Admite atributos globales como class e id.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;body&gt;&lt;h1&gt;Hola&lt;/h1&gt;&lt;/body&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Estructura">
-            <div class="eyebrow">Estructura</div>
-            <h2>&lt;header&gt;</h2>
-            <p>Define una cabecera de página o de sección.</p>
-            <p>
-              <strong>Atributos principales:</strong> <code>id, class</code>
-            </p>
-            <p class="tiny">Ayudan a identificarla y aplicar estilos.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;header&gt;&lt;h1&gt;Mi sitio&lt;/h1&gt;&lt;/header&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Estructura">
-            <div class="eyebrow">Estructura</div>
-            <h2>&lt;nav&gt;</h2>
-            <p>Identifica un bloque de navegación.</p>
-            <p>
-              <strong>Atributos principales:</strong> <code>aria-label</code>
-            </p>
-            <p class="tiny">
-              Permite nombrar la navegación para lectores de pantalla.
-            </p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;nav aria-label=&quot;Principal&quot;&gt;&lt;a href=&quot;/&quot;&gt;Inicio&lt;/a&gt;&lt;/nav&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Estructura">
-            <div class="eyebrow">Estructura</div>
-            <h2>&lt;main&gt;</h2>
-            <p>Marca el contenido principal único de la página.</p>
-            <p><strong>Atributos principales:</strong> <code>id</code></p>
-            <p class="tiny">Permite crear enlaces para saltar al contenido.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;main id=&quot;contenido&quot;&gt;Texto principal&lt;/main&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Estructura">
-            <div class="eyebrow">Estructura</div>
-            <h2>&lt;section&gt;</h2>
-            <p>Agrupa contenido relacionado temáticamente.</p>
-            <p>
-              <strong>Atributos principales:</strong>
-              <code>aria-labelledby</code>
-            </p>
-            <p class="tiny">Asocia la sección con su encabezado.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;section&gt;&lt;h2&gt;Noticias&lt;/h2&gt;&lt;p&gt;...&lt;/p&gt;&lt;/section&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Estructura">
-            <div class="eyebrow">Estructura</div>
-            <h2>&lt;article&gt;</h2>
-            <p>Representa contenido independiente y reutilizable.</p>
-            <p><strong>Atributos principales:</strong> <code>class</code></p>
-            <p class="tiny">
-              Permite aplicar un diseño de tarjeta u otro estilo.
-            </p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;article&gt;&lt;h2&gt;Entrada&lt;/h2&gt;&lt;p&gt;Resumen&lt;/p&gt;&lt;/article&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Estructura">
-            <div class="eyebrow">Estructura</div>
-            <h2>&lt;footer&gt;</h2>
-            <p>Identifica el pie de página o de una sección.</p>
-            <p><strong>Atributos principales:</strong> <code>class</code></p>
-            <p class="tiny">Permite compartir un estilo entre varios pies.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;footer&gt;&lt;small&gt;© 2026&lt;/small&gt;&lt;/footer&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Texto">
-            <div class="eyebrow">Texto</div>
-            <h2>&lt;h1&gt;</h2>
-            <p>Encabezado principal; h2 a h6 crean niveles subordinados.</p>
-            <p><strong>Atributos principales:</strong> <code>id</code></p>
-            <p class="tiny">Sirve para enlazar directamente a una sección.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;h1&gt;Aprender HTML&lt;/h1&gt;&lt;h2&gt;Primer paso&lt;/h2&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Texto">
-            <div class="eyebrow">Texto</div>
-            <h2>&lt;p&gt;</h2>
-            <p>Representa un párrafo de texto.</p>
-            <p><strong>Atributos principales:</strong> <code>class</code></p>
-            <p class="tiny">Permite aplicar diferentes estilos de párrafo.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;p class=&quot;intro&quot;&gt;Mi primer párrafo.&lt;/p&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Texto">
-            <div class="eyebrow">Texto</div>
-            <h2>&lt;a&gt;</h2>
-            <p>Crea enlaces a otras páginas o ubicaciones.</p>
-            <p>
-              <strong>Atributos principales:</strong>
-              <code>href, target, rel</code>
-            </p>
-            <p class="tiny">
-              Define el destino y cómo abrirlo; usa rel=&quot;noopener&quot; con
-              nuevas pestañas.
-            </p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;a href=&quot;https://developer.mozilla.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;MDN&lt;/a&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Texto">
-            <div class="eyebrow">Texto</div>
-            <h2>&lt;span&gt;</h2>
-            <p>Agrupa texto en línea sin significado semántico propio.</p>
-            <p>
-              <strong>Atributos principales:</strong> <code>class, style</code>
-            </p>
-            <p class="tiny">Permite aplicar estilos a una palabra concreta.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;p&gt;Palabra &lt;span style=&quot;color:teal&quot;&gt;destacada&lt;/span&gt;&lt;/p&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Texto">
-            <div class="eyebrow">Texto</div>
-            <h2>&lt;strong&gt;</h2>
-            <p>Indica importancia especial en el texto.</p>
-            <p><strong>Atributos principales:</strong> <code>class</code></p>
-            <p class="tiny">Permite personalizar el énfasis visual.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;p&gt;&lt;strong&gt;Importante:&lt;/strong&gt; guarda los cambios.&lt;/p&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Texto">
-            <div class="eyebrow">Texto</div>
-            <h2>&lt;ul&gt;</h2>
-            <p>Crea una lista sin orden numérico.</p>
-            <p><strong>Atributos principales:</strong> <code>class</code></p>
-            <p class="tiny">Sirve para cambiar viñetas o espaciado con CSS.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;ul&gt;&lt;li&gt;HTML&lt;/li&gt;&lt;li&gt;CSS&lt;/li&gt;&lt;/ul&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Texto">
-            <div class="eyebrow">Texto</div>
-            <h2>&lt;ol&gt;</h2>
-            <p>Crea una lista ordenada.</p>
-            <p>
-              <strong>Atributos principales:</strong>
-              <code>start, reversed, type</code>
-            </p>
-            <p class="tiny">
-              Cambian el inicio, sentido o estilo de numeración.
-            </p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;ol start=&quot;3&quot;&gt;&lt;li&gt;Tercer paso&lt;/li&gt;&lt;/ol&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Texto">
-            <div class="eyebrow">Texto</div>
-            <h2>&lt;li&gt;</h2>
-            <p>Representa un elemento dentro de una lista.</p>
-            <p><strong>Atributos principales:</strong> <code>value</code></p>
-            <p class="tiny">En listas ordenadas, puede ajustar su número.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;ol&gt;&lt;li value=&quot;4&quot;&gt;Cuarto&lt;/li&gt;&lt;/ol&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Multimedia">
-            <div class="eyebrow">Multimedia</div>
-            <h2>&lt;img&gt;</h2>
-            <p>Inserta imágenes en el documento.</p>
-            <p>
-              <strong>Atributos principales:</strong>
-              <code>src, alt, width, height, loading</code>
-            </p>
-            <p class="tiny">
-              Define el archivo, texto alternativo, dimensiones y carga
-              diferida.
-            </p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;img src=&quot;foto.jpg&quot; alt=&quot;Paisaje&quot; width=&quot;300&quot; loading=&quot;lazy&quot;&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Multimedia">
-            <div class="eyebrow">Multimedia</div>
-            <h2>&lt;audio&gt;</h2>
-            <p>Incorpora reproducción de sonido.</p>
-            <p>
-              <strong>Atributos principales:</strong>
-              <code>controls, autoplay, loop, preload</code>
-            </p>
-            <p class="tiny">Muestra controles y configura la reproducción.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;audio controls src=&quot;sonido.mp3&quot;&gt;Tu navegador no admite audio.&lt;/audio&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Multimedia">
-            <div class="eyebrow">Multimedia</div>
-            <h2>&lt;video&gt;</h2>
-            <p>Incorpora reproducción de vídeo.</p>
-            <p>
-              <strong>Atributos principales:</strong>
-              <code>controls, poster, width, muted</code>
-            </p>
-            <p class="tiny">
-              Controla la interfaz, imagen de portada y reproducción.
-            </p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;video controls width=&quot;320&quot; poster=&quot;portada.jpg&quot;&gt;&lt;source src=&quot;clip.mp4&quot; type=&quot;video/mp4&quot;&gt;&lt;/video&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Formularios">
-            <div class="eyebrow">Formularios</div>
-            <h2>&lt;form&gt;</h2>
-            <p>Agrupa controles que recogen datos del usuario.</p>
-            <p>
-              <strong>Atributos principales:</strong>
-              <code>action, method</code>
-            </p>
-            <p class="tiny">Indican a dónde y cómo enviar la información.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;form action=&quot;/enviar&quot; method=&quot;post&quot;&gt;...&lt;/form&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Formularios">
-            <div class="eyebrow">Formularios</div>
-            <h2>&lt;label&gt;</h2>
-            <p>Asocia un texto descriptivo a un campo.</p>
-            <p><strong>Atributos principales:</strong> <code>for</code></p>
-            <p class="tiny">Vincula la etiqueta con el id del campo.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;label for=&quot;nombre&quot;&gt;Nombre&lt;/label&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Formularios">
-            <div class="eyebrow">Formularios</div>
-            <h2>&lt;input&gt;</h2>
-            <p>Permite introducir datos de distintos tipos.</p>
-            <p>
-              <strong>Atributos principales:</strong>
-              <code>type, name, required, placeholder</code>
-            </p>
-            <p class="tiny">
-              Establecen el dato esperado, la clave y la validación.
-            </p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;input type=&quot;email&quot; name=&quot;correo&quot; required&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Formularios">
-            <div class="eyebrow">Formularios</div>
-            <h2>&lt;textarea&gt;</h2>
-            <p>Permite escribir textos de varias líneas.</p>
-            <p>
-              <strong>Atributos principales:</strong>
-              <code>name, rows, maxlength</code>
-            </p>
-            <p class="tiny">Configuran la clave, altura y longitud máxima.</p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;textarea name=&quot;mensaje&quot; rows=&quot;4&quot;&gt;&lt;/textarea&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Formularios">
-            <div class="eyebrow">Formularios</div>
-            <h2>&lt;button&gt;</h2>
-            <p>Crea un botón interactivo.</p>
-            <p>
-              <strong>Atributos principales:</strong>
-              <code>type, disabled</code>
-            </p>
-            <p class="tiny">
-              Define si envía formularios o ejecuta una acción.
-            </p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;button type=&quot;submit&quot;&gt;Enviar&lt;/button&gt;</code></pre>
-          </article>
-          <article class="tag-card" data-category="Formularios">
-            <div class="eyebrow">Formularios</div>
-            <h2>&lt;select&gt;</h2>
-            <p>Crea un desplegable para elegir opciones.</p>
-            <p>
-              <strong>Atributos principales:</strong>
-              <code>name, required, multiple</code>
-            </p>
-            <p class="tiny">
-              Controlan el dato y la selección requerida o múltiple.
-            </p>
-            <div class="panel-label">Ejemplo de uso</div>
-            <pre><code>&lt;select name=&quot;nivel&quot;&gt;&lt;option&gt;Inicial&lt;/option&gt;&lt;/select&gt;</code></pre>
-          </article>
-        </div>
-        <p class="no-results" id="no-results" hidden>
-          No hay etiquetas que coincidan con tu búsqueda.
-        </p>
+    <div class="container">
+      <div class="ref-breadcrumb">
+        <a href="index.html">Inicio</a>
+        <span aria-hidden="true">/</span>
+        <span>Referencia HTML</span>
       </div>
-    </main>
+      <div class="ref-layout">
+        <aside class="ref-sidebar" aria-label="Índice de etiquetas">
+          <details class="ref-sidebar-panel" open>
+            <summary class="ref-sidebar-toggle">
+              Referencia HTML
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
+            </summary>
+            <div class="ref-sidebar-content">
+              <nav aria-label="Etiquetas por categoría">
+                <a class="ref-overview" href="#main-content">Introducción</a>
+                <details class="ref-nav-group">
+                  <summary>
+                    <h3>Documento</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
+                  </summary>
+                  <ul>
+                    <li>
+                      <a href="#tag-html">
+                        <code>&lt;html&gt;</code>
+                        <span class="ref-nav-description">Raíz del documento</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-head">
+                        <code>&lt;head&gt;</code>
+                        <span class="ref-nav-description">Metadatos y recursos</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-meta">
+                        <code>&lt;meta&gt;</code>
+                        <span class="ref-nav-description">Configuración del documento</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-link">
+                        <code>&lt;link&gt;</code>
+                        <span class="ref-nav-description">Relaciones y hojas de estilo</span>
+                      </a>
+                    </li>
+                  </ul>
+                </details>
+                <details class="ref-nav-group">
+                  <summary>
+                    <h3>Estructura</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
+                  </summary>
+                  <ul>
+                    <li>
+                      <a href="#tag-header">
+                        <code>&lt;header&gt;</code>
+                        <span class="ref-nav-description">Introducción y navegación</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-nav">
+                        <code>&lt;nav&gt;</code>
+                        <span class="ref-nav-description">Bloque de navegación</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-main">
+                        <code>&lt;main&gt;</code>
+                        <span class="ref-nav-description">Contenido principal</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-section">
+                        <code>&lt;section&gt;</code>
+                        <span class="ref-nav-description">Sección temática</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-article">
+                        <code>&lt;article&gt;</code>
+                        <span class="ref-nav-description">Contenido independiente</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-aside">
+                        <code>&lt;aside&gt;</code>
+                        <span class="ref-nav-description">Información complementaria</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-footer">
+                        <code>&lt;footer&gt;</code>
+                        <span class="ref-nav-description">Información de cierre</span>
+                      </a>
+                    </li>
+                  </ul>
+                </details>
+                <details class="ref-nav-group">
+                  <summary>
+                    <h3>Texto</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
+                  </summary>
+                  <ul>
+                    <li>
+                      <a href="#tag-h1">
+                        <code>&lt;h1&gt;</code>
+                        <span class="ref-nav-description">Encabezados de h1 a h6</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-p">
+                        <code>&lt;p&gt;</code>
+                        <span class="ref-nav-description">Párrafos</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-a">
+                        <code>&lt;a&gt;</code>
+                        <span class="ref-nav-description">Enlaces e hipervínculos</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-strong">
+                        <code>&lt;strong&gt;</code>
+                        <span class="ref-nav-description">Importancia del texto</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-ul">
+                        <code>&lt;ul&gt;</code>
+                        <span class="ref-nav-description">Listas y elementos li</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-pre">
+                        <code>&lt;pre&gt;</code>
+                        <span class="ref-nav-description">Código y texto preformateado</span>
+                      </a>
+                    </li>
+                  </ul>
+                </details>
+                <details class="ref-nav-group">
+                  <summary>
+                    <h3>Multimedia</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
+                  </summary>
+                  <ul>
+                    <li>
+                      <a href="#tag-img">
+                        <code>&lt;img&gt;</code>
+                        <span class="ref-nav-description">Imágenes con alternativa textual</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-video">
+                        <code>&lt;video&gt;</code>
+                        <span class="ref-nav-description">Vídeo nativo</span>
+                      </a>
+                    </li>
+                  </ul>
+                </details>
+                <details class="ref-nav-group">
+                  <summary>
+                    <h3>Tablas</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
+                  </summary>
+                  <ul>
+                    <li>
+                      <a href="#tag-table">
+                        <code>&lt;table&gt;</code>
+                        <span class="ref-nav-description">Datos tabulares</span>
+                      </a>
+                    </li>
+                  </ul>
+                </details>
+                <details class="ref-nav-group">
+                  <summary>
+                    <h3>Formularios</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
+                  </summary>
+                  <ul>
+                    <li>
+                      <a href="#tag-form">
+                        <code>&lt;form&gt;</code>
+                        <span class="ref-nav-description">Envío de datos</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-label">
+                        <code>&lt;label&gt;</code>
+                        <span class="ref-nav-description">Nombre de un control</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-input">
+                        <code>&lt;input&gt;</code>
+                        <span class="ref-nav-description">Controles según el tipo</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-button">
+                        <code>&lt;button&gt;</code>
+                        <span class="ref-nav-description">Acciones y envío</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-textarea">
+                        <code>&lt;textarea&gt;</code>
+                        <span class="ref-nav-description">Texto de varias líneas</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tag-select">
+                        <code>&lt;select&gt;</code>
+                        <span class="ref-nav-description">Selección de opciones</span>
+                      </a>
+                    </li>
+                  </ul>
+                </details>
+                <details class="ref-nav-group">
+                  <summary>
+                    <h3>Interacción</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
+                  </summary>
+                  <ul>
+                    <li>
+                      <a href="#tag-details">
+                        <code>&lt;details&gt;</code>
+                        <span class="ref-nav-description">Contenido desplegable</span>
+                      </a>
+                    </li>
+                  </ul>
+                </details>
+              </nav>
+            </div>
+          </details>
+        </aside>
+
+        <main id="main-content">
+          <div class="ref-intro">
+            <h1>Referencia de <span>HTML</span></h1>
+            <p class="lead">Elementos, atributos y ejemplos para escribir HTML con criterio.</p>
+          </div>
+          <div class="ref-search" hidden>
+            <label for="tag-search">Buscar en la referencia</label>
+            <div class="ref-search-row">
+              <svg class="ref-search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
+              <input id="tag-search" type="search" placeholder="Etiqueta, atributo o utilidad…" aria-describedby="search-status search-shortcut" />
+              <kbd id="search-shortcut" aria-label="Pulsa barra para buscar">/</kbd>
+              <button class="ref-search-clear" id="clear-search" type="button">Limpiar</button>
+            </div>
+            <div class="ref-search-footer">
+              <p id="search-status" role="status" aria-live="polite">27 elementos</p>
+            </div>
+          </div>
+
+          <div id="no-results" class="ref-empty" hidden>
+            <h2>Sin resultados</h2>
+            <p id="empty-message">Prueba con otra etiqueta o atributo.</p>
+            <button type="button" id="reset-filters" class="ref-reset">Ver toda la referencia</button>
+          </div>
+          <details class="ref-category" aria-labelledby="cat-0">
+            <summary class="ref-category-heading">
+              <h2 id="cat-0">Documento</h2>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
+            </summary>
+            <article class="ref-entry" id="tag-html" aria-labelledby="title-html">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-html">
+                    <a href="#tag-html"><code>&lt;html&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Raíz del documento</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/html">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Agrupa el documento completo: head contiene metadatos y body el contenido visible.
+                Declara HTML moderno con &lt;!doctype html&gt; antes de la raíz.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de html">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de html"><code><span class="code-tag">&lt;!doctype html&gt;</span>
+<span class="code-tag">&lt;html</span> <span class="code-attribute">lang</span>=<span class="code-string">&quot;es&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;head</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;title</span><span class="code-tag">&gt;</span>Mi página<span class="code-tag">&lt;/title</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;/head</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;body</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;h1</span><span class="code-tag">&gt;</span>Hola<span class="code-tag">&lt;/h1</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;/body</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/html</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de html">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;html&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>lang</code></th>
+                      <td>Idioma principal, por ejemplo es; permite una pronunciación correcta.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                Puedes indicar otro lang en un descendiente cuando cambie el idioma. No uses la raíz
+                como contenedor de interfaz.
+              </p>
+              <p>
+                El ejemplo es una estructura abreviada: añade charset y viewport en
+                producción.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-head" aria-labelledby="title-head">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-head">
+                    <a href="#tag-head"><code>&lt;head&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Metadatos y recursos</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/head">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Reúne información sobre el documento. No representa una sección visible de la página
+                y debe preceder a body.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de head">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de head"><code><span class="code-tag">&lt;head</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;meta</span> <span class="code-attribute">charset</span>=<span class="code-string">&quot;utf-8&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;meta</span> <span class="code-attribute">name</span>=<span class="code-string">&quot;viewport&quot;</span> <span class="code-attribute">content</span>=<span class="code-string">&quot;width=device-width, initial-scale=1&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;title</span><span class="code-tag">&gt;</span>Referencia | VCode<span class="code-tag">&lt;/title</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/head</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de head">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;head&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>id</code></th>
+                      <td>Identificador global; normalmente no es necesario aquí.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                Contiene title, meta, link y otros metadatos. El contenido de la interfaz pertenece
+                a body.
+              </p>
+              <p>
+                Incluye un título específico por página.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-meta" aria-labelledby="title-meta">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-meta">
+                    <a href="#tag-meta"><code>&lt;meta&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Configuración del documento</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/meta">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Declara codificación, descripción y configuración del viewport. Es un elemento
+                vacío: no tiene etiqueta de cierre.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de meta">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de meta"><code><span class="code-tag">&lt;meta</span> <span class="code-attribute">charset</span>=<span class="code-string">&quot;utf-8&quot;</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;meta</span> <span class="code-attribute">name</span>=<span class="code-string">&quot;description&quot;</span> <span class="code-attribute">content</span>=<span class="code-string">&quot;Aprende HTML con ejemplos&quot;</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;meta</span> <span class="code-attribute">name</span>=<span class="code-string">&quot;viewport&quot;</span> <span class="code-attribute">content</span>=<span class="code-string">&quot;width=device-width, initial-scale=1&quot;</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de meta">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;meta&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>charset</code></th>
+                      <td>Usa utf-8 y sitúa la declaración al principio de head.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>name</code></th>
+                      <td>Tipo de metadato, como description o viewport.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>content</code></th>
+                      <td>Valor del metadato definido por name.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                charset declara la codificación; name y content expresan metadatos por nombre.
+                http-equiv admite directivas concretas, no reemplaza cualquier cabecera HTTP.
+              </p>
+            
+              <p class="ref-note">
+                <strong>Accesibilidad.</strong> No bloquees el zoom con <code>user-scalable=no</code>: permite que cada persona ajuste el tamaño de lectura.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-link" aria-labelledby="title-link">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-link">
+                    <a href="#tag-link"><code>&lt;link&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Relaciones y hojas de estilo</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/link">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Relaciona el documento con un recurso externo. Para estilos, el navegador descarga y
+                aplica el CSS enlazado. Es un elemento vacío.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de link">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de link"><code><span class="code-tag">&lt;link</span> <span class="code-attribute">rel</span>=<span class="code-string">&quot;stylesheet&quot;</span> <span class="code-attribute">href</span>=<span class="code-string">&quot;assets/css/styles.css&quot;</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;link</span> <span class="code-attribute">rel</span>=<span class="code-string">&quot;stylesheet&quot;</span> <span class="code-attribute">href</span>=<span class="code-string">&quot;print.css&quot;</span> <span class="code-attribute">media</span>=<span class="code-string">&quot;print&quot;</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de link">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;link&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>rel</code></th>
+                      <td>Relación: stylesheet, icon o preload, entre otras.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>href</code></th>
+                      <td>Dirección del recurso.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>media</code></th>
+                      <td>Condición de medios; por ejemplo print.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                stylesheet aplica CSS; icon declara un icono. preload anticipa una descarga y
+                necesita un as adecuado; no aplica estilos por sí solo.
+              </p>
+              <p>
+                Evita precargar recursos sin medir su necesidad.
+              </p>
+            </article>
+          </details>
+
+          <details class="ref-category" aria-labelledby="cat-1">
+            <summary class="ref-category-heading">
+              <h2 id="cat-1">Estructura</h2>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
+            </summary>
+            <article class="ref-entry" id="tag-header" aria-labelledby="title-header">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-header">
+                    <a href="#tag-header"><code>&lt;header&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Introducción y navegación</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/header">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Introduce una página o una sección con su identidad, título o navegación. Puede
+                haber varias cabeceras si pertenecen a contextos diferentes.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de header">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de header"><code><span class="code-tag">&lt;header</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;a</span> <span class="code-attribute">href</span>=<span class="code-string">&quot;index.html&quot;</span><span class="code-tag">&gt;</span>VCode<span class="code-tag">&lt;/a</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;nav</span> <span class="code-attribute">aria-label</span>=<span class="code-string">&quot;Principal&quot;</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;a</span> <span class="code-attribute">href</span>=<span class="code-string">&quot;labels.html&quot;</span><span class="code-tag">&gt;</span>Etiquetas<span class="code-tag">&lt;/a</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;/nav</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/header</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de header">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;header&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>id</code></th>
+                      <td>Destino de un enlace interno.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>class</code></th>
+                      <td>Gancho para estilos; no aporta semántica.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                La cabecera de página suele ser un punto de referencia; una cabecera dentro de
+                article introduce ese artículo. No anides header o footer dentro de header.
+              </p>
+              <p>
+                No hace falta añadir role=&quot;banner&quot; a una cabecera de página
+                nativa.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-nav" aria-labelledby="title-nav">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-nav">
+                    <a href="#tag-nav"><code>&lt;nav&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Bloque de navegación</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/nav">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Agrupa enlaces importantes para recorrer el sitio o la página. No todos los grupos
+                de enlaces requieren nav.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de nav">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de nav"><code><span class="code-tag">&lt;nav</span> <span class="code-attribute">aria-label</span>=<span class="code-string">&quot;En esta página&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;a</span> <span class="code-attribute">href</span>=<span class="code-string">&quot;#tag-main&quot;</span><span class="code-tag">&gt;</span>Contenido principal<span class="code-tag">&lt;/a</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;a</span> <span class="code-attribute">href</span>=<span class="code-string">&quot;#tag-article&quot;</span><span class="code-tag">&gt;</span>Artículos<span class="code-tag">&lt;/a</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/nav</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de nav">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;nav&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>aria-label</code></th>
+                      <td>Nombre accesible cuando hay varias navegaciones.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>aria-labelledby</code></th>
+                      <td>Referencia al id de un título visible.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                Puede contener una lista de enlaces o enlaces directos. Distingue la navegación
+                principal de un índice local con nombres claros.
+              </p>
+              <p>
+                Usa aria-current=&quot;page&quot; en el enlace de la página actual.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-main" aria-labelledby="title-main">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-main">
+                    <a href="#tag-main"><code>&lt;main&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Contenido principal</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/main">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Contiene el contenido dominante de la página. Excluye la navegación y los bloques
+                repetidos comunes a todo el sitio.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de main">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de main"><code><span class="code-tag">&lt;a</span> <span class="code-attribute">href</span>=<span class="code-string">&quot;#contenido&quot;</span><span class="code-tag">&gt;</span>Saltar al contenido<span class="code-tag">&lt;/a</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;main</span> <span class="code-attribute">id</span>=<span class="code-string">&quot;contenido&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;h1</span><span class="code-tag">&gt;</span>Referencia HTML<span class="code-tag">&lt;/h1</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/main</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de main">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;main&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>id</code></th>
+                      <td>Permite un enlace para saltar directamente al contenido.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                Mantén un único main visible por documento. Una aplicación puede conservar otros
+                main ocultos, pero solo uno debe estar activo.
+              </p>
+              <p>
+                No anides main dentro de article, aside, footer, header o nav.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-section" aria-labelledby="title-section">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-section">
+                    <a href="#tag-section"><code>&lt;section&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Sección temática</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/section">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Agrupa contenido sobre un mismo tema cuando no existe un elemento más específico.
+                Suele llevar un encabezado que explica su propósito.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de section">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de section"><code><span class="code-tag">&lt;section</span> <span class="code-attribute">aria-labelledby</span>=<span class="code-string">&quot;titulo-formularios&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;h2</span> <span class="code-attribute">id</span>=<span class="code-string">&quot;titulo-formularios&quot;</span><span class="code-tag">&gt;</span>Formularios<span class="code-tag">&lt;/h2</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;p</span><span class="code-tag">&gt;</span>Recoge datos con controles nativos.<span class="code-tag">&lt;/p</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/section</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de section">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;section&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>aria-labelledby</code></th>
+                      <td>Asocia la sección con su encabezado visible.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>id</code></th>
+                      <td>Identifica la sección para enlaces.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                Una sección con nombre accesible puede ser un punto de referencia. Usa div si solo
+                necesitas un contenedor de diseño.
+              </p>
+              <p>
+                No elijas section solo para aplicar márgenes.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-article" aria-labelledby="title-article">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-article">
+                    <a href="#tag-article"><code>&lt;article&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Contenido independiente</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/article">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Representa una unidad que conserva sentido por sí misma: una noticia, una
+                publicación o una ficha de referencia.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de article">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de article"><code><span class="code-tag">&lt;article</span> <span class="code-attribute">aria-labelledby</span>=<span class="code-string">&quot;titulo-articulo&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;h2</span> <span class="code-attribute">id</span>=<span class="code-string">&quot;titulo-articulo&quot;</span><span class="code-tag">&gt;</span>Cómo crear un enlace<span class="code-tag">&lt;/h2</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;p</span><span class="code-tag">&gt;</span>Usa el elemento a con href.<span class="code-tag">&lt;/p</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/article</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de article">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;article&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>aria-labelledby</code></th>
+                      <td>Vincula la unidad con su título.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                Puede tener header y footer propios. Los artículos anidados representan contenido
+                relacionado, como comentarios de una publicación.
+              </p>
+              <p>
+                La independencia del contenido determina si article es adecuado.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-aside" aria-labelledby="title-aside">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-aside">
+                    <a href="#tag-aside"><code>&lt;aside&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Información complementaria</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/aside">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Contiene información relacionada de forma indirecta con el contenido principal: un
+                glosario, una nota contextual o recursos.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de aside">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de aside"><code><span class="code-tag">&lt;aside</span> <span class="code-attribute">aria-labelledby</span>=<span class="code-string">&quot;consejo&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;h2</span> <span class="code-attribute">id</span>=<span class="code-string">&quot;consejo&quot;</span><span class="code-tag">&gt;</span>Antes de empezar<span class="code-tag">&lt;/h2</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;p</span><span class="code-tag">&gt;</span>Abre las herramientas del navegador.<span class="code-tag">&lt;/p</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/aside</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de aside">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;aside&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>aria-label</code></th>
+                      <td>Nombre del bloque si no hay un título visible.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>aria-labelledby</code></th>
+                      <td>Referencia a su encabezado.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                Puede complementar la página entera o un artículo concreto. Su significado no
+                depende de estar colocado a la derecha o izquierda.
+              </p>
+              <p>
+                No escondas instrucciones esenciales en un bloque considerado
+                complementario.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-footer" aria-labelledby="title-footer">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-footer">
+                    <a href="#tag-footer"><code>&lt;footer&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Información de cierre</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/footer">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Incluye autoría, enlaces relacionados o información legal de la página o sección más
+                cercana.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de footer">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de footer"><code><span class="code-tag">&lt;footer</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;small</span><span class="code-tag">&gt;</span>© 2026 VCode<span class="code-tag">&lt;/small</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;a</span> <span class="code-attribute">href</span>=<span class="code-string">&quot;contact.html&quot;</span><span class="code-tag">&gt;</span>Contacto<span class="code-tag">&lt;/a</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/footer</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de footer">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;footer&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>id</code></th>
+                      <td>Identificador global opcional.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                Un footer de página suele ser un punto de referencia; dentro de article cierra ese
+                artículo. No es obligatorio que esté al final de la ventana.
+              </p>
+              <p>
+                No anides header o footer dentro de footer.
+              </p>
+            </article>
+          </details>
+
+          <details class="ref-category" aria-labelledby="cat-2">
+            <summary class="ref-category-heading">
+              <h2 id="cat-2">Texto</h2>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
+            </summary>
+            <article class="ref-entry" id="tag-h1" aria-labelledby="title-h1">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-h1">
+                    <a href="#tag-h1"><code>&lt;h1&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Encabezados de h1 a h6</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/h1">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Definen seis niveles de títulos para estructurar el contenido. h1 presenta el tema
+                principal; h2 abre secciones y h3 desarrolla subsecciones.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de h1">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de h1"><code><span class="code-tag">&lt;h1</span><span class="code-tag">&gt;</span>Aprender HTML<span class="code-tag">&lt;/h1</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;h2</span><span class="code-tag">&gt;</span>Formularios<span class="code-tag">&lt;/h2</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;h3</span><span class="code-tag">&gt;</span>Etiquetas de los campos<span class="code-tag">&lt;/h3</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de h1">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;h1&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>id</code></th>
+                      <td>Permite enlazar una sección desde un índice.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                Escoge el nivel por jerarquía, no por tamaño visual. CSS puede cambiar el tamaño sin
+                cambiar la estructura.
+              </p>
+              <p>
+                Evita saltos de nivel al abrir subsecciones. Una única h1 es una convención
+                clara para esta página.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-p" aria-labelledby="title-p">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-p">
+                    <a href="#tag-p"><code>&lt;p&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Párrafos</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/p">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Representa un párrafo de texto. Admite contenido de fraseo como enlaces o énfasis,
+                pero no listas, tablas ni secciones.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de p">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de p"><code><span class="code-tag">&lt;p</span><span class="code-tag">&gt;</span>HTML describe la estructura del contenido.<span class="code-tag">&lt;/p</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;p</span><span class="code-tag">&gt;</span>CSS define su presentación visual.<span class="code-tag">&lt;/p</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de p">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;p&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>lang</code></th>
+                      <td>Idioma específico si difiere del documento.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>dir</code></th>
+                      <td>Dirección del texto: ltr, rtl o auto.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                Usa varios p para ideas separadas. br introduce un salto de línea significativo, no
+                sustituye a los párrafos ni a los márgenes CSS.
+              </p>
+            
+              <p class="ref-note">
+                <strong>Anidación.</strong> No introduzcas listas, tablas o secciones dentro de
+                <code>p</code>. El navegador cerrará el párrafo antes de esos elementos.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-a" aria-labelledby="title-a">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-a">
+                    <a href="#tag-a"><code>&lt;a&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Enlaces e hipervínculos</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/a">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Con href permite navegar a otra página, un fragmento, un correo o una descarga. Sin
+                href no representa un hipervínculo.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de a">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de a"><code><span class="code-tag">&lt;a</span> <span class="code-attribute">href</span>=<span class="code-string">&quot;#tag-form&quot;</span><span class="code-tag">&gt;</span>Ver formularios<span class="code-tag">&lt;/a</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;a</span> <span class="code-attribute">href</span>=<span class="code-string">&quot;https://html.spec.whatwg.org/&quot;</span>
+   <span class="code-attribute">target</span>=<span class="code-string">&quot;_blank&quot;</span> <span class="code-attribute">rel</span>=<span class="code-string">&quot;noopener&quot;</span><span class="code-tag">&gt;</span>Estándar HTML (nueva pestaña)<span class="code-tag">&lt;/a</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de a">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;a&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>href</code></th>
+                      <td>Destino relativo, absoluto o fragmento.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>target</code></th>
+                      <td>Contexto de navegación, como _blank.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>rel</code></th>
+                      <td>Relación y opciones como noopener.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>download</code></th>
+                      <td>Sugiere descargar un recurso, sujeto a restricciones de origen.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                Usa #id para navegar dentro del documento y mailto: para abrir el cliente de correo.
+                Un botón ejecuta acciones; un enlace cambia de destino.
+              </p>
+              <p>
+                Escribe un texto que describa el destino. No anides enlaces ni otros
+                controles interactivos.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-strong" aria-labelledby="title-strong">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-strong">
+                    <a href="#tag-strong"><code>&lt;strong&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Importancia del texto</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/strong">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Marca importancia, seriedad o urgencia. Su significado permanece aunque cambies el
+                peso tipográfico con CSS.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de strong">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de strong"><code><span class="code-tag">&lt;p</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;strong</span><span class="code-tag">&gt;</span>Guarda tus cambios<span class="code-tag">&lt;/strong</span><span class="code-tag">&gt;</span> antes de salir.<span class="code-tag">&lt;/p</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;p</span><span class="code-tag">&gt;</span>Esto es <span class="code-tag">&lt;em</span><span class="code-tag">&gt;</span>especialmente<span class="code-tag">&lt;/em</span><span class="code-tag">&gt;</span> útil.<span class="code-tag">&lt;/p</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de strong">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;strong&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>class</code></th>
+                      <td>Permite estilos sin alterar su significado.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                strong comunica importancia; em marca énfasis de la frase. b llama la atención sin
+                añadir importancia y no sustituye a strong en advertencias.
+              </p>
+              <p>
+                No uses negrita como único medio para transmitir una instrucción importante.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-ul" aria-labelledby="title-ul">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-ul">
+                    <a href="#tag-ul"><code>&lt;ul&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Listas y elementos li</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/ul">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                ul representa una lista cuyo orden no importa. Cada elemento se expresa con li; una
+                lista anidada debe estar dentro de un li.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de ul">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de ul"><code><span class="code-tag">&lt;ul</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;li</span><span class="code-tag">&gt;</span>HTML: estructura<span class="code-tag">&lt;/li</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;li</span><span class="code-tag">&gt;</span>CSS: presentación<span class="code-tag">&lt;/li</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/ul</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;ol</span> <span class="code-attribute">start</span>=<span class="code-string">&quot;2&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;li</span><span class="code-tag">&gt;</span>Escribe el contenido<span class="code-tag">&lt;/li</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;li</span><span class="code-tag">&gt;</span>Comprueba el resultado<span class="code-tag">&lt;/li</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/ol</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de ul">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;ul&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>class</code></th>
+                      <td>Define estilos de lista mediante CSS.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                ol indica un orden significativo y admite start, reversed y type. li admite value
+                cuando pertenece a ol para fijar su número.
+              </p>
+              <p>
+                No simules listas con guiones y saltos de línea; conserva su semántica
+                nativa.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-pre" aria-labelledby="title-pre">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-pre">
+                    <a href="#tag-pre"><code>&lt;pre&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Código y texto preformateado</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/pre">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Conserva espacios y saltos de línea. Junto con code representa ejemplos de código;
+                el contenido sigue siendo interpretado como HTML si no se escapa.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de pre">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de pre"><code><span class="code-tag">&lt;pre</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;code</span><span class="code-tag">&gt;</span>&amp;lt;p&amp;gt;Hola, mundo&amp;lt;/p&amp;gt;<span class="code-tag">&lt;/code</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;/pre</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de pre">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;pre&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>tabindex</code></th>
+                      <td>Con 0 permite enfocar un bloque desplazable cuando sea necesario.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                pre conserva formato; code identifica un fragmento de código. Para una palabra
+                dentro de una frase basta con code.
+              </p>
+            
+              <p class="ref-note">
+                <strong>Código literal.</strong> Escapa <code>&lt;</code> como <code>&amp;lt;</code>
+                y <code>&amp;</code> como <code>&amp;amp;</code> en el código fuente para mostrar
+                las etiquetas sin que el navegador las interprete.
+              </p>
+            </article>
+          </details>
+
+          <details class="ref-category" aria-labelledby="cat-3">
+            <summary class="ref-category-heading">
+              <h2 id="cat-3">Multimedia</h2>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
+            </summary>
+            <article class="ref-entry" id="tag-img" aria-labelledby="title-img">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-img">
+                    <a href="#tag-img"><code>&lt;img&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Imágenes con alternativa textual</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/img">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Incrusta una imagen y es un elemento vacío. El texto alternativo debe comunicar su
+                función en el contexto, no limitarse a describir píxeles.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de img">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de img"><code><span class="code-tag">&lt;figure</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;img</span> <span class="code-attribute">src</span>=<span class="code-string">&quot;diagrama.png&quot;</span> <span class="code-attribute">alt</span>=<span class="code-string">&quot;HTML define estructura; CSS, presentación&quot;</span>
+       <span class="code-attribute">width</span>=<span class="code-string">&quot;640&quot;</span> <span class="code-attribute">height</span>=<span class="code-string">&quot;360&quot;</span> <span class="code-attribute">loading</span>=<span class="code-string">&quot;lazy&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;figcaption</span><span class="code-tag">&gt;</span>Separación de responsabilidades.<span class="code-tag">&lt;/figcaption</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/figure</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de img">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;img&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>src</code></th>
+                      <td>URL de la imagen.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>alt</code></th>
+                      <td>Alternativa textual; vacío si es puramente decorativa.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>width / height</code></th>
+                      <td>Dimensiones intrínsecas para reservar espacio.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>loading</code></th>
+                      <td>lazy para imágenes fuera de la vista inicial.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>srcset / sizes</code></th>
+                      <td>Selección de recursos adaptados al tamaño y densidad.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                Usa picture cuando necesites dirección artística o formatos alternativos. figure con
+                figcaption asocia una leyenda visible.
+              </p>
+              <p>
+                No apliques lazy a la imagen principal si retrasa su carga. Una leyenda no
+                sustituye automáticamente a alt.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-video" aria-labelledby="title-video">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-video">
+                    <a href="#tag-video"><code>&lt;video&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Vídeo nativo</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/video">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Reproduce vídeo y puede ofrecer varias fuentes. Incluye controles y alternativas
+                para que el contenido no dependa exclusivamente de la imagen o del sonido.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de video">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de video"><code><span class="code-tag">&lt;video</span> <span class="code-attribute">controls</span> <span class="code-attribute">preload</span>=<span class="code-string">&quot;metadata&quot;</span> <span class="code-attribute">width</span>=<span class="code-string">&quot;640&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;source</span> <span class="code-attribute">src</span>=<span class="code-string">&quot;leccion.mp4&quot;</span> <span class="code-attribute">type</span>=<span class="code-string">&quot;video/mp4&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;track</span> <span class="code-attribute">kind</span>=<span class="code-string">&quot;captions&quot;</span> <span class="code-attribute">src</span>=<span class="code-string">&quot;leccion-es.vtt&quot;</span>
+         <span class="code-attribute">srclang</span>=<span class="code-string">&quot;es&quot;</span> <span class="code-attribute">label</span>=<span class="code-string">&quot;Español&quot;</span> <span class="code-attribute">default</span><span class="code-tag">&gt;</span>
+  Tu navegador no reproduce este vídeo.
+<span class="code-tag">&lt;/video</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de video">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;video&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>controls</code></th>
+                      <td>Muestra los controles nativos.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>poster</code></th>
+                      <td>Imagen previa a la reproducción.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>preload</code></th>
+                      <td>Sugerencia de carga: none, metadata o auto.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>muted / loop</code></th>
+                      <td>Silencio inicial y repetición.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                source permite ofrecer formatos alternativos. track con kind=&quot;captions&quot;
+                ofrece subtítulos de sonidos y diálogo; añade una transcripción accesible.
+              </p>
+              <p>
+                Evita autoplay: puede molestar, consumir datos y estar bloqueado por el
+                navegador.
+              </p>
+            </article>
+          </details>
+
+          <details class="ref-category" aria-labelledby="cat-4">
+            <summary class="ref-category-heading">
+              <h2 id="cat-4">Tablas</h2>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
+            </summary>
+            <article class="ref-entry" id="tag-table" aria-labelledby="title-table">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-table">
+                    <a href="#tag-table"><code>&lt;table&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Datos tabulares</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/table">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Relaciona datos por filas y columnas. caption identifica la tabla; thead y tbody
+                agrupan filas tr y las celdas se expresan con th o td.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de table">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de table"><code><span class="code-tag">&lt;table</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;caption</span><span class="code-tag">&gt;</span>Elementos por función<span class="code-tag">&lt;/caption</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;thead</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;tr</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;th</span> <span class="code-attribute">scope</span>=<span class="code-string">&quot;col&quot;</span><span class="code-tag">&gt;</span>Elemento<span class="code-tag">&lt;/th</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;th</span> <span class="code-attribute">scope</span>=<span class="code-string">&quot;col&quot;</span><span class="code-tag">&gt;</span>Uso<span class="code-tag">&lt;/th</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;/tr</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;/thead</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;tbody</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;tr</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;th</span> <span class="code-attribute">scope</span>=<span class="code-string">&quot;row&quot;</span><span class="code-tag">&gt;</span>a<span class="code-tag">&lt;/th</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;td</span><span class="code-tag">&gt;</span>Navegación<span class="code-tag">&lt;/td</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;/tr</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;/tbody</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/table</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de table">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;table&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>id</code></th>
+                      <td>Identificador de la tabla.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>class</code></th>
+                      <td>Gancho para presentación; usa CSS en lugar de border.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                th identifica encabezados y admite scope=&quot;col&quot; o &quot;row&quot;. colspan
+                y rowspan extienden celdas. Para tablas complejas pueden hacer falta id y headers.
+              </p>
+              <p>
+                No utilices tablas para maquetar páginas. Mantén asociaciones claras entre
+                encabezados y datos.
+              </p>
+            </article>
+          </details>
+
+          <details class="ref-category" aria-labelledby="cat-5">
+            <summary class="ref-category-heading">
+              <h2 id="cat-5">Formularios</h2>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
+            </summary>
+            <article class="ref-entry" id="tag-form" aria-labelledby="title-form">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-form">
+                    <a href="#tag-form"><code>&lt;form&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Envío de datos</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/form">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Agrupa controles para enviar datos a un destino. Los controles deben tener name para
+                aportar normalmente su valor al envío.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de form">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de form"><code><span class="code-tag">&lt;form</span> <span class="code-attribute">action</span>=<span class="code-string">&quot;/buscar&quot;</span> <span class="code-attribute">method</span>=<span class="code-string">&quot;get&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;label</span> <span class="code-attribute">for</span>=<span class="code-string">&quot;consulta&quot;</span><span class="code-tag">&gt;</span>Buscar<span class="code-tag">&lt;/label</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;input</span> <span class="code-attribute">id</span>=<span class="code-string">&quot;consulta&quot;</span> <span class="code-attribute">name</span>=<span class="code-string">&quot;q&quot;</span> <span class="code-attribute">type</span>=<span class="code-string">&quot;search&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;button</span> <span class="code-attribute">type</span>=<span class="code-string">&quot;submit&quot;</span><span class="code-tag">&gt;</span>Buscar<span class="code-tag">&lt;/button</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/form</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de form">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;form&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>action</code></th>
+                      <td>URL que procesa los datos.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>method</code></th>
+                      <td>get o post; dialog cierra un diálogo en su contexto.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>enctype</code></th>
+                      <td>multipart/form-data para subir archivos con post.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>autocomplete</code></th>
+                      <td>Sugerencia de autocompletado: on u off.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                get añade datos a la URL y sirve para consultas; post envía datos en el cuerpo. post
+                no cifra: utiliza HTTPS. No se pueden anidar formularios.
+              </p>
+            
+              <p class="ref-note">
+                <strong>Validación.</strong> Comprueba siempre los datos en el servidor. Las
+                restricciones del navegador se pueden omitir y no protegen por sí solas el
+                procesamiento del formulario.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-label" aria-labelledby="title-label">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-label">
+                    <a href="#tag-label"><code>&lt;label&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Nombre de un control</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/label">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Asocia un texto visible con un control. Pulsar la etiqueta facilita el enfoque o la
+                activación y aumenta el área de interacción.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de label">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de label"><code><span class="code-tag">&lt;label</span> <span class="code-attribute">for</span>=<span class="code-string">&quot;correo&quot;</span><span class="code-tag">&gt;</span>Correo electrónico<span class="code-tag">&lt;/label</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;input</span> <span class="code-attribute">id</span>=<span class="code-string">&quot;correo&quot;</span> <span class="code-attribute">name</span>=<span class="code-string">&quot;email&quot;</span> <span class="code-attribute">type</span>=<span class="code-string">&quot;email&quot;</span>
+       <span class="code-attribute">aria-describedby</span>=<span class="code-string">&quot;ayuda-correo&quot;</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;small</span> <span class="code-attribute">id</span>=<span class="code-string">&quot;ayuda-correo&quot;</span><span class="code-tag">&gt;</span>Te enviaremos la confirmación.<span class="code-tag">&lt;/small</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de label">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;label&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>for</code></th>
+                      <td>Debe coincidir exactamente con el id de un control etiquetable.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                Puedes envolver el control en label o asociarlo mediante for. Un campo suele tener
+                una etiqueta visible incluso si hay texto de ayuda.
+              </p>
+              <p>
+                placeholder desaparece al escribir y no sustituye a label. Evita enlaces y
+                botones dentro de una etiqueta.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-input" aria-labelledby="title-input">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-input">
+                    <a href="#tag-input"><code>&lt;input&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Controles según el tipo</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/input">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Crea controles de una sola entrada o selección. Es vacío; type cambia tanto su
+                interfaz como las reglas de validación y los atributos aplicables.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de input">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de input"><code><span class="code-tag">&lt;label</span> <span class="code-attribute">for</span>=<span class="code-string">&quot;edad&quot;</span><span class="code-tag">&gt;</span>Edad<span class="code-tag">&lt;/label</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;input</span> <span class="code-attribute">id</span>=<span class="code-string">&quot;edad&quot;</span> <span class="code-attribute">name</span>=<span class="code-string">&quot;edad&quot;</span> <span class="code-attribute">type</span>=<span class="code-string">&quot;number&quot;</span> <span class="code-attribute">min</span>=<span class="code-string">&quot;18&quot;</span> <span class="code-attribute">max</span>=<span class="code-string">&quot;120&quot;</span> <span class="code-attribute">required</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;label</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">&quot;checkbox&quot;</span> <span class="code-attribute">name</span>=<span class="code-string">&quot;boletin&quot;</span> <span class="code-attribute">value</span>=<span class="code-string">&quot;si&quot;</span><span class="code-tag">&gt;</span> Recibir novedades<span class="code-tag">&lt;/label</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de input">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;input&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>type</code></th>
+                      <td>text, email, number, checkbox, radio, file y otros.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>name / value</code></th>
+                      <td>Nombre y valor de envío.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>required</code></th>
+                      <td>Exige un valor válido cuando el tipo lo admite.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>min / max / step</code></th>
+                      <td>Límites e incrementos en tipos compatibles.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>autocomplete</code></th>
+                      <td>Propósito del dato: email, name, etc.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                radio con el mismo name forma un grupo; checkbox permite opciones independientes.
+                disabled excluye el control del envío; readonly mantiene su valor y solo se admite
+                en ciertos tipos.
+              </p>
+            
+              <p class="ref-note">
+                <strong>Atributos booleanos.</strong> <code>required="false"</code> también activa
+                <code>required</code>. Para desactivarlo, elimina el atributo.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-button" aria-labelledby="title-button">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-button">
+                    <a href="#tag-button"><code>&lt;button&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Acciones y envío</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/button">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Crea un botón nativo operable con teclado. Su texto debe explicar la acción; puede
+                contener iconos y texto, pero no otros controles interactivos.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de button">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de button"><code><span class="code-tag">&lt;button</span> <span class="code-attribute">type</span>=<span class="code-string">&quot;submit&quot;</span><span class="code-tag">&gt;</span>Guardar cambios<span class="code-tag">&lt;/button</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;button</span> <span class="code-attribute">type</span>=<span class="code-string">&quot;button&quot;</span> <span class="code-attribute">aria-expanded</span>=<span class="code-string">&quot;false&quot;</span>
+        <span class="code-attribute">aria-controls</span>=<span class="code-string">&quot;panel&quot;</span><span class="code-tag">&gt;</span>Mostrar opciones<span class="code-tag">&lt;/button</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de button">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;button&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>type</code></th>
+                      <td>submit envía, button ejecuta una acción y reset restablece.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>disabled</code></th>
+                      <td>Impide su interacción y lo excluye del envío.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>name / value</code></th>
+                      <td>Dato enviado cuando ese botón inicia el envío.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                Dentro de un formulario, declara siempre type para evitar envíos accidentales. Fuera
+                de él, una acción personalizada necesita JavaScript.
+              </p>
+              <p>
+                aria-expanded debe actualizarse cuando se abre el panel; el atributo por sí
+                solo no implementa la interacción.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-textarea" aria-labelledby="title-textarea">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-textarea">
+                    <a href="#tag-textarea"><code>&lt;textarea&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Texto de varias líneas</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/textarea">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Recoge texto libre de varias líneas. El valor inicial se escribe entre sus etiquetas
+                y no en un atributo value.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de textarea">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de textarea"><code><span class="code-tag">&lt;label</span> <span class="code-attribute">for</span>=<span class="code-string">&quot;mensaje&quot;</span><span class="code-tag">&gt;</span>Tu mensaje<span class="code-tag">&lt;/label</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;textarea</span> <span class="code-attribute">id</span>=<span class="code-string">&quot;mensaje&quot;</span> <span class="code-attribute">name</span>=<span class="code-string">&quot;mensaje&quot;</span> <span class="code-attribute">rows</span>=<span class="code-string">&quot;5&quot;</span>
+          <span class="code-attribute">maxlength</span>=<span class="code-string">&quot;2000&quot;</span> <span class="code-attribute">required</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;/textarea</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de textarea">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;textarea&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>name</code></th>
+                      <td>Clave usada al enviar el formulario.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>rows / cols</code></th>
+                      <td>Tamaño inicial orientativo, ajustable con CSS.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>minlength / maxlength</code></th>
+                      <td>Límites de longitud.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>required</code></th>
+                      <td>Impide enviar el campo vacío.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                readonly permite seleccionar y enviar el texto sin editarlo; disabled impide
+                interacción y envío. wrap modifica el ajuste de líneas y, con hard, el envío.
+              </p>
+              <p>
+                Permite redimensionar el campo y muestra instrucciones fuera del
+                placeholder.
+              </p>
+            </article>
+
+            <article class="ref-entry" id="tag-select" aria-labelledby="title-select">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-select">
+                    <a href="#tag-select"><code>&lt;select&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Selección de opciones</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/select">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Ofrece opciones predefinidas con option. optgroup agrupa opciones relacionadas
+                mediante su atributo label.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de select">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de select"><code><span class="code-tag">&lt;label</span> <span class="code-attribute">for</span>=<span class="code-string">&quot;nivel&quot;</span><span class="code-tag">&gt;</span>Nivel<span class="code-tag">&lt;/label</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;select</span> <span class="code-attribute">id</span>=<span class="code-string">&quot;nivel&quot;</span> <span class="code-attribute">name</span>=<span class="code-string">&quot;nivel&quot;</span> <span class="code-attribute">required</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;option</span> <span class="code-attribute">value</span>=<span class="code-string">&quot;&quot;</span><span class="code-tag">&gt;</span>Elige tu nivel<span class="code-tag">&lt;/option</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;option</span> <span class="code-attribute">value</span>=<span class="code-string">&quot;inicial&quot;</span><span class="code-tag">&gt;</span>Inicial<span class="code-tag">&lt;/option</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;option</span> <span class="code-attribute">value</span>=<span class="code-string">&quot;medio&quot;</span><span class="code-tag">&gt;</span>Intermedio<span class="code-tag">&lt;/option</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/select</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de select">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;select&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>name</code></th>
+                      <td>Clave del dato enviado.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>multiple</code></th>
+                      <td>Permite varias opciones.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>size</code></th>
+                      <td>Número orientativo de opciones visibles.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>required</code></th>
+                      <td>Requiere una selección válida.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                En option, value define el dato enviado y selected la selección inicial. Un select
+                multiple puede enviar varias entradas con el mismo name.
+              </p>
+              <p>
+                No cambies de página automáticamente al seleccionar; ofrece un botón si la
+                elección necesita confirmación.
+              </p>
+            </article>
+          </details>
+
+          <details class="ref-category" aria-labelledby="cat-6">
+            <summary class="ref-category-heading">
+              <h2 id="cat-6">Interacción</h2>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
+            </summary>
+            <article class="ref-entry" id="tag-details" aria-labelledby="title-details">
+              <div class="ref-entry-head">
+                <div>
+                  <h3 id="title-details">
+                    <a href="#tag-details"><code>&lt;details&gt;</code></a>
+                  </h3>
+                  <p class="ref-subtitle">Contenido desplegable</p>
+                </div>
+                <div class="ref-entry-actions">
+                  <a class="ref-source" href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/details">
+                    Consultar MDN
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="m7 17 10-10" /></svg>
+                  </a>
+                </div>
+              </div>
+              <p class="ref-description">
+                Ofrece un bloque que la persona puede abrir o cerrar sin JavaScript. Su primer
+                summary aporta el título visible del control.
+              </p>
+
+              <h4>Ejemplo</h4>
+              <div class="ref-example">
+                <div class="window-header">
+                  <span class="window-label">HTML</span>
+                  <button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo de details">
+                    Copiar
+                  </button>
+                </div>
+                <pre tabindex="0" aria-label="Ejemplo de details"><code><span class="code-tag">&lt;details</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;summary</span><span class="code-tag">&gt;</span>¿Qué diferencia hay entre HTML y CSS?<span class="code-tag">&lt;/summary</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;p</span><span class="code-tag">&gt;</span>HTML estructura el contenido y CSS lo presenta.<span class="code-tag">&lt;/p</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/details</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <h4>Atributos principales</h4>
+              <div class="ref-table-wrap" tabindex="0" role="region" aria-label="Atributos de details">
+                <table>
+                  <caption class="ref-visually-hidden">Atributos de &lt;details&gt;</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Atributo</th>
+                      <th scope="col">Utilidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code>open</code></th>
+                      <td>Presente para mostrar el contenido inicialmente.</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><code>name</code></th>
+                      <td>
+                        Agrupa desplegables para que solo uno del grupo permanezca abierto en
+                        navegadores compatibles.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h4>Uso y variantes</h4>
+              <p>
+                Sin open comienza cerrado. summary actúa como disparador y no necesita
+                role=&quot;button&quot; ni un aria-expanded gestionado manualmente.
+              </p>
+              <p>
+                No ocultes mensajes de error esenciales en un desplegable cerrado. Comprueba
+                compatibilidad de name si dependes del acordeón exclusivo.
+              </p>
+            </article>
+          </details>
+
+          <section class="ref-guide" aria-labelledby="sources-title">
+            <h2 id="sources-title">Sigue profundizando</h2>
+            <p>
+              Documentación redactada para VCode. Consulta la
+              <a href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements">
+                referencia de elementos de MDN
+              </a>
+              y el
+              <a href="https://html.spec.whatwg.org/multipage/">estándar vivo de HTML de WHATWG</a>
+              para detalles normativos y compatibilidad.
+            </p>
+            <a href="#main-content" class="text-link">Volver al principio</a>
+          </section>
+        </main>
+      </div>
+    </div>
     <footer>
       <div class="container footer-content">
         <small>© 2026 VCode</small>
         <a href="contact.html">Hecho por Víctor Martín Pérez</a>
       </div>
     </footer>
+    <p id="copy-status" class="ref-announcer" role="status" aria-live="polite"></p>
   </body>
 </html>

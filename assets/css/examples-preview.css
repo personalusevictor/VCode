@@ -1,0 +1,165 @@
+* {
+  box-sizing: border-box;
+}
+html {
+  color-scheme: light;
+  scroll-padding-top: 16px;
+}
+body {
+  margin: 0;
+  padding: 28px;
+  background: #f3f6f3;
+  color: #24372c;
+  font:
+    15px/1.7 system-ui,
+    sans-serif;
+  overflow-wrap: anywhere;
+}
+h1,
+h2 {
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  margin: 0 0 16px;
+}
+h1 {
+  font-size: 32px;
+}
+h2 {
+  font-size: 24px;
+}
+p {
+  margin: 0 0 16px;
+}
+a {
+  color: #007244;
+  text-underline-offset: 3px;
+}
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #cad8ce;
+}
+section + section {
+  margin-top: 24px;
+}
+ol {
+  padding-left: 24px;
+  margin: 0;
+}
+li {
+  padding-left: 5px;
+  margin-bottom: 12px;
+}
+li::marker {
+  color: #007244;
+  font-weight: 600;
+}
+article {
+  padding: 24px;
+  border: 1px solid #d4dfd6;
+  border-radius: 12px;
+  background: #fff;
+}
+article small {
+  color: #007244;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+article footer {
+  border-top: 1px solid #dbe4de;
+  padding-top: 16px;
+}
+article footer p {
+  margin-bottom: 0;
+  font-size: 13px;
+}
+fieldset {
+  border: 1px solid #c1d0c5;
+  border-radius: 10px;
+  padding: 16px;
+}
+legend {
+  padding-inline: 6px;
+  font-weight: 600;
+}
+label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+input {
+  display: block;
+  width: 100%;
+  margin-bottom: 16px;
+  border: 1px solid #a9bcb0;
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: #fff;
+  color: #24372c;
+  font: inherit;
+  font-size: 16px;
+}
+input:last-child {
+  margin-bottom: 0;
+}
+button {
+  padding: 9px 16px;
+  margin-top: 16px;
+  border: 0;
+  border-radius: 6px;
+  background: #008e56;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+:focus-visible {
+  outline: 2px solid #007244;
+  outline-offset: 3px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+}
+caption {
+  text-align: left;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+th,
+td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid #cad8ce;
+}
+th {
+  background: #e2ece5;
+  font-weight: 600;
+}
+details {
+  padding: 18px;
+  border: 1px solid #c5d6ca;
+  border-radius: 10px;
+  background: #fff;
+}
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #006b40;
+}
+details p {
+  margin: 16px 0 0;
+}
+@media (max-width: 400px) {
+  body {
+    padding: 20px;
+  }
+  article {
+    padding: 20px;
+  }
+}

@@ -3,179 +3,192 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ejemplos de código | VCode</title>
+    <meta name="author" content="Víctor Martín Pérez" />
+    <meta name="description" content="Ejemplos de HTML con código y resultado visual: documentos, listas, enlaces, tarjetas, formularios, tablas y desplegables." />
+    <title>Ejemplos HTML | VCode</title>
     <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/examples.css" />
+    <link rel="stylesheet" href="assets/css/header.css" />
     <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/examples.js" defer></script>
   </head>
-  <body>
-    <a class="skip" href="#contenido">Saltar al contenido</a>
-    <header class="site-header">
-      <div class="container nav-wrap">
-        <a class="brand" href="index.html" aria-label="HTMLab, ir al inicio"
-          ><span class="logo" aria-hidden="true">&lt;/&gt;</span
-          ><span>HTM<em>Lab</em></span></a
-        ><button
-          class="menu-toggle"
-          type="button"
-          aria-label="Abrir o cerrar menú"
-          aria-controls="nav-links"
-          aria-expanded="false">
-          ☰ Menú
-        </button>
-        <nav id="nav-links" class="top-links" aria-label="Navegación principal">
-          <a href="index.html">Inicio</a
-          ><a href="examples.html" aria-current="page">Ejemplos</a
-          ><a href="labels.html">Etiquetas</a><a href="faq.html">FAQ</a
-          ><a href="contact.html">Contacto</a>
+  <body class="examples-page">
+    <a class="skip-link" href="#main-content">Saltar al contenido</a>
+    <header>
+      <div class="container navigation">
+        <a class="brand" href="index.html" aria-label="VCode, ir al inicio">VCode</a>
+        <button class="menu-toggle" type="button" aria-controls="navigation-links" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg> Menú</button>
+        <nav id="navigation-links" class="navigation-links" aria-label="Navegación principal">
+          <a href="index.html">Inicio</a>
+          <a href="examples.html" aria-current="page">Ejemplos</a>
+          <a href="labels.html">Etiquetas</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contacto</a>
         </nav>
       </div>
     </header>
-    <main id="contenido">
-      <div class="container">
-        <div class="page-head">
-          <div class="eyebrow">Aprender haciendo</div>
-          <h1>Del código a la pantalla.</h1>
-          <p>
-            Compara el HTML de la izquierda con la página real de la derecha.
-            Los ejemplos se muestran en una vista aislada dentro del navegador.
-          </p>
-        </div>
-        <article class="example-block" data-example>
-          <div class="example-heading">
-            <h2>Estructura básica</h2>
-            <p>Un título, un párrafo y una llamada a la acción.</p>
-          </div>
-          <div class="split">
-            <div class="code-panel">
-              <div class="panel-label">Código HTML</div>
-              <pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;es&quot;&gt;
-&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;title&gt;Ejemplo&lt;/title&gt;&lt;/head&gt;
-&lt;body style=&quot;font-family:Arial;padding:14px&quot;&gt;
-  &lt;h1&gt;¡Hola, HTML!&lt;/h1&gt;
-  &lt;p&gt;Esta es mi primera página.&lt;/p&gt;
-  &lt;a href=&quot;https://developer.mozilla.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Aprender más&lt;/a&gt;
-&lt;/body&gt;&lt;/html&gt;</code></pre>
+    <main id="main-content" class="container ex-main">
+      <div class="ex-intro"><h1>Ejemplos de <span>HTML</span></h1></div>
+      <div class="ex-layout">
+        <aside class="ex-sidebar"><nav aria-label="Índice de ejemplos">
+            <a href="#documento">Una página desde cero</a>
+            <a href="#listas">Ordenar una lista de pasos</a>
+            <a href="#enlaces">Navegar dentro de una página</a>
+            <a href="#tarjeta">Una tarjeta con significado</a>
+            <a href="#formulario">Un formulario con etiquetas claras</a>
+            <a href="#tabla">Comparar información en una tabla</a>
+            <a href="#desplegable">Mostrar información bajo demanda</a>
+        </nav></aside>
+        <div class="ex-content">
+          <article class="ex-entry" id="documento" aria-labelledby="documento-title">
+            <div class="ex-entry-head"><div><h2 id="documento-title">Una página desde cero</h2><p>Define el idioma, los metadatos y el contenido visible de un documento.</p></div><a class="ex-reference" href="labels.html#tag-html">Ver referencia <span aria-hidden="true">↗</span></a></div>
+            <div class="ex-panels">
+              <div class="ex-code-panel">
+                <div class="ex-panel-head"><span>HTML</span><button class="ex-copy" type="button" data-code="code-documento" aria-label="Copiar código de Una página desde cero" hidden>Copiar</button></div>
+                <pre tabindex="0" aria-label="Código de Una página desde cero"><code id="code-documento"><span class="code-tag">&lt;!doctype html&gt;</span>
+<span class="code-tag">&lt;html</span> <span class="code-attribute">lang</span>=<span class="code-string">&quot;es&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;head</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;meta</span> <span class="code-attribute">charset</span>=<span class="code-string">&quot;utf-8&quot;</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;meta</span> <span class="code-attribute">name</span>=<span class="code-string">&quot;viewport&quot;</span>
+      <span class="code-attribute">content</span>=<span class="code-string">&quot;width=device-width, initial-scale=1&quot;</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;title</span><span class="code-tag">&gt;</span>Mi primera página<span class="code-tag">&lt;/title</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;/head</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;body</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;h1</span><span class="code-tag">&gt;</span>Hola, mundo.<span class="code-tag">&lt;/h1</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;p</span><span class="code-tag">&gt;</span>Mi primera página empieza aquí.<span class="code-tag">&lt;/p</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;/body</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/html</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <div class="ex-result-panel"><div class="ex-panel-head"><span>Resultado</span></div><iframe src="assets/examples/documento.html" title="Resultado de Una página desde cero" sandbox referrerpolicy="no-referrer"></iframe></div>
             </div>
-            <div class="preview-panel">
-              <div class="panel-label">Resultado visual</div>
-              <iframe
-                class="preview-frame"
-                title="Resultado de Estructura básica"
-                sandbox="allow-scripts allow-popups"
-                loading="lazy"></iframe>
+          </article>
+          <article class="ex-entry" id="listas" aria-labelledby="listas-title">
+            <div class="ex-entry-head"><div><h2 id="listas-title">Ordenar una lista de pasos</h2><p>Utiliza una lista ordenada cuando la secuencia de las acciones importa.</p></div><a class="ex-reference" href="labels.html#tag-ul">Ver referencia <span aria-hidden="true">↗</span></a></div>
+            <div class="ex-panels">
+              <div class="ex-code-panel">
+                <div class="ex-panel-head"><span>HTML</span><button class="ex-copy" type="button" data-code="code-listas" aria-label="Copiar código de Ordenar una lista de pasos" hidden>Copiar</button></div>
+                <pre tabindex="0" aria-label="Código de Ordenar una lista de pasos"><code id="code-listas"><span class="code-tag">&lt;section</span> <span class="code-attribute">aria-labelledby</span>=<span class="code-string">&quot;pasos-titulo&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;h2</span> <span class="code-attribute">id</span>=<span class="code-string">&quot;pasos-titulo&quot;</span><span class="code-tag">&gt;</span>Tu primera página<span class="code-tag">&lt;/h2</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;ol</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;li</span><span class="code-tag">&gt;</span>Crea un archivo llamado index.html.<span class="code-tag">&lt;/li</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;li</span><span class="code-tag">&gt;</span>Añade un título y un párrafo.<span class="code-tag">&lt;/li</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;li</span><span class="code-tag">&gt;</span>Guarda el archivo.<span class="code-tag">&lt;/li</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;li</span><span class="code-tag">&gt;</span>Ábrelo en el navegador.<span class="code-tag">&lt;/li</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;/ol</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/section</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <div class="ex-result-panel"><div class="ex-panel-head"><span>Resultado</span></div><iframe src="assets/examples/listas.html" title="Resultado de Ordenar una lista de pasos" sandbox referrerpolicy="no-referrer"></iframe></div>
             </div>
-          </div>
-        </article>
-        <article class="example-block" data-example>
-          <div class="example-heading">
-            <h2>Tarjeta con CSS en línea</h2>
-            <p>
-              El atributo style cambia directamente el aspecto de un elemento
-              (CE2.2).
-            </p>
-          </div>
-          <div class="split">
-            <div class="code-panel">
-              <div class="panel-label">Código HTML</div>
-              <pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;es&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;/head&gt;
-&lt;body style=&quot;font-family:Arial;padding:16px&quot;&gt;
-  &lt;article style=&quot;border:2px solid teal;border-radius:12px;padding:16px;background:#ecffff&quot;&gt;
-    &lt;h2 style=&quot;color:teal&quot;&gt;Mi tarjeta&lt;/h2&gt;
-    &lt;p&gt;Un ejemplo visual con estilos directos.&lt;/p&gt;
-  &lt;/article&gt;
-&lt;/body&gt;&lt;/html&gt;</code></pre>
+          </article>
+          <article class="ex-entry" id="enlaces" aria-labelledby="enlaces-title">
+            <div class="ex-entry-head"><div><h2 id="enlaces-title">Navegar dentro de una página</h2><p>Relaciona el destino de un enlace con el id de una sección. Prueba los enlaces en el resultado.</p></div><a class="ex-reference" href="labels.html#tag-a">Ver referencia <span aria-hidden="true">↗</span></a></div>
+            <div class="ex-panels">
+              <div class="ex-code-panel">
+                <div class="ex-panel-head"><span>HTML</span><button class="ex-copy" type="button" data-code="code-enlaces" aria-label="Copiar código de Navegar dentro de una página" hidden>Copiar</button></div>
+                <pre tabindex="0" aria-label="Código de Navegar dentro de una página"><code id="code-enlaces"><span class="code-tag">&lt;nav</span> <span class="code-attribute">aria-label</span>=<span class="code-string">&quot;Secciones del ejemplo&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;a</span> <span class="code-attribute">href</span>=<span class="code-string">&quot;#aprender&quot;</span><span class="code-tag">&gt;</span>Aprender<span class="code-tag">&lt;/a</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;a</span> <span class="code-attribute">href</span>=<span class="code-string">&quot;#practicar&quot;</span><span class="code-tag">&gt;</span>Practicar<span class="code-tag">&lt;/a</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/nav</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;section</span> <span class="code-attribute">id</span>=<span class="code-string">&quot;aprender&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;h2</span><span class="code-tag">&gt;</span>Aprender<span class="code-tag">&lt;/h2</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;p</span><span class="code-tag">&gt;</span>Conoce los elementos de HTML.<span class="code-tag">&lt;/p</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/section</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;section</span> <span class="code-attribute">id</span>=<span class="code-string">&quot;practicar&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;h2</span><span class="code-tag">&gt;</span>Practicar<span class="code-tag">&lt;/h2</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;p</span><span class="code-tag">&gt;</span>Modifica un ejemplo y observa qué cambia.<span class="code-tag">&lt;/p</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/section</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <div class="ex-result-panel"><div class="ex-panel-head"><span>Resultado</span></div><iframe src="assets/examples/enlaces.html" title="Resultado de Navegar dentro de una página" sandbox referrerpolicy="no-referrer"></iframe></div>
             </div>
-            <div class="preview-panel">
-              <div class="panel-label">Resultado visual</div>
-              <iframe
-                class="preview-frame"
-                title="Resultado de Tarjeta con CSS en línea"
-                sandbox="allow-scripts allow-popups"
-                loading="lazy"></iframe>
+          </article>
+          <article class="ex-entry" id="tarjeta" aria-labelledby="tarjeta-title">
+            <div class="ex-entry-head"><div><h2 id="tarjeta-title">Una tarjeta con significado</h2><p>Agrupa un contenido que puede entenderse de forma independiente con article.</p></div><a class="ex-reference" href="labels.html#tag-article">Ver referencia <span aria-hidden="true">↗</span></a></div>
+            <div class="ex-panels">
+              <div class="ex-code-panel">
+                <div class="ex-panel-head"><span>HTML</span><button class="ex-copy" type="button" data-code="code-tarjeta" aria-label="Copiar código de Una tarjeta con significado" hidden>Copiar</button></div>
+                <pre tabindex="0" aria-label="Código de Una tarjeta con significado"><code id="code-tarjeta"><span class="code-tag">&lt;article</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;p</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;small</span><span class="code-tag">&gt;</span>GUÍA DE HTML<span class="code-tag">&lt;/small</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;/p</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;h2</span><span class="code-tag">&gt;</span>Aprende a tu ritmo<span class="code-tag">&lt;/h2</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;p</span><span class="code-tag">&gt;</span>Un elemento, un ejemplo y una idea nueva
+    para poner en práctica.<span class="code-tag">&lt;/p</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;footer</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;p</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;strong</span><span class="code-tag">&gt;</span>Nivel:<span class="code-tag">&lt;/strong</span><span class="code-tag">&gt;</span> primeros pasos<span class="code-tag">&lt;/p</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;/footer</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/article</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <div class="ex-result-panel"><div class="ex-panel-head"><span>Resultado</span></div><iframe src="assets/examples/tarjeta.html" title="Resultado de Una tarjeta con significado" sandbox referrerpolicy="no-referrer"></iframe></div>
             </div>
-          </div>
-        </article>
-        <article class="example-block" data-example>
-          <div class="example-heading">
-            <h2>Formulario sencillo</h2>
-            <p>Etiquetas asociadas, campos obligatorios y botón de envío.</p>
-          </div>
-          <div class="split">
-            <div class="code-panel">
-              <div class="panel-label">Código HTML</div>
-              <pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;es&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;/head&gt;
-&lt;body style=&quot;font-family:Arial;padding:14px&quot;&gt;
-  &lt;form onsubmit=&quot;event.preventDefault();alert(&#x27;Ejemplo: formulario validado&#x27;)&quot;&gt;
-    &lt;label for=&quot;email&quot;&gt;Tu correo:&lt;/label&gt;&lt;br&gt;
-    &lt;input id=&quot;email&quot; type=&quot;email&quot; required&gt;&lt;br&gt;&lt;br&gt;
-    &lt;button type=&quot;submit&quot;&gt;Comprobar&lt;/button&gt;
-  &lt;/form&gt;
-&lt;/body&gt;&lt;/html&gt;</code></pre>
+          </article>
+          <article class="ex-entry" id="formulario" aria-labelledby="formulario-title">
+            <div class="ex-entry-head"><div><h2 id="formulario-title">Un formulario con etiquetas claras</h2><p>Asocia cada label con su campo. Puedes escribir y usar Limpiar para restablecer el formulario.</p></div><a class="ex-reference" href="labels.html#tag-label">Ver referencia <span aria-hidden="true">↗</span></a></div>
+            <div class="ex-panels">
+              <div class="ex-code-panel">
+                <div class="ex-panel-head"><span>HTML</span><button class="ex-copy" type="button" data-code="code-formulario" aria-label="Copiar código de Un formulario con etiquetas claras" hidden>Copiar</button></div>
+                <pre tabindex="0" aria-label="Código de Un formulario con etiquetas claras"><code id="code-formulario"><span class="code-tag">&lt;form</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;fieldset</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;legend</span><span class="code-tag">&gt;</span>Datos de contacto<span class="code-tag">&lt;/legend</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;label</span> <span class="code-attribute">for</span>=<span class="code-string">&quot;nombre&quot;</span><span class="code-tag">&gt;</span>Nombre<span class="code-tag">&lt;/label</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;input</span> <span class="code-attribute">id</span>=<span class="code-string">&quot;nombre&quot;</span> <span class="code-attribute">name</span>=<span class="code-string">&quot;nombre&quot;</span> <span class="code-attribute">type</span>=<span class="code-string">&quot;text&quot;</span>
+      <span class="code-attribute">autocomplete</span>=<span class="code-string">&quot;name&quot;</span><span class="code-tag">&gt;</span>
+
+    <span class="code-tag">&lt;label</span> <span class="code-attribute">for</span>=<span class="code-string">&quot;correo&quot;</span><span class="code-tag">&gt;</span>Correo electrónico<span class="code-tag">&lt;/label</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;input</span> <span class="code-attribute">id</span>=<span class="code-string">&quot;correo&quot;</span> <span class="code-attribute">name</span>=<span class="code-string">&quot;correo&quot;</span> <span class="code-attribute">type</span>=<span class="code-string">&quot;email&quot;</span>
+      <span class="code-attribute">autocomplete</span>=<span class="code-string">&quot;email&quot;</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;/fieldset</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;button</span> <span class="code-attribute">type</span>=<span class="code-string">&quot;reset&quot;</span><span class="code-tag">&gt;</span>Limpiar<span class="code-tag">&lt;/button</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/form</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <div class="ex-result-panel"><div class="ex-panel-head"><span>Resultado</span></div><iframe src="assets/examples/formulario.html" title="Resultado de Un formulario con etiquetas claras" sandbox referrerpolicy="no-referrer"></iframe></div>
             </div>
-            <div class="preview-panel">
-              <div class="panel-label">Resultado visual</div>
-              <iframe
-                class="preview-frame"
-                title="Resultado de Formulario sencillo"
-                sandbox="allow-scripts allow-popups"
-                loading="lazy"></iframe>
+          </article>
+          <article class="ex-entry" id="tabla" aria-labelledby="tabla-title">
+            <div class="ex-entry-head"><div><h2 id="tabla-title">Comparar información en una tabla</h2><p>Da un título a los datos e identifica los encabezados de cada columna con scope.</p></div><a class="ex-reference" href="labels.html#tag-table">Ver referencia <span aria-hidden="true">↗</span></a></div>
+            <div class="ex-panels">
+              <div class="ex-code-panel">
+                <div class="ex-panel-head"><span>HTML</span><button class="ex-copy" type="button" data-code="code-tabla" aria-label="Copiar código de Comparar información en una tabla" hidden>Copiar</button></div>
+                <pre tabindex="0" aria-label="Código de Comparar información en una tabla"><code id="code-tabla"><span class="code-tag">&lt;table</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;caption</span><span class="code-tag">&gt;</span>Elementos para empezar<span class="code-tag">&lt;/caption</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;thead</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;tr</span><span class="code-tag">&gt;</span>
+      <span class="code-tag">&lt;th</span> <span class="code-attribute">scope</span>=<span class="code-string">&quot;col&quot;</span><span class="code-tag">&gt;</span>Elemento<span class="code-tag">&lt;/th</span><span class="code-tag">&gt;</span>
+      <span class="code-tag">&lt;th</span> <span class="code-attribute">scope</span>=<span class="code-string">&quot;col&quot;</span><span class="code-tag">&gt;</span>Para qué sirve<span class="code-tag">&lt;/th</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;/tr</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;/thead</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;tbody</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;tr</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;td</span><span class="code-tag">&gt;</span>h1<span class="code-tag">&lt;/td</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;td</span><span class="code-tag">&gt;</span>Título principal<span class="code-tag">&lt;/td</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;/tr</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;tr</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;td</span><span class="code-tag">&gt;</span>p<span class="code-tag">&lt;/td</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;td</span><span class="code-tag">&gt;</span>Párrafo de texto<span class="code-tag">&lt;/td</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;/tr</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;tr</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;td</span><span class="code-tag">&gt;</span>a<span class="code-tag">&lt;/td</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;td</span><span class="code-tag">&gt;</span>Enlace a un destino<span class="code-tag">&lt;/td</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;/tr</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;/tbody</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/table</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <div class="ex-result-panel"><div class="ex-panel-head"><span>Resultado</span></div><iframe src="assets/examples/tabla.html" title="Resultado de Comparar información en una tabla" sandbox referrerpolicy="no-referrer"></iframe></div>
             </div>
-          </div>
-        </article>
-        <article class="example-block" data-example>
-          <div class="example-heading">
-            <h2>Listas y contenido semántico</h2>
-            <p>Una lista ordenada dentro de una sección con título.</p>
-          </div>
-          <div class="split">
-            <div class="code-panel">
-              <div class="panel-label">Código HTML</div>
-              <pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;es&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;/head&gt;
-&lt;body style=&quot;font-family:Arial;padding:14px&quot;&gt;
-  &lt;section&gt;&lt;h2&gt;Cómo empezar&lt;/h2&gt;
-    &lt;ol&gt;&lt;li&gt;Aprende las etiquetas.&lt;/li&gt;&lt;li&gt;Escribe HTML.&lt;/li&gt;&lt;li&gt;Abre tu página.&lt;/li&gt;&lt;/ol&gt;
-  &lt;/section&gt;
-&lt;/body&gt;&lt;/html&gt;</code></pre>
+          </article>
+          <article class="ex-entry" id="desplegable" aria-labelledby="desplegable-title">
+            <div class="ex-entry-head"><div><h2 id="desplegable-title">Mostrar información bajo demanda</h2><p>Details y summary crean un desplegable nativo. Ábrelo y ciérralo en el resultado.</p></div><a class="ex-reference" href="labels.html#tag-details">Ver referencia <span aria-hidden="true">↗</span></a></div>
+            <div class="ex-panels">
+              <div class="ex-code-panel">
+                <div class="ex-panel-head"><span>HTML</span><button class="ex-copy" type="button" data-code="code-desplegable" aria-label="Copiar código de Mostrar información bajo demanda" hidden>Copiar</button></div>
+                <pre tabindex="0" aria-label="Código de Mostrar información bajo demanda"><code id="code-desplegable"><span class="code-tag">&lt;details</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;summary</span><span class="code-tag">&gt;</span>¿Qué significa HTML?<span class="code-tag">&lt;/summary</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;p</span><span class="code-tag">&gt;</span>HTML es un lenguaje de marcado que define
+    la estructura y el significado del contenido
+    de una página web.<span class="code-tag">&lt;/p</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/details</span><span class="code-tag">&gt;</span></code></pre>
+              </div>
+              <div class="ex-result-panel"><div class="ex-panel-head"><span>Resultado</span></div><iframe src="assets/examples/desplegable.html" title="Resultado de Mostrar información bajo demanda" sandbox referrerpolicy="no-referrer"></iframe></div>
             </div>
-            <div class="preview-panel">
-              <div class="panel-label">Resultado visual</div>
-              <iframe
-                class="preview-frame"
-                title="Resultado de Listas y contenido semántico"
-                sandbox="allow-scripts allow-popups"
-                loading="lazy"></iframe>
-            </div>
-          </div>
-        </article>
-        <div class="strip">
-          <div>
-            <h2>¿Y qué pasa con el audio?</h2>
-            <p>
-              HTML permite añadir reproductores accesibles con la etiqueta
-              &lt;audio&gt;. Escucha este ejemplo original incluido en el
-              proyecto.
-            </p>
-            <audio controls preload="none" src="assets/audio/ejemplo.wav">
-              Tu navegador no admite audio.
-            </audio>
-          </div>
-          <a class="btn" href="labels.html">Consultar &lt;audio&gt; →</a>
+          </article>
+          <div class="ex-closing"><p>¿Quieres entender mejor algún elemento?</p><a href="labels.html">Consulta la referencia HTML <span aria-hidden="true">↗</span></a></div>
         </div>
       </div>
     </main>
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <span
-          >© 2026 HTMLab · Proyecto didáctico de Diseño de Interfaces Web</span
-        ><span
-          >Hecho con HTML, CSS y JavaScript ·
-          <a href="contact.html">Contacto</a></span
-        >
+    <footer>
+      <div class="container footer-content">
+        <small>© 2026 VCode</small>
+        <a href="contact.html">Hecho por Víctor Martín Pérez</a>
       </div>
     </footer>
+    <p class="ex-status" id="example-copy-status" role="status" aria-live="polite"></p>
   </body>
 </html>

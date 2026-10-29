@@ -1,1 +1,115 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Resuelve las dudas habituales de HTML."><title>Preguntas frecuentes | HTMLab</title><link rel="stylesheet" href="assets/css/styles.css"><script src="assets/js/main.js" defer></script></head><body><a class="skip" href="#contenido">Saltar al contenido</a><header class="site-header"><div class="container nav-wrap"><a class="brand" href="index.html" aria-label="HTMLab, ir al inicio"><span class="logo" aria-hidden="true">&lt;/&gt;</span><span>HTM<em>Lab</em></span></a><button class="menu-toggle" type="button" aria-label="Abrir o cerrar menú" aria-controls="nav-links" aria-expanded="false">☰ Menú</button><nav id="nav-links" class="top-links" aria-label="Navegación principal"><a href="index.html" >Inicio</a><a href="examples.html" >Ejemplos</a><a href="labels.html" >Etiquetas</a><a href="faq.html" aria-current="page">FAQ</a><a href="contact.html" >Contacto</a></nav></div></header><main id="contenido"><div class="container"><div class="page-head"><div class="eyebrow">Preguntas frecuentes</div><h1>Resuelve tus dudas.</h1><p>Respuestas breves para comprender mejor HTML y empezar a escribir código con confianza.</p></div><div class="faq-list"><details><summary>¿Qué es HTML?</summary><p>HTML (HyperText Markup Language) es el lenguaje de marcado que organiza el contenido de una página web mediante elementos o etiquetas.</p></details><details><summary>¿HTML es un lenguaje de programación?</summary><p>No. HTML es un lenguaje de marcado: describe la estructura y el significado del contenido. CSS aporta la presentación y JavaScript la interactividad.</p></details><details><summary>¿Qué necesito para empezar?</summary><p>Un editor de texto, un navegador y un archivo con extensión .html. Puedes abrir ese archivo directamente en tu navegador.</p></details><details><summary>¿Cuál es la diferencia entre HTML y CSS?</summary><p>HTML define la estructura y el contenido (títulos, párrafos, enlaces); CSS define colores, tipografía, espacios y distribución.</p></details><details><summary>¿Qué son los atributos HTML?</summary><p>Son valores adicionales dentro de la etiqueta de apertura. Por ejemplo, href indica el destino de un enlace, y alt describe una imagen.</p></details><details><summary>¿Para qué sirven las etiquetas semánticas?</summary><p>Elementos como header, nav, main o article describen el papel del contenido. Facilitan el mantenimiento, la accesibilidad y la comprensión del documento.</p></details><details><summary>¿Qué diferencia hay entre class e id?</summary><p>class puede compartirse entre varios elementos para aplicar estilos o agruparlos; id identifica un elemento de forma única dentro de la página.</p></details><details><summary>¿Por qué mi formulario no envía correos?</summary><p>HTML puede construir y validar un formulario, pero para enviar mensajes realmente se necesita un servidor o servicio externo. El formulario de esta web es una demostración local.</p></details></div><div class="strip"><div><h2>¿Te queda alguna pregunta?</h2><p>Cuéntanos qué concepto te gustaría ver explicado.</p></div><a class="btn btn-primary" href="contact.html">Ir a contacto →</a></div></div></main><footer class="site-footer"><div class="container footer-inner"><span>© 2026 HTMLab · Proyecto didáctico de Diseño de Interfaces Web</span><span>Hecho con HTML, CSS y JavaScript · <a href="contact.html">Contacto</a></span></div></footer></body></html>
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Víctor Martín Pérez" />
+    <meta name="description" content="Resuelve tus dudas sobre HTML y aprende a utilizar los contenidos de VCode con estas preguntas frecuentes." />
+    <title>Preguntas frecuentes | VCode</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/faq.css" />
+    <link rel="stylesheet" href="assets/css/header.css" />
+    <script src="assets/js/main.js" defer></script>
+  </head>
+  <body class="faq-page">
+    <a class="skip-link" href="#main-content">Saltar al contenido</a>
+    <header>
+      <div class="container navigation">
+        <a class="brand" href="index.html" aria-label="VCode, ir al inicio">VCode</a>
+        <button class="menu-toggle" type="button" aria-controls="navigation-links" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg> Menú</button>
+        <nav id="navigation-links" class="navigation-links" aria-label="Navegación principal">
+          <a href="index.html">Inicio</a>
+          <a href="examples.html">Ejemplos</a>
+          <a href="labels.html">Etiquetas</a>
+          <a href="faq.html" aria-current="page">FAQ</a>
+          <a href="contact.html">Contacto</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main-content" class="container faq-main">
+      <div class="faq-intro"><h1>Preguntas frecuentes <span>(FAQ)</span></h1></div>
+      <div class="faq-layout">
+        <aside class="faq-sidebar" aria-label="Categorías de preguntas">
+          <nav aria-label="En esta página"><h2>En esta página</h2>
+              <a href="#primeros-pasos">Primeros pasos<span aria-hidden="true">↗</span></a>
+              <a href="#entender-html">Entender HTML<span aria-hidden="true">↗</span></a>
+              <a href="#poner-en-practica">Ponerlo en práctica<span aria-hidden="true">↗</span></a>
+          </nav>
+          <div class="faq-sidebar-note"><p>¿Buscas una etiqueta concreta?</p><a href="labels.html">Ir a la referencia HTML <span aria-hidden="true">↗</span></a></div>
+        </aside>
+        <div class="faq-content">
+          <section id="primeros-pasos" class="faq-section" aria-labelledby="primeros-pasos-title">
+            <div class="faq-section-head"><h2 id="primeros-pasos-title">Primeros pasos</h2><p>Para empezar con una base clara.</p></div>
+            <div class="faq-items">
+              <details class="faq-item" open>
+                <summary><h3>¿Qué puedo encontrar en VCode?</h3><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></summary>
+                <div class="faq-answer"><p>VCode reúne explicaciones de HTML y ejemplos de código para consultar mientras aprendes. En la <a href="labels.html">referencia HTML</a> encontrarás para qué sirve cada elemento, sus atributos principales y formas de utilizarlo.</p></div>
+              </details>
+              <details class="faq-item">
+                <summary><h3>¿Por dónde empiezo si nunca he hecho una página web?</h3><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></summary>
+                <div class="faq-answer"><p>Empieza por la estructura de un documento: <code>html</code>, <code>head</code> y <code>body</code>. Después añade un encabezado, un párrafo y un enlace. Haz cambios pequeños y observa el resultado en el navegador.</p><p><a href="labels.html#tag-html">Ver la raíz del documento →</a></p></div>
+              </details>
+              <details class="faq-item">
+                <summary><h3>¿Necesito instalar muchas herramientas?</h3><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></summary>
+                <div class="faq-answer"><p>Para un primer documento HTML basta con un editor de texto y un navegador. Guarda el archivo con la extensión <code>.html</code> y ábrelo en el navegador. Un editor de código puede ayudarte con el formato y el cierre de etiquetas.</p></div>
+              </details>
+              <details class="faq-item">
+                <summary><h3>¿Tengo que memorizar todas las etiquetas?</h3><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></summary>
+                <div class="faq-answer"><p>No hace falta aprenderlas todas de golpe. Practica con las más habituales y consulta las demás cuando las necesites. Entender qué representa cada elemento es más útil que recordar una lista de nombres.</p></div>
+              </details>
+            </div>
+          </section>
+          <section id="entender-html" class="faq-section" aria-labelledby="entender-html-title">
+            <div class="faq-section-head"><h2 id="entender-html-title">Entender HTML</h2><p>Conceptos que suelen generar dudas.</p></div>
+            <div class="faq-items">
+              <details class="faq-item">
+                <summary><h3>¿Qué diferencia hay entre HTML, CSS y JavaScript?</h3><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></summary>
+                <div class="faq-answer"><p><strong>HTML</strong> organiza y da significado al contenido. <strong>CSS</strong> define su presentación: colores, tipografía y distribución. <strong>JavaScript</strong> permite añadir comportamiento, como filtrar una lista o responder a una acción.</p></div>
+              </details>
+              <details class="faq-item">
+                <summary><h3>¿Qué diferencia hay entre una etiqueta y un atributo?</h3><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></summary>
+                <div class="faq-answer"><p>Las etiquetas delimitan elementos, como <code>&lt;p&gt;Hola&lt;/p&gt;</code>. Los atributos aportan información adicional en la etiqueta de apertura: en <code>&lt;html lang="es"&gt;</code>, <code>lang</code> es el atributo y <code>es</code> su valor.</p></div>
+              </details>
+              <details class="faq-item">
+                <summary><h3>¿Por qué importa usar HTML semántico?</h3><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></summary>
+                <div class="faq-answer"><p>Porque el elemento cuenta qué función tiene el contenido. <code>nav</code> identifica una zona de navegación y <code>main</code> el contenido principal. Elegir el elemento adecuado ayuda a que la estructura resulte comprensible también con tecnologías de asistencia.</p><p><a href="labels.html#tag-main">Consultar el elemento main →</a></p></div>
+              </details>
+              <details class="faq-item">
+                <summary><h3>¿Cuándo uso un enlace y cuándo un botón?</h3><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></summary>
+                <div class="faq-answer"><p>Usa <code>a</code> para navegar a otro destino. Usa <code>button</code> para ejecutar una acción, como abrir un menú. Que ambos puedan tener un aspecto parecido no cambia su función.</p><p><a href="labels.html#tag-a">Ver enlaces</a> <span aria-hidden="true">·</span> <a href="labels.html#tag-button">Ver botones</a></p></div>
+              </details>
+            </div>
+          </section>
+          <section id="poner-en-practica" class="faq-section" aria-labelledby="poner-en-practica-title">
+            <div class="faq-section-head"><h2 id="poner-en-practica-title">Ponerlo en práctica</h2><p>Del ejemplo al documento que estás creando.</p></div>
+            <div class="faq-items">
+              <details class="faq-item">
+                <summary><h3>¿Puedo copiar los ejemplos y modificarlos?</h3><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></summary>
+                <div class="faq-answer"><p>Sí. Puedes utilizar el botón Copiar de la referencia, pegar el fragmento en tu documento y adaptarlo. Prueba a cambiar el texto o un atributo para entender qué efecto tiene cada parte.</p></div>
+              </details>
+              <details class="faq-item">
+                <summary><h3>¿Los ejemplos son páginas completas?</h3><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></summary>
+                <div class="faq-answer"><p>No siempre. Muchos son fragmentos que se centran en un elemento. Para probarlos, colócalos en el lugar adecuado de un documento HTML: el contenido visible normalmente va dentro de <code>body</code>; los metadatos, en <code>head</code>.</p></div>
+              </details>
+              <details class="faq-item">
+                <summary><h3>¿Qué reviso si un ejemplo no funciona como esperaba?</h3><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></summary>
+                <div class="faq-answer"><p>Comprueba que hayas guardado el archivo y actualizado el navegador. Revisa las etiquetas de apertura y cierre, las comillas de los atributos y las rutas de imágenes o archivos. Un fragmento puede necesitar otros elementos alrededor para tener sentido.</p></div>
+              </details>
+              <details class="faq-item">
+                <summary><h3>¿Dónde puedo profundizar o proponer una mejora?</h3><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></summary>
+                <div class="faq-answer"><p>Cada ficha de la referencia incluye un enlace a MDN para ampliar información. Si quieres compartir una duda sobre VCode o una idea para el proyecto, tienes el apartado de <a href="contact.html">Contacto</a>.</p></div>
+              </details>
+            </div>
+          </section>
+          <div class="faq-closing"><div><h2>¿Te queda alguna duda?</h2><p>Comparte lo que te gustaría aclarar o mejorar.</p></div><a class="btn" href="contact.html">Ir a Contacto <span aria-hidden="true">↗</span></a></div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="container footer-content">
+        <small>© 2026 VCode</small>
+        <a href="contact.html">Hecho por Víctor Martín Pérez</a>
+      </div>
+    </footer>
+  </body>
+</html>

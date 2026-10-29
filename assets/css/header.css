@@ -1,0 +1,19 @@
+.navigation-links > a[aria-current="page"] {
+  background: transparent;
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-light);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 8px;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+body > header {
+  flex: none;
+  --border: #414141;
+  --surface-hover: #343434;
+  --text: #f0f1f2;
+  --muted: #dee1e3;
+}
