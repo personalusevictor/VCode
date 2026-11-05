@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Víctor Martín Pérez" />
-    <meta name="description" content="Referencia de HTML en español: 27 fichas con atributos, variantes, ejemplos y accesibilidad." />
-    <title>Etiquetas HTML | VCode</title>
+    <meta name="description" content="Aprende HTML desde cero: documentos, rutas, semántica y referencia de elementos con ejemplos accesibles." />
+    <title>Aprender HTML | VCode</title>
     <link rel="stylesheet" href="assets/css/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,8 +25,7 @@
         </button>
         <nav id="navigation-links" class="navigation-links" aria-label="Navegación principal">
           <a href="index.html">Inicio</a>
-          <a href="examples.html">Ejemplos</a>
-          <a href="labels.html" aria-current="page">Etiquetas</a>
+          <a href="html.html" aria-current="page">HTML</a> <a href="css.html">CSS</a>
           <a href="faq.html">FAQ</a>
           <a href="contact.html">Contacto</a>
         </nav>
@@ -40,16 +39,16 @@
         <span>Referencia HTML</span>
       </div>
       <div class="ref-layout">
-        <aside class="ref-sidebar" aria-label="Índice de etiquetas">
+        <aside class="ref-sidebar" aria-label="Índice de HTML">
           <details class="ref-sidebar-panel" open>
             <summary class="ref-sidebar-toggle">
               Referencia HTML
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
             </summary>
             <div class="ref-sidebar-content">
-              <nav aria-label="Etiquetas por categoría">
+              <nav aria-label="Temas de HTML">
                 <a class="ref-overview" href="#main-content">Introducción</a>
-                <details class="ref-nav-group">
+                <details class="ref-nav-group" open><summary><h3>Fundamentos</h3></summary><ul><li><a href="#que-es-html">Qué es HTML</a></li><li><a href="#primer-documento">Tu primer documento</a></li><li><a href="#atributos">Atributos y anidación</a></li><li><a href="#rutas">Rutas y enlaces</a></li><li><a href="#semantica">Semántica y accesibilidad</a></li><li><a href="#revisar">Revisar y depurar</a></li></ul></details><details class="ref-nav-group">
                   <summary>
                     <h3>Documento</h3>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
@@ -274,28 +273,68 @@
 
         <main id="main-content">
           <div class="ref-intro">
-            <h1>Referencia de <span>HTML</span></h1>
-            <p class="lead">Elementos, atributos y ejemplos para escribir HTML con criterio.</p>
+            <h1>Aprende <span>HTML</span></h1>
+            <p class="lead">Empieza por cómo funciona una página y sigue con los elementos que dan sentido al contenido.</p>
           </div>
           <div class="ref-search" hidden>
             <label for="tag-search">Buscar en la referencia</label>
             <div class="ref-search-row">
               <svg class="ref-search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
-              <input id="tag-search" type="search" placeholder="Etiqueta, atributo o utilidad…" aria-describedby="search-status search-shortcut" />
+              <input id="tag-search" type="search" placeholder="Concepto, elemento o atributo…" aria-describedby="search-status search-shortcut" />
               <kbd id="search-shortcut" aria-label="Pulsa barra para buscar">/</kbd>
               <button class="ref-search-clear" id="clear-search" type="button">Limpiar</button>
             </div>
             <div class="ref-search-footer">
-              <p id="search-status" role="status" aria-live="polite">27 elementos</p>
+              <p id="search-status" role="status" aria-live="polite">33 elementos</p>
             </div>
           </div>
 
           <div id="no-results" class="ref-empty" hidden>
             <h2>Sin resultados</h2>
-            <p id="empty-message">Prueba con otra etiqueta o atributo.</p>
+            <p id="empty-message">Prueba con otro concepto, propiedad o elemento.</p>
             <button type="button" id="reset-filters" class="ref-reset">Ver toda la referencia</button>
           </div>
-          <details class="ref-category" aria-labelledby="cat-0">
+          <details class="ref-category" open><summary class="ref-category-heading"><h2>Fundamentos de HTML</h2></summary><article class="ref-entry" id="que-es-html" aria-labelledby="title-que-es-html">
+<div class="ref-entry-head"><div><h3 id="title-que-es-html"><a href="#que-es-html">Qué es HTML</a></h3><p class="ref-subtitle">Aprender HTML · Conceptos y práctica</p></div></div>
+<p class="ref-description">HTML es un lenguaje de marcado que describe la estructura y el significado del contenido. El navegador lee el documento y construye un árbol de elementos (DOM). CSS controla la presentación y JavaScript añade comportamiento. Un elemento suele tener apertura, contenido y cierre; img e input no llevan cierre.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">HTML</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Qué es HTML">Copiar</button></div><pre tabindex="0" aria-label="Código de Qué es HTML"><code>&lt;h1&gt;Mi cuaderno&lt;/h1&gt;
+&lt;p&gt;Hoy empiezo mi primera web.&lt;/p&gt;</code></pre></div><h4>Pruébalo tú</h4><p>Crea index.html, añade este fragmento dentro de body y ábrelo en el navegador. Cambia el encabezado, guarda y recarga.</p></article><article class="ref-entry" id="primer-documento" aria-labelledby="title-primer-documento">
+<div class="ref-entry-head"><div><h3 id="title-primer-documento"><a href="#primer-documento">Tu primer documento</a></h3><p class="ref-subtitle">Aprender HTML · Conceptos y práctica</p></div></div>
+<p class="ref-description">Guarda tu archivo con extensión .html y codificación UTF-8. El doctype activa el modo estándar, lang declara el idioma, head contiene metadatos y body el contenido visible. El viewport permite adaptar el diseño al dispositivo.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">HTML</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Tu primer documento">Copiar</button></div><pre tabindex="0" aria-label="Código de Tu primer documento"><code>&lt;!doctype html&gt;
+&lt;html lang=&quot;es&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+    &lt;title&gt;Mi cuaderno&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;estilos.css&quot;&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Mi cuaderno&lt;/h1&gt;
+    &lt;p&gt;Todo empieza por aqu&#237;.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre></div><h4>Pruébalo tú</h4><p>Guarda este documento y ábrelo. Cambia title y compara la pestaña con el encabezado visible. Crea estilos.css en la misma carpeta para empezar con CSS.</p></article><article class="ref-entry" id="atributos" aria-labelledby="title-atributos">
+<div class="ref-entry-head"><div><h3 id="title-atributos"><a href="#atributos">Atributos y anidación</a></h3><p class="ref-subtitle">Aprender HTML · Conceptos y práctica</p></div></div>
+<p class="ref-description">Los atributos añaden información dentro de la apertura. class puede compartirse; id debe ser único. Cierra los elementos en orden inverso al de apertura. No anides controles interactivos como un botón dentro de un enlace.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">HTML</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Atributos y anidación">Copiar</button></div><pre tabindex="0" aria-label="Código de Atributos y anidación"><code>&lt;p class=&quot;nota&quot; id=&quot;bienvenida&quot;&gt;
+  Lee la &lt;a href=&quot;guia.html&quot;&gt;gu&#237;a de inicio&lt;/a&gt;.
+&lt;/p&gt;</code></pre></div><h4>Pruébalo tú</h4><p>Añade otro párrafo con la misma clase y distinto id. Indenta el contenido para distinguir qué elementos están dentro de otros.</p></article><article class="ref-entry" id="rutas" aria-labelledby="title-rutas">
+<div class="ref-entry-head"><div><h3 id="title-rutas"><a href="#rutas">Rutas y enlaces</a></h3><p class="ref-subtitle">Aprender HTML · Conceptos y práctica</p></div></div>
+<p class="ref-description">Una ruta relativa parte de la carpeta del documento: imagenes/foto.jpg entra en una carpeta y ../ vuelve a la superior. Una URL absoluta incluye protocolo y dominio. Un fragmento como #contacto apunta a un id. Respeta mayúsculas y extensiones.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">HTML</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Rutas y enlaces">Copiar</button></div><pre tabindex="0" aria-label="Código de Rutas y enlaces"><code>&lt;a href=&quot;css.html&quot;&gt;Aprender CSS&lt;/a&gt;
+&lt;a href=&quot;#contacto&quot;&gt;Ir al contacto&lt;/a&gt;
+&lt;img src=&quot;imagenes/montana.jpg&quot; alt=&quot;Sendero entre pinos&quot;&gt;
+&lt;section id=&quot;contacto&quot;&gt;&lt;h2&gt;Contacto&lt;/h2&gt;&lt;/section&gt;</code></pre></div><h4>Pruébalo tú</h4><p>Dibuja tus carpetas y escribe la ruta a una imagen. Si no aparece, revisa nombre, extensión y ubicación.</p></article><article class="ref-entry" id="semantica" aria-labelledby="title-semantica">
+<div class="ref-entry-head"><div><h3 id="title-semantica"><a href="#semantica">Semántica y accesibilidad</a></h3><p class="ref-subtitle">Aprender HTML · Conceptos y práctica</p></div></div>
+<p class="ref-description">Elige elementos por significado. Usa encabezados que reflejen la jerarquía, main para el contenido principal y nav para la navegación. Un enlace lleva a un destino; un botón ejecuta una acción. Asocia label con los controles e incluye alternativas textuales útiles; las imágenes decorativas llevan alt vacío.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">HTML</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Semántica y accesibilidad">Copiar</button></div><pre tabindex="0" aria-label="Código de Semántica y accesibilidad"><code>&lt;a href=&quot;#contenido&quot;&gt;Saltar al contenido&lt;/a&gt;
+&lt;main id=&quot;contenido&quot;&gt;
+  &lt;h1&gt;Recetas de casa&lt;/h1&gt;
+  &lt;section&gt;
+    &lt;h2&gt;Ingredientes&lt;/h2&gt;
+    &lt;ul&gt;&lt;li&gt;Tomates maduros&lt;/li&gt;&lt;/ul&gt;
+  &lt;/section&gt;
+&lt;/main&gt;</code></pre></div><h4>Pruébalo tú</h4><p>Recorre la página con Tab y Shift + Tab. Activa los enlaces con Enter y comprueba que se ve el foco. Revisa los encabezados sin depender de su tamaño.</p></article><article class="ref-entry" id="revisar" aria-labelledby="title-revisar">
+<div class="ref-entry-head"><div><h3 id="title-revisar"><a href="#revisar">Revisar y depurar</a></h3><p class="ref-subtitle">Aprender HTML · Conceptos y práctica</p></div></div>
+<p class="ref-description">Guarda y recarga antes de buscar un fallo. Inspecciona el DOM con las herramientas de desarrollo: el navegador puede reparar marcado incorrecto. Un validador HTML ayuda a encontrar cierres incorrectos, atributos inválidos e identificadores repetidos.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">HTML</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Revisar y depurar">Copiar</button></div><pre tabindex="0" aria-label="Código de Revisar y depurar"><code>&lt;!-- Incorrecto: los elementos se cruzan --&gt;
+&lt;p&gt;&lt;strong&gt;Una nota&lt;/p&gt;&lt;/strong&gt;
+&lt;!-- Correcto --&gt;
+&lt;p&gt;&lt;strong&gt;Una nota&lt;/strong&gt;&lt;/p&gt;</code></pre></div><h4>Pruébalo tú</h4><p>Inspecciona el párrafo y compara el DOM con tu archivo. Revisa las rutas y prueba la página con zoom al 200 %.</p></article></details><details class="ref-category" aria-labelledby="cat-0">
             <summary class="ref-category-heading">
               <h2 id="cat-0">Documento</h2>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
@@ -597,7 +636,7 @@
                 </div>
                 <pre tabindex="0" aria-label="Ejemplo de header"><code><span class="code-tag">&lt;header</span><span class="code-tag">&gt;</span>
   <span class="code-tag">&lt;a</span> <span class="code-attribute">href</span>=<span class="code-string">&quot;index.html&quot;</span><span class="code-tag">&gt;</span>VCode<span class="code-tag">&lt;/a</span><span class="code-tag">&gt;</span>
-  <span class="code-tag">&lt;nav</span> <span class="code-attribute">aria-label</span>=<span class="code-string">&quot;Principal&quot;</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;a</span> <span class="code-attribute">href</span>=<span class="code-string">&quot;labels.html&quot;</span><span class="code-tag">&gt;</span>Etiquetas<span class="code-tag">&lt;/a</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;/nav</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;nav</span> <span class="code-attribute">aria-label</span>=<span class="code-string">&quot;Principal&quot;</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;a</span> <span class="code-attribute">href</span>=<span class="code-string">&quot;html.html&quot;</span><span class="code-tag">&gt;</span>Etiquetas<span class="code-tag">&lt;/a</span><span class="code-tag">&gt;</span><span class="code-tag">&lt;/nav</span><span class="code-tag">&gt;</span>
 <span class="code-tag">&lt;/header</span><span class="code-tag">&gt;</span></code></pre>
               </div>
               <h4>Atributos principales</h4>

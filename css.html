@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Víctor Martín Pérez" />
+    <meta name="description" content="Aprende CSS: selectores, cascada, modelo de caja, Flexbox, Grid y diseño accesible.">
+    <title>Aprender CSS | VCode</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="assets/css/labels.css" />
+    <link rel="stylesheet" href="assets/css/header.css" />
+    <script src="assets/js/labels.js" defer>
+    </script>
+  </head>
+
+  <body class="labels-page">
+    <a class="skip-link" href="#main-content">Saltar al contenido</a>
+    <header>
+      <div class="container navigation">
+        <a class="brand" href="index.html" aria-label="VCode, ir al inicio">VCode</a>
+        <button class="menu-toggle" type="button" aria-controls="navigation-links" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16" /><path d="M4 12h16" /><path d="M4 18h16" /></svg>Menú
+        </button>
+        <nav id="navigation-links" class="navigation-links" aria-label="Navegación principal">
+          <a href="index.html">Inicio</a>
+          <a href="html.html">HTML</a> <a href="css.html" aria-current="page">CSS</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contacto</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="ref-breadcrumb">
+        <a href="index.html">Inicio</a>
+        <span aria-hidden="true">/</span>
+        <span>Aprender CSS</span>
+      </div>
+      <div class="ref-layout">
+        <aside class="ref-sidebar" aria-label="Índice de CSS">
+          <details class="ref-sidebar-panel" open>
+            <summary class="ref-sidebar-toggle">
+              Aprender CSS
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ref-chevron"><path d="m9 18 6-6-6-6" /></svg>
+            </summary>
+            <div class="ref-sidebar-content">
+              <nav aria-label="Temas de CSS">
+                <a class="ref-overview" href="#main-content">Introducción</a>
+                <details class="ref-nav-group" open><summary><h3>Fundamentos</h3></summary><ul><li><a href="#primer-css">Conectar HTML y CSS</a></li><li><a href="#selectores">Selectores</a></li><li><a href="#cascada">Cascada y herencia</a></li><li><a href="#modelo-caja">Modelo de caja</a></li><li><a href="#unidades">Unidades y medidas</a></li><li><a href="#tipografia">Tipografía y color</a></li></ul></details><details class="ref-nav-group" open><summary><h3>Distribución y adaptación</h3></summary><ul><li><a href="#flexbox">Flexbox</a></li><li><a href="#grid">CSS Grid</a></li><li><a href="#responsive">Diseño adaptable</a></li></ul></details><details class="ref-nav-group" open><summary><h3>Accesibilidad y práctica</h3></summary><ul><li><a href="#estados-foco">Interacción accesible</a></li><li><a href="#variables">Variables CSS</a></li><li><a href="#practica">Tu primera tarjeta</a></li></ul></details></nav>
+            </div>
+          </details>
+        </aside>
+
+        <main id="main-content">
+          <div class="ref-intro">
+            <h1>Aprende <span>CSS</span></h1>
+            <p class="lead">Da forma a tus páginas con estilos, distribución y diseño adaptable.</p>
+          </div>
+          <div class="ref-search" hidden>
+            <label for="tag-search">Buscar en la referencia</label>
+            <div class="ref-search-row">
+              <svg class="ref-search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
+              <input id="tag-search" type="search" placeholder="Selector, propiedad o concepto…" aria-describedby="search-status search-shortcut" />
+              <kbd id="search-shortcut" aria-label="Pulsa barra para buscar">/</kbd>
+              <button class="ref-search-clear" id="clear-search" type="button">Limpiar</button>
+            </div>
+            <div class="ref-search-footer">
+              <p id="search-status" role="status" aria-live="polite">12 elementos</p>
+            </div>
+          </div>
+
+          <div id="no-results" class="ref-empty" hidden>
+            <h2>Sin resultados</h2>
+            <p id="empty-message">Prueba con otro concepto, propiedad o elemento.</p>
+            <button type="button" id="reset-filters" class="ref-reset">Ver toda la referencia</button>
+          </div>
+          <details class="ref-category" open><summary class="ref-category-heading"><h2>Fundamentos</h2></summary><article class="ref-entry" id="primer-css" aria-labelledby="title-primer-css">
+<div class="ref-entry-head"><div><h3 id="title-primer-css"><a href="#primer-css">Conectar HTML y CSS</a></h3><p class="ref-subtitle">Aprender CSS · Conceptos y práctica</p></div></div>
+<p class="ref-description">CSS describe cómo se presenta el HTML. Enlaza una hoja externa desde head y escribe reglas con selector, propiedad y valor. Un archivo separado permite reutilizar los estilos.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">CSS</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Conectar HTML y CSS">Copiar</button></div><pre tabindex="0" aria-label="Código de Conectar HTML y CSS"><code>/* En head: &lt;link rel=&quot;stylesheet&quot; href=&quot;estilos.css&quot;&gt; */
+body {
+  background: #f5f2eb;
+  color: #202824;
+  font-family: system-ui, sans-serif;
+}</code></pre></div><h4>Pruébalo tú</h4><p>Crea estilos.css junto a index.html y enlázalo. Cambia el fondo; si no ocurre nada, revisa la ruta en la pestaña Red del navegador.</p></article><article class="ref-entry" id="selectores" aria-labelledby="title-selectores">
+<div class="ref-entry-head"><div><h3 id="title-selectores"><a href="#selectores">Selectores</a></h3><p class="ref-subtitle">Aprender CSS · Conceptos y práctica</p></div></div>
+<p class="ref-description">Un selector de tipo afecta a un elemento, una clase se reutiliza y un selector descendiente busca dentro de otro elemento. Las pseudoclases describen estados como :hover o :focus-visible.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">CSS</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Selectores">Copiar</button></div><pre tabindex="0" aria-label="Código de Selectores"><code>p { line-height: 1.6; }
+.nota { padding: 1rem; }
+.nota a { text-decoration: underline; }
+a:focus-visible { outline: 3px solid #166449; }</code></pre></div><h4>Pruébalo tú</h4><p>Añade class="nota" a un párrafo con un enlace. Comprueba qué reglas afectan a cada elemento y llega al enlace con Tab.</p></article><article class="ref-entry" id="cascada" aria-labelledby="title-cascada">
+<div class="ref-entry-head"><div><h3 id="title-cascada"><a href="#cascada">Cascada y herencia</a></h3><p class="ref-subtitle">Aprender CSS · Conceptos y práctica</p></div></div>
+<p class="ref-description">Entre reglas normales del mismo origen y capa, la especificidad decide: un id pesa más que una clase y una clase más que un tipo. Si empatan, gana la última. Algunas propiedades como color se heredan; margin no. Evita resolver todo con !important.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">CSS</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Cascada y herencia">Copiar</button></div><pre tabindex="0" aria-label="Código de Cascada y herencia"><code>body { color: #202824; }
+.nota { color: #195f47; }
+.nota { color: #703b16; } /* Gana por aparecer despu&#233;s */</code></pre></div><h4>Pruébalo tú</h4><p>Inspecciona .nota y busca las reglas tachadas y el color calculado. Quita su color para observar la herencia desde body.</p></article><article class="ref-entry" id="modelo-caja" aria-labelledby="title-modelo-caja">
+<div class="ref-entry-head"><div><h3 id="title-modelo-caja"><a href="#modelo-caja">Modelo de caja</a></h3><p class="ref-subtitle">Aprender CSS · Conceptos y práctica</p></div></div>
+<p class="ref-description">padding separa el contenido del borde; margin separa la caja de otras. Con border-box, la anchura incluye relleno y borde. max-width limita el tamaño sin obligar a desbordar una pantalla pequeña.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">CSS</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Modelo de caja">Copiar</button></div><pre tabindex="0" aria-label="Código de Modelo de caja"><code>*, *::before, *::after { box-sizing: border-box; }
+.tarjeta {
+  width: 100%;
+  max-width: 32rem;
+  padding: 1.5rem;
+  border: 1px solid #64736b;
+  margin-block: 2rem;
+}</code></pre></div><h4>Pruébalo tú</h4><p>Inspecciona el modelo de caja. Cambia padding y margin por separado y observa qué espacio cambia.</p></article><article class="ref-entry" id="unidades" aria-labelledby="title-unidades">
+<div class="ref-entry-head"><div><h3 id="title-unidades"><a href="#unidades">Unidades y medidas</a></h3><p class="ref-subtitle">Aprender CSS · Conceptos y práctica</p></div></div>
+<p class="ref-description">rem toma como referencia la letra raíz; em depende del tamaño de letra del elemento, salvo en font-size, donde se refiere al padre. % depende de la propiedad y el contenedor. Usa medidas flexibles y un line-height sin unidad.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">CSS</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Unidades y medidas">Copiar</button></div><pre tabindex="0" aria-label="Código de Unidades y medidas"><code>body { font-size: 1rem; line-height: 1.6; }
+main { width: min(70rem, 100% - 2rem); margin-inline: auto; }
+h1 { font-size: clamp(2rem, 5vw, 4rem); }</code></pre></div><h4>Pruébalo tú</h4><p>Aumenta el tamaño de texto del navegador y comprueba que no pierdes contenido ni controles.</p></article><article class="ref-entry" id="tipografia" aria-labelledby="title-tipografia">
+<div class="ref-entry-head"><div><h3 id="title-tipografia"><a href="#tipografia">Tipografía y color</a></h3><p class="ref-subtitle">Aprender CSS · Conceptos y práctica</p></div></div>
+<p class="ref-description">Limita la longitud de las líneas y deja interlineado suficiente. Busca contraste de al menos 4,5:1 para texto normal y 3:1 para texto grande. No comuniques errores solo con color y da una señal clara a los enlaces.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">CSS</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Tipografía y color">Copiar</button></div><pre tabindex="0" aria-label="Código de Tipografía y color"><code>body { font-family: system-ui, sans-serif; }
+p { max-width: 65ch; line-height: 1.7; }
+a { text-decoration: underline; }
+a:hover { text-decoration-thickness: 2px; }</code></pre></div><h4>Pruébalo tú</h4><p>Revisa el contraste de un párrafo sobre tu fondo y comprueba que distingues los enlaces sin depender del color.</p></article></details><details class="ref-category" open><summary class="ref-category-heading"><h2>Distribución y adaptación</h2></summary><article class="ref-entry" id="flexbox" aria-labelledby="title-flexbox">
+<div class="ref-entry-head"><div><h3 id="title-flexbox"><a href="#flexbox">Flexbox</a></h3><p class="ref-subtitle">Aprender CSS · Conceptos y práctica</p></div></div>
+<p class="ref-description">Flexbox distribuye elementos en una fila o columna. gap los separa, justify-content actúa en el eje principal y align-items en el transversal. flex-wrap permite saltos cuando falta espacio.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">CSS</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Flexbox">Copiar</button></div><pre tabindex="0" aria-label="Código de Flexbox"><code>.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}</code></pre></div><h4>Pruébalo tú</h4><p>Agrupa tres enlaces en .acciones y estrecha la ventana. Cambia justify-content y flex-direction para entender los ejes.</p></article><article class="ref-entry" id="grid" aria-labelledby="title-grid">
+<div class="ref-entry-head"><div><h3 id="title-grid"><a href="#grid">CSS Grid</a></h3><p class="ref-subtitle">Aprender CSS · Conceptos y práctica</p></div></div>
+<p class="ref-description">Grid distribuye contenido en dos dimensiones. minmax establece límites y auto-fit crea las columnas que caben. min(100%, 16rem) evita que la anchura mínima supere el contenedor.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">CSS</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: CSS Grid">Copiar</button></div><pre tabindex="0" aria-label="Código de CSS Grid"><code>.rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1.5rem;
+}</code></pre></div><h4>Pruébalo tú</h4><p>Crea varias tarjetas dentro de .rejilla y cambia el ancho de la ventana. Observa cómo se reorganizan.</p></article><article class="ref-entry" id="responsive" aria-labelledby="title-responsive">
+<div class="ref-entry-head"><div><h3 id="title-responsive"><a href="#responsive">Diseño adaptable</a></h3><p class="ref-subtitle">Aprender CSS · Conceptos y práctica</p></div></div>
+<p class="ref-description">Empieza con una columna y añade complejidad cuando haya espacio. Las media queries aplican reglas según el entorno. No desactives el zoom ni fijes anchuras que obliguen a desplazar horizontalmente toda la página.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">CSS</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Diseño adaptable">Copiar</button></div><pre tabindex="0" aria-label="Código de Diseño adaptable"><code>.contenido { display: grid; gap: 2rem; }
+img { max-width: 100%; height: auto; }
+@media (min-width: 50rem) {
+  .contenido { grid-template-columns: 1fr 1fr; }
+}</code></pre></div><h4>Pruébalo tú</h4><p>Prueba tu página a 320 píxeles y con zoom al 200 %. Revisa navegación, imágenes y palabras largas.</p></article></details><details class="ref-category" open><summary class="ref-category-heading"><h2>Accesibilidad y práctica</h2></summary><article class="ref-entry" id="estados-foco" aria-labelledby="title-estados-foco">
+<div class="ref-entry-head"><div><h3 id="title-estados-foco"><a href="#estados-foco">Interacción accesible</a></h3><p class="ref-subtitle">Aprender CSS · Conceptos y práctica</p></div></div>
+<p class="ref-description">No elimines el foco visible sin ofrecer un sustituto claro. Acompaña hover con foco y respeta la preferencia de reducir movimiento. Da a los controles espacio suficiente para pulsarlos.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">CSS</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Interacción accesible">Copiar</button></div><pre tabindex="0" aria-label="Código de Interacción accesible"><code>button { min-height: 44px; padding: .75rem 1rem; }
+button:focus-visible {
+  outline: 3px solid #166449;
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}</code></pre></div><h4>Pruébalo tú</h4><p>Usa Tab para llegar a un botón y Espacio para activarlo. Comprueba que el foco se distingue del fondo.</p></article><article class="ref-entry" id="variables" aria-labelledby="title-variables">
+<div class="ref-entry-head"><div><h3 id="title-variables"><a href="#variables">Variables CSS</a></h3><p class="ref-subtitle">Aprender CSS · Conceptos y práctica</p></div></div>
+<p class="ref-description">Las propiedades personalizadas guardan valores reutilizables y participan en la cascada. Defínelas en :root para compartirlas o en un componente para limitar su alcance. var acepta un valor de reserva.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">CSS</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Variables CSS">Copiar</button></div><pre tabindex="0" aria-label="Código de Variables CSS"><code>:root {
+  --fondo: #1f2522;
+  --texto: #f4f6f5;
+  --espacio: 1.5rem;
+}
+.tarjeta {
+  background: var(--fondo);
+  color: var(--texto);
+  padding: var(--espacio, 1rem);
+}</code></pre></div><h4>Pruébalo tú</h4><p>Usa --espacio en dos componentes y cambia su valor en un solo sitio. Observa cómo se actualizan ambos.</p></article><article class="ref-entry" id="practica" aria-labelledby="title-practica">
+<div class="ref-entry-head"><div><h3 id="title-practica"><a href="#practica">Tu primera tarjeta</a></h3><p class="ref-subtitle">Aprender CSS · Conceptos y práctica</p></div></div>
+<p class="ref-description">Revisa las reglas en Estilos y el resultado en Valores calculados. Si algo desborda, revisa anchuras y modelo de caja antes de ocultarlo. Combina tipografía, espacio y distribución en una tarjeta.</p><h4>Ejemplo</h4><div class="ref-example"><div class="window-header"><span class="window-label">CSS</span><button type="button" class="ref-copy" hidden aria-label="Copiar ejemplo: Tu primera tarjeta">Copiar</button></div><pre tabindex="0" aria-label="Código de Tu primera tarjeta"><code>.tarjeta {
+  display: grid;
+  gap: 1rem;
+  max-width: 28rem;
+  padding: 1.5rem;
+  border: 1px solid #68796f;
+  border-radius: .75rem;
+}
+.tarjeta h2, .tarjeta p { margin: 0; }</code></pre></div><h4>Pruébalo tú</h4><p>Crea un article con class="tarjeta", un h2, un párrafo y un enlace. Aplica los estilos y comprueba el resultado con teclado y a varios tamaños.</p></article></details><section class="ref-guide" aria-labelledby="sources-title">
+            <h2 id="sources-title">Sigue profundizando</h2><p>Consulta la <a href="https://developer.mozilla.org/es/docs/Web/CSS">documentación de CSS en MDN</a> o repasa los <a href="html.html">fundamentos de HTML</a>.</p><a href="#main-content" class="text-link">Volver al principio</a>
+          </section>
+        </main>
+      </div>
+    </div>
+    <footer>
+      <div class="container footer-content">
+        <small>© 2026 VCode</small>
+        <a href="contact.html">Hecho por Víctor Martín Pérez</a>
+      </div>
+    </footer>
+    <p id="copy-status" class="ref-announcer" role="status" aria-live="polite"></p>
+  </body>
+</html>

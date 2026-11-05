@@ -123,7 +123,7 @@
       ? `${count} ${count === 1 ? "resultado" : "resultados"} de ${entries.length}`
       : `${entries.length} elementos`;
     elements.empty.hidden = count !== 0;
-    elements.emptyMessage.textContent = "Prueba otra etiqueta o atributo.";
+    elements.emptyMessage.textContent = "Prueba otro concepto, propiedad o elemento.";
     queueReadingUpdate();
   }
 
@@ -265,4 +265,5 @@
   initialiseSearch();
   initialiseCopyButtons();
   initialiseNavigation();
+  filterEntries();
 })();
