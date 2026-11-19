@@ -1,0 +1,394 @@
+[
+  {
+    "id": "html",
+    "name": "HTML",
+    "tag": "La estructura de la web",
+    "description": "Da forma a tus ideas. Estructura páginas accesibles, semánticas y listas para la web.",
+    "lessons": [
+      {
+        "id": "html-1",
+        "title": "Tu primer documento"
+      },
+      {
+        "id": "html-2",
+        "title": "Texto, enlaces y listas"
+      },
+      {
+        "id": "html-3",
+        "title": "Semántica y estructura"
+      },
+      {
+        "id": "html-4",
+        "title": "Imágenes y contenido multimedia"
+      },
+      {
+        "id": "html-5",
+        "title": "Tablas que se entienden"
+      },
+      {
+        "id": "html-6",
+        "title": "Formularios y validación nativa"
+      },
+      {
+        "id": "html-7",
+        "title": "Accesibilidad desde el HTML"
+      },
+      {
+        "id": "html-8",
+        "title": "Elementos interactivos nativos"
+      },
+      {
+        "id": "html-9",
+        "title": "Imágenes adaptables y rendimiento"
+      },
+      {
+        "id": "html-10",
+        "title": "Metadatos, SEO y enlaces compartidos"
+      },
+      {
+        "id": "html-11",
+        "title": "Plantillas, datos y carga de scripts"
+      },
+      {
+        "id": "html-12",
+        "title": "Proyecto: una página que funciona para todos"
+      }
+    ]
+  },
+  {
+    "id": "css",
+    "name": "CSS",
+    "tag": "Diseña sin límites",
+    "description": "Haz que cada detalle cuente. Diseña interfaces adaptables con Flexbox, Grid y mucho estilo.",
+    "lessons": [
+      {
+        "id": "css-1",
+        "title": "Selectores, cascada y herencia"
+      },
+      {
+        "id": "css-2",
+        "title": "El modelo de caja"
+      },
+      {
+        "id": "css-3",
+        "title": "Tipografía, color y unidades"
+      },
+      {
+        "id": "css-4",
+        "title": "Flexbox: un eje, muchas posibilidades"
+      },
+      {
+        "id": "css-5",
+        "title": "Grid: diseña en dos dimensiones"
+      },
+      {
+        "id": "css-6",
+        "title": "Posicionamiento y capas"
+      },
+      {
+        "id": "css-7",
+        "title": "Diseño adaptable de verdad"
+      },
+      {
+        "id": "css-8",
+        "title": "Variables, temas y capas de estilos"
+      },
+      {
+        "id": "css-9",
+        "title": "Transiciones y movimiento accesible"
+      },
+      {
+        "id": "css-10",
+        "title": "Container queries y componentes flexibles"
+      },
+      {
+        "id": "css-11",
+        "title": "Arquitectura, depuración y rendimiento"
+      },
+      {
+        "id": "css-12",
+        "title": "Proyecto: un sistema de tarjetas adaptable"
+      }
+    ]
+  },
+  {
+    "id": "javascript",
+    "name": "JavaScript",
+    "tag": "Dale vida a la web",
+    "description": "De una idea a una interacción. Aprende lógica, DOM y asincronía construyendo cosas reales.",
+    "lessons": [
+      {
+        "id": "javascript-1",
+        "title": "Variables, tipos y operadores"
+      },
+      {
+        "id": "javascript-2",
+        "title": "Condiciones y bucles"
+      },
+      {
+        "id": "javascript-3",
+        "title": "Funciones, ámbito y closures"
+      },
+      {
+        "id": "javascript-4",
+        "title": "Arrays: transformar sin complicarse"
+      },
+      {
+        "id": "javascript-5",
+        "title": "Objetos, destructuring y referencias"
+      },
+      {
+        "id": "javascript-6",
+        "title": "DOM y eventos accesibles"
+      },
+      {
+        "id": "javascript-7",
+        "title": "Promesas, async y await"
+      },
+      {
+        "id": "javascript-8",
+        "title": "Fetch, JSON y estados de carga"
+      },
+      {
+        "id": "javascript-9",
+        "title": "Módulos y almacenamiento local"
+      },
+      {
+        "id": "javascript-10",
+        "title": "Event loop, tareas y microtareas"
+      },
+      {
+        "id": "javascript-11",
+        "title": "Errores, pruebas y código robusto"
+      },
+      {
+        "id": "javascript-12",
+        "title": "Proyecto: un gestor de tareas"
+      }
+    ]
+  },
+  {
+    "id": "react",
+    "name": "React",
+    "tag": "Interfaces que evolucionan",
+    "description": "Piensa en componentes. Construye interfaces con estado, hooks y una arquitectura que crece contigo.",
+    "lessons": [
+      {
+        "id": "react-1",
+        "title": "Componentes y JSX"
+      },
+      {
+        "id": "react-2",
+        "title": "Props y composición"
+      },
+      {
+        "id": "react-3",
+        "title": "Listas, claves y condiciones"
+      },
+      {
+        "id": "react-4",
+        "title": "useState y actualizaciones"
+      },
+      {
+        "id": "react-5",
+        "title": "Formularios controlados"
+      },
+      {
+        "id": "react-6",
+        "title": "Elevar el estado e inmutabilidad"
+      },
+      {
+        "id": "react-7",
+        "title": "useEffect: sincronizar con el exterior"
+      },
+      {
+        "id": "react-8",
+        "title": "Datos remotos y cancelación"
+      },
+      {
+        "id": "react-9",
+        "title": "Context y useReducer"
+      },
+      {
+        "id": "react-10",
+        "title": "Refs y hooks personalizados"
+      },
+      {
+        "id": "react-11",
+        "title": "Rendimiento, identidad y pruebas"
+      },
+      {
+        "id": "react-12",
+        "title": "Proyecto: un catálogo de aprendizaje"
+      }
+    ]
+  },
+  {
+    "id": "php",
+    "name": "PHP",
+    "tag": "Detrás de cada gran web",
+    "description": "Construye el otro lado de la web. Formularios, sesiones, bases de datos y aplicaciones seguras.",
+    "lessons": [
+      {
+        "id": "php-1",
+        "title": "El servidor y tu primer script"
+      },
+      {
+        "id": "php-2",
+        "title": "Variables, tipos y control de flujo"
+      },
+      {
+        "id": "php-3",
+        "title": "Funciones y tipos explícitos"
+      },
+      {
+        "id": "php-4",
+        "title": "Arrays y transformaciones"
+      },
+      {
+        "id": "php-5",
+        "title": "Formularios: validar y escapar"
+      },
+      {
+        "id": "php-6",
+        "title": "Clases, interfaces y composición"
+      },
+      {
+        "id": "php-7",
+        "title": "PDO y consultas preparadas"
+      },
+      {
+        "id": "php-8",
+        "title": "Sesiones y contraseñas"
+      },
+      {
+        "id": "php-9",
+        "title": "CSRF, autorización y límites de confianza"
+      },
+      {
+        "id": "php-10",
+        "title": "Excepciones, transacciones y JSON"
+      },
+      {
+        "id": "php-11",
+        "title": "Arquitectura, Composer y pruebas"
+      },
+      {
+        "id": "php-12",
+        "title": "Proyecto: una API de cursos segura"
+      }
+    ]
+  },
+  {
+    "id": "java",
+    "name": "Java",
+    "tag": "De la lógica a la arquitectura",
+    "description": "Piensa en objetos y resuelve problemas. Tipos, colecciones, streams y código bien construido.",
+    "lessons": [
+      {
+        "id": "java-1",
+        "title": "JDK, compilación y primer programa"
+      },
+      {
+        "id": "java-2",
+        "title": "Tipos, variables y control de flujo"
+      },
+      {
+        "id": "java-3",
+        "title": "Métodos, arrays y referencias"
+      },
+      {
+        "id": "java-4",
+        "title": "Clases, encapsulación y constructores"
+      },
+      {
+        "id": "java-5",
+        "title": "Interfaces, polimorfismo y composición"
+      },
+      {
+        "id": "java-6",
+        "title": "Colecciones y genéricos"
+      },
+      {
+        "id": "java-7",
+        "title": "Excepciones y gestión de recursos"
+      },
+      {
+        "id": "java-8",
+        "title": "Lambdas y streams"
+      },
+      {
+        "id": "java-9",
+        "title": "Records, igualdad y Optional"
+      },
+      {
+        "id": "java-10",
+        "title": "Concurrencia y estado compartido"
+      },
+      {
+        "id": "java-11",
+        "title": "Pruebas, paquetes y diseño mantenible"
+      },
+      {
+        "id": "java-12",
+        "title": "Proyecto: una biblioteca de consola"
+      }
+    ]
+  },
+  {
+    "id": "sql",
+    "name": "SQL",
+    "tag": "Los datos cuentan historias",
+    "description": "Pregunta mejor a tus datos. Consultas, relaciones, transacciones y bases de datos bien diseñadas.",
+    "lessons": [
+      {
+        "id": "sql-1",
+        "title": "Tablas y tu primera consulta"
+      },
+      {
+        "id": "sql-2",
+        "title": "Filtrar, ordenar y limitar"
+      },
+      {
+        "id": "sql-3",
+        "title": "NULL y lógica de tres valores"
+      },
+      {
+        "id": "sql-4",
+        "title": "Agregaciones, GROUP BY y HAVING"
+      },
+      {
+        "id": "sql-5",
+        "title": "JOIN: combinar con significado"
+      },
+      {
+        "id": "sql-6",
+        "title": "Subconsultas, EXISTS y CTE"
+      },
+      {
+        "id": "sql-7",
+        "title": "Diseño relacional y normalización"
+      },
+      {
+        "id": "sql-8",
+        "title": "INSERT, UPDATE y DELETE con control"
+      },
+      {
+        "id": "sql-9",
+        "title": "Transacciones e aislamiento"
+      },
+      {
+        "id": "sql-10",
+        "title": "Funciones de ventana"
+      },
+      {
+        "id": "sql-11",
+        "title": "Índices y planes de ejecución"
+      },
+      {
+        "id": "sql-12",
+        "title": "Proyecto: una academia en datos"
+      }
+    ]
+  }
+]

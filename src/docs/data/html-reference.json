@@ -1,0 +1,711 @@
+[
+  {
+    "id": "tag-html",
+    "title": "<html>",
+    "description": "Raíz del documento",
+    "detail": "Agrupa el documento completo: head contiene metadatos y body el contenido visible. Declara HTML moderno con <!doctype html> antes de la raíz.",
+    "group": "documento",
+    "code": "<!doctype html>\n<html lang=\"es\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Mi biblioteca</title>\n  </head>\n  <body>\n    <h1>Un lugar para el código</h1>\n  </body>\n</html>",
+    "attributes": [
+      {
+        "name": "lang",
+        "description": "Idioma principal del documento; por ejemplo, es o es-MX."
+      },
+      {
+        "name": "dir",
+        "description": "Dirección del texto: ltr, rtl o auto."
+      }
+    ],
+    "tips": [
+      "Usa lang para que lectores de pantalla y herramientas lingüísticas interpreten el contenido.",
+      "El doctype va antes de html y activa el modo de estándares. No es un elemento HTML."
+    ],
+    "related": ["tag-head", "tag-meta", "tag-h1"],
+    "guide": 1,
+    "preview": false,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/html"
+  },
+  {
+    "id": "tag-head",
+    "title": "<head>",
+    "description": "Metadatos y recursos",
+    "detail": "Reúne información sobre el documento. No representa una sección visible de la página y debe preceder a body.",
+    "group": "documento",
+    "code": "<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>Biblioteca · VCode</title>\n  <link rel=\"stylesheet\" href=\"estilos.css\">\n</head>",
+    "attributes": [
+      {
+        "name": "Atributos globales",
+        "description": "Admite atributos globales, pero normalmente su contenido define los metadatos."
+      }
+    ],
+    "tips": [
+      "Incluye un título concreto con title. Es el nombre que aparece en la pestaña y en los marcadores.",
+      "Las etiquetas de contenido visible pertenecen a body."
+    ],
+    "related": ["tag-html", "tag-meta", "tag-link"],
+    "guide": 1,
+    "preview": false,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/head"
+  },
+  {
+    "id": "tag-meta",
+    "title": "<meta>",
+    "description": "Configuración del documento",
+    "detail": "Declara codificación, descripción y configuración del viewport. Es un elemento vacío: no tiene etiqueta de cierre.",
+    "group": "documento",
+    "code": "<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<meta name=\"description\" content=\"Guías y referencias de programación.\">",
+    "attributes": [
+      {
+        "name": "charset",
+        "description": "Codificación del documento. Usa utf-8."
+      },
+      {
+        "name": "name / content",
+        "description": "Nombre del metadato y su valor."
+      },
+      {
+        "name": "http-equiv",
+        "description": "Directiva que el navegador interpreta como determinada información de cabecera."
+      }
+    ],
+    "tips": [
+      "Coloca la declaración de codificación al principio de head.",
+      "No bloquees el zoom de la página con maximum-scale o user-scalable=no."
+    ],
+    "related": ["tag-head", "tag-html", "tag-link"],
+    "guide": 1,
+    "preview": false,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta"
+  },
+  {
+    "id": "tag-link",
+    "title": "<link>",
+    "description": "Relaciones y hojas de estilo",
+    "detail": "Relaciona el documento con un recurso externo. Para estilos, el navegador descarga y aplica el CSS enlazado. Es un elemento vacío.",
+    "group": "documento",
+    "code": "<link rel=\"stylesheet\" href=\"estilos.css\">\n<link rel=\"icon\" href=\"icono.svg\" type=\"image/svg+xml\">",
+    "attributes": [
+      {
+        "name": "rel",
+        "description": "Relación con el recurso, como stylesheet o icon."
+      },
+      {
+        "name": "href",
+        "description": "Dirección del recurso."
+      },
+      {
+        "name": "media",
+        "description": "Condición de medios para aplicar el recurso, cuando corresponda."
+      }
+    ],
+    "tips": [
+      "Una hoja de estilo enlazada se aplica a la página; un enlace a otra página se escribe con a.",
+      "No precargues recursos por costumbre: reserva preload para los que realmente necesites pronto."
+    ],
+    "related": ["tag-head", "tag-a", "tag-meta"],
+    "guide": 9,
+    "preview": false,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/link"
+  },
+  {
+    "id": "tag-header",
+    "title": "<header>",
+    "description": "Introducción y navegación",
+    "detail": "Introduce una página o una sección con su identidad, título o navegación. Puede haber varias cabeceras si pertenecen a contextos diferentes.",
+    "group": "semantica",
+    "code": "<header>\n  <h1>Cuaderno de desarrollo</h1>\n  <p>Ideas, apuntes y proyectos.</p>\n</header>",
+    "attributes": [
+      {
+        "name": "Atributos globales",
+        "description": "Permite id, class, lang y otros atributos globales."
+      }
+    ],
+    "tips": [
+      "Puede introducir el documento o una sección concreta.",
+      "El significado depende de su contexto: un header dentro de article no es la cabecera global del sitio."
+    ],
+    "related": ["tag-nav", "tag-main", "tag-footer"],
+    "guide": 3,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/header"
+  },
+  {
+    "id": "tag-nav",
+    "title": "<nav>",
+    "description": "Bloque de navegación",
+    "detail": "Agrupa enlaces importantes para recorrer el sitio o la página. No todos los grupos de enlaces requieren nav.",
+    "group": "semantica",
+    "code": "<nav aria-label=\"Principal\">\n  <a href=\"#inicio\">Inicio</a>\n  <a href=\"#referencia\">Referencia</a>\n</nav>",
+    "attributes": [
+      {
+        "name": "aria-label",
+        "description": "Distingue la navegación cuando hay varios bloques con funciones diferentes."
+      }
+    ],
+    "tips": [
+      "Reserva nav para grupos de enlaces de navegación relevantes.",
+      "El texto de cada enlace debe explicar adónde lleva; evita repetir «haz clic aquí»."
+    ],
+    "related": ["tag-a", "tag-header", "tag-footer"],
+    "guide": 3,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/nav"
+  },
+  {
+    "id": "tag-main",
+    "title": "<main>",
+    "description": "Contenido principal",
+    "detail": "Contiene el contenido dominante de la página. Excluye la navegación y los bloques repetidos comunes a todo el sitio.",
+    "group": "semantica",
+    "code": "<main id=\"contenido\">\n  <h1>Referencia de HTML</h1>\n  <p>Elementos y atributos del lenguaje.</p>\n</main>",
+    "attributes": [
+      {
+        "name": "id",
+        "description": "Puede servir de destino para un enlace que salte al contenido principal."
+      }
+    ],
+    "tips": [
+      "Mantén un solo main visible por documento.",
+      "Deja fuera los bloques repetidos del sitio, como la navegación global o el pie compartido."
+    ],
+    "related": ["tag-header", "tag-section", "tag-article"],
+    "guide": 3,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/main"
+  },
+  {
+    "id": "tag-section",
+    "title": "<section>",
+    "description": "Sección temática",
+    "detail": "Agrupa contenido sobre un mismo tema cuando no existe un elemento más específico. Suele llevar un encabezado que explica su propósito.",
+    "group": "semantica",
+    "code": "<section aria-labelledby=\"accesibilidad\">\n  <h2 id=\"accesibilidad\">Accesibilidad</h2>\n  <p>Contenido que se entiende y se puede utilizar.</p>\n</section>",
+    "attributes": [
+      {
+        "name": "aria-labelledby",
+        "description": "Asocia un encabezado existente cuando la sección necesita un nombre accesible."
+      }
+    ],
+    "tips": [
+      "Utiliza un encabezado que describa el tema.",
+      "Si solo necesitas un contenedor para distribuir elementos con CSS, considera div."
+    ],
+    "related": ["tag-article", "tag-h1", "tag-main"],
+    "guide": 3,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/section"
+  },
+  {
+    "id": "tag-article",
+    "title": "<article>",
+    "description": "Contenido independiente",
+    "detail": "Representa una unidad que conserva sentido por sí misma: una noticia, una publicación o una ficha de referencia.",
+    "group": "semantica",
+    "code": "<article>\n  <h2>Cómo organizar una hoja de estilos</h2>\n  <p>Una guía que se puede leer por sí sola.</p>\n  <footer>Publicado por el equipo de VCode.</footer>\n</article>",
+    "attributes": [
+      {
+        "name": "Atributos globales",
+        "description": "Usa id o class para identificar o presentar el contenido sin cambiar su semántica."
+      }
+    ],
+    "tips": [
+      "Encaja con una noticia, una entrada o una pieza que tenga sentido por separado.",
+      "Article describe independencia del contenido; section agrupa un tema dentro de una estructura."
+    ],
+    "related": ["tag-section", "tag-header", "tag-footer"],
+    "guide": 3,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/article"
+  },
+  {
+    "id": "tag-aside",
+    "title": "<aside>",
+    "description": "Información complementaria",
+    "detail": "Contiene información relacionada de forma indirecta con el contenido principal: un glosario, una nota contextual o recursos.",
+    "group": "semantica",
+    "code": "<aside aria-labelledby=\"nota\">\n  <h2 id=\"nota\">También te puede servir</h2>\n  <p>Consulta los atributos globales de HTML.</p>\n</aside>",
+    "attributes": [
+      {
+        "name": "aria-labelledby",
+        "description": "Relaciona el bloque con su encabezado cuando necesita un nombre explícito."
+      }
+    ],
+    "tips": [
+      "El contenido debe estar relacionado de forma indirecta con lo que lo rodea.",
+      "No significa necesariamente «columna lateral»: su posición visual la decide CSS."
+    ],
+    "related": ["tag-article", "tag-section", "tag-main"],
+    "guide": 3,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/aside"
+  },
+  {
+    "id": "tag-footer",
+    "title": "<footer>",
+    "description": "Información de cierre",
+    "detail": "Incluye autoría, enlaces relacionados o información legal de la página o sección más cercana.",
+    "group": "semantica",
+    "code": "<footer>\n  <p>© 2026 Cuaderno de desarrollo</p>\n  <a href=\"#contacto\">Contacto</a>\n</footer>",
+    "attributes": [
+      {
+        "name": "Atributos globales",
+        "description": "Admite los atributos globales de HTML."
+      }
+    ],
+    "tips": [
+      "Puede cerrar todo el documento o una sección como article.",
+      "Su posición en pantalla no determina su significado."
+    ],
+    "related": ["tag-header", "tag-article", "tag-a"],
+    "guide": 3,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/footer"
+  },
+  {
+    "id": "tag-h1",
+    "title": "<h1>",
+    "description": "Encabezados de h1 a h6",
+    "detail": "Definen seis niveles de títulos para estructurar el contenido. h1 presenta el tema principal; h2 abre secciones y h3 desarrolla subsecciones.",
+    "group": "texto",
+    "code": "<h1>Guía de formularios</h1>\n<section>\n  <h2>Campos y etiquetas</h2>\n  <h3>Un nombre para cada control</h3>\n</section>",
+    "attributes": [
+      {
+        "name": "id",
+        "description": "Permite enlazar directamente a un apartado."
+      }
+    ],
+    "tips": [
+      "Elige el nivel por la jerarquía del contenido, no por el tamaño de letra.",
+      "Mantén una estructura comprensible: h1 para el tema principal, h2 para sus apartados y h3 para subsecciones."
+    ],
+    "related": ["tag-section", "tag-article", "tag-p"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/Heading_Elements"
+  },
+  {
+    "id": "tag-p",
+    "title": "<p>",
+    "description": "Párrafos",
+    "detail": "Representa un párrafo de texto. Admite contenido de fraseo como enlaces o énfasis, pero no listas, tablas ni secciones.",
+    "group": "texto",
+    "code": "<p>HTML describe la estructura del contenido.</p>\n<p>CSS controla su presentación.</p>",
+    "attributes": [
+      {
+        "name": "Atributos globales",
+        "description": "Puedes aplicar lang a un párrafo escrito en otro idioma."
+      }
+    ],
+    "tips": [
+      "No coloques bloques como div, ul o section dentro de un párrafo.",
+      "El espacio entre párrafos se controla con CSS, no con párrafos vacíos."
+    ],
+    "related": ["tag-strong", "tag-a", "tag-ul"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/p"
+  },
+  {
+    "id": "tag-a",
+    "title": "<a>",
+    "description": "Enlaces e hipervínculos",
+    "detail": "Con href permite navegar a otra página, un fragmento, un correo o una descarga. Sin href no representa un hipervínculo.",
+    "group": "texto",
+    "code": "<a href=\"#referencia\">Ir a la referencia</a>\n<a href=\"https://developer.mozilla.org/\" target=\"_blank\" rel=\"noopener\">\n  Abrir MDN en otra pestaña\n</a>",
+    "attributes": [
+      {
+        "name": "href",
+        "description": "Destino: una URL, un fragmento, mailto u otro esquema válido."
+      },
+      {
+        "name": "target",
+        "description": "Contexto de navegación; _blank suele abrir una pestaña nueva."
+      },
+      {
+        "name": "rel",
+        "description": "Relación con el destino; noopener evita acceso mediante window.opener."
+      }
+    ],
+    "tips": [
+      "Usa enlaces para navegar y botones para realizar acciones.",
+      "Haz que el texto tenga sentido fuera de la frase y avisa si abres otra pestaña."
+    ],
+    "related": ["tag-nav", "tag-button", "tag-p"],
+    "guide": 2,
+    "preview": false,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a"
+  },
+  {
+    "id": "tag-strong",
+    "title": "<strong>",
+    "description": "Importancia del texto",
+    "detail": "Marca importancia, seriedad o urgencia. Su significado permanece aunque cambies el peso tipográfico con CSS.",
+    "group": "texto",
+    "code": "<p><strong>Guarda una copia</strong> antes de reemplazar tus archivos.</p>",
+    "attributes": [
+      {
+        "name": "Atributos globales",
+        "description": "No necesita atributos específicos para expresar importancia."
+      }
+    ],
+    "tips": [
+      "Expresa importancia, seriedad o urgencia; su aspecto visual puede cambiar con CSS.",
+      "Si solo quieres un peso tipográfico diferente, usa font-weight."
+    ],
+    "related": ["tag-p", "tag-h1", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/strong"
+  },
+  {
+    "id": "tag-ul",
+    "title": "<ul>",
+    "description": "Listas y elementos li",
+    "detail": "ul representa una lista cuyo orden no importa. Cada elemento se expresa con li; una lista anidada debe estar dentro de un li.",
+    "group": "texto",
+    "code": "<ul>\n  <li>HTML para la estructura</li>\n  <li>CSS para el diseño</li>\n  <li>JavaScript para la interacción</li>\n</ul>",
+    "attributes": [
+      {
+        "name": "Atributos globales",
+        "description": "Usa class para cambiar la presentación con CSS."
+      }
+    ],
+    "tips": [
+      "Los elementos de la lista se escriben con li.",
+      "Si cambiar el orden altera el significado, utiliza una lista ordenada con ol."
+    ],
+    "related": ["tag-nav", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/ul"
+  },
+  {
+    "id": "tag-pre",
+    "title": "<pre>",
+    "description": "Código y texto preformateado",
+    "detail": "Conserva espacios y saltos de línea. Junto con code representa ejemplos de código; el contenido sigue siendo interpretado como HTML si no se escapa.",
+    "group": "texto",
+    "code": "<pre><code>const saludo = \"Hola, VCode\";\nconsole.log(saludo);</code></pre>",
+    "attributes": [
+      {
+        "name": "Atributos globales",
+        "description": "Puedes identificar el bloque con id y aplicar estilos mediante class."
+      }
+    ],
+    "tips": [
+      "Conserva espacios y saltos de línea. Combínalo con code cuando represente código.",
+      "En HTML escrito como texto, escapa < con &lt; y & con &amp; para evitar que se interprete como marcado."
+    ],
+    "related": ["tag-p", "tag-strong", "tag-h1"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/pre"
+  },
+  {
+    "id": "tag-img",
+    "title": "<img>",
+    "description": "Imágenes con alternativa textual",
+    "detail": "Incrusta una imagen y es un elemento vacío. El texto alternativo debe comunicar su función en el contexto, no limitarse a describir píxeles.",
+    "group": "multimedia",
+    "code": "<img\n  src=\"montanas.svg\"\n  alt=\"Dos montañas azules bajo un cielo claro\"\n  width=\"640\"\n  height=\"360\"\n  loading=\"lazy\"\n>",
+    "attributes": [
+      {
+        "name": "src / srcset",
+        "description": "Archivo de imagen o conjunto de candidatos para el navegador."
+      },
+      {
+        "name": "alt",
+        "description": "Alternativa textual según la función de la imagen; alt=\"\" si es decorativa."
+      },
+      {
+        "name": "width / height",
+        "description": "Dimensiones intrínsecas que ayudan a reservar el espacio."
+      },
+      {
+        "name": "loading",
+        "description": "lazy difiere la carga; no lo apliques a la imagen principal que debe verse enseguida."
+      }
+    ],
+    "tips": [
+      "Describe la información relevante, sin empezar siempre por «imagen de».",
+      "Para imágenes adaptables, combina srcset y sizes o utiliza picture cuando cambie la composición."
+    ],
+    "related": ["tag-video", "tag-a", "tag-html"],
+    "guide": 4,
+    "preview": false,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img"
+  },
+  {
+    "id": "tag-video",
+    "title": "<video>",
+    "description": "Vídeo nativo",
+    "detail": "Reproduce vídeo y puede ofrecer varias fuentes. Incluye controles y alternativas para que el contenido no dependa exclusivamente de la imagen o del sonido.",
+    "group": "multimedia",
+    "code": "<video controls width=\"640\" preload=\"metadata\">\n  <source src=\"demostracion.mp4\" type=\"video/mp4\">\n  <track kind=\"captions\" src=\"subtitulos.vtt\" srclang=\"es\" label=\"Español\">\n  Tu navegador no puede reproducir este vídeo.\n</video>",
+    "attributes": [
+      {
+        "name": "controls",
+        "description": "Muestra los controles de reproducción del navegador."
+      },
+      {
+        "name": "preload",
+        "description": "Pista de carga: none, metadata o auto."
+      },
+      {
+        "name": "poster",
+        "description": "Imagen que representa el vídeo antes de reproducirlo."
+      },
+      {
+        "name": "muted / playsinline",
+        "description": "Silencia inicialmente y permite reproducción integrada cuando el navegador la admite."
+      }
+    ],
+    "tips": [
+      "Incluye subtítulos para el contenido hablado y una alternativa si es necesaria.",
+      "Autoplay depende de las políticas del navegador; no presupongas que se reproducirá. El archivo del ejemplo debe existir en tu proyecto."
+    ],
+    "related": ["tag-img", "tag-html", "tag-a"],
+    "guide": 4,
+    "preview": false,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video"
+  },
+  {
+    "id": "tag-table",
+    "title": "<table>",
+    "description": "Datos tabulares",
+    "detail": "Relaciona datos por filas y columnas. caption identifica la tabla; thead y tbody agrupan filas tr y las celdas se expresan con th o td.",
+    "group": "multimedia",
+    "code": "<table>\n  <caption>Lenguajes del proyecto</caption>\n  <thead><tr><th scope=\"col\">Lenguaje</th><th scope=\"col\">Uso</th></tr></thead>\n  <tbody><tr><th scope=\"row\">HTML</th><td>Estructura</td></tr></tbody>\n</table>",
+    "attributes": [
+      {
+        "name": "Atributos globales",
+        "description": "Presenta bordes y separación mediante CSS, no con atributos visuales antiguos."
+      }
+    ],
+    "tips": [
+      "Representa datos con relaciones entre filas y columnas, no la distribución de una página.",
+      "Caption nombra la tabla; th y scope ayudan a asociar las celdas con sus cabeceras."
+    ],
+    "related": ["tag-h1", "tag-p", "tag-section"],
+    "guide": 5,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/table"
+  },
+  {
+    "id": "tag-form",
+    "title": "<form>",
+    "description": "Envío de datos",
+    "detail": "Agrupa controles para enviar datos a un destino. Los controles deben tener name para aportar normalmente su valor al envío.",
+    "group": "formularios",
+    "code": "<form action=\"/suscripcion\" method=\"post\">\n  <label for=\"correo\">Correo electrónico</label>\n  <input id=\"correo\" name=\"correo\" type=\"email\" autocomplete=\"email\" required>\n  <button type=\"submit\">Suscribirme</button>\n</form>",
+    "attributes": [
+      {
+        "name": "action",
+        "description": "URL que recibe el envío."
+      },
+      {
+        "name": "method",
+        "description": "get coloca datos en la URL; post los envía en el cuerpo de la petición."
+      },
+      {
+        "name": "enctype",
+        "description": "multipart/form-data se usa para enviar archivos con post."
+      },
+      {
+        "name": "novalidate",
+        "description": "Omite la validación interactiva del navegador al enviar."
+      }
+    ],
+    "tips": [
+      "Cada dato que deba enviarse necesita un control con name.",
+      "La validación en el navegador ayuda al usuario, pero el servidor debe validar de nuevo los datos recibidos."
+    ],
+    "related": ["tag-input", "tag-label", "tag-button"],
+    "guide": 6,
+    "preview": false,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/form"
+  },
+  {
+    "id": "tag-label",
+    "title": "<label>",
+    "description": "Nombre de un control",
+    "detail": "Asocia un texto visible con un control. Pulsar la etiqueta facilita el enfoque o la activación y aumenta el área de interacción.",
+    "group": "formularios",
+    "code": "<label for=\"nombre\">Tu nombre</label>\n<input id=\"nombre\" name=\"nombre\" autocomplete=\"name\">",
+    "attributes": [
+      {
+        "name": "for",
+        "description": "id del control con el que se asocia la etiqueta."
+      }
+    ],
+    "tips": [
+      "Una etiqueta visible ayuda a identificar el campo antes y después de escribir.",
+      "Placeholder da una pista de entrada y no sustituye a label. También puedes anidar el control dentro de su etiqueta."
+    ],
+    "related": ["tag-input", "tag-textarea", "tag-select"],
+    "guide": 6,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/label"
+  },
+  {
+    "id": "tag-input",
+    "title": "<input>",
+    "description": "Controles según el tipo",
+    "detail": "Crea controles de una sola entrada o selección. Es vacío; type cambia tanto su interfaz como las reglas de validación y los atributos aplicables.",
+    "group": "formularios",
+    "code": "<label for=\"email\">Correo electrónico</label>\n<input id=\"email\" name=\"email\" type=\"email\" autocomplete=\"email\" required>",
+    "attributes": [
+      {
+        "name": "type",
+        "description": "Selecciona el control: text, email, checkbox, number y otros."
+      },
+      {
+        "name": "name",
+        "description": "Clave con la que se envía el valor."
+      },
+      {
+        "name": "required",
+        "description": "Exige un valor válido antes del envío cuando el tipo lo admite."
+      },
+      {
+        "name": "autocomplete",
+        "description": "Indica el propósito del dato y ayuda al autocompletado."
+      },
+      {
+        "name": "min / max / pattern",
+        "description": "Restricciones cuyo efecto depende del tipo de control."
+      }
+    ],
+    "tips": [
+      "Elige un tipo adecuado y acompáñalo de label.",
+      "Disabled no se envía con el formulario; readonly mantiene el valor en el envío en los tipos que lo admiten."
+    ],
+    "related": ["tag-label", "tag-form", "tag-button"],
+    "guide": 6,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input"
+  },
+  {
+    "id": "tag-button",
+    "title": "<button>",
+    "description": "Acciones y envío",
+    "detail": "Crea un botón nativo operable con teclado. Su texto debe explicar la acción; puede contener iconos y texto, pero no otros controles interactivos.",
+    "group": "formularios",
+    "code": "<button type=\"button\">Guardar borrador</button>\n<button type=\"submit\">Enviar formulario</button>",
+    "attributes": [
+      {
+        "name": "type",
+        "description": "button realiza una acción; submit envía el formulario; reset restablece valores."
+      },
+      {
+        "name": "disabled",
+        "description": "Desactiva el control y lo excluye de la interacción habitual."
+      },
+      {
+        "name": "name / value",
+        "description": "Datos del botón de envío activado que pueden viajar con el formulario."
+      }
+    ],
+    "tips": [
+      "Dentro de un formulario, declara type=\"button\" si no quieres enviar. Para que ese botón realice una acción, asocia el comportamiento con JavaScript.",
+      "Su etiqueta debe explicar la acción. No imites un botón con un div que carece de teclado y semántica nativos."
+    ],
+    "related": ["tag-form", "tag-a", "tag-input"],
+    "guide": 6,
+    "preview": false,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button"
+  },
+  {
+    "id": "tag-textarea",
+    "title": "<textarea>",
+    "description": "Texto de varias líneas",
+    "detail": "Recoge texto libre de varias líneas. El valor inicial se escribe entre sus etiquetas y no en un atributo value.",
+    "group": "formularios",
+    "code": "<label for=\"nota\">Tu nota</label>\n<textarea id=\"nota\" name=\"nota\" rows=\"4\" maxlength=\"500\">Una idea para mañana.</textarea>",
+    "attributes": [
+      {
+        "name": "rows / cols",
+        "description": "Dimensiones iniciales orientativas del control."
+      },
+      {
+        "name": "maxlength",
+        "description": "Límite de longitud de la entrada."
+      },
+      {
+        "name": "required / readonly",
+        "description": "Exige contenido o permite leerlo sin editarlo, respectivamente."
+      }
+    ],
+    "tips": [
+      "El valor inicial se escribe entre las etiquetas, no con un atributo value.",
+      "Permite que el campo crezca o se redimensione cuando ayude a leer y escribir."
+    ],
+    "related": ["tag-label", "tag-form", "tag-input"],
+    "guide": 6,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/textarea"
+  },
+  {
+    "id": "tag-select",
+    "title": "<select>",
+    "description": "Selección de opciones",
+    "detail": "Ofrece opciones predefinidas con option. optgroup agrupa opciones relacionadas mediante su atributo label.",
+    "group": "formularios",
+    "code": "<label for=\"lenguaje\">Lenguaje</label>\n<select id=\"lenguaje\" name=\"lenguaje\">\n  <option value=\"html\">HTML</option>\n  <option value=\"css\">CSS</option>\n  <option value=\"js\">JavaScript</option>\n</select>",
+    "attributes": [
+      {
+        "name": "name",
+        "description": "Clave utilizada al enviar el formulario."
+      },
+      {
+        "name": "multiple",
+        "description": "Permite seleccionar varias opciones."
+      },
+      {
+        "name": "required",
+        "description": "Exige una selección válida antes de enviar."
+      }
+    ],
+    "tips": [
+      "Cada option puede tener un value distinto de su texto visible.",
+      "Asocia un label y evita reemplazar el control nativo si no puedes conservar su accesibilidad y su teclado."
+    ],
+    "related": ["tag-label", "tag-form", "tag-input"],
+    "guide": 6,
+    "preview": true,
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/select"
+  },
+  {
+    "id": "tag-details",
+    "title": "<details>",
+    "description": "Contenido desplegable",
+    "detail": "Ofrece un bloque que la persona puede abrir o cerrar sin JavaScript. Su primer summary aporta el título visible del control.",
+    "group": "interaccion",
+    "code": "<details>\n  <summary>¿Necesito JavaScript?</summary>\n  <p>No. Este contenido se abre con HTML nativo.</p>\n</details>",
+    "attributes": [
+      {
+        "name": "open",
+        "description": "Atributo booleano. Si está presente, el contenido empieza desplegado."
+      },
+      {
+        "name": "name",
+        "description": "Agrupa varios details: al abrir uno, se cierra el que estuviera abierto en el mismo grupo."
+      }
+    ],
+    "tips": [
+      "Summary debe ser el primer elemento hijo y dar un nombre claro al desplegable.",
+      "open=\"false\" también abre el elemento. Para cerrarlo, elimina el atributo.",
+      "Conserva el foco visible y prueba el control con Tab, Enter y Espacio. Evita insertar otros botones o enlaces dentro del summary."
+    ],
+    "related": ["tag-button", "tag-section", "tag-form"],
+    "guide": 8,
+    "preview": true,
+    "extraExample": {
+      "label": "Acordeón",
+      "code": "<details name=\"ayuda\" open>\n  <summary>¿Por dónde empiezo?</summary>\n  <p>Empieza por dar estructura al contenido con HTML.</p>\n</details>\n<details name=\"ayuda\">\n  <summary>¿Y el diseño?</summary>\n  <p>Continúa con CSS para definir su presentación.</p>\n</details>"
+    },
+    "note": "El evento toggle se dispara cuando cambia el estado. Puedes observarlo con JavaScript sin reemplazar el comportamiento nativo.",
+    "spec": "https://html.spec.whatwg.org/multipage/interactive-elements.html#the-details-element",
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/details"
+  }
+]

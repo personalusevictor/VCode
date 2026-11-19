@@ -2,53 +2,31 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="author" content="Víctor Martín Pérez" />
-    <title>Aprende HTML y CSS | VCode</title><meta name="description" content="Aprende a crear tu primera web con HTML y CSS: fundamentos y ejemplos accesibles en español.">
-    <link rel="stylesheet" href="assets/css/styles.css" />
-    <link rel="stylesheet" href="assets/css/header.css" /><link rel="stylesheet" href="assets/css/home.css" />
-    <script src="assets/js/main.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f0f1ed" />
+    <meta
+      name="description"
+      content="VCode: una biblioteca de programación en construcción. Explora siete lenguajes y descubre un espacio para aprender, consultar y crear."
+    />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>VCode — El código, en tus manos</title>
+    <script>
+      (() => {
+        let theme;
+        try {
+          theme = localStorage.getItem("vcode-theme");
+        } catch {}
+        document.documentElement.dataset.theme =
+          theme === "dark" || theme === "light"
+            ? theme
+            : matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+      })();
+    </script>
   </head>
-  <body class="home-page">
-    <a class="skip-link" href="#main-content">Saltar al contenido</a>
-    <header>
-      <div class="container navigation">
-        <a class="brand" href="index.html" aria-label="VCode, ir al inicio">VCode</a>
-        <button class="menu-toggle" type="button" aria-controls="navigation-links" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg> Menú</button>
-        <nav id="navigation-links" class="navigation-links" aria-label="Navegación principal">
-          <a href="index.html" aria-current="page">Inicio</a>
-          <a href="html.html">HTML</a> <a href="css.html">CSS</a>
-          <a href="faq.html">FAQ</a>
-          <a href="contact.html">Contacto</a>
-        </nav>
-      </div>
-    </header>
-
-    <main id="main-content">
-<section id="home" aria-labelledby="home-title"><div class="container hero-grid">
-<div><p class="eyebrow">Apuntes para aprender a crear webs</p><h1 id="home-title">Una idea.<br>Un archivo.<br><span>Tu primera web.</span></h1><p class="lead">Empieza por el contenido con HTML. Dale forma con CSS. Explicaciones claras y código para probar a tu ritmo.</p><div class="actions"><a class="btn btn-primary" href="html.html#primer-documento">Empezar con HTML ↗</a><a class="btn" href="css.html">Aprender CSS</a></div><p class="hero-note">Abre tu editor, guarda los cambios y mira qué pasa.</p></div>
-<figure class="workbench"><figcaption>Del código a la página <span aria-hidden="true">↘</span></figcaption><div class="workbench-code"><p class="file-label">index.html</p><pre tabindex="0" aria-label="Ejemplo HTML"><code><span class="code-tag">&lt;article</span> <span class="code-attribute">class</span>=<span class="code-string">"nota"</span><span class="code-tag">&gt;</span>
-  <span class="code-tag">&lt;p&gt;</span>MI PRIMERA PÁGINA<span class="code-tag">&lt;/p&gt;</span>
-  <span class="code-tag">&lt;h2&gt;</span>Hola, mundo.<span class="code-tag">&lt;/h2&gt;</span>
-  <span class="code-tag">&lt;p&gt;</span>Todo empieza por aquí.<span class="code-tag">&lt;/p&gt;</span>
-<span class="code-tag">&lt;/article&gt;</span></code></pre><p class="file-label css-file">estilos.css</p><pre tabindex="0" aria-label="Estilos de la nota"><code><span class="code-tag">.nota</span> {
-  <span class="code-attribute">background</span>: <span class="code-string">#f4f0e6</span>;
-  <span class="code-attribute">color</span>: <span class="code-string">#25382e</span>;
-  <span class="code-attribute">padding</span>: <span class="code-string">1.5rem</span>;
-}</code></pre></div><div class="render-label">Resultado en el navegador</div><div class="nota"><p>MI PRIMERA PÁGINA</p><h2>Hola, mundo.</h2><p>Todo empieza por aquí.</p></div></figure></div></section>
-<section id="resources" aria-labelledby="resources-title"><div class="container"><div class="learning-heading"><div><p class="eyebrow">Paso a paso</p><h2 id="resources-title">Dos lenguajes que van de la mano.</h2></div><p>Primero la estructura.<br>Después, la presentación.</p></div><div class="learning-paths">
-<article class="learning-path"><span class="path-number">01 / HTML</span><h3>Da sentido al contenido.</h3><p>Cómo funciona un documento, cómo conectar archivos y qué elemento elegir para cada contenido.</p><ul><li>Documentos y rutas</li><li>Semántica y accesibilidad</li><li>Referencia de elementos</li></ul><a class="text-link" href="html.html">Aprender HTML ↗</a></article>
-<article class="learning-path css-path"><span class="path-number">02 / CSS</span><h3>Encuentra su forma.</h3><p>Entiende cómo se aplican los estilos y crea diseños que funcionen en pantallas de distintos tamaños.</p><ul><li>Selectores y cascada</li><li>Flexbox y Grid</li><li>Diseño adaptable y foco visible</li></ul><a class="text-link" href="css.html">Aprender CSS ↗</a></article></div>
-<div class="home-help"><p>¿Algo no encaja? Consulta las dudas habituales sobre tus primeros pasos.</p><a class="text-link" href="faq.html">Ir a preguntas frecuentes →</a></div></div></section></main>
-
-    <footer>
-      <div class="container footer-content">
-        <small>© 2026 VCode</small>
-        <a href="contact.html" class="footer-author">
-          <img src="./assets/images/memoji-perfil.png" alt="Memoji de Víctor"/>
-          <span>Hecho por Víctor Martín Pérez</span>
-        </a>
-      </div>
-    </footer>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

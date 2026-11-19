@@ -1,0 +1,1262 @@
+[
+  {
+    "id": "html-1",
+    "title": "Tu primer documento",
+    "language": "html",
+    "languageName": "HTML",
+    "number": 1,
+    "body": [
+      "HTML describe la estructura y el significado del contenido. Un elemento combina una etiqueta de apertura, contenido y una etiqueta de cierre. Los atributos añaden información: lang identifica el idioma y href indica el destino de un enlace.",
+      "El doctype activa el modo estándar del navegador. head contiene metadatos y recursos; body contiene lo que se muestra. Guarda este ejemplo como index.html y ábrelo en tu navegador. La codificación UTF-8 permite escribir tildes y otros caracteres."
+    ],
+    "code": "<!doctype html>\n<html lang=\"es\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>Mi primer proyecto</title>\n</head>\n<body>\n  <h1>Hola, mundo.</h1>\n  <p>Todo empieza con una línea.</p>\n</body>\n</html>",
+    "note": "HTML aporta significado; CSS controla la presentación y JavaScript añade comportamiento. No elijas una etiqueta por su aspecto predeterminado.",
+    "level": "Fundamentos",
+    "minutes": 4
+  },
+  {
+    "id": "html-2",
+    "title": "Texto, enlaces y listas",
+    "language": "html",
+    "languageName": "HTML",
+    "number": 2,
+    "body": [
+      "Los encabezados h1 a h6 organizan secciones. Usa una jerarquía lógica, sin saltar niveles para cambiar tamaños. p representa un párrafo; strong expresa importancia y em énfasis.",
+      "Un enlace a lleva a otro recurso, mientras que un botón ejecuta una acción. ul describe una lista sin orden y ol una secuencia. Las rutas relativas dependen de la ubicación del archivo; una ruta que empieza por https:// apunta a un sitio externo."
+    ],
+    "code": "<h1>Mi cuaderno de desarrollo</h1>\n<p>Aprender es <strong>practicar con intención</strong>.</p>\n<h2>Primeros pasos</h2>\n<ol>\n  <li>Crea un archivo HTML.</li>\n  <li>Ábrelo en el navegador.</li>\n</ol>\n<a href=\"https://developer.mozilla.org/es/\">Visitar MDN</a>\n<a href=\"#contacto\">Ir al contacto</a>",
+    "note": "Escribe enlaces descriptivos. «Consultar la guía HTML» comunica más que «haz clic aquí».",
+    "level": "Fundamentos",
+    "minutes": 5
+  },
+  {
+    "id": "html-3",
+    "title": "Semántica y estructura",
+    "language": "html",
+    "languageName": "HTML",
+    "number": 3,
+    "body": [
+      "Los elementos semánticos describen la función del contenido: header introduce, nav agrupa navegación, main contiene el contenido principal y footer cierra una página o sección. article representa contenido independiente; section agrupa un tema, normalmente con encabezado.",
+      "div es un contenedor sin significado específico y sigue siendo adecuado para agrupar elementos por motivos de diseño. La semántica ayuda a las tecnologías de asistencia a navegar por regiones, pero no sustituye un orden de lectura comprensible."
+    ],
+    "code": "<header><a href=\"/\">Mi estudio</a></header>\n<nav aria-label=\"Principal\"><a href=\"#trabajos\">Trabajos</a></nav>\n<main id=\"contenido\">\n  <section id=\"trabajos\">\n    <h1>Trabajos seleccionados</h1>\n    <article><h2>Una biblioteca digital</h2><p>Mi primer proyecto.</p></article>\n  </section>\n</main>\n<footer><small>© 2026 Mi estudio</small></footer>",
+    "note": "Usa un solo main visible para el contenido principal. No conviertas todos los contenedores en section: reserva section para agrupaciones temáticas.",
+    "level": "Fundamentos",
+    "minutes": 6
+  },
+  {
+    "id": "html-4",
+    "title": "Imágenes y contenido multimedia",
+    "language": "html",
+    "languageName": "HTML",
+    "number": 4,
+    "body": [
+      "img necesita una fuente src y un texto alternativo adecuado. Describe la información que aporta la imagen; si es puramente decorativa, usa alt vacío. width y height reservan espacio y reducen saltos durante la carga.",
+      "figure y figcaption relacionan una imagen con su pie. audio y video ofrecen controles nativos. Añade subtítulos con track y un archivo WebVTT cuando el vídeo contenga voz. Cargar imágenes fuera de pantalla con loading=\"lazy\" puede reducir el trabajo inicial."
+    ],
+    "code": "<figure>\n  <img src=\"equipo.webp\" alt=\"Tres personas trabajando en un prototipo\"\n       width=\"800\" height=\"500\" loading=\"lazy\">\n  <figcaption>La sesión de diseño del lunes.</figcaption>\n</figure>\n<video controls width=\"640\" preload=\"metadata\">\n  <source src=\"presentacion.mp4\" type=\"video/mp4\">\n  <track kind=\"captions\" src=\"subtitulos-es.vtt\" srclang=\"es\" label=\"Español\" default>\n</video>",
+    "note": "Los nombres de archivo del ejemplo son recursos de tu proyecto: debes proporcionarlos. No apliques lazy loading a la imagen principal que debe verse inmediatamente.",
+    "level": "Intermedio",
+    "minutes": 4
+  },
+  {
+    "id": "html-5",
+    "title": "Tablas que se entienden",
+    "language": "html",
+    "languageName": "HTML",
+    "number": 5,
+    "body": [
+      "Las tablas representan datos con relaciones entre filas y columnas. caption describe su propósito, thead agrupa encabezados y tbody los datos. Usa th con scope para asociar los encabezados a sus celdas.",
+      "No uses tablas para maquetar páginas. Para conjuntos complejos, considera simplificarlos o establecer asociaciones con headers e id. En pantallas pequeñas puedes introducir un contenedor con desplazamiento horizontal sin eliminar información."
+    ],
+    "code": "<table>\n  <caption>Horas de estudio por semana</caption>\n  <thead><tr><th scope=\"col\">Lenguaje</th><th scope=\"col\">Horas</th></tr></thead>\n  <tbody>\n    <tr><th scope=\"row\">HTML</th><td>3</td></tr>\n    <tr><th scope=\"row\">CSS</th><td>4</td></tr>\n  </tbody>\n</table>",
+    "note": "Una tabla visualmente atractiva sigue necesitando encabezados y una lectura coherente. El color no debe ser el único indicador de un resultado.",
+    "level": "Intermedio",
+    "minutes": 5
+  },
+  {
+    "id": "html-6",
+    "title": "Formularios y validación nativa",
+    "language": "html",
+    "languageName": "HTML",
+    "number": 6,
+    "body": [
+      "Un formulario agrupa campos que pueden enviarse a un servidor. label se asocia al id del campo; name define la clave enviada. type adapta el teclado y la validación. required, minlength y min expresan restricciones básicas.",
+      "Usa fieldset y legend para grupos relacionados. El placeholder es una pista temporal y no sustituye la etiqueta. La validación del navegador mejora la experiencia, pero un servidor debe volver a comprobar y autorizar todos los datos recibidos."
+    ],
+    "code": "<form action=\"/registro\" method=\"post\">\n  <label for=\"email\">Correo electrónico</label>\n  <input id=\"email\" name=\"email\" type=\"email\" autocomplete=\"email\" required>\n  <fieldset>\n    <legend>Modalidad</legend>\n    <label><input type=\"radio\" name=\"modo\" value=\"online\" required> Online</label>\n    <label><input type=\"radio\" name=\"modo\" value=\"presencial\"> Presencial</label>\n  </fieldset>\n  <button type=\"submit\">Crear cuenta</button>\n</form>",
+    "note": "El endpoint /registro necesita un servidor. Un sitio estático puede mostrar y validar el formulario, pero no crear cuentas por sí solo.",
+    "level": "Intermedio",
+    "minutes": 6
+  },
+  {
+    "id": "html-7",
+    "title": "Accesibilidad desde el HTML",
+    "language": "html",
+    "languageName": "HTML",
+    "number": 7,
+    "body": [
+      "Una interfaz accesible ofrece estructura, nombres claros y manejo por teclado. Los botones y enlaces nativos ya incluyen semántica y comportamiento que tendrías que reconstruir en un div. Añade un enlace para saltar al contenido principal.",
+      "ARIA complementa el HTML cuando la semántica nativa no basta. aria-expanded comunica el estado de un desplegable y aria-live permite anunciar actualizaciones sin mover el foco. Para un botón que solo muestra un icono, proporciona un nombre accesible."
+    ],
+    "code": "<a href=\"#main\">Saltar al contenido</a>\n<button type=\"button\" aria-label=\"Abrir búsqueda\">\n  <svg aria-hidden=\"true\" viewBox=\"0 0 24 24\"><circle cx=\"10\" cy=\"10\" r=\"7\"/></svg>\n</button>\n<main id=\"main\"><h1>Biblioteca</h1></main>\n<p role=\"status\" aria-live=\"polite\" id=\"estado\"></p>",
+    "note": "No añadas tabindex positivo para corregir un mal orden visual. Organiza el documento para que la secuencia natural tenga sentido.",
+    "level": "Intermedio",
+    "minutes": 4
+  },
+  {
+    "id": "html-8",
+    "title": "Elementos interactivos nativos",
+    "language": "html",
+    "languageName": "HTML",
+    "number": 8,
+    "body": [
+      "details y summary permiten revelar contenido sin JavaScript. dialog proporciona un contenedor para diálogos; showModal() lo abre como modal y close() lo cierra. Usa un título asociado y conserva un mecanismo claro para salir.",
+      "Los controles nativos reducen el código, pero debes comprobar su comportamiento con teclado y lector de pantalla. Abrir un modal debe responder a una acción y el foco debe volver al control que lo abrió al cerrarlo. No conviertas un formulario sencillo en un modal innecesario."
+    ],
+    "code": "<details>\n  <summary>¿Necesito experiencia?</summary>\n  <p>No. Puedes empezar desde cero.</p>\n</details>\n<button id=\"abrir\" type=\"button\">Ver condiciones</button>\n<dialog id=\"condiciones\" aria-labelledby=\"titulo-modal\">\n  <h2 id=\"titulo-modal\">Condiciones de uso</h2>\n  <p>Lee y practica a tu ritmo.</p>\n  <form method=\"dialog\"><button>Cerrar</button></form>\n</dialog>\n<script>\n  document.querySelector('#abrir').addEventListener('click', () => {\n    document.querySelector('#condiciones').showModal();\n  });\n</script>",
+    "note": "showModal() limita la interacción con el resto de la página y ofrece cierre con Escape. show() abre un diálogo no modal.",
+    "level": "Intermedio",
+    "minutes": 5
+  },
+  {
+    "id": "html-9",
+    "title": "Imágenes adaptables y rendimiento",
+    "language": "html",
+    "languageName": "HTML",
+    "number": 9,
+    "body": [
+      "srcset ofrece alternativas de resolución y sizes describe el ancho que ocupará la imagen según la pantalla. El navegador combina esa información con la densidad de píxeles para elegir un recurso. picture permite cambiar formatos o encuadres.",
+      "Define dimensiones, comprime recursos y evita descargar imágenes mucho mayores de lo necesario. Una imagen principal puede necesitar prioridad; otras pueden cargarse bajo demanda. El rendimiento se verifica con mediciones, no solo contando kilobytes."
+    ],
+    "code": "<picture>\n  <source type=\"image/avif\" srcset=\"paisaje.avif\">\n  <img src=\"paisaje-800.jpg\"\n       srcset=\"paisaje-400.jpg 400w, paisaje-800.jpg 800w, paisaje-1200.jpg 1200w\"\n       sizes=\"(max-width: 600px) 100vw, 60vw\"\n       width=\"1200\" height=\"800\"\n       alt=\"Montañas al amanecer\">\n</picture>",
+    "note": "srcset y sizes requieren archivos reales con las dimensiones declaradas. Mantén un src de respaldo y prueba la selección en las herramientas del navegador.",
+    "level": "Intermedio",
+    "minutes": 6
+  },
+  {
+    "id": "html-10",
+    "title": "Metadatos, SEO y enlaces compartidos",
+    "language": "html",
+    "languageName": "HTML",
+    "number": 10,
+    "body": [
+      "Un title único identifica una página en pestañas y resultados de búsqueda. La descripción resume su contenido, aunque un buscador puede generar otro extracto. El idioma, los encabezados y los enlaces claros benefician tanto a personas como a sistemas automáticos.",
+      "Los metadatos Open Graph proponen título, resumen e imagen al compartir una URL. Una URL canónica ayuda a señalar la versión preferida de un contenido duplicado. Ninguna etiqueta garantiza aparecer primero: la calidad y la accesibilidad del contenido siguen siendo esenciales."
+    ],
+    "code": "<head>\n  <meta charset=\"UTF-8\">\n  <title>Portfolio de Alex — Desarrollo web</title>\n  <meta name=\"description\" content=\"Proyectos de interfaces accesibles y desarrollo web de Alex.\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <meta property=\"og:title\" content=\"Portfolio de Alex\">\n  <meta property=\"og:description\" content=\"Ideas convertidas en interfaces.\">\n</head>",
+    "note": "Usa imágenes y URL absolutas de tu dominio al preparar los metadatos de una publicación real. No publiques dominios ficticios como si fueran tuyos.",
+    "level": "Avanzado",
+    "minutes": 4
+  },
+  {
+    "id": "html-11",
+    "title": "Plantillas, datos y carga de scripts",
+    "language": "html",
+    "languageName": "HTML",
+    "number": 11,
+    "body": [
+      "template contiene HTML inerte que JavaScript puede clonar. Los atributos data-* guardan información propia de la interfaz y se consultan mediante dataset. Esta separación evita mezclar lógica con manejadores escritos dentro de los atributos HTML.",
+      "Un script clásico con defer se ejecuta tras analizar el documento y conserva el orden relativo de otros scripts defer. async no garantiza ese orden. Los módulos tienen su propio ámbito y se difieren de forma predeterminada. Escapa contenido no confiable y usa textContent para texto."
+    ],
+    "code": "<template id=\"tarjeta\">\n  <article><h2></h2><p></p></article>\n</template>\n<div id=\"lista\"></div>\n<script>\n  const fragmento = document.querySelector('#tarjeta').content.cloneNode(true);\n  fragmento.querySelector('h2').textContent = 'Mi primer proyecto';\n  fragmento.querySelector('p').textContent = 'Construido con HTML semántico.';\n  document.querySelector('#lista').append(fragmento);\n</script>",
+    "note": "No uses innerHTML para introducir texto de usuarios. textContent lo trata como texto y evita interpretarlo como marcado ejecutable.",
+    "level": "Avanzado",
+    "minutes": 5
+  },
+  {
+    "id": "html-12",
+    "title": "Proyecto: una página que funciona para todos",
+    "language": "html",
+    "languageName": "HTML",
+    "number": 12,
+    "body": [
+      "Integra lo aprendido en un portfolio de una sola página. Planifica el contenido antes de escribir etiquetas: presentación, proyectos, habilidades y contacto. Cada sección necesita una función clara y una navegación consistente.",
+      "Revisa la jerarquía de encabezados, los nombres de enlaces, el texto alternativo y el orden del teclado. Prueba un ancho de 320 píxeles y un zoom del 200 %. Abre las herramientas del navegador para detectar rutas rotas y errores de la consola. Valida el marcado con un validador HTML."
+    ],
+    "code": "<header><a href=\"#inicio\">Alex / desarrollo</a></header>\n<nav aria-label=\"Principal\"><a href=\"#proyectos\">Proyectos</a></nav>\n<main id=\"inicio\">\n  <h1>Construyo ideas para la web.</h1>\n  <section id=\"proyectos\"><h2>Proyectos</h2>\n    <article><h3>Biblioteca de barrio</h3><p>Un catálogo accesible.</p></article>\n  </section>\n  <section><h2>Contacto</h2><p>Disponible para colaborar.</p></section>\n</main>\n<footer>Hecho con curiosidad y HTML.</footer>",
+    "note": "Publicar exige comprobar los archivos reales y las rutas del alojamiento. Un documento válido puede seguir siendo difícil de usar: prueba también tareas concretas.",
+    "level": "Avanzado",
+    "minutes": 6
+  },
+  {
+    "id": "css-1",
+    "title": "Selectores, cascada y herencia",
+    "language": "css",
+    "languageName": "CSS",
+    "number": 1,
+    "body": [
+      "CSS aplica declaraciones a los elementos que coinciden con un selector. Una regla tiene selector, propiedad y valor. La cascada resuelve conflictos considerando origen, importancia, capas, especificidad y orden; si todo lo anterior empata, gana la última declaración.",
+      "La especificidad compara identificadores, clases y atributos, y finalmente tipos de elemento. Algunas propiedades, como color, se heredan; otras, como margin, no. Es preferible mantener selectores sencillos y controlar el orden de los estilos antes que acumular !important."
+    ],
+    "code": "body { color: #263126; font-family: system-ui, sans-serif; }\n.tarjeta { padding: 24px; color: #3b5230; }\n.tarjeta h2 { font-size: 24px; }\n.tarjeta.destacada { border: 1px solid #91ac72; }\na:hover { text-decoration: underline; }",
+    "note": "Un ID aumenta mucho la especificidad. Las clases suelen ser una base más flexible para componentes reutilizables.",
+    "level": "Fundamentos",
+    "minutes": 4
+  },
+  {
+    "id": "css-2",
+    "title": "El modelo de caja",
+    "language": "css",
+    "languageName": "CSS",
+    "number": 2,
+    "body": [
+      "Cada elemento ocupa una caja formada por contenido, padding, border y margin. Con content-box, width solo mide el contenido; con border-box incluye padding y borde. Usar border-box de forma global facilita prever dimensiones.",
+      "Los elementos de bloque suelen ocupar el ancho disponible. Los elementos en línea siguen el flujo del texto y no admiten dimensiones como un bloque. inline-block combina flujo en línea con una caja dimensionable. Los márgenes verticales de ciertos bloques pueden colapsar."
+    ],
+    "code": "*, *::before, *::after { box-sizing: border-box; }\n.tarjeta {\n  width: min(100%, 420px);\n  padding: 24px;\n  border: 1px solid #dbe2d4;\n  margin-inline: auto;\n  border-radius: 14px;\n}\n.etiqueta { display: inline-block; padding: 4px 8px; }",
+    "note": "Un ancho fijo más padding puede causar desbordamiento con content-box. Comprueba la caja calculada en las herramientas de desarrollo.",
+    "level": "Fundamentos",
+    "minutes": 5
+  },
+  {
+    "id": "css-3",
+    "title": "Tipografía, color y unidades",
+    "language": "css",
+    "languageName": "CSS",
+    "number": 3,
+    "body": [
+      "La tipografía crea jerarquía mediante tamaño, peso, espaciado e interlineado. rem depende del tamaño de fuente raíz, em del contexto tipográfico y los porcentajes dependen de la propiedad y su contenedor. Un interlineado sin unidad se hereda de forma previsible.",
+      "Usa una escala pequeña y consistente. Limita el ancho de lectura con ch y mantén suficiente contraste entre texto y fondo. clamp combina mínimo, valor flexible y máximo, por lo que evita saltos bruscos entre tamaños de pantalla."
+    ],
+    "code": ":root { --tinta: #243023; --fondo: #fafbf7; }\nbody { color: var(--tinta); background: var(--fondo); line-height: 1.65; }\nh1 { font-size: clamp(2rem, 5vw, 4rem); letter-spacing: -.04em; }\np { max-width: 65ch; }\nsmall { font-size: .875rem; }",
+    "note": "El texto pequeño y gris demasiado claro puede perder legibilidad. Comprueba contraste y zoom en lugar de confiar solo en la apariencia.",
+    "level": "Fundamentos",
+    "minutes": 6
+  },
+  {
+    "id": "css-4",
+    "title": "Flexbox: un eje, muchas posibilidades",
+    "language": "css",
+    "languageName": "CSS",
+    "number": 4,
+    "body": [
+      "Flexbox distribuye elementos a lo largo de un eje principal. justify-content actúa sobre ese eje y align-items sobre el transversal. flex-direction cambia cuál es el eje principal; por ello no equivalen siempre a horizontal y vertical.",
+      "gap aporta espacio entre elementos sin márgenes manuales. flex-wrap permite varias líneas. flex combina crecimiento, reducción y base. Cuando un hijo no puede encogerse por su contenido, min-width:0 suele resolver desbordamientos en layouts flexibles."
+    ],
+    "code": ".barra { display: flex; align-items: center; gap: 16px; }\n.barra .marca { margin-right: auto; }\n.tarjetas { display: flex; flex-wrap: wrap; gap: 20px; }\n.tarjeta { flex: 1 1 250px; min-width: 0; }\n.centrada { display: flex; align-items: center; justify-content: center; min-height: 200px; }",
+    "note": "Flexbox ordena la presentación, pero el orden del documento sigue afectando a la lectura y al teclado. Evita usar order para corregir una estructura equivocada.",
+    "level": "Intermedio",
+    "minutes": 4
+  },
+  {
+    "id": "css-5",
+    "title": "Grid: diseña en dos dimensiones",
+    "language": "css",
+    "languageName": "CSS",
+    "number": 5,
+    "body": [
+      "Grid define filas y columnas y es adecuado para composiciones de página y colecciones de tarjetas. fr reparte el espacio libre y minmax fija límites para las pistas. repeat evita duplicar valores.",
+      "auto-fit crea tantas columnas como quepan y colapsa las vacías. Combinarlo con minmax permite un catálogo adaptable sin muchos breakpoints. Los hijos también pueden ocupar varias pistas con grid-column o ubicarse mediante áreas con nombre."
+    ],
+    "code": ".catalogo {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));\n  gap: 24px;\n}\n.pagina {\n  display: grid;\n  grid-template-columns: 220px minmax(0, 1fr);\n}\n.destacada { grid-column: 1 / -1; }",
+    "note": "minmax(0,1fr) evita que el tamaño mínimo automático de una columna provoque desbordamiento por un contenido largo.",
+    "level": "Intermedio",
+    "minutes": 5
+  },
+  {
+    "id": "css-6",
+    "title": "Posicionamiento y capas",
+    "language": "css",
+    "languageName": "CSS",
+    "number": 6,
+    "body": [
+      "position:relative mantiene el elemento en el flujo y establece una referencia para descendientes absolute. Un elemento absoluto sale del flujo normal y se posiciona respecto a su bloque contenedor. fixed suele referirse a la ventana, aunque ciertos ancestros pueden cambiarlo.",
+      "sticky combina flujo normal y adherencia dentro de su contexto de desplazamiento. Necesita un umbral como top. z-index no es una clasificación global: los contextos de apilamiento agrupan sus descendientes, y propiedades como transform pueden crear contextos nuevos."
+    ],
+    "code": ".tarjeta { position: relative; padding: 24px; }\n.insignia { position: absolute; top: 12px; right: 12px; }\n.cabecera { position: sticky; top: 0; z-index: 20; }\n.modal-fondo { position: fixed; inset: 0; z-index: 100; background: #0006; }",
+    "note": "Si sticky no funciona, revisa el overflow de sus ancestros y el espacio disponible para desplazarse. Subir z-index no arregla todos los contextos de apilamiento.",
+    "level": "Intermedio",
+    "minutes": 6
+  },
+  {
+    "id": "css-7",
+    "title": "Diseño adaptable de verdad",
+    "language": "css",
+    "languageName": "CSS",
+    "number": 7,
+    "body": [
+      "Empieza con una composición pequeña y añade complejidad cuando el contenido lo necesite. Las media queries consultan características del entorno, como ancho o preferencias. Los breakpoints deben responder a la composición, no a una lista de modelos de teléfono.",
+      "Usa dimensiones fluidas, imágenes con max-width:100% y evita alturas fijas para texto. Prueba orientación, zoom y palabras largas. Una página adaptable conserva funcionalidad y contenido, no solo reduce el tamaño de sus elementos."
+    ],
+    "code": ".contenedor { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }\n.layout { display: grid; gap: 24px; }\nimg { max-width: 100%; height: auto; }\n@media (min-width: 800px) {\n  .layout { grid-template-columns: 1fr 2fr; }\n}",
+    "note": "Comprueba al menos un ancho estrecho, uno intermedio y uno amplio. Detecta el primer elemento que causa desbordamiento en lugar de ocultar overflow globalmente.",
+    "level": "Intermedio",
+    "minutes": 4
+  },
+  {
+    "id": "css-8",
+    "title": "Variables, temas y capas de estilos",
+    "language": "css",
+    "languageName": "CSS",
+    "number": 8,
+    "body": [
+      "Las propiedades personalizadas guardan valores reutilizables y participan en la cascada. Se declaran con --nombre y se leen con var(). Permiten separar decisiones de diseño de las reglas de cada componente.",
+      "Un tema cambia un conjunto de variables en un ancestro. @layer permite declarar un orden explícito entre grupos de estilos: para declaraciones normales, las capas posteriores prevalecen sobre las anteriores. Las reglas normales sin capa tienen más prioridad que las normales dentro de capas."
+    ],
+    "code": "@layer base, componentes;\n:root { --fondo: #fafbf7; --texto: #263126; --espacio: 1rem; }\n[data-theme=\"oscuro\"] { --fondo: #202720; --texto: #e3ebdb; }\n@layer base {\n  body { background: var(--fondo); color: var(--texto); }\n}\n@layer componentes {\n  .tarjeta { padding: calc(var(--espacio) * 1.5); border-radius: 12px; }\n}",
+    "note": "Las variables no son un preprocesador: se resuelven en el navegador y pueden cambiar por elemento o durante la ejecución.",
+    "level": "Intermedio",
+    "minutes": 5
+  },
+  {
+    "id": "css-9",
+    "title": "Transiciones y movimiento accesible",
+    "language": "css",
+    "languageName": "CSS",
+    "number": 9,
+    "body": [
+      "Una transición interpola entre estados de una propiedad; una animación con @keyframes describe una secuencia. Anima propiedades concretas. transform y opacity suelen ser buenas opciones para movimiento sin recalcular el layout en cada fotograma.",
+      "El movimiento comunica cambios y debe ser breve y funcional. Respeta prefers-reduced-motion y evita parpadeos. Una interacción disponible al pasar el ratón necesita también una alternativa mediante foco o activación por teclado."
+    ],
+    "code": ".boton { transition: transform .18s ease, background-color .18s ease; }\n.boton:hover { transform: translateY(-2px); }\n.boton:focus-visible { outline: 3px solid #87a86a; outline-offset: 4px; }\n@media (prefers-reduced-motion: reduce) {\n  .boton { transition: none; }\n  .boton:hover { transform: none; }\n}",
+    "note": "Evita transition:all como solución por defecto. Puede animar propiedades inesperadas y hacer que los cambios de tamaño resulten incómodos.",
+    "level": "Intermedio",
+    "minutes": 6
+  },
+  {
+    "id": "css-10",
+    "title": "Container queries y componentes flexibles",
+    "language": "css",
+    "languageName": "CSS",
+    "number": 10,
+    "body": [
+      "Las media queries responden a la ventana, pero una tarjeta puede aparecer tanto en un panel estrecho como en una página ancha. Las container queries permiten adaptarla al tamaño de su contenedor, haciendo el componente más reutilizable.",
+      "Declara container-type:inline-size en un ancestro y usa @container para cambiar el estilo de sus descendientes. La consulta no transforma directamente el propio contenedor. Diseña primero una base funcional para que la interfaz siga siendo usable donde no se aplique la mejora."
+    ],
+    "code": ".zona-tarjeta { container-type: inline-size; }\n.tarjeta { display: grid; gap: 16px; }\n@container (min-width: 480px) {\n  .tarjeta { grid-template-columns: 150px 1fr; align-items: center; }\n}\n.tarjeta img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }",
+    "note": "El contenedor establece un contexto de tamaño. Prueba su comportamiento dentro de diferentes layouts, especialmente si el contenido contribuye al ancho del padre.",
+    "level": "Avanzado",
+    "minutes": 4
+  },
+  {
+    "id": "css-11",
+    "title": "Arquitectura, depuración y rendimiento",
+    "language": "css",
+    "languageName": "CSS",
+    "number": 11,
+    "body": [
+      "Organiza los estilos por responsabilidades: base, composición y componentes. Usa nombres previsibles y variables para valores repetidos. Un componente necesita estados de foco, interacción, carga, error y desactivación cuando sean aplicables.",
+      "En las herramientas de desarrollo, inspecciona estilos calculados, reglas sobrescritas y el modelo de caja. Antes de añadir un parche, identifica la propiedad que causa el error. Reduce fuentes y efectos costosos; mide la carga y los repintados en dispositivos modestos."
+    ],
+    "code": "/* Base */\n:root { --radio: 12px; --borde: #dce4d5; }\n/* Composición */\n.stack > * + * { margin-block-start: 1rem; }\n/* Componente */\n.card { padding: 1.5rem; border: 1px solid var(--borde); border-radius: var(--radio); }\n.card__title { font-size: 1.25rem; }\n.card--featured { background: #f1f7e8; }",
+    "note": "No añadas !important antes de revisar cascada, capas, especificidad y orden de importación. Una corrección pequeña y explicable es más fácil de mantener.",
+    "level": "Avanzado",
+    "minutes": 5
+  },
+  {
+    "id": "css-12",
+    "title": "Proyecto: un sistema de tarjetas adaptable",
+    "language": "css",
+    "languageName": "CSS",
+    "number": 12,
+    "body": [
+      "Construye un catálogo de cursos con una rejilla, filtros visuales y tarjetas consistentes. Define primero tokens de color, espaciado y radio. Crea una tarjeta completa y después úsala como patrón para todo el catálogo.",
+      "Comprueba textos cortos y largos, foco visible, contraste, modo estrecho y preferencias de movimiento. El proyecto debe funcionar sin anchos fijos en cada tarjeta. Documenta tus decisiones y guarda una captura de tres tamaños para comparar la consistencia."
+    ],
+    "code": ":root { --surface: #fff; --border: #e1e6da; --radius: 14px; }\n.catalogo { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }\n.curso { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }\n.curso__body { padding: 22px; }\n.curso__title { margin: 0 0 10px; font-size: 1.25rem; }\n.curso a:focus-visible { outline: 3px solid #79945a; outline-offset: 4px; }",
+    "note": "Un sistema visual no requiere cientos de variables. Empieza con decisiones consistentes y amplíalo cuando aparezcan necesidades reales.",
+    "level": "Avanzado",
+    "minutes": 6
+  },
+  {
+    "id": "javascript-1",
+    "title": "Variables, tipos y operadores",
+    "language": "javascript",
+    "languageName": "JavaScript",
+    "number": 1,
+    "body": [
+      "Una variable asocia un nombre a un valor. Usa const cuando no reasignes la referencia y let si el valor cambiará. const no vuelve inmutable un objeto: sus propiedades pueden seguir modificándose. Evita var en código nuevo por sus reglas de ámbito.",
+      "JavaScript distingue cadenas, números, booleanos, undefined, null, bigint, symbol y objetos. La suma puede concatenar cadenas; convierte entradas explícitamente y prefiere === para comparar sin coerción implícita."
+    ],
+    "code": "const nombre = 'Alex';\nlet puntos = 0;\npuntos += 10;\nconst precio = Number('12.50');\nconsole.log(nombre, puntos, precio * 2);\nconsole.log(5 === '5'); // false\nconsole.log(typeof precio); // number",
+    "note": "Los valores de los inputs suelen ser cadenas. Valida la conversión con Number.isFinite antes de hacer cálculos.",
+    "level": "Fundamentos",
+    "minutes": 4
+  },
+  {
+    "id": "javascript-2",
+    "title": "Condiciones y bucles",
+    "language": "javascript",
+    "languageName": "JavaScript",
+    "number": 2,
+    "body": [
+      "if selecciona un bloque según una condición booleana. Usa else para el caso contrario y un operador ternario para una elección breve. Los valores 0, cadena vacía, null, undefined y NaN son falsy; un array vacío es truthy.",
+      "for repite con un contador, while mientras se cumpla una condición y for...of recorre valores de un iterable. Asegura que un bucle termina y evita modificar su condición de forma inesperada."
+    ],
+    "code": "const notas = [8, 4, 7];\nlet aprobados = 0;\nfor (const nota of notas) {\n  if (nota >= 5) aprobados++;\n}\nconst mensaje = aprobados > 0 ? 'Buen comienzo' : 'Sigue practicando';\nconsole.log(aprobados, mensaje);",
+    "note": "Un bucle que nunca termina bloquea el hilo donde se ejecuta. Comprueba el límite antes de probarlo en una interfaz.",
+    "level": "Fundamentos",
+    "minutes": 5
+  },
+  {
+    "id": "javascript-3",
+    "title": "Funciones, ámbito y closures",
+    "language": "javascript",
+    "languageName": "JavaScript",
+    "number": 3,
+    "body": [
+      "Las funciones agrupan una operación y pueden recibir parámetros y devolver un resultado. Una función sin return devuelve undefined. Separa el cálculo de los efectos, como modificar la interfaz, para facilitar la reutilización.",
+      "let y const tienen ámbito de bloque. Una closure conserva acceso al entorno donde se creó la función, incluso después de terminar la función exterior. Es útil para encapsular estado sin recurrir a variables globales."
+    ],
+    "code": "function crearContador() {\n  let valor = 0;\n  return () => {\n    valor += 1;\n    return valor;\n  };\n}\nconst siguiente = crearContador();\nconsole.log(siguiente()); // 1\nconsole.log(siguiente()); // 2",
+    "note": "Una función flecha no crea su propio this. No es un reemplazo automático de todos los métodos y funciones tradicionales.",
+    "level": "Fundamentos",
+    "minutes": 6
+  },
+  {
+    "id": "javascript-4",
+    "title": "Arrays: transformar sin complicarse",
+    "language": "javascript",
+    "languageName": "JavaScript",
+    "number": 4,
+    "body": [
+      "map crea un array transformado, filter selecciona elementos y reduce acumula un resultado. find devuelve el primer elemento que coincide o undefined. Estos métodos expresan la intención mejor que algunos bucles manuales.",
+      "Evita mutar el array original cuando represente estado compartido. sort ordena en el propio array, así que clónalo primero si necesitas conservarlo. El comparador numérico evita el orden lexicográfico predeterminado."
+    ],
+    "code": "const cursos = [\n  { nombre: 'HTML', horas: 8 },\n  { nombre: 'JavaScript', horas: 14 }\n];\nconst largos = cursos.filter(curso => curso.horas > 10);\nconst nombres = cursos.map(curso => curso.nombre);\nconst total = cursos.reduce((suma, curso) => suma + curso.horas, 0);\nconsole.log(largos, nombres, total);",
+    "note": "map sirve para producir valores nuevos; forEach sirve para efectos. No uses map si vas a ignorar el array resultante.",
+    "level": "Intermedio",
+    "minutes": 4
+  },
+  {
+    "id": "javascript-5",
+    "title": "Objetos, destructuring y referencias",
+    "language": "javascript",
+    "languageName": "JavaScript",
+    "number": 5,
+    "body": [
+      "Un objeto agrupa propiedades y métodos. La notación de punto accede a claves conocidas y los corchetes permiten claves calculadas. La desestructuración extrae propiedades y puede asignar valores por defecto.",
+      "Spread crea una copia superficial. Los objetos anidados siguen compartiendo referencias, por lo que debes copiar cada nivel que modifiques si necesitas inmutabilidad. Optional chaining evita acceder a una propiedad de null o undefined y ?? ofrece un valor alternativo solo para esos dos casos."
+    ],
+    "code": "const persona = { nombre: 'Alex', preferencias: { tema: 'claro' } };\nconst { nombre } = persona;\nconst actualizada = {\n  ...persona,\n  preferencias: { ...persona.preferencias, tema: 'oscuro' }\n};\nconsole.log(nombre, actualizada.preferencias.tema);\nconsole.log(persona.contacto?.email ?? 'Sin correo');",
+    "note": "Spread no clona profundamente. Compartir referencias puede provocar cambios inesperados si modificas objetos anidados.",
+    "level": "Intermedio",
+    "minutes": 5
+  },
+  {
+    "id": "javascript-6",
+    "title": "DOM y eventos accesibles",
+    "language": "javascript",
+    "languageName": "JavaScript",
+    "number": 6,
+    "body": [
+      "El DOM representa el documento como objetos. querySelector encuentra un elemento y createElement crea uno. Usa textContent para texto externo y classList para cambios visuales. Mantener un estado en datos evita depender de estilos para decidir la lógica.",
+      "addEventListener registra respuestas a interacciones. En formularios, escucha submit para incluir teclado y botón. preventDefault evita el comportamiento nativo cuando la aplicación gestiona el envío. Un botón nativo ya funciona con teclado."
+    ],
+    "code": "// HTML necesario: <button id=\"sumar\">Sumar</button><p id=\"total\">0</p>\nlet cuenta = 0;\nconst boton = document.querySelector('#sumar');\nconst salida = document.querySelector('#total');\nboton.addEventListener('click', () => {\n  cuenta += 1;\n  salida.textContent = String(cuenta);\n});",
+    "note": "Los ejemplos que consultan elementos necesitan ese HTML en la página. Ejecuta el script con defer o después de los elementos.",
+    "level": "Intermedio",
+    "minutes": 6
+  },
+  {
+    "id": "javascript-7",
+    "title": "Promesas, async y await",
+    "language": "javascript",
+    "languageName": "JavaScript",
+    "number": 7,
+    "body": [
+      "Una promesa representa el resultado futuro de una operación: pendiente, cumplida o rechazada. then consume el valor y catch maneja un rechazo. Una función async siempre devuelve una promesa y await permite esperar su resultado dentro de ella.",
+      "Esperar no vuelve síncrona toda la aplicación. El código posterior de esa función se reanuda cuando la promesa se resuelve. Usa try/catch para errores y finally para restaurar estados como un botón desactivado. Promise.all combina tareas independientes y rechaza si alguna falla."
+    ],
+    "code": "const esperar = ms => new Promise(resolve => setTimeout(resolve, ms));\nasync function iniciar() {\n  try {\n    await esperar(300);\n    console.log('Preparado');\n  } catch (error) {\n    console.error('No se pudo iniciar:', error.message);\n  }\n}\niniciar();",
+    "note": "await solo puede usarse dentro de funciones async o en el nivel superior de un módulo. No uses una pausa activa para simular espera.",
+    "level": "Intermedio",
+    "minutes": 4
+  },
+  {
+    "id": "javascript-8",
+    "title": "Fetch, JSON y estados de carga",
+    "language": "javascript",
+    "languageName": "JavaScript",
+    "number": 8,
+    "body": [
+      "fetch devuelve una promesa con una respuesta HTTP. Un estado 404 o 500 no provoca por sí mismo un rechazo: comprueba response.ok. response.json() también es asíncrono y puede fallar si el contenido no es JSON válido.",
+      "Modela carga, éxito, vacío y error. AbortController permite cancelar una solicitud, por ejemplo si cambia una búsqueda. No muestres secretos en código cliente ni asumas que una respuesta externa tiene siempre la estructura esperada."
+    ],
+    "code": "async function cargarCursos(signal) {\n  const respuesta = await fetch('/api/cursos', { signal });\n  if (!respuesta.ok) throw new Error('HTTP ' + respuesta.status);\n  const datos = await respuesta.json();\n  if (!Array.isArray(datos)) throw new Error('Formato inesperado');\n  return datos;\n}\n// /api/cursos debe existir en tu servidor.\nconst controlador = new AbortController();\n// cargarCursos(controlador.signal).then(console.log).catch(console.error);",
+    "note": "Una web estática necesita un servicio externo o un archivo JSON real para hacer solicitudes útiles. CORS lo decide el servidor, no un truco en el cliente.",
+    "level": "Intermedio",
+    "minutes": 5
+  },
+  {
+    "id": "javascript-9",
+    "title": "Módulos y almacenamiento local",
+    "language": "javascript",
+    "languageName": "JavaScript",
+    "number": 9,
+    "body": [
+      "Los módulos separan responsabilidades con export e import. El navegador los carga con type=\"module\" y requieren rutas válidas; es mejor usar un servidor local para probarlos. Mantén las dependencias claras y evita estado global innecesario.",
+      "localStorage guarda cadenas por origen y persiste entre sesiones. Serializa objetos con JSON.stringify y recupera con JSON.parse. La lectura, la escritura o el análisis pueden fallar, por lo que conviene manejar errores y validar la forma de los datos."
+    ],
+    "code": "const preferencias = { tema: 'claro' };\ntry {\n  localStorage.setItem('vcode-demo', JSON.stringify(preferencias));\n  const guardado = JSON.parse(localStorage.getItem('vcode-demo') ?? '{}');\n  console.log(guardado.tema ?? 'claro');\n} catch (error) {\n  console.log('Almacenamiento no disponible');\n}",
+    "note": "No almacenes contraseñas, tokens sensibles ni datos privados en localStorage. Es accesible a JavaScript del mismo origen.",
+    "level": "Intermedio",
+    "minutes": 6
+  },
+  {
+    "id": "javascript-10",
+    "title": "Event loop, tareas y microtareas",
+    "language": "javascript",
+    "languageName": "JavaScript",
+    "number": 10,
+    "body": [
+      "JavaScript ejecuta una tarea cada vez en su hilo. Las operaciones asíncronas coordinan trabajo sin mantener ocupado ese hilo. Cuando termina la pila actual, se procesan las microtareas pendientes antes de continuar con la siguiente tarea.",
+      "Las reacciones de promesas se programan como microtareas; setTimeout programa una tarea tras un tiempo mínimo, no una cita exacta. Una tarea muy larga retrasa entrada, temporizadores y pintado. Divide trabajo costoso o usa workers cuando corresponda."
+    ],
+    "code": "console.log('A');\nsetTimeout(() => console.log('B'), 0);\nPromise.resolve().then(() => console.log('C'));\nconsole.log('D');\n// Orden: A, D, C, B",
+    "note": "Un temporizador de cero milisegundos no se ejecuta inmediatamente. Primero termina el código actual y se vacían las microtareas correspondientes.",
+    "level": "Avanzado",
+    "minutes": 4
+  },
+  {
+    "id": "javascript-11",
+    "title": "Errores, pruebas y código robusto",
+    "language": "javascript",
+    "languageName": "JavaScript",
+    "number": 11,
+    "body": [
+      "Lanza errores cuando una función no pueda cumplir su contrato y manéjalos donde puedas dar una respuesta útil. No ocultes excepciones sin dejar un estado comprensible. Validar las entradas protege también frente a errores accidentales.",
+      "Las funciones puras son fáciles de probar porque su resultado depende de sus argumentos. Comprueba casos normales, límites y entradas inválidas. console.assert sirve para demostraciones sencillas; un proyecto real puede usar un ejecutor de pruebas con aserciones y fallos detectables."
+    ],
+    "code": "function dividir(a, b) {\n  if (!Number.isFinite(a) || !Number.isFinite(b)) {\n    throw new TypeError('Se esperan números finitos');\n  }\n  if (b === 0) throw new RangeError('División entre cero');\n  return a / b;\n}\nconsole.assert(dividir(8, 2) === 4);\ntry { dividir(1, 0); } catch (error) { console.log(error.message); }",
+    "note": "Un catch vacío puede esconder el problema. Devuelve una respuesta recuperable, informa al usuario o propaga el error según la responsabilidad de la función.",
+    "level": "Avanzado",
+    "minutes": 5
+  },
+  {
+    "id": "javascript-12",
+    "title": "Proyecto: un gestor de tareas",
+    "language": "javascript",
+    "languageName": "JavaScript",
+    "number": 12,
+    "body": [
+      "Construye un gestor con estado en un array de objetos: id, texto y completada. Separa operaciones de datos y renderizado. Crea nodos y asigna texto con textContent para que una tarea escrita por una persona no se interprete como HTML.",
+      "Añade creación, marcado, eliminación, filtros y persistencia con manejo de errores. Delega eventos en la lista cuando haya muchos elementos dinámicos. Verifica que el foco no se pierda al actualizar y que los cambios importantes se anuncien de forma discreta."
+    ],
+    "code": "let tareas = [];\nfunction agregar(texto) {\n  const limpio = texto.trim();\n  if (!limpio) return;\n  tareas = [...tareas, { id: crypto.randomUUID(), texto: limpio, completada: false }];\n}\nfunction completar(id) {\n  tareas = tareas.map(t => t.id === id ? { ...t, completada: !t.completada } : t);\n}\nagregar('Terminar mi primer proyecto');\nconsole.log(tareas);",
+    "note": "crypto.randomUUID requiere un contexto seguro en los navegadores compatibles. localhost suele servir para desarrollo; en producción usa HTTPS.",
+    "level": "Avanzado",
+    "minutes": 6
+  },
+  {
+    "id": "react-1",
+    "title": "Componentes y JSX",
+    "language": "react",
+    "languageName": "React",
+    "number": 1,
+    "body": [
+      "React permite describir la interfaz como una función de los datos. Un componente es una función con nombre en mayúscula que devuelve una descripción de UI. JSX se parece a HTML, pero es sintaxis de JavaScript que necesita transformación antes de ejecutarse.",
+      "Usa className para clases, cierra las etiquetas y agrupa los elementos en un padre o fragmento. Las expresiones entre llaves insertan valores. Estos ejemplos se pueden estudiar y ejecutar en un entorno React."
+    ],
+    "code": "function Bienvenida() {\n  const nombre = 'Alex';\n  return (\n    <section className=\"bienvenida\">\n      <h1>Hola, {nombre}</h1>\n      <p>Tu siguiente idea empieza aquí.</p>\n    </section>\n  );\n}\nexport default Bienvenida;",
+    "note": "JSX no es una cadena de HTML. No se puede pegar directamente en un script clásico del navegador sin una transformación adecuada.",
+    "level": "Fundamentos",
+    "minutes": 4
+  },
+  {
+    "id": "react-2",
+    "title": "Props y composición",
+    "language": "react",
+    "languageName": "React",
+    "number": 2,
+    "body": [
+      "Las props son datos que un padre pasa a un hijo. El componente las lee y no debe modificarlas. Puedes desestructurarlas y establecer valores predeterminados. children permite pasar contenido y es útil para contenedores reutilizables.",
+      "Compón componentes pequeños alrededor de responsabilidades reales. Evita añadir opciones para diferencias que podrían expresarse con children o composición. Los datos fluyen hacia abajo y los hijos comunican intenciones mediante callbacks."
+    ],
+    "code": "function Tarjeta({ titulo, children }) {\n  return <article className=\"tarjeta\"><h2>{titulo}</h2>{children}</article>;\n}\nfunction App() {\n  return <Tarjeta titulo=\"JavaScript\"><p>De la lógica a la interacción.</p></Tarjeta>;\n}",
+    "note": "Las props son una instantánea de lectura. Si un hijo necesita pedir un cambio, recibe una función del padre en lugar de mutar el objeto.",
+    "level": "Fundamentos",
+    "minutes": 5
+  },
+  {
+    "id": "react-3",
+    "title": "Listas, claves y condiciones",
+    "language": "react",
+    "languageName": "React",
+    "number": 3,
+    "body": [
+      "Usa map para convertir datos en componentes y expresiones condicionales para elegir qué mostrar. Una key estable identifica cada elemento entre sus hermanos y ayuda a React a mantener la identidad durante inserciones o reordenaciones.",
+      "Evita índices como clave cuando la lista cambia de orden y no generes claves aleatorias durante el render. key no se recibe como prop normal: si el hijo necesita el identificador, pásalo también explícitamente."
+    ],
+    "code": "const cursos = [{ id: 'html', nombre: 'HTML' }, { id: 'css', nombre: 'CSS' }];\nfunction Catalogo() {\n  return cursos.length === 0 ? <p>No hay cursos.</p> : (\n    <ul>{cursos.map(curso => <li key={curso.id}>{curso.nombre}</li>)}</ul>\n  );\n}",
+    "note": "Con condiciones numéricas, 0 && <Elemento /> puede mostrar un cero. Usa cantidad > 0 si quieres expresar una condición booleana.",
+    "level": "Fundamentos",
+    "minutes": 6
+  },
+  {
+    "id": "react-4",
+    "title": "useState y actualizaciones",
+    "language": "react",
+    "languageName": "React",
+    "number": 4,
+    "body": [
+      "useState añade estado local y devuelve el valor actual junto a una función para solicitar una actualización. El estado se conserva entre renders. Cambiar una variable normal no desencadena un nuevo render.",
+      "El estado de cada render es una instantánea. Si el siguiente valor depende del anterior, usa una función actualizadora. React puede agrupar actualizaciones. Los hooks se llaman en el nivel superior del componente o de otro hook, nunca dentro de condiciones o bucles."
+    ],
+    "code": "import { useState } from 'react';\nfunction Contador() {\n  const [cuenta, setCuenta] = useState(0);\n  return <button onClick={() => setCuenta(c => c + 1)}>{cuenta} puntos</button>;\n}",
+    "note": "No escribas onClick={setCuenta(cuenta + 1)}: eso ejecuta el cambio durante el render. Pasa una función para que se ejecute en el evento.",
+    "level": "Intermedio",
+    "minutes": 4
+  },
+  {
+    "id": "react-5",
+    "title": "Formularios controlados",
+    "language": "react",
+    "languageName": "React",
+    "number": 5,
+    "body": [
+      "Un input controlado recibe value y un onChange que actualiza su estado. El valor mostrado deriva de React. Para un checkbox usa checked. Inicia cadenas con una cadena vacía para no cambiar accidentalmente entre controlado y no controlado.",
+      "Gestiona el envío en onSubmit y aprovecha la validación HTML nativa. Mantén etiquetas asociadas, mensajes comprensibles y foco previsible. No guardes datos derivados, como la longitud del texto, si puedes calcularlos durante el render."
+    ],
+    "code": "import { useState } from 'react';\nfunction Busqueda() {\n const [texto, setTexto] = useState('');\n function enviar(evento) { evento.preventDefault(); console.log(texto.trim()); }\n return <form onSubmit={enviar}>\n  <label htmlFor=\"buscar\">Buscar curso</label>\n  <input id=\"buscar\" value={texto} onChange={e => setTexto(e.target.value)} required />\n  <button>Buscar</button>\n </form>;\n}",
+    "note": "Un input con value pero sin un onChange adecuado queda de solo lectura en la práctica, salvo que declares esa intención.",
+    "level": "Intermedio",
+    "minutes": 5
+  },
+  {
+    "id": "react-6",
+    "title": "Elevar el estado e inmutabilidad",
+    "language": "react",
+    "languageName": "React",
+    "number": 6,
+    "body": [
+      "Cuando dos componentes necesitan coordinarse, mueve su estado al ancestro común más cercano. El padre pasa valores y callbacks. Evita duplicar el mismo dato en varios sitios porque las copias pueden divergir.",
+      "No modifiques arrays u objetos del estado directamente. Crea nuevos valores con map, filter y spread. Mantén un estado mínimo: calcula contadores y listas filtradas a partir del origen siempre que sea posible."
+    ],
+    "code": "function alternar(id) {\n setTareas(actuales => actuales.map(tarea =>\n  tarea.id === id ? { ...tarea, hecha: !tarea.hecha } : tarea\n ));\n}\n// Si tareas es estado:\nconst pendientes = tareas.filter(t => !t.hecha);\nconst cantidad = pendientes.length;",
+    "note": "La inmutabilidad permite comparar referencias y razonar sobre instantáneas. Una copia superficial no basta para cambiar objetos anidados.",
+    "level": "Intermedio",
+    "minutes": 6
+  },
+  {
+    "id": "react-7",
+    "title": "useEffect: sincronizar con el exterior",
+    "language": "react",
+    "languageName": "React",
+    "number": 7,
+    "body": [
+      "Un efecto sincroniza el componente con un sistema externo: una suscripción, un temporizador o una API. No lo uses para calcular datos que pueden obtenerse durante el render ni para lógica que pertenece directamente a un evento.",
+      "Declara todas las dependencias reactivas usadas y devuelve una limpieza cuando abras una suscripción o recurso. En desarrollo, Strict Mode puede ejecutar un ciclo adicional de montaje y limpieza para detectar problemas. El código debe tolerar esa comprobación."
+    ],
+    "code": "import { useEffect, useState } from 'react';\nfunction Reloj() {\n const [ahora, setAhora] = useState(Date.now());\n useEffect(() => {\n  const id = setInterval(() => setAhora(Date.now()), 1000);\n  return () => clearInterval(id);\n }, []);\n return <time>{new Date(ahora).toLocaleTimeString('es')}</time>;\n}",
+    "note": "No silencies dependencias para forzar el comportamiento. Reorganiza el efecto si depende de objetos o funciones creados de nuevo en cada render.",
+    "level": "Intermedio",
+    "minutes": 4
+  },
+  {
+    "id": "react-8",
+    "title": "Datos remotos y cancelación",
+    "language": "react",
+    "languageName": "React",
+    "number": 8,
+    "body": [
+      "Una solicitud debe representar estados de carga, error y resultado. Si se lanza desde un efecto, cancela o ignora respuestas obsoletas para evitar que una petición anterior sobrescriba datos nuevos.",
+      "Comprueba el estado HTTP y valida la respuesta. En aplicaciones grandes, un framework o biblioteca de consultas puede resolver caché y coordinación mejor que efectos repetidos. El ejemplo muestra el mecanismo básico y necesita un endpoint real."
+    ],
+    "code": "useEffect(() => {\n const controller = new AbortController();\n setEstado({ carga: true, datos: [], error: '' });\n fetch('/api/cursos', { signal: controller.signal })\n  .then(r => { if (!r.ok) throw new Error('Error HTTP'); return r.json(); })\n  .then(datos => setEstado({ carga: false, datos, error: '' }))\n  .catch(error => {\n   if (error.name !== 'AbortError') setEstado({ carga: false, datos: [], error: error.message });\n  });\n return () => controller.abort();\n}, []);",
+    "note": "El fragmento supone un estado creado con useState y una API que devuelve un array. En producción valida la estructura antes de renderizarla.",
+    "level": "Intermedio",
+    "minutes": 5
+  },
+  {
+    "id": "react-9",
+    "title": "Context y useReducer",
+    "language": "react",
+    "languageName": "React",
+    "number": 9,
+    "body": [
+      "useReducer concentra transiciones de estado en una función pura que recibe estado y acción. Es útil cuando hay muchas operaciones relacionadas. Las acciones describen lo que ocurrió y el reducer decide el siguiente estado.",
+      "Context distribuye un valor a descendientes sin pasarlo por cada nivel. No reemplaza automáticamente todo estado local. Un cambio de identidad en el valor del proveedor puede actualizar consumidores, así que mantén el alcance y la estructura ajustados a la necesidad."
+    ],
+    "code": "import { useReducer } from 'react';\nfunction reducer(estado, accion) {\n switch (accion.tipo) {\n  case 'sumar': return { ...estado, puntos: estado.puntos + 1 };\n  case 'reiniciar': return { puntos: 0 };\n  default: return estado;\n }\n}\nfunction Marcador() {\n const [estado, dispatch] = useReducer(reducer, { puntos: 0 });\n return <button onClick={() => dispatch({ tipo: 'sumar' })}>{estado.puntos}</button>;\n}",
+    "note": "Un reducer no debe hacer fetch ni modificar el DOM. Esos efectos se coordinan fuera de la función que calcula el estado.",
+    "level": "Intermedio",
+    "minutes": 6
+  },
+  {
+    "id": "react-10",
+    "title": "Refs y hooks personalizados",
+    "language": "react",
+    "languageName": "React",
+    "number": 10,
+    "body": [
+      "useRef conserva un valor entre renders sin provocar uno nuevo al cambiar current. Sirve para referencias al DOM o identificadores de recursos; no sustituye al estado para información visible.",
+      "Un hook personalizado extrae lógica con hooks. Su nombre empieza por use y sigue las mismas reglas de llamada. Cada invocación conserva su propio estado: compartir un hook no implica compartir el mismo valor entre componentes."
+    ],
+    "code": "import { useRef } from 'react';\nfunction Buscador() {\n const inputRef = useRef(null);\n return <>\n  <input ref={inputRef} aria-label=\"Buscar\" />\n  <button onClick={() => inputRef.current?.focus()}>Ir a la búsqueda</button>\n </>;\n}",
+    "note": "Evita leer o escribir refs durante el render salvo inicializaciones previsibles. La interfaz visible debe depender de props y estado.",
+    "level": "Avanzado",
+    "minutes": 4
+  },
+  {
+    "id": "react-11",
+    "title": "Rendimiento, identidad y pruebas",
+    "language": "react",
+    "languageName": "React",
+    "number": 11,
+    "body": [
+      "Antes de optimizar, mide. Renderizar no implica necesariamente cambiar el DOM. Un componente debe ser correcto incluso sin memoización. useMemo conserva un cálculo entre renders según dependencias y useCallback una referencia a función.",
+      "Evita optimizar cada operación pequeña. Primero reduce trabajo innecesario y mantén el estado cerca de donde se usa. Prueba comportamientos observables: escribir, filtrar y activar controles. Verifica estados de carga y error, y usa claves estables para preservar identidad."
+    ],
+    "code": "import { useMemo } from 'react';\nfunction Lista({ cursos, filtro }) {\n const visibles = useMemo(\n  () => cursos.filter(c => c.nombre.toLowerCase().includes(filtro.toLowerCase())),\n  [cursos, filtro]\n );\n return <ul>{visibles.map(c => <li key={c.id}>{c.nombre}</li>)}</ul>;\n}",
+    "note": "Este filtro pequeño probablemente no necesita useMemo. El ejemplo enseña la herramienta; una medición debe justificar su uso real.",
+    "level": "Avanzado",
+    "minutes": 5
+  },
+  {
+    "id": "react-12",
+    "title": "Proyecto: un catálogo de aprendizaje",
+    "language": "react",
+    "languageName": "React",
+    "number": 12,
+    "body": [
+      "Construye una aplicación con catálogo, búsqueda, favoritos y ficha de curso. Define datos con identificadores estables y reparte responsabilidades: App coordina, Catalogo filtra y Tarjeta muestra. Mantén el filtro como estado y calcula los resultados.",
+      "Añade favoritos persistentes con manejo de errores y una pantalla vacía útil. Si conectas una API, incluye cancelación y estados de error. Escribe un README con requisitos y pasos de ejecución. El resultado debe poder manejarse por teclado y tener una estructura semántica."
+    ],
+    "code": "function Catalogo({ cursos }) {\n const [filtro, setFiltro] = useState('');\n const visibles = cursos.filter(c => c.nombre.toLowerCase().includes(filtro.toLowerCase()));\n return <section>\n  <label>Buscar <input value={filtro} onChange={e => setFiltro(e.target.value)} /></label>\n  {visibles.length ? visibles.map(c => <article key={c.id}><h2>{c.nombre}</h2></article>) : <p>Sin coincidencias.</p>}\n </section>;\n}",
+    "note": "No hace falta usar Context para un filtro que solo pertenece al catálogo. Añade abstracciones cuando resuelvan una necesidad real.",
+    "level": "Avanzado",
+    "minutes": 6
+  },
+  {
+    "id": "php-1",
+    "title": "El servidor y tu primer script",
+    "language": "php",
+    "languageName": "PHP",
+    "number": 1,
+    "body": [
+      "PHP se ejecuta en el servidor y genera una respuesta que recibe el navegador. El cliente ve el resultado, no el código PHP original, siempre que el servidor esté configurado correctamente. Puedes usar PHP también desde una terminal.",
+      "Guarda el archivo con extensión .php y ejecútalo con php archivo.php. Para una prueba local de páginas puedes usar php -S localhost:8000 desde la carpeta del proyecto. El servidor integrado sirve para desarrollo, no para exposición en producción."
+    ],
+    "code": "<?php\ndeclare(strict_types=1);\n$nombre = 'Alex';\necho \"Hola, $nombre\n\";\necho 'PHP se ejecuta en el servidor.';",
+    "note": "La declaración strict_types controla coerciones escalares en llamadas desde ese archivo; no valida automáticamente entradas HTTP.",
+    "level": "Fundamentos",
+    "minutes": 4
+  },
+  {
+    "id": "php-2",
+    "title": "Variables, tipos y control de flujo",
+    "language": "php",
+    "languageName": "PHP",
+    "number": 2,
+    "body": [
+      "Las variables comienzan con $ y PHP distingue tipos como int, float, string, bool, array y null. Usa === para comparar valor y tipo. Los operadores y conversiones implícitas pueden dar resultados inesperados si no validas las entradas.",
+      "if, foreach y while organizan el flujo. match devuelve un valor usando comparaciones estrictas y debe cubrir el caso recibido. Usa ?? para proporcionar un respaldo cuando una clave no existe o contiene null."
+    ],
+    "code": "<?php\n$horas = 8;\n$nivel = match (true) {\n  $horas < 5 => 'Inicial',\n  $horas < 15 => 'Intermedio',\n  default => 'Intensivo',\n};\nforeach (['HTML', 'CSS', 'PHP'] as $curso) {\n  echo \"$curso\n\";\n}\necho $nivel;",
+    "note": "Las entradas HTTP suelen llegar como cadenas. La tipificación del código no sustituye el análisis de datos externos.",
+    "level": "Fundamentos",
+    "minutes": 5
+  },
+  {
+    "id": "php-3",
+    "title": "Funciones y tipos explícitos",
+    "language": "php",
+    "languageName": "PHP",
+    "number": 3,
+    "body": [
+      "Una función recibe argumentos y devuelve un resultado. Los tipos de parámetros y retorno documentan y verifican parte del contrato. Usa ?string o una unión con null cuando la ausencia sea un resultado válido.",
+      "Separa reglas de negocio de salida HTML. Los argumentos por defecto simplifican llamadas habituales, pero no sustituyen una API clara. Una función pequeña, con entradas y salidas explícitas, es más fácil de comprobar que una que lee variables globales."
+    ],
+    "code": "<?php\ndeclare(strict_types=1);\nfunction precioFinal(float $precio, float $iva = 0.21): float {\n  if ($precio < 0) throw new InvalidArgumentException('Precio negativo');\n  return round($precio * (1 + $iva), 2);\n}\necho precioFinal(100.0); // 121",
+    "note": "El dinero en sistemas reales necesita una estrategia de precisión: unidades mínimas enteras o una biblioteca decimal, según la moneda y el negocio.",
+    "level": "Fundamentos",
+    "minutes": 6
+  },
+  {
+    "id": "php-4",
+    "title": "Arrays y transformaciones",
+    "language": "php",
+    "languageName": "PHP",
+    "number": 4,
+    "body": [
+      "El array de PHP es un mapa ordenado que puede funcionar como lista o diccionario. foreach recorre valores y opcionalmente claves. array_map transforma y array_filter selecciona, pero los índices pueden conservarse; array_values vuelve a indexar si necesitas una lista JSON.",
+      "Comprueba existencia con isset o array_key_exists según si null debe contar como presente. No confíes en el contenido de un array externo sin validar su estructura."
+    ],
+    "code": "<?php\n$cursos = [['nombre' => 'HTML', 'horas' => 8], ['nombre' => 'PHP', 'horas' => 12]];\n$largos = array_values(array_filter($cursos, fn(array $c): bool => $c['horas'] > 10));\n$nombres = array_map(fn(array $c): string => $c['nombre'], $largos);\necho json_encode($nombres, JSON_UNESCAPED_UNICODE);",
+    "note": "Después de filtrar una lista, reindexa antes de serializar si el consumidor espera un array JSON y no un objeto con claves numéricas.",
+    "level": "Intermedio",
+    "minutes": 4
+  },
+  {
+    "id": "php-5",
+    "title": "Formularios: validar y escapar",
+    "language": "php",
+    "languageName": "PHP",
+    "number": 5,
+    "body": [
+      "Las entradas de $_GET y $_POST no son confiables. Valida formato, longitud y reglas del negocio antes de usarlas. Una entrada podría llegar como array cuando esperas una cadena, así que comprueba también el tipo.",
+      "Validar decide si el dato es aceptable. Escapar adapta un valor al contexto donde se inserta. En texto o atributos HTML usa htmlspecialchars con comillas y UTF-8. Escapar HTML no protege una consulta SQL: cada contexto necesita su técnica."
+    ],
+    "code": "<?php\n$entrada = $_POST['email'] ?? null;\n$email = is_string($entrada) ? filter_var($entrada, FILTER_VALIDATE_EMAIL) : false;\nif ($email === false) {\n  http_response_code(422);\n  echo 'Correo no válido';\n  exit;\n}\necho htmlspecialchars($email, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');",
+    "note": "La validación cliente mejora la experiencia; el servidor siempre vuelve a validar. No muestres errores internos o credenciales en una respuesta pública.",
+    "level": "Intermedio",
+    "minutes": 5
+  },
+  {
+    "id": "php-6",
+    "title": "Clases, interfaces y composición",
+    "language": "php",
+    "languageName": "PHP",
+    "number": 6,
+    "body": [
+      "Una clase agrupa estado y comportamiento. La visibilidad limita el acceso y el constructor establece un objeto válido. Una interfaz define un contrato que distintas implementaciones pueden cumplir.",
+      "Prefiere componer objetos que colaboran antes de crear jerarquías profundas. La inyección de dependencias hace explícitas esas colaboraciones y permite reemplazarlas en pruebas. Usa namespaces para evitar colisiones de nombres en proyectos grandes."
+    ],
+    "code": "<?php\ninterface Notificador { public function enviar(string $texto): void; }\nfinal class Consola implements Notificador {\n public function enviar(string $texto): void { echo $texto; }\n}\nfinal class Inscripcion {\n public function __construct(private Notificador $notificador) {}\n public function confirmar(): void { $this->notificador->enviar('Inscripción confirmada'); }\n}\n(new Inscripcion(new Consola()))->confirmar();",
+    "note": "Una interfaz no debe conocer detalles de almacenamiento o transporte que no pertenezcan a su contrato.",
+    "level": "Intermedio",
+    "minutes": 6
+  },
+  {
+    "id": "php-7",
+    "title": "PDO y consultas preparadas",
+    "language": "php",
+    "languageName": "PHP",
+    "number": 7,
+    "body": [
+      "PDO ofrece una interfaz para trabajar con bases de datos. Las consultas preparadas separan la estructura SQL de sus valores, evitando que un dato se interprete como parte del comando. Configura errores como excepciones.",
+      "Los parámetros representan valores, no nombres de tablas ni direcciones de ordenación. Para identificadores dinámicos usa una lista cerrada de opciones permitidas. Las credenciales deben proceder del entorno y disponer de permisos mínimos."
+    ],
+    "code": "<?php\n// SQLite local para practicar; requiere pdo_sqlite.\n$pdo = new PDO('sqlite::memory:');\n$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);\n$pdo->exec('CREATE TABLE cursos (id INTEGER PRIMARY KEY, nombre TEXT NOT NULL)');\n$insertar = $pdo->prepare('INSERT INTO cursos (nombre) VALUES (:nombre)');\n$insertar->execute(['nombre' => 'PHP']);\n$consulta = $pdo->prepare('SELECT nombre FROM cursos WHERE id = :id');\n$consulta->execute(['id' => 1]);\nvar_dump($consulta->fetch(PDO::FETCH_ASSOC));",
+    "note": "No concatentes entradas externas dentro del SQL. Que un valor venga de un formulario interno no lo convierte en confiable.",
+    "level": "Intermedio",
+    "minutes": 4
+  },
+  {
+    "id": "php-8",
+    "title": "Sesiones y contraseñas",
+    "language": "php",
+    "languageName": "PHP",
+    "number": 8,
+    "body": [
+      "Las sesiones relacionan solicitudes con datos almacenados en el servidor mediante un identificador. Configura cookies seguras y regenera el identificador al autenticar para reducir fijación de sesión. Distingue autenticación de autorización: saber quién es alguien no concede acceso a todo.",
+      "Guarda contraseñas con password_hash y compruébalas con password_verify. No inventes un algoritmo ni almacenes texto plano. Usa HTTPS en producción, limita intentos y no reveles si un correo existe mediante mensajes excesivamente específicos."
+    ],
+    "code": "<?php\n$hash = password_hash('una-frase-de-prueba-larga', PASSWORD_DEFAULT);\nif (password_verify('una-frase-de-prueba-larga', $hash)) {\n echo 'Credenciales correctas';\n}\n// Al configurar una sesión web bajo HTTPS:\n// session_set_cookie_params(['httponly' => true, 'secure' => true, 'samesite' => 'Lax']);\n// session_start();\n// session_regenerate_id(true);",
+    "note": "La frase del ejemplo es de demostración y no una credencial que debas reutilizar. No envíes contraseñas al navegador para verificarlas allí.",
+    "level": "Intermedio",
+    "minutes": 5
+  },
+  {
+    "id": "php-9",
+    "title": "CSRF, autorización y límites de confianza",
+    "language": "php",
+    "languageName": "PHP",
+    "number": 9,
+    "body": [
+      "CSRF intenta provocar una acción autenticada desde un contexto ajeno. Para acciones que cambian estado, valida un token impredecible asociado a la sesión y combina esa protección con cookies apropiadas. No realices cambios mediante GET.",
+      "La autorización debe comprobarse en el servidor para cada operación y recurso. Ocultar un botón no impide que alguien envíe la solicitud manualmente. Valida que la persona autenticada puede acceder al registro, no solo que el id recibido tiene formato correcto."
+    ],
+    "code": "<?php\nsession_start();\n$_SESSION['csrf'] ??= bin2hex(random_bytes(32));\nif ($_SERVER['REQUEST_METHOD'] === 'POST') {\n $token = $_POST['csrf'] ?? null;\n if (!is_string($token) || !hash_equals($_SESSION['csrf'], $token)) {\n  http_response_code(403); exit('Solicitud no válida');\n }\n // Comprobar autorización antes de modificar datos.\n}",
+    "note": "El token debe enviarse en el formulario o cabecera y validarse en el servidor. SameSite ayuda, pero no reemplaza una estrategia completa.",
+    "level": "Intermedio",
+    "minutes": 6
+  },
+  {
+    "id": "php-10",
+    "title": "Excepciones, transacciones y JSON",
+    "language": "php",
+    "languageName": "PHP",
+    "number": 10,
+    "body": [
+      "Una excepción comunica que una operación no puede completarse. Captúrala donde puedas recuperar o responder; registra detalles internos de forma controlada y devuelve un mensaje público útil. Una transacción agrupa cambios que deben confirmarse o revertirse juntos.",
+      "Una respuesta JSON necesita Content-Type y un estado HTTP adecuado. json_encode puede fallar: JSON_THROW_ON_ERROR permite gestionarlo como excepción. No mezcles HTML, avisos de PHP o espacios accidentales con una API JSON."
+    ],
+    "code": "<?php\nheader('Content-Type: application/json; charset=utf-8');\ntry {\n $datos = ['curso' => 'PHP', 'disponible' => true];\n echo json_encode($datos, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);\n} catch (JsonException $error) {\n http_response_code(500);\n echo '{\"error\":\"No se pudo generar la respuesta\"}';\n}",
+    "note": "No muestres stack traces en producción. Dentro de una transacción, revierte si falla una operación y comprueba si la conexión sigue en transacción.",
+    "level": "Avanzado",
+    "minutes": 4
+  },
+  {
+    "id": "php-11",
+    "title": "Arquitectura, Composer y pruebas",
+    "language": "php",
+    "languageName": "PHP",
+    "number": 11,
+    "body": [
+      "Separa recepción HTTP, reglas del negocio y acceso a datos. Composer gestiona dependencias y puede cargar clases mediante autoload. Un repositorio no debe contener contraseñas ni directorios de dependencias generados si el proyecto los instala desde su manifiesto.",
+      "Las pruebas deben verificar reglas de negocio y comportamientos, incluidas entradas inválidas y permisos. Inyectar un repositorio falso permite probar sin una base real; las pruebas de integración comprueban consultas y transacciones contra un entorno aislado."
+    ],
+    "code": "<?php\nfinal class Inscribir {\n public function __construct(private array $cursosDisponibles) {}\n public function permitido(string $curso): bool {\n  return in_array($curso, $this->cursosDisponibles, true);\n }\n}\n$servicio = new Inscribir(['html', 'php']);\nif (!$servicio->permitido('php')) throw new RuntimeException('Prueba fallida');\nif ($servicio->permitido('desconocido')) throw new RuntimeException('Prueba fallida');",
+    "note": "Mantén configuración y secretos fuera del código público. Instala solo dependencias necesarias y revisa su mantenimiento y licencias.",
+    "level": "Avanzado",
+    "minutes": 5
+  },
+  {
+    "id": "php-12",
+    "title": "Proyecto: una API de cursos segura",
+    "language": "php",
+    "languageName": "PHP",
+    "number": 12,
+    "body": [
+      "Diseña rutas para listar cursos y registrar inscripciones. Define contratos JSON y estados HTTP antes de programar. Usa PDO, validación de tipos y límites de longitud, autenticación y comprobación de permisos según cada operación.",
+      "Prueba alta válida, datos inválidos, duplicados, falta de sesión y acceso a recursos ajenos. El navegador no puede ejecutar este servidor: crea un proyecto PHP separado. Documenta configuración, esquema, migraciones y variables de entorno sin incluir sus valores secretos."
+    ],
+    "code": "<?php\n// Esqueleto de respuesta de una ruta de listado.\nheader('Content-Type: application/json; charset=utf-8');\n$metodo = $_SERVER['REQUEST_METHOD'] ?? 'GET';\nif ($metodo !== 'GET') {\n header('Allow: GET'); http_response_code(405);\n echo json_encode(['error' => 'Método no permitido']); exit;\n}\necho json_encode(['cursos' => [['id' => 'php', 'nombre' => 'PHP']]], JSON_THROW_ON_ERROR);",
+    "note": "Este esqueleto no implementa autenticación ni persistencia. El proyecto consiste en añadirlas y comprobarlas en un servidor de desarrollo.",
+    "level": "Avanzado",
+    "minutes": 6
+  },
+  {
+    "id": "java-1",
+    "title": "JDK, compilación y primer programa",
+    "language": "java",
+    "languageName": "Java",
+    "number": 1,
+    "body": [
+      "Java compila código fuente a bytecode que ejecuta la JVM. El JDK contiene herramientas de desarrollo como javac. Guarda una clase pública en un archivo con el mismo nombre: Hola.java. Compila con javac Hola.java y ejecuta con java Hola.",
+      "main es un punto de entrada convencional. Los tipos se verifican estáticamente y las sentencias terminan en punto y coma. La biblioteca estándar aporta colecciones, archivos y muchas otras herramientas sin depender de paquetes externos."
+    ],
+    "code": "public class Hola {\n  public static void main(String[] args) {\n    String nombre = \"Alex\";\n    System.out.println(\"Hola, \" + nombre);\n  }\n}",
+    "note": "Java y JavaScript son lenguajes distintos. Este código requiere un JDK; no se ejecuta dentro de una etiqueta script del navegador.",
+    "level": "Fundamentos",
+    "minutes": 4
+  },
+  {
+    "id": "java-2",
+    "title": "Tipos, variables y control de flujo",
+    "language": "java",
+    "languageName": "Java",
+    "number": 2,
+    "body": [
+      "Los primitivos incluyen int, long, double y boolean. String es un tipo de referencia. final impide reasignar una variable, pero no vuelve inmutable el objeto referenciado. var infiere el tipo local sin convertir Java en un lenguaje dinámico.",
+      "if, for y while controlan la ejecución. La división entre enteros trunca el resultado; convierte a double si necesitas decimales. Compara el contenido de cadenas con equals, no con ==, que compara referencias."
+    ],
+    "code": "public class Tipos {\n public static void main(String[] args) {\n  int aciertos = 7, preguntas = 10;\n  double porcentaje = 100.0 * aciertos / preguntas;\n  String nivel = porcentaje >= 60 ? \"Aprobado\" : \"A practicar\";\n  System.out.println(nivel + \": \" + porcentaje);\n  System.out.println(\"Java\".equals(\"Java\"));\n }\n}",
+    "note": "Para cantidades monetarias considera BigDecimal con una política explícita de escala y redondeo. double no representa todos los decimales exactamente.",
+    "level": "Fundamentos",
+    "minutes": 5
+  },
+  {
+    "id": "java-3",
+    "title": "Métodos, arrays y referencias",
+    "language": "java",
+    "languageName": "Java",
+    "number": 3,
+    "body": [
+      "Un método declara parámetros y tipo de retorno. static pertenece a la clase; un método de instancia opera sobre un objeto. Divide un problema en operaciones pequeñas con nombres que expresen intención.",
+      "Los arrays tienen longitud fija e índices desde cero. Java pasa argumentos por valor: si el valor es una referencia, el método recibe una copia de esa referencia y puede modificar el objeto, pero reasignar el parámetro no cambia la variable del llamador."
+    ],
+    "code": "public class Promedios {\n static double media(int[] notas) {\n  if (notas.length == 0) throw new IllegalArgumentException(\"Array vacío\");\n  int suma = 0;\n  for (int nota : notas) suma += nota;\n  return (double) suma / notas.length;\n }\n public static void main(String[] args) {\n  System.out.println(media(new int[] {7, 8, 9}));\n }\n}",
+    "note": "El acceso fuera del rango del array lanza una excepción. Comprueba longitudes y contratos antes de recorrer datos externos.",
+    "level": "Fundamentos",
+    "minutes": 6
+  },
+  {
+    "id": "java-4",
+    "title": "Clases, encapsulación y constructores",
+    "language": "java",
+    "languageName": "Java",
+    "number": 4,
+    "body": [
+      "Una clase define el estado y comportamiento de sus instancias. private evita que código externo cambie detalles internos sin pasar por operaciones controladas. El constructor debe establecer las invariantes que hacen válido al objeto.",
+      "Encapsular no significa generar getters y setters para todo. Expón operaciones con sentido y evita estados imposibles. Si una cantidad no puede ser negativa, compruébalo al construir y al modificar."
+    ],
+    "code": "final class Cuenta {\n private int saldo;\n Cuenta(int saldoInicial) {\n  if (saldoInicial < 0) throw new IllegalArgumentException(\"Saldo negativo\");\n  saldo = saldoInicial;\n }\n void ingresar(int cantidad) {\n  if (cantidad <= 0) throw new IllegalArgumentException(\"Importe inválido\");\n  saldo += cantidad;\n }\n int saldo() { return saldo; }\n}",
+    "note": "El ejemplo usa enteros simplificados. Una aplicación financiera real necesita moneda, precisión, autorización y control de concurrencia.",
+    "level": "Intermedio",
+    "minutes": 4
+  },
+  {
+    "id": "java-5",
+    "title": "Interfaces, polimorfismo y composición",
+    "language": "java",
+    "languageName": "Java",
+    "number": 5,
+    "body": [
+      "Una interfaz establece un contrato y una clase lo implementa. El polimorfismo permite trabajar con el contrato en lugar de una implementación concreta. Esto separa decisiones y permite sustituir colaboradores.",
+      "La herencia expresa una relación de subtipo y debe respetar el comportamiento prometido por el tipo base. Cuando solo quieres reutilizar una capacidad, la composición suele ser más flexible que extender una clase."
+    ],
+    "code": "interface Notificador { void enviar(String texto); }\nfinal class Consola implements Notificador {\n public void enviar(String texto) { System.out.println(texto); }\n}\nfinal class Servicio {\n private final Notificador notificador;\n Servicio(Notificador notificador) { this.notificador = notificador; }\n void confirmar() { notificador.enviar(\"Inscripción confirmada\"); }\n}",
+    "note": "Programa contra un contrato útil, no contra interfaces creadas sin necesidad. Una abstracción debe aislar una variación real.",
+    "level": "Intermedio",
+    "minutes": 5
+  },
+  {
+    "id": "java-6",
+    "title": "Colecciones y genéricos",
+    "language": "java",
+    "languageName": "Java",
+    "number": 6,
+    "body": [
+      "List mantiene una secuencia, Set evita duplicados según igualdad y Map asocia claves a valores. Los genéricos verifican tipos en compilación y reducen conversiones manuales. List<String> declara una lista de cadenas.",
+      "equals y hashCode deben ser coherentes cuando los objetos se usan como claves o en conjuntos hash. No modifiques los campos que determinan su igualdad mientras estén dentro de esas estructuras. List.of crea una lista no modificable."
+    ],
+    "code": "import java.util.*;\npublic class Colecciones {\n public static void main(String[] args) {\n  List<String> cursos = new ArrayList<>(List.of(\"HTML\", \"Java\"));\n  cursos.add(\"SQL\");\n  Set<String> unicos = new HashSet<>(cursos);\n  Map<String, Integer> horas = Map.of(\"Java\", 16, \"SQL\", 10);\n  System.out.println(unicos.size());\n  System.out.println(horas.getOrDefault(\"PHP\", 0));\n }\n}",
+    "note": "No confundas no modificable con una copia profunda inmutable. Los objetos contenidos pueden seguir cambiando si su diseño lo permite.",
+    "level": "Intermedio",
+    "minutes": 6
+  },
+  {
+    "id": "java-7",
+    "title": "Excepciones y gestión de recursos",
+    "language": "java",
+    "languageName": "Java",
+    "number": 7,
+    "body": [
+      "Las excepciones separan el flujo normal de los fallos. Captura tipos concretos cuando puedas reaccionar de forma útil y conserva la causa al traducir errores. No captures Exception para continuar silenciosamente con un estado inconsistente.",
+      "try-with-resources cierra recursos AutoCloseable incluso cuando hay una excepción. Es adecuado para archivos, conexiones y streams que requieren cierre. No confundas un Stream de datos en memoria con un recurso externo que necesariamente deba cerrarse."
+    ],
+    "code": "import java.nio.file.*;\nimport java.io.*;\npublic class Leer {\n public static void main(String[] args) {\n  try (BufferedReader lector = Files.newBufferedReader(Path.of(\"notas.txt\"))) {\n   System.out.println(lector.readLine());\n  } catch (IOException error) {\n   System.err.println(\"No se pudo leer: \" + error.getMessage());\n  }\n }\n}",
+    "note": "El archivo notas.txt debe existir. Nunca construyas rutas desde entradas no confiables sin validar su destino y permisos.",
+    "level": "Intermedio",
+    "minutes": 4
+  },
+  {
+    "id": "java-8",
+    "title": "Lambdas y streams",
+    "language": "java",
+    "languageName": "Java",
+    "number": 8,
+    "body": [
+      "Una lambda implementa una interfaz funcional. Los streams describen transformaciones de datos mediante operaciones intermedias como filter y map, y terminales como toList, count o reduce. Las operaciones intermedias son perezosas.",
+      "Un stream se consume una sola vez. Mantén las funciones sin efectos para que el flujo sea previsible. Un bucle puede ser más claro para lógica con mucho estado; no conviertas todo en streams por costumbre."
+    ],
+    "code": "import java.util.*;\npublic class Flujo {\n public static void main(String[] args) {\n  List<String> nombres = List.of(\"HTML\", \"JavaScript\", \"Java\");\n  List<String> largos = nombres.stream()\n   .filter(nombre -> nombre.length() > 4)\n   .map(String::toUpperCase)\n   .toList();\n  System.out.println(largos);\n }\n}",
+    "note": "parallelStream no garantiza mejorar el rendimiento. Introduce coordinación y requiere operaciones seguras para concurrencia.",
+    "level": "Intermedio",
+    "minutes": 5
+  },
+  {
+    "id": "java-9",
+    "title": "Records, igualdad y Optional",
+    "language": "java",
+    "languageName": "Java",
+    "number": 9,
+    "body": [
+      "Un record declara de forma compacta un portador de datos con componentes finales y genera acceso, equals, hashCode y toString. La inmutabilidad es superficial: una lista recibida puede necesitar una copia defensiva.",
+      "Optional expresa ausencia en un resultado y ofrece map, flatMap y orElseGet. No lo uses para esconder errores ni llames get sin comprobar. Una colección vacía suele ser mejor que Optional<List<T>> para indicar que una búsqueda no tiene elementos."
+    ],
+    "code": "import java.util.*;\nrecord Curso(String id, List<String> temas) {\n Curso { temas = List.copyOf(temas); }\n}\n// Ejemplo de resultado opcional:\nOptional<String> nombre = Optional.of(\"Java\");\nString titulo = nombre.map(String::toUpperCase).orElse(\"Sin nombre\");",
+    "note": "El fragmento de Optional va dentro de un método. Los records requieren Java 16 o superior; el curso usa Java 17 como base.",
+    "level": "Intermedio",
+    "minutes": 6
+  },
+  {
+    "id": "java-10",
+    "title": "Concurrencia y estado compartido",
+    "language": "java",
+    "languageName": "Java",
+    "number": 10,
+    "body": [
+      "La concurrencia permite coordinar tareas que se solapan. El estado mutable compartido introduce carreras: dos hilos pueden leer el mismo valor y perder una actualización. Usa aislamiento, estructuras seguras o sincronización según el problema.",
+      "ExecutorService gestiona ejecución de tareas y debe cerrarse correctamente. AtomicInteger ofrece operaciones atómicas individuales, pero no convierte una secuencia completa de operaciones en una transacción. Más hilos no siempre implican más rendimiento."
+    ],
+    "code": "import java.util.concurrent.*;\nimport java.util.concurrent.atomic.AtomicInteger;\npublic class Trabajo {\n public static void main(String[] args) throws Exception {\n  ExecutorService pool = Executors.newFixedThreadPool(2);\n  AtomicInteger total = new AtomicInteger();\n  try {\n   Future<?> a = pool.submit(() -> total.incrementAndGet());\n   Future<?> b = pool.submit(() -> total.incrementAndGet());\n   a.get(); b.get();\n   System.out.println(total.get());\n  } finally { pool.shutdown(); }\n }\n}",
+    "note": "Este patrón es compatible con Java 17. Las virtual threads de versiones posteriores requieren estudiar su modelo y las características del trabajo antes de adoptarlas.",
+    "level": "Avanzado",
+    "minutes": 4
+  },
+  {
+    "id": "java-11",
+    "title": "Pruebas, paquetes y diseño mantenible",
+    "language": "java",
+    "languageName": "Java",
+    "number": 11,
+    "body": [
+      "Organiza clases en paquetes según capacidades y responsabilidades. Los sistemas de construcción como Maven y Gradle coordinan dependencias y pruebas. Mantén una separación entre consola, lógica y almacenamiento para que el núcleo pueda comprobarse sin interacción manual.",
+      "Una prueba útil comprueba comportamiento y límites. Con JUnit puedes expresar resultados esperados y excepciones. No dependas del orden de las pruebas ni de archivos compartidos sin aislamiento. Documenta el JDK y los pasos de ejecución del proyecto."
+    ],
+    "code": "public class Regla {\n static boolean aprobado(int nota) {\n  if (nota < 0 || nota > 10) throw new IllegalArgumentException(\"Fuera de rango\");\n  return nota >= 5;\n }\n public static void main(String[] args) {\n  if (!aprobado(5)) throw new AssertionError(\"El 5 debe aprobar\");\n  if (aprobado(4)) throw new AssertionError(\"El 4 no debe aprobar\");\n }\n}",
+    "note": "Estas comprobaciones son autocontenidas. Para una suite real usa un ejecutor que reporte fallos y compruebe también las excepciones esperadas.",
+    "level": "Avanzado",
+    "minutes": 5
+  },
+  {
+    "id": "java-12",
+    "title": "Proyecto: una biblioteca de consola",
+    "language": "java",
+    "languageName": "Java",
+    "number": 12,
+    "body": [
+      "Modela una biblioteca con Libro, Socio y Prestamo. Especifica invariantes: un ejemplar no puede estar prestado dos veces y una devolución debe corresponder a un préstamo activo. Usa colecciones con ids estables y servicios con operaciones claras.",
+      "Empieza con memoria antes de añadir archivos o una base de datos. Prueba altas, búsquedas, préstamo, devolución y errores. Separa lectura de consola de las reglas para que puedas probar el negocio sin simular pulsaciones de teclado."
+    ],
+    "code": "import java.util.*;\nfinal class Biblioteca {\n private final Set<String> prestados = new HashSet<>();\n void prestar(String id) {\n  if (!prestados.add(id)) throw new IllegalStateException(\"Ya prestado\");\n }\n void devolver(String id) {\n  if (!prestados.remove(id)) throw new IllegalStateException(\"No estaba prestado\");\n }\n}",
+    "note": "El esqueleto todavía no valida la existencia del libro o del socio. Añade esas reglas como parte del proyecto y protege la operación completa si hay concurrencia.",
+    "level": "Avanzado",
+    "minutes": 6
+  },
+  {
+    "id": "sql-1",
+    "title": "Tablas y tu primera consulta",
+    "language": "sql",
+    "languageName": "SQL",
+    "number": 1,
+    "body": [
+      "Una base relacional organiza información en tablas con columnas tipadas y filas. Una clave identifica una fila. SQL describe el resultado deseado; el motor decide cómo obtenerlo. El orden de las filas solo está definido si usas ORDER BY.",
+      "SELECT elige columnas y FROM indica el origen. Evita SELECT * en contratos estables: una nueva columna podría cambiar la respuesta inesperadamente. Los ejemplos siguientes usan una academia con cursos, alumnos e inscripciones."
+    ],
+    "code": "-- Datos autocontenidos para practicar en PostgreSQL:\nWITH cursos(id, nombre, horas) AS (\n VALUES (1, 'HTML', 8), (2, 'CSS', 10), (3, 'JavaScript', 14)\n)\nSELECT nombre, horas\nFROM cursos\nORDER BY horas DESC;",
+    "note": "Una consulta sin ORDER BY no garantiza un orden aunque el resultado parezca repetirse durante tus pruebas.",
+    "level": "Fundamentos",
+    "minutes": 4
+  },
+  {
+    "id": "sql-2",
+    "title": "Filtrar, ordenar y limitar",
+    "language": "sql",
+    "languageName": "SQL",
+    "number": 2,
+    "body": [
+      "WHERE filtra filas antes de agrupar. Combina condiciones con AND y OR y usa paréntesis para aclarar su precedencia. IN comprueba pertenencia y BETWEEN incluye ambos extremos. LIKE compara patrones y puede tener diferencias de sensibilidad según el motor.",
+      "LIMIT restringe la cantidad de filas y necesita un orden estable para resultados previsibles. Si hay empates, añade una clave como segundo criterio. La paginación con OFFSET puede encarecerse en posiciones muy avanzadas."
+    ],
+    "code": "SELECT id, nombre, horas\nFROM cursos\nWHERE horas >= 10 AND nombre <> 'PHP'\nORDER BY horas DESC, id ASC\nLIMIT 5;",
+    "note": "Este fragmento requiere una tabla cursos con esas columnas. La primera lección incluye un conjunto VALUES para probar sin tablas permanentes.",
+    "level": "Fundamentos",
+    "minutes": 5
+  },
+  {
+    "id": "sql-3",
+    "title": "NULL y lógica de tres valores",
+    "language": "sql",
+    "languageName": "SQL",
+    "number": 3,
+    "body": [
+      "NULL representa ausencia o desconocimiento, no cero ni cadena vacía. Una comparación con NULL produce un resultado desconocido. Usa IS NULL o IS NOT NULL para comprobarlo; WHERE solo conserva condiciones verdaderas.",
+      "COALESCE devuelve el primer valor no nulo. COUNT(*) cuenta filas y COUNT(columna) solo valores no nulos. Ten cuidado con NOT IN si la lista o subconsulta puede contener NULL: puede eliminar resultados que esperabas."
+    ],
+    "code": "SELECT nombre, COALESCE(descripcion, 'Sin descripción') AS resumen\nFROM cursos\nWHERE descripcion IS NULL;\n\nSELECT COUNT(*) AS filas,\n       COUNT(descripcion) AS con_descripcion\nFROM cursos;",
+    "note": "No conviertas todos los NULL a valores arbitrarios antes de decidir qué significan. «Desconocido» y «cero» expresan información distinta.",
+    "level": "Fundamentos",
+    "minutes": 6
+  },
+  {
+    "id": "sql-4",
+    "title": "Agregaciones, GROUP BY y HAVING",
+    "language": "sql",
+    "languageName": "SQL",
+    "number": 4,
+    "body": [
+      "SUM, AVG, MIN, MAX y COUNT resumen conjuntos. GROUP BY forma grupos y cada columna seleccionada debe estar agregada o ser compatible con la agrupación según las reglas del motor.",
+      "WHERE filtra filas antes del agrupamiento; HAVING filtra grupos después. Comprende la unidad que representa cada fila antes de agregar: un join puede multiplicar registros y producir sumas incorrectas."
+    ],
+    "code": "SELECT categoria, COUNT(*) AS cantidad, AVG(horas) AS media_horas\nFROM cursos\nWHERE publicado = true\nGROUP BY categoria\nHAVING COUNT(*) >= 2\nORDER BY cantidad DESC;",
+    "note": "Si el resultado duplica cantidades, revisa la cardinalidad de los joins. Añadir DISTINCT sin entender la causa puede ocultar un error de modelo.",
+    "level": "Intermedio",
+    "minutes": 4
+  },
+  {
+    "id": "sql-5",
+    "title": "JOIN: combinar con significado",
+    "language": "sql",
+    "languageName": "SQL",
+    "number": 5,
+    "body": [
+      "INNER JOIN devuelve coincidencias entre dos tablas según una condición. LEFT JOIN conserva todas las filas de la izquierda y rellena con NULL cuando no encuentra una coincidencia a la derecha.",
+      "La relación puede ser uno a uno, uno a muchos o muchos a muchos. Cada coincidencia genera una fila, así que una persona con tres inscripciones aparecerá tres veces. Un filtro en WHERE sobre la tabla derecha de un LEFT JOIN puede eliminar las filas sin coincidencia."
+    ],
+    "code": "SELECT a.nombre AS alumno, c.nombre AS curso\nFROM alumnos AS a\nJOIN inscripciones AS i ON i.alumno_id = a.id\nJOIN cursos AS c ON c.id = i.curso_id;\n\nSELECT c.nombre, COUNT(i.alumno_id) AS inscritos\nFROM cursos AS c\nLEFT JOIN inscripciones AS i ON i.curso_id = c.id\nGROUP BY c.id, c.nombre;",
+    "note": "En un LEFT JOIN usa COUNT de una columna no nula de la derecha si quieres contar coincidencias, no COUNT(*) para la fila conservada.",
+    "level": "Intermedio",
+    "minutes": 5
+  },
+  {
+    "id": "sql-6",
+    "title": "Subconsultas, EXISTS y CTE",
+    "language": "sql",
+    "languageName": "SQL",
+    "number": 6,
+    "body": [
+      "Una subconsulta puede producir un valor o un conjunto para otra consulta. EXISTS comprueba si hay al menos una fila relacionada y es adecuado para preguntas de existencia sin multiplicar el resultado exterior.",
+      "WITH define expresiones de tabla comunes, o CTE, para dividir una consulta en pasos legibles. No asumas que una CTE siempre se materializa ni que siempre mejora el rendimiento: depende del motor y del plan."
+    ],
+    "code": "WITH cursos_largos AS (\n SELECT id, nombre FROM cursos WHERE horas >= 10\n)\nSELECT c.nombre\nFROM cursos_largos c\nWHERE EXISTS (\n SELECT 1 FROM inscripciones i WHERE i.curso_id = c.id\n);",
+    "note": "EXISTS no necesita devolver todas las columnas. SELECT 1 expresa que solo importa encontrar una coincidencia.",
+    "level": "Intermedio",
+    "minutes": 6
+  },
+  {
+    "id": "sql-7",
+    "title": "Diseño relacional y normalización",
+    "language": "sql",
+    "languageName": "SQL",
+    "number": 7,
+    "body": [
+      "Una clave primaria identifica filas y una clave foránea mantiene relaciones válidas. NOT NULL, UNIQUE y CHECK expresan invariantes cerca de los datos. La normalización reduce redundancias y anomalías al separar entidades y dependencias.",
+      "Para una relación muchos a muchos crea una tabla intermedia. Una clave compuesta puede impedir relaciones duplicadas. Decide el comportamiento de borrado deliberadamente: CASCADE no debe activarse por comodidad si eliminaría información necesaria."
+    ],
+    "code": "CREATE TABLE cursos (\n id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n nombre text NOT NULL,\n horas integer NOT NULL CHECK (horas > 0)\n);\nCREATE TABLE alumnos (\n id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n email text NOT NULL UNIQUE\n);\nCREATE TABLE inscripciones (\n alumno_id integer REFERENCES alumnos(id),\n curso_id integer REFERENCES cursos(id),\n PRIMARY KEY (alumno_id, curso_id)\n);",
+    "note": "Las restricciones son parte del contrato. Valida también en la aplicación para ofrecer buenos mensajes, pero conserva la garantía en la base.",
+    "level": "Intermedio",
+    "minutes": 4
+  },
+  {
+    "id": "sql-8",
+    "title": "INSERT, UPDATE y DELETE con control",
+    "language": "sql",
+    "languageName": "SQL",
+    "number": 8,
+    "body": [
+      "INSERT crea filas, UPDATE modifica y DELETE elimina. En UPDATE y DELETE, omitir WHERE afecta a todas las filas. Trabaja primero sobre datos de prueba y revisa la condición con SELECT antes de ejecutar cambios reales.",
+      "Las aplicaciones deben parametrizar los valores y limitar permisos. En PostgreSQL, RETURNING devuelve filas afectadas sin hacer una consulta separada. No interpolar entradas en SQL es una obligación también en herramientas internas."
+    ],
+    "code": "INSERT INTO cursos (nombre, horas)\nVALUES ('SQL', 10)\nRETURNING id;\n\nUPDATE cursos SET horas = 12\nWHERE id = 1\nRETURNING id, nombre, horas;\n\n-- Solo para datos de prueba:\nDELETE FROM inscripciones\nWHERE alumno_id = 1 AND curso_id = 2;",
+    "note": "Las consultas de escritura del curso son material de práctica. Comprueba tu conexión y usa una base de desarrollo antes de ejecutarlas.",
+    "level": "Intermedio",
+    "minutes": 5
+  },
+  {
+    "id": "sql-9",
+    "title": "Transacciones e aislamiento",
+    "language": "sql",
+    "languageName": "SQL",
+    "number": 9,
+    "body": [
+      "Una transacción agrupa operaciones entre BEGIN y COMMIT; ROLLBACK descarta sus cambios no confirmados. ACID resume atomicidad, consistencia, aislamiento y durabilidad, con matices según configuración y motor.",
+      "El aislamiento controla qué interferencias pueden observar operaciones concurrentes. Un SELECT seguido de UPDATE no garantiza por sí solo una regla compartida. Usa restricciones, actualizaciones condicionales y bloqueo o niveles adecuados según la invariancia."
+    ],
+    "code": "BEGIN;\nUPDATE cuentas SET saldo = saldo - 20\nWHERE id = 1 AND saldo >= 20;\n-- La aplicación debe comprobar que se modificó una fila.\n-- Solo entonces debe ejecutar el abono:\nUPDATE cuentas SET saldo = saldo + 20 WHERE id = 2;\nCOMMIT;\n-- Si una condición falla: ROLLBACK en lugar de COMMIT.",
+    "note": "El fragmento ilustra una secuencia; no es un sistema de transferencias completo. Debe verificar ambas filas, permisos y concurrencia para no crear o perder dinero.",
+    "level": "Intermedio",
+    "minutes": 6
+  },
+  {
+    "id": "sql-10",
+    "title": "Funciones de ventana",
+    "language": "sql",
+    "languageName": "SQL",
+    "number": 10,
+    "body": [
+      "Las funciones de ventana calculan sobre un conjunto relacionado sin colapsar las filas como GROUP BY. OVER define partición, orden y opcionalmente marco. ROW_NUMBER numera y RANK asigna posiciones conservando empates con saltos.",
+      "SUM con una ventana puede crear un acumulado. Un orden con empates necesita un criterio adicional o un marco explícito para el comportamiento deseado. PARTITION BY reinicia el cálculo para cada grupo."
+    ],
+    "code": "SELECT alumno_id, curso_id, nota,\n RANK() OVER (PARTITION BY curso_id ORDER BY nota DESC NULLS LAST) AS posicion,\n AVG(nota) OVER (PARTITION BY curso_id) AS media_curso\nFROM inscripciones;",
+    "note": "RANK y ROW_NUMBER responden a preguntas diferentes. Decide si los empates deben compartir posición antes de elegir la función.",
+    "level": "Avanzado",
+    "minutes": 4
+  },
+  {
+    "id": "sql-11",
+    "title": "Índices y planes de ejecución",
+    "language": "sql",
+    "languageName": "SQL",
+    "number": 11,
+    "body": [
+      "Un índice acelera ciertos accesos a cambio de espacio y trabajo adicional en escrituras. No beneficia todas las consultas. En índices compuestos, el orden de columnas y la selectividad de los filtros influyen en su utilidad.",
+      "EXPLAIN muestra el plan estimado y EXPLAIN ANALYZE ejecuta la sentencia para medirla. Un recorrido secuencial puede ser correcto para tablas pequeñas o consultas que leen gran parte de los datos. Mide con datos representativos y estadísticas actualizadas."
+    ],
+    "code": "CREATE INDEX inscripciones_curso_idx ON inscripciones (curso_id);\nEXPLAIN\nSELECT alumno_id FROM inscripciones WHERE curso_id = 3;\n\n-- ANALYZE ejecuta la sentencia: úsalo con cuidado.\nEXPLAIN ANALYZE\nSELECT alumno_id FROM inscripciones WHERE curso_id = 3;",
+    "note": "EXPLAIN ANALYZE también ejecuta sentencias de escritura si se las proporcionas. En práctica usa SELECT y un entorno aislado.",
+    "level": "Avanzado",
+    "minutes": 5
+  },
+  {
+    "id": "sql-12",
+    "title": "Proyecto: una academia en datos",
+    "language": "sql",
+    "languageName": "SQL",
+    "number": 12,
+    "body": [
+      "Diseña alumnos, cursos e inscripciones con claves y restricciones. Añade datos de prueba suficientes para incluir cursos vacíos, personas sin inscripciones, empates y calificaciones nulas. Una consulta correcta debe manejar todos esos casos.",
+      "Construye un informe con inscritos por curso, nota media y posición de cada alumno. Revisa la cardinalidad de los joins y analiza al menos una consulta. Documenta el dialecto y guarda esquema, datos y consultas en archivos separados."
+    ],
+    "code": "SELECT c.id, c.nombre,\n COUNT(i.alumno_id) AS inscritos,\n ROUND(AVG(i.nota), 2) AS nota_media\nFROM cursos c\nLEFT JOIN inscripciones i ON i.curso_id = c.id\nGROUP BY c.id, c.nombre\nORDER BY inscritos DESC, c.id;",
+    "note": "AVG ignora valores nulos. Un curso sin notas obtiene NULL, que no equivale a una nota media de cero. Explica esa diferencia en el informe.",
+    "level": "Avanzado",
+    "minutes": 6
+  }
+]

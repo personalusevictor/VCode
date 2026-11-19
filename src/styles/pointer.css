@@ -1,0 +1,61 @@
+.vcode-pointer-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  overflow: clip;
+  pointer-events: none;
+  contain: layout paint;
+}
+.vcode-pointer-outline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+  contain: layout style;
+  background: var(--blue);
+  border: 1px solid transparent;
+  transition:
+    background-color 0.12s,
+    border-color 0.12s;
+}
+.vcode-pointer-outline[hidden] {
+  display: none;
+}
+.vcode-pointer-outline[data-mode="magnet"],
+.vcode-pointer-outline[data-mode="bubble"] {
+  background: color-mix(in srgb, var(--blue) 7%, transparent);
+  border-color: color-mix(in srgb, var(--blue) 45%, transparent);
+}
+.vcode-pointer-outline[data-mode="dot"][data-on-mark="true"] {
+  background: #f0f7ff;
+  border-color: #88b8ff;
+}
+.vcode-pointer-outline[data-pressed="true"] {
+  background: color-mix(in srgb, var(--blue) 20%, transparent);
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html.vcode-pointer-active
+    :is(
+      .home-world,
+      .home-world *,
+      .home-navigation,
+      .home-navigation *,
+      .home-footer,
+      .home-footer *
+    ) {
+    cursor: none !important;
+  }
+  html.vcode-pointer-active
+    :is(input, textarea, select, [contenteditable="true"], iframe, pre, code) {
+    cursor: auto !important;
+  }
+}
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .vcode-pointer-layer {
+    display: none !important;
+  }
+}

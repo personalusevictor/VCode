@@ -1,0 +1,105 @@
+.home-entry {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  overflow: hidden;
+}
+.home-entry[hidden] {
+  display: none;
+}
+.entry-shutter {
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  will-change: transform;
+}
+.entry-shutter-left {
+  clip-path: polygon(
+    0 0,
+    calc(50% + 22svh + 1px) 0,
+    calc(50% - 22svh + 1px) 100%,
+    0 100%
+  );
+}
+.entry-shutter-right {
+  clip-path: polygon(
+    calc(50% + 22svh) 0,
+    100% 0,
+    100% 100%,
+    calc(50% - 22svh) 100%
+  );
+}
+.entry-seam {
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  width: 1px;
+  height: 140%;
+  background: linear-gradient(transparent, var(--blue), transparent);
+  transform: skewX(-23.75deg) scaleY(0);
+  opacity: 0;
+}
+.home-navigation-bar {
+  transition:
+    opacity 0.65s ease,
+    translate 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.home-navigation.is-entering .home-navigation-bar {
+  opacity: 0;
+  translate: 0 -18px;
+}
+.home-navigation:focus-within .home-navigation-bar {
+  opacity: 1;
+  translate: none;
+}
+.reveal-mask {
+  display: inline-block;
+  overflow: clip;
+  vertical-align: bottom;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+.reveal-word {
+  display: inline-block;
+  transform-origin: left bottom;
+}
+.placeholder-page {
+  min-height: 75svh;
+  width: min(1176px, calc(100% - 64px));
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-block: 140px 80px;
+  gap: 24px;
+}
+.placeholder-page > .mark {
+  width: 38px;
+  height: 38px;
+  color: var(--blue);
+}
+.placeholder-page h1 {
+  font-size: clamp(44px, 7vw, 88px);
+}
+.placeholder-page p {
+  color: var(--muted);
+}
+@media (max-width: 640px) {
+  .placeholder-page {
+    width: calc(100% - 32px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-entry {
+    display: none;
+  }
+  .home-navigation-bar {
+    transition: none;
+  }
+  .home-navigation.is-entering .home-navigation-bar {
+    opacity: 1;
+    translate: none;
+  }
+}
