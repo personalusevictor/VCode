@@ -1,0 +1,590 @@
+[
+  {
+    "id": "exercise-html-0",
+    "language": "html",
+    "lesson": 3,
+    "title": "Una página con estructura",
+    "brief": "Escribe una página de apuntes. Incluye navegación, contenido principal y un artículo independiente.",
+    "hint": "Usa nav para enlaces, main para el contenido dominante y article para el apunte.",
+    "solution": "<nav aria-label='Navegación'><a href='#nota'>Apunte</a></nav>\n<main><article id='nota'><h1>Mi apunte</h1><p>HTML describe el contenido.</p></article></main>",
+    "starter": "<main>\n  <article id=\"nota\">\n    <h1>Mi apunte</h1>\n    <p>HTML describe el contenido.</p>\n  </article>\n</main>",
+    "criteria": [
+      "Existe una región de navegación antes del contenido principal.",
+      "Su enlace lleva al artículo con id nota.",
+      "El artículo conserva un encabezado que identifica el apunte."
+    ]
+  },
+  {
+    "id": "exercise-html-1",
+    "language": "html",
+    "lesson": 6,
+    "title": "Formulario con etiquetas",
+    "brief": "Crea un formulario con correo obligatorio y un botón de envío. Identifica el campo también cuando está vacío.",
+    "hint": "Conecta label e input con for e id. El atributo type=email activa la validación de formato.",
+    "solution": "<form><label for='correo'>Correo</label>\n<input id='correo' name='correo' type='email' required>\n<button>Enviar</button></form>",
+    "starter": "<form>\n  <input name=\"correo\">\n  <button>Enviar</button>\n</form>",
+    "criteria": [
+      "Pulsar en la etiqueta enfoca el campo de correo.",
+      "El navegador marca como inválidos un correo vacío y un valor sin arroba."
+    ]
+  },
+  {
+    "id": "exercise-html-2",
+    "language": "html",
+    "lesson": 8,
+    "title": "Preguntas desplegables",
+    "brief": "Crea una pregunta que se pueda abrir con el teclado y cuya respuesta aparezca al desplegar.",
+    "hint": "details proporciona la interacción. summary identifica el control.",
+    "solution": "<details><summary>¿Dónde se guarda el avance?</summary><p>En este navegador.</p></details>",
+    "starter": "<p>¿Dónde se guarda el avance?</p>\n<p>En este navegador.</p>",
+    "criteria": [
+      "La pregunta se puede enfocar con Tab.",
+      "La respuesta empieza oculta y cambia de estado con Intro."
+    ]
+  },
+  {
+    "id": "exercise-html-3",
+    "language": "html",
+    "lesson": 14,
+    "title": "Abre ayuda sin salir de la página",
+    "brief": "Convierte la ayuda en un popover nativo. Debe abrirse desde el botón y poder cerrarse con el teclado.",
+    "hint": "Vincula los botones al id del panel con popovertarget y asigna la acción hide al botón interior.",
+    "starter": "<main>\n  <h1>Biblioteca de apuntes</h1>\n  <button type=\"button\">¿Cómo se guardan?</button>\n  <section id=\"ayuda\" aria-labelledby=\"ayuda-titulo\">\n    <h2 id=\"ayuda-titulo\">Guardar apuntes</h2>\n    <p>Tus apuntes se guardan en este navegador.</p>\n    <button type=\"button\">Cerrar ayuda</button>\n  </section>\n</main>",
+    "solution": "<main>\n  <h1>Biblioteca de apuntes</h1>\n  <button type=\"button\" popovertarget=\"ayuda\">¿Cómo se guardan?</button>\n  <section id=\"ayuda\" popover aria-labelledby=\"ayuda-titulo\">\n    <h2 id=\"ayuda-titulo\">Guardar apuntes</h2>\n    <p>Tus apuntes se guardan en este navegador.</p>\n    <button type=\"button\" popovertarget=\"ayuda\" popovertargetaction=\"hide\">Cerrar ayuda</button>\n  </section>\n</main>",
+    "criteria": [
+      "Al cargar, el panel está oculto.",
+      "Puedes abrirlo con Enter sobre el botón de ayuda.",
+      "Escape y el botón Cerrar ayuda ocultan el panel."
+    ]
+  },
+  {
+    "id": "exercise-css-0",
+    "language": "css",
+    "lesson": 2,
+    "title": "La caja de 240 píxeles",
+    "brief": "Consigue que una tarjeta mida 240 px en total aunque tenga padding y borde.",
+    "hint": "Cambia qué incluye el ancho usando box-sizing.",
+    "solution": ".tarjeta { box-sizing: border-box; width: 240px; max-width: 100%; padding: 16px; border: 2px solid; }",
+    "starter": ".tarjeta {\n  width: 240px;\n  max-width: 100%;\n  padding: 16px;\n  border: 2px solid #3b5190;\n}",
+    "criteria": [
+      "A un ancho disponible mayor que 240 px, la caja exterior mide 240 px.",
+      "El padding y el borde permanecen visibles."
+    ],
+    "markup": "<article class=\"tarjeta\"><h2>Apuntes</h2><p>Cuenta también mi borde.</p></article>"
+  },
+  {
+    "id": "exercise-css-1",
+    "language": "css",
+    "lesson": 5,
+    "title": "Cuadrícula que respira",
+    "brief": "Crea una cuadrícula con columnas de 7 rem como mínimo que aprovechen el ancho disponible.",
+    "hint": "Combina repeat, auto-fit, minmax y gap.",
+    "solution": ".galeria { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(7rem, 100%), 1fr)); gap: 1rem; }\n.tarjeta { padding: 1rem; background: #dbeafe; }",
+    "starter": ".galeria {\n  display: grid;\n  grid-template-columns: 1fr;\n  gap: 1rem;\n}\n\n.tarjeta {\n  padding: 1rem;\n  background: #dbeafe;\n  color: #192449;\n}",
+    "criteria": [
+      "En un espacio amplio aparecen varias columnas.",
+      "Las tarjetas pasan a nuevas filas conforme se estrecha la vista.",
+      "El espacio entre tarjetas conserva el valor de 1 rem."
+    ],
+    "markup": "<div class=\"galeria\">\n  <article class=\"tarjeta\">HTML</article>\n  <article class=\"tarjeta\">CSS</article>\n  <article class=\"tarjeta\">JavaScript</article>\n  <article class=\"tarjeta\">React</article>\n</div>"
+  },
+  {
+    "id": "exercise-css-2",
+    "language": "css",
+    "lesson": 7,
+    "title": "Adapta una tarjeta al contenedor",
+    "brief": "Configura el contenedor e incrementa el espacio de las tarjetas por encima de 32 rem.",
+    "hint": "Usa container-type: inline-size y consulta la anchura con @container.",
+    "solution": ".galeria { container-type: inline-size; }\n.tarjeta { padding: .75rem; }\n@container (width > 32rem) { .tarjeta { padding: 2rem; } }",
+    "starter": ".galeria {\n  border: 1px solid #3b5190;\n}\n\n.tarjeta {\n  padding: .75rem;\n  background: #dbeafe;\n  color: #192449;\n}",
+    "criteria": [
+      "La propiedad container-type se aplica al contenedor.",
+      "Por encima de 32 rem el relleno de la tarjeta es de 2 rem.",
+      "Al reducir el ancho vuelve a .75 rem."
+    ],
+    "markup": "<section class=\"galeria\">\n  <article class=\"tarjeta\">\n    <h2>Contenido adaptable</h2>\n    <p>Observa el espacio entre el texto y los bordes.</p>\n  </article>\n</section>"
+  },
+  {
+    "id": "exercise-css-3",
+    "language": "css",
+    "lesson": 10,
+    "title": "La misma tarjeta en dos espacios",
+    "brief": "Haz que las tarjetas se distribuyan en dos columnas cuando su contenedor mida al menos 340 px. La tarjeta de la barra lateral debe seguir en una columna.",
+    "hint": "Permite consultar el ancho de .columna y aplica @container a su descendiente .tarjeta.",
+    "starter": ".columna {\n  max-inline-size: 460px;\n  margin-block: 0 1rem;\n}\n\n.columna-estrecha {\n  max-inline-size: 240px;\n}\n\n.tarjeta {\n  display: grid;\n  grid-template-columns: minmax(0, 1fr);\n  gap: 0.75rem;\n  padding: 1rem;\n  border: 1px solid #7e94d0;\n  border-radius: 0.8rem;\n}\n\n.tarjeta h2, .tarjeta p {\n  margin: 0;\n}",
+    "solution": ".columna {\n  container-type: inline-size;\n  max-inline-size: 460px;\n  margin-block: 0 1rem;\n}\n\n.columna-estrecha {\n  max-inline-size: 240px;\n}\n\n.tarjeta {\n  display: grid;\n  grid-template-columns: minmax(0, 1fr);\n  gap: 0.75rem;\n  padding: 1rem;\n  border: 1px solid #7e94d0;\n  border-radius: 0.8rem;\n}\n\n.tarjeta h2, .tarjeta p {\n  margin: 0;\n}\n\n@container (inline-size >= 340px) {\n  .tarjeta {\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n  }\n}",
+    "criteria": [
+      "En una vista ancha, la primera tarjeta tiene dos columnas y la de la barra lateral tiene una.",
+      "Al elegir 320 px, las dos vuelven a una columna sin desplazamiento horizontal."
+    ],
+    "markup": "<main>\n  <div class=\"columna\">\n    <article class=\"tarjeta\">\n      <div><h2>Consultas</h2><p>SQL y parámetros.</p></div>\n      <p>Disponible para repasar.</p>\n    </article>\n  </div>\n  <aside class=\"columna columna-estrecha\" aria-label=\"Barra lateral\">\n    <article class=\"tarjeta\">\n      <div><h2>Diseño</h2><p>CSS y contenedores.</p></div>\n      <p>Próxima sesión.</p>\n    </article>\n  </aside>\n</main>"
+  },
+  {
+    "id": "exercise-javascript-0",
+    "language": "javascript",
+    "lesson": 4,
+    "title": "Cuenta sesiones completadas",
+    "brief": "Devuelve los títulos de las sesiones de al menos 30 minutos sin modificar el array original.",
+    "hint": "Filtra los objetos y después transforma cada objeto a su título.",
+    "solution": "const sesiones = [{ titulo: 'JS', minutos: 35 }, { titulo: 'CSS', minutos: 20 }];\nconsole.log(sesiones.filter(s => s.minutos >= 30).map(s => s.titulo));",
+    "starter": "const sesiones = [\n  { titulo: 'JS', minutos: 35 },\n  { titulo: 'CSS', minutos: 20 }\n];\n\nconst largas = [];\nconsole.log(largas);",
+    "criteria": [
+      "La duración mínima admitida es 30 minutos.",
+      "La lista resultante contiene solo títulos y el array original permanece intacto."
+    ],
+    "expected": "[\n  \"JS\"\n]"
+  },
+  {
+    "id": "exercise-javascript-1",
+    "language": "javascript",
+    "lesson": 5,
+    "title": "Agrupa sin perder datos",
+    "brief": "Construye un objeto con el total de minutos por lenguaje. Una categoría puede aparecer más de una vez.",
+    "hint": "Inicializa cada clave con 0 mediante ?? antes de sumar.",
+    "solution": "const sesiones = [['CSS', 20], ['JS', 15], ['CSS', 10]];\nconst totales = {};\nfor (const [tema, minutos] of sesiones) totales[tema] = (totales[tema] ?? 0) + minutos;\nconsole.log(totales);",
+    "starter": "const sesiones = [['CSS', 20], ['JS', 15], ['CSS', 10]];\nconst totales = {};\n\nconsole.log(totales);",
+    "criteria": [
+      "La segunda entrada de CSS se suma a la primera.",
+      "Cada lenguaje de la entrada tiene una sola clave en el resultado."
+    ],
+    "expected": "{\n  \"CSS\": 30,\n  \"JS\": 15\n}"
+  },
+  {
+    "id": "exercise-javascript-2",
+    "language": "javascript",
+    "lesson": 7,
+    "title": "Recupera un error asíncrono",
+    "brief": "Crea una función asíncrona que falle con un identificador vacío y muestra el error desde el código que la llama.",
+    "hint": "Dentro de async, throw rechaza la promesa. Captúrala con try/catch y await.",
+    "solution": "async function cargar(id) {\n  if (!id) throw new Error('Falta el identificador');\n  return { id };\n}\ntry { await cargar(''); } catch (error) { console.log(error.message); }",
+    "starter": "async function cargar(id) {\n  return { id };\n}\n\nawait cargar('');",
+    "criteria": [
+      "La función presenta el error mediante el rechazo de la promesa.",
+      "El código que llama a la función captura y muestra ese error."
+    ],
+    "expected": "Falta el identificador"
+  },
+  {
+    "id": "exercise-javascript-3",
+    "language": "javascript",
+    "lesson": 19,
+    "title": "Conserva los datos que sí existen",
+    "brief": "Normaliza las sesiones de un archivo JSON. Una sesión sin duración toma 25 minutos y una sin estado se considera hecha. Conserva el 0 y el false que ya vienen en los datos.",
+    "hint": "La cadena opcional evita leer propiedades de datos cuando ese campo falta. El operador ?? aplica el valor alternativo a null y undefined.",
+    "starter": "import sesiones from \"./sesiones.json\" with { type: \"json\" };\n\nfor (const { tema, datos } of sesiones) {\n  const minutos = datos?.minutos || 25;\n  const hecha = datos?.hecha || true;\n  console.log(tema, minutos, hecha);\n}",
+    "solution": "import sesiones from \"./sesiones.json\" with { type: \"json\" };\n\nfor (const { tema, datos } of sesiones) {\n  const minutos = datos?.minutos ?? 25;\n  const hecha = datos?.hecha ?? true;\n  console.log(tema, minutos, hecha);\n}",
+    "criteria": [
+      "La sesión de HTML conserva los 0 minutos y el estado false.",
+      "Una sesión sin datos usa los dos valores predeterminados.",
+      "Los datos se leen de sesiones.json, con los títulos originales."
+    ],
+    "expected": "HTML 0 false\nCSS 20 true\nSQL 25 true",
+    "files": {
+      "sesiones.json": "[\n  {\n    \"tema\": \"HTML\",\n    \"datos\": {\n      \"minutos\": 0,\n      \"hecha\": false\n    }\n  },\n  {\n    \"tema\": \"CSS\",\n    \"datos\": {\n      \"minutos\": 20,\n      \"hecha\": true\n    }\n  },\n  {\n    \"tema\": \"SQL\"\n  }\n]"
+    }
+  },
+  {
+    "id": "exercise-typescript-0",
+    "language": "typescript",
+    "lesson": 3,
+    "title": "Distingue dos estados",
+    "brief": "Representa un resultado exitoso y uno fallido. En cada rama devuelve el dato correspondiente.",
+    "hint": "Usa una unión discriminada con ok: true y ok: false.",
+    "solution": "type Resultado = { ok: true; valor: number } | { ok: false; error: string };\nfunction mostrar(r: Resultado) { return r.ok ? String(r.valor) : r.error; }\nconsole.log(mostrar({ ok: false, error: 'Sin datos' }));",
+    "starter": "type Resultado = { ok: boolean; valor?: number; error?: string };\n\nfunction mostrar(resultado: Resultado): string {\n  return '';\n}\n\nconsole.log(mostrar({ ok: false, error: 'Sin datos' }));",
+    "criteria": [
+      "Una respuesta con ok: true requiere valor.",
+      "Una respuesta con ok: false requiere error.",
+      "La función compila sin forzar el tipo con as."
+    ],
+    "expected": "Sin datos"
+  },
+  {
+    "id": "exercise-typescript-1",
+    "language": "typescript",
+    "lesson": 5,
+    "title": "Recupera el valor exacto",
+    "brief": "Escribe una función genérica que lea una clave existente de un objeto y conserve el tipo del valor.",
+    "hint": "Relaciona T y K con K extends keyof T. La salida se expresa como T[K].",
+    "solution": "function leer<T, K extends keyof T>(objeto: T, clave: K): T[K] { return objeto[clave]; }\nconsole.log(leer({ ciudad: 'Santa Cruz', horas: 3 }, 'horas'));",
+    "starter": "const plan = { ciudad: 'Santa Cruz', horas: 3 };\n\nconsole.log('Falta una función de lectura');",
+    "criteria": [
+      "Una función genérica recibe el objeto y una clave que existe.",
+      "Al leer horas, la función devuelve number durante la comprobación de tipos.",
+      "Pedir una clave inexistente produce un diagnóstico."
+    ],
+    "expected": "3"
+  },
+  {
+    "id": "exercise-typescript-2",
+    "language": "typescript",
+    "lesson": 6,
+    "title": "Inspecciona un JSON",
+    "brief": "Lee un JSON como unknown y muestra el título solo si el objeto tiene un título de texto.",
+    "hint": "Comprueba objeto, null, la existencia de la clave y su tipo.",
+    "solution": "const dato: unknown = JSON.parse('{\"titulo\":\"VCode\"}');\nif (dato && typeof dato === 'object' && 'titulo' in dato && typeof dato.titulo === 'string') console.log(dato.titulo);",
+    "starter": "const dato: unknown = JSON.parse('{\"titulo\":\"VCode\"}');\n\nconsole.log('Pendiente de validar');",
+    "criteria": [
+      "La variable que recibe JSON está declarada como unknown.",
+      "Solo se imprime el título después de comprobar objeto y propiedad.",
+      "La entrada null o un titulo numérico se maneja sin lanzar."
+    ],
+    "expected": "VCode"
+  },
+  {
+    "id": "exercise-typescript-3",
+    "language": "typescript",
+    "lesson": 19,
+    "title": "Resuelve una clave que puede faltar",
+    "brief": "Corrige el diagnóstico que aparece al leer una duración desde un JSON. La función siempre debe devolver un número y usar 25 minutos para temas sin configuración.",
+    "hint": "Con noUncheckedIndexedAccess, el resultado de duraciones[tema] es number | undefined. Resuelve ese caso al devolver el valor.",
+    "starter": "import datos from \"./duraciones.json\";\n\nconst duraciones: Record<string, number> = datos;\n\nfunction minutosPara(tema: string): number {\n  return duraciones[tema];\n}\n\nfor (const tema of [\"html\", \"css\", \"sql\"]) {\n  console.log(tema, minutosPara(tema));\n}",
+    "solution": "import datos from \"./duraciones.json\";\n\nconst duraciones: Record<string, number> = datos;\n\nfunction minutosPara(tema: string): number {\n  return duraciones[tema] ?? 25;\n}\n\nfor (const tema of [\"html\", \"css\", \"sql\"]) {\n  console.log(tema, minutosPara(tema));\n}",
+    "criteria": [
+      "Comprobar tipos termina sin diagnósticos con noUncheckedIndexedAccess activo.",
+      "Se conservan el cero de HTML y los 40 minutos de CSS.",
+      "SQL toma 25 minutos porque la clave no está en el archivo."
+    ],
+    "expected": "html 0\ncss 40\nsql 25",
+    "files": {
+      "duraciones.json": "{\n  \"html\": 0,\n  \"css\": 40\n}"
+    },
+    "typeOptions": {
+      "noUncheckedIndexedAccess": true
+    }
+  },
+  {
+    "id": "exercise-react-0",
+    "language": "react",
+    "lesson": 4,
+    "title": "Controla un contador",
+    "brief": "Crea un componente que permita aumentar y reiniciar un contador.",
+    "hint": "Usa useState y pasa funciones a onClick.",
+    "solution": "import { useState } from 'react';\nexport default function App() {\n  const [n, setN] = useState(0);\n  return <><button onClick={() => setN(v => v + 1)}>{n} pasos</button><button onClick={() => setN(0)}>Reiniciar</button></>;\n}",
+    "starter": "import { useState } from 'react';\n\nexport default function App() {\n  const [pasos, setPasos] = useState(0);\n  return (\n    <main>\n      <button>{pasos} pasos</button>\n      <button>Reiniciar</button>\n    </main>\n  );\n}",
+    "criteria": [
+      "Cada pulsación del primer botón añade un paso.",
+      "Reiniciar vuelve a mostrar 0 pasos."
+    ]
+  },
+  {
+    "id": "exercise-react-1",
+    "language": "react",
+    "lesson": 5,
+    "title": "Filtra una lista",
+    "brief": "Construye un campo de búsqueda que filtre tres temas mientras escribes.",
+    "hint": "Guarda la consulta y deriva la lista visible a partir del estado.",
+    "solution": "import { useState } from 'react';\nconst temas = ['HTML', 'CSS', 'React'];\nexport default function App() {\n  const [q, setQ] = useState('');\n  return <><label>Buscar <input value={q} onChange={e => setQ(e.target.value)} /></label><ul>{temas.filter(t => t.toLowerCase().includes(q.toLowerCase())).map(t => <li key={t}>{t}</li>)}</ul></>;\n}",
+    "starter": "import { useState } from 'react';\nconst temas = ['HTML', 'CSS', 'React'];\n\nexport default function App() {\n  const [consulta, setConsulta] = useState('');\n  return (\n    <main>\n      <label>Buscar <input /></label>\n      <ul>{temas.map(tema => <li key={tema}>{tema}</li>)}</ul>\n    </main>\n  );\n}",
+    "criteria": [
+      "Escribir rea deja únicamente React.",
+      "Escribir CSS o css produce el mismo resultado.",
+      "Borrar el texto vuelve a mostrar los tres temas."
+    ]
+  },
+  {
+    "id": "exercise-react-2",
+    "language": "react",
+    "lesson": 2,
+    "title": "Separa el componente y sus datos",
+    "brief": "Crea un componente Tema que reciba título y minutos. Muéstralo para dos entradas.",
+    "hint": "Pasa datos por props y usa una clave estable al recorrer las entradas.",
+    "solution": "function Tema({ titulo, minutos }) { return <li>{titulo}: {minutos} min</li>; }\nexport default function App() {\n  return <ul><Tema titulo='React' minutos={30} /><Tema titulo='CSS' minutos={20} /></ul>;\n}",
+    "starter": "function Tema() {\n  return <li>Título: 0 min</li>;\n}\n\nexport default function App() {\n  return <ul><Tema /><Tema /></ul>;\n}",
+    "criteria": [
+      "Las dos filas reutilizan el mismo componente.",
+      "La primera muestra React: 30 min y la segunda CSS: 20 min."
+    ]
+  },
+  {
+    "id": "exercise-react-3",
+    "language": "react",
+    "lesson": 24,
+    "title": "Retoma una nota al volver",
+    "brief": "Haz que el borrador sobreviva al cerrar el panel. El estado del texto debe seguir en el componente Nota.",
+    "hint": "Conserva el componente dentro de Activity y cambia su modo entre visible y hidden.",
+    "starter": "import React, { useState } from \"react\";\nimport { Nota } from \"./Nota.jsx\";\n\nexport default function App() {\n  const [visible, setVisible] = useState(true);\n\n  return (\n    <main>\n      <h1>Cuaderno de estudio</h1>\n      <button onClick={() => setVisible((actual) => !actual)}>\n        {visible ? \"Ocultar nota\" : \"Ver nota\"}\n      </button>\n\n      {visible && <Nota />}\n    </main>\n  );\n}",
+    "solution": "import React, { Activity, useState } from \"react\";\nimport { Nota } from \"./Nota.jsx\";\n\nexport default function App() {\n  const [visible, setVisible] = useState(true);\n\n  return (\n    <main>\n      <h1>Cuaderno de estudio</h1>\n      <button onClick={() => setVisible((actual) => !actual)}>\n        {visible ? \"Ocultar nota\" : \"Ver nota\"}\n      </button>\n\n      <Activity mode={visible ? \"visible\" : \"hidden\"}>\n        <Nota />\n      </Activity>\n    </main>\n  );\n}",
+    "criteria": [
+      "Puedes escribir en el campo y ocultarlo.",
+      "Tras mostrarlo otra vez, conserva el texto.",
+      "El efecto registra «Nota pausada» al ocultar y «Nota activa» al volver."
+    ],
+    "files": {
+      "Nota.jsx": "import React, { useEffect, useState } from \"react\";\n\nexport function Nota() {\n  const [texto, setTexto] = useState(\"\");\n\n  useEffect(() => {\n    console.log(\"Nota activa\");\n    return () => console.log(\"Nota pausada\");\n  }, []);\n\n  return (\n    <p>\n      <label htmlFor=\"nota\">Nota de estudio</label>\n      <br />\n      <textarea\n        id=\"nota\"\n        value={texto}\n        onChange={(evento) => setTexto(evento.target.value)}\n      />\n    </p>\n  );\n}"
+    }
+  },
+  {
+    "id": "exercise-php-0",
+    "language": "php",
+    "lesson": 2,
+    "title": "Total de un carrito",
+    "brief": "Suma los importes en céntimos y muestra el total. Dos unidades del primer producto y una del segundo.",
+    "hint": "Usa un array de líneas y un foreach. Trabaja con enteros para importes en céntimos.",
+    "solution": "<?php\n$lineas = [[550, 2], [1200, 1]];\n$total = 0;\nforeach ($lineas as [$precio, $cantidad]) $total += $precio * $cantidad;\necho $total, PHP_EOL;",
+    "starter": "<?php\n$lineas = [[550, 2], [1200, 1]];\n$total = 0;\n\necho $total, PHP_EOL;",
+    "criteria": [
+      "Multiplica el importe de cada producto por su cantidad.",
+      "Suma todas las líneas en céntimos."
+    ],
+    "expected": "2300"
+  },
+  {
+    "id": "exercise-php-1",
+    "language": "php",
+    "lesson": 4,
+    "title": "Valida un correo",
+    "brief": "Escribe una función que devuelva true para un correo válido y false para un valor incorrecto.",
+    "hint": "filter_var devuelve false cuando el valor no supera FILTER_VALIDATE_EMAIL.",
+    "solution": "<?php\nfunction correoValido(string $valor): bool {\n    return filter_var($valor, FILTER_VALIDATE_EMAIL) !== false;\n}\nvar_dump(correoValido('equipo@example.com'), correoValido('sin-arroba'));",
+    "starter": "<?php\nfunction correoValido(string $valor): bool {\n    return false;\n}\n\nvar_dump(correoValido('equipo@example.com'), correoValido('sin-arroba'));",
+    "criteria": [
+      "El correo válido devuelve true.",
+      "La entrada sin arroba devuelve false."
+    ],
+    "expected": "bool(true)\nbool(false)"
+  },
+  {
+    "id": "exercise-php-2",
+    "language": "php",
+    "lesson": 7,
+    "title": "Guarda datos con PDO",
+    "brief": "Crea una tabla temporal en SQLite e inserta un título mediante un parámetro.",
+    "hint": "Prepara INSERT y pasa el valor por separado en execute. Requiere PDO SQLite.",
+    "solution": "<?php\n$db = new PDO('sqlite::memory:');\n$db->exec('CREATE TABLE notas (titulo TEXT NOT NULL)');\n$insertar = $db->prepare('INSERT INTO notas (titulo) VALUES (:titulo)');\n$insertar->execute(['titulo' => 'Mi apunte']);\necho $db->query('SELECT titulo FROM notas')->fetchColumn();",
+    "starter": "<?php\n$db = new PDO('sqlite::memory:');\n$db->exec('CREATE TABLE notas (titulo TEXT NOT NULL)');\n$titulo = 'Mi apunte';\n\necho $db->query('SELECT titulo FROM notas')->fetchColumn();",
+    "criteria": [
+      "La escritura usa INSERT como sentencia preparada.",
+      "El título se envía como parámetro.",
+      "El SELECT recupera la nota que acabas de guardar."
+    ],
+    "expected": "Mi apunte"
+  },
+  {
+    "id": "exercise-php-3",
+    "language": "php",
+    "lesson": 16,
+    "title": "Resume sesiones en dos archivos",
+    "brief": "Carga las sesiones devueltas por datos.php y calcula cuántas están terminadas y cuántos minutos suman.",
+    "hint": "Usa require_once con __DIR__ una vez al cargar el array. Filtra por terminada antes de sumar y contar.",
+    "starter": "<?php\ndeclare(strict_types=1);\n\n$movimientos = [];\n\n$total = 0;\nforeach ($movimientos as $movimiento) {\n    $total += $movimiento['minutos'];\n}\n\nprintf(\"%d min en %d sesiones terminadas\\n\", $total, count($movimientos));",
+    "solution": "<?php\ndeclare(strict_types=1);\n\n$movimientos = require_once __DIR__ . '/datos.php';\n$terminadas = array_filter(\n    $movimientos,\n    static fn(array $movimiento): bool => $movimiento['terminada'],\n);\n\n$total = 0;\nforeach ($terminadas as $movimiento) {\n    $total += $movimiento['minutos'];\n}\n\nprintf(\"%d min en %d sesiones terminadas\\n\", $total, count($terminadas));",
+    "criteria": [
+      "Los datos se cargan desde el archivo auxiliar.",
+      "Se excluyen los 50 minutos de la sesión pendiente.",
+      "Totaliza 45 minutos en dos sesiones terminadas."
+    ],
+    "expected": "45 min en 2 sesiones terminadas",
+    "files": {
+      "datos.php": "<?php\nreturn [\n    ['tema' => 'PHP', 'minutos' => 25, 'terminada' => true],\n    ['tema' => 'CSS', 'minutos' => 50, 'terminada' => false],\n    ['tema' => 'SQL', 'minutos' => 20, 'terminada' => true],\n];"
+    }
+  },
+  {
+    "id": "exercise-java-0",
+    "language": "java",
+    "lesson": 2,
+    "title": "Suma los minutos",
+    "brief": "Dada una colección de duraciones, devuelve la suma de las que sean mayores que 20.",
+    "hint": "Recorre un int[] con for-each y acumula con una condición.",
+    "solution": "public class Main {\n  public static void main(String[] args) {\n    int total = 0;\n    for (int minutos : new int[]{15, 25, 40}) if (minutos > 20) total += minutos;\n    System.out.println(total);\n  }\n}",
+    "starter": "public class Main {\n  public static void main(String[] args) {\n    int[] duraciones = {15, 25, 40};\n    int total = 0;\n    System.out.println(total);\n  }\n}",
+    "criteria": [
+      "El total incluye las duraciones de 25 y 40.",
+      "Una duración de exactamente 20 se queda fuera."
+    ],
+    "expected": "65"
+  },
+  {
+    "id": "exercise-java-1",
+    "language": "java",
+    "lesson": 9,
+    "title": "Describe una sesión",
+    "brief": "Crea un record de título y minutos e imprime el título mediante su accesor.",
+    "hint": "Los records generan un accesor con el mismo nombre que cada componente.",
+    "solution": "public class Main {\n  record Sesion(String titulo, int minutos) {}\n  public static void main(String[] args) {\n    System.out.println(new Sesion(\"Java\", 25).titulo());\n  }\n}",
+    "starter": "public class Main {\n  public static void main(String[] args) {\n    System.out.println(\"Pendiente\");\n  }\n}",
+    "criteria": [
+      "El record tiene los componentes titulo y minutos.",
+      "La salida usa el método de acceso al título."
+    ],
+    "expected": "Java"
+  },
+  {
+    "id": "exercise-java-2",
+    "language": "java",
+    "lesson": 8,
+    "title": "Transforma una colección",
+    "brief": "Usa un stream para quedarte con palabras de cuatro letras o más y pasarlas a mayúsculas.",
+    "hint": "Encadena filter, map y toList. Usa Locale.ROOT para la transformación independiente del entorno.",
+    "solution": "import java.util.List;\nimport java.util.Locale;\npublic class Main {\n  public static void main(String[] args) {\n    System.out.println(List.of(\"CSS\", \"Java\", \"React\").stream().filter(s -> s.length() >= 4).map(s -> s.toUpperCase(Locale.ROOT)).toList());\n  }\n}",
+    "starter": "import java.util.List;\nimport java.util.Locale;\n\npublic class Main {\n  public static void main(String[] args) {\n    var palabras = List.of(\"CSS\", \"Java\", \"React\");\n    System.out.println(palabras);\n  }\n}",
+    "criteria": [
+      "CSS se queda fuera por tener menos de cuatro letras.",
+      "Java y React aparecen en mayúsculas y conservan el orden."
+    ],
+    "expected": "[JAVA, REACT]"
+  },
+  {
+    "id": "exercise-java-3",
+    "language": "java",
+    "lesson": 18,
+    "title": "Atiende cada resultado del registro",
+    "brief": "Completa el switch según las alternativas de Resultado.java. Cada tipo debe proporcionar un mensaje propio. Deja que el compilador compruebe las alternativas cubiertas.",
+    "hint": "El tipo sellado declara tres alternativas. Abre los records con patrones en los tres case y retira la rama genérica.",
+    "starter": "public class Main {\n    static String resumen(Resultado resultado) {\n        return switch (resultado) {\n            case Guardada(int minutos) -> minutos + \" min guardados\";\n            default -> \"Resultado sin tratar\";\n        };\n    }\n\n    public static void main(String[] args) {\n        System.out.println(resumen(new Guardada(25)));\n        System.out.println(resumen(new Rechazada(\"Duración inválida\")));\n        System.out.println(resumen(new Duplicada(12)));\n    }\n}",
+    "solution": "public class Main {\n    static String resumen(Resultado resultado) {\n        return switch (resultado) {\n            case Guardada(int minutos) -> minutos + \" min guardados\";\n            case Rechazada(String motivo) -> motivo;\n            case Duplicada(int id) -> \"Ya existe la sesión \" + id;\n        };\n    }\n\n    public static void main(String[] args) {\n        System.out.println(resumen(new Guardada(25)));\n        System.out.println(resumen(new Rechazada(\"Duración inválida\")));\n        System.out.println(resumen(new Duplicada(12)));\n    }\n}",
+    "criteria": [
+      "Una sesión guardada muestra sus minutos.",
+      "Una sesión rechazada conserva el motivo y la duplicada muestra su id.",
+      "El switch es exhaustivo y no incluye una rama default."
+    ],
+    "expected": "25 min guardados\nDuración inválida\nYa existe la sesión 12",
+    "files": {
+      "Resultado.java": "sealed interface Resultado permits Guardada, Rechazada, Duplicada {}\nrecord Guardada(int minutos) implements Resultado {}\nrecord Rechazada(String motivo) implements Resultado {}\nrecord Duplicada(int id) implements Resultado {}"
+    }
+  },
+  {
+    "id": "exercise-cpp-0",
+    "language": "cpp",
+    "lesson": 4,
+    "title": "Ordena tiempos",
+    "brief": "Guarda tres duraciones en un vector y muéstralas ordenadas.",
+    "hint": "Usa std::ranges::sort y después un for de rango.",
+    "solution": "#include <algorithm>\n#include <iostream>\n#include <vector>\nint main() {\n  std::vector<int> minutos{25, 15, 40};\n  std::ranges::sort(minutos);\n  for (auto m : minutos) std::cout << m << ' ';\n}",
+    "starter": "#include <algorithm>\n#include <iostream>\n#include <vector>\n\nint main() {\n  std::vector<int> minutos{25, 15, 40};\n  for (int valor : minutos) std::cout << valor << ' ';\n}",
+    "criteria": [
+      "El resultado conserva las tres duraciones.",
+      "Las presenta en orden ascendente."
+    ],
+    "expected": "15 25 40"
+  },
+  {
+    "id": "exercise-cpp-1",
+    "language": "cpp",
+    "lesson": 6,
+    "title": "Propiedad de un recurso",
+    "brief": "Crea un propietario exclusivo de un entero y transfiérelo a una segunda variable.",
+    "hint": "Construye con make_unique y transfiere con std::move.",
+    "solution": "#include <iostream>\n#include <memory>\n#include <utility>\nint main() {\n  auto origen = std::make_unique<int>(42);\n  auto destino = std::move(origen);\n  std::cout << *destino << '\\n';\n}",
+    "starter": "#include <iostream>\n#include <memory>\n#include <utility>\n\nint main() {\n  auto origen = std::make_unique<int>(42);\n  std::cout << \"Completa el traslado de propiedad\" << '\\n';\n}",
+    "criteria": [
+      "El nuevo std::unique_ptr adquiere la propiedad.",
+      "La salida usa el nuevo propietario y sigue mostrando 42."
+    ],
+    "expected": "42"
+  },
+  {
+    "id": "exercise-cpp-2",
+    "language": "cpp",
+    "lesson": 10,
+    "title": "Búsqueda que puede no encontrar",
+    "brief": "Devuelve el primer número mayor que 20 o un resultado vacío.",
+    "hint": "Representa la ausencia con std::nullopt.",
+    "solution": "#include <iostream>\n#include <optional>\n#include <vector>\nstd::optional<int> buscar(const std::vector<int>& datos) {\n  for (int n : datos) if (n > 20) return n;\n  return std::nullopt;\n}\nint main() { if (auto n = buscar({12, 42})) std::cout << *n; }",
+    "starter": "#include <iostream>\n#include <optional>\n#include <vector>\n\nstd::optional<int> buscar(const std::vector<int>& datos) {\n  return std::nullopt;\n}\n\nint main() {\n  if (const auto encontrado = buscar({12, 42})) {\n    std::cout << *encontrado;\n  }\n}",
+    "criteria": [
+      "Se devuelve el primer valor mayor que 20.",
+      "Con un vector vacío o sin coincidencias se devuelve std::nullopt."
+    ],
+    "expected": "42"
+  },
+  {
+    "id": "exercise-cpp-3",
+    "language": "cpp",
+    "lesson": 18,
+    "title": "Recorre solo las sesiones que necesitas",
+    "brief": "Muestra los dos primeros temas con una duración mínima de 25 minutos. Recorre una vista del array y conserva la secuencia original.",
+    "hint": "Combina std::views::filter, std::views::transform y std::views::take, en ese orden.",
+    "starter": "#include <array>\n#include <iostream>\n#include \"sesion.hpp\"\n\nint main() {\n    const std::array sesiones{\n        Sesion{\"HTML\", 15}, Sesion{\"C++\", 30},\n        Sesion{\"SQL\", 25}, Sesion{\"Java\", 45}\n    };\n\n    for (const auto& sesion : sesiones) {\n        std::cout << sesion.tema << '\\n';\n    }\n}",
+    "solution": "#include <array>\n#include <iostream>\n#include <ranges>\n#include \"sesion.hpp\"\n\nint main() {\n    const std::array sesiones{\n        Sesion{\"HTML\", 15}, Sesion{\"C++\", 30},\n        Sesion{\"SQL\", 25}, Sesion{\"Java\", 45}\n    };\n\n    auto temas = sesiones\n        | std::views::filter([](const Sesion& sesion) {\n            return sesion.minutos >= 25;\n        })\n        | std::views::transform(&Sesion::tema)\n        | std::views::take(2);\n\n    for (auto tema : temas) {\n        std::cout << tema << '\\n';\n    }\n}",
+    "criteria": [
+      "Solo se muestran los títulos C++ y SQL en ese orden.",
+      "Los 25 minutos también cuentan como una duración válida.",
+      "La solución recorre la vista sin crear otro contenedor."
+    ],
+    "expected": "C++\nSQL",
+    "files": {
+      "sesion.hpp": "#pragma once\n#include <string_view>\n\nstruct Sesion {\n    std::string_view tema;\n    int minutos;\n};"
+    }
+  },
+  {
+    "id": "exercise-sql-0",
+    "language": "sql",
+    "lesson": 2,
+    "title": "Recupera sesiones largas",
+    "brief": "Consulta los temas con al menos 25 minutos y ordena del más largo al más corto.",
+    "hint": "Usa WHERE antes de ORDER BY.",
+    "solution": "SELECT tema, minutos\nFROM sesiones\nWHERE minutos >= 25\nORDER BY minutos DESC;",
+    "starter": "SELECT tema, minutos\nFROM sesiones;",
+    "criteria": [
+      "Solo aparecen filas con 25 minutos o más.",
+      "La primera fila es la sesión de duración más alta."
+    ],
+    "expected": [
+      ["JavaScript", 40],
+      ["CSS", 25]
+    ],
+    "expectedText": "JavaScript · 40\nCSS · 25"
+  },
+  {
+    "id": "exercise-sql-1",
+    "language": "sql",
+    "lesson": 4,
+    "title": "Resume el tiempo",
+    "brief": "Muestra el número de sesiones, los minutos totales y la media redondeada a una cifra decimal.",
+    "hint": "Combina COUNT, SUM, AVG y ROUND.",
+    "solution": "SELECT COUNT(*) AS sesiones, SUM(minutos) AS total,\n       ROUND(AVG(minutos), 1) AS media\nFROM sesiones;",
+    "starter": "SELECT COUNT(*) AS sesiones\nFROM sesiones;",
+    "criteria": [
+      "La consulta devuelve una sola fila.",
+      "Incluye el número de sesiones, la suma y la media con redondeo."
+    ],
+    "expected": [[3, 80, 26.7]],
+    "expectedText": "Sesiones · 3\nMinutos · 80\nMedia · 26.7"
+  },
+  {
+    "id": "exercise-sql-2",
+    "language": "sql",
+    "lesson": 10,
+    "title": "Compara cada sesión con la anterior",
+    "brief": "Ordénalas por id y añade la duración de la sesión anterior sin perder filas.",
+    "hint": "Usa LAG en una ventana ordenada por id.",
+    "solution": "SELECT tema, minutos, LAG(minutos) OVER (ORDER BY id) AS anterior\nFROM sesiones\nORDER BY id;",
+    "starter": "SELECT tema, minutos\nFROM sesiones\nORDER BY id;",
+    "criteria": [
+      "Se mantienen las tres filas en su orden original.",
+      "El valor anterior de la primera fila es NULL.",
+      "Las otras filas muestran el valor de la fila precedente."
+    ],
+    "expected": [
+      ["HTML", 15, null],
+      ["CSS", 25, 15],
+      ["JavaScript", 40, 25]
+    ],
+    "expectedText": "HTML · 15 · NULL\nCSS · 25 · 15\nJavaScript · 40 · 25"
+  },
+  {
+    "id": "exercise-sql-3",
+    "language": "sql",
+    "lesson": 17,
+    "title": "Activa y desactiva un filtro SQL",
+    "brief": "Filtra las sesiones por tema y duración mínima. El tema siempre es obligatorio. Cuando la duración es NULL, muestra todas las sesiones del tema.",
+    "hint": "Comprueba primero que el tema coincida. Agrupa entre paréntesis las dos formas de pasar el filtro de duración.",
+    "starter": "WITH sesiones(tema, minutos) AS (\n    VALUES ('HTML', 15), ('SQL', 15), ('SQL', 30), ('SQL', 40)\n)\nSELECT tema, minutos\nFROM sesiones\nWHERE :tema IS NOT NULL AND :minimo IS NOT NULL\nORDER BY minutos DESC;",
+    "solution": "WITH sesiones(tema, minutos) AS (\n    VALUES ('HTML', 15), ('SQL', 15), ('SQL', 30), ('SQL', 40)\n)\nSELECT tema, minutos\nFROM sesiones\nWHERE tema = :tema\n  AND (:minimo IS NULL OR minutos >= :minimo)\nORDER BY minutos DESC;",
+    "criteria": [
+      "Con SQL y 25, devuelve únicamente 40 y 30 minutos, por orden descendente.",
+      "Cambia :minimo a NULL en Parámetros y comprueba que vuelve la fila de 15 minutos.",
+      "Cambia :tema a HTML y comprueba que el filtro solo devuelve HTML."
+    ],
+    "expected": [
+      ["SQL", 40],
+      ["SQL", 30]
+    ],
+    "expectedText": "Con los parámetros iniciales\nSQL · 40\nSQL · 30",
+    "parameters": {
+      ":tema": "SQL",
+      ":minimo": "25"
+    }
+  }
+]

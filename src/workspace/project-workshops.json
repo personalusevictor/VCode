@@ -1,0 +1,165 @@
+{
+  "html": {
+    "brief": "Organiza un cuaderno con una nota y un formulario de suscripción. Una persona debe localizar la nota, abrir su ejemplo y entender qué dato pide el formulario usando el teclado.",
+    "checks": [
+      "La navegación lleva a la nota mediante su id.",
+      "La pregunta se puede desplegar con el teclado.",
+      "El correo exige un valor válido y conserva una etiqueta visible."
+    ],
+    "starter": "<header>\n  <h1>Cuaderno de programación</h1>\n  <nav aria-label=\"Cuaderno\">\n    <!-- Añade el enlace a la nota -->\n  </nav>\n</header>\n<main>\n  <article id=\"nota\">\n    <h2>Primer apunte</h2>\n    <p>Una etiqueta describe el significado de una parte del documento.</p>\n    <!-- Añade una pregunta que se pueda abrir -->\n  </article>\n  <!-- Añade el formulario con una etiqueta para el correo -->\n</main>",
+    "solution": "<header>\n  <h1>Cuaderno de programación</h1>\n  <nav aria-label=\"Cuaderno\">\n    <a href=\"#nota\">Ir al apunte</a>\n  </nav>\n</header>\n<main>\n  <article id=\"nota\" aria-labelledby=\"titulo-nota\">\n    <h2 id=\"titulo-nota\">Primer apunte</h2>\n    <p>Una etiqueta describe el significado de una parte del documento.</p>\n    <details>\n      <summary>¿Cuál es el contenido principal?</summary>\n      <p>El elemento main identifica la región principal de la página.</p>\n    </details>\n  </article>\n  <section aria-labelledby=\"titulo-suscripcion\">\n    <h2 id=\"titulo-suscripcion\">Recibe otro apunte</h2>\n    <form>\n      <label for=\"correo\">Correo electrónico</label>\n      <input id=\"correo\" name=\"correo\" type=\"email\" autocomplete=\"email\" required>\n      <button type=\"submit\">Suscribirme</button>\n    </form>\n  </section>\n</main>"
+  },
+  "css": {
+    "brief": "Diseña una galería de recursos que pueda colocarse tanto en una página amplia como en un panel estrecho.",
+    "checks": [
+      "Las tarjetas mantienen el texto visible cuando el ancho cae por debajo de 320 px.",
+      "Al aparecer espacio se muestran varias columnas, con separación uniforme.",
+      "Cada enlace tiene un estado de foco que se distingue del borde normal."
+    ],
+    "starter": ".galeria {\n  display: grid;\n  gap: 1rem;\n}\n\n.recurso {\n  display: block;\n  padding: 1rem;\n  border: 1px solid #cbd5ee;\n}\n\n/* Completa las columnas y el estado de foco. */",
+    "solution": ".galeria {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(min(10rem, 100%), 1fr));\n  gap: 1rem;\n  padding: 0;\n  list-style: none;\n}\n\n.recurso {\n  display: block;\n  padding: 1rem;\n  height: 100%;\n  box-sizing: border-box;\n  border: 1px solid #b8c4df;\n  border-radius: .8rem;\n  background: #e8eefc;\n  color: #1d2b49;\n  overflow-wrap: anywhere;\n}\n\n.recurso:focus-visible {\n  outline: 2px solid #243ed8;\n  outline-offset: 4px;\n}",
+    "markup": "<main>\n  <h1>Recursos del curso</h1>\n  <ul class=\"galeria\">\n    <li><a class=\"recurso\" href=\"#semantica\">HTML semántico</a></li>\n    <li><a class=\"recurso\" href=\"#cuadricula\">Cuadrículas CSS</a></li>\n    <li><a class=\"recurso\" href=\"#eventos\">Eventos JavaScript</a></li>\n  </ul>\n</main>"
+  },
+  "javascript": {
+    "brief": "Construye un panel que actualice una lista y su total cuando cambie el filtro de lenguaje.",
+    "checks": [
+      "La vista inicial muestra tres sesiones y 85 minutos.",
+      "Al elegir CSS aparecen dos sesiones y 45 minutos.",
+      "Elige PHP y comprueba que sale un estado vacío con 0 minutos."
+    ],
+    "starter": "import { sesiones, resumir } from './sesiones.js';\n\nconst filtro = document.querySelector('#lenguaje');\nconst lista = document.querySelector('#sesiones');\nconst resumen = document.querySelector('#resumen');\n\nfunction mostrar() {\n  const { visibles, minutos } = resumir(sesiones, filtro.value);\n\n  const filas = visibles.map(sesion => {\n    const fila = document.createElement('li');\n    fila.textContent = sesion.lenguaje + ' · ' + sesion.minutos + ' min';\n    return fila;\n  });\n\n  lista.replaceChildren(...filas);\n  resumen.textContent = visibles.length\n    ? visibles.length + ' sesiones · ' + minutos + ' minutos'\n    : 'Sin sesiones · 0 minutos';\n}\n\nfiltro.addEventListener('change', mostrar);\nmostrar();",
+    "solution": "import { sesiones, resumir } from './sesiones.js';\n\nconst filtro = document.querySelector('#lenguaje');\nconst lista = document.querySelector('#sesiones');\nconst resumen = document.querySelector('#resumen');\n\nfunction mostrar() {\n  const { visibles, minutos } = resumir(sesiones, filtro.value);\n\n  const filas = visibles.map(sesion => {\n    const fila = document.createElement('li');\n    fila.textContent = sesion.lenguaje + ' · ' + sesion.minutos + ' min';\n    return fila;\n  });\n\n  lista.replaceChildren(...filas);\n  resumen.textContent = visibles.length\n    ? visibles.length + ' sesiones · ' + minutos + ' minutos'\n    : 'Sin sesiones · 0 minutos';\n}\n\nfiltro.addEventListener('change', mostrar);\nmostrar();",
+    "markup": "<main>\n  <h1>Agenda de sesiones</h1>\n  <label for=\"lenguaje\">Lenguaje</label>\n  <select id=\"lenguaje\">\n    <option value=\"\">Todos</option>\n    <option>CSS</option>\n    <option>JavaScript</option>\n    <option>PHP</option>\n  </select>\n  <p id=\"resumen\" aria-live=\"polite\"></p>\n  <ul id=\"sesiones\"></ul>\n</main>",
+    "mode": "dom",
+    "mainFile": "programa.js",
+    "filePlan": {
+      "programa.js": "Actualiza la lista y el total al cambiar el filtro.",
+      "sesiones.js": "Guarda las sesiones y calcula el resumen sin tocar el DOM.",
+      "vista.html": "Contiene el selector, el resumen y la lista."
+    },
+    "starterFiles": {
+      "sesiones.js": "export const sesiones = [\n  { lenguaje: 'CSS', minutos: 20 },\n  { lenguaje: 'JavaScript', minutos: 40 },\n  { lenguaje: 'CSS', minutos: 25 },\n];\n\nexport function resumir(datos, lenguaje) {\n  // Filtra datos y suma los minutos de las sesiones visibles.\n  return { visibles: [], minutos: 0 };\n}"
+    },
+    "solutionFiles": {
+      "sesiones.js": "export const sesiones = [\n  { lenguaje: 'CSS', minutos: 20 },\n  { lenguaje: 'JavaScript', minutos: 40 },\n  { lenguaje: 'CSS', minutos: 25 },\n];\n\nexport function resumir(datos, lenguaje) {\n  const visibles = datos.filter(\n    (sesion) => !lenguaje || sesion.lenguaje === lenguaje,\n  );\n  const minutos = visibles.reduce((total, sesion) => total + sesion.minutos, 0);\n  return { visibles, minutos };\n}"
+    }
+  },
+  "typescript": {
+    "brief": "Procesa datos desconocidos y clasifícalos como un curso válido, una ficha sin título o un dato con formato erróneo.",
+    "checks": [
+      "La salida distingue los estados válido, ausente e inválido.",
+      "El caso válido conserva los tipos string y number de los campos originales.",
+      "La solución pasa «Comprobar tipos» en modo estricto."
+    ],
+    "starter": "import { analizar } from './curso.js';\n\nfor (const entrada of [\n  { titulo: 'CSS', minutos: 30 },\n  { minutos: 30 },\n  { titulo: 'CSS', minutos: '30' },\n]) {\n  const resultado = analizar(entrada);\n  console.log(resultado.estado === 'valido'\n    ? resultado.curso.titulo + ' · ' + resultado.curso.minutos\n    : resultado.estado);\n}",
+    "solution": "import { analizar } from './curso.js';\n\nfor (const entrada of [\n  { titulo: 'CSS', minutos: 30 },\n  { minutos: 30 },\n  { titulo: 'CSS', minutos: '30' },\n]) {\n  const resultado = analizar(entrada);\n  console.log(resultado.estado === 'valido'\n    ? resultado.curso.titulo + ' · ' + resultado.curso.minutos\n    : resultado.estado);\n}",
+    "mainFile": "programa.ts",
+    "filePlan": {
+      "programa.ts": "Comprueba datos válidos, ausentes y con formato erróneo.",
+      "curso.ts": "Declara los tipos y valida cada entrada."
+    },
+    "starterFiles": {
+      "curso.ts": "export type Curso = { titulo: string; minutos: number };\n\nexport type Resultado =\n  | { estado: 'valido'; curso: Curso }\n  | { estado: 'ausente' }\n  | { estado: 'invalido' };\n\nexport function analizar(entrada: unknown): Resultado {\n  // Distingue los tres estados posibles.\n  return { estado: 'invalido' };\n}"
+    },
+    "solutionFiles": {
+      "curso.ts": "export type Curso = { titulo: string; minutos: number };\n\nexport type Resultado =\n  | { estado: 'valido'; curso: Curso }\n  | { estado: 'ausente' }\n  | { estado: 'invalido' };\n\nexport function analizar(entrada: unknown): Resultado {\n  if (typeof entrada !== 'object' || entrada === null) return { estado: 'invalido' };\n  if (!('titulo' in entrada)) return { estado: 'ausente' };\n\n  const titulo = entrada.titulo;\n  const minutos = 'minutos' in entrada ? entrada.minutos : undefined;\n\n  if (typeof titulo !== 'string' || !titulo.trim()) return { estado: 'invalido' };\n  if (typeof minutos !== 'number' || !Number.isFinite(minutos) || minutos <= 0) {\n    return { estado: 'invalido' };\n  }\n  return { estado: 'valido', curso: { titulo, minutos } };\n}"
+    }
+  },
+  "react": {
+    "brief": "Construye una lista donde se puedan añadir tareas, completar cada una y alternar entre todas y las pendientes.",
+    "checks": [
+      "Agregar una tarea en blanco deja la lista igual.",
+      "Al completar una tarea, esta desaparece del filtro de pendientes.",
+      "Volver a Todas recupera la misma tarea marcada como completada."
+    ],
+    "starter": "import React, { useState } from 'react';\nimport { Fila } from './Fila.jsx';\nimport './tablero.css';\n\nexport default function App() {\n  const [tareas, setTareas] = useState([\n    { id: 1, texto: 'Leer una guía', hecha: false },\n  ]);\n\n  function cambiar(id) {\n    // Actualiza solo la tarea con este id.\n  }\n\n  return (\n    <main className=\"tablero\">\n      <h1>Tablero</h1>\n      {/* Añade un formulario y la opción de mostrar solo las pendientes. */}\n      <ul className=\"tablero-lista\">\n        {tareas.map((tarea) => <Fila key={tarea.id} tarea={tarea} cambiar={cambiar} />)}\n      </ul>\n    </main>\n  );\n}",
+    "solution": "import React, { useRef, useState } from 'react';\n\nimport { Fila } from './Fila.jsx';\nimport './tablero.css';\n\nexport default function App() {\n  const [tareas, setTareas] = useState([{ id: 1, texto: 'Leer una guía', hecha: false }]);\n  const [texto, setTexto] = useState('');\n  const [pendientes, mostrarPendientes] = useState(false);\n  const siguienteId = useRef(2);\n  const visibles = pendientes ? tareas.filter(tarea => !tarea.hecha) : tareas;\n\n  function agregar(event) {\n    event.preventDefault();\n    const valor = texto.trim();\n    if (!valor) return;\n    const id = siguienteId.current++;\n    setTareas(actuales => [...actuales, { id, texto: valor, hecha: false }]);\n    setTexto('');\n  }\n\n  function cambiar(id) {\n    setTareas(actuales => actuales.map(tarea =>\n      tarea.id === id ? { ...tarea, hecha: !tarea.hecha } : tarea\n    ));\n  }\n\n  return (\n    <main className=\"tablero\">\n      <h1>Tablero</h1>\n      <form className=\"tablero-formulario\" onSubmit={agregar}>\n        <label htmlFor=\"tarea\">Nueva tarea</label>\n        <input id=\"tarea\" value={texto} onChange={e => setTexto(e.target.value)} />\n        <button type=\"submit\">Agregar</button>\n      </form>\n      <label>\n        <input type=\"checkbox\" checked={pendientes} onChange={e => mostrarPendientes(e.target.checked)} />\n        Solo pendientes\n      </label>\n      {visibles.length ? (\n        <ul className=\"tablero-lista\">{visibles.map(tarea => <Fila key={tarea.id} tarea={tarea} cambiar={cambiar} />)}</ul>\n      ) : <p>No hay tareas en este filtro.</p>}\n    </main>\n  );\n}",
+    "mainFile": "App.jsx",
+    "filePlan": {
+      "App.jsx": "Controla el formulario, el filtro y los cambios de estado.",
+      "Fila.jsx": "Muestra una tarea y avisa cuando cambia su casilla.",
+      "tablero.css": "Define el aspecto del formulario y de las filas."
+    },
+    "starterFiles": {
+      "Fila.jsx": "import React from 'react';\n\nexport function Fila({ tarea, cambiar }) {\n  return (\n    <li>\n      <label>\n        <input type=\"checkbox\" checked={tarea.hecha} onChange={() => cambiar(tarea.id)} />\n        {tarea.texto}\n      </label>\n    </li>\n  );\n}",
+      "tablero.css": ".tablero {\n  max-width: 35rem;\n  margin-inline: auto;\n  color: #202b45;\n}\n.tablero h1 {\n  margin: 0 0 .85rem;\n  letter-spacing: -.045em;\n}\n.tablero-formulario {\n  display: flex;\n  align-items: center;\n  gap: .65rem;\n  flex-wrap: wrap;\n  margin-bottom: .85rem;\n}\n.tablero-formulario input {\n  min-inline-size: 8rem;\n  max-inline-size: 100%;\n  flex: 1;\n  border: 1px solid #bcc6e1;\n  border-radius: 8px;\n  padding: .55rem .65rem;\n  font: inherit;\n}\n.tablero-lista {\n  display: grid;\n  gap: .45rem;\n  list-style: none;\n  padding: 0;\n}\n.tablero-lista li {\n  background: #e6ebff;\n  border-radius: 10px;\n}\n.tablero-lista label {\n  display: flex;\n  align-items: center;\n  gap: .6rem;\n  padding: .65rem .8rem;\n  cursor: pointer;\n}\n.tablero-lista input {\n  accent-color: #343df0;\n}"
+    },
+    "solutionFiles": {
+      "Fila.jsx": "import React from 'react';\n\nexport function Fila({ tarea, cambiar }) {\n  return (\n    <li>\n      <label>\n        <input type=\"checkbox\" checked={tarea.hecha} onChange={() => cambiar(tarea.id)} />\n        {tarea.texto}\n      </label>\n    </li>\n  );\n}",
+      "tablero.css": ".tablero {\n  max-width: 35rem;\n  margin-inline: auto;\n  color: #202b45;\n}\n.tablero h1 {\n  margin: 0 0 .85rem;\n  letter-spacing: -.045em;\n}\n.tablero-formulario {\n  display: flex;\n  align-items: center;\n  gap: .65rem;\n  flex-wrap: wrap;\n  margin-bottom: .85rem;\n}\n.tablero-formulario input {\n  min-inline-size: 8rem;\n  max-inline-size: 100%;\n  flex: 1;\n  border: 1px solid #bcc6e1;\n  border-radius: 8px;\n  padding: .55rem .65rem;\n  font: inherit;\n}\n.tablero-lista {\n  display: grid;\n  gap: .45rem;\n  list-style: none;\n  padding: 0;\n}\n.tablero-lista li {\n  background: #e6ebff;\n  border-radius: 10px;\n}\n.tablero-lista label {\n  display: flex;\n  align-items: center;\n  gap: .6rem;\n  padding: .65rem .8rem;\n  cursor: pointer;\n}\n.tablero-lista input {\n  accent-color: #343df0;\n}"
+    }
+  },
+  "php": {
+    "brief": "Guarda notas con PDO, comprueba la entrada y devuelve una vista como HTML. El laboratorio usa una base SQLite temporal y dos entradas de prueba.",
+    "checks": [
+      "Una nota con comillas se guarda sin alterar la consulta.",
+      "Una nota vacía se rechaza antes de escribir.",
+      "El HTML codifica los caracteres especiales de las notas recuperadas."
+    ],
+    "starter": "<?php\ndeclare(strict_types=1);\n\nrequire_once __DIR__ . '/notas.php';\n\n$base = new PDO('sqlite::memory:');\n$base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);\n$base->exec('CREATE TABLE notas (id INTEGER PRIMARY KEY, texto TEXT NOT NULL)');\n\nforeach (['Una nota con \"comillas\" y <código>', '  '] as $entrada) {\n    if (!guardarNota($base, $entrada)) {\n        echo \"Nota rechazada\\n\";\n    }\n}\n\necho \"<ul>\\n\";\nforeach ($base->query('SELECT texto FROM notas ORDER BY id') as $nota) {\n    echo '  <li>', htmlspecialchars($nota['texto'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), \"</li>\\n\";\n}\necho \"</ul>\\n\";",
+    "solution": "<?php\ndeclare(strict_types=1);\n\nrequire_once __DIR__ . '/notas.php';\n\n$base = new PDO('sqlite::memory:');\n$base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);\n$base->exec('CREATE TABLE notas (id INTEGER PRIMARY KEY, texto TEXT NOT NULL)');\n\nforeach (['Una nota con \"comillas\" y <código>', '  '] as $entrada) {\n    if (!guardarNota($base, $entrada)) {\n        echo \"Nota rechazada\\n\";\n    }\n}\n\necho \"<ul>\\n\";\nforeach ($base->query('SELECT texto FROM notas ORDER BY id') as $nota) {\n    echo '  <li>', htmlspecialchars($nota['texto'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), \"</li>\\n\";\n}\necho \"</ul>\\n\";",
+    "mainFile": "programa.php",
+    "filePlan": {
+      "programa.php": "Crea la base de datos temporal y muestra las notas.",
+      "notas.php": "Valida la entrada y ejecuta la inserción con PDO."
+    },
+    "starterFiles": {
+      "notas.php": "<?php\ndeclare(strict_types=1);\n\nfunction guardarNota(PDO $base, string $entrada): bool\n{\n    // Limpia la entrada y prepara la sentencia antes de ejecutarla.\n    return false;\n}"
+    },
+    "solutionFiles": {
+      "notas.php": "<?php\ndeclare(strict_types=1);\n\nfunction guardarNota(PDO $base, string $entrada): bool {\n    $limpia = trim($entrada);\n    if ($limpia === '' || mb_strlen($limpia) > 400) {\n        return false;\n    }\n    $insertar = $base->prepare('INSERT INTO notas (texto) VALUES (:texto)');\n    return $insertar->execute(['texto' => $limpia]);\n}"
+    }
+  },
+  "java": {
+    "brief": "Separa el estado del inventario de la entrada del programa. El mismo inventario debe responder a altas válidas, duplicadas y con cantidades negativas.",
+    "checks": [
+      "El artículo lapiz conserva cantidad 3.",
+      "Dar de alta otra vez el mismo id muestra «Duplicado».",
+      "La cantidad negativa muestra «Cantidad inválida» y deja el inventario intacto."
+    ],
+    "starter": "public class InventarioDemo {\n    public static void main(String[] args) {\n        Inventario inventario = new Inventario();\n        System.out.println(inventario.alta(\"lapiz\", 3));\n        System.out.println(inventario.alta(\"lapiz\", 9));\n        System.out.println(inventario.alta(\"cuaderno\", -1));\n    }\n}",
+    "solution": "public class InventarioDemo {\n    public static void main(String[] args) {\n        Inventario inventario = new Inventario();\n        System.out.println(inventario.alta(\"lapiz\", 3));\n        System.out.println(inventario.alta(\"lapiz\", 9));\n        System.out.println(inventario.alta(\"cuaderno\", -1));\n        System.out.println(\"Cantidad lápiz: \" + inventario.cantidad(\"lapiz\"));\n    }\n}",
+    "mainFile": "InventarioDemo.java",
+    "filePlan": {
+      "InventarioDemo.java": "Ejecuta las pruebas de alta y consulta.",
+      "Inventario.java": "Conserva las cantidades y valida los cambios."
+    },
+    "starterFiles": {
+      "Inventario.java": "import java.util.HashMap;\nimport java.util.Map;\n\nfinal class Inventario {\n    private final Map<String, Integer> cantidades = new HashMap<>();\n\n    String alta(String id, int cantidad) {\n        // Valida y guarda cuando corresponda.\n        return \"Pendiente\";\n    }\n}"
+    },
+    "solutionFiles": {
+      "Inventario.java": "import java.util.HashMap;\nimport java.util.Map;\n\nfinal class Inventario {\n    private final Map<String, Integer> cantidades = new HashMap<>();\n\n    String alta(String id, int cantidad) {\n        if (cantidad < 0) return \"Cantidad inválida\";\n        if (cantidades.putIfAbsent(id, cantidad) != null) return \"Duplicado\";\n        return \"Artículo añadido\";\n    }\n\n    int cantidad(String id) {\n        return cantidades.getOrDefault(id, 0);\n    }\n}"
+    }
+  },
+  "cpp": {
+    "brief": "Diseña un inventario que ordene artículos por cantidad y pueda responder si un artículo existe.",
+    "checks": [
+      "El inventario se ordena de mayor a menor por cantidad.",
+      "Una búsqueda devuelve cantidad 12 para el artículo teclas.",
+      "Un id ausente produce «Artículo no encontrado» sin acceder a memoria fuera del vector."
+    ],
+    "starter": "#include <algorithm>\n#include <functional>\n#include <iostream>\n#include \"inventario.hpp\"\n\nint main() {\n    std::vector<Articulo> inventario{{\"teclas\", 12}, {\"raton\", 3}, {\"cable\", 7}};\n    // Ordena con ranges::sort y después busca con ranges::find.\n    std::cout << inventario.size() << \" artículos\\n\";\n}",
+    "solution": "#include <algorithm>\n#include <functional>\n#include <iostream>\n#include \"inventario.hpp\"\n\nint main() {\n    std::vector<Articulo> inventario{{\"teclas\", 12}, {\"raton\", 3}, {\"cable\", 7}};\n    std::ranges::sort(inventario, std::ranges::greater{}, &Articulo::cantidad);\n\n    for (const auto& articulo : inventario) {\n        std::cout << articulo.id << \": \" << articulo.cantidad << '\\n';\n    }\n\n    for (const std::string_view id : {\"teclas\", \"pantalla\"}) {\n        if (const auto cantidad = buscar(inventario, id)) {\n            std::cout << \"Resultado: \" << *cantidad << '\\n';\n        } else {\n            std::cout << \"Artículo no encontrado\\n\";\n        }\n    }\n}",
+    "mainFile": "main.cpp",
+    "filePlan": {
+      "main.cpp": "Ordena el inventario y muestra los resultados.",
+      "inventario.hpp": "Define el artículo y la búsqueda reutilizable."
+    },
+    "starterFiles": {
+      "inventario.hpp": "#ifndef VCODE_INVENTARIO_HPP\n#define VCODE_INVENTARIO_HPP\n\n#include <algorithm>\n#include <string>\n#include <vector>\n\nstruct Articulo {\n    std::string id;\n    int cantidad;\n};\n\n#endif"
+    },
+    "solutionFiles": {
+      "inventario.hpp": "#ifndef VCODE_INVENTARIO_HPP\n#define VCODE_INVENTARIO_HPP\n\n#include <algorithm>\n#include <optional>\n#include <string>\n#include <string_view>\n#include <vector>\n\nstruct Articulo {\n    std::string id;\n    int cantidad;\n};\n\ninline std::optional<int> buscar(const std::vector<Articulo>& inventario, std::string_view id) {\n    const auto encontrado = std::ranges::find(inventario, id, &Articulo::id);\n    if (encontrado == inventario.end()) return std::nullopt;\n    return encontrado->cantidad;\n}\n\n#endif"
+    }
+  },
+  "sql": {
+    "brief": "Crea un esquema para temas y sesiones. Presenta la suma de minutos para cada tema, aunque todavía no tenga registros.",
+    "checks": [
+      "CSS suma 45 minutos y SQL suma 30.",
+      "HTML aparece con 0 aunque no tenga sesiones.",
+      "El esquema usa una clave foránea y el índice cubre la columna de relación."
+    ],
+    "starter": "CREATE TABLE temas_taller (\n  id INTEGER PRIMARY KEY,\n  nombre TEXT NOT NULL UNIQUE\n);\nCREATE TABLE sesiones_taller (\n  id INTEGER PRIMARY KEY,\n  tema_id INTEGER NOT NULL REFERENCES temas_taller(id),\n  minutos INTEGER NOT NULL CHECK (minutos > 0)\n);\n\nINSERT INTO temas_taller VALUES (1, 'CSS'), (2, 'SQL'), (3, 'HTML');\nINSERT INTO sesiones_taller VALUES (1, 1, 20), (2, 1, 25), (3, 2, 30);\n\n-- Añade el índice y una consulta que incluya los temas sin sesiones.\nSELECT nombre FROM temas_taller;",
+    "solution": "CREATE TABLE temas_taller (\n  id INTEGER PRIMARY KEY,\n  nombre TEXT NOT NULL UNIQUE\n);\nCREATE TABLE sesiones_taller (\n  id INTEGER PRIMARY KEY,\n  tema_id INTEGER NOT NULL REFERENCES temas_taller(id),\n  minutos INTEGER NOT NULL CHECK (minutos > 0)\n);\n\nINSERT INTO temas_taller VALUES (1, 'CSS'), (2, 'SQL'), (3, 'HTML');\nINSERT INTO sesiones_taller VALUES (1, 1, 20), (2, 1, 25), (3, 2, 30);\n\nCREATE INDEX sesiones_taller_por_tema ON sesiones_taller (tema_id);\n\nSELECT t.nombre, coalesce(sum(s.minutos), 0) AS minutos\nFROM temas_taller AS t\nLEFT JOIN sesiones_taller AS s ON s.tema_id = t.id\nGROUP BY t.id, t.nombre\nORDER BY minutos DESC, t.nombre;"
+  }
+}
