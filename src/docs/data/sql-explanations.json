@@ -1,0 +1,166 @@
+[
+  {
+    "name": "row_number",
+    "locale": "es",
+    "intro": [
+      "Numera las filas dentro de cada partición. La primera fila recibe 1 y la numeración vuelve a empezar en cada grupo."
+    ],
+    "usage": "row_number() OVER (PARTITION BY columna ORDER BY expresion)",
+    "parameters": [
+      {
+        "detail": "La función no recibe argumentos. PARTITION BY y ORDER BY pertenecen a la definición de la ventana."
+      }
+    ],
+    "returns": [
+      "Un número entero por fila. Al contrario que rank(), row_number() asigna números diferentes incluso a filas que empatan en el criterio de orden."
+    ],
+    "body": [
+      "PARTITION BY es opcional. Si se omite, todas las filas del resultado forman una única partición.",
+      "Añade una columna de desempate si te importa qué fila recibe cada posición. El ORDER BY de la ventana indica cómo calcular los números. El ORDER BY de la consulta decide cómo salen ordenadas las filas."
+    ]
+  },
+  {
+    "name": "lag",
+    "locale": "es",
+    "intro": [
+      "Lee un valor de una fila anterior dentro de la misma partición. Sirve para comparar lecturas consecutivas en una serie."
+    ],
+    "usage": "lag(expresion [, desplazamiento [, valor_inicial]]) OVER (ORDER BY columna)",
+    "parameters": [
+      {
+        "label": "expresion",
+        "detail": "Columna o expresión evaluada en la fila anterior."
+      },
+      {
+        "label": "desplazamiento",
+        "detail": "Entero no negativo. El valor inicial es 1. Con 0 se evalúa la expresión de la propia fila."
+      },
+      {
+        "label": "valor_inicial",
+        "detail": "Valor que se devuelve si no existe la fila solicitada. Si se omite, el resultado es NULL."
+      }
+    ],
+    "returns": [
+      "El valor de la expresión en la fila anterior solicitada. Si la fila existe pero su valor es NULL, se devuelve NULL aunque hayas configurado un valor inicial."
+    ],
+    "body": [
+      "El ORDER BY de la ventana define qué fila cuenta como anterior. Puedes usar PARTITION BY para reiniciar la comparación por grupo."
+    ]
+  },
+  {
+    "name": "json_extract",
+    "locale": "es",
+    "intro": [
+      "Lee uno o más datos de un documento JSON de SQLite a partir de sus rutas."
+    ],
+    "usage": "json_extract(documento, ruta [, ruta ...])",
+    "parameters": [
+      {
+        "label": "documento",
+        "detail": "Texto JSON válido o un valor JSONB admitido por SQLite."
+      },
+      {
+        "label": "ruta",
+        "detail": "Ruta que empieza por $. Usa puntos para acceder a propiedades y corchetes para índices, por ejemplo $.cursos[0]."
+      }
+    ],
+    "returns": [
+      "Con una ruta que apunta a un escalar, SQLite devuelve el tipo SQL equivalente. Si la ruta apunta a un objeto o array, el resultado es texto JSON. Con varias rutas se obtiene un array JSON en texto."
+    ],
+    "body": [
+      "Una ruta que no existe devuelve NULL. En algunos casos obtendrás el mismo valor SQL para una ruta ausente y para una propiedad con valor JSON null. Usa json_type() si necesitas distinguirlos."
+    ]
+  },
+  {
+    "name": "coalesce",
+    "locale": "es",
+    "intro": [
+      "Devuelve el primer argumento que no sea NULL. Puedes usarlo para mostrar un valor alternativo cuando falta un dato."
+    ],
+    "usage": "coalesce(valor, alternativa [, alternativa ...])",
+    "parameters": [
+      {
+        "detail": "Escribe como mínimo dos expresiones. Se consideran en el orden indicado."
+      }
+    ],
+    "returns": [
+      "El primer valor distinto de NULL, o NULL si todos los argumentos son NULL."
+    ],
+    "body": [
+      "Una cadena vacía y el número cero son valores válidos. Si también quieres sustituir una cadena vacía, puedes convertirla a NULL con NULLIF(campo, '')."
+    ]
+  },
+  {
+    "name": "count",
+    "locale": "es",
+    "intro": [
+      "Cuenta filas de un conjunto o valores no nulos de una expresión. El resultado depende de si usas el asterisco o una columna."
+    ],
+    "usage": "count(*)\ncount(expresion)\ncount(DISTINCT expresion)",
+    "parameters": [
+      {
+        "label": "*",
+        "detail": "Cuenta todas las filas, incluso si contienen columnas con NULL."
+      },
+      {
+        "label": "expresion",
+        "detail": "Cuenta únicamente resultados distintos de NULL. DISTINCT elimina los duplicados antes de contar."
+      }
+    ],
+    "returns": [
+      "Un entero. Un grupo sin filas da 0 en una consulta agregada con count(*)."
+    ],
+    "body": [
+      "Con GROUP BY obtienes un conteo por grupo. En un LEFT JOIN, COUNT(tabla_derecha.id) permite contar coincidencias reales por fila de la tabla izquierda."
+    ]
+  },
+  {
+    "name": "upsert",
+    "locale": "es",
+    "intro": [
+      "Inserta una fila y decide qué hacer si la inserción entra en conflicto con una restricción de unicidad."
+    ],
+    "usage": "INSERT INTO tabla (clave, valor) VALUES (clave_nueva, valor_nuevo)\nON CONFLICT (clave) DO UPDATE SET valor = excluded.valor;",
+    "parameters": [
+      {
+        "label": "ON CONFLICT",
+        "detail": "Indica qué restricción de unicidad activa la rama alternativa. Puede referirse a una clave primaria, una restricción UNIQUE o un índice único."
+      },
+      {
+        "label": "excluded",
+        "detail": "Da acceso a los valores de la fila que se intentó insertar."
+      }
+    ],
+    "body": [
+      "DO NOTHING conserva la fila existente. DO UPDATE cambia las columnas indicadas de la fila en conflicto. SQLite toma la decisión por cada fila de un INSERT múltiple.",
+      "Una clave foránea o un CHECK fallido requiere su propio tratamiento. Prueba ambos caminos con una clave nueva y una que ya existe."
+    ]
+  },
+  {
+    "name": "returning",
+    "locale": "es",
+    "intro": [
+      "Devuelve columnas o expresiones de las filas que una sentencia INSERT, UPDATE o DELETE modifica directamente."
+    ],
+    "usage": "INSERT INTO tabla (valor) VALUES (nuevo_valor) RETURNING id, valor;",
+    "returns": [
+      "Una fila de resultado por fila modificada directamente. En INSERT y UPDATE se devuelven los valores después del cambio. En DELETE se devuelven los valores antes de borrar."
+    ],
+    "body": [
+      "Puedes obtener el identificador asignado por SQLite en la misma sentencia que crea la fila.",
+      "SQLite no garantiza el orden de las filas que devuelve RETURNING cuando la operación afecta a varias. Usa una clave en cada fila si quieres relacionarlas con otra lista."
+    ]
+  },
+  {
+    "name": "savepoint",
+    "locale": "es",
+    "intro": [
+      "Crea un punto de recuperación con nombre dentro de una transacción."
+    ],
+    "usage": "SAVEPOINT nombre;\nROLLBACK TO nombre;\nRELEASE nombre;",
+    "body": [
+      "ROLLBACK TO deshace los cambios hechos después de ese punto y mantiene el punto activo. RELEASE elimina el punto de la pila de recuperación.",
+      "Si ese punto es el más externo, RELEASE confirma la transacción. Si hay una transacción exterior todavía abierta, sus cambios se confirman con su propio COMMIT."
+    ]
+  }
+]
