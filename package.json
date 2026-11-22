@@ -10,19 +10,49 @@
     "test": "node --test tests/*.test.mjs",
     "format": "prettier --write src tests scripts index.html vite.config.js package.json README.md",
     "format:check": "prettier --check src tests scripts index.html vite.config.js package.json README.md",
-    "prebuild": "node scripts/build-search-index.mjs",
+    "prebuild": "node scripts/build-search-index.mjs && node scripts/build-lab-runtime.mjs",
     "pretest": "node scripts/build-search-index.mjs",
-    "index:build": "node scripts/build-search-index.mjs"
+    "index:build": "node scripts/build-search-index.mjs",
+    "reference:build": "node scripts/build-reference.mjs",
+    "predev": "node scripts/build-search-index.mjs && node scripts/build-lab-runtime.mjs"
   },
   "dependencies": {
+    "@bjorn3/browser_wasi_shim": "0.4.2",
+    "@codemirror/commands": "6.11.1",
+    "@codemirror/lang-cpp": "6.0.3",
+    "@codemirror/lang-css": "6.3.1",
+    "@codemirror/lang-html": "6.4.12",
+    "@codemirror/lang-java": "6.0.2",
+    "@codemirror/lang-javascript": "6.2.5",
+    "@codemirror/lang-json": "6.0.2",
+    "@codemirror/lang-php": "6.0.2",
+    "@codemirror/lang-sql": "6.10.0",
+    "@codemirror/language": "6.13.1",
+    "@codemirror/lint": "6.9.8",
+    "@codemirror/state": "6.7.6",
+    "@codemirror/view": "6.43.15",
+    "@lezer/highlight": "1.2.5",
+    "@php-wasm/universal": "^3.1.65",
+    "@php-wasm/web-8-3": "^3.1.65",
+    "browsercc": "0.1.1",
+    "codemirror": "6.0.2",
+    "esbuild-wasm": "0.28.2",
+    "fflate": "0.8.3",
     "gsap": "^3.15.1",
     "lucide-react": "^0.468.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "three": "^0.187.0"
+    "sql.js": "^1.17.0",
+    "three": "^0.187.0",
+    "typescript": "^6.0.3"
   },
   "devDependencies": {
+    "@webref/css": "^8.7.10",
+    "esbuild": "^0.28.2",
     "prettier": "^3.9.10",
     "vite": "^7.2.2"
+  },
+  "engines": {
+    "node": ">=24.18.0"
   }
 }
