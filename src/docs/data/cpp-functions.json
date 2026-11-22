@@ -1,0 +1,902 @@
+[
+  {
+    "title": "std::ranges::find()",
+    "chapter": "algorithms",
+    "section": "alg.find",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Busca el primer elemento igual al valor solicitado. Una proyección permite comparar una propiedad de cada objeto.",
+    "caveats": ["Devuelve un iterador a la coincidencia o al final del rango."],
+    "header": "algorithm",
+    "usage": "auto posicion = std::ranges::find(rango, valor);"
+  },
+  {
+    "title": "std::ranges::find_if()",
+    "chapter": "algorithms",
+    "section": "alg.find",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Encuentra el primer elemento para el que el predicado devuelve true.",
+    "caveats": ["Comprueba el final antes de desreferenciar el resultado."],
+    "header": "algorithm",
+    "usage": "auto posicion = std::ranges::find_if(rango, predicado);"
+  },
+  {
+    "title": "std::ranges::copy_if()",
+    "chapter": "algorithms",
+    "section": "alg.copy",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Copia los elementos que satisfacen una condición sin alterar su orden relativo.",
+    "caveats": [
+      "El destino debe admitir todas las escrituras. Usa std::back_inserter para añadir a un vector vacío."
+    ],
+    "header": "algorithm",
+    "usage": "auto resultado = std::ranges::copy_if(entrada, destino, predicado);"
+  },
+  {
+    "title": "std::ranges::transform()",
+    "chapter": "algorithms",
+    "section": "alg.transform",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Aplica una operación a los elementos y escribe los resultados a partir del iterador de salida.",
+    "caveats": [
+      "La variante con dos rangos se detiene al agotarse cualquiera de ellos."
+    ],
+    "header": "algorithm",
+    "usage": "auto resultado = std::ranges::transform(entrada, destino, operacion);"
+  },
+  {
+    "title": "std::clamp()",
+    "chapter": "algorithms",
+    "section": "alg.clamp",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Limita un valor al intervalo cerrado entre dos extremos.",
+    "caveats": [
+      "Exige mínimo ≤ máximo usando el mismo comparador. El retorno es una referencia a uno de los argumentos, por lo que conviene copiarla si usaste temporales."
+    ],
+    "header": "algorithm",
+    "usage": "auto limitado = std::clamp(valor, minimo, maximo);"
+  },
+  {
+    "title": "std::accumulate()",
+    "chapter": "algorithms",
+    "section": "accumulate",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Combina elementos de izquierda a derecha partiendo de un acumulador inicial.",
+    "caveats": [
+      "El tipo de valorInicial determina el tipo acumulado. Usa 0LL si necesitas que las sumas usen long long."
+    ],
+    "header": "numeric",
+    "usage": "auto total = std::accumulate(inicio, fin, valorInicial);"
+  },
+  {
+    "title": "std::reduce()",
+    "chapter": "algorithms",
+    "section": "reduce",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Reduce un rango permitiendo reagrupar las operaciones.",
+    "caveats": [
+      "Para obtener un resultado independiente de la agrupación, usa una operación asociativa y conmutativa apropiada para los tipos."
+    ],
+    "header": "numeric",
+    "usage": "auto total = std::reduce(inicio, fin, valorInicial);"
+  },
+  {
+    "title": "std::transform_reduce()",
+    "chapter": "algorithms",
+    "section": "transform.reduce",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Aplica una transformación y combina sus resultados con un acumulador.",
+    "caveats": [
+      "Las transformaciones pueden evaluarse en un orden distinto al del recorrido de izquierda a derecha."
+    ],
+    "header": "numeric",
+    "usage": "auto total = std::transform_reduce(inicio, fin, inicial, combinar, transformar);"
+  },
+  {
+    "title": "std::iota()",
+    "chapter": "algorithms",
+    "section": "numeric.iota",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Rellena un rango existente con un valor inicial y sus incrementos sucesivos.",
+    "caveats": [
+      "Los elementos del rango se sobrescriben. El algoritmo no aumenta el tamaño del contenedor."
+    ],
+    "header": "numeric",
+    "usage": "std::iota(inicio, fin, primero);"
+  },
+  {
+    "title": "std::gcd()",
+    "chapter": "algorithms",
+    "section": "numeric.ops.gcd",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Calcula el máximo común divisor de enteros teniendo en cuenta sus magnitudes.",
+    "caveats": [
+      "Si ambos valores son cero devuelve cero. Las magnitudes deben caber en el tipo común."
+    ],
+    "header": "numeric",
+    "usage": "auto divisor = std::gcd(a, b);"
+  },
+  {
+    "title": "std::lcm()",
+    "chapter": "algorithms",
+    "section": "numeric.ops.lcm",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Devuelve el mínimo común múltiplo de dos enteros.",
+    "caveats": [
+      "Si alguno es cero devuelve cero. Las magnitudes y el resultado deben caber en el tipo común."
+    ],
+    "header": "numeric",
+    "usage": "auto multiplo = std::lcm(a, b);"
+  },
+  {
+    "title": "std::midpoint()",
+    "chapter": "algorithms",
+    "section": "numeric.ops.midpoint",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Calcula el punto medio entre dos valores sin desbordar una suma de enteros.",
+    "caveats": [
+      "Si la distancia entre enteros es impar, redondea hacia el primer argumento. Para punteros, ambos deben corresponder al mismo array."
+    ],
+    "header": "numeric",
+    "usage": "auto mitad = std::midpoint(a, b);"
+  },
+  {
+    "title": "std::from_chars()",
+    "chapter": "utilities",
+    "section": "charconv.from.chars",
+    "group": "Conversiones",
+    "guide": 15,
+    "summary": "Lee un número desde un intervalo de caracteres sin usar la configuración regional.",
+    "caveats": [
+      "Comprueba ec para detectar errores y ptr para saber cuánto se leyó. El análisis entero no omite espacios iniciales."
+    ],
+    "header": "charconv",
+    "usage": "auto [posicion, error] = std::from_chars(inicio, fin, valor);"
+  },
+  {
+    "title": "std::to_chars()",
+    "chapter": "utilities",
+    "section": "charconv.to.chars",
+    "group": "Conversiones",
+    "guide": 15,
+    "summary": "Escribe una representación numérica en un búfer existente sin añadir un terminador nulo.",
+    "caveats": [
+      "La posición apunta justo después del último carácter escrito cuando la conversión tiene éxito."
+    ],
+    "header": "charconv",
+    "usage": "auto [posicion, error] = std::to_chars(inicio, fin, valor);"
+  },
+  {
+    "title": "std::get_if()",
+    "chapter": "utilities",
+    "section": "variant.get",
+    "group": "Tipos utilitarios",
+    "guide": 15,
+    "summary": "Comprueba si una variante contiene la alternativa indicada y permite acceder a ella.",
+    "caveats": [
+      "Devuelve un puntero nulo si la alternativa activa es otra o el puntero de entrada es nulo."
+    ],
+    "header": "variant",
+    "usage": "const auto* dato = std::get_if<int>(&variante);"
+  },
+  {
+    "title": "std::visit()",
+    "chapter": "utilities",
+    "section": "variant.visit",
+    "group": "Tipos utilitarios",
+    "guide": 15,
+    "summary": "Ejecuta el visitante para los valores activos de una o más variantes.",
+    "caveats": [
+      "El visitante debe aceptar las combinaciones posibles. En la forma habitual, las llamadas deben producir el mismo tipo de retorno."
+    ],
+    "header": "variant",
+    "usage": "auto resultado = std::visit(visitante, variante);"
+  },
+  {
+    "title": "std::make_unique()",
+    "chapter": "utilities",
+    "section": "unique.ptr.create",
+    "group": "Propiedad y recursos",
+    "guide": 6,
+    "summary": "Construye un objeto y entrega un propietario exclusivo mediante unique_ptr.",
+    "caveats": [
+      "Los argumentos se reenvían al constructor. Existen formas específicas para arrays de tamaño dinámico."
+    ],
+    "header": "memory",
+    "usage": "auto recurso = std::make_unique<T>(argumentos...);"
+  },
+  {
+    "title": "std::make_shared()",
+    "chapter": "utilities",
+    "section": "util.smartptr.shared.create",
+    "group": "Propiedad y recursos",
+    "guide": 6,
+    "summary": "Construye un objeto y devuelve su primer propietario compartido.",
+    "caveats": [
+      "Puede agrupar el bloque de control y el objeto en una sola asignación de memoria."
+    ],
+    "header": "memory",
+    "usage": "auto recurso = std::make_shared<T>(argumentos...);"
+  },
+  {
+    "title": "std::as_bytes()",
+    "chapter": "containers",
+    "section": "span.objectrep",
+    "group": "Vistas y cadenas",
+    "guide": 13,
+    "summary": "Crea una vista de solo lectura de los bytes que representan los objetos de una vista contigua.",
+    "caveats": [
+      "Conserva la dependencia del almacenamiento original. No garantiza un formato portátil de serialización entre máquinas."
+    ],
+    "header": "span",
+    "usage": "auto bytes = std::as_bytes(vista);"
+  },
+  {
+    "title": "std::views::iota",
+    "chapter": "ranges",
+    "section": "range.iota.overview",
+    "group": "Rangos y vistas",
+    "guide": 13,
+    "summary": "Crea una vista perezosa que genera valores incrementales empezando en el valor indicado.",
+    "caveats": [
+      "Con dos enteros, el límite final es exclusivo. La forma de un solo argumento puede producir una secuencia sin fin."
+    ],
+    "header": "ranges",
+    "usage": "auto valores = std::views::iota(1, 5);",
+    "related": ["std::ranges::iota_view"]
+  },
+  {
+    "title": "std::views::filter",
+    "chapter": "ranges",
+    "section": "range.filter.overview",
+    "group": "Rangos y vistas",
+    "guide": 13,
+    "summary": "Presenta los elementos que cumplen un predicado sin crear una colección con copias.",
+    "caveats": [
+      "Conserva la dependencia de la vista de origen y evalúa el predicado al recorrerla."
+    ],
+    "header": "ranges",
+    "usage": "auto visibles = origen | std::views::filter(predicado);",
+    "related": ["std::ranges::filter_view"]
+  },
+  {
+    "title": "std::views::take",
+    "chapter": "ranges",
+    "section": "range.take.overview",
+    "group": "Rangos y vistas",
+    "guide": 8,
+    "summary": "Limita un rango a un prefijo de, como máximo, el número solicitado de elementos.",
+    "caveats": [
+      "La vista conserva la dependencia del rango de origen. Si hay menos elementos, recorre solo los que existen."
+    ],
+    "header": "ranges",
+    "usage": "auto primeros = origen | std::views::take(3);",
+    "aliases": ["views::take", "std::ranges::views::take"],
+    "related": ["std::ranges::take_view"],
+    "example": {
+      "language": "cpp",
+      "title": "Obtén el inicio de una secuencia que no tiene límite",
+      "description": "take acota el recorrido de una vista iota sin tope.",
+      "code": "#include <iostream>\n#include <ranges>\nint main() {\n    auto muestras = std::views::iota(10) | std::views::take(3);\n    for (int valor : muestras) std::cout << valor << '\\n';\n}",
+      "expected": "10\n11\n12"
+    }
+  },
+  {
+    "title": "std::views::drop",
+    "chapter": "ranges",
+    "section": "range.drop.overview",
+    "group": "Rangos y vistas",
+    "guide": 8,
+    "summary": "Salta una cantidad de elementos al principio y expone lo que queda.",
+    "caveats": [
+      "Con un rango finito más corto que la cantidad solicitada, el resultado está vacío. La cantidad debe ser no negativa."
+    ],
+    "header": "ranges",
+    "usage": "auto resto = origen | std::views::drop(2);",
+    "aliases": ["views::drop", "std::ranges::views::drop"],
+    "related": ["std::ranges::drop_view"]
+  },
+  {
+    "title": "std::views::take_while",
+    "chapter": "ranges",
+    "section": "range.take.while.overview",
+    "group": "Rangos y vistas",
+    "guide": 8,
+    "summary": "Recorre el prefijo que satisface un predicado y termina al encontrar el primer fallo.",
+    "caveats": [
+      "Si hay coincidencias después de la primera que falla, quedan fuera. Usa filter cuando quieras comprobar todos los elementos."
+    ],
+    "header": "ranges",
+    "usage": "auto iniciales = origen | std::views::take_while(predicado);",
+    "aliases": ["views::take_while", "std::ranges::views::take_while"],
+    "related": ["std::ranges::take_while_view"]
+  },
+  {
+    "title": "std::views::drop_while",
+    "chapter": "ranges",
+    "section": "range.drop.while.overview",
+    "group": "Rangos y vistas",
+    "guide": 8,
+    "summary": "Omite el prefijo que satisface el predicado y deja disponible el resto del rango.",
+    "caveats": [
+      "El primer elemento que no cumple el predicado forma parte de la salida. Los posteriores se recorren sin volver a aplicar la condición de descarte."
+    ],
+    "header": "ranges",
+    "usage": "auto resto = origen | std::views::drop_while(predicado);",
+    "aliases": ["views::drop_while", "std::ranges::views::drop_while"],
+    "related": ["std::ranges::drop_while_view"]
+  },
+  {
+    "title": "std::views::transform",
+    "chapter": "ranges",
+    "section": "range.transform.overview",
+    "group": "Rangos y vistas",
+    "guide": 8,
+    "summary": "Aplica una función a cada elemento al acceder a él.",
+    "caveats": [
+      "La vista no guarda todos los resultados. Si el cálculo debe ocurrir una sola vez o debes conservarlo, materialízalo en un contenedor."
+    ],
+    "header": "ranges",
+    "usage": "auto duraciones = sesiones | std::views::transform(&Sesion::minutos);",
+    "aliases": ["views::transform", "std::ranges::views::transform"],
+    "related": ["std::ranges::transform_view"],
+    "example": {
+      "language": "cpp",
+      "title": "Proyecta un miembro sin copiar todas las sesiones",
+      "description": "Podrías cambiar la proyección a otro miembro de la estructura.",
+      "code": "#include <array>\n#include <iostream>\n#include <ranges>\nstruct Sesion { int minutos; };\nint main() {\n    const std::array sesiones{Sesion{15}, Sesion{25}};\n    int total = 0;\n    for (int minutos : sesiones | std::views::transform(&Sesion::minutos)) {\n        total += minutos;\n    }\n    std::cout << total << '\\n';\n}",
+      "expected": "40"
+    }
+  },
+  {
+    "title": "std::views::reverse",
+    "chapter": "ranges",
+    "section": "range.reverse.overview",
+    "group": "Rangos y vistas",
+    "guide": 8,
+    "summary": "Adapta un rango bidireccional para visitarlo desde el final hasta el inicio.",
+    "caveats": [
+      "La vista conserva el orden físico del contenedor. Para reordenar los elementos usa un algoritmo que modifique el rango."
+    ],
+    "header": "ranges",
+    "usage": "auto invertido = datos | std::views::reverse;",
+    "aliases": ["views::reverse", "std::ranges::views::reverse"],
+    "related": ["std::ranges::reverse_view"],
+    "example": {
+      "language": "cpp",
+      "title": "Lee un array desde el final sin reorganizarlo",
+      "description": "El primer recorrido va hacia atrás y el acceso directo conserva la primera posición.",
+      "code": "#include <array>\n#include <iostream>\n#include <ranges>\nint main() {\n    std::array valores{2, 4, 8};\n    for (int n : valores | std::views::reverse) std::cout << n << '\\n';\n    std::cout << \"Inicio: \" << valores.front() << '\\n';\n}",
+      "expected": "8\n4\n2\nInicio: 2"
+    }
+  },
+  {
+    "title": "std::views::join",
+    "chapter": "ranges",
+    "section": "range.join.overview",
+    "group": "Rangos y vistas",
+    "guide": 8,
+    "summary": "Aplana un rango de rangos con un único recorrido.",
+    "caveats": [
+      "Los elementos se leen siguiendo el orden de los rangos internos. La vista no añade separadores entre grupos."
+    ],
+    "header": "ranges",
+    "usage": "auto elementos = grupos | std::views::join;",
+    "aliases": ["views::join", "std::ranges::views::join"],
+    "related": ["std::ranges::join_view"],
+    "example": {
+      "language": "cpp",
+      "title": "Recorre los elementos de dos grupos como una secuencia",
+      "description": "El recorrido conserva primero los dos elementos del primer grupo.",
+      "code": "#include <array>\n#include <iostream>\n#include <ranges>\nint main() {\n    std::array grupos{std::array{2, 4}, std::array{8, 16}};\n    for (int n : grupos | std::views::join) std::cout << n << '\\n';\n}",
+      "expected": "2\n4\n8\n16"
+    }
+  },
+  {
+    "title": "std::views::split",
+    "chapter": "ranges",
+    "section": "range.split.overview",
+    "group": "Rangos y vistas",
+    "guide": 8,
+    "summary": "Divide un rango a partir de un delimitador y entrega fragmentos recorribles.",
+    "caveats": [
+      "Los fragmentos siguen relacionados con el rango original. Cuando necesites algo duradero, copia el fragmento a un tipo propietario."
+    ],
+    "header": "ranges",
+    "usage": "auto campos = linea | std::views::split(',');",
+    "aliases": ["views::split", "std::ranges::views::split"],
+    "related": ["std::ranges::split_view"],
+    "example": {
+      "language": "cpp",
+      "title": "Separa nombres de lenguajes por comas",
+      "description": "Recorre cada fragmento y escribe sus caracteres para ver los límites.",
+      "code": "#include <iostream>\n#include <ranges>\n#include <string_view>\nint main() {\n    auto texto = std::string_view{\"HTML,CSS,Java\"};\n    for (auto parte : texto | std::views::split(',')) {\n        for (char letra : parte) std::cout << letra;\n        std::cout << '\\n';\n    }\n}",
+      "expected": "HTML\nCSS\nJava"
+    }
+  },
+  {
+    "title": "std::views::common",
+    "chapter": "ranges",
+    "section": "range.common.overview",
+    "group": "Rangos y vistas",
+    "guide": 8,
+    "summary": "Adapta el recorrido para usar el mismo tipo de iterador al principio y al final.",
+    "caveats": [
+      "Puede servir con APIs que reciben dos iteradores del mismo tipo. Si la entrada ya satisface common_range, puede reutilizarse directamente."
+    ],
+    "header": "ranges",
+    "usage": "auto compatible = rango | std::views::common;",
+    "aliases": ["views::common", "std::ranges::views::common"],
+    "related": ["std::ranges::common_view"]
+  },
+  {
+    "title": "std::views::empty",
+    "chapter": "ranges",
+    "section": "range.empty.overview",
+    "group": "Rangos y vistas",
+    "guide": 8,
+    "summary": "Proporciona un rango vacío de un tipo de elemento escrito explícitamente.",
+    "caveats": [
+      "Es una plantilla de variable. Accede a begin, end o size si necesitas componerla con otros rangos."
+    ],
+    "header": "ranges",
+    "usage": "auto nada = std::views::empty<int>;",
+    "aliases": ["views::empty", "std::ranges::views::empty"],
+    "related": ["std::ranges::empty_view"]
+  },
+  {
+    "title": "std::views::single",
+    "chapter": "ranges",
+    "section": "range.single.overview",
+    "group": "Rangos y vistas",
+    "guide": 8,
+    "summary": "Construye un rango que contiene un solo elemento.",
+    "caveats": [
+      "La vista contiene su valor. Si necesitas conservar una referencia al original, especifica ese comportamiento por separado."
+    ],
+    "header": "ranges",
+    "usage": "auto uno = std::views::single(25);",
+    "aliases": ["views::single", "std::ranges::views::single"],
+    "related": ["std::ranges::single_view"]
+  },
+  {
+    "title": "std::views::all",
+    "chapter": "ranges",
+    "section": "range.all",
+    "group": "Rangos y vistas",
+    "guide": 8,
+    "summary": "Convierte un rango adecuado en una vista que permite componer otros adaptadores.",
+    "caveats": [
+      "Una vista construida sobre un contenedor lvalue suele referenciarlo. Mantén el contenedor vivo durante todo el recorrido."
+    ],
+    "header": "ranges",
+    "usage": "auto vista = std::views::all(contenedor);",
+    "aliases": ["views::all", "std::ranges::views::all"],
+    "related": ["std::ranges::ref_view", "std::ranges::subrange"]
+  },
+  {
+    "title": "std::back_inserter()",
+    "chapter": "iterators",
+    "section": "back.inserter",
+    "group": "Iteradores",
+    "guide": 8,
+    "summary": "Crea un iterador de salida que añade valores al final del contenedor.",
+    "caveats": [
+      "El contenedor destino debe ofrecer push_back. Esta operación modifica su tamaño sin exigir que prepares posiciones vacías."
+    ],
+    "header": "iterator",
+    "usage": "std::ranges::copy(origen, std::back_inserter(destino));",
+    "aliases": ["back inserter", "insertar al final"],
+    "related": ["std::back_insert_iterator", "std::ranges::copy()"],
+    "example": {
+      "language": "cpp",
+      "title": "Copia valores en un vector vacío",
+      "description": "copy escribe en el adaptador y cada escritura añade un nuevo elemento.",
+      "code": "#include <algorithm>\n#include <array>\n#include <iostream>\n#include <iterator>\n#include <vector>\nint main() {\n    const std::array origen{15, 25};\n    std::vector<int> destino;\n    std::ranges::copy(origen, std::back_inserter(destino));\n    std::cout << destino.size() << ' ' << destino.back() << '\\n';\n}",
+      "expected": "2 25"
+    }
+  },
+  {
+    "title": "std::inserter()",
+    "chapter": "iterators",
+    "section": "inserter",
+    "group": "Iteradores",
+    "guide": 8,
+    "summary": "Crea un iterador de salida que inserta elementos a partir de una posición.",
+    "caveats": [
+      "El adaptador conserva la posición para las escrituras siguientes. El contenedor debe ofrecer la operación insert apropiada."
+    ],
+    "header": "iterator",
+    "usage": "std::ranges::copy(origen, std::inserter(destino, destino.begin()));",
+    "related": ["std::insert_iterator", "std::ranges::copy()"]
+  },
+  {
+    "title": "std::ranges::distance()",
+    "chapter": "iterators",
+    "section": "range.iter.op.distance",
+    "group": "Iteradores",
+    "guide": 8,
+    "summary": "Cuenta la distancia entre un iterador y su centinela o mide el tamaño de un rango.",
+    "caveats": [
+      "Cuando puede consultarlo directamente, la operación es constante. En un rango de una sola pasada, medir mediante recorrido puede consumir la entrada."
+    ],
+    "header": "iterator",
+    "usage": "auto cantidad = std::ranges::distance(rango);",
+    "related": ["std::ranges::subrange", "std::counted_iterator"]
+  },
+  {
+    "title": "std::ranges::next()",
+    "chapter": "iterators",
+    "section": "range.iter.op.next",
+    "group": "Iteradores",
+    "guide": 8,
+    "summary": "Devuelve otra posición al avanzar un iterador, con un límite opcional.",
+    "caveats": [
+      "Al pasar un centinela, el avance puede terminar antes de completar la distancia. Sin límite, debes garantizar que el recorrido es válido."
+    ],
+    "header": "iterator",
+    "usage": "auto nueva = std::ranges::next(inicio, 2, fin);",
+    "related": ["std::ranges::distance()", "std::ranges::prev()"]
+  },
+  {
+    "title": "std::ranges::prev()",
+    "chapter": "iterators",
+    "section": "range.iter.op.prev",
+    "group": "Iteradores",
+    "guide": 8,
+    "summary": "Devuelve otra posición al retroceder un iterador bidireccional.",
+    "caveats": [
+      "Con un rango vacío, retroceder desde su final no es válido. Comprueba el límite si la entrada puede estar vacía."
+    ],
+    "header": "iterator",
+    "usage": "auto anterior = std::ranges::prev(fin);",
+    "related": ["std::ranges::next()", "std::reverse_iterator"]
+  },
+  {
+    "title": "std::ranges::copy()",
+    "chapter": "algorithms",
+    "section": "alg.copy",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Copia sucesivamente los elementos del rango de origen al destino.",
+    "caveats": [
+      "El destino debe aceptar todas las escrituras. Una salida mediante back_inserter permite añadir a un contenedor vacío."
+    ],
+    "header": "algorithm",
+    "usage": "auto posiciones = std::ranges::copy(origen, destino.begin());",
+    "related": ["std::back_inserter()", "std::ranges::copy_if()"]
+  },
+  {
+    "title": "std::ranges::all_of()",
+    "chapter": "algorithms",
+    "section": "alg.all.of",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Comprueba que todos los elementos cumplen el predicado, con una proyección opcional.",
+    "caveats": [
+      "Un rango vacío satisface all_of. El recorrido puede terminar al encontrar el primer fallo."
+    ],
+    "header": "algorithm",
+    "usage": "bool validos = std::ranges::all_of(datos, predicado);",
+    "related": ["std::ranges::any_of()", "std::ranges::none_of()"]
+  },
+  {
+    "title": "std::ranges::any_of()",
+    "chapter": "algorithms",
+    "section": "alg.any.of",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Comprueba si al menos un elemento cumple el predicado, con una proyección opcional.",
+    "caveats": [
+      "Un rango vacío devuelve false y el recorrido puede terminar al encontrar la primera coincidencia."
+    ],
+    "header": "algorithm",
+    "usage": "bool hayPendientes = std::ranges::any_of(tareas, predicado);",
+    "related": ["std::ranges::all_of()", "std::ranges::none_of()"]
+  },
+  {
+    "title": "std::ranges::none_of()",
+    "chapter": "algorithms",
+    "section": "alg.none.of",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Comprueba que ningún elemento cumple el predicado, con una proyección opcional.",
+    "caveats": [
+      "Un rango vacío devuelve true. El predicado también puede operar sobre una proyección del elemento."
+    ],
+    "header": "algorithm",
+    "usage": "bool sinErrores = std::ranges::none_of(resultados, esError);",
+    "related": ["std::ranges::any_of()", "std::ranges::all_of()"]
+  },
+  {
+    "title": "std::ranges::lower_bound()",
+    "chapter": "algorithms",
+    "section": "lower.bound",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Encuentra la primera posición donde el valor existente deja de ser menor que el buscado.",
+    "caveats": [
+      "El rango debe estar particionado para la comparación. Para una búsqueda normal, ordena con el mismo criterio antes de llamar."
+    ],
+    "header": "algorithm",
+    "usage": "auto inicio = std::ranges::lower_bound(ordenados, buscado);",
+    "related": ["std::ranges::upper_bound()", "std::ranges::binary_search()"],
+    "example": {
+      "language": "cpp",
+      "title": "Calcula cuántos elementos son iguales a un valor",
+      "description": "Los dos límites acotan el tramo que contiene todos los duplicados.",
+      "code": "#include <algorithm>\n#include <array>\n#include <iostream>\nint main() {\n    std::array valores{2, 5, 5, 5, 8};\n    auto inicio = std::ranges::lower_bound(valores, 5);\n    auto final = std::ranges::upper_bound(valores, 5);\n    std::cout << final - inicio << '\\n';\n}",
+      "expected": "3"
+    }
+  },
+  {
+    "title": "std::ranges::upper_bound()",
+    "chapter": "algorithms",
+    "section": "upper.bound",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Encuentra la primera posición cuyo valor compare como mayor que el buscado.",
+    "caveats": [
+      "Usa el mismo criterio de ordenación que al preparar el rango. La posición puede coincidir con su final."
+    ],
+    "header": "algorithm",
+    "usage": "auto final = std::ranges::upper_bound(ordenados, buscado);",
+    "related": ["std::ranges::lower_bound()", "std::ranges::binary_search()"]
+  },
+  {
+    "title": "std::ranges::binary_search()",
+    "chapter": "algorithms",
+    "section": "binary.search",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Indica si el rango ordenado contiene un valor equivalente al buscado.",
+    "caveats": [
+      "La equivalencia viene del comparador. Para encontrar la posición y consultar el elemento, usa lower_bound y verifica el resultado."
+    ],
+    "header": "algorithm",
+    "usage": "bool existe = std::ranges::binary_search(ordenados, buscado);",
+    "related": ["std::ranges::lower_bound()", "std::ranges::upper_bound()"]
+  },
+  {
+    "title": "std::ranges::unique()",
+    "chapter": "algorithms",
+    "section": "alg.unique",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Compacta los grupos de elementos equivalentes consecutivos.",
+    "caveats": [
+      "Solo combina elementos adyacentes. Si quieres quitar duplicados dispersos, ordena antes cuando el orden resultante lo permita."
+    ],
+    "header": "algorithm",
+    "usage": "auto sobrantes = std::ranges::unique(valores);\nvalores.erase(sobrantes.begin(), sobrantes.end());",
+    "related": ["std::ranges::sort", "std::ranges::remove()"],
+    "example": {
+      "language": "cpp",
+      "title": "Elimina repeticiones consecutivas de un vector",
+      "description": "La llamada erase recorta el rango devuelto por unique.",
+      "code": "#include <algorithm>\n#include <iostream>\n#include <vector>\nint main() {\n    std::vector<int> datos{4, 4, 7, 7, 9};\n    auto sobrantes = std::ranges::unique(datos);\n    datos.erase(sobrantes.begin(), sobrantes.end());\n    for (int n : datos) std::cout << n << '\\n';\n}",
+      "expected": "4\n7\n9"
+    }
+  },
+  {
+    "title": "std::ranges::remove()",
+    "chapter": "algorithms",
+    "section": "alg.remove",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Compacta los elementos que difieren del valor solicitado y devuelve el tramo sobrante.",
+    "caveats": [
+      "El algoritmo reasigna elementos y conserva el tamaño del contenedor. Para borrarlos de un vector, llama erase o usa std::erase."
+    ],
+    "header": "algorithm",
+    "usage": "auto sobrantes = std::ranges::remove(datos, valor);\ndatos.erase(sobrantes.begin(), sobrantes.end());",
+    "related": ["std::ranges::unique()", "std::vector"]
+  },
+  {
+    "title": "std::ranges::stable_sort()",
+    "chapter": "algorithms",
+    "section": "stable.sort",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Ordena un rango de acceso aleatorio y conserva el orden relativo de elementos equivalentes.",
+    "caveats": [
+      "La estabilidad conserva la secuencia de entrada dentro de cada grupo con la misma clave. Comprueba si otra clave de ordenación describe mejor el resultado."
+    ],
+    "header": "algorithm",
+    "usage": "std::ranges::stable_sort(sesiones, {}, &Sesion::dia);",
+    "related": ["std::ranges::sort", "std::ranges::is_sorted()"]
+  },
+  {
+    "title": "std::ranges::is_sorted()",
+    "chapter": "algorithms",
+    "section": "is.sorted",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Comprueba si aparece una pareja de elementos que rompe el orden solicitado.",
+    "caveats": [
+      "Usa el mismo comparador si buscas después mediante algoritmos de búsqueda binaria."
+    ],
+    "header": "algorithm",
+    "usage": "bool ordenado = std::ranges::is_sorted(datos);",
+    "related": ["std::ranges::sort", "std::ranges::lower_bound()"]
+  },
+  {
+    "title": "std::chrono::duration_cast()",
+    "chapter": "time",
+    "section": "time.duration.cast",
+    "group": "Tiempo",
+    "guide": 2,
+    "summary": "Convierte explícitamente una duración al periodo y representación de otro tipo de duración.",
+    "caveats": [
+      "Si el destino es entero, se descarta la fracción hacia cero. Usa floor, ceil o round cuando necesites una regla distinta."
+    ],
+    "header": "chrono",
+    "usage": "auto minutos = std::chrono::duration_cast<std::chrono::minutes>(segundos);",
+    "related": ["std::chrono::duration", "std::chrono::time_point_cast()"],
+    "example": {
+      "language": "cpp",
+      "title": "Convierte segundos positivos y negativos a minutos completos",
+      "description": "125 y -125 segundos se convierten en 2 y -2 minutos con representación entera.",
+      "code": "#include <chrono>\n#include <iostream>\nint main() {\n    using namespace std::chrono;\n    auto primero = duration_cast<minutes>(seconds{125});\n    auto segundo = duration_cast<minutes>(seconds{-125});\n    std::cout << primero.count() << ' ' << segundo.count() << '\\n';\n}",
+      "expected": "2 -2"
+    }
+  },
+  {
+    "title": "std::chrono::time_point_cast()",
+    "chapter": "time",
+    "section": "time.point.cast",
+    "group": "Tiempo",
+    "guide": 2,
+    "summary": "Cambia la resolución de la duración de un punto temporal manteniendo su reloj.",
+    "caveats": [
+      "Convertir la precisión no transforma la zona horaria. También conserva el referente de su reloj."
+    ],
+    "header": "chrono",
+    "usage": "auto segundos = std::chrono::time_point_cast<std::chrono::seconds>(instante);",
+    "related": ["std::chrono::time_point", "std::chrono::duration_cast()"]
+  },
+  {
+    "title": "std::invoke()",
+    "chapter": "utilities",
+    "section": "func.invoke",
+    "group": "Tipos utilitarios",
+    "guide": 8,
+    "summary": "Invoca de forma uniforme un invocable, un método miembro o un miembro de datos.",
+    "caveats": [
+      "Un puntero a método necesita un objeto compatible como primer argumento adicional. Un puntero a un miembro de datos puede devolver una referencia."
+    ],
+    "header": "functional",
+    "usage": "auto total = std::invoke(&Sesion::total, sesion, extra);",
+    "related": ["std::reference_wrapper", "std::function", "std::bind_front()"],
+    "example": {
+      "language": "cpp",
+      "title": "Llama a un método y lee un campo mediante invoke",
+      "description": "Los punteros a miembros se aplican al objeto proporcionado.",
+      "code": "#include <functional>\n#include <iostream>\nstruct Sesion {\n    int minutos;\n    int ampliar(int extra) const { return minutos + extra; }\n};\nint main() {\n    Sesion sesion{25};\n    std::cout << std::invoke(&Sesion::ampliar, sesion, 10)\n              << ' ' << std::invoke(&Sesion::minutos, sesion) << '\\n';\n}",
+      "expected": "35 25"
+    }
+  },
+  {
+    "title": "std::bind_front()",
+    "chapter": "utilities",
+    "section": "func.bind.front",
+    "group": "Tipos utilitarios",
+    "guide": 8,
+    "summary": "Construye un invocable con los primeros argumentos ya asociados.",
+    "caveats": [
+      "Los valores asociados se almacenan según las reglas de decaimiento. Usa std::ref cuando necesites conservar deliberadamente una referencia."
+    ],
+    "header": "functional",
+    "usage": "auto porDiez = std::bind_front(std::multiplies<int>{}, 10);",
+    "related": ["std::invoke()", "std::reference_wrapper"]
+  },
+  {
+    "title": "std::not_fn()",
+    "chapter": "utilities",
+    "section": "func.not.fn",
+    "group": "Tipos utilitarios",
+    "guide": 8,
+    "summary": "Construye un invocable que niega el resultado de otro.",
+    "caveats": [
+      "Conserva una copia o movimiento del invocable original. También puedes usar una lambda para expresar una condición con varias partes."
+    ],
+    "header": "functional",
+    "usage": "auto disponibles = std::not_fn(estaOcupado);",
+    "related": ["std::invoke()", "std::function"]
+  },
+  {
+    "title": "std::move()",
+    "chapter": "utilities",
+    "section": "forward",
+    "group": "Propiedad y recursos",
+    "guide": 9,
+    "summary": "Convierte una expresión en una referencia rvalue para que otra operación pueda mover su contenido.",
+    "caveats": [
+      "El propio std::move no modifica el objeto. Si se transfiere un recurso, lo hace el constructor o la asignación que recibe el valor."
+    ],
+    "header": "utility",
+    "usage": "auto destino = std::move(origen);",
+    "related": ["std::forward()", "std::move_iterator", "std::unique_ptr"]
+  },
+  {
+    "title": "std::forward()",
+    "chapter": "utilities",
+    "section": "forward",
+    "group": "Propiedad y recursos",
+    "guide": 9,
+    "summary": "Reenvía una referencia preservando la categoría deducida en una función plantilla.",
+    "caveats": [
+      "Escribe el parámetro de tipo deducido como argumento de plantilla. Si quieres mover incondicionalmente un objeto que ya tienes, usa std::move cuando corresponda."
+    ],
+    "header": "utility",
+    "usage": "destino(std::forward<T>(valor));",
+    "related": ["std::move()", "std::invoke()"]
+  },
+  {
+    "title": "std::partial_sum()",
+    "chapter": "algorithms",
+    "section": "partial.sum",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Escribe resultados acumulados en el orden del rango de entrada.",
+    "caveats": [
+      "El iterador de salida debe aceptar todos los prefijos calculados. El tipo de los elementos de entrada influye en la acumulación."
+    ],
+    "header": "numeric",
+    "usage": "std::partial_sum(datos.begin(), datos.end(), salida.begin());",
+    "related": ["std::accumulate()", "std::adjacent_difference()"]
+  },
+  {
+    "title": "std::adjacent_difference()",
+    "chapter": "algorithms",
+    "section": "adjacent.difference",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Copia el primer elemento y calcula después la diferencia entre parejas adyacentes.",
+    "caveats": [
+      "Por defecto se resta el valor anterior al actual. Puedes proporcionar otra operación binaria."
+    ],
+    "header": "numeric",
+    "usage": "std::adjacent_difference(lecturas.begin(), lecturas.end(), cambios.begin());",
+    "related": ["std::partial_sum()", "std::accumulate()"]
+  },
+  {
+    "title": "std::inner_product()",
+    "chapter": "algorithms",
+    "section": "inner.product",
+    "group": "Algoritmos",
+    "guide": 8,
+    "summary": "Multiplica elementos correspondientes de dos rangos y agrega los resultados a partir de un valor inicial.",
+    "caveats": [
+      "El segundo rango debe tener al menos tantos elementos como el primero. El acumulador empieza con el tipo del valor inicial."
+    ],
+    "header": "numeric",
+    "usage": "auto total = std::inner_product(a.begin(), a.end(), b.begin(), 0);",
+    "related": ["std::accumulate()", "std::transform_reduce()"]
+  },
+  {
+    "title": "std::pmr::get_default_resource()",
+    "chapter": "utilities",
+    "section": "mem.res.global",
+    "group": "Propiedad y recursos",
+    "guide": 6,
+    "summary": "Obtiene el recurso de memoria predeterminado usado por las operaciones que no reciben uno explícito.",
+    "caveats": [
+      "Puedes pasar un recurso propio directamente al contenedor para que su dependencia y duración queden visibles."
+    ],
+    "header": "memory_resource",
+    "usage": "std::pmr::memory_resource* recurso = std::pmr::get_default_resource();",
+    "related": ["std::pmr::memory_resource", "std::pmr::polymorphic_allocator"]
+  }
+]
