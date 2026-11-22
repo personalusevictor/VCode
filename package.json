@@ -13,7 +13,7 @@
     "prebuild": "node scripts/build-search-index.mjs && node scripts/build-lab-runtime.mjs",
     "pretest": "node scripts/build-search-index.mjs",
     "index:build": "node scripts/build-search-index.mjs",
-    "reference:build": "node scripts/build-reference.mjs",
+    "reference:build": "node scripts/build-reference.mjs && node scripts/build-quick-reference.mjs",
     "predev": "node scripts/build-search-index.mjs && node scripts/build-lab-runtime.mjs"
   },
   "dependencies": {
