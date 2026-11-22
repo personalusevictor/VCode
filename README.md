@@ -2,6 +2,8 @@
 
 Biblioteca de programación en español, con portada 3D, cursos, referencia consultable y laboratorio local.
 
+[Abrir VCode en GitHub Pages](https://personalusevictor.github.io/VCode/)
+
 ## Abrir en local
 
 Con Node.js 24.18 o posterior y npm 11.16 o posterior:
