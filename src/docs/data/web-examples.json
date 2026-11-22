@@ -1,0 +1,611 @@
+[
+  {
+    "id": "css-properties-box-sizing",
+    "language": "css",
+    "title": "Compara el tamaño de las dos cajas",
+    "description": "Las dos cajas declaran 12rem de ancho. En la primera, el borde y el relleno suman espacio por fuera de esa medida.",
+    "markup": "<article class=\"box content\">content-box</article>\n<article class=\"box border\">border-box</article>",
+    "code": ".box {\n  width: 12rem;\n  padding: 1rem;\n  border: 4px solid #5446a6;\n  margin-block: 1rem;\n  border-radius: .5rem;\n  background: #e8e2fc;\n  color: #241942;\n}\n\n.content { box-sizing: content-box; }\n.border { box-sizing: border-box; }"
+  },
+  {
+    "id": "css-atrules-%40container",
+    "language": "css",
+    "title": "Una tarjeta que responde a su espacio",
+    "description": "Ajusta el ancho del panel de vista previa. El contenido cambia de columna a fila cuando su contenedor alcanza 25rem.",
+    "markup": "<div class=\"contenedor\">\n  <article class=\"tarjeta\">\n    <strong>VCode</strong>\n    <span>HTML y CSS</span>\n  </article>\n</div>",
+    "code": ".contenedor { container-type: inline-size; }\n\n.tarjeta {\n  display: flex;\n  flex-direction: column;\n  gap: .5rem;\n  padding: 1rem;\n  border-radius: .75rem;\n  background: #e5eafe;\n  color: #192243;\n}\n\n@container (width >= 25rem) {\n  .tarjeta {\n    flex-direction: row;\n    justify-content: space-between;\n  }\n}"
+  },
+  {
+    "id": "html-attribute-inert",
+    "language": "html",
+    "title": "Comprueba qué recibe el foco",
+    "description": "Recorre los controles con Tab. El botón de la sección inerte queda fuera de la navegación por teclado.",
+    "code": "<h1>Opciones de envío</h1>\n<button type=\"button\">Recogida en tienda</button>\n<section inert>\n  <h2>Envío a domicilio</h2>\n  <button type=\"button\">Elegir dirección</button>\n</section>\n<button type=\"button\">Continuar</button>"
+  },
+  {
+    "id": "web-javascript-global_objects-array-at",
+    "language": "javascript",
+    "title": "Lee desde el principio o desde el final",
+    "description": "Cambia los índices para acceder a otras posiciones. Cuando el índice está fuera del array, el resultado es undefined.",
+    "expected": "Mañana\nTarde\nundefined",
+    "code": "const turnos = ['Mañana', 'Tarde', 'Noche'];\n\nconsole.log(turnos.at(0));\nconsole.log(turnos.at(-2));\nconsole.log(turnos.at(5));"
+  },
+  {
+    "id": "javascript-api-Promise.allSettled()",
+    "language": "javascript",
+    "title": "Conserva el resultado de cada tarea",
+    "description": "Una tarea falla y la otra se completa. Cada resultado incluye su estado y el valor o el motivo correspondiente.",
+    "expected": "cumplida: Guías listas\nrechazada: Archivo no disponible",
+    "code": "const tareas = [\n  Promise.resolve('Guías listas'),\n  Promise.reject(new Error('Archivo no disponible')),\n];\n\nPromise.allSettled(tareas).then(resultados => {\n  for (const resultado of resultados) {\n    if (resultado.status === 'fulfilled') {\n      console.log('cumplida: ' + resultado.value);\n    } else {\n      console.log('rechazada: ' + resultado.reason.message);\n    }\n  }\n});"
+  },
+  {
+    "id": "web-javascript-global_objects-object-groupby",
+    "language": "javascript",
+    "title": "Agrupa lecciones por tema",
+    "description": "La función devuelve la clave de cada tema. Cada propiedad del resultado contiene los objetos que le corresponden.",
+    "expected": "1\n2",
+    "code": "const lecciones = [\n  { tema: 'HTML', titulo: 'Formularios' },\n  { tema: 'CSS', titulo: 'Grid' },\n  { tema: 'CSS', titulo: 'Flexbox' },\n];\n\nconst grupos = Object.groupBy(lecciones, leccion => leccion.tema);\nconsole.log(grupos.HTML.length);\nconsole.log(grupos.CSS.length);"
+  },
+  {
+    "id": "react-api-useState",
+    "language": "react",
+    "title": "Actualiza el estado a partir de su valor anterior",
+    "description": "Pulsa +3. Cada actualizador recibe el valor que dejó el anterior. Prueba a sustituirlos por tres llamadas a setTotal(total + 1) y observa la diferencia.",
+    "code": "import React, { useState } from 'react';\n\nexport default function App() {\n  const [total, setTotal] = useState(0);\n\n  function sumarTres() {\n    setTotal(valor => valor + 1);\n    setTotal(valor => valor + 1);\n    setTotal(valor => valor + 1);\n  }\n\n  return (\n    <section>\n      <h1>Contador</h1>\n      <p aria-live=\"polite\">Total: {total}</p>\n      <button onClick={sumarTres}>+3</button>\n      <button onClick={() => setTotal(0)}>Reiniciar</button>\n    </section>\n  );\n}"
+  },
+  {
+    "id": "react-api-useEffectEvent",
+    "language": "react",
+    "title": "Lee el tema actual desde una suscripción",
+    "description": "Cambia el tema y emite un evento. El efecto conserva la suscripción al mismo objeto y el evento lee el valor actualizado. Usa esta técnica para la lógica que pertenece al efecto.",
+    "code": "import React, { useEffect, useEffectEvent, useMemo, useState } from 'react';\n\nexport default function App() {\n  const eventos = useMemo(() => new EventTarget(), []);\n  const [tema, setTema] = useState('Claro');\n  const [resultado, setResultado] = useState('Todavía sin eventos');\n\n  const registrar = useEffectEvent(() => {\n    setResultado('Tema al recibir el evento: ' + tema);\n  });\n\n  useEffect(() => {\n    function onPing() {\n      registrar();\n    }\n\n    eventos.addEventListener('ping', onPing);\n    return () => eventos.removeEventListener('ping', onPing);\n  }, [eventos]);\n\n  return (\n    <section>\n      <h1>Tema: {tema}</h1>\n      <button onClick={() => setTema(tema === 'Claro' ? 'Oscuro' : 'Claro')}>\n        Cambiar tema\n      </button>\n      <button onClick={() => eventos.dispatchEvent(new Event('ping'))}>\n        Emitir evento\n      </button>\n      <p aria-live=\"polite\">{resultado}</p>\n    </section>\n  );\n}"
+  },
+  {
+    "id": "react-api-%3CSuspense%3E",
+    "language": "react",
+    "title": "Muestra una vista mientras se carga un componente",
+    "description": "Pulsa Mostrar la guía. La espera del ejemplo simula una importación diferida. Cuando React recibe el módulo, sustituye la vista de carga por el contenido.",
+    "code": "import React, { Suspense, lazy, useState } from 'react';\n\nconst Guia = lazy(() =>\n  new Promise(resolve => {\n    setTimeout(() => {\n      resolve({ default: () => <h2>Tu guía está lista</h2> });\n    }, 1200);\n  })\n);\n\nexport default function App() {\n  const [abierta, setAbierta] = useState(false);\n\n  return (\n    <main>\n      <button onClick={() => setAbierta(true)}>Mostrar la guía</button>\n      <Suspense fallback={<p role=\"status\">Cargando la guía…</p>}>\n        {abierta && <Guia />}\n      </Suspense>\n    </main>\n  );\n}"
+  },
+  {
+    "id": "typescript-api-Partial%3CT%3E",
+    "language": "typescript",
+    "title": "Actualiza solo los campos de un objeto",
+    "description": "Partial convierte en opcionales las propiedades de primer nivel. La función acepta una actualización con un solo campo y devuelve un curso completo.",
+    "expected": "PHP · Avanzado",
+    "code": "type Curso = {\n  titulo: string;\n  nivel: 'Inicial' | 'Avanzado';\n};\n\nfunction actualizar(curso: Curso, cambios: Partial<Curso>): Curso {\n  return { ...curso, ...cambios };\n}\n\nconst original: Curso = { titulo: 'PHP', nivel: 'Inicial' };\nconst actualizado = actualizar(original, { nivel: 'Avanzado' });\nconsole.log(actualizado.titulo + ' · ' + actualizado.nivel);"
+  },
+  {
+    "id": "web-sql-row_number",
+    "title": "Ordena los cursos dentro de cada categoría",
+    "description": "Comprueba cómo la primera posición se repite en Backend y Web. El identificador resuelve los empates en horas.",
+    "code": "SELECT categoria, nombre, horas,\n       row_number() OVER (\n         PARTITION BY categoria\n         ORDER BY horas DESC, id\n       ) AS posicion\nFROM cursos\nORDER BY categoria, posicion;",
+    "expectedRows": [
+      ["Backend", "PHP", 10, 1],
+      ["Web", "JavaScript", 14, 1],
+      ["Web", "HTML", 8, 2]
+    ],
+    "language": "sql",
+    "expected": "Backend | PHP | 10 | 1\nWeb | JavaScript | 14 | 1\nWeb | HTML | 8 | 2"
+  },
+  {
+    "id": "web-sql-lag",
+    "title": "Compara la duración con la sesión anterior",
+    "description": "Cada fila conserva sus minutos y muestra la diferencia con la anterior. La primera tiene una diferencia NULL porque aún no hay una sesión previa.",
+    "code": "SELECT tema, minutos,\n       minutos - lag(minutos) OVER (ORDER BY id) AS diferencia\nFROM sesiones\nORDER BY id;",
+    "expectedRows": [
+      ["HTML", 15, null],
+      ["CSS", 25, 10],
+      ["JavaScript", 40, 15]
+    ],
+    "language": "sql",
+    "expected": "HTML | 15 | NULL\nCSS | 25 | 10\nJavaScript | 40 | 15"
+  },
+  {
+    "id": "web-sql-json_extract",
+    "title": "Lee un número de un documento JSON",
+    "description": "La consulta extrae horas y muestra el tipo SQL que obtuvo. Prueba otra ruta o una propiedad que no existe.",
+    "code": "WITH curso(documento) AS (\n  VALUES ('{\"tema\":\"SQL\",\"horas\":4}')\n)\nSELECT json_extract(documento, '$.horas') AS horas,\n       typeof(json_extract(documento, '$.horas')) AS tipo\nFROM curso;",
+    "expectedRows": [[4, "integer"]],
+    "language": "sql",
+    "expected": "4 | integer"
+  },
+  {
+    "id": "sql-api-COALESCE",
+    "title": "Completa una descripción ausente",
+    "description": "La descripción existente se conserva. La de JavaScript se sustituye porque su valor en esta base de prueba es NULL.",
+    "code": "SELECT nombre, coalesce(descripcion, 'Sin descripción') AS detalle\nFROM cursos\nORDER BY id;",
+    "expectedRows": [
+      ["HTML", "Estructura"],
+      ["JavaScript", "Sin descripción"],
+      ["PHP", "Servidor"]
+    ],
+    "language": "sql",
+    "expected": "HTML | Estructura\nJavaScript | Sin descripción\nPHP | Servidor"
+  },
+  {
+    "id": "web-sql-count",
+    "title": "Distingue inscripciones de notas",
+    "description": "Compara el número total de inscripciones con el número de notas registradas. Hay una inscripción con nota NULL.",
+    "code": "SELECT count(*) AS inscripciones, count(nota) AS notas\nFROM inscripciones;",
+    "expectedRows": [[4, 3]],
+    "language": "sql",
+    "expected": "4 | 3"
+  },
+  {
+    "id": "web-sql-upsert",
+    "title": "Actualiza las horas de un curso existente",
+    "description": "El id 1 ya existe. El primer comando actualiza sus horas y el segundo permite verificar el nuevo valor.",
+    "code": "INSERT INTO cursos (id, nombre, horas)\nVALUES (1, 'HTML', 12)\nON CONFLICT (id) DO UPDATE SET horas = excluded.horas;\n\nSELECT id, nombre, horas FROM cursos WHERE id = 1;",
+    "expectedRows": [[1, "HTML", 12]],
+    "language": "sql",
+    "expected": "1 | HTML | 12"
+  },
+  {
+    "id": "web-sql-returning",
+    "title": "Obtén el id de una fila recién creada",
+    "description": "SQLite asigna un id al curso. RETURNING muestra ese id y el nombre en la misma consulta.",
+    "code": "INSERT INTO cursos (nombre, horas, categoria)\nVALUES ('SQL', 16, 'Datos')\nRETURNING id, nombre;",
+    "expectedRows": [[4, "SQL"]],
+    "language": "sql",
+    "expected": "4 | SQL"
+  },
+  {
+    "id": "web-sql-savepoint",
+    "title": "Revierte solo el tramo de trabajo posterior al punto",
+    "description": "La cuenta parte de 100. Se añade un importe antes del punto de recuperación y otro después. Al volver al punto solo se conserva el primero.",
+    "code": "BEGIN;\nUPDATE cuentas SET saldo = saldo + 10 WHERE id = 1;\nSAVEPOINT ajuste;\nUPDATE cuentas SET saldo = saldo + 25 WHERE id = 1;\nROLLBACK TO ajuste;\nRELEASE ajuste;\nCOMMIT;\n\nSELECT saldo FROM cuentas WHERE id = 1;",
+    "expectedRows": [[110]],
+    "language": "sql",
+    "expected": "110"
+  },
+  {
+    "id": "web-java-List.of",
+    "language": "java",
+    "title": "Conserva el orden de los temas",
+    "description": "La copia de trabajo admite un nuevo tema sin cambiar la lista original.",
+    "code": "import java.util.ArrayList;\nimport java.util.List;\n\npublic class Main {\n    public static void main(String[] args) {\n        var temas = List.of(\"HTML\", \"CSS\");\n        var plan = new ArrayList<>(temas);\n        plan.add(\"JavaScript\");\n        System.out.println(temas.size() + \" / \" + plan.size());\n    }\n}",
+    "expected": "2 / 3"
+  },
+  {
+    "id": "web-java-Map.computeIfAbsent",
+    "language": "java",
+    "title": "Agrupa cursos con listas creadas bajo demanda",
+    "description": "Cada tema recibe su propia lista al llegar el primer curso de ese grupo.",
+    "code": "import java.util.ArrayList;\nimport java.util.List;\nimport java.util.Map;\nimport java.util.TreeMap;\n\npublic class Main {\n    public static void main(String[] args) {\n        Map<String, List<String>> cursos = new TreeMap<>();\n        cursos.computeIfAbsent(\"Web\", tema -> new ArrayList<>()).add(\"HTML\");\n        cursos.computeIfAbsent(\"Web\", tema -> new ArrayList<>()).add(\"CSS\");\n        cursos.computeIfAbsent(\"Datos\", tema -> new ArrayList<>()).add(\"SQL\");\n        System.out.println(cursos.get(\"Web\"));\n        System.out.println(cursos.get(\"Datos\"));\n    }\n}",
+    "expected": "[HTML, CSS]\n[SQL]"
+  },
+  {
+    "id": "web-java-Optional.map",
+    "language": "java",
+    "title": "Prepara un saludo con un nombre opcional",
+    "description": "El mismo flujo produce un saludo cuando hay nombre y una alternativa cuando falta.",
+    "code": "import java.util.Optional;\n\npublic class Main {\n    static String saludar(Optional<String> nombre) {\n        return nombre.map(valor -> \"Hola, \" + valor).orElse(\"Hola\");\n    }\n\n    public static void main(String[] args) {\n        System.out.println(saludar(Optional.of(\"Víctor\")));\n        System.out.println(saludar(Optional.empty()));\n    }\n}",
+    "expected": "Hola, Víctor\nHola"
+  },
+  {
+    "id": "web-cpp-std%3A%3Avector%3A%3Apush_back",
+    "language": "cpp",
+    "title": "Añade un lenguaje a una selección",
+    "description": "Comprueba que el tamaño cambia y que back() devuelve el elemento que acaba de entrar.",
+    "code": "#include <iostream>\n#include <string>\n#include <vector>\n\nint main() {\n    std::vector<std::string> lenguajes{\"HTML\", \"CSS\"};\n    lenguajes.push_back(\"JavaScript\");\n    std::cout << lenguajes.size() << '\\n';\n    std::cout << lenguajes.back() << '\\n';\n}",
+    "expected": "3\nJavaScript"
+  },
+  {
+    "id": "web-cpp-std%3A%3Avector%3A%3Areserve",
+    "language": "cpp",
+    "title": "Distingue tamaño y capacidad",
+    "description": "El vector sigue vacío después de reserve(). Usa push_back() para añadir el primer elemento.",
+    "code": "#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> notas;\n    notas.reserve(8);\n    std::cout << notas.size() << '\\n';\n    std::cout << std::boolalpha << (notas.capacity() >= 8) << '\\n';\n    notas.push_back(9);\n    std::cout << notas.size() << '\\n';\n}",
+    "expected": "0\ntrue\n1"
+  },
+  {
+    "id": "cpp-api-std%3A%3Aranges%3A%3Asort",
+    "language": "cpp",
+    "title": "Ordena estructuras por su campo minutos",
+    "description": "La proyección apunta al miembro minutos. El comparador solo ve la clave numérica.",
+    "code": "#include <algorithm>\n#include <iostream>\n#include <string>\n#include <vector>\n\nstruct Sesion {\n    std::string tema;\n    int minutos;\n};\n\nint main() {\n    std::vector<Sesion> sesiones{{\"HTML\", 30}, {\"CSS\", 10}, {\"SQL\", 20}};\n    std::ranges::sort(sesiones, {}, &Sesion::minutos);\n    for (const auto& sesion : sesiones) {\n        std::cout << sesion.tema << '\\n';\n    }\n}",
+    "expected": "CSS\nSQL\nHTML"
+  },
+  {
+    "id": "web-cpp-std%3A%3Aoptional%3A%3Avalue_or",
+    "language": "cpp",
+    "title": "Observa cuándo se calcula la alternativa",
+    "description": "El primer optional tiene un valor. El argumento alternativo de su llamada se evalúa igualmente.",
+    "code": "#include <iostream>\n#include <optional>\n\nint main() {\n  int calculos = 0;\n  auto alternativa = [&]() { ++calculos; return 12; };\n\n  std::optional<int> definida = 25;\n  std::optional<int> vacia;\n  std::cout << definida.value_or(alternativa()) << '\\n';\n  std::cout << vacia.value_or(alternativa()) << '\\n';\n  std::cout << \"Cálculos alternativos: \" << calculos << '\\n';\n}",
+    "expected": "25\n12\nCálculos alternativos: 2"
+  },
+  {
+    "id": "javascript-api-fetch()",
+    "language": "javascript",
+    "title": "Lee una respuesta JSON dentro del laboratorio",
+    "description": "El recurso de prueba está en la propia URL de datos. Conserva el mismo flujo de comprobación que usarías con una petición HTTP.",
+    "expected": "CSS · 25 minutos",
+    "code": "const leccion = { tema: 'CSS', minutos: 25 };\nconst recurso = 'data:application/json,' + encodeURIComponent(JSON.stringify(leccion));\nconst respuesta = await fetch(recurso);\n\nif (!respuesta.ok) {\n  throw new Error('No se pudo leer la lección: ' + respuesta.status);\n}\n\nconst datos = await respuesta.json();\nconsole.log(datos.tema + ' · ' + datos.minutos + ' minutos');"
+  },
+  {
+    "id": "javascript-api-querySelector()",
+    "language": "javascript",
+    "mode": "dom",
+    "title": "Selecciona un elemento y actualiza su texto",
+    "description": "La consulta se hace sobre el documento de prueba. Cambia el selector para comprobar qué sucede cuando no hay coincidencia.",
+    "markup": "<main>\n  <h1>Mi biblioteca</h1>\n  <p id=\"resultado\" aria-live=\"polite\">Sin cambios</p>\n</main>",
+    "code": "const resultado = document.querySelector('#resultado');\nif (resultado) {\n  resultado.textContent = 'Encontraste el elemento.';\n} else {\n  console.warn('El selector no encontró un elemento.');\n}"
+  },
+  {
+    "id": "javascript-api-addEventListener()",
+    "language": "javascript",
+    "mode": "dom",
+    "title": "Escucha clics y libera la suscripción",
+    "description": "Pulsa Sumar varias veces y después Desconectar. Los clics posteriores ya no cambian el contador.",
+    "markup": "<h1>Eventos</h1>\n<button id=\"sumar\">Sumar</button>\n<button id=\"parar\">Desconectar</button>\n<p id=\"contador\" aria-live=\"polite\">Total: 0</p>",
+    "code": "const control = new AbortController();\nconst sumar = document.querySelector('#sumar');\nconst parar = document.querySelector('#parar');\nconst contador = document.querySelector('#contador');\nlet total = 0;\n\nsumar.addEventListener('click', () => {\n  total += 1;\n  contador.textContent = 'Total: ' + total;\n}, { signal: control.signal });\n\nparar.addEventListener('click', () => {\n  control.abort();\n  sumar.disabled = true;\n  contador.textContent = 'Último total: ' + total;\n});"
+  },
+  {
+    "id": "web-java-se-java.lang.String.codePointCount",
+    "language": "java",
+    "title": "Compara UTF-16 y puntos de código",
+    "description": "El emoji ocupa dos unidades de String y un solo punto de código.",
+    "code": "public class Main {\n  public static void main(String[] args) {\n    String texto = \"A🌊\";\n    System.out.println(\"Unidades: \" + texto.length());\n    System.out.println(\"Puntos de código: \" + texto.codePointCount(0, texto.length()));\n  }\n}",
+    "expected": "Unidades: 3\nPuntos de código: 2"
+  },
+  {
+    "id": "web-java-se-java.lang.String.substring",
+    "language": "java",
+    "title": "Extrae una fecha sin incluir el límite final",
+    "description": "Usa la primera sobrecarga para llegar al final. Usa la segunda para acotar el tramo.",
+    "code": "public class Main {\n  public static void main(String[] args) {\n    String fecha = \"2026-11-21\";\n    System.out.println(\"Año: \" + fecha.substring(0, 4));\n    System.out.println(\"Día: \" + fecha.substring(8));\n  }\n}",
+    "expected": "Año: 2026\nDía: 21"
+  },
+  {
+    "id": "web-java-se-java.util.List.remove",
+    "language": "java",
+    "title": "Elige entre retirar por índice y por valor",
+    "description": "Las llamadas se aplican a listas independientes que parten de la misma secuencia.",
+    "code": "import java.util.ArrayList;\nimport java.util.List;\n\npublic class Main {\n  public static void main(String[] args) {\n    List<Integer> base = List.of(1, 20, 30);\n\n    var porIndice = new ArrayList<>(base);\n    porIndice.remove(1);\n    System.out.println(\"Índice 1: \" + porIndice);\n\n    var porValor = new ArrayList<>(base);\n    porValor.remove(Integer.valueOf(1));\n    System.out.println(\"Valor 1: \" + porValor);\n  }\n}",
+    "expected": "Índice 1: [1, 30]\nValor 1: [20, 30]"
+  },
+  {
+    "id": "web-java-se-java.math.BigDecimal.divide",
+    "language": "java",
+    "title": "Divide con una escala explícita",
+    "description": "Redondea 10 entre 3 a dos decimales usando HALF_UP.",
+    "code": "import java.math.BigDecimal;\nimport java.math.RoundingMode;\n\npublic class Main {\n  public static void main(String[] args) {\n    BigDecimal total = new BigDecimal(\"10.00\");\n    BigDecimal personas = new BigDecimal(\"3\");\n    System.out.println(total.divide(personas, 2, RoundingMode.HALF_UP));\n  }\n}",
+    "expected": "3.33"
+  },
+  {
+    "id": "web-java-se-java.util.stream.Collectors.groupingBy",
+    "language": "java",
+    "title": "Cuenta apuntes por materia",
+    "description": "Al elegir TreeMap, el resultado se presenta ordenado por clave. El colector suma uno por cada apunte.",
+    "code": "import java.util.List;\nimport java.util.TreeMap;\nimport java.util.stream.Collectors;\n\npublic class Main {\n  record Apunte(String materia, String titulo) {}\n\n  public static void main(String[] args) {\n    var apuntes = List.of(\n        new Apunte(\"Java\", \"Streams\"),\n        new Apunte(\"CSS\", \"Grid\"),\n        new Apunte(\"Java\", \"Records\"));\n    var conteo = apuntes.stream().collect(\n        Collectors.groupingBy(Apunte::materia, TreeMap::new, Collectors.summingInt(apunte -> 1)));\n    conteo.forEach((tema, cantidad) -> System.out.println(tema + \": \" + cantidad));\n  }\n}",
+    "expected": "CSS: 1\nJava: 2"
+  },
+  {
+    "id": "web-java-se-java.util.regex.Matcher.find",
+    "language": "java",
+    "title": "Recorre todas las coincidencias",
+    "description": "find() avanza a la siguiente racha de cifras. group() recupera el texto que acaba de encontrar.",
+    "code": "import java.util.regex.Pattern;\n\npublic class Main {\n  public static void main(String[] args) {\n    var patron = Pattern.compile(\"[0-9]+\");\n    var coincidencias = patron.matcher(\"HTML 15 · Java 25\");\n    while (coincidencias.find()) {\n      System.out.println(coincidencias.group());\n    }\n  }\n}",
+    "expected": "15\n25"
+  },
+  {
+    "id": "web-cpp-std%3A%3Avector%3A%3Aerase",
+    "language": "cpp",
+    "title": "Continúa desde el iterador que devuelve erase",
+    "description": "Quita los ceros y conserva el recorrido sobre posiciones válidas.",
+    "code": "#include <iostream>\n#include <vector>\n\nint main() {\n  std::vector<int> minutos{0, 0, 15, 0, 25};\n  for (auto it = minutos.begin(); it != minutos.end();) {\n    if (*it == 0) it = minutos.erase(it);\n    else ++it;\n  }\n\n  for (int valor : minutos) std::cout << valor << '\\n';\n}",
+    "expected": "15\n25"
+  },
+  {
+    "id": "web-cpp20-std%3A%3Aunordered_map%3A%3Acontains",
+    "language": "cpp",
+    "title": "Consulta claves sin insertar",
+    "description": "Después de buscar SQL, el mapa conserva su único elemento.",
+    "code": "#include <iostream>\n#include <string>\n#include <unordered_map>\n\nint main() {\n  const std::unordered_map<std::string, int> horas{{\"CSS\", 12}};\n  std::cout << std::boolalpha;\n  std::cout << \"CSS: \" << horas.contains(\"CSS\") << '\\n';\n  std::cout << \"SQL: \" << horas.contains(\"SQL\") << '\\n';\n  std::cout << \"Entradas: \" << horas.size() << '\\n';\n}",
+    "expected": "CSS: true\nSQL: false\nEntradas: 1"
+  },
+  {
+    "id": "web-cpp20-std%3A%3Amap%3A%3Alower_bound",
+    "language": "cpp",
+    "title": "Busca el primer tema a partir de un valor",
+    "description": "Con el comparador por defecto, se obtiene la primera clave mayor o igual al valor de búsqueda.",
+    "code": "#include <iostream>\n#include <map>\n\nint main() {\n  const std::map<int, const char*> sesiones{{15, \"HTML\"}, {25, \"CSS\"}, {40, \"Java\"}};\n  const auto it = sesiones.lower_bound(20);\n  if (it != sesiones.end()) {\n    std::cout << it->second << \": \" << it->first << \" min\\n\";\n  }\n}",
+    "expected": "CSS: 25 min"
+  },
+  {
+    "id": "web-cpp-std%3A%3Aweak_ptr%3A%3Alock",
+    "language": "cpp",
+    "title": "Obtén acceso solo mientras el recurso está vivo",
+    "description": "Tras liberar el último propietario, lock() devuelve un puntero compartido vacío.",
+    "code": "#include <iostream>\n#include <memory>\n\nint main() {\n  auto propietario = std::make_shared<int>(42);\n  std::weak_ptr<int> observador = propietario;\n\n  if (const auto vigente = observador.lock()) std::cout << *vigente << '\\n';\n  propietario.reset();\n  if (!observador.lock()) std::cout << \"Recurso liberado\\n\";\n}",
+    "expected": "42\nRecurso liberado"
+  },
+  {
+    "id": "web-cpp20-std%3A%3Aviews%3A%3Afilter",
+    "language": "cpp",
+    "title": "Recorre solo las sesiones que quieres mostrar",
+    "description": "La vista observa un vector que sigue vivo durante el recorrido.",
+    "code": "#include <iostream>\n#include <ranges>\n#include <vector>\n\nint main() {\n  const std::vector<int> sesiones{10, 25, 30, 15};\n  auto largas = sesiones | std::views::filter([](int minutos) {\n    return minutos >= 20;\n  });\n  for (int minutos : largas) std::cout << minutos << '\\n';\n}",
+    "expected": "25\n30"
+  },
+  {
+    "id": "web-cpp20-std%3A%3Afrom_chars",
+    "language": "cpp",
+    "title": "Distingue el número del texto restante",
+    "description": "El análisis puede tener éxito y dejar texto sin consumir. La posición indica dónde terminó.",
+    "code": "#include <charconv>\n#include <iostream>\n#include <string_view>\n#include <system_error>\n\nint main() {\n  const std::string_view texto = \"32min\";\n  int minutos = 0;\n  const auto [fin, error] = std::from_chars(texto.data(), texto.data() + texto.size(), minutos);\n  if (error == std::errc{}) {\n    std::cout << \"Minutos: \" << minutos << '\\n';\n    std::cout << \"Restante: \" << texto.substr(fin - texto.data()) << '\\n';\n  }\n}",
+    "expected": "Minutos: 32\nRestante: min"
+  },
+  {
+    "id": "web-javascript-web-api-readablestream",
+    "language": "javascript",
+    "title": "Lee dos fragmentos y comprueba el cierre",
+    "description": "El lector recibe los fragmentos de texto en orden. Una tercera lectura indica que llegó el final.",
+    "code": "const fuente = new ReadableStream({\n  start(control) {\n    control.enqueue(\"inicio\");\n    control.enqueue(\"fin\");\n    control.close();\n  }\n});\n\nconst lector = fuente.getReader();\nconsole.log((await lector.read()).value);\nconsole.log((await lector.read()).value);\nconsole.log((await lector.read()).done);\nlector.releaseLock();",
+    "expected": "inicio\nfin\ntrue"
+  },
+  {
+    "id": "web-javascript-web-api-readablestream-pipethrough",
+    "language": "javascript",
+    "title": "Transforma los fragmentos sin juntarlos primero",
+    "description": "Cada entrada se convierte a mayúsculas antes de llegar al destino.",
+    "code": "const origen = new ReadableStream({\n  start(control) {\n    for (const tema of [\"html\", \"css\"]) control.enqueue(tema);\n    control.close();\n  }\n});\n\nconst mayusculas = new TransformStream({\n  transform(tema, control) {\n    control.enqueue(tema.toUpperCase());\n  }\n});\n\nawait origen\n  .pipeThrough(mayusculas)\n  .pipeTo(new WritableStream({\n    write: (tema) => console.log(tema),\n  }));",
+    "expected": "HTML\nCSS"
+  },
+  {
+    "id": "web-javascript-web-api-readablestream-pipeto",
+    "language": "javascript",
+    "title": "Espera a que termine el destino",
+    "description": "El destino acumula cada valor y publica el total cuando se cierra.",
+    "code": "const origen = new ReadableStream({\n  start(control) {\n    control.enqueue(15);\n    control.enqueue(20);\n    control.close();\n  }\n});\n\nlet total = 0;\nawait origen.pipeTo(new WritableStream({\n  write(minutos) { total += minutos; },\n  close() { console.log(total + \" min\"); },\n}));\nconsole.log(\"Entrega completada\");",
+    "expected": "35 min\nEntrega completada"
+  },
+  {
+    "id": "web-javascript-web-api-compressionstream",
+    "language": "javascript",
+    "title": "Comprime y recupera texto en el navegador",
+    "description": "Se comprimen bytes con gzip, se descomprimen con el mismo formato y se convierte la salida a texto.",
+    "code": "const original = \"VCode · repasa y practica\";\nconst bytes = new TextEncoder().encode(original);\n\nconst entrada = new ReadableStream({\n  start(control) {\n    control.enqueue(bytes);\n    control.close();\n  }\n});\n\nconst recuperado = entrada\n  .pipeThrough(new CompressionStream(\"gzip\"))\n  .pipeThrough(new DecompressionStream(\"gzip\"));\n\nconsole.log(await new Response(recuperado).text());",
+    "expected": "VCode · repasa y practica"
+  },
+  {
+    "id": "web-javascript-web-api-htmlformelement-requestsubmit",
+    "language": "javascript",
+    "title": "Valida antes de entregar el formulario",
+    "description": "Pulsa Revisar con el nombre vacío y prueba de nuevo después de escribirlo. La entrega se simula dentro de la vista.",
+    "code": "const formulario = document.querySelector(\"form\");\nconst estado = document.querySelector(\"#estado\");\n\ndocument.querySelector(\"#revisar\").addEventListener(\"click\", () => {\n  formulario.requestSubmit();\n});\n\nformulario.addEventListener(\"submit\", (evento) => {\n  evento.preventDefault();\n  const datos = new FormData(formulario);\n  estado.textContent = \"Tema preparado: \" + datos.get(\"tema\");\n});",
+    "markup": "<form>\n  <label for=\"tema\">Tema de estudio</label>\n  <input id=\"tema\" name=\"tema\" required>\n</form>\n<button id=\"revisar\" type=\"button\">Revisar formulario</button>\n<p id=\"estado\" role=\"status\"></p>",
+    "mode": "dom"
+  },
+  {
+    "id": "web-javascript-web-api-htmlinputelement-setcustomvalidity",
+    "language": "javascript",
+    "title": "Añade un requisito a la validación nativa",
+    "description": "Prueba con «CSS» y con «tema1». El ejemplo acepta entre dos y doce letras.",
+    "code": "const formulario = document.querySelector(\"form\");\nconst entrada = document.querySelector(\"#alias\");\nconst estado = document.querySelector(\"#estado\");\n\nformulario.addEventListener(\"input\", () => {\n  const valor = entrada.value.trim();\n  const valido = !valor || /^\\p{L}{2,12}$/u.test(valor);\n  entrada.setCustomValidity(valido ? \"\" : \"Usa entre 2 y 12 letras.\");\n  estado.textContent = entrada.validationMessage;\n});\n\nformulario.addEventListener(\"submit\", (evento) => {\n  evento.preventDefault();\n  estado.textContent = \"Alias válido: \" + entrada.value.trim();\n});",
+    "markup": "<form>\n  <label for=\"alias\">Alias</label>\n  <input id=\"alias\" name=\"alias\" required>\n  <button>Validar alias</button>\n</form>\n<p id=\"estado\" role=\"status\"></p>",
+    "mode": "dom"
+  },
+  {
+    "id": "web-javascript-web-api-htmldialogelement-showmodal",
+    "language": "javascript",
+    "title": "Abre un diálogo y vuelve al botón activador",
+    "description": "Al abrir, el diálogo recibe el foco. Pulsa Cerrar o Escape y comprueba que puedes continuar desde el botón de apertura.",
+    "code": "const ayuda = document.querySelector(\"#ayuda\");\ndocument.querySelector(\"#abrir\").addEventListener(\"click\", () => {\n  ayuda.showModal();\n});\ndocument.querySelector(\"#cerrar\").addEventListener(\"click\", () => {\n  ayuda.close();\n});",
+    "markup": "<button id=\"abrir\" type=\"button\">Abrir ayuda</button>\n<dialog id=\"ayuda\" aria-labelledby=\"titulo\">\n  <h2 id=\"titulo\">Acceso a la biblioteca</h2>\n  <p>Busca un concepto para consultar su ficha.</p>\n  <button id=\"cerrar\" type=\"button\" autofocus>Cerrar</button>\n</dialog>",
+    "mode": "dom"
+  },
+  {
+    "id": "web-javascript-web-api-customelementregistry-define",
+    "language": "javascript",
+    "title": "Define un elemento para reutilizarlo",
+    "description": "El mismo elemento se usa dos veces. Cada instancia lee el título que recibe en su atributo.",
+    "code": "class TemaEstudio extends HTMLElement {\n  connectedCallback() {\n    if (this.shadowRoot) return;\n    const raiz = this.attachShadow({ mode: \"open\" });\n    const texto = document.createElement(\"strong\");\n    texto.textContent = this.getAttribute(\"tema\") ?? \"Tema sin título\";\n    raiz.append(texto);\n  }\n}\n\ncustomElements.define(\"tema-estudio\", TemaEstudio);",
+    "markup": "<h1>Temas pendientes</h1>\n<ul>\n  <li><tema-estudio tema=\"Introducción a PHP\"></tema-estudio></li>\n  <li><tema-estudio tema=\"Diseño adaptable\"></tema-estudio></li>\n</ul>",
+    "mode": "dom"
+  },
+  {
+    "id": "web-javascript-web-api-performanceobserver",
+    "language": "javascript",
+    "title": "Observa una medición con nombre",
+    "description": "La promesa espera el aviso del observador. El dato comprobado es el nombre de la medida, cuya duración puede variar.",
+    "code": "const nombre = await new Promise((resolver) => {\n  const observador = new PerformanceObserver((lista) => {\n    const medida = lista.getEntries().find((item) => item.name === \"calcular\");\n    if (medida) {\n      observador.disconnect();\n      resolver(medida.name);\n    }\n  });\n  observador.observe({ type: \"measure\" });\n\n  performance.mark(\"inicio\");\n  [15, 20, 25].reduce((total, minutos) => total + minutos, 0);\n  performance.measure(\"calcular\", \"inicio\");\n});\n\nconsole.log(\"Medición: \" + nombre);",
+    "expected": "Medición: calcular"
+  },
+  {
+    "id": "html-attribute-onclick",
+    "title": "Activa el botón con el teclado o el puntero",
+    "description": "Pulsa el botón con un clic o con Intro. Los dos gestos activan el mismo control nativo.",
+    "language": "javascript",
+    "mode": "dom",
+    "markup": "<button type=\"button\" onclick=\"marcarTema()\">\n  Marcar CSS\n</button>\n<p id=\"resumen\" role=\"status\">CSS pendiente</p>",
+    "code": "window.marcarTema = () => {\n  document.querySelector(\"#resumen\").textContent = \"CSS completado\";\n};"
+  },
+  {
+    "id": "html-attribute-oninput",
+    "title": "Actualiza el recuento mientras escribes",
+    "description": "El estado muestra la cantidad de caracteres del título al cambiar el campo.",
+    "language": "javascript",
+    "mode": "dom",
+    "markup": "<label for=\"tema\">Título del tema</label>\n<input id=\"tema\" oninput=\"actualizar(this.value)\">\n<p id=\"resumen\" role=\"status\">0 caracteres</p>",
+    "code": "window.actualizar = (titulo) => {\n  const total = [...titulo].length;\n  document.querySelector(\"#resumen\").textContent =\n    total + (total === 1 ? \" carácter\" : \" caracteres\");\n};"
+  },
+  {
+    "id": "html-attribute-onsubmit",
+    "title": "Responde a un envío validado",
+    "description": "El navegador comprueba el campo requerido antes de llamar al manejador. El resultado se muestra localmente.",
+    "language": "javascript",
+    "mode": "dom",
+    "markup": "<form onsubmit=\"preparar(event)\">\n  <label for=\"tema\">Tema</label>\n  <input id=\"tema\" name=\"tema\" required>\n  <button>Preparar tema</button>\n</form>\n<p id=\"resumen\" role=\"status\"></p>",
+    "code": "window.preparar = (evento) => {\n  evento.preventDefault();\n  const tema = new FormData(evento.currentTarget).get(\"tema\");\n  document.querySelector(\"#resumen\").textContent = \"Tema preparado: \" + tema;\n};"
+  },
+  {
+    "id": "html-attribute-ontoggle",
+    "title": "Lee el estado de un desplegable",
+    "description": "Abre y cierra el desplegable. El manejador recibe el nuevo estado de details.",
+    "language": "javascript",
+    "mode": "dom",
+    "markup": "<details ontoggle=\"mostrarEstado(this.open)\">\n  <summary>Revisar temas</summary>\n  <ul><li>Eventos nativos</li></ul>\n</details>\n<p id=\"resumen\" role=\"status\">Temas ocultos</p>",
+    "code": "window.mostrarEstado = (abierto) => {\n  document.querySelector(\"#resumen\").textContent =\n    abierto ? \"Temas visibles\" : \"Temas ocultos\";\n};"
+  },
+  {
+    "id": "web-typescript-config-exactOptionalPropertyTypes",
+    "language": "typescript",
+    "title": "Comprueba si la propiedad está presente",
+    "description": "La opción está activa al abrir la muestra. Comprueba tipos y después ejecuta para observar el valor real.",
+    "code": "type Ajustes = { tema?: \"claro\" | \"oscuro\" };\nconst ajustes: Ajustes = {};\najustes.tema = undefined;\n\nconsole.log(\"Existe tema:\", Object.hasOwn(ajustes, \"tema\"));",
+    "expected": "Existe tema: true",
+    "typeOptions": {
+      "exactOptionalPropertyTypes": true
+    }
+  },
+  {
+    "id": "web-typescript-config-noUncheckedIndexedAccess",
+    "language": "typescript",
+    "title": "Observa una lectura de una clave ausente",
+    "description": "El comprobador detecta undefined aunque el objeto tenga una firma de índice numérica.",
+    "code": "const cursos: Record<string, number> = { Java: 35 };\nconst total: number = cursos[\"SQL\"];\nconsole.log(total);",
+    "expected": "undefined",
+    "typeOptions": {
+      "noUncheckedIndexedAccess": true
+    }
+  },
+  {
+    "id": "web-typescript-config-noPropertyAccessFromIndexSignature",
+    "language": "typescript",
+    "title": "Distingue nombres declarados y claves de índice",
+    "description": "Comprueba tipos con la opción activa. Cambia datos.repaso por datos[\"repaso\"] para admitir el acceso.",
+    "code": "const datos: { [nombre: string]: number } = { repaso: 24 };\nconsole.log(datos.repaso);",
+    "expected": "24",
+    "typeOptions": {
+      "noPropertyAccessFromIndexSignature": true
+    }
+  },
+  {
+    "id": "web-typescript-config-noImplicitReturns",
+    "language": "typescript",
+    "title": "Lee una rama que termina sin valor",
+    "description": "Comprueba tipos y después ejecuta las llamadas.",
+    "code": "function categoria(minutos: number) {\n    if (minutos >= 30) return \"extendida\";\n}\n\nconsole.log(categoria(45));\nconsole.log(categoria(12));",
+    "expected": "extendida\nundefined",
+    "typeOptions": {
+      "noImplicitReturns": true
+    }
+  },
+  {
+    "id": "javascript-api-Set",
+    "language": "javascript",
+    "title": "Conserva una sola vez cada tema",
+    "description": "Set conserva la primera aparición de cada valor. Puedes consultar el tamaño y recorrer sus valores.",
+    "code": "const temas = new Set([\"HTML\", \"SQL\", \"HTML\"]);\ntemas.add(\"Java\");\nconsole.log(temas.size, temas.has(\"SQL\"));\nconsole.log([...temas].join(\", \"));",
+    "expected": "3 true\nHTML, SQL, Java"
+  },
+  {
+    "id": "typescript-api-Required%3CT%3E",
+    "language": "typescript",
+    "title": "Completa los datos de una configuración",
+    "description": "La función recibe opciones parciales y debe devolver todas las claves de Pantalla.",
+    "expected": "Cómoda · 14",
+    "code": "type Pantalla = { tema?: string; columnas?: number };\n\nfunction preparar(entrada: Pantalla): Required<Pantalla> {\n  return { tema: entrada.tema ?? 'Cómoda', columnas: entrada.columnas ?? 12 };\n}\n\nconst pantalla = preparar({ columnas: 14 });\nconsole.log(`${pantalla.tema} · ${pantalla.columnas}`);"
+  },
+  {
+    "id": "typescript-api-Exclude%3CT%2C%20U%3E",
+    "language": "typescript",
+    "title": "Restringe las transiciones de un proyecto",
+    "description": "El tipo de destino elimina el estado archivado. Prueba a usarlo en lugar de publicado y comprueba los tipos.",
+    "expected": "publicado",
+    "code": "type Estado = 'borrador' | 'publicado' | 'archivado';\ntype DestinoVisible = Exclude<Estado, 'archivado'>;\n\nfunction cambiarEstado(destino: DestinoVisible): void {\n  console.log(destino);\n}\n\ncambiarEstado('publicado');"
+  },
+  {
+    "id": "web-typescript-utility-ConstructorParameters",
+    "language": "typescript",
+    "title": "Reutiliza la firma de un constructor",
+    "description": "Los argumentos de crearSesion se deducen de la clase y conservan el orden y los tipos.",
+    "expected": "React · 25",
+    "code": "class Sesion {\n  constructor(readonly tema: string, readonly minutos: number) {}\n}\n\nfunction crearSesion(...args: ConstructorParameters<typeof Sesion>): Sesion {\n  return new Sesion(...args);\n}\n\nconst sesion = crearSesion('React', 25);\nconsole.log(`${sesion.tema} · ${sesion.minutos}`);"
+  },
+  {
+    "id": "web-typescript-utility-NoInfer",
+    "language": "typescript",
+    "title": "Deja que las opciones determinen el contrato",
+    "description": "La lista literal fija las opciones disponibles. NoInfer impide ampliarlas a partir del segundo argumento. Cámbialo por system y comprueba el diagnóstico.",
+    "expected": "light",
+    "code": "function elegir<Etiqueta extends string>(\n  opciones: readonly Etiqueta[],\n  valor: NoInfer<Etiqueta>,\n): Etiqueta {\n  if (!opciones.includes(valor)) throw new Error('Opción desconocida');\n  return valor;\n}\n\nconsole.log(elegir(['light', 'dark'] as const, 'light'));"
+  },
+  {
+    "id": "web-typescript-utility-Uppercase",
+    "language": "typescript",
+    "title": "Comprueba una etiqueta literal",
+    "description": "El tipo Uppercase transforma la etiqueta de entrada. Comprueba qué ocurre si asignas el texto sin transformar.",
+    "expected": "VCODE",
+    "code": "type Etiqueta = Uppercase<'vcode'>;\nconst etiqueta: Etiqueta = 'VCODE';\nconsole.log(etiqueta);"
+  },
+  {
+    "id": "web-typescript-utility-Lowercase",
+    "language": "typescript",
+    "title": "Comprueba una etiqueta literal",
+    "description": "El tipo Lowercase transforma la etiqueta de entrada. Comprueba qué ocurre si asignas el texto sin transformar.",
+    "expected": "vcode",
+    "code": "type Etiqueta = Lowercase<'VCODE'>;\nconst etiqueta: Etiqueta = 'vcode';\nconsole.log(etiqueta);"
+  },
+  {
+    "id": "web-typescript-utility-Capitalize",
+    "language": "typescript",
+    "title": "Comprueba una etiqueta literal",
+    "description": "El tipo Capitalize transforma la etiqueta de entrada. Comprueba qué ocurre si asignas el texto sin transformar.",
+    "expected": "CursoActivo",
+    "code": "type Etiqueta = Capitalize<'cursoActivo'>;\nconst etiqueta: Etiqueta = 'CursoActivo';\nconsole.log(etiqueta);"
+  },
+  {
+    "id": "web-typescript-utility-Uncapitalize",
+    "language": "typescript",
+    "title": "Comprueba una etiqueta literal",
+    "description": "El tipo Uncapitalize transforma la etiqueta de entrada. Comprueba qué ocurre si asignas el texto sin transformar.",
+    "expected": "cursoActivo",
+    "code": "type Etiqueta = Uncapitalize<'CursoActivo'>;\nconst etiqueta: Etiqueta = 'cursoActivo';\nconsole.log(etiqueta);"
+  },
+  {
+    "id": "web-javascript-web-api-intersectionobserver",
+    "language": "javascript",
+    "title": "Detecta cuándo entra una tarjeta",
+    "description": "Pulsa Mostrar tarjeta para desplazar el panel. El observador cambia la etiqueta al alcanzar el umbral visible.",
+    "code": "const panel = document.querySelector(\"#panel\");\nconst tarjeta = document.querySelector(\"#tarjeta\");\nconst estado = document.querySelector(\"#estado\");\n\nconst observador = new IntersectionObserver(([entrada]) => {\n  estado.textContent = entrada.intersectionRatio >= 0.6\n    ? \"Tarjeta visible\"\n    : \"Tarjeta fuera de vista\";\n}, { root: panel, threshold: 0.6 });\n\nobservador.observe(tarjeta);\ndocument.querySelector(\"#mostrar\").addEventListener(\"click\", () => {\n  panel.scrollTop = panel.scrollHeight;\n});",
+    "markup": "<style>\n  #panel { height: 100px; overflow: auto; border: 1px solid #8a94ad; }\n  #separador { height: 125px; padding: 8px; }\n  #tarjeta { background: #c9d6ff; color: #17274d; padding: 12px; }\n  #estado { margin-block: 8px; }\n</style>\n<div id=\"panel\" tabindex=\"0\" role=\"region\" aria-label=\"Panel de demostración\">\n  <div id=\"separador\">Desplázate para ver la tarjeta.</div>\n  <article id=\"tarjeta\">Guía de observadores</article>\n</div>\n<p id=\"estado\" aria-live=\"polite\">Calculando visibilidad…</p>\n<button id=\"mostrar\" type=\"button\">Mostrar tarjeta</button>",
+    "mode": "dom"
+  },
+  {
+    "id": "web-javascript-web-api-resizeobserver",
+    "language": "javascript",
+    "title": "Mide el ancho al cambiar una tarjeta",
+    "description": "La etiqueta muestra el ancho de la tarjeta. Alterna entre 130 y 220 píxeles sin cambiar la ventana.",
+    "code": "const tarjeta = document.querySelector(\"#tarjeta\");\nconst medida = document.querySelector(\"#medida\");\nconst observador = new ResizeObserver(([entrada]) => {\n  medida.textContent = Math.round(entrada.contentRect.width) + \" px\";\n});\n\nobservador.observe(tarjeta);\ndocument.querySelector(\"#alternar\").addEventListener(\"click\", () => {\n  tarjeta.classList.toggle(\"amplia\");\n});",
+    "markup": "<style>\n  #tarjeta { box-sizing: content-box; width: 130px; height: 36px; background: #c9d6ff; }\n  #tarjeta.amplia { width: 220px; }\n</style>\n<div id=\"tarjeta\"></div>\n<p id=\"medida\" aria-live=\"polite\">Midiendo…</p>\n<button id=\"alternar\" type=\"button\">Cambiar ancho</button>",
+    "mode": "dom"
+  },
+  {
+    "id": "web-javascript-web-api-abortsignal",
+    "language": "javascript",
+    "title": "Escucha la cancelación de una tarea",
+    "description": "La tarea espera a un temporizador. La señal cancela la espera y conserva el motivo que le pasó el controlador.",
+    "code": "const controlador = new AbortController();\nconst { signal } = controlador;\n\nconst espera = new Promise((resolver, rechazar) => {\n  const control = setTimeout(resolver, 100);\n  signal.addEventListener(\"abort\", () => {\n    clearTimeout(control);\n    rechazar(signal.reason);\n  }, { once: true });\n});\n\ncontrolador.abort(\"Solicitud cancelada\");\ntry {\n  await espera;\n} catch (motivo) {\n  console.log(motivo);\n}\nconsole.log(\"Cancelada: \" + signal.aborted);",
+    "expected": "Solicitud cancelada\nCancelada: true"
+  },
+  {
+    "id": "web-javascript-web-api-shadowroot",
+    "language": "javascript",
+    "title": "Cambia un texto dentro del componente",
+    "description": "El botón cambia el texto de la raíz interna. La vista también comprueba que el selector global no encuentra ese nodo.",
+    "code": "const anfitrion = document.querySelector(\"#componente\");\nconst raiz = anfitrion.attachShadow({ mode: \"open\" });\n\nconst estilo = document.createElement(\"style\");\nestilo.textContent = \"p { padding: 10px; color: #17274d; background: #c9d6ff; }\";\n\nconst contenido = document.createElement(\"p\");\ncontenido.id = \"estado-interno\";\ncontenido.textContent = \"Componente disponible\";\nraiz.append(estilo, contenido);\n\ndocument.querySelector(\"#cambiar\").addEventListener(\"click\", () => {\n  raiz.querySelector(\"#estado-interno\").textContent = \"Texto interno actualizado\";\n  const global = document.querySelector(\"#estado-interno\");\n  document.querySelector(\"#estado\").textContent = global\n    ? \"Selector global encontró el nodo\"\n    : \"Selector global fuera del árbol interno\";\n});",
+    "markup": "<div id=\"componente\"></div>\n<button id=\"cambiar\" type=\"button\">Actualizar componente</button>\n<p id=\"estado\" aria-live=\"polite\"></p>",
+    "mode": "dom"
+  },
+  {
+    "id": "web-javascript-web-api-readablestream-getreader",
+    "language": "javascript",
+    "title": "Comprueba el bloqueo del flujo",
+    "description": "Obtén el lector, lee un fragmento y libera el bloqueo. La salida diferencia la lectura bloqueada de la disponibilidad posterior.",
+    "code": "const flujo = new ReadableStream({\n  start(control) {\n    control.enqueue(\"Biblioteca\");\n    control.close();\n  },\n});\n\nconst lector = flujo.getReader();\nconsole.log(\"Bloqueado: \" + flujo.locked);\ntry {\n  console.log((await lector.read()).value);\n} finally {\n  lector.releaseLock();\n}\nconsole.log(\"Bloqueado: \" + flujo.locked);",
+    "expected": "Bloqueado: true\nBiblioteca\nBloqueado: false"
+  }
+]

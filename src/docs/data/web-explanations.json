@@ -1,0 +1,351 @@
+[
+  {
+    "id": "css-properties-box-sizing",
+    "intro": [
+      "Controla si el ancho y el alto declarados incluyen el relleno y el borde de la caja. El margen siempre queda fuera de la medida.",
+      "Resulta útil si quieres colocar varias cajas en una fila y conservar el ancho previsto al añadirles borde o relleno."
+    ],
+    "values": [
+      {
+        "label": "content-box",
+        "detail": "Valor inicial. width y height miden el área de contenido. El navegador añade después el relleno y los bordes."
+      },
+      {
+        "label": "border-box",
+        "detail": "width y height miden hasta el borde exterior. Al aumentar el borde o el relleno, queda menos espacio para el contenido."
+      }
+    ]
+  },
+  {
+    "id": "web-javascript-global_objects-array-at",
+    "intro": [
+      "Lee un elemento de un array por su índice. Los índices negativos cuentan desde el final, de modo que at(-1) devuelve el último elemento."
+    ],
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "Posición del elemento contando desde cero o desplazamiento negativo desde el final. JavaScript convierte el valor a un entero."
+      }
+    ],
+    "returns": [
+      "El valor de la posición indicada. Devuelve undefined cuando el índice queda fuera del array."
+    ]
+  },
+  {
+    "id": "javascript-api-fetch()",
+    "intro": [
+      "Inicia una petición y devuelve una promesa de Response. Puedes revisar el estado y leer el cuerpo de la respuesta en un paso posterior.",
+      "Un estado HTTP como 404 o 500 suele resolver la promesa con una respuesta. Comprueba response.ok. Los problemas de red o una cancelación rechazan la promesa."
+    ],
+    "parameters": [
+      {
+        "label": "resource",
+        "detail": "URL o instancia de Request que describe lo que se va a solicitar."
+      },
+      {
+        "label": "options",
+        "detail": "Configuración opcional, como el método, las cabeceras, el cuerpo o una señal de cancelación."
+      }
+    ],
+    "returns": [
+      "Una Promise<Response>. El cuerpo se lee con métodos como json(), text() o arrayBuffer()."
+    ],
+    "locale": "es"
+  },
+  {
+    "id": "javascript-api-querySelector()",
+    "intro": [
+      "Encuentra el primer elemento que coincide con un selector CSS dentro del documento."
+    ],
+    "parameters": [
+      {
+        "label": "selectors",
+        "detail": "Cadena que contiene un selector CSS válido, como #resultado o main > p."
+      }
+    ],
+    "returns": [
+      "El primer Element coincidente, o null cuando no hay coincidencia."
+    ],
+    "exceptions": [
+      {
+        "label": "SyntaxError",
+        "detail": "El selector no es una expresión CSS válida para consultar el DOM."
+      }
+    ],
+    "locale": "es",
+    "body": [
+      "Usa querySelectorAll() si quieres procesar todas las coincidencias. En un Element, querySelector() limita la búsqueda a sus descendientes."
+    ]
+  },
+  {
+    "id": "web-javascript-web-api-readablestream",
+    "locale": "es",
+    "intro": [
+      "Fuente de datos que entrega fragmentos a medida que pueden consumirse."
+    ],
+    "body": [
+      "Puedes leer un stream con un lector o conectarlo a una cadena de transformaciones. El flujo sigue un orden y puede cerrarse, cancelarse o terminar con error."
+    ],
+    "caveats": [
+      "Mientras un lector mantiene el bloqueo, libera ese lector antes de conectar el mismo flujo a otro destino. Consumirlo una vez no restaura los fragmentos ya leídos."
+    ]
+  },
+  {
+    "id": "web-javascript-web-api-readablestream-pipethrough",
+    "locale": "es",
+    "intro": [
+      "Conecta este flujo al lado de escritura de una transformación y devuelve su lado de lectura."
+    ],
+    "body": [
+      "Encadena transformaciones con pipeThrough. Usa pipeTo cuando quieras esperar a que todo llegue a un destino final."
+    ]
+  },
+  {
+    "id": "web-javascript-web-api-readablestream-pipeto",
+    "locale": "es",
+    "intro": [
+      "Entrega los fragmentos de un flujo a un WritableStream y devuelve una promesa."
+    ],
+    "body": [
+      "La promesa se cumple al completar la cadena. Por defecto, el cierre, los fallos y la cancelación se propagan entre la fuente y el destino según su estado."
+    ]
+  },
+  {
+    "id": "web-javascript-web-api-compressionstream",
+    "locale": "es",
+    "intro": [
+      "Transforma fragmentos de bytes en bytes comprimidos dentro de una cadena de Streams."
+    ],
+    "body": [
+      "Codifica el texto si tu fuente todavía entrega cadenas. Al recuperar los datos, usa el mismo formato con DecompressionStream."
+    ]
+  },
+  {
+    "id": "web-javascript-web-api-htmlformelement-requestsubmit",
+    "locale": "es",
+    "intro": [
+      "Pide un envío con la validación y el evento submit habituales de un formulario."
+    ],
+    "body": [
+      "Cuando pasas un botón de envío, sus atributos formmethod o formaction pueden modificar el envío. El listener submit puede cancelarlo, como en el ejemplo."
+    ]
+  },
+  {
+    "id": "web-javascript-web-api-htmlinputelement-setcustomvalidity",
+    "locale": "es",
+    "intro": [
+      "Establece un mensaje de error propio que vuelve inválido el campo mientras esté presente."
+    ],
+    "body": [
+      "Pasa una cadena vacía al resolver el problema. El control continúa aplicando restricciones como required, min o pattern."
+    ]
+  },
+  {
+    "id": "web-javascript-web-api-htmldialogelement-showmodal",
+    "locale": "es",
+    "intro": ["Abre el diálogo como modal en la capa superior del documento."],
+    "body": [
+      "En un diálogo modal, el contenido exterior del documento queda inerte. Una etiqueta y un control para cerrar ayudan a navegar dentro del diálogo."
+    ]
+  },
+  {
+    "id": "web-javascript-web-api-customelementregistry-define",
+    "locale": "es",
+    "intro": [
+      "Registra el nombre de un elemento personalizado y la clase que lo implementa."
+    ],
+    "body": [
+      "Usa un nombre con guion. El registro actualiza las instancias correspondientes del documento y permite crear otras nuevas."
+    ]
+  },
+  {
+    "id": "web-javascript-web-api-performanceobserver",
+    "locale": "es",
+    "intro": [
+      "Recibe avisos de las entradas añadidas a la línea de tiempo de rendimiento."
+    ],
+    "body": [
+      "Comprueba qué tipos admite el contexto. Llama a disconnect cuando termines de observar para dejar de recibir avisos."
+    ]
+  },
+  {
+    "id": "web-javascript-web-api-intersectionobserver",
+    "locale": "es",
+    "intro": [
+      "Observa de forma asíncrona cuánto de un elemento se cruza con una zona visible."
+    ],
+    "body": [
+      "Elige un contenedor o la ventana como raíz. Los umbrales controlan cuándo se envía una notificación. Es útil para saber cuándo aparece contenido al desplazarse. La intersección geométrica por sí sola no prueba que se pueda ver a través de elementos que lo cubren."
+    ],
+    "aliases": ["observar visibilidad", "elemento al hacer scroll"],
+    "specification": "https://w3c.github.io/IntersectionObserver/#intersection-observer-interface"
+  },
+  {
+    "id": "web-javascript-web-api-intersectionobserver-intersectionobserver",
+    "locale": "es",
+    "intro": [
+      "Crea un observador de intersección con una función que recibe cambios por lotes."
+    ],
+    "body": [
+      "La raíz, los márgenes y los umbrales se deciden al crear el observador. Para observar varios elementos con la misma configuración, llama a observe para cada uno."
+    ],
+    "parameters": [
+      {
+        "label": "callback",
+        "detail": "Recibe una lista de entradas y el observador que emitió el aviso."
+      },
+      {
+        "label": "options",
+        "detail": "Objeto opcional. root elige el contenedor y rootMargin ajusta su rectángulo. threshold acepta un número entre 0 y 1 o una lista. También existen opciones de márgenes del desplazamiento y seguimiento de visibilidad según el navegador."
+      }
+    ],
+    "returns": ["Un IntersectionObserver sin elementos observados."],
+    "exceptions": [
+      {
+        "label": "SyntaxError",
+        "detail": "El formato de un margen indicado no es válido."
+      },
+      {
+        "label": "RangeError",
+        "detail": "Un umbral queda fuera del intervalo de 0 a 1."
+      }
+    ]
+  },
+  {
+    "id": "web-javascript-web-api-intersectionobserver-observe",
+    "locale": "es",
+    "intro": ["Registra un elemento en un observador de intersección."],
+    "body": [
+      "Recibirás un primer aviso y después avisos cuando cambie su relación con los umbrales. Llama a unobserve para retirar un elemento o a disconnect para retirarlos todos."
+    ],
+    "parameters": [
+      {
+        "label": "target",
+        "detail": "Elemento cuya intersección se va a observar."
+      }
+    ],
+    "returns": ["undefined."]
+  },
+  {
+    "id": "web-javascript-web-api-resizeobserver",
+    "locale": "es",
+    "intro": ["Notifica cambios de tamaño en la caja de un elemento."],
+    "body": [
+      "Observa el elemento que te interesa incluso si la ventana no cambió de tamaño. Elige entre la caja de contenido o la del borde. Si solo tienes que adaptar estilos, considera una consulta de contenedor. Evita que el callback cambie repetidamente el tamaño que observa."
+    ],
+    "aliases": ["observar tamaño", "cambio de ancho"],
+    "specification": "https://drafts.csswg.org/resize-observer/#resize-observer-interface"
+  },
+  {
+    "id": "web-javascript-web-api-resizeobserver-observe",
+    "locale": "es",
+    "intro": ["Empieza a observar los cambios de tamaño de un elemento."],
+    "body": [
+      "El callback recibe entradas con detalles de su caja. Para saber el ancho lógico en una caja CSS, usa inlineSize de la entrada de tamaño correspondiente."
+    ],
+    "parameters": [
+      {
+        "label": "target",
+        "detail": "Elemento cuya caja se va a observar."
+      },
+      {
+        "label": "options",
+        "detail": "Objeto opcional. box puede ser content-box, border-box o device-pixel-content-box. El valor inicial es content-box."
+      }
+    ],
+    "returns": ["undefined."],
+    "exceptions": [
+      {
+        "label": "TypeError",
+        "detail": "El elemento o el valor de box no cumple el tipo esperado."
+      }
+    ]
+  },
+  {
+    "id": "web-javascript-web-api-abortsignal",
+    "locale": "es",
+    "intro": ["Comunica que una operación debe cancelarse."],
+    "body": [
+      "Pasa controller.signal a la API que se pueda cancelar. Cuando se solicite la cancelación, aborted cambia a true y reason contiene el motivo. La operación que recibe la señal decide cómo responder y cómo liberar sus recursos. Crea otra señal para una operación posterior."
+    ],
+    "aliases": ["cancelar una operación", "cancelar fetch"],
+    "specification": "https://dom.spec.whatwg.org/#interface-abortsignal"
+  },
+  {
+    "id": "web-javascript-web-api-abortsignal-any_static",
+    "locale": "es",
+    "intro": [
+      "Crea una señal que se cancela cuando se cancela cualquiera de las señales recibidas."
+    ],
+    "body": [
+      "Combina la cancelación del usuario con un límite de tiempo. Si una señal ya estaba cancelada, el resultado empieza cancelado. Conserva el motivo de la señal que determinó la cancelación."
+    ],
+    "parameters": [
+      {
+        "label": "signals",
+        "detail": "Iterable de objetos AbortSignal."
+      }
+    ],
+    "returns": ["Una nueva AbortSignal que sigue a las señales recibidas."],
+    "exceptions": []
+  },
+  {
+    "id": "web-javascript-web-api-abortsignal-timeout_static",
+    "locale": "es",
+    "intro": [
+      "Crea una señal que solicita cancelar una operación después de un intervalo."
+    ],
+    "body": [
+      "La cuenta usa el tiempo activo del contexto. Si el documento o trabajador se suspende, el intervalo se puede pausar. El motivo al expirar es una excepción TimeoutError."
+    ],
+    "parameters": [
+      {
+        "label": "milliseconds",
+        "detail": "Intervalo en milisegundos, como entero no negativo representable con seguridad."
+      }
+    ],
+    "returns": ["Una nueva AbortSignal con cancelación programada."],
+    "exceptions": [
+      {
+        "label": "TypeError",
+        "detail": "El argumento está fuera del rango admitido para esta conversión."
+      }
+    ]
+  },
+  {
+    "id": "web-javascript-web-api-shadowroot",
+    "locale": "es",
+    "intro": [
+      "Representa el árbol interno que se conecta a un elemento anfitrión."
+    ],
+    "body": [
+      "Crea la raíz con attachShadow. Los selectores que se ejecutan desde document no recorren su interior. Consulta los nodos a partir de su raíz. El modo open deja obtenerla desde host.shadowRoot. El modo closed oculta esa propiedad y conserva la referencia devuelta al crearlo."
+    ],
+    "aliases": ["shadow DOM", "encapsular un componente web"],
+    "specification": "https://dom.spec.whatwg.org/#interface-shadowroot"
+  },
+  {
+    "id": "web-javascript-web-api-readablestream-getreader",
+    "locale": "es",
+    "intro": ["Obtiene un lector que toma el control de un flujo legible."],
+    "body": [
+      "El flujo queda bloqueado para otros lectores hasta liberar ese lector. Cada read() indica si la lectura terminó y, mientras haya datos, devuelve su valor. Usa finally para liberar el bloqueo incluso si la lectura falla."
+    ],
+    "parameters": [
+      {
+        "label": "options",
+        "detail": "Objeto opcional. mode: 'byob' permite aportar el espacio de almacenamiento al leer un flujo de bytes."
+      }
+    ],
+    "returns": [
+      "Un ReadableStreamDefaultReader o un ReadableStreamBYOBReader, según el modo."
+    ],
+    "exceptions": [
+      {
+        "label": "TypeError",
+        "detail": "El flujo está bloqueado, el modo no es válido o se solicitó el modo BYOB sobre un flujo que no es de bytes."
+      }
+    ],
+    "specification": "https://streams.spec.whatwg.org/#rs-get-reader"
+  }
+]

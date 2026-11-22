@@ -1,0 +1,2499 @@
+[
+  {
+    "id": "web-javascript-statements-block",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-block",
+    "guide": 3,
+    "intro": [
+      "Agrupa sentencias dentro de llaves y abre un ámbito para declaraciones léxicas."
+    ],
+    "usage": "{\n  const local = calcular();\n  mostrar(local);\n}",
+    "body": [
+      "Al salir del bloque, las declaraciones let y const que contiene ya no se pueden referenciar por ese nombre. Es posible usar otro nombre igual en un ámbito exterior."
+    ],
+    "caveats": [
+      "var tiene ámbito de función o de script, por lo que no queda limitado a unas llaves ordinarias."
+    ],
+    "aliases": ["bloque", "block", "ámbito de bloque", "llaves javascript"],
+    "related": [
+      {
+        "id": "web-javascript-statements-let",
+        "title": "let"
+      },
+      {
+        "id": "web-javascript-statements-const",
+        "title": "const"
+      },
+      {
+        "id": "web-javascript-statements-var",
+        "title": "var"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Block statement",
+      "description": "Cada lectura corresponde a una declaración distinta.",
+      "code": "const titulo = \"Catálogo\";\n    {\n      const titulo = \"Guía\";\n      console.log(titulo);\n    }\n    console.log(titulo);",
+      "expected": "Guía\nCatálogo"
+    }
+  },
+  {
+    "id": "web-javascript-statements-let",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-let-and-const-declarations",
+    "guide": 1,
+    "intro": ["Declara un nombre de ámbito léxico que admite reasignación."],
+    "usage": "let disponible = 3;\ndisponible -= 1;",
+    "body": [
+      "Un let existe en su bloque. Antes de ejecutar su declaración, acceder al nombre causa un ReferenceError incluso si el ámbito empieza antes."
+    ],
+    "caveats": [
+      "En bucles for con let, cada iteración puede conservar su propio enlace cuando creas cierres. Usa const cuando no reasignes el nombre."
+    ],
+    "aliases": [
+      "variable mutable",
+      "let javascript",
+      "zona muerta temporal",
+      "temporal dead zone"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-const",
+        "title": "const"
+      },
+      {
+        "id": "web-javascript-statements-var",
+        "title": "var"
+      },
+      {
+        "id": "web-javascript-statements-for",
+        "title": "for"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de let",
+      "description": "Las funciones recuerdan el enlace de la vuelta donde se crearon.",
+      "code": "const tareas = [];\n    for (let indice = 0; indice < 3; indice++) {\n      tareas.push(() => indice);\n    }\n    console.log(tareas.map((leer) => leer()).join(\", \"));",
+      "expected": "0, 1, 2"
+    }
+  },
+  {
+    "id": "web-javascript-statements-const",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-let-and-const-declarations",
+    "guide": 1,
+    "intro": [
+      "Declara un enlace de ámbito léxico que conserva el valor asignado al inicializarlo."
+    ],
+    "usage": "const curso = { nombre: \"JavaScript\" };",
+    "body": [
+      "Una referencia const permanece vinculada al mismo objeto, pero sus propiedades pueden cambiar si el objeto las admite."
+    ],
+    "caveats": [
+      "Una declaración const ordinaria necesita un inicializador. Si quieres valores inmutables, revisa además cómo se modifican sus estructuras."
+    ],
+    "aliases": ["const javascript", "declarar constante", "objeto const"],
+    "related": [
+      {
+        "id": "web-javascript-statements-let",
+        "title": "let"
+      },
+      {
+        "id": "web-javascript-statements-var",
+        "title": "var"
+      },
+      {
+        "id": "web-javascript-statements-block",
+        "title": "Block statement"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de const",
+      "description": "La referencia se mantiene y el contenido cambia.",
+      "code": "const curso = { vistos: 2 };\n    curso.vistos += 1;\n    console.log(curso.vistos);",
+      "expected": "3"
+    }
+  },
+  {
+    "id": "web-javascript-statements-var",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-variable-statement",
+    "guide": 1,
+    "intro": [
+      "Declara una variable cuyo ámbito es la función que la contiene o el entorno del script."
+    ],
+    "usage": "var total = 0;",
+    "body": [
+      "La declaración se procesa al entrar en el ámbito y se inicializa con undefined. La asignación escrita ocurre cuando se ejecuta su línea."
+    ],
+    "caveats": [
+      "En un bloque ordinario, var es visible fuera del bloque. Para que su alcance coincida con las llaves, usa let o const."
+    ],
+    "aliases": ["var javascript", "hoisting var", "variable de función"],
+    "related": [
+      {
+        "id": "web-javascript-statements-let",
+        "title": "let"
+      },
+      {
+        "id": "web-javascript-statements-block",
+        "title": "Block statement"
+      },
+      {
+        "id": "web-javascript-statements-const",
+        "title": "const"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de var",
+      "description": "La primera lectura ocurre antes de la asignación y la segunda después del bloque.",
+      "code": "function muestra() {\n      console.log(total);\n      if (true) {\n        var total = 15;\n      }\n      console.log(total);\n    }\n    muestra();",
+      "expected": "undefined\n15"
+    }
+  },
+  {
+    "id": "web-javascript-statements-if...else",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-if-statement",
+    "guide": 2,
+    "intro": [
+      "Decide qué sentencia ejecutar según el valor booleano de una condición."
+    ],
+    "usage": "if (disponible) {\n  abrir();\n} else {\n  mostrarAviso();\n}",
+    "body": [
+      "JavaScript convierte la condición a booleano. Si obtiene true, ejecuta if. Si obtiene false y hay else, ejecuta la otra rama."
+    ],
+    "caveats": [
+      "Una cadena vacía y el número cero se convierten a false. Si solo quieres descartar null y undefined, comprueba ese requisito de forma explícita."
+    ],
+    "aliases": ["if else", "condición javascript", "condicional", "else if"],
+    "related": [
+      {
+        "id": "web-javascript-statements-switch",
+        "title": "switch"
+      },
+      {
+        "id": "web-javascript-statements-block",
+        "title": "Block statement"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de if...else",
+      "description": "Las dos llamadas recorren ramas distintas.",
+      "code": "function estado(minutos) {\n      if (minutos >= 30) return \"Extendida\";\n      else if (minutos > 0) return \"Breve\";\n      else return \"Sin duración\";\n    }\n    console.log(estado(25), estado(0));",
+      "expected": "Breve Sin duración"
+    }
+  },
+  {
+    "id": "web-javascript-statements-switch",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-switch-statement",
+    "guide": 2,
+    "intro": [
+      "Selecciona una etiqueta que coincide con el valor de la expresión."
+    ],
+    "usage": "switch (curso) {\n  case \"SQL\": abrirSQL(); break;\n  default: abrirIndice();\n}",
+    "body": [
+      "Las etiquetas se comparan mediante igualdad estricta. Después de iniciar una rama, el flujo puede continuar por las siguientes hasta encontrar break, return u otra salida."
+    ],
+    "caveats": [
+      "Si algunas ramas declaran nombres let o const propios, añade llaves para delimitar su ámbito."
+    ],
+    "aliases": [
+      "case default",
+      "switch javascript",
+      "varias ramas",
+      "fall through"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-if...else",
+        "title": "if...else"
+      },
+      {
+        "id": "web-javascript-statements-break",
+        "title": "break"
+      },
+      {
+        "id": "web-javascript-statements-block",
+        "title": "Block statement"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de switch",
+      "description": "La rama coincide y break evita seguir por default.",
+      "code": "const opcion = \"consultar\";\n    switch (opcion) {\n      case \"aprender\":\n        console.log(\"Guías\");\n        break;\n      case \"consultar\":\n        console.log(\"Referencias\");\n        break;\n      default:\n        console.log(\"Portada\");\n    }",
+      "expected": "Referencias"
+    }
+  },
+  {
+    "id": "web-javascript-statements-for",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-for-statement",
+    "guide": 2,
+    "intro": [
+      "Repite un bloque con pasos explícitos de preparación, condición y actualización."
+    ],
+    "usage": "for (let indice = 0; indice < limite; indice++) {\n  leer(indice);\n}",
+    "body": [
+      "La preparación se ejecuta una vez. La condición se comprueba antes de cada vuelta y la actualización ocurre al terminar la vuelta."
+    ],
+    "caveats": [
+      "Si solo necesitas los valores de un iterable, for...of expresa el recorrido sin manejar manualmente un índice."
+    ],
+    "aliases": ["bucle for javascript", "for clásico", "índice de bucle"],
+    "related": [
+      {
+        "id": "web-javascript-statements-for...of",
+        "title": "for...of"
+      },
+      {
+        "id": "web-javascript-statements-while",
+        "title": "while"
+      },
+      {
+        "id": "web-javascript-statements-continue",
+        "title": "continue"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de for",
+      "description": "El índice permite numerar los valores sin modificar la lista.",
+      "code": "const minutos = [15, 25, 30];\n    for (let i = 0; i < minutos.length; i++) {\n      console.log(i + 1, minutos[i]);\n    }",
+      "expected": "1 15\n2 25\n3 30"
+    }
+  },
+  {
+    "id": "web-javascript-statements-while",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-while-statement",
+    "guide": 2,
+    "intro": [
+      "Repite una sentencia mientras la condición siga siendo verdadera."
+    ],
+    "usage": "while (pendientes.length > 0) {\n  revisar(pendientes.pop());\n}",
+    "body": [
+      "Comprueba la condición antes de cada vuelta, incluida la primera. Es útil cuando la cantidad de iteraciones depende del estado."
+    ],
+    "caveats": [
+      "Haz que el cuerpo acerque la condición a su final o incorpora una forma de detenerlo."
+    ],
+    "aliases": ["mientras", "bucle while", "repetir condición"],
+    "related": [
+      {
+        "id": "web-javascript-statements-do...while",
+        "title": "do...while"
+      },
+      {
+        "id": "web-javascript-statements-for",
+        "title": "for"
+      },
+      {
+        "id": "web-javascript-statements-break",
+        "title": "break"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de while",
+      "description": "Cada vuelta consume un elemento y el bucle termina al agotar la lista.",
+      "code": "const pendientes = [\"HTML\", \"JS\"];\n    while (pendientes.length) {\n      console.log(\"Reviso\", pendientes.shift());\n    }\n    console.log(\"Quedan\", pendientes.length);",
+      "expected": "Reviso HTML\nReviso JS\nQuedan 0"
+    }
+  },
+  {
+    "id": "web-javascript-statements-do...while",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-do-while-statement",
+    "guide": 2,
+    "intro": [
+      "Ejecuta primero el cuerpo y comprueba al final de cada vuelta si debe repetirlo."
+    ],
+    "usage": "do {\n  paso();\n} while (quedaTrabajo);",
+    "body": [
+      "Esta forma ejecuta el cuerpo al menos una vez, incluso si la primera evaluación de la condición da false."
+    ],
+    "caveats": [
+      "Usa while cuando debas comprobar la condición antes de la primera ejecución."
+    ],
+    "aliases": ["do while", "hacer mientras", "al menos una vez"],
+    "related": [
+      {
+        "id": "web-javascript-statements-while",
+        "title": "while"
+      },
+      {
+        "id": "web-javascript-statements-for",
+        "title": "for"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de do...while",
+      "description": "La condición falsa se consulta después de la primera vuelta.",
+      "code": "let intentos = 0;\n    const quedaTrabajo = false;\n    do {\n      intentos++;\n    } while (quedaTrabajo);\n    console.log(\"Intentos:\", intentos);",
+      "expected": "Intentos: 1"
+    }
+  },
+  {
+    "id": "web-javascript-statements-for...of",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-for-in-and-for-of-statements",
+    "guide": 13,
+    "intro": [
+      "Itera sobre los valores de un objeto que implementa el protocolo iterable."
+    ],
+    "usage": "for (const valor of iterable) {\n  mostrar(valor);\n}",
+    "body": [
+      "Arrays, cadenas, mapas, conjuntos y generadores proporcionan iteradores. Un objeto ordinario necesita un iterable explícito, como Object.entries(objeto)."
+    ],
+    "caveats": [
+      "Al interrumpir la iteración, JavaScript puede llamar a return del iterador. Un generador puede usar finally para liberar trabajo asociado."
+    ],
+    "aliases": [
+      "for of",
+      "recorrer valores",
+      "bucle iterable",
+      "iteración javascript"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-for...in",
+        "title": "for...in"
+      },
+      {
+        "id": "web-javascript-statements-function_star_",
+        "title": "function*"
+      },
+      {
+        "id": "web-javascript-statements-for-await...of",
+        "title": "for await...of"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de for...of",
+      "description": "Cada entrada del mapa se recibe como pareja de clave y valor.",
+      "code": "const duraciones = new Map([[\"HTML\", 15], [\"React\", 30]]);\n    for (const [tema, minutos] of duraciones) {\n      console.log(tema, minutos);\n    }",
+      "expected": "HTML 15\nReact 30"
+    }
+  },
+  {
+    "id": "web-javascript-statements-for...in",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-for-in-and-for-of-statements",
+    "guide": 5,
+    "intro": [
+      "Enumera nombres de propiedades de tipo cadena que son enumerables."
+    ],
+    "usage": "for (const nombre in objeto) {\n  mostrar(nombre);\n}",
+    "body": [
+      "La enumeración puede incluir propiedades heredadas. Object.hasOwn permite preguntar si un nombre pertenece directamente a ese objeto."
+    ],
+    "caveats": [
+      "Para recorrer solo claves propias, Object.keys suele expresar mejor la intención. Para leer los valores de un array, usa for...of."
+    ],
+    "aliases": ["for in", "recorrer propiedades", "claves heredadas"],
+    "related": [
+      {
+        "id": "web-javascript-statements-for...of",
+        "title": "for...of"
+      },
+      {
+        "id": "web-javascript-statements-for",
+        "title": "for"
+      },
+      {
+        "id": "web-javascript-statements-block",
+        "title": "Block statement"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de for...in",
+      "description": "La clave nivel se encuentra en el prototipo.",
+      "code": "const heredado = { nivel: \"medio\" };\n    const curso = Object.create(heredado);\n    curso.nombre = \"SQL\";\n\n    for (const clave in curso) {\n      console.log(clave, Object.hasOwn(curso, clave) ? \"propia\" : \"heredada\");\n    }",
+      "expected": "nombre propia\nnivel heredada"
+    }
+  },
+  {
+    "id": "web-javascript-statements-for-await...of",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-for-in-and-for-of-statements",
+    "guide": 17,
+    "intro": [
+      "Recorre valores asíncronos y espera al avance del iterador en cada vuelta."
+    ],
+    "usage": "for await (const fila of fuente) {\n  registrar(fila);\n}",
+    "body": [
+      "Puede leer un iterable asíncrono o adaptar un iterable síncrono. Usa async function, un cuerpo asíncrono o un módulo que admita await en nivel superior."
+    ],
+    "caveats": [
+      "Con una fuente que produzca datos en paralelo, el recorrido asíncrono sigue el orden que define su iterador."
+    ],
+    "aliases": [
+      "for await of",
+      "iteración asíncrona",
+      "async iterator",
+      "async iterable"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-async_function_star_",
+        "title": "async function*"
+      },
+      {
+        "id": "web-javascript-statements-for...of",
+        "title": "for...of"
+      },
+      {
+        "id": "web-javascript-statements-async_function",
+        "title": "async function"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de for await...of",
+      "description": "El laboratorio ejecuta la muestra en un cuerpo asíncrono.",
+      "code": "async function* bloques() {\n      yield Promise.resolve(\"HTML\");\n      yield Promise.resolve(\"SQL\");\n    }\n\n    for await (const tema of bloques()) {\n      console.log(tema);\n    }",
+      "expected": "HTML\nSQL"
+    }
+  },
+  {
+    "id": "web-javascript-statements-break",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-break-statement",
+    "guide": 2,
+    "intro": [
+      "Sale del bucle o switch actual. Con una etiqueta, puede salir de la sentencia etiquetada."
+    ],
+    "usage": "if (coincide) break;",
+    "body": [
+      "Después de la salida, la ejecución continúa con la sentencia que sigue al bloque de control que se abandonó."
+    ],
+    "caveats": [
+      "break y continue tienen efectos distintos. Usa continue para pasar a otra vuelta sin abandonar el bucle."
+    ],
+    "aliases": ["salir del bucle", "interrumpir bucle", "break switch"],
+    "related": [
+      {
+        "id": "web-javascript-statements-continue",
+        "title": "continue"
+      },
+      {
+        "id": "web-javascript-statements-switch",
+        "title": "switch"
+      },
+      {
+        "id": "web-javascript-statements-label",
+        "title": "Labeled statement"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de break",
+      "description": "El recorrido se detiene antes de imprimir SQL y Java.",
+      "code": "for (const tema of [\"HTML\", \"CSS\", \"SQL\", \"Java\"]) {\n      if (tema === \"SQL\") break;\n      console.log(tema);\n    }\n    console.log(\"Fin de la búsqueda\");",
+      "expected": "HTML\nCSS\nFin de la búsqueda"
+    }
+  },
+  {
+    "id": "web-javascript-statements-continue",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-continue-statement",
+    "guide": 2,
+    "intro": [
+      "Interrumpe la vuelta actual y pasa al siguiente paso del bucle."
+    ],
+    "usage": "if (minutos <= 0) continue;",
+    "body": [
+      "En for se ejecuta la actualización antes de consultar la condición. En while se vuelve a evaluar la condición."
+    ],
+    "caveats": [
+      "En un while, una salida temprana que salta la actualización del estado puede crear un bucle infinito."
+    ],
+    "aliases": ["saltar vuelta", "siguiente iteración", "continue javascript"],
+    "related": [
+      {
+        "id": "web-javascript-statements-break",
+        "title": "break"
+      },
+      {
+        "id": "web-javascript-statements-for",
+        "title": "for"
+      },
+      {
+        "id": "web-javascript-statements-while",
+        "title": "while"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de continue",
+      "description": "Las dos duraciones inválidas se saltan y el bucle sigue.",
+      "code": "for (const minutos of [0, 25, -1, 30]) {\n      if (minutos <= 0) continue;\n      console.log(minutos);\n    }",
+      "expected": "25\n30"
+    }
+  },
+  {
+    "id": "web-javascript-statements-label",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-labelled-statements",
+    "guide": 2,
+    "intro": [
+      "Da un nombre a una sentencia para poder dirigir un break o continue a su estructura."
+    ],
+    "usage": "busqueda: for (const grupo of grupos) {\n  // break busqueda;\n}",
+    "body": [
+      "Una etiqueta delante de un bucle permite salir de varios niveles o elegir qué bucle debe pasar a la siguiente vuelta."
+    ],
+    "caveats": [
+      "continue con etiqueta requiere un bucle como destino. Cuando el recorrido es complejo, extraer una función con return también puede expresar la salida."
+    ],
+    "aliases": [
+      "label",
+      "etiqueta bucle",
+      "break etiquetado",
+      "bucles anidados"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-break",
+        "title": "break"
+      },
+      {
+        "id": "web-javascript-statements-continue",
+        "title": "continue"
+      },
+      {
+        "id": "web-javascript-statements-for",
+        "title": "for"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Labeled statement",
+      "description": "El break etiquetado termina los dos recorridos.",
+      "code": "const etapas = [[\"HTML\", \"CSS\"], [\"SQL\", \"React\"]];\n    buscar: for (const etapa of etapas) {\n      for (const tema of etapa) {\n        if (tema === \"SQL\") break buscar;\n        console.log(tema);\n      }\n    }\n    console.log(\"Encontrado\");",
+      "expected": "HTML\nCSS\nEncontrado"
+    }
+  },
+  {
+    "id": "web-javascript-statements-return",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-return-statement",
+    "guide": 3,
+    "intro": [
+      "Termina una función y entrega un valor al llamador cuando se proporciona."
+    ],
+    "usage": "function leer() {\n  return 25;\n}",
+    "body": [
+      "Sin expresión, la función devuelve undefined. En una función async, el resultado se entrega a través de su promesa."
+    ],
+    "caveats": [
+      "Pon la expresión en la misma línea que return o usa paréntesis. Un salto antes del valor puede terminar la instrucción."
+    ],
+    "aliases": [
+      "retorno javascript",
+      "devolver valor",
+      "return function",
+      "retorno temprano"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-function",
+        "title": "function"
+      },
+      {
+        "id": "web-javascript-statements-async_function",
+        "title": "async function"
+      },
+      {
+        "id": "web-javascript-statements-if...else",
+        "title": "if...else"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de return",
+      "description": "El texto sale por la rama de validación antes de aplicar Math.max.",
+      "code": "function duracion(valor) {\n      if (!Number.isFinite(valor)) return 0;\n      return Math.max(0, valor);\n    }\n    console.log(duracion(25), duracion(\"25\"));",
+      "expected": "25 0"
+    }
+  },
+  {
+    "id": "web-javascript-statements-throw",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-throw-statement",
+    "guide": 11,
+    "intro": [
+      "Interrumpe el flujo normal con una excepción que puede capturarse en un bloque exterior."
+    ],
+    "usage": "throw new RangeError(\"La duración debe ser positiva\");",
+    "body": [
+      "El valor lanzado se entrega a catch si hay un manejador. Un objeto Error puede describir el tipo de fallo y conservar información de la pila."
+    ],
+    "caveats": [
+      "El lenguaje permite lanzar cualquier valor. Usa objetos Error para que los consumidores del código puedan distinguir y diagnosticar fallos."
+    ],
+    "aliases": ["lanzar excepción", "throw error", "excepción javascript"],
+    "related": [
+      {
+        "id": "web-javascript-statements-try...catch",
+        "title": "try...catch"
+      },
+      {
+        "id": "web-javascript-statements-return",
+        "title": "return"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de throw",
+      "description": "La función entrega el error al manejador exterior.",
+      "code": "function validar(minutos) {\n      if (minutos <= 0) throw new RangeError(\"Duración inválida\");\n      return minutos;\n    }\n    try {\n      console.log(validar(0));\n    } catch (error) {\n      console.log(error.name, error.message);\n    }",
+      "expected": "RangeError Duración inválida"
+    }
+  },
+  {
+    "id": "web-javascript-statements-try...catch",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-try-statement",
+    "guide": 11,
+    "intro": [
+      "Delimita una operación que puede fallar y gestiona su salida con catch o finally."
+    ],
+    "usage": "try {\n  ejecutar();\n} catch (error) {\n  informar(error);\n} finally {\n  limpiar();\n}",
+    "body": [
+      "catch recibe la excepción del bloque protegido y finally se ejecuta cuando el flujo abandona la construcción. Puedes usar finally sin catch para limpiar y propagar el fallo."
+    ],
+    "caveats": [
+      "Una salida desde finally puede sustituir un return o una excepción anterior. Reserva ese bloque para liberar recursos y terminar tareas pendientes."
+    ],
+    "aliases": ["try catch finally", "manejar errores", "capturar excepción"],
+    "related": [
+      {
+        "id": "web-javascript-statements-throw",
+        "title": "throw"
+      },
+      {
+        "id": "web-javascript-statements-return",
+        "title": "return"
+      },
+      {
+        "id": "web-javascript-statements-await_using",
+        "title": "await using"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de try...catch",
+      "description": "El manejador se ejecuta antes del bloque de limpieza.",
+      "code": "try {\n      JSON.parse(\"{\");\n    } catch (error) {\n      console.log(error.name);\n    } finally {\n      console.log(\"Lectura cerrada\");\n    }",
+      "expected": "SyntaxError\nLectura cerrada"
+    }
+  },
+  {
+    "id": "web-javascript-statements-empty",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-empty-statement",
+    "guide": 2,
+    "intro": ["Representa una sentencia sin efecto mediante un punto y coma."],
+    "usage": "for (let i = 0; i < 3; i++);",
+    "body": [
+      "Puede aparecer donde la gramática requiere una sentencia. Las apariciones accidentales después de if, for o while pueden cambiar el alcance del bloque siguiente."
+    ],
+    "caveats": [
+      "Usa un bloque explícito cuando un cuerpo vacío sea intencional. Resulta más fácil distinguirlo de un punto y coma puesto por error."
+    ],
+    "aliases": ["sentencia vacía", "punto y coma suelto", "empty statement"],
+    "related": [
+      {
+        "id": "web-javascript-statements-block",
+        "title": "Block statement"
+      },
+      {
+        "id": "web-javascript-statements-for",
+        "title": "for"
+      },
+      {
+        "id": "web-javascript-statements-if...else",
+        "title": "if...else"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Empty statement",
+      "description": "La actualización del for se ejecuta aunque el cuerpo esté vacío.",
+      "code": "let i = 0;\n    for (; i < 3; i++);\n    console.log(\"Vueltas:\", i);",
+      "expected": "Vueltas: 3"
+    }
+  },
+  {
+    "id": "web-javascript-statements-expression_statement",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-expression-statement",
+    "guide": 3,
+    "intro": [
+      "Evalúa una expresión como sentencia, normalmente por el efecto que produce."
+    ],
+    "usage": "registrar(\"HTML\");",
+    "body": [
+      "Las llamadas, asignaciones y otras expresiones pueden ocupar su propia sentencia. El valor calculado suele ser irrelevante para el flujo del programa."
+    ],
+    "caveats": [
+      "Usa paréntesis al comienzo de una sentencia cuando quieras expresar un literal de objeto y evitar que se interprete como un bloque."
+    ],
+    "aliases": [
+      "sentencia de expresión",
+      "expression statement",
+      "llamada como sentencia"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-block",
+        "title": "Block statement"
+      },
+      {
+        "id": "web-javascript-statements-function",
+        "title": "function"
+      },
+      {
+        "id": "web-javascript-statements-return",
+        "title": "return"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Expression statement",
+      "description": "El programa usa el efecto de push sobre el array.",
+      "code": "const visitas = [];\n    visitas.push(\"HTML\");\n    visitas.push(\"CSS\");\n    console.log(visitas.join(\" / \"));",
+      "expected": "HTML / CSS"
+    }
+  },
+  {
+    "id": "web-javascript-statements-debugger",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-debugger-statement",
+    "guide": 11,
+    "intro": [
+      "Pide al entorno de depuración que interrumpa la ejecución si está disponible."
+    ],
+    "usage": "debugger;",
+    "body": [
+      "Con un depurador activo, la instrucción puede permitir inspeccionar variables, la pila y el punto donde se detuvo el programa."
+    ],
+    "caveats": [
+      "El comportamiento depende de las herramientas del entorno. Elimina las pausas de depuración que no deban quedar en la aplicación."
+    ],
+    "aliases": [
+      "punto de interrupción",
+      "debugger statement",
+      "pausar javascript"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-expression_statement",
+        "title": "Expression statement"
+      },
+      {
+        "id": "web-javascript-statements-throw",
+        "title": "throw"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de debugger",
+      "description": "Con el depurador cerrado, el ejemplo sigue y muestra el valor.",
+      "code": "const progreso = 25;\n    debugger;\n    console.log(progreso);",
+      "expected": "25"
+    }
+  },
+  {
+    "id": "web-javascript-statements-with",
+    "clause": "ecmascript-language-statements-and-declarations.html#sec-with-statement",
+    "guide": 3,
+    "intro": [
+      "Añade temporalmente un objeto a la búsqueda de nombres en código no estricto."
+    ],
+    "usage": "with (objeto) { /* código antiguo */ }",
+    "body": [
+      "La resolución de nombres depende de las propiedades que encuentre en ese objeto. La misma referencia puede significar algo distinto al cambiar su forma."
+    ],
+    "caveats": [
+      "La sentencia está obsoleta y se rechaza en modo estricto, incluidos los módulos. Expresa el acceso con una variable, un alias o desestructuración."
+    ],
+    "aliases": [
+      "with antiguo",
+      "with javascript",
+      "ámbito dinámico",
+      "legacy javascript"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-block",
+        "title": "Block statement"
+      },
+      {
+        "id": "web-javascript-statements-let",
+        "title": "let"
+      },
+      {
+        "id": "web-javascript-statements-import",
+        "title": "import"
+      }
+    ]
+  },
+  {
+    "id": "web-javascript-statements-function",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-function-definitions",
+    "guide": 3,
+    "intro": [
+      "Declara una función con nombre, parámetros y un cuerpo reutilizable."
+    ],
+    "usage": "function convertir(horas, extra = 0) {\n  return horas * 60 + extra;\n}",
+    "body": [
+      "Una declaración de función se prepara al entrar en su ámbito. Las llamadas pueden usarla antes de encontrar su línea en el flujo normal."
+    ],
+    "caveats": [
+      "Una función puede leer enlaces de su entorno exterior. Decide qué estado captura y qué datos llegan como parámetros para que sus dependencias se entiendan."
+    ],
+    "aliases": ["declarar función", "function javascript", "hoisting función"],
+    "related": [
+      {
+        "id": "web-javascript-functions-arrow_functions",
+        "title": "Arrow function expressions"
+      },
+      {
+        "id": "web-javascript-functions-default_parameters",
+        "title": "Default parameters"
+      },
+      {
+        "id": "web-javascript-statements-return",
+        "title": "return"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de function",
+      "description": "La declaración está disponible al ejecutar la primera línea.",
+      "code": "console.log(convertir(2, 15));\n\n    function convertir(horas, extra = 0) {\n      return horas * 60 + extra;\n    }",
+      "expected": "135"
+    }
+  },
+  {
+    "id": "web-javascript-functions-arrow_functions",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-arrow-function-definitions",
+    "guide": 3,
+    "intro": [
+      "Crea una función breve cuyo this proviene del entorno donde se escribe."
+    ],
+    "usage": "const etiquetas = datos.map((dato) => ({ tema: dato.nombre }));",
+    "body": [
+      "Una flecha con cuerpo de expresión devuelve ese valor. Un cuerpo con llaves requiere return para devolver un resultado explícito."
+    ],
+    "caveats": [
+      "Una flecha no crea su propio this ni arguments y no puede usarse como constructor mediante new. Para devolver un objeto como expresión, utiliza paréntesis."
+    ],
+    "aliases": [
+      "arrow function",
+      "función flecha",
+      "flecha javascript",
+      "función lambda js"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-function",
+        "title": "function"
+      },
+      {
+        "id": "web-javascript-operators-this",
+        "title": "this"
+      },
+      {
+        "id": "web-javascript-statements-return",
+        "title": "return"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Arrow function expressions",
+      "description": "Los paréntesis permiten usar el objeto completo como resultado de la flecha.",
+      "code": "const temas = [\"HTML\", \"SQL\"];\n    const opciones = temas.map((tema) => ({ valor: tema.toLowerCase(), texto: tema }));\n    console.log(opciones[1].valor, opciones[1].texto);",
+      "expected": "sql SQL"
+    }
+  },
+  {
+    "id": "web-javascript-functions-default_parameters",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-function-definitions",
+    "guide": 3,
+    "intro": [
+      "Proporciona un valor para un argumento omitido o recibido como undefined."
+    ],
+    "usage": "function iniciar(tema = \"HTML\", minutos = 15) {\n  return tema + \" \" + minutos;\n}",
+    "body": [
+      "Los inicializadores se evalúan en cada llamada. Un inicializador puede consultar parámetros declarados antes que él."
+    ],
+    "caveats": [
+      "Un null explícito es un valor y conserva su significado. Si quieres usar un valor por defecto también para null, exprésalo en el cuerpo."
+    ],
+    "aliases": [
+      "parámetros por defecto",
+      "default argument",
+      "argumentos opcionales"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-function",
+        "title": "function"
+      },
+      {
+        "id": "web-javascript-functions-rest_parameters",
+        "title": "Rest parameters"
+      },
+      {
+        "id": "web-javascript-operators-nullish_coalescing",
+        "title": "Nullish coalescing operator (??)"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Default parameters",
+      "description": "Solo las dos primeras llamadas utilizan el inicializador.",
+      "code": "function repaso(minutos = 20) {\n      console.log(minutos);\n    }\n    repaso();\n    repaso(undefined);\n    repaso(null);",
+      "expected": "20\n20\nnull"
+    }
+  },
+  {
+    "id": "web-javascript-functions-rest_parameters",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-function-definitions",
+    "guide": 3,
+    "intro": ["Reúne los argumentos restantes de una llamada en un array."],
+    "usage": "function sumar(etiqueta, ...valores) {\n  return etiqueta + valores.length;\n}",
+    "body": [
+      "El parámetro rest recibe los argumentos que siguen a los parámetros escritos delante de él. Puedes usar métodos de array directamente sobre su valor."
+    ],
+    "caveats": [
+      "Debe ser el último y no admite un valor por defecto. Al llamar una función con ...array, la operación complementaria expande los argumentos."
+    ],
+    "aliases": [
+      "parámetro rest",
+      "argumentos variables",
+      "rest parameter",
+      "rest vs spread"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-functions-default_parameters",
+        "title": "Default parameters"
+      },
+      {
+        "id": "web-javascript-operators-spread_syntax",
+        "title": "Spread syntax (...)"
+      },
+      {
+        "id": "web-javascript-statements-function",
+        "title": "function"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Rest parameters",
+      "description": "El tema se vincula aparte y los números forman el array minutos.",
+      "code": "function resumen(tema, ...minutos) {\n      return tema + \" \" + minutos.reduce((total, valor) => total + valor, 0);\n    }\n    console.log(resumen(\"JavaScript\", 10, 20, 15));",
+      "expected": "JavaScript 45"
+    }
+  },
+  {
+    "id": "web-javascript-statements-async_function",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-async-function-definitions",
+    "guide": 7,
+    "intro": [
+      "Declara una función cuyo resultado se entrega mediante una promesa."
+    ],
+    "usage": "async function leer() {\n  return await origen();\n}",
+    "body": [
+      "return resuelve la promesa con el valor de la función. Una excepción sin tratar dentro del cuerpo hace que la promesa se rechace."
+    ],
+    "caveats": [
+      "Una función async comienza a ejecutar su cuerpo cuando se invoca. await suspende la continuación de esa función mientras el entorno puede seguir con otras tareas."
+    ],
+    "aliases": ["función asíncrona", "async javascript", "promesa async"],
+    "related": [
+      {
+        "id": "web-javascript-operators-await",
+        "title": "await"
+      },
+      {
+        "id": "web-javascript-statements-throw",
+        "title": "throw"
+      },
+      {
+        "id": "web-javascript-statements-async_function_star_",
+        "title": "async function*"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de async function",
+      "description": "La llamada devuelve una promesa incluso cuando el cuerpo devuelve un número directamente.",
+      "code": "async function duracion() {\n      return 25;\n    }\n    const resultado = duracion();\n    console.log(resultado instanceof Promise);\n    console.log(await resultado);",
+      "expected": "true\n25"
+    }
+  },
+  {
+    "id": "web-javascript-operators-await",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-async-function-definitions",
+    "guide": 7,
+    "intro": [
+      "Espera la resolución de un valor y reanuda la ejecución asíncrona con su resultado."
+    ],
+    "usage": "const dato = await cargar();",
+    "body": [
+      "Si la promesa se cumple, await obtiene su valor. Si se rechaza, la espera produce una excepción que puede manejarse con try y catch."
+    ],
+    "caveats": [
+      "Puedes usar await dentro de funciones async y en el nivel superior de módulos que lo admiten. El laboratorio ejecuta los ejemplos de consola dentro de un cuerpo asíncrono."
+    ],
+    "aliases": [
+      "async await",
+      "esperar promesa",
+      "await javascript",
+      "espera asíncrona"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-async_function",
+        "title": "async function"
+      },
+      {
+        "id": "web-javascript-statements-try...catch",
+        "title": "try...catch"
+      },
+      {
+        "id": "web-javascript-statements-for-await...of",
+        "title": "for await...of"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de await",
+      "description": "La segunda línea usa el valor con el que se cumplió la promesa.",
+      "code": "const lectura = Promise.resolve(\"SQL\");\n    console.log(\"Antes\");\n    const tema = await lectura;\n    console.log(\"Tema:\", tema);",
+      "expected": "Antes\nTema: SQL"
+    }
+  },
+  {
+    "id": "web-javascript-statements-function_star_",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-generator-function-definitions",
+    "guide": 13,
+    "intro": [
+      "Declara una función generadora que puede producir varios valores por etapas."
+    ],
+    "usage": "function* pasos() {\n  yield \"inicio\";\n  yield \"fin\";\n}",
+    "body": [
+      "La llamada devuelve un objeto generador. Cada next avanza la ejecución hasta un yield, una salida o un error."
+    ],
+    "caveats": [
+      "El valor de un return final puede aparecer en next() con done verdadero. Un bucle for...of consume los valores de yield y deja fuera el valor final de return."
+    ],
+    "aliases": [
+      "función generadora",
+      "generator function",
+      "function star",
+      "generadores js"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-operators-yield",
+        "title": "yield"
+      },
+      {
+        "id": "web-javascript-operators-yield_star_",
+        "title": "yield*"
+      },
+      {
+        "id": "web-javascript-statements-for...of",
+        "title": "for...of"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de function*",
+      "description": "El recorrido del array y el avance manual muestran resultados diferentes al finalizar.",
+      "code": "function* fases() {\n      yield \"Buscar\";\n      yield \"Leer\";\n      return \"Fin\";\n    }\n    console.log([...fases()].join(\" → \"));\n\n    const iterator = fases();\n    iterator.next();\n    iterator.next();\n    const final = iterator.next();\n    console.log(final.value, final.done);",
+      "expected": "Buscar → Leer\nFin true"
+    }
+  },
+  {
+    "id": "web-javascript-operators-yield",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-generator-function-definitions",
+    "guide": 13,
+    "intro": [
+      "Suspende un generador y publica un valor para quien lo recorre."
+    ],
+    "usage": "const respuesta = yield \"Tema?\";",
+    "body": [
+      "La llamada a next puede pasar un valor que se convierte en el resultado de la expresión yield anterior al reanudar."
+    ],
+    "caveats": [
+      "El primer next arranca el generador y no reanuda un yield previo. Su argumento no se usa como respuesta inicial."
+    ],
+    "aliases": ["yield javascript", "suspender generador", "pausar generador"],
+    "related": [
+      {
+        "id": "web-javascript-statements-function_star_",
+        "title": "function*"
+      },
+      {
+        "id": "web-javascript-operators-yield_star_",
+        "title": "yield*"
+      },
+      {
+        "id": "web-javascript-statements-for...of",
+        "title": "for...of"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de yield",
+      "description": "El segundo next entrega la respuesta al punto donde estaba suspendida la función.",
+      "code": "function* preguntas() {\n      const tema = yield \"¿Tema?\";\n      yield \"Elegido \" + tema;\n    }\n    const consulta = preguntas();\n    console.log(consulta.next().value);\n    console.log(consulta.next(\"React\").value);",
+      "expected": "¿Tema?\nElegido React"
+    }
+  },
+  {
+    "id": "web-javascript-operators-yield_star_",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-generator-function-definitions",
+    "guide": 13,
+    "intro": [
+      "Delega el recorrido a otro iterable desde el interior de un generador."
+    ],
+    "usage": "yield* otrosPasos;",
+    "body": [
+      "Los valores del iterable delegado se entregan en su orden. El generador exterior puede continuar después con sus propios pasos."
+    ],
+    "caveats": [
+      "La expresión yield* obtiene el valor de finalización del iterador delegado. En un recorrido normal se usan los valores emitidos durante la iteración."
+    ],
+    "aliases": ["yield star", "yield asterisco", "delegar generador"],
+    "related": [
+      {
+        "id": "web-javascript-operators-yield",
+        "title": "yield"
+      },
+      {
+        "id": "web-javascript-statements-function_star_",
+        "title": "function*"
+      },
+      {
+        "id": "web-javascript-statements-for...of",
+        "title": "for...of"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de yield*",
+      "description": "El generador inserta en medio los dos valores del array delegado.",
+      "code": "function* ruta() {\n      yield \"Inicio\";\n      yield* [\"HTML\", \"CSS\"];\n      yield \"Proyecto\";\n    }\n    console.log([...ruta()].join(\" / \"));",
+      "expected": "Inicio / HTML / CSS / Proyecto"
+    }
+  },
+  {
+    "id": "web-javascript-statements-async_function_star_",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-async-generator-function-definitions",
+    "guide": 17,
+    "intro": [
+      "Declara un generador cuyas operaciones de avance devuelven promesas."
+    ],
+    "usage": "async function* leer() {\n  yield await cargar();\n}",
+    "body": [
+      "Una llamada devuelve un iterador asíncrono. Puedes usar for await...of para consumir resultados progresivamente."
+    ],
+    "caveats": [
+      "Si el consumidor corta el recorrido, un bloque finally ayuda a cerrar la fuente cuando se llama a return del iterador."
+    ],
+    "aliases": [
+      "async generator",
+      "generador asíncrono",
+      "yield async",
+      "async function star"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-for-await...of",
+        "title": "for await...of"
+      },
+      {
+        "id": "web-javascript-statements-async_function",
+        "title": "async function"
+      },
+      {
+        "id": "web-javascript-operators-yield",
+        "title": "yield"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de async function*",
+      "description": "La salida temprana termina el generador y ejecuta su limpieza.",
+      "code": "async function* sesiones() {\n      try {\n        yield await Promise.resolve(\"HTML\");\n        yield await Promise.resolve(\"SQL\");\n      } finally {\n        console.log(\"Fuente cerrada\");\n      }\n    }\n    for await (const tema of sesiones()) {\n      console.log(tema);\n      break;\n    }",
+      "expected": "HTML\nFuente cerrada"
+    }
+  },
+  {
+    "id": "web-javascript-statements-class",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-class-definitions",
+    "guide": 5,
+    "intro": [
+      "Declara una clase con un constructor y miembros de instancia o estáticos."
+    ],
+    "usage": "class Sesion {\n  constructor(tema) { this.tema = tema; }\n  leer() { return this.tema; }\n}",
+    "body": [
+      "Los métodos de instancia se comparten a través del prototipo y los campos se inicializan para cada objeto. new crea una instancia."
+    ],
+    "caveats": [
+      "La declaración tiene su propio ámbito léxico y el cuerpo de la clase se ejecuta en modo estricto."
+    ],
+    "aliases": ["class javascript", "clase js", "métodos de clase"],
+    "related": [
+      {
+        "id": "web-javascript-classes-constructor",
+        "title": "constructor"
+      },
+      {
+        "id": "web-javascript-classes-public_class_fields",
+        "title": "Public class fields"
+      },
+      {
+        "id": "web-javascript-classes-private_elements",
+        "title": "Private elements"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de class",
+      "description": "Dos instancias pueden compartir etiqueta y conservar datos de tema distintos.",
+      "code": "class Sesion {\n      constructor(tema) {\n        this.tema = tema;\n      }\n      etiqueta() {\n        return \"Curso · \" + this.tema;\n      }\n    }\n    console.log(new Sesion(\"SQL\").etiqueta());",
+      "expected": "Curso · SQL"
+    }
+  },
+  {
+    "id": "web-javascript-classes-constructor",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-class-definitions",
+    "guide": 5,
+    "intro": ["Inicializa un objeto creado mediante una clase."],
+    "usage": "constructor(nombre) {\n  this.nombre = nombre;\n}",
+    "body": [
+      "El constructor recibe los argumentos que se pasan a new. En una clase derivada, super inicializa el objeto base antes de usar this."
+    ],
+    "caveats": [
+      "Dentro de una clase se admite un único constructor. Para distintas formas de inicializar, usa argumentos opcionales o funciones con nombre."
+    ],
+    "aliases": [
+      "constructor javascript",
+      "inicializar clase",
+      "new constructor"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-class",
+        "title": "class"
+      },
+      {
+        "id": "web-javascript-classes-extends",
+        "title": "extends"
+      },
+      {
+        "id": "web-javascript-operators-super",
+        "title": "super"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de constructor",
+      "description": "El argumento omitido se resuelve con el valor por defecto.",
+      "code": "class Tarjeta {\n      constructor(tema, minutos = 15) {\n        this.tema = tema;\n        this.minutos = minutos;\n      }\n    }\n    const ficha = new Tarjeta(\"React\");\n    console.log(ficha.tema, ficha.minutos);",
+      "expected": "React 15"
+    }
+  },
+  {
+    "id": "web-javascript-classes-extends",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-class-definitions",
+    "guide": 5,
+    "intro": [
+      "Establece la clase de la que se heredan métodos y comportamiento."
+    ],
+    "usage": "class Guiada extends Sesion {\n  constructor(tema) { super(tema); }\n}",
+    "body": [
+      "El objeto derivado hereda métodos por la cadena de prototipos. Puede declarar un método con el mismo nombre para especializar el comportamiento."
+    ],
+    "caveats": [
+      "Para reutilizar una parte de un método base, usa super.nombre(). En ocasiones, componer un objeto con otro expresa mejor el vínculo que la herencia."
+    ],
+    "aliases": ["extends javascript", "herencia js", "clase base", "subclase"],
+    "related": [
+      {
+        "id": "web-javascript-statements-class",
+        "title": "class"
+      },
+      {
+        "id": "web-javascript-classes-constructor",
+        "title": "constructor"
+      },
+      {
+        "id": "web-javascript-operators-super",
+        "title": "super"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de extends",
+      "description": "La subclase amplía el resultado del método del prototipo base.",
+      "code": "class Sesion {\n      constructor(tema) {\n        this.tema = tema;\n      }\n      titulo() {\n        return this.tema;\n      }\n    }\n    class Guiada extends Sesion {\n      titulo() {\n        return \"Guía · \" + super.titulo();\n      }\n    }\n    console.log(new Guiada(\"CSS\").titulo());",
+      "expected": "Guía · CSS"
+    }
+  },
+  {
+    "id": "web-javascript-classes-private_elements",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-class-definitions",
+    "guide": 5,
+    "intro": ["Declara miembros privados mediante nombres que empiezan por #."],
+    "usage": "class Progreso {\n  #total = 0;\n  leer() { return this.#total; }\n}",
+    "body": [
+      "El nombre privado pertenece al ámbito de la declaración de clase. Los métodos pueden usarlo para leer o modificar sus datos internos."
+    ],
+    "caveats": [
+      "objeto[\"#total\"] consulta una propiedad de texto diferente. Acceder a un nombre privado fuera de su ámbito produce un error de sintaxis."
+    ],
+    "aliases": [
+      "private fields",
+      "campo privado javascript",
+      "hash clase",
+      "miembros privados"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-class",
+        "title": "class"
+      },
+      {
+        "id": "web-javascript-classes-public_class_fields",
+        "title": "Public class fields"
+      },
+      {
+        "id": "web-javascript-operators-in",
+        "title": "in"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Private elements",
+      "description": "El método actualiza el estado privado y otro método publica su total.",
+      "code": "class Progreso {\n      #vistos = 0;\n      completar() {\n        this.#vistos += 1;\n      }\n      total() {\n        return this.#vistos;\n      }\n    }\n    const avance = new Progreso();\n    avance.completar();\n    avance.completar();\n    console.log(avance.total());",
+      "expected": "2"
+    }
+  },
+  {
+    "id": "web-javascript-classes-public_class_fields",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-class-definitions",
+    "guide": 5,
+    "intro": [
+      "Define propiedades públicas que se inicializan al crear cada instancia."
+    ],
+    "usage": "class Cuaderno {\n  notas = [];\n}",
+    "body": [
+      "El inicializador del campo se evalúa para cada objeto. Un campo array crea una lista independiente por instancia."
+    ],
+    "caveats": [
+      "Los campos son propiedades del objeto creado. Los métodos ordinarios se encuentran en el prototipo. Esa diferencia importa al inspeccionar el objeto o copiar sus datos."
+    ],
+    "aliases": ["class field", "campo público", "propiedades de instancia"],
+    "related": [
+      {
+        "id": "web-javascript-statements-class",
+        "title": "class"
+      },
+      {
+        "id": "web-javascript-classes-private_elements",
+        "title": "Private elements"
+      },
+      {
+        "id": "web-javascript-classes-constructor",
+        "title": "constructor"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Public class fields",
+      "description": "Los dos cuadernos reciben listas distintas.",
+      "code": "class Cuaderno {\n      notas = [];\n    }\n    const primero = new Cuaderno();\n    const segundo = new Cuaderno();\n    primero.notas.push(\"SQL\");\n    console.log(primero.notas.length, segundo.notas.length);",
+      "expected": "1 0"
+    }
+  },
+  {
+    "id": "web-javascript-classes-static",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-class-definitions",
+    "guide": 5,
+    "intro": ["Declara un campo o método accesible desde la clase."],
+    "usage": "class Sesion {\n  static permitir(minutos) { return minutos >= 5; }\n}",
+    "body": [
+      "Un método estático puede representar una fábrica, una validación o una operación que trabaja con la clase sin requerir una instancia."
+    ],
+    "caveats": [
+      "Un campo static se inicializa al definir la clase. No se crea una copia del campo para cada instancia."
+    ],
+    "aliases": ["static javascript", "método estático", "campo estático"],
+    "related": [
+      {
+        "id": "web-javascript-statements-class",
+        "title": "class"
+      },
+      {
+        "id": "web-javascript-classes-static_initialization_blocks",
+        "title": "Static initialization blocks"
+      },
+      {
+        "id": "web-javascript-classes-constructor",
+        "title": "constructor"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de static",
+      "description": "La validación se llama en Sesion sin crear un objeto.",
+      "code": "class Sesion {\n      static permitir(minutos) {\n        return minutos >= 5;\n      }\n    }\n    console.log(Sesion.permitir(30), Sesion.permitir(0));",
+      "expected": "true false"
+    }
+  },
+  {
+    "id": "web-javascript-classes-static_initialization_blocks",
+    "clause": "ecmascript-language-functions-and-classes.html#sec-runtime-semantics-classstaticblockdefinitionevaluation",
+    "guide": 5,
+    "intro": ["Ejecuta código de inicialización cuando se define la clase."],
+    "usage": "class Catalogo {\n  static resumen;\n  static { this.resumen = preparar(); }\n}",
+    "body": [
+      "Los bloques estáticos y los inicializadores de campos estáticos se ejecutan en el orden de la declaración. Un bloque puede acceder a miembros privados estáticos de su clase."
+    ],
+    "caveats": [
+      "El bloque se ejecuta de forma síncrona durante la definición. La inicialización asíncrona debe hacerse mediante otra operación."
+    ],
+    "aliases": ["static block", "bloque estático", "inicialización estática"],
+    "related": [
+      {
+        "id": "web-javascript-classes-static",
+        "title": "static"
+      },
+      {
+        "id": "web-javascript-statements-class",
+        "title": "class"
+      },
+      {
+        "id": "web-javascript-classes-private_elements",
+        "title": "Private elements"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Static initialization blocks",
+      "description": "El bloque usa el campo que ya se inicializó y calcula otro.",
+      "code": "class Catalogo {\n      static temas = [\"HTML\", \"CSS\"];\n      static total;\n      static {\n        this.temas.push(\"SQL\");\n        this.total = this.temas.length;\n      }\n    }\n    console.log(Catalogo.total);",
+      "expected": "3"
+    }
+  },
+  {
+    "id": "web-javascript-statements-import",
+    "clause": "ecmascript-language-scripts-and-modules.html#sec-imports",
+    "guide": 16,
+    "intro": [
+      "Declara enlaces a exportaciones de otro módulo antes de ejecutar su cuerpo."
+    ],
+    "usage": "import { duracion } from \"./sesiones.js\";",
+    "body": [
+      "Una importación con nombre corresponde a una exportación del módulo de origen. Con as puedes usar un nombre diferente en el módulo que la recibe."
+    ],
+    "caveats": [
+      "La declaración solo es válida en módulos. En el laboratorio, los archivos auxiliares se resuelven de forma local."
+    ],
+    "aliases": [
+      "import javascript",
+      "importar módulo",
+      "esm",
+      "importación con nombre"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-export",
+        "title": "export"
+      },
+      {
+        "id": "web-javascript-operators-import",
+        "title": "import()"
+      },
+      {
+        "id": "web-javascript-statements-import-with",
+        "title": "Import attributes"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de import",
+      "description": "El nombre duracion es un alias local de una exportación.",
+      "code": "import { minutos as duracion } from \"./sesiones.js\";\n    console.log(duracion(2, 15));",
+      "expected": "135",
+      "files": {
+        "sesiones.js": "export const minutos = (horas, extra) => horas * 60 + extra;"
+      }
+    }
+  },
+  {
+    "id": "web-javascript-statements-export",
+    "clause": "ecmascript-language-scripts-and-modules.html#sec-exports",
+    "guide": 16,
+    "intro": [
+      "Publica nombres o un valor predeterminado de un módulo para que otros lo importen."
+    ],
+    "usage": "export const tema = \"SQL\";\nexport default function titulo() { return tema; }",
+    "body": [
+      "Un módulo puede tener varias exportaciones con nombre y una exportación default. Un import adopta el nombre predeterminado o pide los nombres entre llaves."
+    ],
+    "caveats": [
+      "Los enlaces importados observan las actualizaciones de la exportación correspondiente. El módulo que importa no puede reasignar los nombres importados."
+    ],
+    "aliases": ["export default", "export named", "exportar módulo javascript"],
+    "related": [
+      {
+        "id": "web-javascript-statements-import",
+        "title": "import"
+      },
+      {
+        "id": "web-javascript-operators-import",
+        "title": "import()"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de export",
+      "description": "La exportación con nombre refleja la actualización del módulo de origen.",
+      "code": "import etiqueta, { minutos, ampliar } from \"./sesion.js\";\n    console.log(etiqueta, minutos);\n    ampliar();\n    console.log(minutos);",
+      "expected": "JavaScript 15\n20",
+      "files": {
+        "sesion.js": "export default \"JavaScript\";\nexport let minutos = 15;\nexport function ampliar() {\n  minutos += 5;\n}"
+      }
+    }
+  },
+  {
+    "id": "web-javascript-operators-import",
+    "clause": "ecmascript-language-expressions.html#sec-import-calls",
+    "guide": 16,
+    "intro": [
+      "Solicita un módulo durante la ejecución y devuelve una promesa con su espacio de nombres."
+    ],
+    "usage": "const conjunto = await import(\"./formatos.js\");",
+    "body": [
+      "Puede usarse para cargar una ruta opcional o diferir trabajo. La promesa se cumple con las exportaciones de ese módulo."
+    ],
+    "caveats": [
+      "En VCode, importa los archivos del programa mediante rutas relativas que el editor pueda resolver. La vista de código no carga módulos de otros servidores."
+    ],
+    "aliases": [
+      "dynamic import",
+      "import dinámico",
+      "carga dinámica javascript"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-import",
+        "title": "import"
+      },
+      {
+        "id": "web-javascript-statements-export",
+        "title": "export"
+      },
+      {
+        "id": "web-javascript-operators-await",
+        "title": "await"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de import()",
+      "description": "El módulo auxiliar se solicita al ejecutar el programa.",
+      "code": "const { crearEtiqueta } = await import(\"./formatos.js\");\n    console.log(crearEtiqueta(\"SQL\", 30));",
+      "expected": "SQL · 30 min",
+      "files": {
+        "formatos.js": "export const crearEtiqueta = (nombre, minutos) => nombre + ' · ' + minutos + ' min';"
+      }
+    }
+  },
+  {
+    "id": "web-javascript-operators-optional_chaining",
+    "clause": "ecmascript-language-expressions.html#sec-optional-chaining-evaluation",
+    "guide": 5,
+    "intro": [
+      "Accede a una propiedad o invoca un miembro si el valor anterior existe."
+    ],
+    "usage": "const nombre = registro?.curso?.nombre;",
+    "body": [
+      "La cadena devuelve undefined al encontrar null o undefined donde hay un acceso opcional. El lado protegido puede incluir propiedades, índices o llamadas."
+    ],
+    "caveats": [
+      "Los paréntesis pueden terminar la cadena. En (objeto?.curso).nombre, el último acceso vuelve a ejecutarse aun si el interior dio undefined."
+    ],
+    "aliases": [
+      "optional chaining",
+      "encadenamiento opcional",
+      "signo interrogación punto",
+      "propiedad opcional js"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-operators-nullish_coalescing",
+        "title": "Nullish coalescing operator (??)"
+      },
+      {
+        "id": "web-javascript-operators-property_accessors",
+        "title": "Property accessors"
+      },
+      {
+        "id": "web-javascript-operators-destructuring",
+        "title": "Destructuring"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Optional chaining (?.)",
+      "description": "La combinación evita acceder a una propiedad de null y define un texto de reserva.",
+      "code": "const lecturas = [null, { curso: { nombre: \"React\" } }, { curso: null }];\n    for (const registro of lecturas) {\n      console.log(registro?.curso?.nombre ?? \"Sin curso\");\n    }",
+      "expected": "Sin curso\nReact\nSin curso"
+    }
+  },
+  {
+    "id": "web-javascript-operators-nullish_coalescing",
+    "clause": "ecmascript-language-expressions.html#sec-binary-logical-operators",
+    "guide": 1,
+    "intro": [
+      "Devuelve el operando derecho cuando el izquierdo es null o undefined."
+    ],
+    "usage": "const cantidad = volumen ?? 1;",
+    "body": [
+      "Valores como 0, false y una cadena vacía son resultados válidos y se conservan. El segundo operando se evalúa solo si hace falta."
+    ],
+    "caveats": [
+      "Al combinar ?? con || o &&, añade paréntesis para expresar el orden. Las combinaciones directas se rechazan por sintaxis."
+    ],
+    "aliases": [
+      "nullish coalescing",
+      "doble interrogación",
+      "valor por defecto null",
+      "?? javascript"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-operators-optional_chaining",
+        "title": "Optional chaining (?.)"
+      },
+      {
+        "id": "web-javascript-operators-logical_or",
+        "title": "Logical OR (||)"
+      },
+      {
+        "id": "web-javascript-operators-nullish_coalescing_assignment",
+        "title": "Nullish coalescing assignment (??=)"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Nullish coalescing operator (??)",
+      "description": "Solo los dos valores ausentes activan el valor de reserva.",
+      "code": "const datos = [0, false, \"\", null, undefined];\n    for (const valor of datos) {\n      console.log(JSON.stringify(valor ?? \"reserva\"));\n    }",
+      "expected": "0\nfalse\n\"\"\n\"reserva\"\n\"reserva\""
+    }
+  },
+  {
+    "id": "web-javascript-operators-nullish_coalescing_assignment",
+    "clause": "ecmascript-language-expressions.html#sec-assignment-operators",
+    "guide": 1,
+    "intro": [
+      "Asigna un valor a un destino solo si su valor actual es null o undefined."
+    ],
+    "usage": "progreso.minutos ??= 20;",
+    "body": [
+      "Evalúa el destino una sola vez. Si el valor actual ya existe, no evalúa la expresión de la derecha ni escribe en él."
+    ],
+    "caveats": [
+      "Una propiedad con 0 conserva ese valor. Para condiciones distintas, usa una comprobación explícita."
+    ],
+    "aliases": ["asignación nula", "operador ??=", "nullish assignment"],
+    "related": [
+      {
+        "id": "web-javascript-operators-nullish_coalescing",
+        "title": "Nullish coalescing operator (??)"
+      },
+      {
+        "id": "web-javascript-operators-assignment",
+        "title": "Assignment (=)"
+      },
+      {
+        "id": "web-javascript-operators-optional_chaining",
+        "title": "Optional chaining (?.)"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Nullish coalescing assignment (??=)",
+      "description": "Solo se inicializa la propiedad que tenía un valor nulo.",
+      "code": "const progreso = { minutos: 0, tema: null };\n    progreso.minutos ??= 15;\n    progreso.tema ??= \"JavaScript\";\n    console.log(progreso.minutos, progreso.tema);",
+      "expected": "0 JavaScript"
+    }
+  },
+  {
+    "id": "web-javascript-operators-conditional_operator",
+    "clause": "ecmascript-language-expressions.html#sec-conditional-operator",
+    "guide": 2,
+    "intro": [
+      "Calcula un valor eligiendo una de dos expresiones según una condición."
+    ],
+    "usage": "const etiqueta = listo ? \"Disponible\" : \"Pendiente\";",
+    "body": [
+      "Se evalúa la condición y a continuación solo el operando de la rama que corresponde."
+    ],
+    "caveats": [
+      "Para varias operaciones por rama o condiciones encadenadas que dificulten la lectura, usa if y else."
+    ],
+    "aliases": [
+      "operador ternario",
+      "ternario javascript",
+      "interrogación dos puntos",
+      "condición ternaria"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-if...else",
+        "title": "if...else"
+      },
+      {
+        "id": "web-javascript-operators-logical_and",
+        "title": "Logical AND (&&)"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Conditional (ternary) operator",
+      "description": "El resultante se puede asignar a una variable como cualquier otra expresión.",
+      "code": "const sesiones = 0;\n    const resultado = sesiones > 0 ? \"Con actividad\" : \"Pendiente\";\n    console.log(resultado);",
+      "expected": "Pendiente"
+    }
+  },
+  {
+    "id": "web-javascript-operators-destructuring",
+    "clause": "ecmascript-language-expressions.html#sec-destructuring-assignment",
+    "guide": 5,
+    "intro": ["Extrae valores de objetos o iterables siguiendo un patrón."],
+    "usage": "const { nombre: tema, minutos = 15 } = sesion;\nconst [primero, ...siguientes] = ruta;",
+    "body": [
+      "En objetos, el patrón usa claves. En arrays y otros iterables, usa las posiciones que produce el recorrido. Puedes cambiar nombres y dar valores por defecto."
+    ],
+    "caveats": [
+      "Un valor predeterminado se usa cuando la lectura da undefined. Un null explícito se conserva y no se puede desestructurar un objeto nulo sin tratamiento previo."
+    ],
+    "aliases": [
+      "desestructuración javascript",
+      "destructuring assignment",
+      "renombrar objeto",
+      "extraer propiedades"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-operators-spread_syntax",
+        "title": "Spread syntax (...)"
+      },
+      {
+        "id": "web-javascript-operators-property_accessors",
+        "title": "Property accessors"
+      },
+      {
+        "id": "web-javascript-functions-default_parameters",
+        "title": "Default parameters"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Destructuring",
+      "description": "El objeto renombra la propiedad y el iterable separa el primer elemento.",
+      "code": "const sesion = { nombre: \"JavaScript\" };\n    const { nombre: tema, minutos = 20 } = sesion;\n    const [inicio, ...resto] = [\"HTML\", \"CSS\", \"React\"];\n    console.log(tema, minutos);\n    console.log(inicio, resto.length);",
+      "expected": "JavaScript 20\nHTML 2"
+    }
+  },
+  {
+    "id": "web-javascript-operators-spread_syntax",
+    "clause": "ecmascript-language-expressions.html#sec-array-initializer",
+    "guide": 5,
+    "intro": [
+      "Expande valores de un iterable en un array o una llamada y copia propiedades propias enumerables en un literal de objeto."
+    ],
+    "usage": "const ruta = [...inicio, \"SQL\"];\nconst copia = { ...origen, listo: true };",
+    "body": [
+      "En un literal de objeto, las propiedades escritas después pueden sustituir otras anteriores. En arrays, la expansión inserta valores en orden."
+    ],
+    "caveats": [
+      "La copia de un objeto mediante spread es superficial. Las propiedades que contienen referencias conservan esos objetos compartidos."
+    ],
+    "aliases": [
+      "spread operator",
+      "propagación",
+      "tres puntos javascript",
+      "copiar objeto"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-functions-rest_parameters",
+        "title": "Rest parameters"
+      },
+      {
+        "id": "web-javascript-operators-destructuring",
+        "title": "Destructuring"
+      },
+      {
+        "id": "web-javascript-operators-object_initializer",
+        "title": "Object initializer"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Spread syntax (...)",
+      "description": "La propiedad tema se sustituye en la copia y el array interno sigue compartido.",
+      "code": "const base = { tema: \"HTML\", etiquetas: [\"base\"] };\n    const copia = { ...base, tema: \"JS\" };\n    copia.etiquetas.push(\"guía\");\n    console.log(base.tema, copia.tema);\n    console.log(base.etiquetas.join(\", \"));",
+      "expected": "HTML JS\nbase, guía"
+    }
+  },
+  {
+    "id": "web-javascript-operators-object_initializer",
+    "clause": "ecmascript-language-expressions.html#sec-object-initializer",
+    "guide": 5,
+    "intro": [
+      "Construye un objeto con propiedades, métodos y nombres calculados."
+    ],
+    "usage": "const curso = { tema, [clave]: minutos, abrir() { return this.tema; } };",
+    "body": [
+      "Los atajos permiten usar el propio nombre de una variable como clave. Un nombre entre corchetes se calcula a partir de una expresión."
+    ],
+    "caveats": [
+      "Los literales pueden contener getters y setters. Distingue una propiedad de datos de otra que ejecuta código cuando se lee o escribe."
+    ],
+    "aliases": [
+      "objeto literal",
+      "literal javascript",
+      "object literal",
+      "clave calculada"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-operators-destructuring",
+        "title": "Destructuring"
+      },
+      {
+        "id": "web-javascript-operators-property_accessors",
+        "title": "Property accessors"
+      },
+      {
+        "id": "web-javascript-operators-spread_syntax",
+        "title": "Spread syntax (...)"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Object initializer",
+      "description": "El nombre de la segunda propiedad se obtiene de la variable unidad.",
+      "code": "const tema = \"SQL\";\n    const unidad = \"minutos\";\n    const ficha = { tema, [unidad]: 30 };\n    console.log(ficha.tema, ficha.minutos);",
+      "expected": "SQL 30"
+    }
+  },
+  {
+    "id": "web-javascript-operators-property_accessors",
+    "clause": "ecmascript-language-expressions.html#sec-property-accessors",
+    "guide": 5,
+    "intro": [
+      "Lee o escribe propiedades de un objeto mediante punto o corchetes."
+    ],
+    "usage": "const titulo = curso.nombre;\nconst dato = curso[clave];",
+    "body": [
+      "El punto utiliza el nombre escrito. Los corchetes evalúan una expresión y pueden recibir cadenas, índices o símbolos."
+    ],
+    "caveats": [
+      "Las propiedades que parecen números se convierten normalmente en claves de cadena. Usa corchetes para nombres calculados o símbolos."
+    ],
+    "aliases": [
+      "acceso propiedades",
+      "dot notation",
+      "bracket notation",
+      "propiedad calculada"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-operators-optional_chaining",
+        "title": "Optional chaining (?.)"
+      },
+      {
+        "id": "web-javascript-operators-object_initializer",
+        "title": "Object initializer"
+      },
+      {
+        "id": "web-javascript-operators-in",
+        "title": "in"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Property accessors",
+      "description": "El nombre con espacio se puede usar mediante corchetes.",
+      "code": "const tema = { nombre: \"JS\", \"nivel actual\": \"medio\" };\n    const clave = \"nivel actual\";\n    console.log(tema.nombre, tema[clave]);",
+      "expected": "JS medio"
+    }
+  },
+  {
+    "id": "web-javascript-operators-this",
+    "clause": "ecmascript-language-expressions.html#sec-this-keyword",
+    "guide": 3,
+    "intro": [
+      "Obtiene el valor this asociado al contexto de ejecución actual."
+    ],
+    "usage": "ficha.mostrar();",
+    "body": [
+      "En un método ordinario, el valor suele venir del receptor de la llamada. Una función flecha conserva el valor de su entorno."
+    ],
+    "caveats": [
+      "Extraer un método y llamarlo como función separada puede cambiar su this. Usa bind, una flecha envolvente o la llamada con su receptor."
+    ],
+    "aliases": [
+      "this javascript",
+      "receptor",
+      "contexto de método",
+      "binding this"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-functions-arrow_functions",
+        "title": "Arrow function expressions"
+      },
+      {
+        "id": "web-javascript-classes-constructor",
+        "title": "constructor"
+      },
+      {
+        "id": "web-javascript-operators-property_accessors",
+        "title": "Property accessors"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de this",
+      "description": "La segunda función conserva el receptor porque se vinculó explícitamente.",
+      "code": "const ficha = {\n      tema: \"SQL\",\n      mostrar() {\n        return this.tema;\n      },\n    };\n    const llamar = ficha.mostrar.bind(ficha);\n    console.log(ficha.mostrar(), llamar());",
+      "expected": "SQL SQL"
+    }
+  },
+  {
+    "id": "web-javascript-operators-super",
+    "clause": "ecmascript-language-expressions.html#sec-super-keyword",
+    "guide": 5,
+    "intro": [
+      "Accede a métodos de la clase base o invoca su constructor desde una clase derivada."
+    ],
+    "usage": "constructor(tema) { super(tema); }\nmostrar() { return super.mostrar(); }",
+    "body": [
+      "super() inicializa this en un constructor de subclase. super.método() consulta la definición de la base y la llama con la instancia actual."
+    ],
+    "caveats": [
+      "super solo se admite donde existe un contexto de método o constructor que permita ese acceso."
+    ],
+    "aliases": [
+      "super javascript",
+      "constructor padre",
+      "método base",
+      "llamar clase base"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-classes-extends",
+        "title": "extends"
+      },
+      {
+        "id": "web-javascript-classes-constructor",
+        "title": "constructor"
+      },
+      {
+        "id": "web-javascript-operators-this",
+        "title": "this"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de super",
+      "description": "El método base lee el campo que inicializó su constructor sobre la misma instancia.",
+      "code": "class Ficha {\n      constructor(tema) { this.tema = tema; }\n      mostrar() { return this.tema; }\n    }\n    class Guiada extends Ficha {\n      constructor(tema) { super(tema); }\n      mostrar() { return \"Guía · \" + super.mostrar(); }\n    }\n    console.log(new Guiada(\"HTML\").mostrar());",
+      "expected": "Guía · HTML"
+    }
+  },
+  {
+    "id": "web-javascript-operators-typeof",
+    "clause": "ecmascript-language-expressions.html#sec-typeof-operator",
+    "guide": 1,
+    "intro": [
+      "Devuelve una cadena que describe la categoría básica de un valor."
+    ],
+    "usage": "typeof entrada === \"string\"",
+    "body": [
+      "Los resultados incluyen undefined, boolean, number, bigint, string, symbol, object y function. null produce object por compatibilidad histórica."
+    ],
+    "caveats": [
+      "typeof no distingue arrays de otros objetos. Usa Array.isArray para esa pregunta y compara con null para detectar un valor nulo."
+    ],
+    "aliases": [
+      "typeof javascript",
+      "comprobar tipo",
+      "tipo de variable",
+      "typeof null"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-operators-strict_equality",
+        "title": "Strict equality (===)"
+      },
+      {
+        "id": "web-javascript-operators-instanceof",
+        "title": "instanceof"
+      },
+      {
+        "id": "web-javascript-operators-in",
+        "title": "in"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de typeof",
+      "description": "typeof da la categoría general y Array.isArray aporta una comprobación más específica.",
+      "code": "console.log(typeof 25, typeof \"JS\");\n    console.log(typeof null, typeof []);\n    console.log(Array.isArray([]));",
+      "expected": "number string\nobject object\ntrue"
+    }
+  },
+  {
+    "id": "web-javascript-operators-in",
+    "clause": "ecmascript-language-expressions.html#sec-relational-operators",
+    "guide": 5,
+    "intro": [
+      "Comprueba si existe una propiedad con el nombre indicado en un objeto."
+    ],
+    "usage": "\"minutos\" in sesion",
+    "body": [
+      "Para claves ordinarias se revisa el objeto y su cadena de prototipos. El valor de la propiedad puede ser undefined aunque su clave exista."
+    ],
+    "caveats": [
+      "Utiliza Object.hasOwn si solo te interesan propiedades directas. El lado derecho del operador debe ser un objeto."
+    ],
+    "aliases": [
+      "in javascript",
+      "comprobar propiedad",
+      "clave presente",
+      "has own"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-operators-property_accessors",
+        "title": "Property accessors"
+      },
+      {
+        "id": "web-javascript-statements-for...in",
+        "title": "for...in"
+      },
+      {
+        "id": "web-javascript-classes-private_elements",
+        "title": "Private elements"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de in",
+      "description": "La propiedad está en la cadena de prototipos y su valor es undefined.",
+      "code": "const base = { tema: undefined };\n    const ficha = Object.create(base);\n    console.log(\"tema\" in ficha, Object.hasOwn(ficha, \"tema\"), ficha.tema);",
+      "expected": "true false undefined"
+    }
+  },
+  {
+    "id": "web-javascript-operators-strict_equality",
+    "clause": "ecmascript-language-expressions.html#sec-equality-operators",
+    "guide": 1,
+    "intro": [
+      "Compara dos valores sin convertir sus tipos para buscar igualdad."
+    ],
+    "usage": "if (codigo === 12) abrir();",
+    "body": [
+      "Para valores primitivos, compara según su tipo. Para objetos, comprueba si ambos valores son la misma referencia."
+    ],
+    "caveats": [
+      "NaN y NaN no comparan como iguales con ===. Si necesitas detectar NaN, usa Number.isNaN. Object.is tiene reglas distintas para NaN y los ceros con signo."
+    ],
+    "aliases": [
+      "igualdad estricta",
+      "triple igual",
+      "=== javascript",
+      "comparar sin coerción"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-operators-equality",
+        "title": "Equality (==)"
+      },
+      {
+        "id": "web-javascript-statements-switch",
+        "title": "switch"
+      },
+      {
+        "id": "web-javascript-operators-typeof",
+        "title": "typeof"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Strict equality (===)",
+      "description": "Dos objetos con el mismo contenido siguen siendo referencias distintas.",
+      "code": "const ficha = { id: 12 };\n    console.log(12 === \"12\", ficha === ficha, ficha === { id: 12 });\n    console.log(NaN === NaN, Object.is(NaN, NaN));",
+      "expected": "false true false\nfalse true"
+    }
+  },
+  {
+    "id": "web-javascript-operators-equality",
+    "clause": "ecmascript-language-expressions.html#sec-equality-operators",
+    "guide": 1,
+    "intro": [
+      "Compara valores mediante las reglas de igualdad abstracta de JavaScript."
+    ],
+    "usage": "const coincide = izquierda == derecha;",
+    "body": [
+      "La igualdad abstracta puede convertir operandos, por ejemplo al comparar una cadena numérica con un número."
+    ],
+    "caveats": [
+      "Usa === cuando quieras que el tipo participe en la decisión. Si el dato llega como texto, convierte y valida de forma explícita."
+    ],
+    "aliases": [
+      "igualdad abstracta",
+      "doble igual",
+      "coerción javascript",
+      "== javascript"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-operators-strict_equality",
+        "title": "Strict equality (===)"
+      },
+      {
+        "id": "web-javascript-operators-typeof",
+        "title": "typeof"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Equality (==)",
+      "description": "Las dos reglas dan resultados distintos cuando los tipos son diferentes.",
+      "code": "console.log(\"12\" == 12, \"12\" === 12);\n    console.log(null == undefined, null === undefined);",
+      "expected": "true false\ntrue false"
+    }
+  },
+  {
+    "id": "web-javascript-operators-delete",
+    "clause": "ecmascript-language-expressions.html#sec-delete-operator",
+    "guide": 5,
+    "intro": ["Intenta eliminar una propiedad de un objeto."],
+    "usage": "delete borrador.tema;",
+    "body": [
+      "Si la propiedad propia se puede configurar, se elimina. Si existe una con el mismo nombre en el prototipo, esa lectura heredada puede quedar visible."
+    ],
+    "caveats": [
+      "Al borrar una posición de un array no se desplazan las demás. Usa splice cuando quieras eliminar una posición y reducir la longitud."
+    ],
+    "aliases": ["delete javascript", "borrar propiedad", "eliminar clave"],
+    "related": [
+      {
+        "id": "web-javascript-operators-property_accessors",
+        "title": "Property accessors"
+      },
+      {
+        "id": "web-javascript-operators-in",
+        "title": "in"
+      },
+      {
+        "id": "web-javascript-operators-destructuring",
+        "title": "Destructuring"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de delete",
+      "description": "La clave deja de existir y los campos restantes se mantienen.",
+      "code": "const borrador = { tema: \"Java\", minutos: 25 };\n    delete borrador.tema;\n    console.log(\"tema\" in borrador, borrador.minutos);",
+      "expected": "false 25"
+    }
+  },
+  {
+    "id": "web-javascript-operators-new",
+    "clause": "ecmascript-language-expressions.html#sec-new-operator",
+    "guide": 5,
+    "intro": ["Invoca un constructor para crear una instancia."],
+    "usage": "const registro = new Sesion(\"HTML\");",
+    "body": [
+      "El nuevo objeto se asocia al prototipo apropiado y el constructor inicializa sus datos."
+    ],
+    "caveats": [
+      "Las funciones flecha no admiten new. Un constructor ordinario que devuelve un objeto de forma explícita puede sustituir la instancia creada."
+    ],
+    "aliases": ["new javascript", "crear instancia", "instanciar clase"],
+    "related": [
+      {
+        "id": "web-javascript-classes-constructor",
+        "title": "constructor"
+      },
+      {
+        "id": "web-javascript-statements-class",
+        "title": "class"
+      },
+      {
+        "id": "web-javascript-operators-instanceof",
+        "title": "instanceof"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de new",
+      "description": "El objeto contiene datos de instancia y está relacionado con el prototipo de Sesion.",
+      "code": "class Sesion {\n      constructor(tema) { this.tema = tema; }\n    }\n    const dato = new Sesion(\"HTML\");\n    console.log(dato.tema, dato instanceof Sesion);",
+      "expected": "HTML true"
+    }
+  },
+  {
+    "id": "web-javascript-operators-instanceof",
+    "clause": "ecmascript-language-expressions.html#sec-relational-operators",
+    "guide": 5,
+    "intro": [
+      "Comprueba si un valor satisface las reglas de pertenencia respecto al operando derecho."
+    ],
+    "usage": "const esSesion = valor instanceof Sesion;",
+    "body": [
+      "En el comportamiento normal, busca el prototipo del constructor en la cadena del objeto. Un objeto puede personalizar esa comprobación con Symbol.hasInstance."
+    ],
+    "caveats": [
+      "Objetos procedentes de diferentes contextos pueden usar prototipos distintos. Para detectar arrays, Array.isArray funciona a través de esos límites."
+    ],
+    "aliases": [
+      "instanceof javascript",
+      "comprobar instancia",
+      "prototipo cadena"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-operators-new",
+        "title": "new"
+      },
+      {
+        "id": "web-javascript-operators-typeof",
+        "title": "typeof"
+      },
+      {
+        "id": "web-javascript-statements-class",
+        "title": "class"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de instanceof",
+      "description": "La instancia se relaciona con el prototipo de su clase y el de su base.",
+      "code": "class Ficha {}\n    class Referencia extends Ficha {}\n    const dato = new Referencia();\n    console.log(dato instanceof Referencia, dato instanceof Ficha, {} instanceof Ficha);",
+      "expected": "true true false"
+    }
+  },
+  {
+    "id": "web-javascript-operators-logical_and",
+    "clause": "ecmascript-language-expressions.html#sec-binary-logical-operators",
+    "guide": 1,
+    "intro": [
+      "Evalúa los operandos de izquierda a derecha y continúa mientras el resultado pueda considerarse verdadero."
+    ],
+    "usage": "const etiqueta = registro && registro.nombre;",
+    "body": [
+      "Si el primer operando se considera falso, devuelve ese valor. En caso contrario evalúa el derecho y devuelve su resultado."
+    ],
+    "caveats": [
+      "El resultado puede ser algo distinto de true o false. Usa Boolean si necesitas producir siempre un booleano."
+    ],
+    "aliases": ["and javascript", "operador y", "&&", "cortocircuito"],
+    "related": [
+      {
+        "id": "web-javascript-operators-logical_or",
+        "title": "Logical OR (||)"
+      },
+      {
+        "id": "web-javascript-operators-optional_chaining",
+        "title": "Optional chaining (?.)"
+      },
+      {
+        "id": "web-javascript-statements-if...else",
+        "title": "if...else"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Logical AND (&&)",
+      "description": "La primera expresión conserva el cero y la segunda lee el operando derecho.",
+      "code": "console.log(0 && \"siguiente\");\n    console.log(\"activo\" && \"siguiente\");",
+      "expected": "0\nsiguiente"
+    }
+  },
+  {
+    "id": "web-javascript-operators-logical_or",
+    "clause": "ecmascript-language-expressions.html#sec-binary-logical-operators",
+    "guide": 1,
+    "intro": [
+      "Devuelve el primer valor que se considera verdadero o el último valor evaluado."
+    ],
+    "usage": "const etiqueta = texto || \"Sin título\";",
+    "body": [
+      "Solo evalúa el lado derecho cuando el resultado del izquierdo se convierte a falso. Puede devolver un string u otro valor."
+    ],
+    "caveats": [
+      "Si cero o la cadena vacía son datos válidos que debes conservar, considera el operador ?? para tratar solo la ausencia."
+    ],
+    "aliases": [
+      "or javascript",
+      "operador o",
+      "cortocircuito or",
+      "valor de reserva"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-operators-logical_and",
+        "title": "Logical AND (&&)"
+      },
+      {
+        "id": "web-javascript-operators-nullish_coalescing",
+        "title": "Nullish coalescing operator (??)"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de Logical OR (||)",
+      "description": "El valor de reserva se aplica a cero con || y se conserva con ??.",
+      "code": "console.log(0 || 10, 0 ?? 10);\n    console.log(\"React\" || \"Otro\");",
+      "expected": "10 0\nReact"
+    }
+  },
+  {
+    "id": "web-javascript-functions-set",
+    "clause": "ecmascript-language-expressions.html#sec-object-initializer",
+    "guide": 5,
+    "intro": [
+      "Define una operación que se ejecuta cuando asignas un valor a una propiedad."
+    ],
+    "usage": "const datos = { set minutos(valor) { this.total = valor; } };",
+    "body": [
+      "La asignación invoca el setter con el valor como único parámetro. El método puede validar o actualizar otras propiedades del objeto."
+    ],
+    "caveats": [
+      "Guardar el dato con el mismo nombre dentro del setter invoca de nuevo ese setter. Usa un campo interno o una propiedad distinta para almacenar el valor."
+    ],
+    "aliases": [
+      "setter javascript",
+      "set en objeto",
+      "asignador propiedad",
+      "accesor de escritura"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-functions-get",
+        "title": "get"
+      },
+      {
+        "id": "web-javascript-operators-object_initializer",
+        "title": "Object initializer"
+      },
+      {
+        "id": "web-javascript-operators-property_accessors",
+        "title": "Property accessors"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de set",
+      "description": "La asignación actualiza otro campo según una regla de validación.",
+      "code": "const ficha = {\n      valido: false,\n      set minutos(valor) {\n        this.valido = Number.isFinite(valor) && valor >= 15;\n      },\n    };\n    ficha.minutos = 5;\n    console.log(ficha.valido);\n    ficha.minutos = 35;\n    console.log(ficha.valido);",
+      "expected": "false\ntrue"
+    }
+  },
+  {
+    "id": "web-javascript-functions-get",
+    "clause": "ecmascript-language-expressions.html#sec-object-initializer",
+    "guide": 5,
+    "intro": [
+      "Define una operación que devuelve el valor solicitado al leer una propiedad."
+    ],
+    "usage": "const dato = { get total() { return this.minutos; } };",
+    "body": [
+      "Un getter se invoca al leer la propiedad sin usar paréntesis. Puede calcular el resultado a partir de otros datos del receptor."
+    ],
+    "caveats": [
+      "Mantén el coste de lectura claro. Si la operación inicia trabajo pesado o tiene efectos, un método con nombre explícito suele comunicarlo mejor."
+    ],
+    "aliases": [
+      "getter javascript",
+      "get en objeto",
+      "accesor lectura",
+      "propiedad calculada"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-functions-set",
+        "title": "set"
+      },
+      {
+        "id": "web-javascript-operators-object_initializer",
+        "title": "Object initializer"
+      },
+      {
+        "id": "web-javascript-operators-property_accessors",
+        "title": "Property accessors"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Ejemplo de get",
+      "description": "Cada lectura obtiene un resultado calculado con los datos actuales.",
+      "code": "const ficha = {\n      minutos: 25,\n      get etiqueta() {\n        return this.minutos + \" min de repaso\";\n      },\n    };\n    console.log(ficha.etiqueta);\n    ficha.minutos = 30;\n    console.log(ficha.etiqueta);",
+      "expected": "25 min de repaso\n30 min de repaso"
+    }
+  },
+  {
+    "id": "web-javascript-statements-import-with",
+    "clause": "ecmascript-language-scripts-and-modules.html#sec-withclausetoattributes",
+    "guide": 20,
+    "intro": [
+      "Declara información adicional para el entorno que carga un módulo."
+    ],
+    "usage": "import datos from \"./sesiones.json\" with { type: \"json\" };",
+    "body": [
+      "Las claves de atributos se escriben con with y sus valores son cadenas. El entorno interpreta qué atributos admite al cargar el módulo.",
+      "Para una importación dinámica puedes proporcionar un segundo argumento como { with: { type: \"json\" } }."
+    ],
+    "caveats": [
+      "El laboratorio admite el atributo type con el valor json para sus archivos .json. Los navegadores que cargan módulos por red comprueban además el contenido que devuelve el servidor."
+    ],
+    "aliases": [
+      "import with",
+      "atributo de importación",
+      "import json",
+      "módulos JSON"
+    ],
+    "related": [
+      {
+        "id": "web-javascript-statements-import",
+        "title": "import"
+      },
+      {
+        "id": "web-javascript-operators-import",
+        "title": "import()"
+      }
+    ],
+    "example": {
+      "language": "javascript",
+      "title": "Calcula un resumen desde JSON",
+      "description": "Edita sesiones.json para añadir una fila y ejecuta de nuevo.",
+      "code": "import sesiones from \"./sesiones.json\" with { type: \"json\" };\n\nconst duracion = sesiones.reduce((total, sesion) => total + sesion.minutos, 0);\nconsole.log(\"Sesiones:\", sesiones.length);\nconsole.log(\"Minutos:\", duracion);",
+      "expected": "Sesiones: 2\nMinutos: 40",
+      "files": {
+        "sesiones.json": "[\n    { \"tema\": \"HTML\", \"minutos\": 15 },\n    { \"tema\": \"JavaScript\", \"minutos\": 25 }\n]"
+      }
+    }
+  }
+]
