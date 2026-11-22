@@ -8,30 +8,33 @@ import {
   List,
 } from "lucide-react";
 import { TechIcon } from "../app/Brand";
-import { knowledgeIndex } from "../lib/catalog";
 import { rememberEntry } from "../lib/readingHistory";
+import { courseGuides } from "../lib/curriculum";
 import { usePreferences } from "../app/Preferences";
-import {
-  references,
-  guides,
-  referenceById,
-  groupLabel,
-  languageName,
-} from "./catalog";
-import Sidebar from "./components/Sidebar";
+import { references, guides, referenceById } from "./catalog";
+import { groupLabel, languageName } from "./taxonomy";
+import LearningActions from "../workspace/LearningActions";
+import { sources } from "../workspace/study-data";
+import { practiceForLanguage, practiceUrl } from "../workspace/practice";
+import Sidebar, { ReferenceSidebar } from "./components/Sidebar";
 import Example from "./components/Example";
+import CssLessonPreview from "./components/CssLessonPreview";
 import CodeBlock from "./components/CodeBlock";
+import ReferenceLessons from "./components/ReferenceLessons";
+import { ReferenceContents } from "./components/ReferenceSection";
+import elementMeta from "./data/html-element-meta.json";
+import attributeIds from "./data/html-attribute-ids.json";
+import attributeBriefs from "./data/html-attribute-briefs.json";
+import spanishBriefs from "./data/html-attribute-briefs-es.json";
+import {
+  LessonConcepts,
+  LessonFinish,
+  LessonObjectives,
+  LessonPractice,
+  LessonReferences,
+} from "./LessonDetail";
 
-const sources = {
-  html: "https://developer.mozilla.org/es/docs/Web/HTML",
-  css: "https://developer.mozilla.org/es/docs/Web/CSS",
-  javascript: "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide",
-  react: "https://react.dev/learn",
-  php: "https://www.php.net/manual/es/",
-  java: "https://dev.java/learn/",
-  sql: "https://www.postgresql.org/docs/current/tutorial.html",
-};
-const sectionsFor = (reference) =>
+const sectionsFor = (reference, practice) =>
   reference
     ? [
         ["example", "Ejemplo"],
@@ -42,6 +45,7 @@ const sectionsFor = (reference) =>
     : [
         ["concept", "El concepto"],
         ["example", "Código"],
+        ...(practice ? [["practice", "Practica"]] : []),
         ["notes", "Ten en cuenta"],
         ["related", "Seguir consultando"],
       ];
@@ -51,24 +55,59 @@ export default function DocumentationReader({ entry, isReference, section }) {
   const href = isReference
     ? `#reference/${entry.id}`
     : `#lesson/${language}/${entry.number}`;
-  const sections = sectionsFor(isReference);
+  const sections = sectionsFor(isReference, entry.practice);
+  const element = isReference && entry.id.slice(4);
+  const described = isReference
+    ? entry.attributes.flatMap((attribute) => {
+        const names = attribute.name.split(" / ");
+        return names.length > 1 &&
+          names.every((name) => Object.hasOwn(attributeIds, name))
+          ? names.map((name) => ({ name }))
+          : [attribute];
+      })
+    : [];
+  const attributes = isReference
+    ? [
+        ...described,
+        ...(elementMeta[entry.id]?.attributes || [])
+          .filter(
+            (name) =>
+              Object.hasOwn(attributeIds, name) &&
+              !described.some((attribute) => attribute.name === name),
+          )
+          .map((name) => ({ name })),
+      ].map((attribute) => {
+        const { name, description } = attribute;
+        if (description) return attribute;
+        if (Object.hasOwn(spanishBriefs, name))
+          return { ...attribute, description: spanishBriefs[name] };
+        const brief = attributeBriefs[name];
+        const definition =
+          brief?.[element] ||
+          brief?.["HTML elements"] ||
+          Object.values(brief || {})[0];
+        return definition
+          ? { ...attribute, description: definition, locale: "en" }
+          : attribute;
+      })
+    : [];
   const [active, setActive] = useState(sections[0][0]);
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
   const root = useRef();
   const { reducedMotion } = usePreferences();
+  const collection = isReference ? references : courseGuides(language);
+  const position = collection.findIndex((item) => item.id === entry.id);
+  const practice = isReference
+    ? null
+    : practiceForLanguage(language).find(
+        ({ lesson }) => lesson === entry.number,
+      );
   const related = isReference
     ? entry.related.map(referenceById).filter(Boolean)
-    : guides
-        .filter((item) => item.language === language && item.id !== entry.id)
-        .slice(
-          Math.max(0, entry.number - 2),
-          Math.max(0, entry.number - 2) + 3,
-        );
-  const collection = isReference
-    ? references
-    : guides.filter((item) => item.language === language);
-  const position = collection.findIndex((item) => item.id === entry.id);
+    : collection
+        .slice(Math.max(0, position - 1), position + 3)
+        .filter((item) => item.id !== entry.id);
   const previous = collection[position - 1],
     next = collection[position + 1];
   const entryUrl = (item) =>
@@ -77,7 +116,15 @@ export default function DocumentationReader({ entry, isReference, section }) {
       : `#lesson/${item.language}/${item.number}`;
 
   useEffect(() => {
-    rememberEntry(entry.id, knowledgeIndex);
+    rememberEntry({
+      id: entry.id,
+      title: entry.title,
+      language,
+      kind: isReference ? "reference" : "guide",
+      href,
+      description: isReference ? entry.description : entry.languageName,
+      summary: isReference ? entry.detail : entry.body[0],
+    });
     const node = root.current;
     const observer = new IntersectionObserver(
       (entries) => {
@@ -106,8 +153,22 @@ export default function DocumentationReader({ entry, isReference, section }) {
   }, [entry.id]);
 
   function move(event, id) {
+    if (
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    )
+      return;
+    const target = document.getElementById(`doc-${id}`);
+    if (!target) return;
     event.preventDefault();
-    document.getElementById(`doc-${id}`)?.scrollIntoView({
+    if (isReference) {
+      event.currentTarget.closest("details")?.removeAttribute("open");
+      target.querySelector("h2")?.focus({ preventScroll: true });
+    }
+    target.scrollIntoView({
       behavior: reducedMotion ? "instant" : "smooth",
       block: "start",
     });
@@ -124,31 +185,69 @@ export default function DocumentationReader({ entry, isReference, section }) {
     }
   }
 
+  const contents = {
+    items: sections.map(([id, label]) => ({ id, label })),
+    active,
+    sectionHref: (id) => `${href}?section=${id}`,
+    onMove: move,
+  };
+
   return (
-    <div className="doc-reader-layout" ref={root}>
+    <div
+      className={
+        isReference ? "doc-reader-layout reference-layout" : "doc-reader-layout"
+      }
+      ref={root}
+    >
       <aside className="doc-reader-sidebar">
-        <Sidebar entry={entry} isReference={isReference} />
+        {isReference ? (
+          <ReferenceSidebar entry={entry} />
+        ) : (
+          <Sidebar entry={entry} />
+        )}
       </aside>
-      <article className="doc-reader" data-section-link={Boolean(section)}>
+      <article
+        className={
+          isReference ? "doc-reader reference-sheet" : "doc-reader doc-guide"
+        }
+        data-section-link={Boolean(section)}
+      >
         <nav className="doc-breadcrumb" aria-label="Ruta de navegación">
-          <a href="#docs">Consultar</a>
+          <a href={isReference ? "#docs" : "#courses"}>
+            {isReference ? "Buscar" : "Aprender"}
+          </a>
           <span>/</span>
-          <a href={`#docs/${language}`}>{languageName(language)}</a>
+          <a href={`#${isReference ? "docs" : "course"}/${language}`}>
+            {languageName(language)}
+          </a>
           <span>/</span>
-          <span aria-current="page">{isReference ? entry.title : "Guía"}</span>
+          <span aria-current="page">
+            {isReference
+              ? entry.title
+              : `Lección ${position + 1} de ${collection.length}`}
+          </span>
         </nav>
-        <details className="doc-mobile-index">
+        <details
+          className={
+            isReference
+              ? "doc-mobile-index reference-mobile-index"
+              : "doc-mobile-index"
+          }
+        >
           <summary>
-            <List size={16} /> Índice de {languageName(language)}
+            <List size={16} aria-hidden="true" /> Índice de{" "}
+            {languageName(language)}
           </summary>
-          <Sidebar entry={entry} isReference={isReference} />
+          {isReference ? (
+            <ReferenceSidebar entry={entry} />
+          ) : (
+            <Sidebar entry={entry} />
+          )}
         </details>
         <header className="doc-article-header">
           <div className="doc-article-eyebrow">
             <TechIcon id={language} />
-            <span>
-              {isReference ? groupLabel(entry.group) : `${entry.level} · Guía`}
-            </span>
+            <span>{isReference ? groupLabel(entry.group) : entry.level}</span>
             <button
               onClick={copyLink}
               aria-label="Copiar enlace de esta entrada"
@@ -159,12 +258,29 @@ export default function DocumentationReader({ entry, isReference, section }) {
           </div>
           <h1 className={isReference ? "doc-tag-title" : ""}>{entry.title}</h1>
           <p>{isReference ? entry.detail : entry.body[0]}</p>
+          <LearningActions
+            id={entry.id}
+            language={entry.labLanguage || language}
+            isGuide={!isReference}
+            canEdit={
+              Boolean(entry.code) &&
+              (entry.environment !== "server" || Boolean(entry.labCode))
+            }
+            labLabel={
+              entry.labLanguage === "javascript"
+                ? "Probar con JavaScript"
+                : entry.labCode
+                  ? "Probar componente cliente"
+                  : undefined
+            }
+          />
           {copyError && (
             <p className="doc-copy-error" role="status">
               Puedes copiar el enlace desde la barra de direcciones.
             </p>
           )}
         </header>
+        {isReference && <ReferenceContents {...contents} />}
         {!isReference && (
           <section
             id="doc-concept"
@@ -172,9 +288,14 @@ export default function DocumentationReader({ entry, isReference, section }) {
             className="doc-article-section"
           >
             <h2>El concepto</h2>
+            <LessonObjectives objectives={entry.objectives} />
             {entry.body.slice(1).map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
+            <LessonConcepts
+              items={entry.concepts}
+              language={languageName(language)}
+            />
           </section>
         )}
         <section
@@ -183,15 +304,51 @@ export default function DocumentationReader({ entry, isReference, section }) {
           className="doc-article-section"
         >
           <div className="doc-section-heading">
-            <h2>{isReference ? "Así se utiliza" : "Código de referencia"}</h2>
+            <h2 tabIndex={isReference ? -1 : undefined}>
+              {isReference ? "Así se utiliza" : "Código de referencia"}
+            </h2>
             <span>{isReference ? "HTML" : languageName(language)}</span>
           </div>
           {isReference ? (
             <Example entry={entry} />
           ) : (
-            <CodeBlock code={entry.code} language={languageName(language)} />
+            <>
+              {language === "css" && entry.markup && (
+                <CssLessonPreview code={entry.code} markup={entry.markup} />
+              )}
+              {language === "html" && entry.preview ? (
+                <Example entry={entry} />
+              ) : (
+                <CodeBlock
+                  code={entry.code}
+                  language={entry.mainFile || languageName(language)}
+                />
+              )}
+              {entry.markup &&
+                ["css", "javascript", "react"].includes(language) && (
+                  <details className="lesson-markup">
+                    <summary>Ver el HTML del ejemplo</summary>
+                    <CodeBlock code={entry.markup} language="vista.html" />
+                  </details>
+                )}
+              {Object.entries(entry.files || {}).map(([filename, code]) => (
+                <CodeBlock key={filename} code={code} language={filename} />
+              ))}
+              {entry.exampleOutput && (
+                <CodeBlock
+                  code={entry.exampleOutput}
+                  language="Salida esperada"
+                />
+              )}
+            </>
           )}
         </section>
+        {!isReference && entry.practice && (
+          <LessonPractice
+            practice={entry.practice}
+            language={languageName(language)}
+          />
+        )}
         {isReference ? (
           <>
             <section
@@ -199,17 +356,51 @@ export default function DocumentationReader({ entry, isReference, section }) {
               data-section="attributes"
               className="doc-article-section"
             >
-              <h2>Atributos que conviene conocer</h2>
+              <h2 tabIndex={-1}>Atributos del elemento</h2>
               <p className="doc-section-intro">
-                También admite los atributos globales, como id y class.
+                También admite atributos globales como{" "}
+                <a className="work-link" href="#symbol/html-attribute-id">
+                  id
+                </a>{" "}
+                y{" "}
+                <a className="work-link" href="#symbol/html-attribute-class">
+                  class
+                </a>
+                . Consulta también los{" "}
+                <a
+                  className="work-link"
+                  href="#docs/html//reference?category=html-events"
+                >
+                  atributos de evento
+                </a>
+                .
               </p>
               <dl className="doc-attributes">
-                {entry.attributes.map((attribute) => (
+                {attributes.length === 0 && (
+                  <p>Este elemento no declara atributos propios.</p>
+                )}
+                {attributes.map((attribute) => (
                   <div key={attribute.name}>
                     <dt>
-                      <code>{attribute.name}</code>
+                      {Object.hasOwn(attributeIds, attribute.name) ? (
+                        <a href={`#symbol/${attributeIds[attribute.name]}`}>
+                          <code>{attribute.name}</code>
+                        </a>
+                      ) : (
+                        <code>{attribute.name}</code>
+                      )}
                     </dt>
-                    <dd>{attribute.description}</dd>
+                    <dd lang={attribute.locale}>
+                      {attribute.description || (
+                        <a
+                          href={attribute.source}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Definición en el estándar <ArrowUpRight size={12} />
+                        </a>
+                      )}
+                    </dd>
                   </div>
                 ))}
               </dl>
@@ -219,7 +410,7 @@ export default function DocumentationReader({ entry, isReference, section }) {
               data-section="usage"
               className="doc-article-section"
             >
-              <h2>Uso y accesibilidad</h2>
+              <h2 tabIndex={-1}>Uso y accesibilidad</h2>
               <ul className="doc-tips">
                 {entry.tips.map((tip, index) => (
                   <li key={index}>{tip}</li>
@@ -253,9 +444,10 @@ export default function DocumentationReader({ entry, isReference, section }) {
           data-section="related"
           className="doc-article-section"
         >
-          <h2>
+          <h2 tabIndex={isReference ? -1 : undefined}>
             {isReference ? "Conecta los conceptos" : "Seguir consultando"}
           </h2>
+          <LessonReferences references={entry.relatedReferences} />
           <div className="doc-related">
             {related.map((item) => (
               <a
@@ -299,67 +491,91 @@ export default function DocumentationReader({ entry, isReference, section }) {
             </a>
           )}
         </section>
+        {isReference && (
+          <ReferenceLessons
+            href={href}
+            language="html"
+            linkedLesson={entry.guide}
+          />
+        )}
+        {practice && (
+          <a className="doc-guide-bridge" href={practiceUrl(practice)}>
+            <span>
+              Práctica
+              <strong>{practice.title}</strong>
+            </span>
+            <ArrowRight size={18} />
+          </a>
+        )}
         <div className="doc-source">
           <span>Para ampliar o comprobar un detalle</span>
           <a
-            href={isReference ? entry.source : sources[language]}
+            href={entry.source || sources[language]?.[1]}
             target="_blank"
             rel="noopener noreferrer"
           >
             Documentación oficial <ArrowUpRight size={14} />
             <span className="sr-only"> (abre otra pestaña)</span>
           </a>
-          {entry.spec && (
+          {entry.spec && entry.spec !== entry.source && (
             <a href={entry.spec} target="_blank" rel="noopener noreferrer">
               Estándar HTML <ArrowUpRight size={14} />
               <span className="sr-only"> (abre otra pestaña)</span>
             </a>
           )}
         </div>
-        <nav
-          className="doc-pagination"
-          aria-label="Entradas relacionadas en el índice"
-        >
-          {previous ? (
-            <a href={entryUrl(previous)}>
-              <ArrowLeft size={17} />
-              <span>
-                <small>Anterior</small>
-                {previous.title}
-              </span>
-            </a>
-          ) : (
-            <span />
-          )}
-          {next && (
-            <a href={entryUrl(next)}>
-              <span>
-                <small>Siguiente</small>
-                {next.title}
-              </span>
-              <ArrowRight size={17} />
-            </a>
-          )}
-        </nav>
+        {isReference ? (
+          <nav
+            className="doc-pagination"
+            aria-label="Entradas relacionadas en el índice"
+          >
+            {previous ? (
+              <a href={entryUrl(previous)}>
+                <ArrowLeft size={17} />
+                <span>
+                  <small>Anterior</small>
+                  {previous.title}
+                </span>
+              </a>
+            ) : (
+              <span />
+            )}
+            {next && (
+              <a href={entryUrl(next)}>
+                <span>
+                  <small>Siguiente</small>
+                  {next.title}
+                </span>
+                <ArrowRight size={17} />
+              </a>
+            )}
+          </nav>
+        ) : (
+          <LessonFinish entry={entry} previous={previous} next={next} />
+        )}
       </article>
-      <aside className="doc-toc">
-        <span>En esta página</span>
-        <nav aria-label="En esta página">
-          {sections.map(([id, label]) => (
-            <a
-              key={id}
-              href={`${href}?section=${id}`}
-              aria-current={active === id ? "location" : undefined}
-              onClick={(event) => move(event, id)}
-            >
-              {label}
-            </a>
-          ))}
-        </nav>
-        <a className="doc-toc-index" href={`#docs/${language}`}>
-          Ver índice de {languageName(language)} <ArrowUpRight size={14} />
-        </a>
-      </aside>
+      {isReference ? (
+        <ReferenceContents {...contents} rail />
+      ) : (
+        <aside className="doc-toc">
+          <span>En esta página</span>
+          <nav aria-label="En esta página">
+            {sections.map(([id, label]) => (
+              <a
+                key={id}
+                href={`${href}?section=${id}`}
+                aria-current={active === id ? "location" : undefined}
+                onClick={(event) => move(event, id)}
+              >
+                {label}
+              </a>
+            ))}
+          </nav>
+          <a className="doc-toc-index" href={`#docs/${language}`}>
+            Ver índice de {languageName(language)} <ArrowUpRight size={14} />
+          </a>
+        </aside>
+      )}
     </div>
   );
 }

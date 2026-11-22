@@ -4,6 +4,8 @@ import {
   readHistory,
   rememberEntry,
   clearHistory,
+  hasLegacyHistory,
+  upgradeHistory,
 } from "../src/lib/readingHistory.js";
 
 test("los recientes validan el contenido, eliminan duplicados y pueden borrarse", () => {
@@ -41,4 +43,34 @@ test("no disponer de almacenamiento no impide buscar o leer", () => {
   assert.doesNotThrow(() => rememberEntry("a", [{ id: "a" }]));
   assert.deepEqual(readHistory([{ id: "a" }]), []);
   assert.doesNotThrow(clearHistory);
+});
+
+test("el acceso rápido restaura consultas recientes sin cargar el índice", () => {
+  let stored = JSON.stringify(["html-13", "obsoleta"]);
+  globalThis.localStorage = {
+    getItem: () => stored,
+    setItem: (_key, value) => {
+      stored = value;
+    },
+  };
+  try {
+    const guide = {
+      id: "html-13",
+      title: "Diálogos modales",
+      description: "HTML",
+      language: "html",
+      kind: "guide",
+      href: "#lesson/html/13",
+      summary: "Controla el foco.",
+    };
+    assert.equal(hasLegacyHistory(), true);
+    assert.deepEqual(readHistory(), []);
+    upgradeHistory([guide]);
+    assert.equal(hasLegacyHistory(), false);
+    assert.deepEqual(readHistory(), [guide]);
+    rememberEntry({ ...guide, href: "javascript:alert(1)" });
+    assert.deepEqual(readHistory(), [guide]);
+  } finally {
+    delete globalThis.localStorage;
+  }
 });

@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Check, Copy } from "lucide-react";
+import "./code-block.css";
 
 function Highlight({ code }) {
   const parts = code.split(
