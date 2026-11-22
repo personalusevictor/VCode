@@ -1,18 +1,21 @@
 import RevealHeading from "../motion/RevealHeading";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { ArrowUpRight, Search, X } from "lucide-react";
 import { courses } from "../../lib/catalog.js";
-import { knowledgeIndex } from "../../lib/catalog.js";
-import { searchKnowledge } from "../../lib/search.js";
+import ChoiceMenu from "../../app/ChoiceMenu";
+import useKnowledge from "../../lib/useKnowledge";
 import KnowledgeMark from "../components/KnowledgeMark.jsx";
 export default function Library({ paused = false }) {
   const [query, setQuery] = useState("");
   const [language, setLanguage] = useState("all");
   const [kind, setKind] = useState("all");
-  const matches = useMemo(
-    () => searchKnowledge(knowledgeIndex, query, { language, kind }),
-    [query, language, kind],
+  const hasQuery = Boolean(query.trim());
+  const { data: knowledgeIndex, error: loadError } = useKnowledge(
+    { language, kind, query, limit: 4 },
+    hasQuery,
   );
+  const matches = knowledgeIndex?.items || [];
+  const total = knowledgeIndex?.total || 0;
   return (
     <section className="home-library" aria-labelledby="home-knowledge-title">
       <div className="library-emblem">
@@ -56,53 +59,48 @@ export default function Library({ paused = false }) {
             </button>
           </div>
           <div className="library-refiners">
-            <select
-              aria-label="Lenguaje de consulta"
+            <ChoiceMenu
+              label="Lenguaje de consulta"
               value={language}
-              onChange={(event) => setLanguage(event.target.value)}
-            >
-              <option value="all">Todos los lenguajes</option>
-              {courses.map((course) => (
-                <option
-                  key={course.id}
-                  value={course.id}
-                  disabled={kind === "reference" && course.id !== "html"}
-                >
-                  {course.name}
-                </option>
-              ))}
-            </select>
-            <select
-              aria-label="Tipo de consulta"
+              options={[
+                ["all", "Todos los lenguajes"],
+                ...courses.map((course) => [course.id, course.name]),
+              ]}
+              onChange={setLanguage}
+            />
+            <ChoiceMenu
+              label="Tipo de consulta"
               value={kind}
-              onChange={(event) => setKind(event.target.value)}
-            >
-              <option value="all">Guías y referencias</option>
-              <option value="guide">Solo guías</option>
-              <option
-                value="reference"
-                disabled={language !== "all" && language !== "html"}
-              >
-                Referencia HTML
-              </option>
-            </select>
+              options={[
+                ["all", "Guías y referencias"],
+                ["guide", "Solo guías"],
+                ["reference", "Solo referencias"],
+              ]}
+              onChange={setKind}
+            />
           </div>
         </form>
-        {query.trim() && (
+        {hasQuery && !knowledgeIndex && (
+          <p className="work-muted" role="status">
+            {loadError
+              ? "Abre el índice para continuar la búsqueda."
+              : "Cargando el índice…"}
+          </p>
+        )}
+        {hasQuery && knowledgeIndex && (
           <div className="library-results">
             <p role="status">
-              {matches.length}{" "}
-              {matches.length === 1 ? "coincidencia" : "coincidencias"}
+              {total} {total === 1 ? "coincidencia" : "coincidencias"}
             </p>
             <ul>
-              {matches.slice(0, 4).map((entry) => (
+              {matches.map((entry) => (
                 <li key={entry.id}>
                   <a href={entry.href}>
                     <span>
                       <strong>{entry.title}</strong>
                       <small>
                         {entry.kind === "reference"
-                          ? "Referencia HTML"
+                          ? entry.description + " · Referencia"
                           : `${entry.description} · Guía`}
                       </small>
                     </span>
@@ -116,7 +114,7 @@ export default function Library({ paused = false }) {
             )}
           </div>
         )}
-        <a className="library-index" href="#docs">
+        <a className="library-index" href="#docs?view=index">
           Ver el índice completo
           <ArrowUpRight size={16} />
         </a>

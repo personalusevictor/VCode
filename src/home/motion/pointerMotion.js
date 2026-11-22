@@ -20,3 +20,23 @@ export function nearestNavigationItem(rects, x, y) {
   });
   return best;
 }
+
+export function insetRadii(corners, width, height, inset) {
+  const x = [];
+  const y = [];
+  const pixels = (value, size) =>
+    Number.parseFloat(value) * (value.endsWith("%") ? size / 100 : 1);
+  for (const corner of corners) {
+    const [horizontal, vertical = horizontal] = corner.trim().split(/\s+/);
+    x.push(pixels(horizontal, width));
+    y.push(pixels(vertical, height));
+  }
+  const scale = Math.min(
+    1,
+    width / (x[0] + x[1]),
+    width / (x[3] + x[2]),
+    height / (y[0] + y[3]),
+    height / (y[1] + y[2]),
+  );
+  return [...x, ...y].map((value) => Math.max(0, value * scale - inset));
+}

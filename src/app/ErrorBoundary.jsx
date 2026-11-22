@@ -6,12 +6,16 @@ export default class ErrorBoundary extends React.Component {
   static getDerivedStateFromError() {
     return { failed: true };
   }
+  componentDidCatch(error) {
+    this.props.onError?.(error);
+  }
   componentDidUpdate(previous) {
     if (previous.route !== this.props.route && this.state.failed)
       this.setState({ failed: false });
   }
   render() {
     if (!this.state.failed) return this.props.children;
+    if ("fallback" in this.props) return this.props.fallback;
     return (
       <section className="section page recovery-view">
         <Mark />

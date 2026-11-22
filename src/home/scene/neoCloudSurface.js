@@ -1,7 +1,9 @@
 export function installNeoClouds(material) {
   const time = { value: 0 };
+  const night = { value: 0 };
   material.onBeforeCompile = (shader) => {
     shader.uniforms.uNeoTime = time;
+    shader.uniforms.uNeoNight = night;
     shader.vertexShader = shader.vertexShader
       .replace(
         "#include <common>",
@@ -17,14 +19,8 @@ export function installNeoClouds(material) {
         `
       #include <common>
       uniform float uNeoTime;
+      uniform float uNeoNight;
       varying vec3 vNeoSurface; varying float vNeoShoulder;
-      float neoCloudOutline(vec2 p) {
-
-        float d = min(length((p - vec2(-0.27, 0.0)) / vec2(0.27, 0.15)) - 1.0,
-                      length((p - vec2(0.02, 0.09)) / vec2(0.33, 0.22)) - 1.0);
-        d = min(d, length((p - vec2(0.34, -0.01)) / vec2(0.25, 0.14)) - 1.0);
-        return max(d * 0.15, -p.y - 0.08);
-      }
       float neoHash(vec2 p) {
         vec3 q = fract(vec3(p.xyx) * 0.1031);
         q += dot(q, q.yzx + 33.33);
@@ -65,7 +61,7 @@ export function installNeoClouds(material) {
       neoCloudColor = mix(neoCloudColor, neoIce, smoothstep(0.72, 0.96, neoRange));
       neoCloudColor = mix(neoCloudColor, neoIce, smoothstep(0.54, 0.80, neoVeil) * 0.55);
       neoCloudColor = mix(vec3(0.018, 0.075, 0.48), neoCloudColor, 0.55);
-
+      neoCloudColor *= mix(vec3(1.0), vec3(0.55, 0.59, 0.78), uNeoNight);
 
       float neoSide = 1.0 - smoothstep(0.08, 0.78, vNeoShoulder);
       float neoCore = 1.0 - smoothstep(0.012, 0.034, abs(vNeoSurface.z));
@@ -73,26 +69,22 @@ export function installNeoClouds(material) {
       diffuseColor.rgb = mix(neoCloudColor, neoSideColor, neoSide);
       totalEmissiveRadiance += neoCloudColor * (0.045 + neoDensity * 0.06);
       totalEmissiveRadiance += vec3(0.01, 0.065, 0.6) * neoCore * neoSide * 0.10;
-
-      vec2 neoMotif = vNeoSurface.xy + vec2(uNeoTime * 0.012, 0.0);
-      neoMotif.x += floor((neoMotif.y + 1.2) / 2.4) * 1.4;
-      neoMotif = mod(neoMotif + vec2(1.7, 1.2), vec2(3.4, 2.4)) - vec2(1.7, 1.2);
-      float neoCloudEdge = neoCloudOutline(neoMotif);
-      float neoLineWidth = max(fwidth(neoCloudEdge), 0.002);
-      float neoEtching = 1.0 - smoothstep(0.002, 0.002 + neoLineWidth, abs(neoCloudEdge));
-      neoEtching += (1.0 - smoothstep(0.002, 0.002 + neoLineWidth, abs(neoCloudEdge + 0.032))) * 0.45;
-      diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.32, 0.61, 1.0), neoEtching * 0.035);
-
     `,
       )
       .replace(
         "#include <roughnessmap_fragment>",
         `
       #include <roughnessmap_fragment>
-      roughnessFactor = mix(roughnessFactor, 0.13, neoCore * neoSide) + neoEtching * 0.012;
+      roughnessFactor = mix(roughnessFactor, mix(0.13, 0.24, uNeoNight), neoCore * neoSide);
     `,
+      )
+      .replace(
+        "#include <opaque_fragment>",
+        `float neoRim = 1.0 - smoothstep(0.38, 0.96, vNeoShoulder);
+        outgoingLight *= mix(vec3(1.0), vec3(0.37, 0.50, 0.72), neoRim * uNeoNight);
+        #include <opaque_fragment>`,
       );
   };
-  material.customProgramCacheKey = () => "vcode-continuous-cobalt-core-v7";
-  return time;
+  material.customProgramCacheKey = () => "vcode-continuous-cobalt-core-v9";
+  return { time, night };
 }

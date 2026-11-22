@@ -4,7 +4,7 @@ import {
   ArrowUpRight,
   FolderOpen,
   BookOpenCheck,
-  FlaskConical,
+  PenLine,
   Code2,
 } from "lucide-react";
 import CodeExhibition from "./CodeExhibition.jsx";
@@ -27,7 +27,7 @@ export default function Workbench() {
           </div>
         </div>
         <div className="toolkit-companions">
-          <a className="toolkit-file" href="#progress">
+          <a className="toolkit-file" data-pointer-dot href="#progress">
             <FolderOpen className="toolkit-icon" size={31} strokeWidth={1.3} />
             <span className="toolkit-arrow">
               <ArrowUpRight size={21} />
@@ -42,21 +42,17 @@ export default function Workbench() {
               </span>
             </div>
           </a>
-          <a className="toolkit-studio" href="#studio">
-            <FlaskConical
-              className="toolkit-icon"
-              size={30}
-              strokeWidth={1.3}
-            />
+          <a className="toolkit-practice" data-pointer-dot href="#practice">
+            <PenLine className="toolkit-icon" size={30} strokeWidth={1.3} />
             <span className="toolkit-arrow">
               <ArrowUpRight size={21} />
             </span>
             <div>
-              <h3>Estudio</h3>
-              <p>Explora conceptos con experimentos interactivos.</p>
+              <h3>Ejercicios</h3>
+              <p>Practica un concepto con código inicial, pistas y solución.</p>
             </div>
           </a>
-          <a className="toolkit-sources" href="#resources">
+          <a className="toolkit-sources" data-pointer-dot href="#resources">
             <BookOpenCheck
               className="toolkit-icon"
               size={31}

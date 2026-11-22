@@ -30,20 +30,18 @@ export default function Footer({ onSearch }) {
         <nav aria-label="Aprender">
           <span>APRENDER</span>
           <a href="#courses">Lenguajes</a>
-          <a href="#paths">Recorridos</a>
-          <a href="#projects">Proyectos</a>
+          <a href="#practice">Ejercicios</a>
         </nav>
-        <nav aria-label="Consultar">
-          <span>CONSULTAR</span>
+        <nav aria-label="Buscar">
+          <span>BUSCAR</span>
           <a href="#docs">Guías y referencias</a>
-          <a href="#reference">Diccionario HTML</a>
+          <a href="#reference">Elementos HTML</a>
           <button onClick={onSearch}>
-            <Search size={13} /> Buscar en todo VCode
+            <Search size={13} /> Búsqueda rápida
           </button>
         </nav>
         <nav aria-label="Herramientas">
           <span>HERRAMIENTAS</span>
-          <a href="#studio">Estudio</a>
           <a href="#playground">Laboratorio</a>
           <a href="#progress">Mi archivo</a>
         </nav>
