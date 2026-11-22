@@ -23,8 +23,9 @@ export default function Essentials() {
               ¿Qué está disponible ahora?<span aria-hidden="true">+</span>
             </summary>
             <p>
-              Esta versión está centrada en la página principal. Las páginas de
-              aprendizaje, consulta y herramientas están en preparación.
+              Puedes seguir nueve cursos, consultar la biblioteca y probar el
+              código en el laboratorio. Cada curso incluye ejercicios y un
+              proyecto.
             </p>
           </details>
           <details>
@@ -42,9 +43,8 @@ export default function Essentials() {
               ¿Qué incluye la consulta?<span aria-hidden="true">+</span>
             </summary>
             <p>
-              Las 84 guías de los siete lenguajes y un diccionario de 27
-              elementos HTML. Para detalles adicionales, cada lenguaje enlaza a
-              su documentación oficial.
+              Las guías de los nueve lenguajes y sus referencias. Para detalles
+              adicionales, cada lenguaje enlaza a su documentación oficial.
             </p>
           </details>
         </div>

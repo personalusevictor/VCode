@@ -1,0 +1,1287 @@
+[
+  {
+    "slug": "auto",
+    "title": "auto",
+    "chapter": "declarations",
+    "section": "dcl.spec.auto",
+    "group": "Tipos y declaraciones",
+    "guide": 2,
+    "summary": "Deduce el tipo de una variable o de un retorno a partir de su inicializador o sus sentencias return.",
+    "syntax": "auto copia = origen;\nconst auto& vista = origen;",
+    "body": [
+      "En una variable, auto por valor suele descartar las referencias y el const de nivel superior. Con auto& puedes conservar el acceso al objeto original."
+    ],
+    "notes": [
+      "auto n{3} deduce int. auto n = {3} deduce std::initializer_list<int>. La forma de inicializar influye en el tipo."
+    ],
+    "aliases": ["deducción de tipos", "auto&", "const auto&"],
+    "related": ["decltype", "decltype-auto", "reference"],
+    "example": {
+      "language": "cpp",
+      "title": "Observa la diferencia entre copiar y referenciar",
+      "description": "Al cambiar el origen, solo la referencia ve el valor nuevo.",
+      "code": "#include <iostream>\n\nint main() {\n    int origen = 8;\n    auto copia = origen;\n    const auto& vista = origen;\n    origen = 13;\n    std::cout << copia << ' ' << vista << '\\n';\n}",
+      "expected": "8 13"
+    }
+  },
+  {
+    "slug": "decltype",
+    "title": "decltype",
+    "chapter": "declarations",
+    "section": "dcl.type.decltype",
+    "group": "Tipos y declaraciones",
+    "guide": 2,
+    "summary": "Obtiene un tipo a partir del nombre de una entidad o de una expresión sin evaluarla.",
+    "syntax": "decltype(valor) copia = valor;\ndecltype((valor)) referencia = valor;",
+    "body": [
+      "Un nombre simple sin paréntesis da su tipo declarado. Una expresión lvalue de tipo T produce T&, y una xvalue produce T&&."
+    ],
+    "notes": [
+      "Los paréntesis pueden cambiar el resultado. Si valor es int, decltype(valor) es int y decltype((valor)) es int&."
+    ],
+    "aliases": ["tipo de una expresión", "decltype(expr)"],
+    "related": ["auto", "decltype-auto", "reference"],
+    "example": {
+      "language": "cpp",
+      "title": "Comprueba los dos tipos en compilación",
+      "description": "Las verificaciones static_assert fallarían si ambos tipos fueran iguales.",
+      "code": "#include <iostream>\n#include <type_traits>\n\nint main() {\n    int valor = 5;\n    static_assert(std::is_same_v<decltype(valor), int>);\n    static_assert(std::is_same_v<decltype((valor)), int&>);\n    decltype((valor)) referencia = valor;\n    referencia += 2;\n    std::cout << valor << '\\n';\n}",
+      "expected": "7"
+    }
+  },
+  {
+    "slug": "decltype-auto",
+    "title": "decltype(auto)",
+    "chapter": "declarations",
+    "section": "dcl.spec.auto",
+    "group": "Tipos y declaraciones",
+    "guide": 2,
+    "summary": "Deduce el tipo con las reglas de decltype y puede conservar una referencia en el retorno.",
+    "syntax": "decltype(auto) primero(int (&datos)[2]) {\n    return (datos[0]);\n}",
+    "body": [
+      "Envolturas que devuelven el resultado de otra operación pueden propagar su referencia con decltype(auto). El llamador puede conservarla con auto& o copiar el valor."
+    ],
+    "notes": [
+      "Una referencia devuelta sigue dependiendo de la duración del objeto. Usa auto por valor si necesitas devolver una copia de una variable local."
+    ],
+    "aliases": ["decltype auto", "retorno deducido", "tipo de retorno"],
+    "related": ["auto", "decltype", "reference"],
+    "example": {
+      "language": "cpp",
+      "title": "Modifica un elemento a través del retorno",
+      "description": "La función devuelve int& porque datos[0] es una expresión lvalue.",
+      "code": "#include <iostream>\n\ndecltype(auto) primero(int (&datos)[2]) {\n    return (datos[0]);\n}\n\nint main() {\n    int datos[] = {4, 9};\n    primero(datos) *= 3;\n    std::cout << datos[0] << '\\n';\n}",
+      "expected": "12"
+    }
+  },
+  {
+    "slug": "reference",
+    "title": "Referencias & y &&",
+    "chapter": "declarations",
+    "section": "dcl.ref",
+    "group": "Tipos y declaraciones",
+    "guide": 2,
+    "summary": "Vincula un nombre o un parámetro a otro objeto. Las referencias lvalue y rvalue permiten expresar distintas formas de acceso.",
+    "syntax": "int& alias = valor;\nconst int& lectura = valor;\nint&& temporal = 42;",
+    "body": [
+      "Un parámetro T& admite la modificación del objeto al que está vinculado. Una referencia const T& permite leerlo y puede enlazar con ciertos temporales."
+    ],
+    "notes": [
+      "Una variable nombrada de tipo T&& es una expresión lvalue cuando usas su nombre. La vinculación de la referencia permanece al asignar con =."
+    ],
+    "aliases": [
+      "referencia rvalue",
+      "referencia lvalue",
+      "rvalue reference",
+      "lvalue reference",
+      "int&",
+      "int&&"
+    ],
+    "related": ["auto", "decltype", "move-constructor"],
+    "example": {
+      "language": "cpp",
+      "title": "Pasa un acumulador por referencia",
+      "description": "La función modifica el entero que vive en main.",
+      "code": "#include <iostream>\n\nvoid completar(int& unidades) {\n    unidades += 6;\n}\n\nint main() {\n    int unidades = 4;\n    completar(unidades);\n    std::cout << unidades << '\\n';\n}",
+      "expected": "10"
+    }
+  },
+  {
+    "slug": "const",
+    "title": "const",
+    "chapter": "declarations",
+    "section": "dcl.type.cv",
+    "group": "Tipos y declaraciones",
+    "guide": 2,
+    "summary": "Califica un tipo para impedir modificaciones a través de ese acceso.",
+    "syntax": "const int* lectura = &valor;\nint* const fijo = &valor;",
+    "body": [
+      "En const int*, el puntero se puede reasignar y sirve para leer el entero. En int* const, el puntero queda fijo y permite modificar el entero."
+    ],
+    "notes": [
+      "Leer un objeto mediante una referencia const no impide que otro alias no const lo modifique. Modificar un objeto declarado const produce comportamiento indefinido."
+    ],
+    "aliases": ["const correctness", "puntero constante", "const qualifier"],
+    "related": ["reference", "constexpr", "const-cast"],
+    "example": {
+      "language": "cpp",
+      "title": "Mueve el puntero de lectura y modifica el entero original",
+      "description": "El puntero fijo cambia el valor original y el de lectura apunta al otro entero.",
+      "code": "#include <iostream>\n\nint main() {\n    int primero = 4;\n    int segundo = 9;\n    const int* lectura = &primero;\n    int* const fijo = &primero;\n    lectura = &segundo;\n    *fijo += 2;\n    std::cout << primero << ' ' << *lectura << '\\n';\n}",
+      "expected": "6 9"
+    }
+  },
+  {
+    "slug": "constexpr",
+    "title": "constexpr",
+    "chapter": "declarations",
+    "section": "dcl.constexpr",
+    "group": "Tipos y declaraciones",
+    "guide": 2,
+    "summary": "Permite usar una función en una expresión constante y declara variables que deben tener inicialización constante.",
+    "syntax": "constexpr int doble(int n) { return n * 2; }\nconstexpr int capacidad = doble(8);",
+    "body": [
+      "Una función constexpr puede ejecutarse durante la compilación cuando se aplica en ese contexto con argumentos válidos, o durante la ejecución en una llamada ordinaria."
+    ],
+    "notes": [
+      "constexpr impone reglas a la declaración. Para exigir que las llamadas inmediatas a una función se evalúen en compilación, usa consteval."
+    ],
+    "aliases": [
+      "expresión constante",
+      "evaluación en compilación",
+      "función constexpr"
+    ],
+    "related": ["consteval", "constinit", "if-constexpr"],
+    "example": {
+      "language": "cpp",
+      "title": "Usa la misma función en dos contextos",
+      "description": "static_assert obliga a evaluar la primera llamada en compilación. La segunda lee una variable ordinaria.",
+      "code": "#include <iostream>\n\nconstexpr int doble(int n) { return n * 2; }\n\nint main() {\n    static_assert(doble(8) == 16);\n    int unidades = 3;\n    std::cout << doble(unidades) << '\\n';\n}",
+      "expected": "6"
+    }
+  },
+  {
+    "slug": "consteval",
+    "title": "consteval",
+    "chapter": "declarations",
+    "section": "dcl.constexpr",
+    "group": "Tipos y declaraciones",
+    "guide": 2,
+    "summary": "Declara una función inmediata cuyo uso fuera de un contexto inmediato debe dar una expresión constante.",
+    "syntax": "consteval int minutos(int horas) { return horas * 60; }\nconstexpr int horaYMedia = minutos(1) + 30;",
+    "body": [
+      "Una llamada que queda en el programa ordinario debe poder evaluarse durante la compilación. Una función inmediata puede llamar a otra como parte del mismo cálculo."
+    ],
+    "notes": [
+      "Un valor leído desde la entrada del usuario no se puede pasar a una llamada inmediata. Si necesitas admitir esa entrada, considera constexpr."
+    ],
+    "aliases": ["función inmediata", "immediate function", "const eval"],
+    "related": ["constexpr", "constinit", "if-constexpr"],
+    "example": {
+      "language": "cpp",
+      "title": "Calcula una duración antes de ejecutar",
+      "description": "Cambia el argumento por una variable local no constante para ver el diagnóstico de compilación.",
+      "code": "#include <iostream>\n\nconsteval int minutos(int horas) { return horas * 60; }\n\nint main() {\n    int turno = minutos(2);\n    std::cout << turno << '\\n';\n}",
+      "expected": "120"
+    }
+  },
+  {
+    "slug": "constinit",
+    "title": "constinit",
+    "chapter": "declarations",
+    "section": "dcl.constinit",
+    "group": "Tipos y declaraciones",
+    "guide": 2,
+    "summary": "Exige inicialización estática para una variable con duración estática o de hilo.",
+    "syntax": "constinit int conexiones = 0;",
+    "body": [
+      "El compilador rechaza un inicializador que necesite inicialización dinámica. El valor puede cambiar después si el tipo de la variable es mutable."
+    ],
+    "notes": [
+      "constinit no califica el tipo como const ni hace que su valor sea una expresión constante."
+    ],
+    "aliases": [
+      "inicialización estática",
+      "inicialización constante",
+      "const init"
+    ],
+    "related": ["constexpr", "consteval", "const"],
+    "example": {
+      "language": "cpp",
+      "title": "Inicializa un contador estático y después modifícalo",
+      "description": "La inicialización se comprueba en compilación y el incremento ocurre al ejecutar.",
+      "code": "#include <iostream>\n\nconstinit int conexiones = 4;\n\nint main() {\n    ++conexiones;\n    std::cout << conexiones << '\\n';\n}",
+      "expected": "5"
+    }
+  },
+  {
+    "slug": "using-alias",
+    "title": "using para alias de tipo",
+    "chapter": "declarations",
+    "section": "dcl.typedef",
+    "group": "Tipos y declaraciones",
+    "guide": 2,
+    "summary": "Asigna un nombre alternativo a un tipo existente. Un alias también puede formar parte de una plantilla.",
+    "syntax": "using Minutos = int;\ntemplate<class T> using Lista = std::vector<T>;",
+    "body": [
+      "Un alias nombra el mismo tipo. Ayuda a explicar una intención o reducir una declaración larga sin introducir conversiones."
+    ],
+    "notes": [
+      "Si dos alias representan el mismo tipo, no pueden distinguirse como sobrecargas. Para expresar unidades incompatibles, usa tipos propios."
+    ],
+    "aliases": ["type alias", "typedef", "plantilla de alias", "alias de tipo"],
+    "related": ["template", "auto", "std::vector"],
+    "example": {
+      "language": "cpp",
+      "title": "Da un nombre legible a un tipo numérico",
+      "description": "El alias comunica la unidad y el tipo subyacente sigue siendo int.",
+      "code": "#include <iostream>\n#include <type_traits>\n\nusing Minutos = int;\nstatic_assert(std::is_same_v<Minutos, int>);\n\nint main() {\n    Minutos total = 35 + 25;\n    std::cout << total << \" min\\n\";\n}",
+      "expected": "60 min"
+    }
+  },
+  {
+    "slug": "structured-binding",
+    "title": "Desestructuración con auto [ ]",
+    "chapter": "declarations",
+    "section": "dcl.struct.bind",
+    "group": "Tipos y declaraciones",
+    "guide": 2,
+    "summary": "Da nombre a los componentes de un array, un objeto compatible con tuple o una clase con miembros adecuados.",
+    "syntax": "const auto& [nombre, minutos] = sesion;",
+    "body": [
+      "La declaración crea una entidad subyacente y cada identificador accede al componente correspondiente. La lista debe tener tantas posiciones como el objeto."
+    ],
+    "notes": [
+      "Con auto por valor se inicializa una copia o se mueve el objeto. Con auto& puedes modificar sus componentes originales."
+    ],
+    "aliases": [
+      "structured binding",
+      "auto []",
+      "desestructuración",
+      "enlace estructurado"
+    ],
+    "related": ["auto", "reference", "std::pair"],
+    "example": {
+      "language": "cpp",
+      "title": "Actualiza una duración usando el segundo componente",
+      "description": "La declaración por referencia permite modificar el std::pair original.",
+      "code": "#include <iostream>\n#include <utility>\n\nint main() {\n    std::pair sesion{\"C++\", 30};\n    auto& [lenguaje, minutos] = sesion;\n    minutos += 15;\n    std::cout << lenguaje << ' ' << sesion.second << '\\n';\n}",
+      "expected": "C++ 45"
+    }
+  },
+  {
+    "slug": "enum-class",
+    "title": "enum class",
+    "chapter": "declarations",
+    "section": "dcl.enum",
+    "group": "Tipos y declaraciones",
+    "guide": 2,
+    "summary": "Declara un tipo enumerado cuyos valores se nombran dentro de la propia enumeración.",
+    "syntax": "enum class Estado : unsigned { nuevo, listo };\nEstado actual = Estado::listo;",
+    "body": [
+      "Una enumeración con ámbito mantiene sus nombres separados del resto del programa y no se convierte implícitamente a un entero."
+    ],
+    "notes": [
+      "Si conviertes un número a tu enumeración, puede representar un valor sin nombre según el tipo subyacente. Valida los datos externos antes de interpretarlos."
+    ],
+    "aliases": ["scoped enum", "enumeración con ámbito", "enumeración fuerte"],
+    "related": ["switch", "static-cast", "std::variant"],
+    "example": {
+      "language": "cpp",
+      "title": "Decide el mensaje a partir de un estado",
+      "description": "Cambiar el estado inicial selecciona la otra rama del programa.",
+      "code": "#include <iostream>\n\nenum class Estado { nuevo, listo };\n\nint main() {\n    Estado actual = Estado::listo;\n    switch (actual) {\n        case Estado::nuevo: std::cout << \"Pendiente\\n\"; break;\n        case Estado::listo: std::cout << \"Disponible\\n\"; break;\n    }\n}",
+      "expected": "Disponible"
+    }
+  },
+  {
+    "slug": "if-init",
+    "title": "if con inicializador",
+    "chapter": "statements",
+    "section": "stmt.if",
+    "group": "Control de flujo",
+    "guide": 3,
+    "summary": "Declara una variable con un ámbito limitado a la condición y las ramas del if.",
+    "syntax": "if (const auto total = calcular(); total > 0) {\n    mostrar(total);\n} else {\n    informar(total);\n}",
+    "body": [
+      "La instrucción antes del punto y coma se ejecuta una vez. Su nombre está disponible en la condición y tanto en if como en else."
+    ],
+    "notes": [
+      "Fuera de la sentencia ya no existe el nombre. Usa una declaración anterior si el resultado también se necesita después de las ramas."
+    ],
+    "aliases": ["if init", "if initializer", "if con declaración"],
+    "related": ["if-constexpr", "switch", "std::optional"],
+    "example": {
+      "language": "cpp",
+      "title": "Evalúa una consulta antes de elegir la rama",
+      "description": "El optional está disponible en la condición y permite acceder al valor tras comprobarlo.",
+      "code": "#include <iostream>\n#include <optional>\n\nstd::optional<int> buscar(int clave) {\n    if (clave == 3) return 18;\n    return std::nullopt;\n}\n\nint main() {\n    if (const auto duracion = buscar(3); duracion.has_value()) {\n        std::cout << *duracion << \" min\\n\";\n    } else {\n        std::cout << \"Sin resultado\\n\";\n    }\n}",
+      "expected": "18 min"
+    }
+  },
+  {
+    "slug": "if-constexpr",
+    "title": "if constexpr",
+    "chapter": "statements",
+    "section": "stmt.if",
+    "group": "Plantillas y conceptos",
+    "guide": 7,
+    "summary": "Selecciona una rama con una condición que debe poder evaluarse en compilación.",
+    "syntax": "if constexpr (condicion_constante) {\n    primera_estrategia();\n} else {\n    segunda_estrategia();\n}",
+    "body": [
+      "Dentro de una plantilla, una rama descartada no se instancia cuando la condición ya se conoce. Así se pueden elegir operaciones válidas para cada familia de tipos."
+    ],
+    "notes": [
+      "La rama descartada se analiza sintácticamente. Fuera de una plantilla también se comprueba su validez."
+    ],
+    "aliases": ["constexpr if", "if de compilación", "rama descartada"],
+    "related": ["constexpr", "concept", "requires-expression"],
+    "example": {
+      "language": "cpp",
+      "title": "Elige una operación según el tipo",
+      "description": "size() solo se instancia para el texto. Para un entero se usa directamente el valor.",
+      "code": "#include <iostream>\n#include <string>\n#include <type_traits>\n\ntemplate<class T>\nauto longitud(const T& valor) {\n    if constexpr (std::is_integral_v<T>) {\n        return valor;\n    } else {\n        return valor.size();\n    }\n}\n\nint main() {\n    std::cout << longitud(7) << ' ' << longitud(std::string{\"hola\"}) << '\\n';\n}",
+      "expected": "7 4"
+    }
+  },
+  {
+    "slug": "range-for",
+    "title": "for basado en rango",
+    "chapter": "statements",
+    "section": "stmt.ranged",
+    "group": "Control de flujo",
+    "guide": 3,
+    "summary": "Recorre los elementos entre el inicio y el final de un array o rango.",
+    "syntax": "for (const auto& elemento : rango) {\n    usar(elemento);\n}",
+    "body": [
+      "auto copia cada elemento, const auto& permite leerlo sin copiar y auto& permite modificarlo cuando el iterador devuelve una referencia mutable."
+    ],
+    "notes": [
+      "Cambiar la estructura del contenedor durante el bucle puede invalidar el iterador. Modificar el valor de un elemento y borrar un elemento tienen reglas diferentes."
+    ],
+    "aliases": [
+      "range based for",
+      "range-for",
+      "for each",
+      "for (auto : rango)"
+    ],
+    "related": ["auto", "reference", "std::vector", "std::span"],
+    "example": {
+      "language": "cpp",
+      "title": "Actualiza un rango y luego léelo",
+      "description": "El bucle modifica los elementos y el programa imprime el valor de la segunda posición.",
+      "code": "#include <iostream>\n\nint main() {\n    int minutos[] = {15, 25, 35};\n    for (auto& valor : minutos) {\n        valor += 5;\n    }\n    std::cout << minutos[1] << '\\n';\n}",
+      "expected": "30"
+    }
+  },
+  {
+    "slug": "switch",
+    "title": "switch",
+    "chapter": "statements",
+    "section": "stmt.switch",
+    "group": "Control de flujo",
+    "guide": 3,
+    "summary": "Salta a la rama cuya etiqueta constante coincide con un entero o una enumeración.",
+    "syntax": "switch (estado) {\n    case Estado::listo: ejecutar(); break;\n    default: esperar(); break;\n}",
+    "body": [
+      "Si no coincide ninguna etiqueta, se ejecuta default cuando existe. break sale de la sentencia switch. Sin salto, el flujo continúa por las sentencias siguientes."
+    ],
+    "notes": [
+      "Encierra una rama entre llaves cuando declares variables que deban vivir solo ahí. Una etiqueta case puede saltar por encima de una inicialización."
+    ],
+    "aliases": ["case", "default", "selección múltiple", "salto entre casos"],
+    "related": ["enum-class", "fallthrough", "if-init"],
+    "example": {
+      "language": "cpp",
+      "title": "Traduce una opción de un menú",
+      "description": "La coincidencia termina con break y la rama por defecto queda disponible para otras opciones.",
+      "code": "#include <iostream>\n\nint main() {\n    const int opcion = 2;\n    switch (opcion) {\n        case 1: std::cout << \"Abrir\\n\"; break;\n        case 2: std::cout << \"Guardar\\n\"; break;\n        default: std::cout << \"Opción inválida\\n\"; break;\n    }\n}",
+      "expected": "Guardar"
+    }
+  },
+  {
+    "slug": "lambda",
+    "title": "Expresión lambda",
+    "chapter": "expressions",
+    "section": "expr.prim.lambda",
+    "group": "Expresiones y conversiones",
+    "guide": 8,
+    "summary": "Crea un objeto invocable con parámetros, cuerpo y acceso opcional al contexto.",
+    "syntax": "auto duracion = [](int horas, int minutos) {\n    return horas * 60 + minutos;\n};",
+    "body": [
+      "El compilador genera un tipo de cierre propio. Puedes guardar el objeto en auto, pasarlo a un algoritmo o llamarlo igual que una función."
+    ],
+    "notes": [
+      "Los parámetros auto crean una lambda genérica. Las capturas por referencia dependen de la duración del objeto externo."
+    ],
+    "aliases": ["lambda", "closure", "función anónima", "lambda genérica"],
+    "related": ["lambda-capture", "auto", "std::ranges::find_if()"],
+    "example": {
+      "language": "cpp",
+      "title": "Reutiliza un cálculo en un pequeño programa",
+      "description": "La lambda acepta dos enteros y se llama por su nombre local.",
+      "code": "#include <iostream>\n\nint main() {\n    auto duracion = [](int horas, int minutos) {\n        return horas * 60 + minutos;\n    };\n    std::cout << duracion(2, 15) << '\\n';\n}",
+      "expected": "135"
+    }
+  },
+  {
+    "slug": "lambda-capture",
+    "title": "Capturas de lambda",
+    "chapter": "expressions",
+    "section": "expr.prim.lambda.capture",
+    "group": "Expresiones y conversiones",
+    "guide": 8,
+    "summary": "Selecciona qué variables externas usa una lambda y cómo accede a ellas.",
+    "syntax": "auto foto = [umbral](int n) { return n >= umbral; };\nauto enVivo = [&umbral](int n) { return n >= umbral; };",
+    "body": [
+      "La captura por copia guarda el valor al construir el cierre. La captura por referencia lee el objeto original cada vez que la lambda usa esa variable."
+    ],
+    "notes": [
+      "Una lambda que se ejecutará después de que termine el ámbito original puede conservar referencias inválidas. Captura por valor los datos que deban viajar con ella."
+    ],
+    "aliases": [
+      "lambda capture",
+      "captura por referencia",
+      "captura por valor",
+      "capture list"
+    ],
+    "related": ["lambda", "reference", "move-constructor"],
+    "example": {
+      "language": "cpp",
+      "title": "Compara el valor guardado y el valor actual",
+      "description": "Después de cambiar el umbral, cada lambda evalúa el mismo número contra un valor distinto.",
+      "code": "#include <iostream>\n\nint main() {\n    int umbral = 5;\n    auto foto = [umbral](int n) { return n >= umbral; };\n    auto enVivo = [&umbral](int n) { return n >= umbral; };\n    umbral = 8;\n    std::cout << std::boolalpha << foto(6) << ' ' << enVivo(6) << '\\n';\n}",
+      "expected": "true false"
+    }
+  },
+  {
+    "slug": "template",
+    "title": "template",
+    "chapter": "templates",
+    "section": "temp.param",
+    "group": "Plantillas y conceptos",
+    "guide": 7,
+    "summary": "Parametriza una declaración con tipos, valores de compilación u otras plantillas.",
+    "syntax": "template<class T>\nT mayor(T a, T b) { return a < b ? b : a; }",
+    "body": [
+      "En una llamada, los argumentos suelen permitir deducir T. También puedes indicar mayor<int>(a, b) para elegir explícitamente el tipo."
+    ],
+    "notes": [
+      "La definición debe estar disponible donde se instancia, salvo que se gestione la instanciación explícita. Por eso se suele definir en la cabecera."
+    ],
+    "aliases": [
+      "plantilla de función",
+      "function template",
+      "typename",
+      "class template"
+    ],
+    "related": ["concept", "requires-clause", "deduction-guide"],
+    "example": {
+      "language": "cpp",
+      "title": "Usa la misma función con dos tipos",
+      "description": "El compilador deduce int y double en las dos llamadas.",
+      "code": "#include <iostream>\ntemplate<class T>\nT mayor(T a, T b) { return a < b ? b : a; }\nint main() {\n    std::cout << mayor(6, 9) << ' ' << mayor(1.5, 2.5) << '\\n';\n}",
+      "expected": "9 2.5"
+    }
+  },
+  {
+    "slug": "concept",
+    "title": "concept",
+    "chapter": "templates",
+    "section": "temp.concept",
+    "group": "Plantillas y conceptos",
+    "guide": 7,
+    "summary": "Da nombre a una condición de compilación que pueden exigir las plantillas.",
+    "syntax": "template<class T>\nconcept ConTamano = requires(const T& valor) { valor.size(); };",
+    "body": [
+      "Un concepto puede combinar otros conceptos y comprobar expresiones mediante requires. En una plantilla limitada por el concepto, los candidatos que incumplen la condición quedan fuera."
+    ],
+    "notes": [
+      "Una expresión válida solo verifica la forma que has pedido. Define un requisito compuesto si también necesitas limitar el tipo devuelto."
+    ],
+    "aliases": ["concepto", "constraints", "restricción de plantilla"],
+    "related": ["template", "requires-expression", "requires-clause"],
+    "example": {
+      "language": "cpp",
+      "title": "Limita una función a objetos con size()",
+      "description": "La colección cumple el concepto. Un entero no presenta esa operación.",
+      "code": "#include <array>\n#include <iostream>\n\ntemplate<class T>\nconcept ConTamano = requires(const T& valor) { valor.size(); };\n\nauto longitud(const ConTamano auto& valor) { return valor.size(); }\n\nint main() {\n    std::cout << longitud(std::array{3, 6, 9}) << '\\n';\n}",
+      "expected": "3"
+    }
+  },
+  {
+    "slug": "requires-expression",
+    "title": "Expresión requires",
+    "chapter": "expressions",
+    "section": "expr.prim.req",
+    "group": "Plantillas y conceptos",
+    "guide": 7,
+    "summary": "Comprueba si determinados tipos y expresiones cumplen requisitos y produce un valor booleano.",
+    "syntax": "requires(const T& valor) {\n    { valor.size() } -> std::convertible_to<std::size_t>;\n}",
+    "body": [
+      "Una expresión requires puede comprobar operaciones, tipos, restricciones anidadas y requisitos compuestos. Las expresiones comprobadas no se ejecutan."
+    ],
+    "notes": [
+      "Dentro de una declaración de plantilla, un fallo de sustitución en un requisito puede dar false. Fuera de ese contexto, un requisito no válido puede ser un error de compilación."
+    ],
+    "aliases": [
+      "requires expression",
+      "requisito compuesto",
+      "constraint expression"
+    ],
+    "related": ["requires-clause", "concept", "decltype"],
+    "example": {
+      "language": "cpp",
+      "title": "Verifica el tipo del resultado de size()",
+      "description": "El requisito compuesto examina la validez y el tipo de la expresión.",
+      "code": "#include <array>\n#include <concepts>\n#include <iostream>\n\ntemplate<class T>\nconstexpr bool conTamano = requires(const T& valor) {\n    { valor.size() } -> std::convertible_to<std::size_t>;\n};\n\nint main() {\n    std::cout << std::boolalpha\n              << conTamano<std::array<int, 2>> << ' ' << conTamano<int> << '\\n';\n}",
+      "expected": "true false"
+    }
+  },
+  {
+    "slug": "requires-clause",
+    "title": "Cláusula requires",
+    "chapter": "templates",
+    "section": "temp.constr.decl",
+    "group": "Plantillas y conceptos",
+    "guide": 7,
+    "summary": "Añade una condición a la declaración de una plantilla o función con plantillas.",
+    "syntax": "template<class T> requires std::integral<T>\nT siguiente(T valor) { return valor + 1; }",
+    "body": [
+      "La cláusula limita cuándo una declaración participa en la deducción y resolución de sobrecargas. En una función puede aparecer tras los parámetros de plantilla o al final del declarador."
+    ],
+    "notes": [
+      "requires puede introducir una cláusula o una expresión. Con una expresión requires dentro de la cláusula aparecen dos palabras requires seguidas."
+    ],
+    "aliases": [
+      "requires clause",
+      "requires requires",
+      "restricción de sobrecarga"
+    ],
+    "related": ["concept", "requires-expression", "template"],
+    "example": {
+      "language": "cpp",
+      "title": "Escoge la sobrecarga que cumple la restricción",
+      "description": "El entero usa la rama restringida y el número decimal usa la general.",
+      "code": "#include <concepts>\n#include <iostream>\n\ntemplate<class T>\nconst char* clase(T) { return \"otro\"; }\n\ntemplate<class T> requires std::integral<T>\nconst char* clase(T) { return \"entero\"; }\n\nint main() {\n    std::cout << clase(5) << ' ' << clase(2.5) << '\\n';\n}",
+      "expected": "entero otro"
+    }
+  },
+  {
+    "slug": "deduction-guide",
+    "title": "Guía de deducción CTAD",
+    "chapter": "templates",
+    "section": "temp.deduct.guide",
+    "group": "Plantillas y conceptos",
+    "guide": 7,
+    "summary": "Indica cómo deducir los argumentos de una plantilla de clase a partir de su inicialización.",
+    "syntax": "Caja(const char*) -> Caja<std::string>;",
+    "body": [
+      "La deducción forma candidatos a partir de constructores y guías de deducción. Una guía escrita permite elegir otra especialización cuando los candidatos implícitos producirían un tipo menos útil."
+    ],
+    "notes": [
+      "La guía participa en la deducción. La especialización que resulte aún debe poder construirse con los argumentos originales."
+    ],
+    "aliases": ["CTAD", "class template argument deduction", "deduction guide"],
+    "related": ["template", "auto", "structured-binding"],
+    "example": {
+      "language": "cpp",
+      "title": "Guarda texto con propiedad sin anotar el argumento de plantilla",
+      "description": "La guía elige Caja<std::string> al inicializar con un literal.",
+      "code": "#include <iostream>\n#include <string>\n#include <type_traits>\n\ntemplate<class T>\nstruct Caja { T valor; };\n\nCaja(const char*) -> Caja<std::string>;\n\nint main() {\n    Caja caja{\"hola\"};\n    static_assert(std::is_same_v<decltype(caja), Caja<std::string>>);\n    std::cout << caja.valor.size() << '\\n';\n}",
+      "expected": "4"
+    }
+  },
+  {
+    "slug": "fold-expression",
+    "title": "Expresión de plegado",
+    "chapter": "expressions",
+    "section": "expr.prim.fold",
+    "group": "Plantillas y conceptos",
+    "guide": 7,
+    "summary": "Combina un paquete de argumentos mediante un operador, con o sin valor inicial.",
+    "syntax": "return (0 + ... + valores);",
+    "body": [
+      "La posición de los puntos suspensivos determina el agrupamiento. En un plegado binario puedes incluir un valor inicial para todo el cálculo."
+    ],
+    "notes": [
+      "Con una resta o división, los plegados izquierdo y derecho pueden dar resultados distintos. Para un paquete vacío, usa un valor inicial si tu operador no tiene identidad prevista."
+    ],
+    "aliases": ["fold expression", "parameter pack", "expresión fold"],
+    "related": ["template", "concept"],
+    "example": {
+      "language": "cpp",
+      "title": "Suma una cantidad variable de duraciones",
+      "description": "El valor inicial hace que un paquete vacío produzca cero.",
+      "code": "#include <iostream>\n\ntemplate<class... T>\nauto sumar(T... valores) { return (0 + ... + valores); }\n\nint main() {\n    std::cout << sumar(10, 20, 15) << ' ' << sumar() << '\\n';\n}",
+      "expected": "45 0"
+    }
+  },
+  {
+    "slug": "constructor-init",
+    "title": "Lista de inicialización del constructor",
+    "chapter": "classes",
+    "section": "class.base.init",
+    "group": "Clases y objetos",
+    "guide": 5,
+    "summary": "Inicializa bases y miembros antes de ejecutar el cuerpo del constructor.",
+    "syntax": "Sesion(int total) : minutos{total} {}",
+    "body": [
+      "Usa la lista para construir el estado inicial y establecer miembros const o de referencia. El cuerpo se ejecuta después de inicializar esos miembros."
+    ],
+    "notes": [
+      "Los miembros se inicializan en su orden de declaración en la clase. Mantén la lista en ese mismo orden para que las dependencias se lean bien."
+    ],
+    "aliases": [
+      "constructor initializer list",
+      "inicializador de miembros",
+      "ctor initializer"
+    ],
+    "related": ["const", "destructor", "copy-constructor"],
+    "example": {
+      "language": "cpp",
+      "title": "Construye el valor de un miembro constante",
+      "description": "minutos se inicializa con el argumento y ya se puede leer al terminar el constructor.",
+      "code": "#include <iostream>\nstruct Sesion {\n    const int minutos;\n    explicit Sesion(int total) : minutos{total} {}\n};\nint main() {\n    Sesion repaso(35);\n    std::cout << repaso.minutos << '\\n';\n}",
+      "expected": "35"
+    }
+  },
+  {
+    "slug": "destructor",
+    "title": "Destructor ~Tipo()",
+    "chapter": "classes",
+    "section": "class.dtor",
+    "group": "Clases y objetos",
+    "guide": 6,
+    "summary": "Ejecuta el código de finalización de un objeto antes de destruir sus miembros y bases.",
+    "syntax": "~Sesion() { liberar(); }",
+    "body": [
+      "Los objetos automáticos se destruyen al salir de su ámbito. Los contenedores y los punteros inteligentes usan destructores para liberar recursos, un patrón conocido como RAII."
+    ],
+    "notes": [
+      "Si un objeto derivado se va a borrar a través de un puntero ordinario a su base, el destructor de esa base normalmente debe ser virtual."
+    ],
+    "aliases": ["destructor", "RAII", "finalización de objeto", "tilde clase"],
+    "related": [
+      "constructor-init",
+      "object-lifetime",
+      "virtual",
+      "std::unique_ptr"
+    ],
+    "example": {
+      "language": "cpp",
+      "title": "Observa qué ocurre al abandonar un bloque",
+      "description": "El mensaje del destructor aparece antes del mensaje que está fuera del bloque.",
+      "code": "#include <iostream>\nstruct Sesion {\n    ~Sesion() { std::cout << \"Cerrada\\n\"; }\n};\nint main() {\n    {\n        const Sesion sesion;\n        std::cout << \"Abierta\\n\";\n    }\n    std::cout << \"Fin\\n\";\n}",
+      "expected": "Abierta\nCerrada\nFin"
+    }
+  },
+  {
+    "slug": "copy-constructor",
+    "title": "Constructor de copia",
+    "chapter": "classes",
+    "section": "class.copy.ctor",
+    "group": "Clases y objetos",
+    "guide": 9,
+    "summary": "Construye un objeto nuevo a partir de otro de su tipo.",
+    "syntax": "Sesion(const Sesion& otra) = default;",
+    "body": [
+      "El constructor de copia generado copia las bases y miembros según sus propias operaciones de copia. Un miembro con propiedad exclusiva puede impedir que se genere una copia utilizable."
+    ],
+    "notes": [
+      "Al copiar un puntero ordinario se copia su dirección. Si el objeto es dueño del recurso, define qué debe significar esa copia o usa un tipo que gestione la propiedad."
+    ],
+    "aliases": ["copy constructor", "copiar objeto", "copiar instancia"],
+    "related": ["move-constructor", "constructor-init", "default-delete"],
+    "example": {
+      "language": "cpp",
+      "title": "Crea una copia y cámbiala por separado",
+      "description": "El entero es un valor y las dos instancias conservan estados independientes.",
+      "code": "#include <iostream>\nstruct Sesion { int minutos; };\nint main() {\n    Sesion original{30};\n    Sesion copia = original;\n    copia.minutos += 15;\n    std::cout << original.minutos << ' ' << copia.minutos << '\\n';\n}",
+      "expected": "30 45"
+    }
+  },
+  {
+    "slug": "move-constructor",
+    "title": "Constructor de movimiento",
+    "chapter": "classes",
+    "section": "class.copy.ctor",
+    "group": "Clases y objetos",
+    "guide": 9,
+    "summary": "Construye un objeto nuevo a partir de una referencia rvalue del mismo tipo.",
+    "syntax": "Sesion(Sesion&& otra) noexcept = default;",
+    "body": [
+      "Un constructor de movimiento puede transferir recursos si sus miembros ofrecen esa operación. std::move convierte una expresión en candidata a esa sobrecarga."
+    ],
+    "notes": [
+      "Las garantías después del movimiento dependen del tipo. Por ejemplo, un unique_ptr movido queda vacío. No extrapoles esa garantía a todos los tipos."
+    ],
+    "aliases": ["move constructor", "std move", "mover objeto", "rvalue"],
+    "related": ["copy-constructor", "reference", "noexcept", "std::unique_ptr"],
+    "example": {
+      "language": "cpp",
+      "title": "Transfiere un recurso con propiedad exclusiva",
+      "description": "El constructor generado mueve el unique_ptr y deja vacío el puntero de origen.",
+      "code": "#include <iostream>\n#include <memory>\n#include <utility>\n\nstruct Sesion { std::unique_ptr<int> minutos; };\n\nint main() {\n    Sesion origen{std::make_unique<int>(30)};\n    Sesion destino = std::move(origen);\n    std::cout << *destino.minutos << ' ' << std::boolalpha\n              << (origen.minutos == nullptr) << '\\n';\n}",
+      "expected": "30 true"
+    }
+  },
+  {
+    "slug": "default-delete",
+    "title": "= default y = delete",
+    "chapter": "declarations",
+    "section": "dcl.fct.def.delete",
+    "group": "Clases y objetos",
+    "guide": 5,
+    "summary": "Permite generar una función especial con = default o impedir el uso de una función con = delete.",
+    "syntax": "Valor() = default;\nValor(const Valor&) = delete;",
+    "body": [
+      "Una función eliminada sigue participando en la resolución de sobrecargas. Si es elegida, la llamada se rechaza en compilación."
+    ],
+    "notes": [
+      "El compilador puede definir como eliminada una operación solicitada con default si sus bases o miembros no admiten esa operación."
+    ],
+    "aliases": [
+      "defaulted function",
+      "deleted function",
+      "delete copy constructor",
+      "constructor eliminado"
+    ],
+    "related": ["copy-constructor", "move-constructor"],
+    "example": {
+      "language": "cpp",
+      "title": "Prohíbe la copia de una identidad única",
+      "description": "El programa verifica la propiedad mediante el comprobador de tipos.",
+      "code": "#include <iostream>\n#include <type_traits>\nstruct Identidad {\n    Identidad() = default;\n    Identidad(const Identidad&) = delete;\n};\nint main() {\n    static_assert(std::is_default_constructible_v<Identidad>);\n    std::cout << std::boolalpha\n              << std::is_copy_constructible_v<Identidad> << '\\n';\n}",
+      "expected": "false"
+    }
+  },
+  {
+    "slug": "virtual",
+    "title": "virtual, override y final",
+    "chapter": "classes",
+    "section": "class.virtual",
+    "group": "Clases y objetos",
+    "guide": 5,
+    "summary": "Hace que una llamada a un método pueda resolverse según el tipo concreto del objeto.",
+    "syntax": "struct Base { virtual int total() const = 0; };\nstruct Modelo : Base { int total() const override { return 7; } };",
+    "body": [
+      "override pide al compilador verificar que la función reemplaza una virtual de la base. final impide sobrescribir esa función o heredar de una clase marcada como final."
+    ],
+    "notes": [
+      "Una función que difiere por const o sus parámetros puede ser otra sobrecarga. Escribe override para detectar ese error en la declaración."
+    ],
+    "aliases": [
+      "polimorfismo",
+      "función virtual",
+      "método virtual",
+      "override",
+      "final"
+    ],
+    "related": ["constructor-init", "destructor", "dynamic-cast"],
+    "example": {
+      "language": "cpp",
+      "title": "Llama a un método a través de la interfaz base",
+      "description": "La referencia tiene tipo base y la llamada elige el método del objeto concreto.",
+      "code": "#include <iostream>\nstruct Base {\n    virtual int total() const = 0;\n    virtual ~Base() = default;\n};\nstruct Modelo : Base {\n    int total() const override { return 7; }\n};\nint main() {\n    Modelo modelo;\n    const Base& interfaz = modelo;\n    std::cout << interfaz.total() << '\\n';\n}",
+      "expected": "7"
+    }
+  },
+  {
+    "slug": "object-lifetime",
+    "title": "Duración de un objeto",
+    "chapter": "basic",
+    "section": "basic.life",
+    "group": "Memoria y duración",
+    "guide": 9,
+    "summary": "Explica cuándo un objeto existe y cuándo dejan de ser válidos los accesos que dependen de él.",
+    "syntax": "{\n    int local = 3;\n    usar(local);\n}",
+    "body": [
+      "La duración del objeto y la del almacenamiento son conceptos diferentes. Una referencia, un puntero o una vista pueden seguir existiendo tras destruirse el objeto al que apuntaban."
+    ],
+    "notes": [
+      "Mantén el propietario vivo durante todo acceso mediante una vista. Al salir del bloque, no devuelvas un puntero o referencia a un objeto local automático."
+    ],
+    "aliases": [
+      "object lifetime",
+      "duración de vida",
+      "lifetime",
+      "referencia colgante",
+      "dangling reference"
+    ],
+    "related": ["destructor", "reference", "std::span"],
+    "example": {
+      "language": "cpp",
+      "title": "Consume una vista dentro del ámbito de su propietario",
+      "description": "El array permanece vivo mientras la vista lo recorre.",
+      "code": "#include <array>\n#include <iostream>\n#include <span>\nint main() {\n    std::array datos{10, 20, 30};\n    std::span lectura{datos};\n    std::cout << lectura.front() << ' ' << lectura.back() << '\\n';\n}",
+      "expected": "10 30"
+    }
+  },
+  {
+    "slug": "static-cast",
+    "title": "static_cast",
+    "chapter": "expressions",
+    "section": "expr.static.cast",
+    "group": "Expresiones y conversiones",
+    "guide": 2,
+    "summary": "Solicita una conversión explícita que el lenguaje permite resolver a partir de los tipos.",
+    "syntax": "int entero = static_cast<int>(valor);",
+    "body": [
+      "Sirve para conversiones numéricas y otras conversiones definidas. La conversión de un valor decimal a entero descarta su parte fraccionaria."
+    ],
+    "notes": [
+      "Comprueba el intervalo antes de convertir un número que puede quedar fuera del tipo de destino. Para comprobar el tipo derivado de un objeto polimórfico, usa dynamic_cast."
+    ],
+    "aliases": [
+      "cast estático",
+      "conversión explícita",
+      "cast int",
+      "static cast"
+    ],
+    "related": ["dynamic-cast", "const-cast", "enum-class"],
+    "example": {
+      "language": "cpp",
+      "title": "Convierte un decimal positivo y uno negativo",
+      "description": "En los dos casos se descarta la fracción hacia cero.",
+      "code": "#include <iostream>\nint main() {\n    std::cout << static_cast<int>(5.9) << ' '\n              << static_cast<int>(-5.9) << '\\n';\n}",
+      "expected": "5 -5"
+    }
+  },
+  {
+    "slug": "dynamic-cast",
+    "title": "dynamic_cast",
+    "chapter": "expressions",
+    "section": "expr.dynamic.cast",
+    "group": "Expresiones y conversiones",
+    "guide": 5,
+    "summary": "Comprueba en ejecución si un objeto polimórfico se puede tratar como otro tipo de su jerarquía.",
+    "syntax": "if (auto* derivada = dynamic_cast<Derivada*>(base)) {\n    derivada->operacion();\n}",
+    "body": [
+      "En una conversión comprobada a puntero, un fallo devuelve nullptr. En una conversión comprobada a referencia, un fallo lanza std::bad_cast."
+    ],
+    "notes": [
+      "La conversión comprobada necesita un tipo polimórfico y un objeto válido. Las interfaces virtuales suelen evitar que cada llamador deba distinguir manualmente los subtipos."
+    ],
+    "aliases": [
+      "dynamic cast",
+      "RTTI",
+      "downcast comprobado",
+      "conversión polimórfica"
+    ],
+    "related": ["static-cast", "virtual", "catch"],
+    "example": {
+      "language": "cpp",
+      "title": "Comprueba dos objetos de una jerarquía",
+      "description": "El puntero solo se obtiene cuando el objeto es del subtipo esperado.",
+      "code": "#include <iostream>\nstruct Recurso { virtual ~Recurso() = default; };\nstruct Guia : Recurso { int paginas = 8; };\nstruct Video : Recurso {};\n\nint paginas(const Recurso& recurso) {\n    const auto* guia = dynamic_cast<const Guia*>(&recurso);\n    return guia ? guia->paginas : 0;\n}\n\nint main() {\n    std::cout << paginas(Guia{}) << ' ' << paginas(Video{}) << '\\n';\n}",
+      "expected": "8 0"
+    }
+  },
+  {
+    "slug": "const-cast",
+    "title": "const_cast",
+    "chapter": "expressions",
+    "section": "expr.const.cast",
+    "group": "Expresiones y conversiones",
+    "guide": 2,
+    "summary": "Cambia las calificaciones const o volatile en conversiones admitidas de punteros y referencias.",
+    "syntax": "int& editable = const_cast<int&>(lectura);",
+    "body": [
+      "Quitar const de una referencia puede recuperar acceso de escritura si el objeto original era modificable."
+    ],
+    "notes": [
+      "Escribir en un objeto que fue declarado const tiene comportamiento indefinido aunque el cast compile. Una interfaz con ambas sobrecargas suele evitar la conversión."
+    ],
+    "aliases": ["const cast", "quitar const", "cast de calificación"],
+    "related": ["const", "reference", "static-cast"],
+    "example": {
+      "language": "cpp",
+      "title": "Recupera acceso a un objeto originalmente mutable",
+      "description": "La referencia de lectura apunta a origen, que se declaró como int.",
+      "code": "#include <iostream>\nint main() {\n    int origen = 6;\n    const int& lectura = origen;\n    int& editable = const_cast<int&>(lectura);\n    editable += 2;\n    std::cout << lectura << '\\n';\n}",
+      "expected": "8"
+    }
+  },
+  {
+    "slug": "spaceship",
+    "title": "Operador <=>",
+    "chapter": "expressions",
+    "section": "expr.spaceship",
+    "group": "Expresiones y conversiones",
+    "guide": 5,
+    "summary": "Compara dos valores en tres direcciones y devuelve una categoría de orden.",
+    "syntax": "auto resultado = a <=> b;\nif (resultado < 0) usar(a);",
+    "body": [
+      "Un resultado negativo, cero o positivo respecto de cero expresa menor, equivalente o mayor. Una comparación parcial también puede quedar sin ordenar, como sucede con NaN."
+    ],
+    "notes": [
+      "Una comparación predeterminada de clase recorre bases y miembros en orden de declaración. Confirma que ese orden expresa la prioridad que quieres."
+    ],
+    "aliases": [
+      "spaceship",
+      "three-way comparison",
+      "comparación de tres vías",
+      "operador nave espacial"
+    ],
+    "related": ["enum-class", "virtual"],
+    "example": {
+      "language": "cpp",
+      "title": "Ordena sesiones por día y después por minutos",
+      "description": "Cuando el día coincide, el segundo miembro decide la relación.",
+      "code": "#include <compare>\n#include <iostream>\n\nstruct Sesion {\n    int dia;\n    int minutos;\n    auto operator<=>(const Sesion&) const = default;\n};\n\nint main() {\n    Sesion primera{1, 25};\n    Sesion segunda{1, 40};\n    std::cout << std::boolalpha << (primera < segunda) << '\\n';\n}",
+      "expected": "true"
+    }
+  },
+  {
+    "slug": "sizeof",
+    "title": "sizeof",
+    "chapter": "expressions",
+    "section": "expr.sizeof",
+    "group": "Expresiones y conversiones",
+    "guide": 2,
+    "summary": "Obtiene el tamaño del tipo de una expresión o de un tipo escrito, medido en bytes de C++.",
+    "syntax": "std::size_t bytes = sizeof(datos);",
+    "body": [
+      "En un array, sizeof mide todos sus elementos cuando se aplica al propio array. Aplicado a un puntero solo mide la representación del puntero."
+    ],
+    "notes": [
+      "El resultado puede incluir relleno y depender de la implementación. Para conocer el número de elementos, prefiere std::size o la operación size() del contenedor."
+    ],
+    "aliases": ["size of", "tamaño en bytes", "tamaño de tipo", "sizeof array"],
+    "related": ["alignof", "decltype", "std::array"],
+    "example": {
+      "language": "cpp",
+      "title": "Compara el almacenamiento de un array con un elemento",
+      "description": "El cociente es portable porque se calcula con los tamaños de esta implementación.",
+      "code": "#include <iostream>\nint main() {\n    int datos[] = {11, 15, 20};\n    std::cout << sizeof(datos) / sizeof(datos[0]) << '\\n';\n}",
+      "expected": "3"
+    }
+  },
+  {
+    "slug": "alignof",
+    "title": "alignof",
+    "chapter": "expressions",
+    "section": "expr.alignof",
+    "group": "Expresiones y conversiones",
+    "guide": 2,
+    "summary": "Consulta el requisito de alineación de un tipo sin construir un objeto.",
+    "syntax": "std::size_t alineacion = alignof(Muestra);",
+    "body": [
+      "La alineación expresa las posiciones de memoria válidas para alojar un objeto. alignas puede pedir una alineación admitida más estricta."
+    ],
+    "notes": [
+      "El valor depende del tipo y la plataforma. Las aquí usadas se pueden comprobar en compilación sin asumir el tamaño de un int."
+    ],
+    "aliases": ["align of", "alineación de memoria", "alignas", "alinear tipo"],
+    "related": ["sizeof", "object-lifetime"],
+    "example": {
+      "language": "cpp",
+      "title": "Verifica una alineación reforzada",
+      "description": "La declaración exige al menos 16 bytes de alineación y la comparación da el mismo resultado en los entornos de prueba.",
+      "code": "#include <iostream>\nstruct alignas(16) Muestra { int valor; };\nint main() {\n    std::cout << std::boolalpha << (alignof(Muestra) >= 16) << '\\n';\n}",
+      "expected": "true"
+    }
+  },
+  {
+    "slug": "noexcept",
+    "title": "noexcept",
+    "chapter": "exceptions",
+    "section": "except.spec",
+    "group": "Excepciones",
+    "guide": 10,
+    "summary": "Expresa si una función puede propagar excepciones y permite comprobarlo en compilación.",
+    "syntax": "void cerrar() noexcept;\nconstexpr bool sinExcepciones = noexcept(cerrar());",
+    "body": [
+      "Como especificación, noexcept establece un contrato para la función. Como operador, noexcept(expresión) comprueba si la expresión se considera potencialmente lanzadora sin ejecutarla."
+    ],
+    "notes": [
+      "Si una excepción escapa de una función con noexcept efectivo, se llama a std::terminate. Algunas operaciones de biblioteca consultan esa garantía al decidir si mueven o copian."
+    ],
+    "aliases": ["excepción especificación", "no except", "noexcept operator"],
+    "related": ["catch", "move-constructor", "constexpr"],
+    "example": {
+      "language": "cpp",
+      "title": "Inspecciona dos contratos sin ejecutar las funciones",
+      "description": "Las expresiones solo consultan declaraciones, así que las funciones no necesitan definición en esta prueba.",
+      "code": "#include <iostream>\nvoid cerrar() noexcept;\nvoid guardar();\nint main() {\n    std::cout << std::boolalpha << noexcept(cerrar()) << ' '\n              << noexcept(guardar()) << '\\n';\n}",
+      "expected": "true false"
+    }
+  },
+  {
+    "slug": "catch",
+    "title": "try, throw y catch",
+    "chapter": "exceptions",
+    "section": "except.handle",
+    "group": "Excepciones",
+    "guide": 10,
+    "summary": "Propaga un fallo mediante una excepción y ejecuta el primer manejador compatible.",
+    "syntax": "try {\n    tarea();\n} catch (const std::exception& error) {\n    informar(error.what());\n}",
+    "body": [
+      "Los manejadores se prueban en orden. Capturar por referencia constante conserva el tipo del objeto de excepción y permite consultar sus métodos virtuales."
+    ],
+    "notes": [
+      "Coloca las capturas de tipos derivados antes que las de sus bases. Durante el desenrollado se destruyen objetos automáticos y se liberan sus recursos RAII."
+    ],
+    "aliases": [
+      "try catch",
+      "throw",
+      "capturar excepción",
+      "lanzar error",
+      "excepciones"
+    ],
+    "related": ["noexcept", "destructor", "std::optional"],
+    "example": {
+      "language": "cpp",
+      "title": "Maneja un argumento que incumple el contrato",
+      "description": "Compila este ejemplo con un compilador C++20 nativo. El compilador del laboratorio tiene las excepciones desactivadas.",
+      "code": "#include <iostream>\n#include <stdexcept>\nint minutos(int cantidad) {\n    if (cantidad < 0) throw std::invalid_argument(\"Duración negativa\");\n    return cantidad;\n}\nint main() {\n    try {\n        std::cout << minutos(-5) << '\\n';\n    } catch (const std::invalid_argument& error) {\n        std::cout << error.what() << '\\n';\n    }\n}",
+      "expected": "Duración negativa",
+      "runnable": false
+    }
+  },
+  {
+    "slug": "new-delete",
+    "title": "new y delete",
+    "chapter": "expressions",
+    "section": "expr.new",
+    "group": "Memoria y duración",
+    "guide": 6,
+    "summary": "Crea un objeto de duración dinámica y permite destruirlo y liberar su almacenamiento.",
+    "syntax": "auto* dato = new int(15);\ndelete dato;",
+    "body": [
+      "En la forma ordinaria, new obtiene almacenamiento y ejecuta la inicialización. delete destruye el objeto y libera la memoria que le corresponde."
+    ],
+    "notes": [
+      "Empareja new con delete y new[] con delete[]. Para la propiedad cotidiana usa std::make_unique o un contenedor, que liberan automáticamente."
+    ],
+    "aliases": [
+      "new",
+      "delete",
+      "memoria dinámica",
+      "dynamic allocation",
+      "reserva de memoria"
+    ],
+    "related": ["object-lifetime", "destructor", "std::unique_ptr"],
+    "example": {
+      "language": "cpp",
+      "title": "Construye y libera un entero dinámico",
+      "description": "El programa solo accede al valor antes de llamar a delete.",
+      "code": "#include <iostream>\nint main() {\n    auto* dato = new int(15);\n    std::cout << *dato << '\\n';\n    delete dato;\n}",
+      "expected": "15"
+    }
+  },
+  {
+    "slug": "include",
+    "title": "#include",
+    "chapter": "preprocessor",
+    "section": "cpp.include",
+    "group": "Preprocesador",
+    "guide": 16,
+    "summary": "Inserta el contenido de una cabecera o archivo durante el preprocesado.",
+    "syntax": "#include <iostream>\n#include \"duracion.hpp\"",
+    "body": [
+      "Las dos formas siguen reglas de búsqueda asociadas a la implementación. Las comillas se suelen usar para cabeceras del proyecto y los ángulos para cabeceras del sistema o una biblioteca."
+    ],
+    "notes": [
+      "Una guarda #ifndef evita incluir repetidamente el mismo contenido en una unidad de traducción. Para una función corta definida en una cabecera que se comparte entre varios archivos, considera inline."
+    ],
+    "aliases": [
+      "include",
+      "incluir cabecera",
+      "header",
+      "archivo .hpp",
+      "header guard"
+    ],
+    "related": ["header-guard", "template", "constructor-init"],
+    "example": {
+      "language": "cpp",
+      "title": "Compila un programa con su propia cabecera",
+      "description": "Abre duracion.hpp en el laboratorio para cambiar el cálculo sin tocar main.cpp.",
+      "code": "#include <iostream>\n#include \"duracion.hpp\"\n\nint main() {\n    std::cout << minutos(2, 15) << '\\n';\n}",
+      "expected": "135",
+      "files": {
+        "duracion.hpp": "#ifndef VCODE_DURACION_HPP\n#define VCODE_DURACION_HPP\n\ninline constexpr int minutos(int horas, int extra) {\n    return horas * 60 + extra;\n}\n\n#endif"
+      }
+    }
+  },
+  {
+    "slug": "header-guard",
+    "title": "Guardas #ifndef y #define",
+    "chapter": "preprocessor",
+    "section": "cpp.cond",
+    "group": "Preprocesador",
+    "guide": 16,
+    "summary": "Evita procesar el mismo cuerpo de una cabecera más de una vez por unidad de traducción.",
+    "syntax": "#ifndef VCODE_DURACION_HPP\n#define VCODE_DURACION_HPP\n// Declaraciones de la cabecera\n#endif",
+    "body": [
+      "La primera inclusión define la macro de la guarda. Las inclusiones posteriores encuentran la macro definida y omiten el bloque."
+    ],
+    "notes": [
+      "Usa un nombre único por cabecera. La guarda actúa por unidad de traducción y no resuelve por sí sola las definiciones compartidas entre varios .cpp."
+    ],
+    "aliases": [
+      "#ifndef",
+      "#endif",
+      "include guard",
+      "header guard",
+      "guarda cabecera"
+    ],
+    "related": ["include", "macro"],
+    "example": {
+      "language": "cpp",
+      "title": "Incluye la misma cabecera dos veces",
+      "description": "El struct se define una sola vez gracias a la guarda.",
+      "code": "#include <iostream>\n#include \"sesion.hpp\"\n#include \"sesion.hpp\"\n\nint main() {\n    std::cout << Sesion{25}.minutos << '\\n';\n}",
+      "expected": "25",
+      "files": {
+        "sesion.hpp": "#ifndef VCODE_SESION_HPP\n#define VCODE_SESION_HPP\n\nstruct Sesion { int minutos; };\n\n#endif"
+      }
+    }
+  },
+  {
+    "slug": "macro",
+    "title": "#define",
+    "chapter": "preprocessor",
+    "section": "cpp.replace",
+    "group": "Preprocesador",
+    "guide": 16,
+    "summary": "Define una sustitución de tokens que ocurre antes de la compilación del programa.",
+    "syntax": "#define VCODE_MODO 1\n#if VCODE_MODO\n// Rama incluida por el preprocesador\n#endif",
+    "body": [
+      "Las macros pueden seleccionar una rama de compilación o generar tokens. Las macros con parámetros sustituyen texto y pueden usar un argumento más de una vez."
+    ],
+    "notes": [
+      "Si solo necesitas un valor tipado o una llamada normal, prefiere constexpr o una función. Así evitas duplicar la evaluación de argumentos con efectos."
+    ],
+    "aliases": ["define", "macro", "preprocessor directive", "#if"],
+    "related": ["include", "header-guard", "constexpr"],
+    "example": {
+      "language": "cpp",
+      "title": "Selecciona un mensaje durante el preprocesado",
+      "description": "Cambia el valor de VCODE_DETALLE a cero y vuelve a compilar.",
+      "code": "#include <iostream>\n#define VCODE_DETALLE 1\nint main() {\n#if VCODE_DETALLE\n    std::cout << \"Detallado\\n\";\n#else\n    std::cout << \"Breve\\n\";\n#endif\n}",
+      "expected": "Detallado"
+    }
+  },
+  {
+    "slug": "nodiscard",
+    "title": "[[nodiscard]]",
+    "chapter": "declarations",
+    "section": "dcl.attr.nodiscard",
+    "group": "Atributos de C++",
+    "guide": 10,
+    "summary": "Marca un resultado cuyo descarte involuntario merece un diagnóstico.",
+    "syntax": "[[nodiscard]] bool guardar();",
+    "body": [
+      "Se puede aplicar a funciones y a ciertos tipos devueltos por valor. Una llamada como sentencia independiente permite al compilador avisar que el resultado se ignoró."
+    ],
+    "notes": [
+      "La advertencia depende de la configuración del compilador. Una conversión explícita a void expresa que el descarte es intencional."
+    ],
+    "aliases": [
+      "nodiscard",
+      "no discard",
+      "resultado obligatorio",
+      "atributo de retorno"
+    ],
+    "related": ["maybe-unused", "noexcept", "std::optional"],
+    "example": {
+      "language": "cpp",
+      "title": "Comprueba el resultado antes de anunciar que se guardó",
+      "description": "El consumidor lee el resultado y elige la salida correspondiente.",
+      "code": "#include <iostream>\n[[nodiscard]] bool guardar(int minutos) { return minutos > 0; }\nint main() {\n    std::cout << (guardar(30) ? \"Guardado\" : \"Inválido\") << '\\n';\n}",
+      "expected": "Guardado"
+    }
+  },
+  {
+    "slug": "fallthrough",
+    "title": "[[fallthrough]]",
+    "chapter": "declarations",
+    "section": "dcl.attr.fallthrough",
+    "group": "Atributos de C++",
+    "guide": 3,
+    "summary": "Indica que una rama de switch continúa intencionalmente hasta otra etiqueta.",
+    "syntax": "case Modo::destacado:\n    decorar();\n    [[fallthrough]];\ncase Modo::normal:\n    mostrar();\n    break;",
+    "body": [
+      "El atributo se aplica a una sentencia vacía. Su siguiente sentencia ejecutable debe estar bajo una etiqueta case o default del mismo switch."
+    ],
+    "notes": [
+      "No cambia el flujo. Úsalo en una continuación intencionada y escribe break cuando debas salir."
+    ],
+    "aliases": [
+      "fallthrough",
+      "fall through",
+      "caída de case",
+      "atributo switch"
+    ],
+    "related": ["switch", "nodiscard"],
+    "example": {
+      "language": "cpp",
+      "title": "Comparte la parte común de dos opciones",
+      "description": "La opción destacada añade una marca y después ejecuta la rama común.",
+      "code": "#include <iostream>\nenum class Modo { normal, destacado };\nint main() {\n    switch (Modo::destacado) {\n        case Modo::destacado:\n            std::cout << \"* \";\n            [[fallthrough]];\n        case Modo::normal:\n            std::cout << \"Guía\\n\";\n            break;\n    }\n}",
+      "expected": "* Guía"
+    }
+  },
+  {
+    "slug": "maybe-unused",
+    "title": "[[maybe_unused]]",
+    "chapter": "declarations",
+    "section": "dcl.attr.unused",
+    "group": "Atributos de C++",
+    "guide": 2,
+    "summary": "Indica que puede ser intencional que una declaración quede sin uso.",
+    "syntax": "[[maybe_unused]] const int nivel = calcular_nivel();",
+    "body": [
+      "El atributo ayuda cuando una variable o función solo se utiliza con ciertas opciones de compilación. No impide ejecutar su inicializador."
+    ],
+    "notes": [
+      "Úsalo donde haya una razón para conservar la declaración. Si el valor no participa en ninguna variante, revisa si sigue haciendo falta."
+    ],
+    "aliases": [
+      "maybe unused",
+      "maybe_unused",
+      "variable sin usar",
+      "atributo de uso"
+    ],
+    "related": ["nodiscard", "fallthrough", "macro"],
+    "example": {
+      "language": "cpp",
+      "title": "Mantén un valor disponible para una comprobación opcional",
+      "description": "El programa compila aunque esta variante solo imprima el total.",
+      "code": "#include <iostream>\nint main() {\n    [[maybe_unused]] const int limite = 60;\n    std::cout << 20 + 25 << '\\n';\n}",
+      "expected": "45"
+    }
+  },
+  {
+    "slug": "no-unique-address",
+    "title": "[[no_unique_address]]",
+    "chapter": "declarations",
+    "section": "dcl.attr.nouniqueaddr",
+    "group": "Atributos de C++",
+    "guide": 5,
+    "summary": "Permite que un miembro ocupe almacenamiento que puede solaparse con otro subobjeto.",
+    "syntax": "struct Sesion { int minutos; [[no_unique_address]] Etiqueta etiqueta; };",
+    "body": [
+      "Es útil para miembros vacíos que llevan una política de tipo. La implementación puede evitar asignarles almacenamiento independiente cuando se cumplen sus reglas."
+    ],
+    "notes": [
+      "No promete un tamaño concreto ni convierte el miembro en estático. Evita depender de la disposición para intercambiar datos binarios entre compiladores."
+    ],
+    "aliases": [
+      "no unique address",
+      "no_unique_address",
+      "empty member",
+      "optimización de miembro vacío"
+    ],
+    "related": ["sizeof", "alignof"],
+    "example": {
+      "language": "cpp",
+      "title": "Agrupa un dato y una política vacía",
+      "description": "La salida usa el valor del objeto y deja el tamaño a la implementación.",
+      "code": "#include <iostream>\nstruct Etiqueta {};\nstruct Sesion {\n    int minutos;\n    [[no_unique_address]] Etiqueta etiqueta;\n};\nint main() {\n    Sesion sesion{25, {}};\n    std::cout << sesion.minutos << '\\n';\n}",
+      "expected": "25"
+    }
+  }
+]

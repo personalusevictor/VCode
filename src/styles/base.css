@@ -3,30 +3,68 @@
   src: url("../assets/fonts/BricolageGrotesque.woff2") format("woff2");
   font-weight: 200 800;
   font-display: swap;
+  unicode-range:
+    U+0250-02AF, U+0370-1DFF, U+1F00-1FFF, U+2070-20AB, U+20AD-218F,
+    U+2200-2211, U+2213-2214, U+2216-2303, U+2305-FEFE, U+FF00-FFFC,
+    U+FFFE-10FFFF;
 }
 @font-face {
   font-family: Geist;
   src: url("../assets/fonts/Geist.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
+  unicode-range:
+    U+0250-02AF, U+0370-1DFF, U+1F00-1FFF, U+2070-20AB, U+20AD-218F,
+    U+2200-2211, U+2213-2214, U+2216-2303, U+2305-FEFE, U+FF00-FFFC,
+    U+FFFE-10FFFF;
 }
 @font-face {
   font-family: Cascadia;
   src: url("../assets/fonts/CascadiaCode.woff2") format("woff2");
   font-display: swap;
+  unicode-range:
+    U+0250-02AF, U+0370-1DFF, U+1F00-1FFF, U+2070-20AB, U+20AD-218F,
+    U+2200-2211, U+2213-2214, U+2216-2303, U+2305-FEFE, U+FF00-FFFC,
+    U+FFFE-10FFFF;
+}
+@font-face {
+  font-family: Bricolage;
+  src: url("../assets/fonts/BricolageGrotesque.latin.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+  unicode-range:
+    U+0000-024F, U+02B0-036F, U+1E00-1EFF, U+2000-206F, U+20AC, U+2190-21FF,
+    U+2212, U+2215, U+2304, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: Geist;
+  src: url("../assets/fonts/Geist.latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range:
+    U+0000-024F, U+02B0-036F, U+1E00-1EFF, U+2000-206F, U+20AC, U+2190-21FF,
+    U+2212, U+2215, U+2304, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: Cascadia;
+  src: url("../assets/fonts/VCodeMono.latin.woff2") format("woff2");
+  font-display: swap;
+  unicode-range:
+    U+0000-024F, U+02B0-036F, U+1E00-1EFF, U+2000-206F, U+20AC, U+2190-21FF,
+    U+2212, U+2215, U+2304, U+FEFF, U+FFFD;
 }
 :root {
   font-family: Geist, Arial, sans-serif;
   color: #1c2027;
-  background: #f0f1ed;
+  background: #f2f1eb;
   font-synthesis: none;
-  --bg: #f0f1ed;
-  --surface: #fafbf7;
+  --bg: #f2f1eb;
+  --surface: #faf9f4;
   --paper: #fff;
   --ink: #1c2027;
-  --muted: #666c70;
-  --line: #d7dbd5;
-  --soft: #e6e9e2;
+  --muted: #60676b;
+  --line: #d9d9d1;
+  --soft: #e9e8e1;
   --blue: #343df0;
   --blue-soft: #e2e3fc;
   --on-blue: #fff;
@@ -250,23 +288,23 @@ kbd {
   color: var(--muted);
 }
 :root[data-theme="dark"] {
-  --bg: #11151b;
-  --surface: #1a2029;
-  --paper: #242d39;
-  --ink: #e8ece7;
-  --muted: #9ca5ae;
-  --line: #333c45;
-  --soft: #1f2831;
-  --blue: #a1aaff;
-  --blue-soft: #252e50;
-  --on-blue: #171e48;
+  --bg: #1f1f1f;
+  --surface: #282826;
+  --paper: #333330;
+  --ink: #eeede7;
+  --muted: #b3b1a9;
+  --line: #41413c;
+  --soft: #30302d;
+  --blue: #aab3ff;
+  --blue-soft: #34374b;
+  --on-blue: #1b1e37;
   color: var(--ink);
   background: var(--bg);
   color-scheme: dark;
 }
 [data-theme="dark"] .button:not(.secondary) {
-  background: #a1aaff;
-  color: #171e48;
+  background: var(--blue);
+  color: var(--on-blue);
 }
 [data-theme="dark"] .button:not(.secondary):hover {
   background: #bbc2ff;
@@ -309,13 +347,8 @@ kbd {
   gap: 15px;
   flex-wrap: wrap;
 }
-html:not([data-theme="dark"]):has(.page-home) {
-  --bg: #f2f1eb;
-  --surface: #faf9f4;
-  --line: #d9d9d1;
-}
-.page-home {
-  background: var(--bg);
+#root {
+  isolation: isolate;
 }
 .brand-heading {
   margin: 0;
@@ -337,4 +370,28 @@ html:not([data-theme="dark"]):has(.page-home) {
   padding-top: 150px;
   color: var(--muted);
   font-size: 14px;
+}
+.site-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.31;
+  background:
+    radial-gradient(ellipse at 15% 12%, #fffdf5a0, transparent 58%),
+    linear-gradient(155deg, #f7f5ed80, #e8edf140 58%, #f2f1eb00 90%);
+}
+.site-ambient[data-home="true"] {
+  opacity: var(--ambient-strength, 1);
+}
+[data-theme="dark"] .site-ambient {
+  background: radial-gradient(ellipse at 42% 22%, #c1b39808, transparent 70%);
+}
+.story-wave-field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse at 50% 46%, #0009 12%, #000 74%);
 }

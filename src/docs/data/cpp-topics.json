@@ -1,0 +1,1222 @@
+[
+  {
+    "name": "array",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "array.overview",
+    "header": "array",
+    "group": "Contenedores",
+    "lesson": 4,
+    "summary": "Array de tamaño fijo conocido al compilar. Conserva almacenamiento contiguo."
+  },
+  {
+    "name": "vector",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "vector.overview",
+    "header": "vector",
+    "group": "Contenedores",
+    "lesson": 4,
+    "summary": "Secuencia contigua que puede crecer. La reasignación invalida vistas, referencias e iteradores."
+  },
+  {
+    "name": "deque",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "deque.overview",
+    "header": "deque",
+    "group": "Contenedores",
+    "lesson": 4,
+    "summary": "Secuencia indexada que permite insertar y retirar en ambos extremos."
+  },
+  {
+    "name": "list",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "list.overview",
+    "header": "list",
+    "group": "Contenedores",
+    "lesson": 4,
+    "summary": "Lista doblemente enlazada con iteradores bidireccionales."
+  },
+  {
+    "name": "forward_list",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "forwardlist.overview",
+    "header": "forward_list",
+    "group": "Contenedores",
+    "lesson": 4,
+    "summary": "Lista simplemente enlazada con operaciones relativas al elemento anterior."
+  },
+  {
+    "name": "map",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "map.overview",
+    "header": "map",
+    "group": "Contenedores",
+    "lesson": 4,
+    "summary": "Asocia claves únicas y mantiene el orden definido por el comparador."
+  },
+  {
+    "name": "multimap",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "multimap.overview",
+    "header": "map",
+    "group": "Contenedores",
+    "lesson": 4,
+    "summary": "Mapa ordenado que puede tener varias entradas con claves equivalentes."
+  },
+  {
+    "name": "set",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "set.overview",
+    "header": "set",
+    "group": "Contenedores",
+    "lesson": 4,
+    "summary": "Conjunto de valores únicos ordenados por un comparador."
+  },
+  {
+    "name": "multiset",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "multiset.overview",
+    "header": "set",
+    "group": "Contenedores",
+    "lesson": 4,
+    "summary": "Conjunto ordenado que admite valores equivalentes."
+  },
+  {
+    "name": "unordered_map",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "unord.map.overview",
+    "header": "unordered_map",
+    "group": "Contenedores",
+    "lesson": 4,
+    "summary": "Mapa de claves únicas basado en hash, sin orden de iteración garantizado."
+  },
+  {
+    "name": "unordered_multimap",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "unord.multimap.overview",
+    "header": "unordered_map",
+    "group": "Contenedores",
+    "lesson": 4,
+    "summary": "Mapa basado en hash que admite claves equivalentes."
+  },
+  {
+    "name": "unordered_set",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "unord.set.overview",
+    "header": "unordered_set",
+    "group": "Contenedores",
+    "lesson": 4,
+    "summary": "Conjunto basado en hash. Usa igualdad y hash en lugar de un comparador de orden."
+  },
+  {
+    "name": "unordered_multiset",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "unord.multiset.overview",
+    "header": "unordered_set",
+    "group": "Contenedores",
+    "lesson": 4,
+    "summary": "Conjunto con hash que admite valores equivalentes."
+  },
+  {
+    "name": "queue",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "queue.defn",
+    "header": "queue",
+    "group": "Contenedores",
+    "lesson": 4,
+    "summary": "Adaptador para consumir primero los elementos que entran primero."
+  },
+  {
+    "name": "priority_queue",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "priqueue.overview",
+    "header": "queue",
+    "group": "Contenedores",
+    "lesson": 4,
+    "summary": "Adaptador que extrae primero un elemento de máxima prioridad según el comparador."
+  },
+  {
+    "name": "stack",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "stack.defn",
+    "header": "stack",
+    "group": "Contenedores",
+    "lesson": 4,
+    "summary": "Adaptador de pila. El último valor insertado se retira primero."
+  },
+  {
+    "name": "span",
+    "namespace": "std",
+    "chapter": "containers",
+    "section": "span.overview",
+    "header": "span",
+    "group": "Vistas y cadenas",
+    "lesson": 13,
+    "summary": "Vista de una secuencia contigua. Su almacenamiento pertenece a otro objeto."
+  },
+  {
+    "name": "basic_string",
+    "namespace": "std",
+    "chapter": "strings",
+    "section": "basic.string",
+    "header": "string",
+    "group": "Vistas y cadenas",
+    "lesson": 4,
+    "summary": "Cadena que posee su almacenamiento. std::string es la especialización para char."
+  },
+  {
+    "name": "basic_string_view",
+    "namespace": "std",
+    "chapter": "strings",
+    "section": "string.view.template",
+    "header": "string_view",
+    "group": "Vistas y cadenas",
+    "lesson": 4,
+    "summary": "Vista de una secuencia de caracteres. No garantiza un terminador nulo ni prolonga la vida de los datos."
+  },
+  {
+    "name": "pair",
+    "namespace": "std",
+    "chapter": "utilities",
+    "section": "pairs.pair",
+    "header": "utility",
+    "group": "Tipos utilitarios",
+    "lesson": 3,
+    "summary": "Agrupa dos valores, que pueden tener tipos distintos."
+  },
+  {
+    "name": "tuple",
+    "namespace": "std",
+    "chapter": "utilities",
+    "section": "tuple.tuple",
+    "header": "tuple",
+    "group": "Tipos utilitarios",
+    "lesson": 3,
+    "summary": "Agrupa una cantidad fija de valores, con un tipo para cada posición."
+  },
+  {
+    "name": "bitset",
+    "namespace": "std",
+    "chapter": "utilities",
+    "section": "template.bitset",
+    "header": "bitset",
+    "group": "Tipos utilitarios",
+    "lesson": 3,
+    "summary": "Conjunto de bits con tamaño fijo conocido al compilar."
+  },
+  {
+    "name": "optional",
+    "namespace": "std",
+    "chapter": "utilities",
+    "section": "optional.optional",
+    "header": "optional",
+    "group": "Tipos utilitarios",
+    "lesson": 10,
+    "summary": "Almacena un valor o representa su ausencia sin punteros propietarios."
+  },
+  {
+    "name": "variant",
+    "namespace": "std",
+    "chapter": "utilities",
+    "section": "variant.variant",
+    "header": "variant",
+    "group": "Tipos utilitarios",
+    "lesson": 10,
+    "summary": "Almacena un valor de una de varias alternativas. Cada alternativa tiene su tipo."
+  },
+  {
+    "name": "any",
+    "namespace": "std",
+    "chapter": "utilities",
+    "section": "any.class",
+    "header": "any",
+    "group": "Tipos utilitarios",
+    "lesson": 10,
+    "summary": "Almacena un valor de tipo copiable y permite comprobar su tipo en ejecución."
+  },
+  {
+    "name": "unique_ptr",
+    "namespace": "std",
+    "chapter": "utilities",
+    "section": "unique.ptr.single",
+    "header": "memory",
+    "group": "Propiedad y recursos",
+    "lesson": 6,
+    "summary": "Propietario exclusivo con borrado automático. Se transfiere mediante movimiento."
+  },
+  {
+    "name": "shared_ptr",
+    "namespace": "std",
+    "chapter": "utilities",
+    "section": "util.smartptr.shared",
+    "header": "memory",
+    "group": "Propiedad y recursos",
+    "lesson": 6,
+    "summary": "Comparte la propiedad de un objeto. El recurso se libera cuando desaparece el último propietario."
+  },
+  {
+    "name": "weak_ptr",
+    "namespace": "std",
+    "chapter": "utilities",
+    "section": "util.smartptr.weak",
+    "header": "memory",
+    "group": "Propiedad y recursos",
+    "lesson": 6,
+    "summary": "Observa un objeto gestionado por shared_ptr sin mantenerlo vivo."
+  },
+  {
+    "name": "enable_shared_from_this",
+    "namespace": "std",
+    "chapter": "utilities",
+    "section": "util.smartptr.enab",
+    "header": "memory",
+    "group": "Propiedad y recursos",
+    "lesson": 6,
+    "summary": "Permite obtener un shared_ptr que comparte el control ya asociado al objeto."
+  },
+  {
+    "name": "thread",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "thread.thread.class",
+    "header": "thread",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Representa un hilo de ejecución. Antes de destruirlo, resuelve si se espera o se separa."
+  },
+  {
+    "name": "jthread",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "thread.jthread.class",
+    "header": "thread",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Hilo que solicita la parada y espera al destruirse cuando aún es joinable."
+  },
+  {
+    "name": "mutex",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "thread.mutex.class",
+    "header": "mutex",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Protege un recurso para que solo un hilo lo posea a la vez."
+  },
+  {
+    "name": "lock_guard",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "thread.lock.guard",
+    "header": "mutex",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Mantiene un bloqueo durante el ámbito del objeto."
+  },
+  {
+    "name": "unique_lock",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "thread.lock.unique",
+    "header": "mutex",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Controla un bloqueo que se puede adquirir y liberar en distintos momentos."
+  },
+  {
+    "name": "condition_variable",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "thread.condition.condvar",
+    "header": "condition_variable",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Coordina espera y aviso entre hilos. Usa un predicado ligado al estado compartido."
+  },
+  {
+    "name": "promise",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "futures.promise",
+    "header": "future",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Publica un valor o una excepción en un estado compartido asíncrono."
+  },
+  {
+    "name": "future",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "futures.unique.future",
+    "header": "future",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Espera y obtiene el resultado asociado a un estado compartido."
+  },
+  {
+    "name": "atomic",
+    "namespace": "std",
+    "chapter": "atomics",
+    "section": "atomics.types.generic",
+    "header": "atomic",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Expone operaciones atómicas sobre un valor y permite especificar su orden de memoria."
+  },
+  {
+    "name": "duration",
+    "namespace": "std::chrono",
+    "chapter": "time",
+    "section": "time.duration",
+    "header": "chrono",
+    "group": "Tiempo",
+    "lesson": 3,
+    "summary": "Intervalo temporal representado por un número de ticks y su periodo.",
+    "related": ["std::chrono::duration_cast()", "std::chrono::time_point"]
+  },
+  {
+    "name": "time_point",
+    "namespace": "std::chrono",
+    "chapter": "time",
+    "section": "time.point",
+    "header": "chrono",
+    "group": "Tiempo",
+    "lesson": 3,
+    "summary": "Instante representado como duración desde el origen de un reloj determinado.",
+    "related": ["std::chrono::time_point_cast()", "std::chrono::steady_clock"]
+  },
+  {
+    "name": "error_code",
+    "namespace": "std",
+    "chapter": "diagnostics",
+    "section": "syserr.errcode.overview",
+    "header": "system_error",
+    "group": "Errores",
+    "lesson": 10,
+    "summary": "Combinación de código entero y categoría, útil para propagar un fallo como valor."
+  },
+  {
+    "name": "error_condition",
+    "namespace": "std",
+    "chapter": "diagnostics",
+    "section": "syserr.errcondition.overview",
+    "header": "system_error",
+    "group": "Errores",
+    "lesson": 10,
+    "summary": "Condición de error que permite comparar fallos equivalentes de diferentes fuentes."
+  },
+  {
+    "name": "system_error",
+    "namespace": "std",
+    "chapter": "diagnostics",
+    "section": "syserr.syserr.overview",
+    "header": "system_error",
+    "group": "Errores",
+    "lesson": 10,
+    "summary": "Excepción que conserva un código de error además de su mensaje."
+  },
+  {
+    "name": "basic_istream",
+    "namespace": "std",
+    "chapter": "iostreams",
+    "section": "istream",
+    "header": "istream",
+    "group": "Archivos y flujos",
+    "lesson": 6,
+    "summary": "Flujo que lee caracteres y transforma datos desde una fuente de entrada."
+  },
+  {
+    "name": "basic_ostream",
+    "namespace": "std",
+    "chapter": "iostreams",
+    "section": "ostream",
+    "header": "ostream",
+    "group": "Archivos y flujos",
+    "lesson": 6,
+    "summary": "Flujo que escribe caracteres y valores sobre un destino."
+  },
+  {
+    "name": "basic_stringstream",
+    "namespace": "std",
+    "chapter": "iostreams",
+    "section": "stringstream",
+    "header": "sstream",
+    "group": "Archivos y flujos",
+    "lesson": 6,
+    "summary": "Flujo de entrada y salida sobre una cadena en memoria."
+  },
+  {
+    "name": "basic_ifstream",
+    "namespace": "std",
+    "chapter": "iostreams",
+    "section": "ifstream",
+    "header": "fstream",
+    "group": "Archivos y flujos",
+    "lesson": 6,
+    "summary": "Flujo de lectura asociado a un archivo."
+  },
+  {
+    "name": "basic_ofstream",
+    "namespace": "std",
+    "chapter": "iostreams",
+    "section": "ofstream",
+    "header": "fstream",
+    "group": "Archivos y flujos",
+    "lesson": 6,
+    "summary": "Flujo de escritura asociado a un archivo."
+  },
+  {
+    "name": "path",
+    "namespace": "std::filesystem",
+    "chapter": "iostreams",
+    "section": "fs.class.path",
+    "header": "filesystem",
+    "group": "Archivos y flujos",
+    "lesson": 6,
+    "summary": "Representa una ruta y permite componer o inspeccionar sus componentes léxicos."
+  },
+  {
+    "name": "directory_entry",
+    "namespace": "std::filesystem",
+    "chapter": "iostreams",
+    "section": "fs.class.directory.entry",
+    "header": "filesystem",
+    "group": "Archivos y flujos",
+    "lesson": 6,
+    "summary": "Entrada de directorio con su ruta y acceso a información del sistema de archivos."
+  },
+  {
+    "name": "directory_iterator",
+    "namespace": "std::filesystem",
+    "chapter": "iostreams",
+    "section": "fs.class.directory.iterator",
+    "header": "filesystem",
+    "group": "Archivos y flujos",
+    "lesson": 6,
+    "summary": "Repetidor de entradas de un directorio sin recorrer sus subdirectorios."
+  },
+  {
+    "name": "basic_regex",
+    "namespace": "std",
+    "chapter": "regex",
+    "section": "re.regex",
+    "header": "regex",
+    "group": "Texto y patrones",
+    "lesson": 4,
+    "summary": "Representación compilada de una expresión regular. std::regex es su variante para char."
+  },
+  {
+    "name": "match_results",
+    "namespace": "std",
+    "chapter": "regex",
+    "section": "re.results",
+    "header": "regex",
+    "group": "Texto y patrones",
+    "lesson": 4,
+    "summary": "Resultado de una operación sobre un patrón, con coincidencia completa y subgrupos."
+  },
+  {
+    "name": "sub_match",
+    "namespace": "std",
+    "chapter": "regex",
+    "section": "re.submatch",
+    "header": "regex",
+    "group": "Texto y patrones",
+    "lesson": 4,
+    "summary": "Describe un tramo coincidente mediante iteradores y un indicador de coincidencia."
+  },
+  {
+    "name": "complex",
+    "namespace": "std",
+    "chapter": "numerics",
+    "section": "complex",
+    "header": "complex",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Representa un número complejo con parte real e imaginaria."
+  },
+  {
+    "name": "random_device",
+    "namespace": "std",
+    "chapter": "numerics",
+    "section": "rand.device",
+    "header": "random",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Fuente de números para obtener semillas, con garantías que dependen de la implementación."
+  },
+  {
+    "name": "mersenne_twister_engine",
+    "namespace": "std",
+    "chapter": "numerics",
+    "section": "rand.eng.mers",
+    "header": "random",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Generador seudoaleatorio de Mersenne Twister. Una semilla fija produce una secuencia reproducible."
+  },
+  {
+    "name": "uniform_int_distribution",
+    "namespace": "std",
+    "chapter": "numerics",
+    "section": "rand.dist.uni.int",
+    "header": "random",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Transforma un generador para obtener enteros en un intervalo cerrado con distribución uniforme."
+  },
+  {
+    "name": "uniform_real_distribution",
+    "namespace": "std",
+    "chapter": "numerics",
+    "section": "rand.dist.uni.real",
+    "header": "random",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Transforma un generador para obtener valores reales en un intervalo que excluye el extremo superior."
+  },
+  {
+    "name": "subrange",
+    "namespace": "std::ranges",
+    "chapter": "ranges",
+    "section": "range.subrange",
+    "header": "ranges",
+    "group": "Rangos y vistas",
+    "lesson": 13,
+    "summary": "Empareja un iterador inicial con un centinela. Conserva el tamaño cuando el tipo y la construcción lo permiten."
+  },
+  {
+    "name": "empty_view",
+    "namespace": "std::ranges",
+    "chapter": "ranges",
+    "section": "range.empty.view",
+    "header": "ranges",
+    "group": "Rangos y vistas",
+    "lesson": 8,
+    "summary": "Representa un rango sin elementos con un tipo de elemento conocido.",
+    "related": ["std::views::empty"]
+  },
+  {
+    "name": "single_view",
+    "namespace": "std::ranges",
+    "chapter": "ranges",
+    "section": "range.single.view",
+    "header": "ranges",
+    "group": "Rangos y vistas",
+    "lesson": 8,
+    "summary": "Almacena un valor y lo expone como un rango de un elemento.",
+    "related": ["std::views::single"]
+  },
+  {
+    "name": "iota_view",
+    "namespace": "std::ranges",
+    "chapter": "ranges",
+    "section": "range.iota.view",
+    "header": "ranges",
+    "group": "Rangos y vistas",
+    "lesson": 8,
+    "summary": "Genera valores de una progresión por incremento sin almacenar la secuencia completa.",
+    "related": ["std::views::iota"]
+  },
+  {
+    "name": "basic_istream_view",
+    "namespace": "std::ranges",
+    "chapter": "ranges",
+    "section": "range.istream.view",
+    "header": "ranges",
+    "group": "Rangos y vistas",
+    "lesson": 8,
+    "summary": "Extrae valores del flujo al avanzar. El rango es de una sola pasada."
+  },
+  {
+    "name": "ref_view",
+    "namespace": "std::ranges",
+    "chapter": "ranges",
+    "section": "range.ref.view",
+    "header": "ranges",
+    "group": "Rangos y vistas",
+    "lesson": 13,
+    "summary": "Expone un rango por referencia. El rango original debe seguir vivo al usar la vista."
+  },
+  {
+    "name": "filter_view",
+    "namespace": "std::ranges",
+    "chapter": "ranges",
+    "section": "range.filter.view",
+    "header": "ranges",
+    "group": "Rangos y vistas",
+    "lesson": 8,
+    "summary": "Recorre los elementos para los que se cumple un predicado. La selección se encuentra al iterar.",
+    "related": ["std::views::filter"]
+  },
+  {
+    "name": "transform_view",
+    "namespace": "std::ranges",
+    "chapter": "ranges",
+    "section": "range.transform.view",
+    "header": "ranges",
+    "group": "Rangos y vistas",
+    "lesson": 8,
+    "summary": "Aplica una función al acceder a cada elemento de su rango base.",
+    "related": ["std::views::transform"]
+  },
+  {
+    "name": "take_view",
+    "namespace": "std::ranges",
+    "chapter": "ranges",
+    "section": "range.take.view",
+    "header": "ranges",
+    "group": "Rangos y vistas",
+    "lesson": 8,
+    "summary": "Limita el recorrido a los primeros N elementos del rango base.",
+    "related": ["std::views::take"]
+  },
+  {
+    "name": "take_while_view",
+    "namespace": "std::ranges",
+    "chapter": "ranges",
+    "section": "range.take.while.view",
+    "header": "ranges",
+    "group": "Rangos y vistas",
+    "lesson": 8,
+    "summary": "Recorre un prefijo y termina cuando un elemento incumple el predicado.",
+    "related": ["std::views::take_while"]
+  },
+  {
+    "name": "drop_view",
+    "namespace": "std::ranges",
+    "chapter": "ranges",
+    "section": "range.drop.view",
+    "header": "ranges",
+    "group": "Rangos y vistas",
+    "lesson": 8,
+    "summary": "Comienza después de omitir una cantidad de elementos del rango base.",
+    "related": ["std::views::drop"]
+  },
+  {
+    "name": "drop_while_view",
+    "namespace": "std::ranges",
+    "chapter": "ranges",
+    "section": "range.drop.while.view",
+    "header": "ranges",
+    "group": "Rangos y vistas",
+    "lesson": 8,
+    "summary": "Descarta el prefijo que cumple el predicado y expone el resto del rango.",
+    "related": ["std::views::drop_while"]
+  },
+  {
+    "name": "join_view",
+    "namespace": "std::ranges",
+    "chapter": "ranges",
+    "section": "range.join.view",
+    "header": "ranges",
+    "group": "Rangos y vistas",
+    "lesson": 8,
+    "summary": "Recorre sucesivamente los elementos de los rangos internos de otro rango.",
+    "related": ["std::views::join"]
+  },
+  {
+    "name": "split_view",
+    "namespace": "std::ranges",
+    "chapter": "ranges",
+    "section": "range.split.view",
+    "header": "ranges",
+    "group": "Rangos y vistas",
+    "lesson": 8,
+    "summary": "Divide un rango mediante un delimitador y expone los fragmentos como subrangos.",
+    "related": ["std::views::split"]
+  },
+  {
+    "name": "common_view",
+    "namespace": "std::ranges",
+    "chapter": "ranges",
+    "section": "range.common.view",
+    "header": "ranges",
+    "group": "Rangos y vistas",
+    "lesson": 8,
+    "summary": "Adapta un rango para que begin y end devuelvan el mismo tipo.",
+    "related": ["std::views::common"]
+  },
+  {
+    "name": "reverse_view",
+    "namespace": "std::ranges",
+    "chapter": "ranges",
+    "section": "range.reverse.view",
+    "header": "ranges",
+    "group": "Rangos y vistas",
+    "lesson": 8,
+    "summary": "Recorre en orden inverso un rango bidireccional.",
+    "related": ["std::views::reverse"]
+  },
+  {
+    "name": "reverse_iterator",
+    "namespace": "std",
+    "chapter": "iterators",
+    "section": "reverse.iterator",
+    "header": "iterator",
+    "group": "Iteradores",
+    "lesson": 8,
+    "summary": "Invierte el avance y la desreferenciación de un iterador bidireccional o de acceso aleatorio."
+  },
+  {
+    "name": "move_iterator",
+    "namespace": "std",
+    "chapter": "iterators",
+    "section": "move.iterator",
+    "header": "iterator",
+    "group": "Iteradores",
+    "lesson": 9,
+    "summary": "Adapta el acceso de un iterador para que los algoritmos puedan mover sus elementos."
+  },
+  {
+    "name": "counted_iterator",
+    "namespace": "std",
+    "chapter": "iterators",
+    "section": "counted.iterator",
+    "header": "iterator",
+    "group": "Iteradores",
+    "lesson": 8,
+    "summary": "Acompaña un iterador con una cuenta de elementos restantes hasta un centinela."
+  },
+  {
+    "name": "common_iterator",
+    "namespace": "std",
+    "chapter": "iterators",
+    "section": "common.iterator",
+    "header": "iterator",
+    "group": "Iteradores",
+    "lesson": 8,
+    "summary": "Encapsula un iterador o un centinela para publicar un solo tipo de recorrido."
+  },
+  {
+    "name": "back_insert_iterator",
+    "namespace": "std",
+    "chapter": "iterators",
+    "section": "back.insert.iterator",
+    "header": "iterator",
+    "group": "Iteradores",
+    "lesson": 8,
+    "summary": "Convierte las asignaciones de salida en llamadas a push_back del contenedor.",
+    "related": ["std::back_inserter()", "std::ranges::copy()"]
+  },
+  {
+    "name": "front_insert_iterator",
+    "namespace": "std",
+    "chapter": "iterators",
+    "section": "front.insert.iterator",
+    "header": "iterator",
+    "group": "Iteradores",
+    "lesson": 8,
+    "summary": "Convierte las asignaciones de salida en inserciones al principio con push_front."
+  },
+  {
+    "name": "insert_iterator",
+    "namespace": "std",
+    "chapter": "iterators",
+    "section": "insert.iterator",
+    "header": "iterator",
+    "group": "Iteradores",
+    "lesson": 8,
+    "summary": "Inserta asignaciones de salida en la posición que mantiene dentro del contenedor.",
+    "related": ["std::inserter()", "std::ranges::copy()"]
+  },
+  {
+    "name": "istream_iterator",
+    "namespace": "std",
+    "chapter": "iterators",
+    "section": "istream.iterator",
+    "header": "iterator",
+    "group": "Iteradores",
+    "lesson": 4,
+    "summary": "Lee valores de un flujo de entrada. El iterador predeterminado representa el final."
+  },
+  {
+    "name": "ostream_iterator",
+    "namespace": "std",
+    "chapter": "iterators",
+    "section": "ostream.iterator",
+    "header": "iterator",
+    "group": "Iteradores",
+    "lesson": 4,
+    "summary": "Escribe valores en un flujo de salida y puede añadir un delimitador."
+  },
+  {
+    "name": "numeric_limits",
+    "namespace": "std",
+    "chapter": "support",
+    "section": "numeric.limits",
+    "header": "limits",
+    "group": "Tipos y números",
+    "lesson": 2,
+    "summary": "Describe límites y propiedades de tipos numéricos mediante constantes y funciones estáticas.",
+    "example": {
+      "title": "Comprueba el intervalo de un tipo entero sin asumir su tamaño",
+      "description": "La comparación se realiza con los límites de la plataforma que compila el ejemplo.",
+      "language": "cpp",
+      "code": "#include <iostream>\n#include <limits>\n\nint main() {\n    using Entero = std::numeric_limits<int>;\n    std::cout << std::boolalpha\n              << (Entero::min() < -100) << ' ' << (Entero::max() > 100) << '\\n';\n}",
+      "expected": "true true"
+    }
+  },
+  {
+    "name": "ratio",
+    "namespace": "std",
+    "chapter": "utilities",
+    "section": "ratio.ratio",
+    "header": "ratio",
+    "group": "Tipos y números",
+    "lesson": 7,
+    "summary": "Representa una fracción racional en compilación con numerador y denominador enteros reducidos."
+  },
+  {
+    "name": "reference_wrapper",
+    "namespace": "std",
+    "chapter": "utilities",
+    "section": "refwrap",
+    "header": "functional",
+    "group": "Tipos utilitarios",
+    "lesson": 8,
+    "summary": "Conserva una referencia en un objeto copiable y asignable. Puede envolver un invocable.",
+    "related": ["std::invoke()", "std::function"]
+  },
+  {
+    "name": "allocator",
+    "namespace": "std",
+    "chapter": "utilities",
+    "section": "default.allocator",
+    "header": "memory",
+    "group": "Propiedad y recursos",
+    "lesson": 6,
+    "summary": "Proporciona almacenamiento para elementos de un tipo según el modelo de asignadores."
+  },
+  {
+    "name": "allocator_traits",
+    "namespace": "std",
+    "chapter": "utilities",
+    "section": "allocator.traits",
+    "header": "memory",
+    "group": "Propiedad y recursos",
+    "lesson": 6,
+    "summary": "Normaliza cómo acceden los contenedores a los tipos y operaciones de sus asignadores."
+  },
+  {
+    "name": "memory_resource",
+    "namespace": "std::pmr",
+    "chapter": "utilities",
+    "section": "mem.res.class",
+    "header": "memory_resource",
+    "group": "Propiedad y recursos",
+    "lesson": 6,
+    "summary": "Define la interfaz virtual de recursos que suministran y recuperan bloques de memoria.",
+    "related": [
+      "std::pmr::polymorphic_allocator",
+      "std::pmr::get_default_resource()"
+    ]
+  },
+  {
+    "name": "polymorphic_allocator",
+    "namespace": "std::pmr",
+    "chapter": "utilities",
+    "section": "mem.poly.allocator.class",
+    "header": "memory_resource",
+    "group": "Propiedad y recursos",
+    "lesson": 6,
+    "summary": "Delega la reserva y liberación en un memory_resource seleccionado en ejecución.",
+    "related": [
+      "std::pmr::memory_resource",
+      "std::pmr::monotonic_buffer_resource"
+    ]
+  },
+  {
+    "name": "monotonic_buffer_resource",
+    "namespace": "std::pmr",
+    "chapter": "utilities",
+    "section": "mem.res.monotonic.buffer",
+    "header": "memory_resource",
+    "group": "Propiedad y recursos",
+    "lesson": 6,
+    "summary": "Entrega bloques de memoria y los libera conjuntamente con release o al destruirse.",
+    "related": ["std::pmr::memory_resource", "std::pmr::polymorphic_allocator"],
+    "example": {
+      "title": "Reserva espacio para un vector en un búfer local",
+      "description": "El recurso se construye antes del contenedor y sigue vivo durante toda su utilización.",
+      "language": "cpp",
+      "code": "#include <array>\n#include <cstddef>\n#include <iostream>\n#include <memory_resource>\n#include <vector>\n\nint main() {\n    alignas(std::max_align_t) std::array<std::byte, 256> espacio{};\n    std::pmr::monotonic_buffer_resource recurso(espacio.data(), espacio.size());\n    std::pmr::vector<int> duraciones(&recurso);\n    duraciones.push_back(15);\n    duraciones.push_back(25);\n    std::cout << duraciones.front() + duraciones.back() << '\\n';\n}",
+      "expected": "40"
+    }
+  },
+  {
+    "name": "synchronized_pool_resource",
+    "namespace": "std::pmr",
+    "chapter": "utilities",
+    "section": "mem.res.pool.overview",
+    "header": "memory_resource",
+    "group": "Propiedad y recursos",
+    "lesson": 6,
+    "summary": "Reutiliza bloques agrupados por tamaño y permite acceso concurrente al recurso."
+  },
+  {
+    "name": "unsynchronized_pool_resource",
+    "namespace": "std::pmr",
+    "chapter": "utilities",
+    "section": "mem.res.pool.overview",
+    "header": "memory_resource",
+    "group": "Propiedad y recursos",
+    "lesson": 6,
+    "summary": "Reutiliza bloques agrupados por tamaño. Coordina el acceso fuera del recurso si participan varios hilos."
+  },
+  {
+    "name": "system_clock",
+    "namespace": "std::chrono",
+    "chapter": "time",
+    "section": "time.clock.system.overview",
+    "header": "chrono",
+    "group": "Tiempo",
+    "lesson": 2,
+    "summary": "Mide tiempo de calendario. La hora del sistema puede ajustarse mientras el programa se ejecuta."
+  },
+  {
+    "name": "steady_clock",
+    "namespace": "std::chrono",
+    "chapter": "time",
+    "section": "time.clock.steady",
+    "header": "chrono",
+    "group": "Tiempo",
+    "lesson": 2,
+    "summary": "Proporciona un reloj monótono adecuado para medir intervalos transcurridos."
+  },
+  {
+    "name": "year",
+    "namespace": "std::chrono",
+    "chapter": "time",
+    "section": "time.cal.year.overview",
+    "header": "chrono",
+    "group": "Tiempo",
+    "lesson": 2,
+    "summary": "Representa el año de un calendario gregoriano y ofrece una comprobación de año bisiesto."
+  },
+  {
+    "name": "month",
+    "namespace": "std::chrono",
+    "chapter": "time",
+    "section": "time.cal.month.overview",
+    "header": "chrono",
+    "group": "Tiempo",
+    "lesson": 2,
+    "summary": "Representa un mes de calendario y permite comprobar si corresponde a un valor válido."
+  },
+  {
+    "name": "day",
+    "namespace": "std::chrono",
+    "chapter": "time",
+    "section": "time.cal.day.overview",
+    "header": "chrono",
+    "group": "Tiempo",
+    "lesson": 2,
+    "summary": "Representa un día de mes. Sus límites propios no validan el mes o el año asociados."
+  },
+  {
+    "name": "year_month_day",
+    "namespace": "std::chrono",
+    "chapter": "time",
+    "section": "time.cal.ymd.overview",
+    "header": "chrono",
+    "group": "Tiempo",
+    "lesson": 2,
+    "summary": "Combina año, mes y día. ok comprueba si la fecha existe en el calendario gregoriano.",
+    "related": ["std::chrono::year_month_day_last", "std::chrono::year"],
+    "example": {
+      "title": "Comprueba el 29 de febrero en dos años",
+      "description": "La fecha puede construirse en ambos casos. ok distingue cuál existe en el calendario.",
+      "language": "cpp",
+      "code": "#include <chrono>\n#include <iostream>\n\nint main() {\n    using namespace std::chrono;\n    const auto bisiesto = year{2024}/February/29;\n    const auto ordinario = year{2025}/February/29;\n    std::cout << std::boolalpha << bisiesto.ok() << ' ' << ordinario.ok() << '\\n';\n}",
+      "expected": "true false"
+    }
+  },
+  {
+    "name": "year_month_day_last",
+    "namespace": "std::chrono",
+    "chapter": "time",
+    "section": "time.cal.ymdlast.overview",
+    "header": "chrono",
+    "group": "Tiempo",
+    "lesson": 2,
+    "summary": "Representa el último día de un mes en un año dado y lo calcula según el calendario."
+  },
+  {
+    "name": "stop_token",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "stoptoken",
+    "header": "stop_token",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Observa si un estado compartido admite y ha recibido una solicitud de parada.",
+    "related": ["std::stop_source", "std::stop_callback", "std::jthread"]
+  },
+  {
+    "name": "stop_source",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "stopsource",
+    "header": "stop_token",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Puede solicitar que se detengan operaciones que observan el mismo estado de parada.",
+    "related": ["std::stop_token", "std::stop_callback"]
+  },
+  {
+    "name": "stop_callback",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "stopcallback",
+    "header": "stop_token",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Asocia una función a una solicitud de parada mientras el registro permanece activo.",
+    "related": ["std::stop_token", "std::stop_source"]
+  },
+  {
+    "name": "recursive_mutex",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "thread.mutex.recursive",
+    "header": "mutex",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Permite que el mismo hilo adquiera el bloqueo varias veces. Debe liberarlo otras tantas."
+  },
+  {
+    "name": "shared_mutex",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "thread.sharedmutex.class",
+    "header": "shared_mutex",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Coordina un propietario exclusivo o varios propietarios de lectura compartida."
+  },
+  {
+    "name": "counting_semaphore",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "thread.sema.cnt",
+    "header": "semaphore",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Administra un contador de permisos. Una adquisición puede esperar hasta que haya un permiso."
+  },
+  {
+    "name": "latch",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "thread.latch.class",
+    "header": "latch",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Permite esperar a que un contador llegue a cero para coordinar un solo punto de encuentro."
+  },
+  {
+    "name": "barrier",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "thread.barrier.class",
+    "header": "barrier",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Coordina fases reutilizables y puede realizar una operación al completar cada fase."
+  },
+  {
+    "name": "shared_future",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "futures.shared.future",
+    "header": "future",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Comparte el acceso al resultado de un estado futuro entre varias referencias al mismo estado."
+  },
+  {
+    "name": "atomic_flag",
+    "namespace": "std",
+    "chapter": "atomics",
+    "section": "atomics.flag",
+    "header": "atomic",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Proporciona una bandera atómica sin bloqueo con operaciones de comprobación y actualización."
+  },
+  {
+    "name": "basic_ios",
+    "namespace": "std",
+    "chapter": "iostreams",
+    "section": "ios.overview",
+    "header": "ios",
+    "group": "Archivos y flujos",
+    "lesson": 4,
+    "summary": "Mantiene el estado de error, el búfer y la configuración común a los flujos tipados."
+  },
+  {
+    "name": "basic_streambuf",
+    "namespace": "std",
+    "chapter": "iostreams",
+    "section": "streambuf",
+    "header": "streambuf",
+    "group": "Archivos y flujos",
+    "lesson": 4,
+    "summary": "Administra áreas de lectura y escritura de caracteres para un flujo."
+  },
+  {
+    "name": "basic_iostream",
+    "namespace": "std",
+    "chapter": "iostreams",
+    "section": "iostreamclass",
+    "header": "istream",
+    "group": "Archivos y flujos",
+    "lesson": 4,
+    "summary": "Combina operaciones de entrada y salida en un flujo que comparte el mismo búfer."
+  },
+  {
+    "name": "function",
+    "namespace": "std",
+    "chapter": "utilities",
+    "section": "func.wrap.func",
+    "header": "functional",
+    "group": "Tipos utilitarios",
+    "lesson": 8,
+    "summary": "Guarda un objeto invocable copiable con una firma determinada y permite sustituirlo en ejecución.",
+    "related": ["std::invoke()", "std::bind_front()"],
+    "example": {
+      "title": "Sustituye la operación conservando la misma firma",
+      "description": "La misma variable llama dos lambdas con un parámetro entero y un resultado entero.",
+      "language": "cpp",
+      "code": "#include <functional>\n#include <iostream>\n\nint main() {\n    std::function<int(int)> ampliar = [](int n) { return n + 5; };\n    std::cout << ampliar(10) << '\\n';\n    ampliar = [](int n) { return n * 2; };\n    std::cout << ampliar(10) << '\\n';\n}",
+      "expected": "15\n20"
+    }
+  },
+  {
+    "name": "packaged_task",
+    "namespace": "std",
+    "chapter": "threads",
+    "section": "futures.task",
+    "header": "future",
+    "group": "Concurrencia",
+    "lesson": 11,
+    "summary": "Conecta la ejecución de un invocable con un futuro que transporta su resultado o excepción."
+  }
+]

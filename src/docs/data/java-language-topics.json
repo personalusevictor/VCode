@@ -1,0 +1,1207 @@
+[
+  {
+    "slug": "var",
+    "title": "var",
+    "chapter": 14,
+    "section": "14.4.1",
+    "group": "Tipos y variables",
+    "guide": 2,
+    "summary": "Pide al compilador que deduzca el tipo estático de una variable local a partir de su inicializador.",
+    "syntax": "var total = 25;\nvar texto = \"VCode\";",
+    "body": [
+      "La deducción ocurre al compilar. El tipo resultante se mantiene y determina qué operaciones y reasignaciones se pueden hacer."
+    ],
+    "notes": [
+      "var requiere un inicializador adecuado. null sin un tipo concreto, una lambda sin tipo objetivo y las declaraciones de campos requieren una forma explícita."
+    ],
+    "aliases": [
+      "inferencia de tipos",
+      "local variable type inference",
+      "variable var"
+    ],
+    "related": ["final", "boxing", "method-reference"],
+    "example": {
+      "language": "java",
+      "title": "Deduce dos tipos a partir de sus valores",
+      "description": "El compilador infiere int y String y permite operaciones acordes a cada tipo.",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        var minutos = 25;\n        var tema = \"Java\";\n        System.out.println(tema + \" \" + (minutos + 5));\n    }\n}",
+      "expected": "Java 30"
+    }
+  },
+  {
+    "slug": "final",
+    "title": "final en variables",
+    "chapter": 4,
+    "section": "4.12.4",
+    "group": "Tipos y variables",
+    "guide": 2,
+    "summary": "Limita una variable a una sola asignación según las reglas de inicialización de Java.",
+    "syntax": "final int limite = 60;\nfinal int[] serie = {10, 20};",
+    "body": [
+      "Una referencia final sigue apuntando al mismo objeto. El estado del objeto puede cambiar si su tipo permite modificarlo."
+    ],
+    "notes": [
+      "Las variables efectivamente finales cumplen las condiciones para capturar su valor en una lambda aunque no lleven la palabra final."
+    ],
+    "aliases": [
+      "variable final",
+      "constante java",
+      "effectively final",
+      "efectivamente final"
+    ],
+    "related": ["var", "lambda", "primitive"],
+    "example": {
+      "language": "java",
+      "title": "Modifica el contenido sin cambiar la referencia",
+      "description": "El array admite cambiar un elemento aunque su variable no admita reasignación.",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        final int[] serie = {10, 20};\n        serie[0] += 5;\n        System.out.println(serie[0]);\n    }\n}",
+      "expected": "15"
+    }
+  },
+  {
+    "slug": "primitive",
+    "title": "Tipos primitivos",
+    "chapter": 4,
+    "section": "4.2",
+    "group": "Tipos y variables",
+    "guide": 2,
+    "summary": "Describe los tipos boolean y los tipos numéricos que almacenan valores primitivos.",
+    "syntax": "int minutos = 25;\nlong milisegundos = 1_000L;\nboolean disponible = true;",
+    "body": [
+      "Los ocho tipos son boolean, byte, short, int, long, char, float y double. Los enteros tienen tamaños definidos. char contiene una unidad UTF-16."
+    ],
+    "notes": [
+      "La división de enteros descarta la fracción. Un desbordamiento en la aritmética entera ordinaria conserva los bits bajos, así que valida límites cuando importen."
+    ],
+    "aliases": [
+      "primitive types",
+      "int long double",
+      "boolean byte short char float double"
+    ],
+    "related": ["boxing", "cast", "array"],
+    "example": {
+      "language": "java",
+      "title": "Compara división entera y decimal",
+      "description": "El segundo cálculo convierte el primer operando a double.",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        int cantidad = 5;\n        System.out.println(cantidad / 2 + \" \" + (double) cantidad / 2);\n    }\n}",
+      "expected": "2 2.5"
+    }
+  },
+  {
+    "slug": "boxing",
+    "title": "Boxing y unboxing",
+    "chapter": 5,
+    "section": "5.1.7",
+    "group": "Tipos y variables",
+    "guide": 6,
+    "summary": "Convierte entre valores primitivos y sus clases envoltorio en contextos permitidos.",
+    "syntax": "Integer caja = 25;\nint valor = caja;",
+    "body": [
+      "Las colecciones genéricas reciben tipos de referencia. Java puede envolver un int como Integer al guardarlo y extraer el valor al pasarlo a una operación numérica."
+    ],
+    "notes": [
+      "Extraer el valor de una referencia null lanza NullPointerException. Para comparar dos envoltorios por valor, usa equals o convierte a primitivos tras validar."
+    ],
+    "aliases": ["autoboxing", "unboxing", "java wrapper", "envoltorios"],
+    "related": ["primitive", "var", "List"],
+    "example": {
+      "language": "java",
+      "title": "Guarda un entero en una colección genérica",
+      "description": "List.of recibe el valor envuelto y la suma usa el primitivo extraído.",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        java.util.List<Integer> minutos = java.util.List.of(15, 25, 30);\n        int segundo = minutos.get(1);\n        System.out.println(segundo + 5);\n    }\n}",
+      "expected": "30"
+    }
+  },
+  {
+    "slug": "cast",
+    "title": "Conversión explícita (cast)",
+    "chapter": 5,
+    "section": "5.5",
+    "group": "Tipos y variables",
+    "guide": 2,
+    "summary": "Indica un tipo de destino para una conversión admitida por Java.",
+    "syntax": "int entero = (int) 3.8;\nString nombre = (String) objeto;",
+    "body": [
+      "Un cast numérico puede estrechar un valor. Un cast de referencia no cambia el objeto y puede comprobar en ejecución si es compatible con el destino."
+    ],
+    "notes": [
+      "Un cast incompatible de referencia lanza ClassCastException. Un patrón instanceof permite comprobar el tipo y extraerlo en un solo paso."
+    ],
+    "aliases": ["casting", "cast", "narrowing", "conversión de tipo"],
+    "related": ["instanceof-pattern", "primitive"],
+    "example": {
+      "language": "java",
+      "title": "Elimina la fracción sin redondear",
+      "description": "El resultado de convertir un decimal negativo a int se acerca a cero.",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        double medida = -5.8;\n        System.out.println((int) medida);\n    }\n}",
+      "expected": "-5"
+    }
+  },
+  {
+    "slug": "array",
+    "title": "Arrays []",
+    "chapter": 10,
+    "section": "10.3",
+    "group": "Tipos y variables",
+    "guide": 3,
+    "summary": "Crea un objeto de longitud fija con componentes del tipo declarado.",
+    "syntax": "int[] minutos = {15, 20, 30};\nint[] copia = new int[minutos.length];",
+    "body": [
+      "Los índices empiezan en cero y se comprueban en ejecución. Los componentes reciben un valor por defecto cuando se reserva el array sin datos iniciales."
+    ],
+    "notes": [
+      "Dos variables de array pueden apuntar al mismo objeto. La asignación de una variable a otra no duplica los componentes."
+    ],
+    "aliases": ["array", "arreglo", "vector java", "new int[]"],
+    "related": ["enhanced-for", "primitive", "Arrays"],
+    "example": {
+      "language": "java",
+      "title": "Edita una posición mediante una segunda referencia",
+      "description": "La segunda variable apunta al mismo array y la longitud permanece igual.",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        int[] minutos = {15, 20, 30};\n        int[] mismos = minutos;\n        mismos[1] = 25;\n        System.out.println(minutos.length + \" \" + minutos[1]);\n    }\n}",
+      "expected": "3 25"
+    }
+  },
+  {
+    "slug": "enhanced-for",
+    "title": "for mejorado",
+    "chapter": 14,
+    "section": "14.14.2",
+    "group": "Control de flujo",
+    "guide": 2,
+    "summary": "Recorre los elementos de un array o de un objeto Iterable.",
+    "syntax": "for (int minutos : duraciones) {\n    total += minutos;\n}",
+    "body": [
+      "En cada vuelta la variable recibe el valor del elemento siguiente. Para un Iterable se usa su iterador, y para un array se recorren sus posiciones."
+    ],
+    "notes": [
+      "Reasignar la variable de bucle no reemplaza la posición en la colección. Para modificar la estructura durante un recorrido, usa el método que ofrezca el iterador o la colección."
+    ],
+    "aliases": [
+      "foreach",
+      "for each",
+      "enhanced for",
+      "bucle for por elemento"
+    ],
+    "related": ["array", "List", "java.lang.Iterable"],
+    "example": {
+      "language": "java",
+      "title": "Suma todas las duraciones de un array",
+      "description": "El bucle no necesita controlar un índice ni el límite por separado.",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        int total = 0;\n        for (int minutos : new int[]{10, 25, 15}) {\n            total += minutos;\n        }\n        System.out.println(total);\n    }\n}",
+      "expected": "50"
+    }
+  },
+  {
+    "slug": "switch-statement",
+    "title": "Sentencia switch",
+    "chapter": 14,
+    "section": "14.11",
+    "group": "Control de flujo",
+    "guide": 2,
+    "summary": "Ejecuta una rama según la coincidencia del selector con sus etiquetas.",
+    "syntax": "switch (opcion) {\n    case 1 -> abrir();\n    default -> mostrarAyuda();\n}",
+    "body": [
+      "Las reglas con flecha ejecutan la rama elegida sin continuar por la siguiente. Con case y dos puntos, el código puede continuar hasta break u otra salida."
+    ],
+    "notes": [
+      "Una expresión switch tiene sus propias reglas de exhaustividad y produce un valor. Si solo quieres ejecutar acciones, usa la sentencia."
+    ],
+    "aliases": [
+      "switch statement",
+      "sentencia de selección",
+      "case default",
+      "switch flechas"
+    ],
+    "related": ["switch-expression", "yield", "enum"],
+    "example": {
+      "language": "java",
+      "title": "Ejecuta una acción de menú",
+      "description": "Las reglas con flecha evitan que se ejecute la opción siguiente.",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        int opcion = 2;\n        switch (opcion) {\n            case 1 -> System.out.println(\"Abrir\");\n            case 2 -> System.out.println(\"Guardar\");\n            default -> System.out.println(\"Ayuda\");\n        }\n    }\n}",
+      "expected": "Guardar"
+    }
+  },
+  {
+    "slug": "switch-expression",
+    "title": "Expresión switch",
+    "chapter": 15,
+    "section": "15.28",
+    "group": "Control de flujo",
+    "guide": 2,
+    "summary": "Elige una rama y produce un valor que se puede asignar o devolver.",
+    "syntax": "String etiqueta = switch (estado) {\n    case LISTO -> \"Disponible\";\n    default -> \"En espera\";\n};",
+    "body": [
+      "La expresión debe cubrir todos los valores posibles según su tipo y reglas de patrones. Con una enumeración se pueden cubrir todas sus constantes explícitamente."
+    ],
+    "notes": [
+      "Un bloque que produce un valor usa yield. return termina el método en el que se encuentra."
+    ],
+    "aliases": [
+      "switch expression",
+      "switch devuelve valor",
+      "switch como expresión"
+    ],
+    "related": ["switch-statement", "yield", "enum"],
+    "example": {
+      "language": "java",
+      "title": "Devuelve una etiqueta para cada estado",
+      "description": "Las dos constantes de la enumeración aparecen en ramas explícitas.",
+      "code": "public class Main {\n    enum Estado { NUEVO, LISTO }\n\n    public static void main(String[] args) {\n        Estado actual = Estado.LISTO;\n        String etiqueta = switch (actual) {\n            case NUEVO -> \"En espera\";\n            case LISTO -> \"Disponible\";\n        };\n        System.out.println(etiqueta);\n    }\n}",
+      "expected": "Disponible"
+    }
+  },
+  {
+    "slug": "yield",
+    "title": "yield",
+    "chapter": 14,
+    "section": "14.21",
+    "group": "Control de flujo",
+    "guide": 2,
+    "summary": "Entrega un valor desde un bloque de una expresión switch.",
+    "syntax": "case COMPLETO -> {\n    int total = calcular();\n    yield total;\n}",
+    "body": [
+      "Un bloque puede calcular datos, registrar una decisión o validar antes de producir su valor. yield transfiere el control a la expresión switch que lo contiene."
+    ],
+    "notes": [
+      "Para una rama que solo evalúa una expresión, la forma con flecha directa suele ser suficiente."
+    ],
+    "aliases": ["yield switch", "devolver en switch", "bloque switch"],
+    "related": ["switch-expression", "switch-statement"],
+    "example": {
+      "language": "java",
+      "title": "Calcula un valor dentro de una rama",
+      "description": "La primera rama combina dos datos y devuelve su suma al switch.",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        int turno = 1;\n        int total = switch (turno) {\n            case 1 -> {\n                int teoria = 20;\n                int practica = 35;\n                yield teoria + practica;\n            }\n            default -> 0;\n        };\n        System.out.println(total);\n    }\n}",
+      "expected": "55"
+    }
+  },
+  {
+    "slug": "instanceof-pattern",
+    "title": "Patrón instanceof",
+    "chapter": 15,
+    "section": "15.20.2",
+    "group": "Tipos y variables",
+    "guide": 5,
+    "summary": "Comprueba el tipo de una referencia y vincula un nombre del tipo comprobado.",
+    "syntax": "if (objeto instanceof String texto) {\n    System.out.println(texto.length());\n}",
+    "body": [
+      "La variable de patrón existe en las partes del flujo donde el compilador demuestra que hubo coincidencia. Un valor null no satisface un patrón de tipo."
+    ],
+    "notes": [
+      "Con && el operando derecho se evalúa solo si el izquierdo tuvo éxito. Con || la coincidencia puede no existir cuando se evalúa el derecho."
+    ],
+    "aliases": [
+      "instanceof",
+      "pattern matching",
+      "patrón de tipo",
+      "comprobar tipo"
+    ],
+    "related": ["cast", "record-pattern", "switch-pattern"],
+    "example": {
+      "language": "java",
+      "title": "Comprueba el tipo y utiliza el valor en la misma condición",
+      "description": "La segunda parte de la condición ya puede usar la variable texto.",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        Object origen = \"VCode\";\n        if (origen instanceof String texto && texto.length() >= 4) {\n            System.out.println(texto.length());\n        }\n    }\n}",
+      "expected": "5"
+    }
+  },
+  {
+    "slug": "switch-pattern",
+    "title": "Patrones en switch",
+    "chapter": 14,
+    "section": "14.11.1",
+    "group": "Control de flujo",
+    "guide": 9,
+    "summary": "Selecciona una rama de acuerdo con el tipo, valor o patrón que satisface el selector.",
+    "syntax": "return switch (valor) {\n    case String texto when !texto.isBlank() -> texto;\n    case null -> \"Vacío\";\n    default -> \"Otro\";\n};",
+    "body": [
+      "case puede comprobar el tipo y vincular una variable. Una guarda when añade una condición. El orden importa cuando una etiqueta podría dominar a otra."
+    ],
+    "notes": [
+      "Para tratar null explícitamente escribe case null. La exhaustividad del conjunto de patrones y la gestión de null son comprobaciones distintas."
+    ],
+    "aliases": [
+      "switch pattern",
+      "pattern matching switch",
+      "case null",
+      "case when",
+      "guarded pattern"
+    ],
+    "related": [
+      "instanceof-pattern",
+      "switch-expression",
+      "record-pattern",
+      "sealed"
+    ],
+    "example": {
+      "language": "java",
+      "title": "Clasifica texto, enteros y ausencia de valor",
+      "description": "El switch usa patrones de tipo y una rama explícita para null.",
+      "code": "public class Main {\n    static String describir(Object valor) {\n        return switch (valor) {\n            case String texto when !texto.isBlank() -> texto;\n            case Integer numero when numero > 0 -> \"Número\";\n            case null -> \"Vacío\";\n            default -> \"Otro\";\n        };\n    }\n\n    public static void main(String[] args) {\n        System.out.println(describir(\"Java\"));\n        System.out.println(describir(3));\n        System.out.println(describir(null));\n    }\n}",
+      "expected": "Java\nNúmero\nVacío"
+    }
+  },
+  {
+    "slug": "record",
+    "title": "record",
+    "chapter": 8,
+    "section": "8.10",
+    "group": "Clases e interfaces",
+    "guide": 9,
+    "summary": "Declara una clase pensada para representar un agregado de datos mediante componentes nombrados.",
+    "syntax": "record Sesion(String tema, int minutos) {}",
+    "body": [
+      "Cada componente obtiene un campo final privado y un método de acceso. La clase dispone de constructor canónico y genera equals, hashCode y toString a partir de sus componentes."
+    ],
+    "notes": [
+      "Un record impide reasignar sus componentes. Si un componente es mutable, su contenido puede cambiar; considera realizar una copia defensiva."
+    ],
+    "aliases": [
+      "java record",
+      "clase record",
+      "agregado de datos",
+      "componentes record"
+    ],
+    "related": ["record-constructor", "record-pattern", "equals"],
+    "example": {
+      "language": "java",
+      "title": "Compara dos valores con los mismos componentes",
+      "description": "El record generado ofrece acceso a minutos y compara el contenido.",
+      "code": "public class Main {\n    record Sesion(String tema, int minutos) {}\n\n    public static void main(String[] args) {\n        Sesion primera = new Sesion(\"Java\", 25);\n        Sesion segunda = new Sesion(\"Java\", 25);\n        System.out.println(primera.minutos() + \" \" + primera.equals(segunda));\n    }\n}",
+      "expected": "25 true"
+    }
+  },
+  {
+    "slug": "record-constructor",
+    "title": "Constructor compacto de record",
+    "chapter": 8,
+    "section": "8.10.4.2",
+    "group": "Clases e interfaces",
+    "guide": 9,
+    "summary": "Define validaciones o normalizaciones en el constructor canónico de un record sin volver a declarar sus parámetros.",
+    "syntax": "record Sesion(String tema, int minutos) {\n    Sesion {\n        tema = tema.strip();\n    }\n}",
+    "body": [
+      "El cuerpo recibe los parámetros implícitos de los componentes. Al terminar normalmente, el compilador asigna sus valores finales a los campos."
+    ],
+    "notes": [
+      "Dentro del constructor compacto puedes reasignar un parámetro para normalizarlo. Asignar directamente sus campos de componente está prohibido."
+    ],
+    "aliases": [
+      "compact constructor",
+      "constructor canónico",
+      "validar record"
+    ],
+    "related": ["record", "constructor", "record-pattern"],
+    "example": {
+      "language": "java",
+      "title": "Normaliza un tema al crear un record",
+      "description": "El valor de tema se recorta antes de asignarse al campo generado.",
+      "code": "public class Main {\n    record Sesion(String tema, int minutos) {\n        Sesion {\n            tema = tema.strip();\n        }\n    }\n\n    public static void main(String[] args) {\n        Sesion sesion = new Sesion(\" Java \", 25);\n        System.out.println(\"[\" + sesion.tema() + \"]\");\n    }\n}",
+      "expected": "[Java]"
+    }
+  },
+  {
+    "slug": "record-pattern",
+    "title": "Patrón de record",
+    "chapter": 14,
+    "section": "14.30.1",
+    "group": "Clases e interfaces",
+    "guide": 9,
+    "summary": "Comprueba que un valor es un record compatible y extrae sus componentes con subpatrones.",
+    "syntax": "if (origen instanceof Sesion(String tema, int minutos)) {\n    mostrar(tema, minutos);\n}",
+    "body": [
+      "Puedes usar patrones anidados para llegar a los componentes de otro record sin encadenar conversiones. La coincidencia aplica las reglas de todos los subpatrones."
+    ],
+    "notes": [
+      "La cantidad y orden de subpatrones deben coincidir con los componentes declarados. Un record null no coincide."
+    ],
+    "aliases": ["record pattern", "desestructurar record", "patrón anidado"],
+    "related": ["record", "instanceof-pattern", "switch-pattern"],
+    "example": {
+      "language": "java",
+      "title": "Lee componentes anidados desde una referencia Object",
+      "description": "El patrón da acceso a tema y total en el bloque donde hubo coincidencia.",
+      "code": "public class Main {\n    record Tema(String nombre) {}\n    record Sesion(Tema tema, int minutos) {}\n\n    public static void main(String[] args) {\n        Object resultado = new Sesion(new Tema(\"Java\"), 25);\n        if (resultado instanceof Sesion(Tema(String nombre), int total)) {\n            System.out.println(nombre + \" \" + total);\n        }\n    }\n}",
+      "expected": "Java 25"
+    }
+  },
+  {
+    "slug": "constructor",
+    "title": "Constructores",
+    "chapter": 8,
+    "section": "8.8",
+    "group": "Clases e interfaces",
+    "guide": 4,
+    "summary": "Inicializa una instancia recién creada y establece el estado que sus métodos pueden dar por válido.",
+    "syntax": "Sesion(int duracion) {\n    this.minutos = duracion;\n}",
+    "body": [
+      "El constructor usa el mismo nombre que la clase y no declara retorno. Puede aceptar parámetros, validar condiciones o delegar la inicialización mediante this o super."
+    ],
+    "notes": [
+      "El compilador proporciona un constructor por defecto solo si no has declarado ninguno. En Java 21, una llamada explícita a otro constructor va al principio."
+    ],
+    "aliases": [
+      "constructor",
+      "this constructor",
+      "super constructor",
+      "crear instancia"
+    ],
+    "related": ["record-constructor", "inheritance", "access"],
+    "example": {
+      "language": "java",
+      "title": "Construye un objeto con un valor proporcionado",
+      "description": "El campo minutos recibe su valor antes de que se lea el método total.",
+      "code": "public class Main {\n    static final class Sesion {\n        private final int minutos;\n        Sesion(int duracion) { this.minutos = duracion; }\n        int total() { return minutos; }\n    }\n\n    public static void main(String[] args) {\n        Sesion sesion = new Sesion(45);\n        System.out.println(sesion.total());\n    }\n}",
+      "expected": "45"
+    }
+  },
+  {
+    "slug": "inheritance",
+    "title": "extends en clases",
+    "chapter": 8,
+    "section": "8.1.4",
+    "group": "Clases e interfaces",
+    "guide": 5,
+    "summary": "Declara la superclase directa de una clase y permite reutilizar su contrato y comportamiento.",
+    "syntax": "class SesionGuiada extends Sesion {\n    SesionGuiada(int minutos) { super(minutos); }\n}",
+    "body": [
+      "Una clase puede tener una superclase directa y varias interfaces. La instancia derivada puede usarse donde se espera un valor de su tipo base."
+    ],
+    "notes": [
+      "Los constructores no se heredan. El constructor derivado debe invocar uno accesible de la base, explícita o implícitamente."
+    ],
+    "aliases": [
+      "extends",
+      "herencia",
+      "superclase",
+      "subclase",
+      "heredar clase"
+    ],
+    "related": ["override", "constructor", "interface"],
+    "example": {
+      "language": "java",
+      "title": "Reutiliza el estado que inicializa una clase base",
+      "description": "Guiada puede leer su duración mediante el método de Sesion.",
+      "code": "public class Main {\n    static class Sesion {\n        private final int minutos;\n        Sesion(int minutos) { this.minutos = minutos; }\n        int total() { return minutos; }\n    }\n    static class Guiada extends Sesion {\n        Guiada(int minutos) { super(minutos); }\n    }\n\n    public static void main(String[] args) {\n        Sesion vista = new Guiada(25);\n        System.out.println(vista.total());\n    }\n}",
+      "expected": "25"
+    }
+  },
+  {
+    "slug": "interface",
+    "title": "interface e implements",
+    "chapter": 9,
+    "section": "9.1",
+    "group": "Clases e interfaces",
+    "guide": 5,
+    "summary": "Declara un contrato que distintas clases pueden implementar.",
+    "syntax": "interface Calificable { int total(); }\nclass Ficha implements Calificable {\n    public int total() { return 10; }\n}",
+    "body": [
+      "Una interfaz puede declarar métodos abstractos, default, static o private según el propósito. Una clase que la implementa puede usarse a través de ese tipo."
+    ],
+    "notes": [
+      "Declara como public la implementación de un método público. Si dos interfaces proporcionan versiones default que entren en conflicto, la clase debe resolverlo."
+    ],
+    "aliases": ["interfaz", "implements", "default method", "interfaz java"],
+    "related": ["override", "inheritance", "functional-interface"],
+    "example": {
+      "language": "java",
+      "title": "Usa una implementación mediante el tipo de su interfaz",
+      "description": "La interfaz declara el contrato y aporta el formato predeterminado.",
+      "code": "public class Main {\n    interface Calificable {\n        int total();\n        default String resumen() { return total() + \" puntos\"; }\n    }\n    static class Ficha implements Calificable {\n        public int total() { return 10; }\n    }\n\n    public static void main(String[] args) {\n        Calificable dato = new Ficha();\n        System.out.println(dato.resumen());\n    }\n}",
+      "expected": "10 puntos"
+    }
+  },
+  {
+    "slug": "override",
+    "title": "@Override",
+    "chapter": 9,
+    "section": "9.6.4.4",
+    "group": "Clases e interfaces",
+    "guide": 5,
+    "summary": "Pide al compilador que compruebe que un método reemplaza otro admitido por la jerarquía.",
+    "syntax": "@Override\npublic int total() { return 30; }",
+    "body": [
+      "La anotación ayuda a detectar errores de nombre o parámetros. La selección de una implementación de instancia se hace según la clase del objeto."
+    ],
+    "notes": [
+      "Un método con distinto parámetro puede sobrecargar en vez de reemplazar. Los métodos static se ocultan con otras reglas."
+    ],
+    "aliases": [
+      "override",
+      "sobrescritura",
+      "reemplazar método",
+      "anotación override"
+    ],
+    "related": ["inheritance", "overload", "interface"],
+    "example": {
+      "language": "java",
+      "title": "Selecciona un método con una referencia de la clase base",
+      "description": "Aunque la referencia tiene tipo Sesion, el resultado viene de Guiada.",
+      "code": "public class Main {\n    static class Sesion {\n        int total() { return 15; }\n    }\n    static class Guiada extends Sesion {\n        @Override int total() { return 30; }\n    }\n\n    public static void main(String[] args) {\n        Sesion sesion = new Guiada();\n        System.out.println(sesion.total());\n    }\n}",
+      "expected": "30"
+    }
+  },
+  {
+    "slug": "overload",
+    "title": "Sobrecarga de métodos",
+    "chapter": 8,
+    "section": "8.4.9",
+    "group": "Clases e interfaces",
+    "guide": 3,
+    "summary": "Permite varios métodos con el mismo nombre y listas de parámetros distinguibles.",
+    "syntax": "int sumar(int a, int b) { return a + b; }\nint sumar(int a, int b, int c) { return a + b + c; }",
+    "body": [
+      "El compilador elige entre los candidatos a partir de los argumentos y reglas de aplicabilidad. La selección de una sobrecarga precede al despacho virtual de una implementación."
+    ],
+    "notes": [
+      "Cambiar solo el tipo de retorno no distingue dos declaraciones con la misma firma. Un argumento null puede provocar ambigüedad entre sobrecargas de referencia."
+    ],
+    "aliases": [
+      "overload",
+      "sobrecarga",
+      "método con mismo nombre",
+      "method overloading"
+    ],
+    "related": ["override", "varargs", "constructor"],
+    "example": {
+      "language": "java",
+      "title": "Llama a dos variantes de la misma operación",
+      "description": "La cantidad de argumentos determina cuál de las dos firmas se usa.",
+      "code": "public class Main {\n    static int sumar(int a, int b) { return a + b; }\n    static int sumar(int a, int b, int c) { return a + b + c; }\n\n    public static void main(String[] args) {\n        System.out.println(sumar(10, 15) + \" \" + sumar(10, 15, 20));\n    }\n}",
+      "expected": "25 45"
+    }
+  },
+  {
+    "slug": "access",
+    "title": "public, protected y private",
+    "chapter": 6,
+    "section": "6.6",
+    "group": "Clases e interfaces",
+    "guide": 4,
+    "summary": "Controla desde qué partes del programa pueden usarse clases y miembros.",
+    "syntax": "private int minutos;\npublic int total() { return minutos; }",
+    "body": [
+      "Sin modificador suele aplicarse el acceso del paquete. protected permite acceso en el paquete y ciertos usos en subclases fuera de él."
+    ],
+    "notes": [
+      "Una clase de nivel superior no se declara private ni protected. Los módulos también pueden limitar qué paquetes son accesibles."
+    ],
+    "aliases": [
+      "access modifiers",
+      "modificadores acceso",
+      "package private",
+      "encapsular"
+    ],
+    "related": ["constructor", "package", "inheritance"],
+    "example": {
+      "language": "java",
+      "title": "Expón el comportamiento y mantén el campo interno",
+      "description": "El método añade la duración y solo publica el total para leerlo.",
+      "code": "public class Main {\n    static class Plan {\n        private int minutos;\n        public void añadir(int extra) { minutos += extra; }\n        public int total() { return minutos; }\n    }\n\n    public static void main(String[] args) {\n        Plan plan = new Plan();\n        plan.añadir(20);\n        plan.añadir(15);\n        System.out.println(plan.total());\n    }\n}",
+      "expected": "35"
+    }
+  },
+  {
+    "slug": "enum",
+    "title": "enum",
+    "chapter": 8,
+    "section": "8.9",
+    "group": "Clases e interfaces",
+    "guide": 9,
+    "summary": "Declara una clase con un conjunto conocido de instancias nombradas.",
+    "syntax": "enum Estado { NUEVO, EN_CURSO, TERMINADO }",
+    "body": [
+      "Cada constante es una instancia. Una enumeración puede guardar datos, declarar métodos e implementar interfaces."
+    ],
+    "notes": [
+      "Evita persistir ordinal, que cambia si reordenas las constantes. Para datos duraderos, usa un identificador explícito y estable."
+    ],
+    "aliases": [
+      "enumeración",
+      "enum class",
+      "constantes enum",
+      "estados enumerados"
+    ],
+    "related": ["switch-expression", "switch-statement", "record"],
+    "example": {
+      "language": "java",
+      "title": "Guarda un identificador estable por estado",
+      "description": "La salida usa la clave declarada en el código, separada de la posición de la constante.",
+      "code": "public class Main {\n    enum Estado {\n        NUEVO(\"nuevo\"), TERMINADO(\"terminado\");\n        private final String clave;\n        Estado(String clave) { this.clave = clave; }\n        String clave() { return clave; }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(Estado.TERMINADO.clave());\n    }\n}",
+      "expected": "terminado"
+    }
+  },
+  {
+    "slug": "sealed",
+    "title": "sealed, permits y non-sealed",
+    "chapter": 8,
+    "section": "8.1.1.2",
+    "group": "Clases e interfaces",
+    "guide": 5,
+    "summary": "Limita qué clases o interfaces pueden heredar directamente del tipo declarado.",
+    "syntax": "sealed interface Resultado permits Bien, Fallo {}\nrecord Bien(int total) implements Resultado {}\nrecord Fallo(String causa) implements Resultado {}",
+    "body": [
+      "Cada subtipo directo permitido declara cómo continúa la jerarquía. Puede ser final, sellado o abierto con non-sealed según su clase de declaración."
+    ],
+    "notes": [
+      "Las clases permitidas deben cumplir las reglas de paquete o módulo comunes. Un record ya es final, de modo que no necesita repetir el modificador."
+    ],
+    "aliases": [
+      "sealed class",
+      "sealed interface",
+      "sealed types",
+      "permits",
+      "non sealed",
+      "clase sellada"
+    ],
+    "related": ["record", "interface", "switch-pattern"],
+    "example": {
+      "language": "java",
+      "title": "Modela dos clases de resultado",
+      "description": "Una operación puede devolver ambas alternativas mediante la interfaz común.",
+      "code": "public class Main {\n    sealed interface Resultado permits Bien, Fallo {}\n    record Bien(int minutos) implements Resultado {}\n    record Fallo(String causa) implements Resultado {}\n\n    public static void main(String[] args) {\n        Resultado guardado = new Bien(25);\n        if (guardado instanceof Bien dato) {\n            System.out.println(dato.minutos());\n        }\n    }\n}",
+      "expected": "25"
+    }
+  },
+  {
+    "slug": "equals",
+    "title": "Igualdad de referencias con ==",
+    "chapter": 15,
+    "section": "15.21.3",
+    "group": "Tipos y variables",
+    "guide": 9,
+    "summary": "Compara si dos referencias apuntan al mismo objeto o si las dos son null.",
+    "syntax": "boolean mismaReferencia = origen == copia;\nboolean mismoValor = origen.equals(copia);",
+    "body": [
+      "equals permite que el tipo defina igualdad de contenido. Por ejemplo, String tiene igualdad por texto y un record compara sus componentes."
+    ],
+    "notes": [
+      "Para comparar valores posiblemente nulos usa Objects.equals(a, b). Si implementas equals, un hashCode coherente es necesario para colecciones hash."
+    ],
+    "aliases": [
+      "==",
+      "igualdad",
+      "equals",
+      "comparar referencias",
+      "object equality"
+    ],
+    "related": ["record", "boxing", "Object.equals()"],
+    "example": {
+      "language": "java",
+      "title": "Compara dos textos con el mismo contenido",
+      "description": "La construcción explícita crea un objeto distinto aunque equals obtenga el mismo texto.",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        String primero = \"Java\";\n        String segundo = new String(\"Java\");\n        System.out.println((primero == segundo) + \" \" + primero.equals(segundo));\n    }\n}",
+      "expected": "false true"
+    }
+  },
+  {
+    "slug": "generic-class",
+    "title": "Clases genéricas <T>",
+    "chapter": 8,
+    "section": "8.1.2",
+    "group": "Genéricos",
+    "guide": 6,
+    "summary": "Declara una clase con parámetros de tipo que aparecen en sus campos, métodos y construcción.",
+    "syntax": "record Caja<T>(T valor) {}\nCaja<String> caja = new Caja<>(\"Java\");",
+    "body": [
+      "Cada uso concreta qué tipo expone la clase. El operador diamante permite inferir los argumentos del constructor a partir de los argumentos y el tipo objetivo."
+    ],
+    "notes": [
+      "Los argumentos de tipo deben ser referencias. Usa Integer para representar enteros dentro de Caja<T>."
+    ],
+    "aliases": [
+      "generics",
+      "generic class",
+      "tipo genérico",
+      "operador diamante",
+      "diamond operator"
+    ],
+    "related": ["generic-method", "wildcard", "boxing", "List"],
+    "example": {
+      "language": "java",
+      "title": "Construye cajas con dos tipos de valor",
+      "description": "En cada uso, el resultado de valor() tiene el tipo argumentado.",
+      "code": "public class Main {\n    record Caja<T>(T valor) {}\n\n    public static void main(String[] args) {\n        Caja<String> tema = new Caja<>(\"Java\");\n        Caja<Integer> total = new Caja<>(30);\n        System.out.println(tema.valor() + \" \" + (total.valor() + 5));\n    }\n}",
+      "expected": "Java 35"
+    }
+  },
+  {
+    "slug": "generic-method",
+    "title": "Métodos genéricos",
+    "chapter": 8,
+    "section": "8.4.4",
+    "group": "Genéricos",
+    "guide": 6,
+    "summary": "Declara parámetros de tipo propios de un método y permite vincular tipos de entrada y salida.",
+    "syntax": "static <T> T primero(List<T> valores) { return valores.get(0); }",
+    "body": [
+      "Los parámetros de tipo aparecen antes del retorno. En la mayoría de llamadas, el compilador deduce T; también se pueden proporcionar argumentos de tipo explícitos."
+    ],
+    "notes": [
+      "Usa un parámetro de tipo cuando quieras expresar una relación entre valores. Si únicamente necesitas aceptar distintas variantes de una colección, puede bastar un comodín."
+    ],
+    "aliases": ["generic method", "método con <T>", "parámetro de tipo"],
+    "related": ["generic-class", "wildcard", "erasure"],
+    "example": {
+      "language": "java",
+      "title": "Devuelve el mismo tipo que recibe la lista",
+      "description": "No se necesita conversión al pasar el resultado a una variable String.",
+      "code": "public class Main {\n    static <T> T tomarPrimero(java.util.List<T> valores) {\n        return valores.get(0);\n    }\n\n    public static void main(String[] args) {\n        String primero = tomarPrimero(java.util.List.of(\"Java\", \"PHP\"));\n        System.out.println(primero);\n    }\n}",
+      "expected": "Java"
+    }
+  },
+  {
+    "slug": "wildcard",
+    "title": "Comodines ? extends y ? super",
+    "chapter": 4,
+    "section": "4.5.1",
+    "group": "Genéricos",
+    "guide": 17,
+    "summary": "Expresa un argumento de tipo desconocido y, si hace falta, un límite superior o inferior.",
+    "syntax": "List<? extends Number> origen = List.of(10, 15);\nList<? super Integer> destino = new ArrayList<Number>();",
+    "body": [
+      "Una lista con ? extends Number permite leer Number. Una con ? super Integer permite añadir Integer y garantiza al leer, como mínimo, Object."
+    ],
+    "notes": [
+      "List<Integer> y List<Number> no tienen una relación directa de subtipo. Los comodines expresan qué acceso admite una vista de cualquiera de ellas."
+    ],
+    "aliases": [
+      "wildcard",
+      "PECS",
+      "comodín java",
+      "generic bounds",
+      "covarianza"
+    ],
+    "related": ["generic-class", "generic-method", "List"],
+    "example": {
+      "language": "java",
+      "title": "Copia enteros con dos límites distintos",
+      "description": "La fuente entrega Integer y el destino acepta Integer como un tipo más general.",
+      "code": "public class Main {\n    static void transferir(\n            java.util.List<? extends Integer> origen,\n            java.util.List<? super Integer> destino) {\n        for (Integer valor : origen) destino.add(valor);\n    }\n\n    public static void main(String[] args) {\n        var origen = java.util.List.of(15, 25);\n        var destino = new java.util.ArrayList<Number>();\n        transferir(origen, destino);\n        System.out.println(destino);\n    }\n}",
+      "expected": "[15, 25]"
+    }
+  },
+  {
+    "slug": "erasure",
+    "title": "Borrado de tipos genéricos",
+    "chapter": 4,
+    "section": "4.6",
+    "group": "Genéricos",
+    "guide": 6,
+    "summary": "Traduce los tipos de una declaración genérica a sus formas borradas para la representación compilada.",
+    "syntax": "static <T extends Number> double valor(T dato) {\n    return dato.doubleValue();\n}",
+    "body": [
+      "Un parámetro de tipo se borra a su primer límite, o a Object si no tiene límite escrito. El compilador añade conversiones y, cuando hace falta, métodos puente."
+    ],
+    "notes": [
+      "No puedes sobrecargar dos métodos con List<String> y List<Integer> como única diferencia. Ambas firmas se borran de la misma forma."
+    ],
+    "aliases": [
+      "type erasure",
+      "erasure",
+      "genéricos en tiempo de ejecución",
+      "borrado genéricos"
+    ],
+    "related": ["generic-method", "generic-class", "wildcard"],
+    "example": {
+      "language": "java",
+      "title": "Aplica un método genérico con un límite numérico",
+      "description": "El método usa las operaciones comunes declaradas por Number.",
+      "code": "public class Main {\n    static <T extends Number> double doble(T dato) {\n        return dato.doubleValue() * 2;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(doble(5) + \" \" + doble(2.5));\n    }\n}",
+      "expected": "10.0 5.0"
+    }
+  },
+  {
+    "slug": "varargs",
+    "title": "Parámetros varargs (...)",
+    "chapter": 8,
+    "section": "8.4.1",
+    "group": "Genéricos",
+    "guide": 3,
+    "summary": "Permite pasar cero o más argumentos al último parámetro de un método.",
+    "syntax": "static int total(int... minutos) {\n    return minutos.length;\n}",
+    "body": [
+      "Dentro del método se usa un array del tipo declarado. El llamador puede proporcionar argumentos individuales o pasar directamente un array compatible."
+    ],
+    "notes": [
+      "Solo puede haber un parámetro de aridad variable y debe quedar al final. Si sus elementos son genéricos, revisa los avisos de contaminación del heap."
+    ],
+    "aliases": [
+      "varargs",
+      "variable arity",
+      "parámetro variable",
+      "varargs java"
+    ],
+    "related": ["array", "overload", "generic-method"],
+    "example": {
+      "language": "java",
+      "title": "Cuenta argumentos individuales y elementos de un array",
+      "description": "Las dos llamadas llegan al mismo parámetro minutos.",
+      "code": "public class Main {\n    static int cantidad(int... minutos) { return minutos.length; }\n\n    public static void main(String[] args) {\n        System.out.println(cantidad(10, 15, 25) + \" \" + cantidad(new int[]{7, 3}));\n    }\n}",
+      "expected": "3 2"
+    }
+  },
+  {
+    "slug": "checked-exception",
+    "title": "throws y excepciones comprobadas",
+    "chapter": 11,
+    "section": "11.2.3",
+    "group": "Excepciones",
+    "guide": 7,
+    "summary": "Obliga a declarar o manejar excepciones comprobadas que pueden salir de un método.",
+    "syntax": "void cargar() throws IOException {\n    ejecutarLectura();\n}",
+    "body": [
+      "throws declara posibles excepciones y throw lanza una instancia. Las subclases de RuntimeException y Error están exentas de la comprobación obligatoria."
+    ],
+    "notes": [
+      "Propaga una excepción cuando el llamador pueda tomar una decisión; captúrala si tienes una respuesta concreta en el nivel actual."
+    ],
+    "aliases": [
+      "throws",
+      "checked exception",
+      "excepción comprobada",
+      "throw java"
+    ],
+    "related": ["try-catch", "try-resources", "Throwable"],
+    "example": {
+      "language": "java",
+      "title": "Declara un fallo y léelo en el llamador",
+      "description": "La llamada se maneja con un catch que cubre el tipo declarado.",
+      "code": "public class Main {\n    static class DatoInvalido extends Exception {\n        final int minutos;\n        DatoInvalido(int minutos) { this.minutos = minutos; }\n    }\n    static void validar(int minutos) throws DatoInvalido {\n        if (minutos < 0) throw new DatoInvalido(minutos);\n    }\n\n    public static void main(String[] args) {\n        try {\n            validar(-1);\n        } catch (DatoInvalido error) {\n            System.out.println(\"Minutos inválidos: \" + error.minutos);\n        }\n    }\n}",
+      "expected": "Minutos inválidos: -1"
+    }
+  },
+  {
+    "slug": "try-catch",
+    "title": "try, catch y finally",
+    "chapter": 14,
+    "section": "14.20.2",
+    "group": "Excepciones",
+    "guide": 7,
+    "summary": "Maneja excepciones y permite ejecutar una acción al salir del bloque protegido.",
+    "syntax": "try {\n    ejecutar();\n} catch (IllegalArgumentException error) {\n    informar(error);\n} finally {\n    limpiar();\n}",
+    "body": [
+      "Se elige el primer catch compatible. Las reglas de ejecución de finally cubren también return y excepciones que salen del bloque."
+    ],
+    "notes": [
+      "Un return o error lanzado desde finally puede ocultar la salida original. Gestiona un recurso AutoCloseable con try-with-resources cuando sea posible."
+    ],
+    "aliases": ["try catch", "finally", "manejar excepciones", "multi catch"],
+    "related": ["checked-exception", "try-resources", "Throwable"],
+    "example": {
+      "language": "java",
+      "title": "Maneja un dato inválido y después limpia",
+      "description": "El mensaje de finally aparece después del mensaje de la captura.",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            Integer.parseInt(\"hora\");\n        } catch (NumberFormatException error) {\n            System.out.println(\"Formato inválido\");\n        } finally {\n            System.out.println(\"Fin de la validación\");\n        }\n    }\n}",
+      "expected": "Formato inválido\nFin de la validación"
+    }
+  },
+  {
+    "slug": "try-resources",
+    "title": "try-with-resources",
+    "chapter": 14,
+    "section": "14.20.3",
+    "group": "Excepciones",
+    "guide": 7,
+    "summary": "Cierra automáticamente los recursos AutoCloseable al abandonar el bloque.",
+    "syntax": "try (Recurso recurso = abrir()) {\n    recurso.usar();\n}",
+    "body": [
+      "Los recursos se cierran en orden inverso a su apertura. Si el bloque ya lanzó una excepción, las adicionales de cierre pueden quedar asociadas como suprimidas."
+    ],
+    "notes": [
+      "El método close del tipo concreto puede declarar excepciones comprobadas. Elige el ámbito para que cubra todo el uso del recurso."
+    ],
+    "aliases": [
+      "try with resources",
+      "try recursos",
+      "cierre automático",
+      "auto closeable"
+    ],
+    "related": ["try-catch", "checked-exception", "AutoCloseable"],
+    "example": {
+      "language": "java",
+      "title": "Verifica el orden de cierre de dos recursos",
+      "description": "Los recursos usan AutoCloseable sin acceder al sistema de archivos.",
+      "code": "public class Main {\n    record Recurso(String nombre) implements AutoCloseable {\n        @Override public void close() {\n            System.out.println(\"Cierra \" + nombre);\n        }\n    }\n\n    public static void main(String[] args) {\n        try (Recurso primero = new Recurso(\"uno\");\n             Recurso segundo = new Recurso(\"dos\")) {\n            System.out.println(\"En uso\");\n        }\n    }\n}",
+      "expected": "En uso\nCierra dos\nCierra uno"
+    }
+  },
+  {
+    "slug": "lambda",
+    "title": "Expresión lambda",
+    "chapter": 15,
+    "section": "15.27",
+    "group": "Lambdas y referencias",
+    "guide": 8,
+    "summary": "Proporciona una implementación del método abstracto de una interfaz funcional.",
+    "syntax": "Predicate<String> noVacio = texto -> !texto.isBlank();",
+    "body": [
+      "El tipo objetivo fija los tipos de parámetros y retorno. La lambda puede leer variables locales finales o efectivamente finales del entorno."
+    ],
+    "notes": [
+      "Si el cuerpo es un bloque y debe devolver un valor, escribe return en las rutas correspondientes. Para modificar estado compartido, elige un diseño que explicite ese propósito."
+    ],
+    "aliases": [
+      "lambda",
+      "expresión lambda",
+      "java function arrow",
+      "captura lambda"
+    ],
+    "related": [
+      "functional-interface",
+      "method-reference",
+      "final",
+      "Function"
+    ],
+    "example": {
+      "language": "java",
+      "title": "Filtra nombres de temas con una condición",
+      "description": "La variable mínimo se captura y el resultado conserva los textos que la cumplen.",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        int minimo = 4;\n        java.util.List.of(\"JS\", \"Java\", \"SQL\").stream()\n            .filter(texto -> texto.length() >= minimo)\n            .forEach(System.out::println);\n    }\n}",
+      "expected": "Java"
+    }
+  },
+  {
+    "slug": "method-reference",
+    "title": "Referencia de método ::",
+    "chapter": 15,
+    "section": "15.13",
+    "group": "Lambdas y referencias",
+    "guide": 8,
+    "summary": "Usa un método o constructor existente para satisfacer una interfaz funcional.",
+    "syntax": "Function<String, String> limpiar = String::strip;\nConsumer<String> mostrar = System.out::println;",
+    "body": [
+      "Puedes referenciar un método estático, un método ligado a una instancia, un método de instancia a partir del tipo o un constructor con ::new."
+    ],
+    "notes": [
+      "La firma de la interfaz funcional determina qué sobrecarga encaja. Si la llamada necesita reordenar o transformar argumentos, una lambda puede expresarlo con claridad."
+    ],
+    "aliases": [
+      "method reference",
+      "referencia método",
+      "doble dos puntos",
+      "referencia constructor"
+    ],
+    "related": ["lambda", "functional-interface", "Function"],
+    "example": {
+      "language": "java",
+      "title": "Usa una referencia para limpiar y otra para mostrar",
+      "description": "La instancia de String llega como primer argumento implícito de String::strip.",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        java.util.List.of(\" Java \", \" SQL \").stream()\n            .map(String::strip)\n            .forEach(System.out::println);\n    }\n}",
+      "expected": "Java\nSQL"
+    }
+  },
+  {
+    "slug": "functional-interface",
+    "title": "@FunctionalInterface",
+    "chapter": 9,
+    "section": "9.6.4.9",
+    "group": "Lambdas y referencias",
+    "guide": 8,
+    "summary": "Pide al compilador que verifique que la interfaz admite una lambda o referencia de método como objetivo.",
+    "syntax": "@FunctionalInterface\ninterface Conversor { int aplicar(int entrada); }",
+    "body": [
+      "El contrato funcional se obtiene de sus métodos abstractos compatibles. Los métodos default y static no añaden operaciones que la lambda deba implementar."
+    ],
+    "notes": [
+      "La interfaz puede ser funcional sin la anotación. La anotación protege el contrato ante futuras modificaciones."
+    ],
+    "aliases": [
+      "functional interface",
+      "SAM",
+      "interfaz funcional",
+      "functionalinterface"
+    ],
+    "related": ["lambda", "method-reference", "interface"],
+    "example": {
+      "language": "java",
+      "title": "Declara un tipo de operación y pásale una lambda",
+      "description": "La lambda proporciona solo la transformación definida por Conversor.",
+      "code": "public class Main {\n    @FunctionalInterface\n    interface Conversor { int aplicar(int entrada); }\n\n    public static void main(String[] args) {\n        Conversor minutos = horas -> horas * 60;\n        System.out.println(minutos.aplicar(2));\n    }\n}",
+      "expected": "120"
+    }
+  },
+  {
+    "slug": "package",
+    "title": "package",
+    "chapter": 7,
+    "section": "7.4",
+    "group": "Paquetes y módulos",
+    "guide": 16,
+    "summary": "Da un nombre de paquete a las clases definidas en la unidad de compilación.",
+    "syntax": "package vcode.sesiones;",
+    "body": [
+      "El paquete forma parte del nombre completo de un tipo. Las clases del mismo paquete pueden usar los nombres simples y los miembros con acceso de paquete."
+    ],
+    "notes": [
+      "Las herramientas suelen reflejar el paquete en la estructura de carpetas. La pertenencia la determina la declaración package."
+    ],
+    "aliases": ["paquete java", "package declaration", "namespace java"],
+    "related": ["import", "access", "module"],
+    "example": {
+      "language": "java",
+      "title": "Compila dos archivos del mismo paquete",
+      "description": "Main puede usar Duracion sin importarlo al estar en el mismo paquete.",
+      "code": "package vcode.sesiones;\n\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(Duracion.minutos(1, 35));\n    }\n}",
+      "expected": "95",
+      "files": {
+        "Duracion.java": "package vcode.sesiones;\n\nfinal class Duracion {\n    static int minutos(int horas, int extra) {\n        return horas * 60 + extra;\n    }\n}"
+      }
+    }
+  },
+  {
+    "slug": "import",
+    "title": "import e import static",
+    "chapter": 7,
+    "section": "7.5",
+    "group": "Paquetes y módulos",
+    "guide": 16,
+    "summary": "Permite nombrar mediante un identificador corto tipos y miembros estáticos de otras declaraciones.",
+    "syntax": "import java.util.List;\nimport static java.lang.Math.max;",
+    "body": [
+      "El import de tipo actúa sobre la unidad de compilación. El import estático permite llamar max sin escribir Math.max. La resolución de nombres ocurre durante la compilación."
+    ],
+    "notes": [
+      "Un comodín de paquetes no incluye sus subpaquetes. Si dos nombres simples chocan, usa el nombre cualificado donde lo necesites."
+    ],
+    "aliases": [
+      "import static",
+      "importar clase",
+      "import java",
+      "import por asterisco"
+    ],
+    "related": ["package", "module", "Math"],
+    "example": {
+      "language": "java",
+      "title": "Usa un tipo y un método estático por sus nombres cortos",
+      "description": "List viene de java.util y max de java.lang.Math.",
+      "code": "import java.util.List;\nimport static java.lang.Math.max;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<Integer> bloques = List.of(25, 35);\n        System.out.println(max(bloques.get(0), bloques.get(1)));\n    }\n}",
+      "expected": "35"
+    }
+  },
+  {
+    "slug": "module",
+    "title": "module-info.java",
+    "chapter": 7,
+    "section": "7.7",
+    "group": "Paquetes y módulos",
+    "guide": 11,
+    "summary": "Declara un módulo nombrado y sus relaciones con otros módulos y paquetes.",
+    "syntax": "module vcode.sesiones {\n    exports vcode.sesiones;\n}",
+    "body": [
+      "requires declara una dependencia. exports abre el acceso ordinario a tipos públicos en un paquete y opens regula acceso reflexivo más amplio."
+    ],
+    "notes": [
+      "El módulo java.base se requiere implícitamente. Para probar la selección de módulos usa javac y java con la ruta de módulos."
+    ],
+    "aliases": [
+      "module info",
+      "JPMS",
+      "módulos java",
+      "requires exports opens"
+    ],
+    "related": ["package", "import", "access"],
+    "example": {
+      "language": "java",
+      "title": "Arranca una aplicación mediante la ruta de módulos",
+      "description": "Con un JDK 21, compila los dos archivos con javac -d out module-info.java Main.java. Ejecuta java --module-path out -m vcode.sesiones/vcode.sesiones.Main.",
+      "code": "package vcode.sesiones;\n\npublic class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        System.out.println(\"Módulo listo\");\n    }\n}",
+      "expected": "Módulo listo",
+      "files": {
+        "module-info.java": "module vcode.sesiones {\n    exports vcode.sesiones;\n}"
+      },
+      "runnable": false
+    }
+  },
+  {
+    "slug": "synchronized",
+    "title": "synchronized",
+    "chapter": 14,
+    "section": "14.19",
+    "group": "Concurrencia",
+    "guide": 10,
+    "summary": "Adquiere el monitor de un objeto antes de ejecutar un bloque y lo libera al salir.",
+    "syntax": "synchronized (candado) {\n    minutos += extra;\n}",
+    "body": [
+      "Los hilos que sincronizan con el mismo monitor no entran juntos. La liberación y adquisición posterior de ese monitor también establecen visibilidad de cambios."
+    ],
+    "notes": [
+      "Todos los accesos a ese estado deben respetar la misma regla de bloqueo. El ejemplo del laboratorio es secuencial; prueba la contención entre hilos con un JDK."
+    ],
+    "aliases": [
+      "synchronized block",
+      "monitor",
+      "bloque sincronizado",
+      "exclusión mutua"
+    ],
+    "related": ["volatile", "Thread"],
+    "example": {
+      "language": "java",
+      "title": "Encapsula una lectura y una escritura con el mismo monitor",
+      "description": "El ejemplo llama cada operación en orden y usa el candado privado en ambas.",
+      "code": "public class Main {\n    static final class Contador {\n        private final Object candado = new Object();\n        private int minutos;\n        void sumar(int extra) {\n            synchronized (candado) { minutos += extra; }\n        }\n        int total() {\n            synchronized (candado) { return minutos; }\n        }\n    }\n\n    public static void main(String[] args) {\n        Contador diario = new Contador();\n        diario.sumar(25);\n        System.out.println(diario.total());\n    }\n}",
+      "expected": "25"
+    }
+  },
+  {
+    "slug": "volatile",
+    "title": "volatile",
+    "chapter": 8,
+    "section": "8.3.1.4",
+    "group": "Concurrencia",
+    "guide": 10,
+    "summary": "Declara un campo con reglas de visibilidad entre lecturas y escrituras de distintos hilos.",
+    "syntax": "private volatile boolean cancelado;",
+    "body": [
+      "Un hilo puede publicar el cambio de una bandera mediante una escritura volatile. Una lectura posterior de la misma variable queda ordenada por el modelo de memoria."
+    ],
+    "notes": [
+      "Operaciones compuestas como contador++ siguen siendo lectura, cálculo y escritura separados. Para un contador concurrente considera AtomicInteger."
+    ],
+    "aliases": [
+      "volatile field",
+      "volatile java",
+      "visibilidad memoria",
+      "bandera cancelación"
+    ],
+    "related": ["synchronized", "Thread"],
+    "example": {
+      "language": "java",
+      "title": "Publica una señal de cancelación",
+      "description": "Este ejemplo demuestra el estado de la bandera sin simular varios hilos en el navegador.",
+      "code": "public class Main {\n    static final class Tarea {\n        private volatile boolean cancelada;\n        void cancelar() { cancelada = true; }\n        boolean cancelada() { return cancelada; }\n    }\n\n    public static void main(String[] args) {\n        Tarea tarea = new Tarea();\n        tarea.cancelar();\n        System.out.println(tarea.cancelada());\n    }\n}",
+      "expected": "true"
+    }
+  },
+  {
+    "slug": "text-block",
+    "title": "Bloque de texto \"\"\"",
+    "chapter": 3,
+    "section": "3.10.6",
+    "group": "Tipos y variables",
+    "guide": 2,
+    "summary": "Escribe un literal de cadena en varias líneas con reglas de indentación propias.",
+    "syntax": "String cuerpo = \"\"\"\n    Java\n    SQL\n    \"\"\";",
+    "body": [
+      "El compilador normaliza los saltos de línea y retira la indentación incidental. La posición del delimitador de cierre influye en el contenido."
+    ],
+    "notes": [
+      "Sigue siendo un String y se procesan secuencias de escape. Cuando el salto de línea final importa, compruébalo con length o endsWith."
+    ],
+    "aliases": [
+      "text block",
+      "cadena multilínea",
+      "string multiline",
+      "triple comilla"
+    ],
+    "related": ["primitive", "String"],
+    "example": {
+      "language": "java",
+      "title": "Define dos líneas y comprueba el salto final",
+      "description": "El valor tiene dos líneas de contenido y termina con un salto.",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        String temas = \"\"\"\n            Java\n            SQL\n            \"\"\";\n        int saltos = 0;\n        for (int i = 0; i < temas.length(); i++) {\n            if (temas.charAt(i) == '\\n') saltos++;\n        }\n        System.out.println(saltos + \" \" + temas.endsWith(\"\\n\"));\n    }\n}",
+      "expected": "2 true"
+    }
+  }
+]

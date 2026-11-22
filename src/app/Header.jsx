@@ -3,42 +3,56 @@ import {
   Search as SearchIcon,
   Sun,
   Moon,
-  X,
-  ArrowUpRight,
   Folder,
   Settings2,
-  MoreHorizontal,
 } from "lucide-react";
 import { Mark } from "./Brand";
 import { usePreferences } from "./Preferences";
 
-export default function Header({ onSearch, route, entering = false }) {
-  const [menu, setMenu] = useState(false);
+const navigation = [
+  {
+    href: "#courses",
+    label: "Aprender",
+    routes: /^(courses|course|lesson|practice|projects|paths)([/?]|$)/,
+  },
+  {
+    href: "#docs",
+    label: "Buscar",
+    routes: /^(docs|reference|symbol)([/?]|$)/,
+  },
+  {
+    href: "#playground",
+    label: "Laboratorio",
+    routes: /^(playground|studio)([/?]|$)/,
+  },
+];
+
+export default function Header({ onSearch, route }) {
   const [settings, setSettings] = useState(false);
-  const { theme, setTheme, motionPaused, setMotionPaused, reducedMotion } =
-    usePreferences();
+  const {
+    theme,
+    setTheme,
+    motionPaused,
+    setMotionPaused,
+    reducedMotion,
+    searchShortcut,
+    setSearchShortcut,
+  } = usePreferences();
   const settingsTrigger = useRef();
   const settingsPanel = useRef();
-  const homeMenuTrigger = useRef();
   const root = useRef();
 
   useEffect(() => {
-    setMenu(false);
     setSettings(false);
   }, [route]);
   useEffect(() => {
     const close = (event) => {
-      if (!root.current?.contains(event.target)) {
-        setMenu(false);
-        setSettings(false);
-      }
+      if (!root.current?.contains(event.target)) setSettings(false);
     };
     const escape = (event) => {
       if (event.key !== "Escape") return;
       if (settings) settingsTrigger.current?.focus();
-      if (menu) homeMenuTrigger.current?.focus();
       setSettings(false);
-      setMenu(false);
     };
     document.addEventListener("pointerdown", close);
     document.addEventListener("keydown", escape);
@@ -46,25 +60,19 @@ export default function Header({ onSearch, route, entering = false }) {
       document.removeEventListener("pointerdown", close);
       document.removeEventListener("keydown", escape);
     };
-  }, [menu, settings]);
+  }, [settings]);
   useEffect(() => {
     if (settings) settingsPanel.current?.querySelector("button")?.focus();
-    if (menu)
-      document
-        .getElementById("home-navigation-menu")
-        ?.querySelector("a")
-        ?.focus();
-  }, [settings, menu]);
+  }, [settings]);
 
-  const openSearch = () => {
+  const openSearch = (event) => {
     setSettings(false);
-    setMenu(false);
-    onSearch();
+    onSearch(event);
   };
   return (
     <header
       ref={root}
-      className={`home-navigation ${entering ? "is-entering" : ""}`}
+      className="home-navigation"
       aria-label="Navegación VCode"
     >
       <div className="home-navigation-bar">
@@ -75,7 +83,6 @@ export default function Header({ onSearch, route, entering = false }) {
           onClick={(event) => {
             if (location.hash && location.hash !== "#home") return;
             event.preventDefault();
-            setMenu(false);
             setSettings(false);
             window.scrollTo({
               top: 0,
@@ -89,21 +96,12 @@ export default function Header({ onSearch, route, entering = false }) {
           className="home-navigation-links"
           aria-label="Navegación principal"
         >
-          {[
-            ["courses", "Lenguajes"],
-            ["docs", "Consultar"],
-            ["studio", "Estudio"],
-            ["projects", "Proyectos"],
-          ].map(([id, label]) => (
+          {navigation.map(({ href, label, routes }) => (
             <a
-              key={id}
-              href={`#${id}`}
+              key={href}
+              href={href}
               draggable={false}
-              aria-current={
-                id === "docs" && /^(docs|reference|lesson)(\/|$)/.test(route)
-                  ? "page"
-                  : undefined
-              }
+              aria-current={routes.test(route) ? "page" : undefined}
             >
               {label}
             </a>
@@ -111,13 +109,11 @@ export default function Header({ onSearch, route, entering = false }) {
         </nav>
         <div className="home-navigation-tools">
           <button
+            className="home-quick-search"
             aria-label="Buscar en todo VCode"
-            title="Buscar · ⌘K"
-            onClick={() => {
-              setSettings(false);
-              setMenu(false);
-              openSearch();
-            }}
+            aria-keyshortcuts={searchShortcut ? "/" : undefined}
+            title={searchShortcut ? "Búsqueda rápida · /" : "Búsqueda rápida"}
+            onClick={openSearch}
           >
             <SearchIcon size={17} />
           </button>
@@ -130,25 +126,9 @@ export default function Header({ onSearch, route, entering = false }) {
             title="Configuración"
             aria-expanded={settings}
             aria-controls="home-settings"
-            onClick={() => {
-              setMenu(false);
-              setSettings((value) => !value);
-            }}
+            onClick={() => setSettings((value) => !value)}
           >
             <Settings2 size={17} />
-          </button>
-          <button
-            ref={homeMenuTrigger}
-            aria-label={menu ? "Cerrar navegación" : "Más páginas"}
-            title="Todas las páginas"
-            aria-expanded={menu}
-            aria-controls="home-navigation-menu"
-            onClick={() => {
-              setSettings(false);
-              setMenu((value) => !value);
-            }}
-          >
-            {menu ? <X size={18} /> : <MoreHorizontal size={20} />}
           </button>
         </div>
       </div>
@@ -219,38 +199,26 @@ export default function Header({ onSearch, route, entering = false }) {
               </span>
             </button>
           </div>
+          <div className="settings-group settings-motion-group">
+            <button
+              className="settings-motion-switch"
+              role="switch"
+              aria-label="Atajo de búsqueda"
+              aria-checked={searchShortcut}
+              onClick={() => setSearchShortcut((value) => !value)}
+            >
+              <span>
+                <span className="settings-label">Atajo de búsqueda</span>
+                <span className="settings-value">
+                  {searchShortcut ? "Pulsa / para buscar" : "Desactivado"}
+                </span>
+              </span>
+              <span className="settings-switch-track" aria-hidden="true">
+                <span />
+              </span>
+            </button>
+          </div>
         </section>
-      )}
-      {menu && (
-        <nav
-          className="home-navigation-menu"
-          id="home-navigation-menu"
-          aria-label="Todas las páginas"
-          onBlur={(event) => {
-            if (
-              event.relatedTarget &&
-              !event.currentTarget.contains(event.relatedTarget) &&
-              event.relatedTarget !== homeMenuTrigger.current
-            )
-              setMenu(false);
-          }}
-        >
-          {[
-            ["courses", "Lenguajes"],
-            ["docs", "Consultar"],
-            ["studio", "Estudio"],
-            ["projects", "Proyectos"],
-            ["playground", "Laboratorio"],
-            ["practice", "Práctica"],
-            ["resources", "Recursos"],
-            ["contact", "Contacto"],
-          ].map(([id, label]) => (
-            <a href={`#${id}`} key={id}>
-              {label}
-              <ArrowUpRight size={14} />
-            </a>
-          ))}
-        </nav>
       )}
     </header>
   );

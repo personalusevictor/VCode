@@ -1,0 +1,126 @@
+{
+  "session_status": {
+    "summary": "Indica si PHP tiene una sesión activa en la petición actual.",
+    "description": [
+      "Úsala antes de iniciar una sesión cuando tu código no controla si otro componente ya llamó a session_start(). El estado refleja la sesión durante esta ejecución. La presencia de una cookie no demuestra que PHP haya abierto la sesión.",
+      "La consulta no inicia ni modifica la sesión. Compara el entero devuelto con una de las constantes de PHP."
+    ],
+    "returns": [],
+    "returnValues": [
+      {
+        "value": "PHP_SESSION_DISABLED",
+        "meaning": "El soporte de sesiones está desactivado."
+      },
+      {
+        "value": "PHP_SESSION_NONE",
+        "meaning": "Las sesiones están habilitadas, pero esta petición aún no tiene una abierta."
+      },
+      {
+        "value": "PHP_SESSION_ACTIVE",
+        "meaning": "PHP tiene una sesión abierta en la petición actual."
+      }
+    ],
+    "examples": [
+      {
+        "title": "Comprueba el estado antes y después de abrir una sesión",
+        "code": "<?php\n$antes = session_status();\n\nif ($antes === PHP_SESSION_NONE && !session_start()) {\n    throw new RuntimeException('No se pudo abrir la sesión');\n}\n\n$despues = session_status();\nprintf(\"Activa antes: %s\\n\", $antes === PHP_SESSION_ACTIVE ? 'sí' : 'no');\nprintf(\"Activa después: %s\\n\", $despues === PHP_SESSION_ACTIVE ? 'sí' : 'no');",
+        "output": "Activa antes: no\nActiva después: sí",
+        "runnable": true
+      }
+    ],
+    "notes": [
+      "En una petición web, inicia la sesión antes de enviar contenido si necesitas emitir sus cabeceras y cookies.",
+      "Una sesión activa no equivale a un usuario autenticado. Comprueba por separado los datos de identidad y los permisos.",
+      "No compruebes el retorno como un booleano. Compara cada caso con su constante para distinguir una sesión desactivada de otra habilitada pero sin abrir."
+    ],
+    "related": [
+      "session_start",
+      "session_write_close",
+      "session_destroy",
+      "session_id"
+    ]
+  },
+  "backedenum::tryfrom": {
+    "summary": "Busca el caso de una enumeración que corresponde a un entero o a una cadena.",
+    "description": [
+      "Devuelve el caso si el valor coincide. Si el valor escalar es válido para el tipo de la enumeración pero no corresponde a ningún caso, devuelve null.",
+      "Llama al método de tu propia enumeración. Comprueba los datos que vienen de JSON o de un formulario antes de pasarlos al método."
+    ],
+    "examples": [
+      {
+        "title": "Convierte dos estados recibidos como texto",
+        "code": "<?php\ndeclare(strict_types=1);\n\nenum Estado: string {\n    case Publicado = 'publicado';\n}\n\nforeach (['publicado', 'pendiente'] as $valor) {\n    $caso = Estado::tryFrom($valor);\n    echo $caso?->name ?? 'Estado desconocido', PHP_EOL;\n}",
+        "output": "Publicado\nEstado desconocido",
+        "runnable": true
+      }
+    ],
+    "returns": [
+      "El caso con el valor solicitado o null si no hay coincidencia."
+    ],
+    "related": ["BackedEnum", "BackedEnum::from", "UnitEnum::cases"]
+  },
+  "generator::current": {
+    "summary": "Lee el valor que el generador tiene disponible en su posición actual.",
+    "description": [
+      "Al consultar por primera vez, el generador se ejecuta hasta alcanzar su primer yield. Llama a next() para avanzar.",
+      "Usa valid() para comprobar que queda un valor disponible. Un generador también puede producir null como valor."
+    ],
+    "examples": [
+      {
+        "title": "Lee dos valores sin construir una lista",
+        "code": "<?php\nfunction temas(): Generator {\n    yield 'HTML';\n    yield 'PHP';\n}\n\n$temas = temas();\necho $temas->current(), PHP_EOL;\n$temas->next();\necho $temas->current(), PHP_EOL;",
+        "output": "HTML\nPHP",
+        "runnable": true
+      }
+    ],
+    "returns": ["El valor producido por yield en la posición actual."],
+    "related": ["Generator", "Generator::next", "Generator::valid"]
+  },
+  "datetimeimmutable": {
+    "summary": "Representa un instante con una fecha, una hora y una zona horaria.",
+    "description": [
+      "Sus operaciones de cambio devuelven otra instancia. Conserva el resultado al sumar intervalos o ajustar la zona horaria.",
+      "Indica la zona al construir una fecha de calendario. El mismo texto de fecha y hora local puede identificar instantes distintos según la zona."
+    ],
+    "examples": [
+      {
+        "title": "Suma un día y conserva la fecha original",
+        "code": "<?php\n$inicio = new DateTimeImmutable('2026-11-21', new DateTimeZone('UTC'));\n$siguiente = $inicio->add(new DateInterval('P1D'));\n\necho $inicio->format('Y-m-d'), PHP_EOL;\necho $siguiente->format('Y-m-d'), PHP_EOL;",
+        "output": "2026-11-21\n2026-11-22",
+        "runnable": true
+      }
+    ]
+  },
+  "pdo::fetch_assoc": {
+    "summary": "Recupera una fila de PDO con los nombres de las columnas como claves.",
+    "description": [
+      "Configura este modo al llamar a fetch() o fetchAll(). Si tu consulta produce columnas con nombres repetidos, usa alias para que cada clave represente un valor distinto."
+    ],
+    "examples": [
+      {
+        "title": "Recupera una fila con claves de texto",
+        "code": "<?php\n$base = new PDO('sqlite::memory:');\n$fila = $base->query(\"SELECT 'PHP' AS lenguaje, 25 AS minutos\")\n             ->fetch(PDO::FETCH_ASSOC);\necho $fila['lenguaje'], ': ', $fila['minutos'], ' min', PHP_EOL;",
+        "output": "PHP: 25 min",
+        "runnable": true
+      }
+    ],
+    "related": ["PDO", "PDOStatement::fetch", "PDOStatement::fetchAll"]
+  },
+  "$_get": {
+    "summary": "Contiene los parámetros de la cadena de consulta de la URL.",
+    "description": [
+      "Las claves y los valores proceden de la petición. Comprueba que una clave esté presente y que tenga el tipo esperado. Una clave puede aportar un array si se envía con notación de corchetes.",
+      "Valida antes de usar los datos y escapa al escribirlos en HTML. El laboratorio simula la petición con parse_str()."
+    ],
+    "examples": [
+      {
+        "title": "Lee un tema de una cadena de consulta",
+        "code": "<?php\nparse_str('tema=HTML&duracion=20', $_GET);\n$tema = $_GET['tema'] ?? null;\n\nif (is_string($tema) && trim($tema) !== '') {\n    echo \"Tema: \", $tema, PHP_EOL;\n}",
+        "output": "Tema: HTML",
+        "runnable": true
+      }
+    ],
+    "typeName": "array",
+    "related": ["parse_str", "filter_input", "$_POST"]
+  }
+}

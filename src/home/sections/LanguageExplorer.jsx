@@ -109,9 +109,9 @@ export default function LanguageExplorer({ paused = false }) {
     <section
       className="language-explorer"
       id="home-languages"
-      aria-label="Explora los siete lenguajes"
+      aria-label="Explora los lenguajes"
     >
-      <h2 className="sr-only">Siete lenguajes para explorar</h2>
+      <h2 className="sr-only">Lenguajes para explorar</h2>
       <div className="language-tabs" role="tablist" aria-label="Lenguajes">
         {courses.map((course, index) => (
           <button
@@ -144,13 +144,21 @@ export default function LanguageExplorer({ paused = false }) {
         <div className="language-introduction">
           <LanguageArtwork course={course} paused={paused} />
           <h3 className="sr-only">{course.name}</h3>
-          <p className="language-description">{descriptions[selected][1]}</p>
-          <p className="language-context">{context[selected]}</p>
+          <p className="language-description">
+            {descriptions[selected]?.[1] || course.description}
+          </p>
+          <p className="language-context">{context[selected] || course.tag}</p>
           <nav
             className="language-topics"
             aria-label={`Temas de ${course.name}`}
           >
-            {topics[selected].map(([lesson, label]) => (
+            {(
+              topics[selected] || [
+                [1, "Primer programa"],
+                [5, "Tipos y abstracciones"],
+                [12, "Proyecto"],
+              ]
+            ).map(([lesson, label]) => (
               <a key={lesson} href={`#lesson/${selected}/${lesson}`}>
                 {label}
                 <ArrowUpRight size={12} />

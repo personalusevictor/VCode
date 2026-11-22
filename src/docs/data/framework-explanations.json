@@ -1,0 +1,1178 @@
+{
+  "web-typescript-config-exactOptionalPropertyTypes": {
+    "guide": 18,
+    "intro": [
+      "Distingue omitir una propiedad opcional y asignarle undefined de forma explícita."
+    ],
+    "body": [
+      "Con esta opción activa, tema?: string permite que el campo falte o contenga un texto. Si debe aceptar una asignación undefined, escribe tema?: string | undefined.",
+      "Al leer una propiedad opcional sigue siendo posible obtener undefined. El programa puede comprobar su presencia mediante Object.hasOwn."
+    ],
+    "caveats": [
+      "Requiere strictNullChecks. strict lo activa de forma predeterminada, pero exactOptionalPropertyTypes se configura por separado."
+    ],
+    "aliases": [
+      "opcional exacto",
+      "propiedad ausente",
+      "exact optional properties"
+    ],
+    "locale": "es",
+    "usage": "{\n  \"compilerOptions\": {\n    \"exactOptionalPropertyTypes\": true\n  }\n}"
+  },
+  "web-typescript-config-noUncheckedIndexedAccess": {
+    "guide": 19,
+    "intro": [
+      "Incluye undefined al leer una clave de índice que TypeScript no puede demostrar que exista."
+    ],
+    "body": [
+      "Una firma Record<string, number> describe un tipo de valores. Con la opción activa, consultar una clave arbitraria produce number | undefined.",
+      "Las propiedades declaradas directamente conservan sus tipos. Antes de usar un resultado incierto, comprueba su presencia o elige un valor de reserva."
+    ],
+    "caveats": [
+      "Al acceder a una posición de array, la opción también puede introducir undefined. Un acceso comprobado al recorrer una lista puede expresarse con for...of."
+    ],
+    "aliases": [
+      "índice ausente",
+      "clave que puede faltar",
+      "comprobar índices"
+    ],
+    "locale": "es",
+    "usage": "{\n  \"compilerOptions\": {\n    \"noUncheckedIndexedAccess\": true\n  }\n}"
+  },
+  "web-typescript-config-noPropertyAccessFromIndexSignature": {
+    "guide": 19,
+    "intro": [
+      "Exige la notación con corchetes para acceder a propiedades descritas únicamente por una firma de índice."
+    ],
+    "body": [
+      "Si una propiedad está declarada con su propio nombre, puedes seguir escribiendo objeto.nombre.",
+      "Para las claves que solo permite un índice, usa objeto[clave]. Así se ve dónde el código depende de un nombre que no figura en la declaración."
+    ],
+    "caveats": [
+      "La opción cambia la forma permitida de escribir el acceso. Usa noUncheckedIndexedAccess para que la lectura refleje una posible ausencia."
+    ],
+    "aliases": [
+      "índice acceso con corchetes",
+      "propiedades de índice",
+      "acceso a claves dinámicas"
+    ],
+    "locale": "es",
+    "usage": "{\n  \"compilerOptions\": {\n    \"noPropertyAccessFromIndexSignature\": true\n  }\n}"
+  },
+  "web-typescript-config-noImplicitReturns": {
+    "guide": 20,
+    "intro": [
+      "Señala caminos de una función que devuelve un valor en los que el control llega al final sin un resultado."
+    ],
+    "body": [
+      "Añade un retorno de reserva o devuelve undefined explícitamente si la ausencia forma parte del contrato.",
+      "Una anotación de retorno puede declarar qué datos debe obtener el llamador y ayudar a detectar ramas incompatibles."
+    ],
+    "caveats": [
+      "El comprobador informa sobre el código. La emisión de JavaScript puede seguir siendo posible según la configuración."
+    ],
+    "aliases": [
+      "retorno implícito",
+      "falta un return",
+      "todas las ramas devuelven"
+    ],
+    "locale": "es",
+    "usage": "{\n  \"compilerOptions\": {\n    \"noImplicitReturns\": true\n  }\n}"
+  },
+  "web-typescript-config-resolveJsonModule": {
+    "locale": "es",
+    "intro": [
+      "Permite importar archivos JSON y deducir los tipos de sus valores."
+    ],
+    "usage": "{\n  \"compilerOptions\": {\n    \"resolveJsonModule\": true\n  }\n}",
+    "body": [
+      "TypeScript lee el contenido del archivo al resolver el módulo. Puedes usar su forma inferida para comprobar las operaciones que lo consumen."
+    ],
+    "caveats": [
+      "La opción afecta a la resolución y comprobación de TypeScript. El formato de carga durante la ejecución depende del entorno o empaquetador."
+    ],
+    "guide": 21,
+    "aliases": ["importar json ts", "tipos de json", "json module typescript"]
+  },
+  "web-typescript-config-strict": {
+    "locale": "es",
+    "intro": [
+      "Activa una familia de comprobaciones que hacen explícitos más errores de tipos."
+    ],
+    "body": [
+      "Incluye controles como strictNullChecks y noImplicitAny. Puedes configurar una comprobación concreta aparte. Al actualizar el compilador, revisa los nuevos diagnósticos, ya que la familia puede incorporar comprobaciones."
+    ],
+    "aliases": ["modo estricto"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"strict\": true\n  }\n}"
+  },
+  "web-typescript-config-target": {
+    "locale": "es",
+    "intro": [
+      "Indica qué versión de JavaScript debe poder ejecutar el código emitido."
+    ],
+    "body": [
+      "Elige el nivel según los navegadores o motores que vas a usar. Un nivel bajo puede transformar sintaxis. Para APIs que falten en el entorno, comprueba la compatibilidad y añade los polyfills necesarios."
+    ],
+    "aliases": ["versión de JavaScript", "destino JavaScript"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"target\": \"ES2022\"\n  }\n}"
+  },
+  "web-typescript-config-lib": {
+    "locale": "es",
+    "intro": [
+      "Elige las declaraciones de tipos del entorno que verá el compilador."
+    ],
+    "body": [
+      "DOM añade tipos como Document. ES2022 describe APIs del lenguaje hasta ese nivel. Incluye solo bibliotecas disponibles en tu destino o que vayas a proporcionar. Declarar una API no la instala."
+    ],
+    "aliases": ["bibliotecas estándar", "tipos DOM"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"lib\": [\n      \"ES2022\",\n      \"DOM\",\n      \"DOM.Iterable\"\n    ]\n  }\n}"
+  },
+  "web-typescript-config-module": {
+    "locale": "es",
+    "intro": [
+      "Selecciona el formato de módulos que modela o emite TypeScript."
+    ],
+    "body": [
+      "Para Node, los modos modernos tienen en cuenta la extensión y el campo type del paquete. Para un empaquetador, preserve conserva cada forma de importación y exportación. Coordina esta opción con moduleResolution."
+    ],
+    "aliases": ["módulos ESM y CommonJS"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"module\": \"NodeNext\"\n  }\n}"
+  },
+  "web-typescript-config-moduleResolution": {
+    "locale": "es",
+    "intro": [
+      "Define cómo encuentra TypeScript los archivos y paquetes que importas."
+    ],
+    "body": [
+      "Usa Bundler cuando el empaquetador resuelve rutas y permite importaciones relativas sin extensión. Para código ejecutado directamente por Node, escoge una modalidad acorde como NodeNext y sigue sus reglas de extensiones y exports."
+    ],
+    "aliases": ["resolución de módulos"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"moduleResolution\": \"Bundler\"\n  }\n}"
+  },
+  "web-typescript-config-rootDir": {
+    "locale": "es",
+    "intro": [
+      "Marca la raíz que usa TypeScript para conservar la estructura al emitir archivos."
+    ],
+    "body": [
+      "Con rootDir src y outDir dist, src/componentes/boton.ts puede emitirse como dist/componentes/boton.js. Configura include o files para elegir las entradas. rootDir por sí solo no limita qué código analiza."
+    ],
+    "aliases": ["raíz de código fuente"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"rootDir\": \"./src\"\n  }\n}"
+  },
+  "web-typescript-config-outDir": {
+    "locale": "es",
+    "intro": ["Dirige los archivos emitidos a otra carpeta."],
+    "body": [
+      "Puede contener JavaScript, declaraciones y mapas, según las demás opciones. TypeScript conserva la estructura relativa a rootDir. Usa una carpeta de salida distinta de la del código fuente."
+    ],
+    "aliases": ["carpeta de salida"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"outDir\": \"./dist\"\n  }\n}"
+  },
+  "web-typescript-config-types": {
+    "locale": "es",
+    "intro": [
+      "Limita los paquetes de declaraciones que añaden tipos al ámbito global."
+    ],
+    "body": [
+      "Al enumerar node, se incorporan sus tipos globales si está instalado @types/node. Los tipos de una dependencia importada se siguen resolviendo al importarla, aunque no figure en esta lista."
+    ],
+    "aliases": ["tipos globales", "@types"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"types\": [\n      \"node\"\n    ]\n  }\n}"
+  },
+  "web-typescript-config-typeRoots": {
+    "locale": "es",
+    "intro": [
+      "Indica las carpetas donde buscar paquetes de declaraciones globales."
+    ],
+    "body": [
+      "Cada ruta es relativa al archivo de configuración. Al definir typeRoots, enumera también cualquier directorio de @types que quieras seguir usando. Cada paquete de tipos debe tener su propia carpeta."
+    ],
+    "aliases": ["carpetas @types"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"typeRoots\": [\n      \"./tipos\",\n      \"./node_modules/@types\"\n    ]\n  }\n}"
+  },
+  "web-typescript-config-noEmit": {
+    "locale": "es",
+    "intro": [
+      "Comprueba el proyecto sin generar JavaScript, declaraciones ni mapas."
+    ],
+    "body": [
+      "Resulta útil cuando el empaquetador ya produce la salida. Ejecuta tsc con esta opción para validar los tipos como paso separado de tu compilación."
+    ],
+    "aliases": ["solo comprobar tipos"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"noEmit\": true\n  }\n}"
+  },
+  "web-typescript-config-noEmitOnError": {
+    "locale": "es",
+    "intro": ["Evita generar archivos si TypeScript comunica errores."],
+    "body": [
+      "Úsalo si publicas la salida de tsc y quieres detenerla tras un diagnóstico. Los archivos que ya existían permanecen en el disco, así que limpia la carpeta antes de preparar una entrega."
+    ],
+    "aliases": ["bloquear salida con errores"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"noEmitOnError\": true\n  }\n}"
+  },
+  "web-typescript-config-allowJs": {
+    "locale": "es",
+    "intro": [
+      "Permite incluir archivos JavaScript en un proyecto de TypeScript."
+    ],
+    "body": [
+      "Es útil durante una migración gradual. Activa checkJs si también quieres diagnósticos dentro de esos archivos. Si emites resultados, usa outDir para evitar que se solapen con tus fuentes."
+    ],
+    "aliases": ["mezclar JavaScript y TypeScript"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"allowJs\": true\n  }\n}"
+  },
+  "web-typescript-config-checkJs": {
+    "locale": "es",
+    "intro": [
+      "Informa de errores de tipos en los archivos JavaScript incluidos."
+    ],
+    "body": [
+      "Puedes empezar por un archivo con // @ts-check y ampliar después a todo el proyecto con checkJs. Las anotaciones JSDoc ayudan a precisar parámetros, propiedades y retornos."
+    ],
+    "aliases": ["comprobar JavaScript", "JSDoc"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"checkJs\": true\n  }\n}"
+  },
+  "web-typescript-config-declaration": {
+    "locale": "es",
+    "intro": [
+      "Genera archivos .d.ts para describir la interfaz de tipos del código."
+    ],
+    "body": [
+      "Publica estas declaraciones junto con tu biblioteca para que quien la use conozca sus exportaciones. Con emitDeclarationOnly puedes dejar la salida JavaScript a otro compilador."
+    ],
+    "aliases": ["generar declaraciones", ".d.ts"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"declaration\": true\n  }\n}"
+  },
+  "web-typescript-config-emitDeclarationOnly": {
+    "locale": "es",
+    "intro": ["Emite declaraciones sin generar JavaScript."],
+    "body": [
+      "Combínala con declaration o composite. Es habitual en bibliotecas donde el empaquetador genera el código ejecutable y tsc prepara los tipos para sus consumidores."
+    ],
+    "aliases": ["solo declaraciones"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"emitDeclarationOnly\": true\n  }\n}"
+  },
+  "web-typescript-config-declarationMap": {
+    "locale": "es",
+    "intro": [
+      "Genera mapas que conectan las declaraciones con el código fuente."
+    ],
+    "body": [
+      "Un editor puede abrir la definición original en lugar de quedarse en el .d.ts generado. Es especialmente útil entre paquetes con referencias de proyecto. Activa también declaration."
+    ],
+    "aliases": ["mapas de declaraciones"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"declarationMap\": true\n  }\n}"
+  },
+  "web-typescript-config-incremental": {
+    "locale": "es",
+    "intro": [
+      "Guarda datos de la compilación anterior para acelerar las siguientes."
+    ],
+    "body": [
+      "TypeScript usa un archivo .tsbuildinfo como caché. Puedes borrarlo para forzar una comprobación completa. No se necesita en tiempo de ejecución."
+    ],
+    "aliases": ["compilación incremental"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"incremental\": true\n  }\n}"
+  },
+  "web-typescript-config-sourceMap": {
+    "locale": "es",
+    "intro": [
+      "Genera mapas que relacionan JavaScript emitido con el código original."
+    ],
+    "body": [
+      "Un depurador que lea el mapa puede mostrar el .ts y colocar puntos de interrupción sobre él. Decide si esos mapas deben acompañar una publicación, ya que describen los archivos originales."
+    ],
+    "aliases": ["mapa de depuración"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"sourceMap\": true\n  }\n}"
+  },
+  "web-typescript-config-verbatimModuleSyntax": {
+    "locale": "es",
+    "intro": [
+      "Conserva las importaciones de valor y borra las importaciones y exportaciones marcadas como type."
+    ],
+    "body": [
+      "Marca con import type aquello que solo se usa al comprobar tipos. Si el archivo está en un formato incompatible con la sintaxis escrita, TypeScript pide corregir la configuración o el código."
+    ],
+    "aliases": ["import type", "syntax de módulos"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"verbatimModuleSyntax\": true\n  }\n}"
+  },
+  "web-typescript-config-jsx": {
+    "locale": "es",
+    "intro": ["Elige cómo transforma TypeScript el JSX de los archivos .tsx."],
+    "body": [
+      "react-jsx usa el entorno JSX automático. preserve conserva este marcado para otra herramienta. Aunque el resultado cambie, la comprobación de tipos también depende de los tipos JSX que aporte la biblioteca."
+    ],
+    "aliases": ["configurar TSX"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"jsx\": \"react-jsx\"\n  }\n}"
+  },
+  "web-typescript-config-noUnusedLocals": {
+    "locale": "es",
+    "intro": [
+      "Informa de variables, importaciones y otras declaraciones locales sin usar."
+    ],
+    "body": [
+      "Úsala para detectar restos al refactorizar. Un valor exportado forma parte de la interfaz pública del módulo aunque su propio archivo no lo lea."
+    ],
+    "aliases": ["variables sin usar"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"noUnusedLocals\": true\n  }\n}"
+  },
+  "web-typescript-config-noUnusedParameters": {
+    "locale": "es",
+    "intro": ["Informa de parámetros que una función declara pero no utiliza."],
+    "body": [
+      "Un nombre que empieza por _ queda exento. Usa esa forma cuando una firma externa exige la posición del argumento, pero el cuerpo no lo necesita."
+    ],
+    "aliases": ["parámetros sin usar"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"noUnusedParameters\": true\n  }\n}"
+  },
+  "web-typescript-config-noImplicitAny": {
+    "locale": "es",
+    "intro": [
+      "Informa cuando el compilador tendría que deducir any de manera implícita."
+    ],
+    "body": [
+      "Añade una anotación útil o deja que TypeScript infiera el tipo a partir de un contexto concreto. La opción permite un any explícito, así que revisa también cómo lo usas."
+    ],
+    "aliases": ["any implícito"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"noImplicitAny\": true\n  }\n}"
+  },
+  "web-typescript-config-strictNullChecks": {
+    "locale": "es",
+    "intro": [
+      "Trata null y undefined como tipos distintos que debes tener en cuenta."
+    ],
+    "body": [
+      "Una búsqueda puede devolver undefined aunque su colección tenga un tipo concreto. Comprueba el resultado antes de acceder a una propiedad. Usar ! silencia la comprobación para esa expresión."
+    ],
+    "aliases": ["null y undefined"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"strictNullChecks\": true\n  }\n}"
+  },
+  "web-typescript-config-useUnknownInCatchVariables": {
+    "locale": "es",
+    "intro": [
+      "Tipa la variable capturada por catch como unknown de forma predeterminada."
+    ],
+    "body": [
+      "JavaScript permite lanzar valores de cualquier tipo. Antes de leer message, estrecha el tipo con instanceof Error o valida la forma que tu aplicación espera."
+    ],
+    "aliases": ["errores unknown"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"useUnknownInCatchVariables\": true\n  }\n}"
+  },
+  "web-typescript-config-noImplicitOverride": {
+    "locale": "es",
+    "intro": [
+      "Exige override cuando una subclase redefine un miembro heredado."
+    ],
+    "body": [
+      "Si se renombra el miembro en la clase base, el compilador puede señalar la redefinición desfasada. Declara override en el miembro correspondiente de la subclase."
+    ],
+    "aliases": ["sobrescribir método"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"noImplicitOverride\": true\n  }\n}"
+  },
+  "web-typescript-config-isolatedModules": {
+    "locale": "es",
+    "intro": [
+      "Detecta código que otras herramientas podrían transformar mal al procesar cada archivo por separado."
+    ],
+    "body": [
+      "Esta opción sirve como comprobación de compatibilidad con transpiladores de un solo archivo. Marca las exportaciones de tipos con export type y revisa los diagnósticos sobre sintaxis que requiera información entre archivos."
+    ],
+    "aliases": ["transpilación por archivo"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"isolatedModules\": true\n  }\n}"
+  },
+  "web-typescript-config-isolatedDeclarations": {
+    "locale": "es",
+    "intro": [
+      "Exige anotaciones suficientes para generar declaraciones a partir de cada archivo."
+    ],
+    "body": [
+      "Cuando una exportación depende de inferencias complejas, añade un tipo de retorno o una anotación explícita. Usa la opción con declaration o composite."
+    ],
+    "aliases": ["declaraciones aisladas"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"isolatedDeclarations\": true\n  }\n}"
+  },
+  "web-typescript-config-skipLibCheck": {
+    "locale": "es",
+    "intro": ["Omite la comprobación interna de los archivos de declaración."],
+    "body": [
+      "TypeScript sigue comprobando tu código contra esos tipos. Activarla puede reducir el tiempo de compilación y también ocultar incompatibilidades entre declaraciones. Si hay tipos duplicados, revisa primero las versiones."
+    ],
+    "aliases": ["omitir .d.ts"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"skipLibCheck\": true\n  }\n}"
+  },
+  "web-typescript-config-paths": {
+    "locale": "es",
+    "intro": ["Enseña al comprobador a resolver un alias de importación."],
+    "body": [
+      "El alias no reescribe el import emitido. Configura la misma ruta en el empaquetador o utiliza un mecanismo que conozca tu entorno de ejecución."
+    ],
+    "aliases": ["alias de importación"],
+    "usage": "{\n  \"compilerOptions\": {\n    \"paths\": {\n      \"@app/*\": [\n        \"./src/*\"\n      ]\n    }\n  }\n}"
+  },
+  "web-typescript-config-include": {
+    "locale": "es",
+    "intro": [
+      "Selecciona archivos raíz que coincidan con patrones relativos al tsconfig."
+    ],
+    "body": [
+      "El compilador incluye archivos adicionales cuando tu código los importa. Por ello, la selección inicial no equivale a una frontera alrededor del directorio."
+    ],
+    "aliases": ["archivos incluidos"],
+    "usage": "{\n  \"include\": [\n    \"src/**/*\"\n  ]\n}"
+  },
+  "web-typescript-config-exclude": {
+    "locale": "es",
+    "intro": [
+      "Descarta coincidencias cuando se expanden los patrones de include."
+    ],
+    "body": [
+      "Un archivo excluido por esta lista puede seguir entrando a través de un import, una referencia o files. Comprueba con explainFiles por qué pertenece al programa."
+    ],
+    "aliases": ["archivos excluidos"],
+    "usage": "{\n  \"exclude\": [\n    \"dist\",\n    \"node_modules\"\n  ]\n}"
+  },
+  "web-typescript-config-files": {
+    "locale": "es",
+    "intro": ["Enumera archivos raíz por ruta en la configuración."],
+    "body": [
+      "Es una opción explícita útil para programas pequeños. Si falta alguno de los archivos enumerados, TypeScript muestra un error. Sus dependencias se siguen resolviendo mediante importaciones."
+    ],
+    "aliases": ["lista de archivos"],
+    "usage": "{\n  \"files\": [\n    \"./src/inicio.ts\"\n  ]\n}"
+  },
+  "web-typescript-config-extends": {
+    "locale": "es",
+    "intro": [
+      "Toma opciones de una configuración base para reutilizarlas en otro proyecto."
+    ],
+    "body": [
+      "La configuración hija sobreescribe las opciones que declara. Las rutas relativas se interpretan desde el archivo donde aparecen. files, include y exclude de la hija sustituyen sus equivalentes de la base."
+    ],
+    "aliases": ["heredar tsconfig"],
+    "usage": "{\n  \"extends\": \"./tsconfig.base.json\"\n}"
+  },
+  "web-typescript-types-basic-types": {
+    "locale": "es",
+    "intro": [
+      "TypeScript añade comprobaciones estáticas a programas de JavaScript."
+    ],
+    "body": [
+      "Escribe tipos para describir valores y detectar incompatibilidades antes de ejecutar. La mayoría de las anotaciones desaparecen al emitir JavaScript. Valida los datos externos en ejecución aunque el compilador conozca tus tipos."
+    ],
+    "aliases": ["The Basics", "fundamentos de TypeScript"]
+  },
+  "web-typescript-types-classes": {
+    "locale": "es",
+    "intro": [
+      "Las clases de TypeScript pueden tipar campos, constructores, métodos y herencia."
+    ],
+    "body": [
+      "Con strictPropertyInitialization, cada campo tiene que recibir un valor a tiempo. El modificador private de TypeScript restringe el acceso para el comprobador. Un nombre con # también impone privacidad en JavaScript."
+    ],
+    "aliases": ["classes", "campos privados"]
+  },
+  "web-typescript-types-everyday-types": {
+    "locale": "es",
+    "intro": [
+      "Usa tipos primitivos, objetos, arrays, uniones y literales para expresar la forma de los datos."
+    ],
+    "body": [
+      "La inferencia suele ser suficiente en variables locales. Añade anotaciones donde definas un contrato y reduce una unión con una comprobación antes de acceder a propiedades que no comparten sus miembros."
+    ],
+    "aliases": ["Everyday Types", "tipos primitivos", "tipos literales"]
+  },
+  "web-typescript-types-modules": {
+    "locale": "es",
+    "intro": [
+      "Importa y exporta código entre archivos sin compartir el ámbito global."
+    ],
+    "body": [
+      "Una declaración import o export convierte el archivo en módulo. Usa import type para una dependencia de tipos. El formato y la forma de resolver rutas deben coincidir con el entorno que ejecutará el programa."
+    ],
+    "aliases": ["Modules", "import export"]
+  },
+  "web-typescript-types-functions": {
+    "locale": "es",
+    "intro": [
+      "Describe los argumentos, la salida y las relaciones entre valores de una función."
+    ],
+    "body": [
+      "Un parámetro genérico puede conectar el tipo de un argumento con el retorno. Declara sobrecargas si una misma operación admite llamadas distintas. La firma de implementación debe cubrir los casos declarados."
+    ],
+    "aliases": ["More on Functions", "sobrecargas"]
+  },
+  "web-typescript-types-narrowing": {
+    "locale": "es",
+    "intro": [
+      "TypeScript refina el tipo de un valor a medida que el código prueba sus posibles casos."
+    ],
+    "body": [
+      "Comprueba typeof, instanceof, in o un discriminante literal. Con una unión discriminada, cada rama conoce los campos de su variante. Una comprobación genérica de verdad también excluye cero y la cadena vacía."
+    ],
+    "aliases": ["Narrowing", "guardas de tipo", "uniones discriminadas"]
+  },
+  "web-typescript-types-objects": {
+    "locale": "es",
+    "intro": [
+      "Describe las propiedades de un objeto con un tipo literal, una interfaz o un alias."
+    ],
+    "body": [
+      "El signo ? expresa que una propiedad puede faltar. readonly impide escribir a través de esa vista en la comprobación, de forma superficial. La forma de un objeto también puede incluir firmas de índice."
+    ],
+    "aliases": ["Object Types", "interface", "readonly"]
+  },
+  "web-typescript-types-type-declarations": {
+    "locale": "es",
+    "intro": [
+      "Los archivos .d.ts describen tipos y firmas sin incluir la implementación ejecutable."
+    ],
+    "body": [
+      "Sirven para consumir bibliotecas JavaScript con el comprobador. Busca los que distribuye el paquete o su correspondiente @types. Una declaración incorrecta puede prometer un comportamiento que el código real no tiene."
+    ],
+    "aliases": ["Type Declarations", ".d.ts", "declaraciones de tipos"]
+  },
+  "web-typescript-types-conditional-types": {
+    "locale": "es",
+    "intro": ["Escogen un tipo según si una forma se puede asignar a otra."],
+    "body": [
+      "En T extends U ? A : B, la rama verdadera puede aprovechar la restricción. Usa infer para extraer una parte del tipo comparado. Un T desnudo como parámetro distribuye la comparación sobre una unión."
+    ],
+    "aliases": ["Conditional Types", "infer", "distribución de uniones"]
+  },
+  "web-typescript-types-generics": {
+    "locale": "es",
+    "intro": [
+      "Los parámetros genéricos permiten reutilizar código conservando relaciones entre tipos."
+    ],
+    "body": [
+      "Una función identidad devuelve el mismo T que recibe. Usa extends para exigir las capacidades que necesita su implementación y deja que se deduzca T cuando la llamada ya aporta información suficiente."
+    ],
+    "aliases": ["Generics", "restricciones genéricas"]
+  },
+  "web-typescript-types-indexed-access-types": {
+    "locale": "es",
+    "intro": ["Un acceso T[K] obtiene el tipo de la propiedad K de T."],
+    "body": [
+      "Si K es una unión de claves, el resultado combina los tipos de esas propiedades. Usa T[number] para obtener el tipo de elemento de un array o una tupla. Una clave fuera de T es un error."
+    ],
+    "aliases": ["Indexed Access Types", "tipo de una propiedad"]
+  },
+  "web-typescript-types-mapped-types": {
+    "locale": "es",
+    "intro": ["Construyen un tipo recorriendo las claves de otro."],
+    "body": [
+      "Con [K in keyof T], puedes reutilizar T[K] para cada propiedad. Los modificadores + y - cambian readonly u opcionalidad. La cláusula as permite cambiar o excluir claves."
+    ],
+    "aliases": ["Mapped Types", "remapeo de claves"]
+  },
+  "web-typescript-types-template-literal-types": {
+    "locale": "es",
+    "intro": [
+      "Componen tipos de cadenas a partir de fragmentos y uniones de literales."
+    ],
+    "body": [
+      "Puedes convertir las claves de un objeto en nombres de eventos como nombreChanged. Al interpolar varias uniones, se generan sus combinaciones. Para conjuntos muy grandes conviene producir el catálogo en otro paso."
+    ],
+    "aliases": ["Template Literal Types", "literales de plantilla"]
+  },
+  "web-typescript-types-types-from-types": {
+    "locale": "es",
+    "intro": [
+      "Reutiliza tipos existentes para que varias partes del programa evolucionen juntas."
+    ],
+    "body": [
+      "keyof extrae las claves, typeof toma el tipo de un valor y T[K] selecciona una parte. Los tipos mapeados y condicionales permiten aplicar la misma transformación a muchas declaraciones."
+    ],
+    "aliases": ["Creating Types from Types", "derivar tipos"]
+  },
+  "web-typescript-types-understanding-errors": {
+    "locale": "es",
+    "intro": [
+      "Lee un diagnóstico de tipos siguiendo la diferencia concreta que impide una asignación."
+    ],
+    "body": [
+      "Empieza por los dos tipos y la propiedad o el parámetro que aparece al final del mensaje. Reproduce el fallo con un ejemplo pequeño y corrige la declaración o valida el valor antes de usar una aserción."
+    ],
+    "aliases": ["Understanding Errors", "diagnósticos del compilador"]
+  },
+  "web-typescript-types-advanced-types": {
+    "locale": "es",
+    "intro": [
+      "Combina estrechamiento, claves, uniones y transformaciones para representar reglas más específicas."
+    ],
+    "body": [
+      "Usa un discriminante para decidir qué caso está presente en ejecución. Usa mapped types o tipos condicionales cuando la relación se pueda expresar solo a nivel de tipos."
+    ],
+    "aliases": ["Advanced Types", "tipos avanzados"]
+  },
+  "web-typescript-types-decorators": {
+    "locale": "es",
+    "intro": [
+      "Un decorador recibe un valor declarado y su contexto para extender su comportamiento."
+    ],
+    "body": [
+      "Los decoradores modernos de clases y miembros siguen un modelo distinto al de experimentalDecorators. Revisa cuál espera tu biblioteca. Emitir metadatos y decorar parámetros son características del modo anterior."
+    ],
+    "aliases": ["Decorators", "decoradores"]
+  },
+  "web-typescript-types-enums": {
+    "locale": "es",
+    "intro": [
+      "Un enum agrupa constantes con nombre y normalmente crea un objeto en JavaScript."
+    ],
+    "body": [
+      "Los enums numéricos pueden incrementar su valor de forma automática. Los de cadena necesitan valores explícitos. Si solo necesitas un conjunto de cadenas conocidas por el comprobador, también puedes usar una unión literal."
+    ],
+    "aliases": ["Enums", "enumeraciones"]
+  },
+  "web-typescript-types-jsx": {
+    "locale": "es",
+    "intro": [
+      "TypeScript comprueba expresiones JSX y las propiedades de los componentes."
+    ],
+    "body": [
+      "Usa la extensión .tsx y configura jsx según tu entorno. Los elementos intrínsecos se comprueban con los tipos JSX del entorno y los componentes con su tipo de propiedades."
+    ],
+    "aliases": ["TSX", "tipar componentes"]
+  },
+  "web-typescript-types-mixins": {
+    "locale": "es",
+    "intro": [
+      "Un mixin añade capacidades a una clase al devolver una subclase."
+    ],
+    "body": [
+      "Puedes recibir un constructor genérico y conservar sus miembros mientras añades otros. Limita con una restricción los constructores compatibles si la nueva clase necesita algún método de la base."
+    ],
+    "aliases": ["Mixins", "composición de clases"]
+  },
+  "web-typescript-types-namespaces-and-modules": {
+    "locale": "es",
+    "intro": [
+      "Los módulos y los espacios de nombres ofrecen formas diferentes de agrupar declaraciones."
+    ],
+    "body": [
+      "Los módulos usan import y export para separar archivos. Los namespaces son comunes en declaraciones y código heredado que agrupa nombres en un mismo objeto. Respeta el formato de las dependencias que consumes."
+    ],
+    "aliases": ["Namespaces and Modules", "espacios de nombres y módulos"]
+  },
+  "web-typescript-types-namespaces": {
+    "locale": "es",
+    "intro": [
+      "Un namespace agrupa nombres y puede exponer miembros mediante export."
+    ],
+    "body": [
+      "Se usa en algunos scripts y declaraciones existentes. El comprobador puede fusionar declaraciones del mismo namespace. Para una aplicación compuesta de archivos con dependencias, considera módulos explícitos."
+    ],
+    "aliases": ["Namespaces", "espacios de nombres"]
+  },
+  "web-typescript-types-symbols": {
+    "locale": "es",
+    "intro": [
+      "symbol representa un valor único que puede ser clave de un objeto."
+    ],
+    "body": [
+      "Dos llamadas a Symbol con la misma descripción crean valores distintos. unique symbol expresa la identidad de una constante individual. Algunas claves conocidas, como Symbol.iterator, forman parte de contratos de JavaScript."
+    ],
+    "aliases": ["Symbols", "unique symbol"]
+  },
+  "web-typescript-types-triple-slash-directives": {
+    "locale": "es",
+    "intro": [
+      "Las directivas de triple barra declaran dependencias para el compilador."
+    ],
+    "body": [
+      "Colócalas en comentarios al inicio del archivo. Una directiva reference types añade un paquete de tipos. En código con módulos, una importación ordinaria suele expresar mejor la relación entre los archivos."
+    ],
+    "aliases": ["Triple-Slash Directives", "referencias de declaraciones"]
+  },
+  "web-typescript-types-type-compatibility": {
+    "locale": "es",
+    "intro": [
+      "TypeScript compara la estructura que exige un tipo con la que ofrece otro."
+    ],
+    "body": [
+      "Un valor con campos adicionales puede cumplir un tipo con menos campos. Los literales de objeto recién escritos tienen controles adicionales. Ten en cuenta el modo estricto al comparar funciones."
+    ],
+    "aliases": ["Type Compatibility", "tipado estructural"]
+  },
+  "web-typescript-types-type-inference": {
+    "locale": "es",
+    "intro": [
+      "El compilador deduce tipos a partir de valores y de su contexto."
+    ],
+    "body": [
+      "Un inicializador, los argumentos de una llamada o la posición de una función en una API aportan información. Si el resultado inferido resulta demasiado general, añade una anotación en el límite del contrato."
+    ],
+    "aliases": ["Type Inference", "inferencia contextual"]
+  },
+  "web-typescript-types-variable-declarations": {
+    "locale": "es",
+    "intro": ["let y const declaran variables con alcance de bloque."],
+    "body": [
+      "Usa const cuando la referencia no se reasigne. Un objeto guardado en const aún puede cambiar por dentro. La desestructuración extrae valores y permite declarar un valor de reserva para undefined."
+    ],
+    "aliases": ["Variable Declaration", "let const", "desestructuración"]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-component-hook-factories": {
+    "locale": "es",
+    "intro": [
+      "Detecta funciones que definen componentes o hooks dentro de otras funciones."
+    ],
+    "body": [
+      "Declara el componente o el hook en el módulo y pasa sus diferencias mediante parámetros. Crear un tipo de componente nuevo durante el render puede desmontar el anterior y perder su estado."
+    ]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-config": {
+    "locale": "es",
+    "intro": [
+      "Comprueba la configuración de React Compiler que usa el complemento."
+    ],
+    "body": [
+      "Corrige primero las opciones y valores que señala el diagnóstico. Las reglas de análisis dependen de que la configuración del proyecto se pueda interpretar."
+    ]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-error-boundaries": {
+    "locale": "es",
+    "intro": [
+      "Detecta intentos de capturar errores de componentes hijos con try/catch alrededor de JSX."
+    ],
+    "body": [
+      "La ejecución del hijo ocurre cuando React lo renderiza. Usa un límite de errores para los fallos de renderizado del subárbol. Maneja aparte los fallos de eventos y operaciones asíncronas."
+    ],
+    "aliases": ["límite de errores", "error boundary"]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-exhaustive-deps": {
+    "locale": "es",
+    "intro": [
+      "Comprueba que las dependencias declaradas incluyan las que usa un hook."
+    ],
+    "body": [
+      "Si un efecto lee un valor reactivo que falta en la lista, puede seguir usando una versión anterior. Si añadir una dependencia provoca ciclos, revisa qué se debe sincronizar y dónde debe vivir la operación."
+    ],
+    "aliases": ["dependencias de efectos", "cierre obsoleto"]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-gating": {
+    "locale": "es",
+    "intro": [
+      "Comprueba la configuración que habilita de forma condicional las optimizaciones del compilador."
+    ],
+    "body": [
+      "El nombre de la función de control y el módulo que la exporta deben coincidir con tu configuración. Prueba la estrategia de activación con optimización habilitada y deshabilitada."
+    ],
+    "aliases": ["activación condicional"]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-globals": {
+    "locale": "es",
+    "intro": ["Señala escrituras en valores globales durante el renderizado."],
+    "body": [
+      "Cambiar datos globales al renderizar puede afectar a otras instancias y repetirse cuando React reintenta la vista. Mueve la operación al evento o a la sincronización donde corresponde."
+    ]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-immutability": {
+    "locale": "es",
+    "intro": [
+      "Detecta mutaciones de props, estado y otros valores que React trata como instantáneas."
+    ],
+    "body": [
+      "Construye una lista nueva con map, filter o spread y actualiza el estado con su función. Si cambias un objeto anidado, crea también los niveles que atraviesas para llegar al cambio."
+    ],
+    "aliases": ["mutación de estado"]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-incompatible-library": {
+    "locale": "es",
+    "intro": [
+      "Señala APIs cuyo comportamiento no encaja con la memoización de React."
+    ],
+    "body": [
+      "Algunas bibliotecas ofrecen valores que cambian sin que cambie su identidad, o necesitan que se vuelva a llamar a su función. Sigue la integración recomendada por la biblioteca y el diagnóstico del compilador."
+    ]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-preserve-manual-memoization": {
+    "locale": "es",
+    "intro": [
+      "Comprueba que el compilador pueda conservar la memoización declarada a mano."
+    ],
+    "body": [
+      "Completa las dependencias de useMemo y useCallback cuando corresponda. Si la inferencia no puede igualar el comportamiento, React Compiler puede omitir la optimización de esa función."
+    ]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-purity": {
+    "locale": "es",
+    "intro": [
+      "Detecta llamadas impuras que hacen que el renderizado dependa de algo ajeno a las entradas de React."
+    ],
+    "body": [
+      "Genera identificadores de interfaz con useId cuando corresponda. Si una interacción necesita el tiempo actual o aleatoriedad, obtén ese dato en el evento y representa el valor almacenado."
+    ],
+    "aliases": ["renderizado puro"]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-refs": {
+    "locale": "es",
+    "intro": ["Detecta lecturas o escrituras de refs durante el renderizado."],
+    "body": [
+      "Una ref es apropiada para un nodo DOM o un valor que no deba provocar un render. Lee su contenido desde el evento o efecto adecuado. Usa estado si necesitas reflejar un cambio en la interfaz."
+    ],
+    "aliases": ["useRef", "referencias DOM"]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-rules-of-hooks": {
+    "locale": "es",
+    "intro": [
+      "Comprueba que los hooks se llamen desde sus lugares permitidos y en orden estable."
+    ],
+    "body": [
+      "Llama a los hooks normales al nivel superior de un componente o de otro hook, antes de retornos condicionales. La API use admite condicionales y bucles, pero sigue restringida a componentes o hooks y no admite try/catch."
+    ],
+    "aliases": ["reglas de hooks"]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-set-state-in-effect": {
+    "locale": "es",
+    "intro": [
+      "Detecta actualizaciones sincrónicas de estado dentro de efectos que provocan un render adicional."
+    ],
+    "body": [
+      "Deriva los datos durante el render si ya tienes sus entradas. Usa un efecto para coordinar un sistema externo y actualiza cuando llegue el evento o valor de ese sistema."
+    ]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-set-state-in-render": {
+    "locale": "es",
+    "intro": [
+      "Señala actualizaciones de estado incondicionales durante el renderizado."
+    ],
+    "body": [
+      "Cambiar estado en cada render vuelve a programar otro. Si el cambio depende de una acción, aplícalo en su controlador. Si representa un dato calculado, obténlo a partir de las entradas actuales."
+    ]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-static-components": {
+    "locale": "es",
+    "intro": [
+      "Detecta componentes que se vuelven a declarar durante cada render."
+    ],
+    "body": [
+      "Define su tipo fuera del componente padre y pasa los datos como props. React reconoce el mismo tipo entre renderizados y puede conservar su estado y su DOM."
+    ]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-unsupported-syntax": {
+    "locale": "es",
+    "intro": ["Señala sintaxis que React Compiler aún no puede analizar."],
+    "body": [
+      "Revisa cuál es la construcción indicada. Si la necesitas, puede ser posible aislarla en una función ordinaria. El diagnóstico afecta a lo que se puede optimizar."
+    ]
+  },
+  "web-react-eslint-plugin-react-hooks-lints-use-memo": {
+    "locale": "es",
+    "intro": [
+      "Comprueba que la función de useMemo devuelva el valor calculado."
+    ],
+    "body": [
+      "Devuelve el resultado del cálculo cuando uses useMemo. Para sincronizar con algo externo, usa el mecanismo del ciclo de vida adecuado, sin introducir efectos dentro del cálculo."
+    ]
+  },
+  "web-react-react-compiler-compilationMode": {
+    "locale": "es",
+    "intro": [
+      "Controla qué funciones examina React Compiler para aplicar optimizaciones."
+    ],
+    "body": [
+      "El modo infer reconoce patrones de componentes y hooks. El modo annotation permite seleccionar funciones con la directiva use memo. Comprueba qué archivos pasan por el complemento."
+    ]
+  },
+  "web-react-react-compiler-configuration": {
+    "locale": "es",
+    "intro": [
+      "Reúne las opciones con las que se integra React Compiler en la compilación."
+    ],
+    "body": [
+      "Distingue la versión de React que se ejecutará, las funciones que quieres analizar y el tratamiento de errores. Empieza con la configuración que corresponda a tu cadena de herramientas."
+    ],
+    "aliases": ["Configuration", "configuración de React Compiler"]
+  },
+  "web-react-react-compiler-compiling-libraries": {
+    "locale": "es",
+    "intro": [
+      "Explica cómo distribuir una biblioteca que ya pasó por React Compiler."
+    ],
+    "body": [
+      "Elige un target compatible con las versiones de React que admites. Incluye el entorno de ejecución adecuado cuando lo necesite la versión más antigua y comprueba el paquete en una aplicación consumidora."
+    ],
+    "aliases": ["Compiling Libraries", "compilar bibliotecas React"]
+  },
+  "web-react-react-compiler-directives": {
+    "locale": "es",
+    "intro": [
+      "Las directivas son cadenas literales que modifican cómo se compila una función."
+    ],
+    "body": [
+      "Coloca use memo o use no memo al inicio del cuerpo. Usa la primera para solicitar optimización según el modo y la segunda para desactivarla para esa función."
+    ],
+    "aliases": ["Directives", "directivas de React Compiler"]
+  },
+  "web-react-react-compiler-directives-use-memo": {
+    "locale": "es",
+    "intro": ["Solicita a React Compiler que intente optimizar una función."],
+    "body": [
+      "Es relevante en compilationMode annotation. La función sigue teniendo que respetar los requisitos de React Compiler y estar en código procesado por él."
+    ]
+  },
+  "web-react-react-compiler-directives-use-no-memo": {
+    "locale": "es",
+    "intro": ["Excluye una función de las optimizaciones de React Compiler."],
+    "body": [
+      "Puede servir para aislar un problema al adoptar el compilador. Describe la causa cerca de la directiva y retírala cuando la función sea compatible, si ya no la necesitas."
+    ]
+  },
+  "web-react-react-compiler-gating": {
+    "locale": "es",
+    "intro": [
+      "Permite activar en ejecución la ruta optimizada de un componente."
+    ],
+    "body": [
+      "Configura el módulo y la función de control para elegir entre la versión compilada y la original. Es útil si quieres activar optimizaciones de forma gradual."
+    ]
+  },
+  "web-react-react-compiler-logger": {
+    "locale": "es",
+    "intro": [
+      "Permite recibir eventos del compilador para analizarlos durante la construcción."
+    ],
+    "body": [
+      "Registra el nombre del archivo y el tipo de evento para diagnosticar qué optimiza o qué omite el compilador. Los registros pertenecen a la compilación, sin intervenir en el renderizado."
+    ]
+  },
+  "web-react-react-compiler-panicThreshold": {
+    "locale": "es",
+    "intro": [
+      "Decide qué errores del compilador interrumpen el proceso de construcción."
+    ],
+    "body": [
+      "La configuración habitual permite continuar cuando una función no puede optimizarse. Un modo más estricto sirve para detectar problemas durante una investigación. Revisa cada diagnóstico antes de cambiar el umbral."
+    ]
+  },
+  "web-react-react-compiler-target": {
+    "locale": "es",
+    "intro": ["Indica para qué versión de React genera código el compilador."],
+    "body": [
+      "Elige el destino según el React instalado por tu aplicación o la versión mínima que admite la biblioteca. React 17 y 18 necesitan el paquete de ejecución adicional indicado por el compilador."
+    ],
+    "aliases": ["versión React Compiler"]
+  },
+  "web-typescript-config-enable": {
+    "locale": "es",
+    "intro": [
+      "Controla si el editor adquiere automáticamente declaraciones para un proyecto JavaScript."
+    ],
+    "body": [
+      "Al desactivar esta opción, el servicio de lenguaje deja de descargar esos paquetes automáticamente. Sigue pudiendo usar declaraciones instaladas o incluidas en el proyecto."
+    ],
+    "usage": "{\n  \"typeAcquisition\": {\n    \"enable\": false\n  }\n}"
+  },
+  "web-typescript-config-typeAcquisition.include": {
+    "locale": "es",
+    "intro": [
+      "Pide al servicio de lenguaje las declaraciones de los paquetes indicados en un proyecto JavaScript."
+    ],
+    "body": [
+      "Puede completar la detección por importaciones o por nombres de archivo. Usa una lista explícita cuando el servicio no deduce qué biblioteca global estás usando."
+    ],
+    "usage": "{\n  \"typeAcquisition\": {\n    \"include\": [\n      \"jquery\"\n    ]\n  }\n}"
+  },
+  "web-typescript-config-typeAcquisition.exclude": {
+    "locale": "es",
+    "intro": [
+      "Evita adquirir automáticamente declaraciones de los paquetes indicados en un proyecto JavaScript."
+    ],
+    "body": [
+      "Úsala cuando la detección automática añada tipos globales de herramientas que este proyecto no necesita. La opción exclude del nivel superior controla en cambio los archivos raíz."
+    ],
+    "usage": "{\n  \"typeAcquisition\": {\n    \"exclude\": [\n      \"mocha\"\n    ]\n  }\n}"
+  },
+  "web-typescript-config-disableFilenameBasedTypeAcquisition": {
+    "locale": "es",
+    "intro": [
+      "Evita que el nombre de un archivo dispare la adquisición automática de tipos."
+    ],
+    "body": [
+      "Sirve si nombres como jquery.js coinciden con bibliotecas que no usas. Puedes seguir indicando paquetes en typeAcquisition.include."
+    ],
+    "usage": "{\n  \"typeAcquisition\": {\n    \"disableFilenameBasedTypeAcquisition\": true\n  }\n}"
+  },
+  "typescript-api-Awaited%3CT%3E": {
+    "locale": "es",
+    "intro": ["Obtiene el tipo que resulta de esperar un valor."],
+    "body": [
+      "Si recibe una promesa anidada, extrae el valor final de forma recursiva. Si recibe una unión, calcula el resultado para cada miembro. Sirve para tipar el resultado de una función asíncrona a partir de su firma."
+    ]
+  },
+  "typescript-api-Partial%3CT%3E": {
+    "locale": "es",
+    "intro": [
+      "Vuelve opcionales las propiedades del primer nivel de un tipo de objeto."
+    ],
+    "body": [
+      "Úsalo para un conjunto de cambios incompleto. Si una propiedad contiene otro objeto, sus propiedades internas conservan su forma. Con exactOptionalPropertyTypes, declarar que algo puede faltar difiere de permitirle el valor undefined."
+    ]
+  },
+  "typescript-api-Required%3CT%3E": {
+    "locale": "es",
+    "intro": ["Hace obligatorias las propiedades de primer nivel del tipo."],
+    "body": [
+      "Aplica Required al resultado de completar opciones o normalizar un objeto. Antes de devolverlo, el código debe proporcionar cada propiedad obligatoria. El tipo no inventa valores de reserva."
+    ]
+  },
+  "typescript-api-Readonly%3CT%3E": {
+    "locale": "es",
+    "intro": [
+      "Impide reasignar las propiedades de primer nivel a través del tipo resultante."
+    ],
+    "body": [
+      "Es una restricción del comprobador. Quien tiene otra referencia mutable todavía puede cambiar el mismo objeto. Si necesitas proteger niveles internos, expresa también qué partes deben ser de solo lectura."
+    ]
+  },
+  "typescript-api-Record%3CK%2C%20T%3E": {
+    "locale": "es",
+    "intro": [
+      "Construye un objeto cuyos nombres vienen de K y cuyos valores tienen tipo T."
+    ],
+    "body": [
+      "Con una unión literal de claves, exige una propiedad por cada miembro de esa unión. Es útil para catálogos exhaustivos de estados y traducciones. Con string como clave, una búsqueda puede devolver undefined en ejecución."
+    ]
+  },
+  "typescript-api-Pick%3CT%2C%20K%3E": {
+    "locale": "es",
+    "intro": ["Conserva solo las propiedades de T que enumera K."],
+    "body": [
+      "Las propiedades seleccionadas mantienen características como readonly u opcional. Pick es una vista de tipos. Para crear un objeto que de verdad tenga solo esas claves, selecciónalas también en ejecución."
+    ]
+  },
+  "typescript-api-Omit%3CT%2C%20K%3E": {
+    "locale": "es",
+    "intro": [
+      "Construye un tipo de objeto que deja fuera las claves indicadas."
+    ],
+    "body": [
+      "Es útil para derivar una entrada de creación a partir de un modelo que también contiene identificadores. La utilidad no borra propiedades del objeto durante la ejecución. Selecciona los datos cuando los serialices."
+    ]
+  },
+  "typescript-api-Exclude%3CT%2C%20U%3E": {
+    "locale": "es",
+    "intro": [
+      "Retira de una unión los miembros que se pueden asignar al segundo argumento."
+    ],
+    "body": [
+      "Por ejemplo, si Modo es 'borrador' | 'publicado', Exclude<Modo, 'borrador'> produce 'publicado'. Para quitar propiedades de un objeto, utiliza Omit. Exclude actúa sobre miembros de una unión, no sobre sus claves."
+    ],
+    "aliases": ["excluir miembros de una unión"]
+  },
+  "typescript-api-Extract%3CT%2C%20U%3E": {
+    "locale": "es",
+    "intro": [
+      "Conserva los miembros de una unión que se pueden asignar al segundo argumento."
+    ],
+    "body": [
+      "Puedes usar Extract con una forma que tenga un discriminante. El comprobador selecciona las variantes compatibles de la unión, conservando sus otros campos."
+    ]
+  },
+  "typescript-api-NonNullable%3CT%3E": {
+    "locale": "es",
+    "intro": ["Elimina null y undefined de un tipo."],
+    "body": [
+      "Con strictNullChecks, úsalo dentro de código que ya comprobó la presencia del valor. El tipo describe los casos que quieres conservar. El valor de ejecución necesita la validación correspondiente."
+    ]
+  },
+  "typescript-api-Parameters%3CF%3E": {
+    "locale": "es",
+    "intro": ["Devuelve una tupla con los tipos de parámetros de una función."],
+    "body": [
+      "La tupla conserva opcionalidad, resto y nombres de las posiciones cuando están disponibles. Si hay sobrecargas, infiere a partir de la última firma, así que conviene revisar cuál declara la API."
+    ]
+  },
+  "web-typescript-utility-ConstructorParameters": {
+    "locale": "es",
+    "intro": ["Obtiene la tupla de argumentos que recibe un constructor."],
+    "body": [
+      "Aplica typeof a la clase para pasar el tipo de su constructor. Puedes reutilizar esa tupla en una función que cree la clase y reenvíe sus argumentos con spread."
+    ]
+  },
+  "typescript-api-ReturnType%3CF%3E": {
+    "locale": "es",
+    "intro": ["Obtiene el tipo que devuelve una función."],
+    "body": [
+      "Pasa el tipo de la función, por ejemplo typeof leer. Si la función devuelve una promesa, ReturnType conserva esa promesa. Combínalo con Awaited si necesitas su valor resuelto."
+    ]
+  },
+  "web-typescript-utility-InstanceType": {
+    "locale": "es",
+    "intro": ["Obtiene el tipo de instancia a partir de un constructor."],
+    "body": [
+      "typeof NombreDeClase representa el lado constructor. InstanceType<typeof NombreDeClase> expresa los campos y métodos disponibles en sus instancias."
+    ]
+  },
+  "web-typescript-utility-NoInfer": {
+    "locale": "es",
+    "intro": ["Bloquea la inferencia a partir de una posición de un tipo."],
+    "body": [
+      "Úsalo cuando un argumento deba decidir el tipo y otro necesite ajustarse a la decisión. En escoger(opciones, valor), NoInfer puede impedir que valor amplíe la unión deducida de opciones."
+    ]
+  },
+  "web-typescript-utility-ThisParameterType": {
+    "locale": "es",
+    "intro": ["Extrae el tipo explícito del parámetro this de una función."],
+    "body": [
+      "El parámetro this de TypeScript ocupa una posición especial que se elimina del JavaScript emitido. Si la función carece de esa declaración, el resultado de esta utilidad es unknown."
+    ]
+  },
+  "web-typescript-utility-OmitThisParameter": {
+    "locale": "es",
+    "intro": [
+      "Construye un nuevo tipo de función sin el parámetro this explícito."
+    ],
+    "body": [
+      "Puede describir una función cuyo contexto ya se vinculó con bind. La utilidad solo cambia el tipo y no vincula un objeto en ejecución. Al quitar this se borran los genéricos y se conserva la última sobrecarga."
+    ]
+  },
+  "web-typescript-utility-ThisType": {
+    "locale": "es",
+    "intro": [
+      "Marca qué tipo tendrá this dentro de un objeto tipado por contexto."
+    ],
+    "body": [
+      "Combínalo con un tipo que describa los campos que necesitan los métodos de un objeto literal. Activa noImplicitThis para que TypeScript compruebe el contexto. ThisType funciona como marcador y no genera código."
+    ]
+  },
+  "web-typescript-utility-Uppercase": {
+    "locale": "es",
+    "intro": [
+      "Uppercase<T> convierte todos los caracteres a mayúsculas de un tipo literal de cadena."
+    ],
+    "body": [
+      "Ejemplo de transformación 'vcode' → 'VCODE'. Solo calcula un tipo. Realiza la transformación con JavaScript si el valor llega en ejecución. Las reglas no dependen de la configuración regional."
+    ]
+  },
+  "web-typescript-utility-Lowercase": {
+    "locale": "es",
+    "intro": [
+      "Lowercase<T> convierte todos los caracteres a minúsculas de un tipo literal de cadena."
+    ],
+    "body": [
+      "Ejemplo de transformación 'VCODE' → 'vcode'. Solo calcula un tipo. Realiza la transformación con JavaScript si el valor llega en ejecución. Las reglas no dependen de la configuración regional."
+    ]
+  },
+  "web-typescript-utility-Capitalize": {
+    "locale": "es",
+    "intro": [
+      "Capitalize<T> convierte a mayúscula el primer carácter de un tipo literal de cadena."
+    ],
+    "body": [
+      "Ejemplo de transformación 'guía activa' → 'Guía activa'. Solo calcula un tipo. Realiza la transformación con JavaScript si el valor llega en ejecución. Las reglas no dependen de la configuración regional."
+    ]
+  },
+  "web-typescript-utility-Uncapitalize": {
+    "locale": "es",
+    "intro": [
+      "Uncapitalize<T> convierte a minúscula el primer carácter de un tipo literal de cadena."
+    ],
+    "body": [
+      "Ejemplo de transformación 'CursoCompleto' → 'cursoCompleto'. Solo calcula un tipo. Realiza la transformación con JavaScript si el valor llega en ejecución. Las reglas no dependen de la configuración regional."
+    ]
+  }
+}

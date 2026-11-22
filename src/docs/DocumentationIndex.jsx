@@ -1,162 +1,247 @@
-import React, { useMemo, useState } from "react";
-import {
-  ArrowUpRight,
-  Search,
-  X,
-  ArrowRight,
-  SlidersHorizontal,
-} from "lucide-react";
-import { courses, knowledgeIndex } from "../lib/catalog";
+import React, { useEffect, useRef, useState } from "react";
+import { ArrowUpRight, Search, X, ArrowRight, Layers2 } from "lucide-react";
+import { courses } from "../lib/catalog";
+import { knowledgeManifest } from "../lib/knowledge";
+import useKnowledge from "../lib/useKnowledge";
+import useSettledQuery from "../lib/useSettledQuery";
+import ChoiceMenu from "../app/ChoiceMenu";
 import { TechIcon } from "../app/Brand";
-import { searchKnowledge } from "../lib/search";
 import { documentationUrl } from "./routes";
-import { groups, groupLabel } from "./catalog";
+import { groups, groupLabel, languageName } from "./taxonomy";
 import HighlightMatch from "./components/HighlightMatch";
+
+const pageSize = 8;
+const countFormat = new Intl.NumberFormat("es-ES");
+
+const phpGroups = Object.entries(knowledgeManifest.php.groups).sort(
+  ([a], [b]) => a.localeCompare(b, "es"),
+);
+const cssGroups = [
+  ["css-properties", "Propiedades"],
+  ["css-atrules", "Reglas @"],
+  ["css-selectors", "Selectores"],
+  ["css-functions", "Funciones"],
+  ["css-descriptors", "Descriptores"],
+  ["css-values", "Valores"],
+  ["css-media-features", "Características de medios"],
+];
+const jsGroups = [
+  ["js-builtins", "Objetos integrados"],
+  ["js-operators", "Operadores"],
+  ["js-statements", "Sentencias"],
+  ["js-classes-functions", "Clases y funciones"],
+  ["js-regex", "Expresiones regulares"],
+  ["js-concepts", "Conceptos"],
+  ["DOM", "DOM"],
+  ["Eventos web", "Eventos web"],
+  ["Red y peticiones", "Red y peticiones"],
+  ["Archivos y datos", "Archivos y datos"],
+  ["Formularios web", "Formularios web"],
+  ["Flujos y compresión", "Flujos y compresión"],
+  ["Ventana y navegación", "Ventana y navegación"],
+  ["Observadores", "Observadores"],
+  ["Procesos web", "Procesos web"],
+  ["Dibujo y medios", "Dibujo y medios"],
+  ["Componentes web", "Componentes web"],
+  ["Tiempo y rendimiento", "Tiempo y rendimiento"],
+];
+const topicGroups = Object.fromEntries(
+  ["react", "typescript", "sql", "java", "cpp"].map((language) => [
+    language,
+    Object.keys(knowledgeManifest[language].groups)
+      .sort((a, b) => a.localeCompare(b, "es"))
+      .map((label) => [label, label]),
+  ]),
+);
+const htmlGroups = [
+  ...groups,
+  ["html-attributes", "Atributos HTML"],
+  ["html-events", "Atributos de evento"],
+];
 
 export default function DocumentationIndex({ initial }) {
   const [filters, setFilters] = useState(initial);
-  const [category, setCategory] = useState("all");
-  const [limit, setLimit] = useState(24);
-  const results = useMemo(
-    () =>
-      searchKnowledge(knowledgeIndex, filters.query, filters).filter(
-        (entry) => category === "all" || entry.group === category,
-      ),
-    [filters, category],
-  );
+  const [saved] = useState(() => history.state?.documentationIndex);
+  const query = filters.query.trim();
+  const [settledQuery, settleQuery] = useSettledQuery(query);
+  const [page, setPage] = useState({ query, limit: saved?.limit ?? pageSize });
+  const limit = page.query === settledQuery ? page.limit : pageSize;
+  const restoreResult = useRef(saved?.focusedId);
+  const resultList = useRef(null);
+  const field = useRef(null);
+  const openWhenReady = useRef(false);
   const name = courses.find((course) => course.id === filters.language)?.name;
-  const canReference = ["all", "html"].includes(filters.language);
+  const php = filters.language === "php";
+  const languageGroups = {
+    all: htmlGroups,
+    html: htmlGroups,
+    css: cssGroups,
+    javascript: jsGroups,
+    ...topicGroups,
+  };
+  const categories = php
+    ? phpGroups.map(([label]) => [label, label])
+    : languageGroups[filters.language] || [];
+  const category = categories.some(([id]) => filters.category === id)
+    ? filters.category
+    : "all";
+  const canFilterGroups =
+    filters.language !== "all" &&
+    filters.kind !== "guide" &&
+    categories.length > 0;
+  const hasQuery = Boolean(settledQuery);
+  const showResults = Boolean(
+    filters.browse ||
+    hasQuery ||
+    filters.language !== "all" ||
+    filters.kind !== "all",
+  );
+  const { data, error, retry, loading, previous } = useKnowledge(
+    { ...filters, query: settledQuery, category, limit },
+    showResults,
+  );
+  const updating = query !== settledQuery || loading;
+  const shown = data || (updating ? previous?.data : undefined);
+  const displayedQuery = data ? settledQuery : previous?.query || "";
+  const results = shown?.items || [];
+  const total = shown?.total || 0;
+  const canReference =
+    filters.language === "all" ||
+    Boolean(knowledgeManifest[filters.language]?.references);
+
+  useEffect(() => {
+    if (!restoreResult.current || updating || !data) return;
+    const id = restoreResult.current;
+    restoreResult.current = null;
+    const target = document.getElementById(`doc-result-${id}`);
+    if (!target) return;
+    target.focus({ preventScroll: true });
+    target.scrollIntoView({ behavior: "instant", block: "center" });
+  }, [data, updating]);
+
+  useEffect(() => {
+    if (updating || !openWhenReady.current) return;
+    openWhenReady.current = false;
+    if (data) resultList.current?.querySelector("a")?.click();
+  }, [data, updating]);
+
+  function savePosition(limit, focusedId) {
+    history.replaceState(
+      { ...history.state, documentationIndex: { limit, focusedId } },
+      "",
+    );
+  }
+
+  function showMore() {
+    const next = limit + pageSize;
+    setPage({ query: settledQuery, limit: next });
+    savePosition(next);
+  }
+
+  function submit(event) {
+    event.preventDefault();
+    if (!query) return;
+    if (updating) {
+      openWhenReady.current = true;
+      settleQuery(query);
+      return;
+    }
+    resultList.current?.querySelector("a")?.click();
+  }
 
   function update(patch) {
-    const next = { ...filters, ...patch };
+    const changedLanguage =
+      patch.language && patch.language !== filters.language;
+    const resetCategory = changedLanguage || patch.kind === "guide";
+    const next = {
+      ...filters,
+      ...(resetCategory && { category: "all" }),
+      ...patch,
+    };
     setFilters(next);
-    setCategory("all");
-    setLimit(24);
-    history.replaceState(null, "", documentationUrl(next));
+    if (patch.query === undefined || !next.query.trim()) {
+      const nextQuery = next.query.trim();
+      settleQuery(nextQuery);
+      setPage({ query: nextQuery, limit: pageSize });
+    }
+    restoreResult.current = null;
+    openWhenReady.current = false;
+    history.replaceState(
+      { ...history.state, documentationIndex: null },
+      "",
+      documentationUrl(next),
+    );
   }
   function pickCategory(value) {
-    const next = { ...filters, language: "html", kind: "reference" };
-    setFilters(next);
-    setCategory(value);
-    setLimit(24);
-    history.replaceState(null, "", documentationUrl(next));
+    update({
+      kind: "reference",
+      category: value,
+    });
   }
 
   return (
     <div className="docs-index">
-      <nav className="doc-breadcrumb" aria-label="Ruta de navegación">
-        <a href="#home">Inicio</a>
-        <span>/</span>
-        <span aria-current="page">Consultar</span>
-      </nav>
-      <div className="docs-index-intro">
-        <div>
-          <h1>Consulta</h1>
-          <p>Guías de siete lenguajes y referencia de elementos HTML.</p>
-        </div>
-        <a className="docs-feature" href="#reference/tag-details">
-          <span>
-            HTML <ArrowUpRight size={18} />
-          </span>
-          <code>&lt;details&gt;</code>
-          <strong>Contenido desplegable</strong>
-          <small>Explora el elemento y prueba su comportamiento nativo.</small>
-        </a>
-      </div>
-      <div className="docs-index-layout">
-        <aside className="docs-index-sidebar">
-          <h2>Lenguajes</h2>
-          <div
-            className="docs-language-navigation"
-            role="group"
-            aria-label="Lenguaje de consulta"
-          >
+      <header className="docs-index-intro">
+        <h1>Buscar en VCode</h1>
+        <form className="docs-search" role="search" onSubmit={submit}>
+          <Search size={24} strokeWidth={1.65} aria-hidden="true" />
+          <input
+            ref={field}
+            aria-label="Buscar en el índice"
+            value={filters.query}
+            placeholder="Busca una función, propiedad o guía…"
+            onChange={(event) => update({ query: event.target.value })}
+          />
+          {filters.query && (
             <button
-              aria-pressed={filters.language === "all"}
-              onClick={() => update({ language: "all" })}
+              type="button"
+              aria-label="Limpiar búsqueda del índice"
+              onClick={() => {
+                update({ query: "" });
+                field.current.focus();
+              }}
             >
-              <span>Todos los lenguajes</span>
-              <small>{knowledgeIndex.length}</small>
+              <X size={17} />
             </button>
-            {courses.map((course) => (
-              <button
-                key={course.id}
-                aria-pressed={filters.language === course.id}
-                disabled={filters.kind === "reference" && course.id !== "html"}
-                onClick={() => update({ language: course.id })}
-              >
-                <TechIcon id={course.id} />
-                <span>{course.name}</span>
-                <small>
-                  {
-                    knowledgeIndex.filter(
-                      (entry) => entry.language === course.id,
-                    ).length
-                  }
-                </small>
-              </button>
-            ))}
-          </div>
-          {canReference && filters.kind !== "guide" && (
-            <div className="docs-category-navigation">
-              <h2>Elementos HTML</h2>
-              {groups.map(([id, label]) => (
-                <button
-                  key={id}
-                  aria-pressed={category === id}
-                  onClick={() => pickCategory(category === id ? "all" : id)}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
           )}
-        </aside>
-        <section className="docs-results" aria-label="Índice de contenidos">
-          <form
-            className="docs-search"
-            role="search"
-            onSubmit={(event) => event.preventDefault()}
+          <button
+            type="submit"
+            className="docs-query-submit"
+            aria-label="Abrir primer resultado"
+            disabled={!filters.query.trim()}
           >
-            <Search size={21} strokeWidth={1.6} />
-            <input
-              aria-label="Buscar en el índice"
-              value={filters.query}
-              placeholder="¿Qué necesitas consultar?"
-              onChange={(event) => update({ query: event.target.value })}
-            />
-            {filters.query && (
-              <button
-                type="button"
-                aria-label="Limpiar búsqueda del índice"
-                onClick={() => update({ query: "" })}
-              >
-                <X size={17} />
-              </button>
-            )}
-          </form>
-          <div className="docs-mobile-language">
-            <SlidersHorizontal size={16} />
-            <select
-              aria-label="Filtrar por lenguaje"
-              value={filters.language}
-              onChange={(event) => update({ language: event.target.value })}
+            <ArrowRight size={19} />
+          </button>
+        </form>
+        <div
+          className="docs-language-picker"
+          role="group"
+          aria-label="Filtrar por lenguaje"
+        >
+          <button
+            type="button"
+            aria-pressed={filters.language === "all"}
+            onClick={() => update({ language: "all" })}
+          >
+            <Layers2 size={27} strokeWidth={1.55} aria-hidden="true" />
+            <span>Todos</span>
+          </button>
+          {courses.map(({ id, name }) => (
+            <button
+              key={id}
+              type="button"
+              aria-pressed={filters.language === id}
+              onClick={() => update({ language: id })}
             >
-              <option value="all">Todos los lenguajes</option>
-              {courses.map((course) => (
-                <option
-                  key={course.id}
-                  value={course.id}
-                  disabled={
-                    filters.kind === "reference" && course.id !== "html"
-                  }
-                >
-                  {course.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="docs-results-toolbar">
+              <TechIcon id={id} />
+              <span>{name}</span>
+            </button>
+          ))}
+        </div>
+      </header>
+      {showResults ? (
+        <section className="docs-results" aria-label="Índice de contenidos">
+          <div className="docs-filters">
             <div
               className="docs-kind-tabs"
               role="group"
@@ -164,7 +249,7 @@ export default function DocumentationIndex({ initial }) {
             >
               {[
                 ["all", "Todo"],
-                ["reference", "Elementos HTML"],
+                ["reference", "Referencias"],
                 ["guide", "Guías"],
               ].map(([id, label]) => (
                 <button
@@ -177,54 +262,101 @@ export default function DocumentationIndex({ initial }) {
                 </button>
               ))}
             </div>
-            <span role="status">
-              {results.length} {results.length === 1 ? "entrada" : "entradas"}
-            </span>
+            <div className="docs-selects">
+              {canFilterGroups && (
+                <ChoiceMenu
+                  label={
+                    php ? "Filtrar por módulo PHP" : "Filtrar por categoría"
+                  }
+                  value={category}
+                  options={
+                    php
+                      ? [
+                          ["all", "Todos los módulos"],
+                          ...phpGroups.map(([label, count]) => [
+                            label,
+                            `${label} · ${countFormat.format(count)}`,
+                          ]),
+                        ]
+                      : [["all", "Todas las categorías"], ...categories]
+                  }
+                  onChange={(value) =>
+                    value === "all"
+                      ? update({ category: "all" })
+                      : pickCategory(value)
+                  }
+                />
+              )}
+            </div>
           </div>
           <div className="docs-list-heading">
             <h2>
               {category !== "all"
-                ? groupLabel(category)
+                ? categories.find(([id]) => id === category)?.[1] ||
+                  groupLabel(category)
                 : name || "Toda la biblioteca"}
             </h2>
-            {category !== "all" && (
-              <button onClick={() => setCategory("all")}>
-                Quitar categoría <X size={13} />
-              </button>
-            )}
+            <span
+              role="status"
+              aria-busy={updating}
+              data-updating={updating || undefined}
+            >
+              {shown
+                ? `${countFormat.format(total)} ${total === 1 ? "entrada" : "entradas"}`
+                : error
+                  ? "Índice no disponible"
+                  : ""}
+            </span>
           </div>
-          {results.length ? (
-            <ul className="docs-entry-list">
-              {results.slice(0, limit).map((entry) => (
+          {!shown ? (
+            <div className="docs-empty">
+              <p>
+                {error
+                  ? "No se pudo abrir el índice de este lenguaje."
+                  : "Buscando…"}
+              </p>
+              {error && (
+                <button className="button secondary" onClick={retry}>
+                  Volver a intentar
+                </button>
+              )}
+            </div>
+          ) : results.length ? (
+            <ul className="docs-entry-list" ref={resultList}>
+              {results.map((entry) => (
                 <li key={entry.id}>
-                  <a href={entry.href}>
-                    <span
-                      className={`docs-entry-icon ${entry.kind === "reference" ? "is-element" : ""}`}
-                    >
-                      {entry.kind === "reference" ? (
-                        <span aria-hidden="true">&lt;/&gt;</span>
-                      ) : (
-                        <TechIcon id={entry.language} />
-                      )}
-                    </span>
+                  <a
+                    id={`doc-result-${entry.id}`}
+                    href={entry.href}
+                    onClick={(event) => {
+                      if (
+                        !event.metaKey &&
+                        !event.ctrlKey &&
+                        !event.shiftKey &&
+                        !event.altKey
+                      )
+                        savePosition(limit, entry.id);
+                    }}
+                  >
+                    <TechIcon id={entry.language} />
                     <span className="docs-entry-text">
                       <strong
                         className={entry.kind === "reference" ? "is-code" : ""}
                       >
                         <HighlightMatch
                           text={entry.title}
-                          query={filters.query}
+                          query={displayedQuery}
                         />
                       </strong>
-                      <small>
-                        {entry.kind === "reference"
-                          ? entry.description
-                          : entry.summary}
-                      </small>
+                      {displayedQuery && (
+                        <small>{entry.summary || entry.description}</small>
+                      )}
                     </span>
                     <span className="docs-entry-kind">
                       {entry.kind === "reference"
-                        ? groupLabel(entry.group)
+                        ? entry.module
+                          ? entry.group
+                          : `${languageName(entry.language)} · ${entry.description}`
                         : `${entry.description} · Guía`}
                     </span>
                     <ArrowUpRight size={17} />
@@ -240,25 +372,38 @@ export default function DocumentationIndex({ initial }) {
               <button
                 className="button secondary"
                 onClick={() =>
-                  update({ language: "all", query: "", kind: "all" })
+                  update({
+                    language: "all",
+                    query: "",
+                    kind: "all",
+                    category: "all",
+                    browse: true,
+                  })
                 }
               >
                 Ver toda la biblioteca <ArrowRight size={16} />
               </button>
             </div>
           )}
-          {results.length > limit && (
+          {total > results.length && (
             <button
               className="docs-load-more"
-              onClick={() => setLimit((value) => value + 24)}
+              disabled={updating}
+              onClick={showMore}
             >
-              Mostrar más entradas{" "}
-              <span>{results.length - limit} restantes</span>
+              Mostrar más entradas
               <ArrowRight size={17} />
             </button>
           )}
         </section>
-      </div>
+      ) : (
+        <div className="docs-browse">
+          <a href={documentationUrl({ browse: true })}>
+            Explorar el índice completo{" "}
+            <ArrowUpRight size={16} aria-hidden="true" />
+          </a>
+        </div>
+      )}
     </div>
   );
 }

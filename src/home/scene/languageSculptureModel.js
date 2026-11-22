@@ -15,13 +15,15 @@ const ids = new Set([
   "php",
   "java",
   "sql",
+  "typescript",
+  "cpp",
 ]);
 export function createLanguageSculpture(id, paths) {
   if (!ids.has(id)) throw new Error("Lenguaje desconocido");
   if (id === "html") return createHtmlSculpture();
   const root = new THREE.Group(),
     content = new THREE.Group();
-  const openSymbol = id === "react" || id === "java";
+  const openSymbol = id === "react" || id === "java" || id === "sql";
   let layer = 0;
   try {
     for (const path of paths) {
@@ -32,7 +34,6 @@ export function createLanguageSculpture(id, paths) {
       const base = openSymbol || layer === 0;
       const depth = base ? (openSymbol ? 8 : 18) : 0.38;
       const color = path.color.clone();
-      if (id === "sql" && color.getHex() === 0) color.set("#183b53");
       const face = new THREE.MeshPhysicalMaterial({
         color,
         metalness: 0.18,
@@ -50,7 +51,7 @@ export function createLanguageSculpture(id, paths) {
         depth,
         steps: 1,
         bevelEnabled: true,
-        bevelSize: base ? 0.65 : 0.04,
+        bevelSize: base ? (id === "sql" ? 0.24 : 0.65) : 0.04,
         bevelThickness: base ? 0.65 : 0.04,
         bevelSegments: 4,
         curveSegments: 10,
@@ -80,9 +81,8 @@ export async function loadLanguageSculpture(id, signal) {
   if (id === "html") return createHtmlSculpture();
   if (!ids.has(id)) throw new Error("Lenguaje desconocido");
   if (!sources.has(id)) {
-    const name = id === "sql" ? "postgresql" : id;
     const response = await fetch(
-      `${import.meta.env.BASE_URL}technologies/${name}.svg`,
+      `${import.meta.env.BASE_URL}technologies/${id}.svg`,
       { signal },
     );
     if (!response.ok) throw new Error("No se ha podido cargar el símbolo");

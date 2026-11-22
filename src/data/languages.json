@@ -3,7 +3,7 @@
     "id": "html",
     "name": "HTML",
     "tag": "La estructura de la web",
-    "description": "Da forma a tus ideas. Estructura páginas accesibles, semánticas y listas para la web.",
+    "description": "Documentos semánticos, formularios, imágenes y accesibilidad.",
     "lessons": [
       {
         "id": "html-1",
@@ -52,6 +52,22 @@
       {
         "id": "html-12",
         "title": "Proyecto: una página que funciona para todos"
+      },
+      {
+        "id": "html-13",
+        "title": "Diálogos modales y gestión del foco"
+      },
+      {
+        "id": "html-14",
+        "title": "Popovers para ayuda contextual"
+      },
+      {
+        "id": "html-15",
+        "title": "Plantillas declarativas y slots"
+      },
+      {
+        "id": "html-16",
+        "title": "Representa mediciones y progreso con HTML nativo"
       }
     ]
   },
@@ -59,7 +75,7 @@
     "id": "css",
     "name": "CSS",
     "tag": "Diseña sin límites",
-    "description": "Haz que cada detalle cuente. Diseña interfaces adaptables con Flexbox, Grid y mucho estilo.",
+    "description": "Tipografía, Flexbox, Grid y diseño adaptable.",
     "lessons": [
       {
         "id": "css-1",
@@ -108,6 +124,22 @@
       {
         "id": "css-12",
         "title": "Proyecto: un sistema de tarjetas adaptable"
+      },
+      {
+        "id": "css-13",
+        "title": "Propiedades lógicas para distintos sentidos de lectura"
+      },
+      {
+        "id": "css-14",
+        "title": "Subgrid para alinear tarjetas con contenido distinto"
+      },
+      {
+        "id": "css-15",
+        "title": "Selectores relacionales y especificidad"
+      },
+      {
+        "id": "css-16",
+        "title": "Anima la entrada y salida de un popover"
       }
     ]
   },
@@ -115,7 +147,7 @@
     "id": "javascript",
     "name": "JavaScript",
     "tag": "Dale vida a la web",
-    "description": "De una idea a una interacción. Aprende lógica, DOM y asincronía construyendo cosas reales.",
+    "description": "Funciones, eventos, módulos y asincronía en la web.",
     "lessons": [
       {
         "id": "javascript-1",
@@ -164,6 +196,130 @@
       {
         "id": "javascript-12",
         "title": "Proyecto: un gestor de tareas"
+      },
+      {
+        "id": "javascript-13",
+        "title": "Iterables y generadores"
+      },
+      {
+        "id": "javascript-14",
+        "title": "Microtareas y orden de ejecución"
+      },
+      {
+        "id": "javascript-15",
+        "title": "Cancela peticiones con AbortController"
+      },
+      {
+        "id": "javascript-16",
+        "title": "Organiza estado y operaciones con módulos"
+      },
+      {
+        "id": "javascript-17",
+        "title": "Procesa datos bajo demanda con Streams"
+      },
+      {
+        "id": "javascript-18",
+        "title": "Gestiona eventos de una lista que cambia"
+      },
+      {
+        "id": "javascript-19",
+        "title": "Representa datos ausentes sin perder los valores válidos"
+      },
+      {
+        "id": "javascript-20",
+        "title": "Importa datos JSON sin mezclarlos con el programa"
+      }
+    ]
+  },
+  {
+    "id": "typescript",
+    "name": "TypeScript",
+    "tag": "Contratos para tu JavaScript",
+    "description": "Tipos, genéricos y comprobaciones para JavaScript.",
+    "lessons": [
+      {
+        "id": "typescript-1",
+        "title": "Tu primer programa tipado"
+      },
+      {
+        "id": "typescript-2",
+        "title": "Objetos, arrays y propiedades opcionales"
+      },
+      {
+        "id": "typescript-3",
+        "title": "Uniones y estrechamiento"
+      },
+      {
+        "id": "typescript-4",
+        "title": "Funciones y callbacks"
+      },
+      {
+        "id": "typescript-5",
+        "title": "Genéricos y restricciones"
+      },
+      {
+        "id": "typescript-6",
+        "title": "unknown y fronteras de datos"
+      },
+      {
+        "id": "typescript-7",
+        "title": "Tipos derivados y keyof"
+      },
+      {
+        "id": "typescript-8",
+        "title": "Tipos mapeados y utilidades"
+      },
+      {
+        "id": "typescript-9",
+        "title": "Condicionales e infer"
+      },
+      {
+        "id": "typescript-10",
+        "title": "Módulos y configuración estricta"
+      },
+      {
+        "id": "typescript-11",
+        "title": "satisfies y contratos exhaustivos"
+      },
+      {
+        "id": "typescript-12",
+        "title": "Proyecto: un catálogo tipado"
+      },
+      {
+        "id": "typescript-13",
+        "title": "Genera métodos a partir de las claves"
+      },
+      {
+        "id": "typescript-14",
+        "title": "Modela estados de pantalla con uniones discriminadas"
+      },
+      {
+        "id": "typescript-15",
+        "title": "Valida datos antes de convertirlos en modelos"
+      },
+      {
+        "id": "typescript-16",
+        "title": "Comparte tipos entre archivos y revisa las importaciones"
+      },
+      {
+        "id": "typescript-17",
+        "title": "Describe un módulo JavaScript con un archivo .d.ts"
+      },
+      {
+        "id": "typescript-18",
+        "title": "Distingue una propiedad ausente de undefined"
+      },
+      {
+        "id": "typescript-19",
+        "title": "Comprueba accesos a claves que pueden faltar"
+      },
+      {
+        "id": "typescript-20",
+        "title": "Verifica que cada rama devuelve el resultado previsto"
+      },
+      {
+        "id": "typescript-21",
+        "title": "Comprueba los tipos de un archivo JSON local"
       }
     ]
   },
@@ -171,7 +327,7 @@
     "id": "react",
     "name": "React",
     "tag": "Interfaces que evolucionan",
-    "description": "Piensa en componentes. Construye interfaces con estado, hooks y una arquitectura que crece contigo.",
+    "description": "Componentes, estado, efectos y carga de datos.",
     "lessons": [
       {
         "id": "react-1",
@@ -220,6 +376,66 @@
       {
         "id": "react-12",
         "title": "Proyecto: un catálogo de aprendizaje"
+      },
+      {
+        "id": "react-13",
+        "title": "Transiciones y render aplazado"
+      },
+      {
+        "id": "react-14",
+        "title": "Carga diferida y Suspense"
+      },
+      {
+        "id": "react-15",
+        "title": "Acciones de formulario y estado pendiente"
+      },
+      {
+        "id": "react-16",
+        "title": "Renderizado en el servidor e hidratación"
+      },
+      {
+        "id": "react-17",
+        "title": "Componentes de servidor y límites de cliente"
+      },
+      {
+        "id": "react-18",
+        "title": "Portales, foco y diálogos"
+      },
+      {
+        "id": "react-19",
+        "title": "Leer un almacén externo sin duplicar el estado"
+      },
+      {
+        "id": "react-20",
+        "title": "Actualizaciones optimistas y recuperación"
+      },
+      {
+        "id": "react-21",
+        "title": "Aísla un fallo de renderizado y permite reintentar"
+      },
+      {
+        "id": "react-22",
+        "title": "Divide una vista en componentes y estilos"
+      },
+      {
+        "id": "react-23",
+        "title": "Crea campos reutilizables con etiquetas distintas"
+      },
+      {
+        "id": "react-24",
+        "title": "Conserva un borrador al ocultarlo con Activity"
+      },
+      {
+        "id": "react-25",
+        "title": "Usa los datos recientes en una suscripción con useEffectEvent"
+      },
+      {
+        "id": "react-26",
+        "title": "Lee una promesa estable con use y Suspense"
+      },
+      {
+        "id": "react-27",
+        "title": "Filtra una lista que viene de un archivo JSON"
       }
     ]
   },
@@ -227,7 +443,7 @@
     "id": "php",
     "name": "PHP",
     "tag": "Detrás de cada gran web",
-    "description": "Construye el otro lado de la web. Formularios, sesiones, bases de datos y aplicaciones seguras.",
+    "description": "Formularios, sesiones y bases de datos con PDO.",
     "lessons": [
       {
         "id": "php-1",
@@ -259,7 +475,7 @@
       },
       {
         "id": "php-8",
-        "title": "Sesiones y contraseñas"
+        "title": "Sesiones, identidad y contraseñas"
       },
       {
         "id": "php-9",
@@ -276,6 +492,26 @@
       {
         "id": "php-12",
         "title": "Proyecto: una API de cursos segura"
+      },
+      {
+        "id": "php-13",
+        "title": "Transacciones que revierten una operación incompleta"
+      },
+      {
+        "id": "php-14",
+        "title": "Enumera estados válidos y valida al entrar"
+      },
+      {
+        "id": "php-15",
+        "title": "Procesa CSV sin cargar el archivo completo"
+      },
+      {
+        "id": "php-16",
+        "title": "Separa el programa en archivos con require_once"
+      },
+      {
+        "id": "php-17",
+        "title": "Carga una clase cuando se usa por primera vez"
       }
     ]
   },
@@ -283,7 +519,7 @@
     "id": "java",
     "name": "Java",
     "tag": "De la lógica a la arquitectura",
-    "description": "Piensa en objetos y resuelve problemas. Tipos, colecciones, streams y código bien construido.",
+    "description": "Clases, colecciones, errores y concurrencia.",
     "lessons": [
       {
         "id": "java-1",
@@ -332,6 +568,126 @@
       {
         "id": "java-12",
         "title": "Proyecto: una biblioteca de consola"
+      },
+      {
+        "id": "java-13",
+        "title": "Agrupa y resume datos con un Collector"
+      },
+      {
+        "id": "java-14",
+        "title": "Ordena resultados con varios criterios"
+      },
+      {
+        "id": "java-15",
+        "title": "Deshacer y rehacer con dos Deque"
+      },
+      {
+        "id": "java-16",
+        "title": "Compila dos archivos Java que comparten un paquete"
+      },
+      {
+        "id": "java-17",
+        "title": "Elige comodines para leer y escribir colecciones"
+      },
+      {
+        "id": "java-18",
+        "title": "Modela un resultado cerrado con sealed y switch"
+      },
+      {
+        "id": "java-19",
+        "title": "Protege una colección que forma parte de un record"
+      },
+      {
+        "id": "java-20",
+        "title": "Elige una sobrecarga con el tipo objetivo"
+      }
+    ]
+  },
+  {
+    "id": "cpp",
+    "name": "C++",
+    "tag": "Control, rendimiento y abstracción",
+    "description": "Recursos, plantillas, contenedores y algoritmos con C++20.",
+    "lessons": [
+      {
+        "id": "cpp-1",
+        "title": "Compilar tu primer programa"
+      },
+      {
+        "id": "cpp-2",
+        "title": "Tipos, referencias y const"
+      },
+      {
+        "id": "cpp-3",
+        "title": "Control de flujo y funciones"
+      },
+      {
+        "id": "cpp-4",
+        "title": "std::string, vector y arrays"
+      },
+      {
+        "id": "cpp-5",
+        "title": "Clases y encapsulación"
+      },
+      {
+        "id": "cpp-6",
+        "title": "RAII y propiedad de recursos"
+      },
+      {
+        "id": "cpp-7",
+        "title": "Plantillas y conceptos"
+      },
+      {
+        "id": "cpp-8",
+        "title": "Algoritmos y lambdas"
+      },
+      {
+        "id": "cpp-9",
+        "title": "Movimiento y duración"
+      },
+      {
+        "id": "cpp-10",
+        "title": "Errores y std::optional"
+      },
+      {
+        "id": "cpp-11",
+        "title": "Concurrencia y std::jthread"
+      },
+      {
+        "id": "cpp-12",
+        "title": "Proyecto: inventario en consola"
+      },
+      {
+        "id": "cpp-13",
+        "title": "Pasa vistas con span y conserva la propiedad"
+      },
+      {
+        "id": "cpp-14",
+        "title": "Evita referencias inválidas al modificar un vector"
+      },
+      {
+        "id": "cpp-15",
+        "title": "Devuelve un resultado tipado al analizar una entrada"
+      },
+      {
+        "id": "cpp-16",
+        "title": "Extrae una cabecera y compílala con #include"
+      },
+      {
+        "id": "cpp-17",
+        "title": "Modela alternativas y recórrelas con variant"
+      },
+      {
+        "id": "cpp-18",
+        "title": "Compón vistas y recorre solo lo que necesitas"
+      },
+      {
+        "id": "cpp-19",
+        "title": "Acota el almacenamiento temporal con un recurso PMR"
+      },
+      {
+        "id": "cpp-20",
+        "title": "Valida fechas y opera con días de calendario"
       }
     ]
   },
@@ -339,7 +695,7 @@
     "id": "sql",
     "name": "SQL",
     "tag": "Los datos cuentan historias",
-    "description": "Pregunta mejor a tus datos. Consultas, relaciones, transacciones y bases de datos bien diseñadas.",
+    "description": "Consultas, relaciones, transacciones e índices con SQLite.",
     "lessons": [
       {
         "id": "sql-1",
@@ -388,6 +744,26 @@
       {
         "id": "sql-12",
         "title": "Proyecto: una academia en datos"
+      },
+      {
+        "id": "sql-13",
+        "title": "Recorre dependencias con una consulta recursiva"
+      },
+      {
+        "id": "sql-14",
+        "title": "Inserta o actualiza y recupera los valores escritos"
+      },
+      {
+        "id": "sql-15",
+        "title": "Acumulados por fila y por grupo con ventanas"
+      },
+      {
+        "id": "sql-16",
+        "title": "Protege relaciones con una clave foránea compuesta"
+      },
+      {
+        "id": "sql-17",
+        "title": "Consulta con parámetros y cambia los datos por separado"
       }
     ]
   }

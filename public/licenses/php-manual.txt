@@ -1,0 +1,17 @@
+PHP Manual reference data
+
+Original work: PHP Manual, PHP Documentation Group and contributors
+Sources: https://github.com/php/doc-en and https://github.com/php/doc-es
+License: Creative Commons Attribution 3.0 Unported
+https://creativecommons.org/licenses/by/3.0/
+Original license and credits: https://www.php.net/manual/en/cc.license.php
+
+VCode extracts summaries, signatures, parameters, return values, notes and
+examples from the DocBook sources and rearranges them into reference cards.
+The catalog includes class and interface declarations, methods, constants and
+predefined variables. Cards link to their corresponding manual page. Original VCode explanations
+and runnable samples are maintained in src/docs/data/php-explanations.json.
+
+SHA-256 of the source archives used for this edition:
+English 330a292a706bb340505cfdeac09c59167c9c7e6823352e6dfec862878e32e89e
+Spanish 9ae41c28aafccac9af209577d535062143356c8234e6814a5feed5996dff0f56

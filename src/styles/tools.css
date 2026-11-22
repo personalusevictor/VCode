@@ -108,14 +108,17 @@
   overflow: clip;
 }
 .experiment-preview {
+  display: grid;
+  place-items: center;
+  min-height: 125px;
   background: radial-gradient(ellipse at 30% 20%, #fff, #e8ecff);
 }
-.experiment-preview iframe {
-  display: block;
-  width: 100%;
-  height: 125px;
-  border: 0;
-  background: transparent;
+.experiment-preview span {
+  padding: 14px 24px;
+  border-radius: 16px;
+  background: #4b5bdb;
+  color: white;
+  font: 500 15px system-ui;
 }
 .experiment-editor {
   background: #1d2330;
@@ -228,8 +231,7 @@
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   margin-top: 22px;
 }
-.toolkit-lab .experiment-preview iframe {
-  height: 100%;
+.toolkit-lab .experiment-preview {
   min-height: 225px;
 }
 .toolkit-lab .experiment-editor {
@@ -254,7 +256,9 @@
   gap: 20px;
   align-items: center;
   font-size: 12px;
-  padding-block: 5px;
+  padding: 7px 10px;
+  margin-inline-start: -10px;
+  border-radius: 8px;
 }
 .toolkit-lab-footer > span {
   font-size: 10px;
@@ -294,8 +298,7 @@
   place-items: center;
   width: 31px;
   height: 31px;
-  border: 1px solid var(--line);
-  border-radius: 50%;
+  color: var(--muted);
 }
 .toolkit-arrow svg {
   width: 16px;
@@ -323,8 +326,13 @@
   margin-top: 6px;
 }
 .toolkit-companions a:hover .toolkit-arrow {
-  color: var(--surface);
-  background: var(--ink);
+  color: var(--blue);
+  transform: translate(2px, -2px);
+}
+.toolkit-companions > a:hover,
+.toolkit-companions > a:focus-visible {
+  background: var(--surface);
+  border-color: color-mix(in srgb, var(--blue) 30%, var(--line));
 }
 .toolkit-layout a:focus-visible {
   outline: 2px solid var(--blue);
@@ -340,8 +348,7 @@
   .toolkit-lab .home-experiment {
     grid-template-columns: minmax(0, 1fr);
   }
-  .toolkit-lab .experiment-preview iframe {
-    height: 125px;
+  .toolkit-lab .experiment-preview {
     min-height: 125px;
   }
   .toolkit-companions > a {
@@ -429,9 +436,6 @@
 .is-exhibition .experiment-preview {
   pointer-events: none;
   user-select: none;
-}
-.is-exhibition .experiment-preview iframe {
-  pointer-events: none;
 }
 .toolkit-lab > p,
 .toolkit-open-lab {
