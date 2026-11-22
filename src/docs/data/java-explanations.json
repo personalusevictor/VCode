@@ -1,0 +1,288 @@
+{
+  "String.substring()": {
+    "intro": [
+      "Devuelve un tramo de texto mediante índices de unidades UTF-16."
+    ],
+    "parameters": [
+      {
+        "label": "beginIndex",
+        "detail": "Posición inicial incluida. Usa 0 para empezar en la primera unidad de texto."
+      },
+      {
+        "label": "endIndex",
+        "detail": "Posición final excluida. Si se omite, la subcadena llega hasta length()."
+      }
+    ],
+    "returns": [
+      "El texto del intervalo indicado. Si el inicio y el fin son iguales, devuelve una cadena vacía."
+    ],
+    "caveats": [
+      "Valida que 0 ≤ beginIndex ≤ endIndex ≤ length(). El índice puede caer en medio de un carácter que ocupa dos unidades UTF-16."
+    ]
+  },
+  "String.isBlank()": {
+    "intro": [
+      "Comprueba si el texto está vacío o contiene únicamente espacios en blanco según Character.isWhitespace()."
+    ],
+    "returns": [
+      "true para una cadena vacía o compuesta solo de espacios en blanco. Comprueba null por separado."
+    ]
+  },
+  "String.codePointCount()": {
+    "intro": ["Cuenta los puntos de código Unicode en un tramo de la cadena."],
+    "parameters": [
+      {
+        "label": "beginIndex",
+        "detail": "Índice inicial incluido, medido en unidades UTF-16."
+      },
+      {
+        "label": "endIndex",
+        "detail": "Índice final excluido, también en unidades UTF-16."
+      }
+    ],
+    "returns": [
+      "El número de puntos de código en el intervalo. Un par sustituto válido cuenta como uno."
+    ],
+    "caveats": [
+      "Un carácter percibido puede estar compuesto por varios puntos de código, como una letra seguida de un acento combinante."
+    ]
+  },
+  "String.split()": {
+    "intro": [
+      "Divide el texto en fragmentos usando una expresión regular como delimitador."
+    ],
+    "parameters": [
+      {
+        "label": "regex",
+        "detail": "Patrón que identifica los delimitadores. Usa Pattern.quote() si el delimitador es texto literal que puede contener metacaracteres."
+      },
+      {
+        "label": "limit",
+        "detail": "Con un valor negativo conserva los fragmentos vacíos finales. Con 0, el comportamiento de la sobrecarga de un argumento, los descarta."
+      }
+    ],
+    "returns": ["Array con los fragmentos obtenidos."]
+  },
+  "StringBuilder.append()": {
+    "intro": [
+      "Añade texto al final del búfer. Las sobrecargas convierten diferentes tipos a caracteres."
+    ],
+    "returns": ["El mismo StringBuilder actualizado, para encadenar llamadas."],
+    "caveats": [
+      "Usa toString() para extraer una cadena independiente del búfer."
+    ]
+  },
+  "List.remove()": {
+    "intro": [
+      "Quita un elemento por índice o la primera aparición según su valor, dependiendo de la sobrecarga."
+    ],
+    "returns": [
+      "La sobrecarga con int devuelve el elemento retirado. La sobrecarga con Object devuelve si se retiró alguna coincidencia."
+    ],
+    "caveats": [
+      "En List<Integer>, remove(1) usa un índice. Pasa Integer.valueOf(1) para retirar ese valor. Una lista inmutable puede rechazar ambas operaciones."
+    ]
+  },
+  "Map.put()": {
+    "intro": [
+      "Añade una relación entre clave y valor o sustituye la asignación existente."
+    ],
+    "returns": [
+      "El valor anterior, o null cuando no existía. Si tu mapa admite valores nulos, usa containsKey() para distinguir los casos."
+    ]
+  },
+  "Map.containsKey()": {
+    "intro": [
+      "Comprueba la presencia de una clave incluso cuando su valor asociado es null."
+    ],
+    "returns": [
+      "true si el mapa tiene una asignación para esa clave según su criterio de igualdad."
+    ]
+  },
+  "ArrayDeque.pollLast()": {
+    "intro": ["Extrae el último elemento de la cola."],
+    "returns": [
+      "El valor retirado o null si la cola está vacía. ArrayDeque no almacena elementos null."
+    ]
+  },
+  "Comparator.comparingInt()": {
+    "intro": [
+      "Crea un comparador a partir de un valor entero derivado de cada objeto."
+    ],
+    "returns": [
+      "Un comparador que ordena por el entero calculado, en orden ascendente."
+    ],
+    "caveats": [
+      "Componlo con reversed() para invertir ese criterio y con thenComparing() para resolver empates."
+    ]
+  },
+  "Comparator.thenComparing()": {
+    "intro": [
+      "Compone un segundo criterio que se aplica cuando el primero devuelve cero."
+    ],
+    "returns": [
+      "Un comparador que decide primero por el criterio original y después por el de desempate."
+    ]
+  },
+  "Collectors.groupingBy()": {
+    "intro": ["Agrupa los elementos de un stream por una clave calculada."],
+    "parameters": [
+      {
+        "label": "classifier",
+        "detail": "Función que calcula la clave de cada elemento."
+      },
+      {
+        "label": "mapFactory",
+        "detail": "Factoría del mapa cuando necesitas elegir la implementación, por ejemplo TreeMap."
+      },
+      {
+        "label": "downstream",
+        "detail": "Colector que procesa los elementos de cada grupo. La variante básica agrupa en listas."
+      }
+    ],
+    "returns": ["Un colector que produce un mapa con un resultado por grupo."]
+  },
+  "Collectors.summingInt()": {
+    "intro": ["Suma un valor entero extraído de cada elemento del stream."],
+    "returns": [
+      "Un colector que obtiene el total como Integer. Si la entrada está vacía, el total es 0."
+    ],
+    "caveats": [
+      "Si el total puede superar el rango de int, considera summingLong()."
+    ]
+  },
+  "Stream.distinct()": {
+    "intro": ["Devuelve un flujo de elementos únicos según equals()."],
+    "caveats": [
+      "Si el flujo tiene orden de encuentro, se conserva la primera aparición de cada elemento equivalente."
+    ]
+  },
+  "Stream.findFirst()": {
+    "intro": [
+      "Termina el recorrido al obtener el primer elemento conforme al orden de encuentro, cuando existe."
+    ],
+    "returns": ["Un Optional que queda vacío si no hay elementos."],
+    "caveats": [
+      "Si los elementos pueden ser nulos, filtra esos valores previamente. Un primer elemento nulo causa NullPointerException."
+    ]
+  },
+  "BigDecimal.divide()": {
+    "intro": [
+      "Divide dos valores decimales y permite indicar precisión, escala o modo de redondeo."
+    ],
+    "caveats": [
+      "La división exacta puede lanzar ArithmeticException si el resultado decimal no termina. Elige redondeo y escala de acuerdo con la regla de tu aplicación."
+    ],
+    "returns": ["Otro BigDecimal con el resultado de la operación."]
+  },
+  "BigDecimal.compareTo()": {
+    "intro": ["Compara el valor numérico de dos decimales."],
+    "returns": ["Un negativo, cero o positivo según el orden numérico."],
+    "caveats": [
+      "compareTo considera equivalentes 2.0 y 2.00. equals también tiene en cuenta la escala."
+    ]
+  },
+  "LocalDate.plusDays()": {
+    "intro": [
+      "Avanza una cantidad de días en el calendario, incluso al cambiar de mes o año."
+    ],
+    "returns": [
+      "Una nueva LocalDate. El valor sobre el que se hizo la llamada permanece igual."
+    ]
+  },
+  "LocalDate.withDayOfMonth()": {
+    "intro": ["Construye una fecha del mismo mes y año con el día indicado."],
+    "exceptions": [
+      {
+        "label": "DateTimeException",
+        "detail": "El día indicado no existe en ese mes y año."
+      }
+    ]
+  },
+  "Files.readString()": {
+    "intro": [
+      "Lee el contenido completo de un archivo y lo decodifica como texto."
+    ],
+    "caveats": [
+      "La variante sin Charset lee en UTF-8. Para archivos grandes utiliza un lector o stream en vez de cargar el contenido completo."
+    ],
+    "exceptions": [
+      {
+        "label": "IOException",
+        "detail": "Se produjo un fallo de lectura o de decodificación."
+      }
+    ]
+  },
+  "Pattern.compile()": {
+    "intro": [
+      "Analiza una expresión regular y devuelve un patrón reutilizable."
+    ],
+    "caveats": [
+      "En un literal de Java, escribe dos barras inversas para que una llegue a la expresión regular."
+    ],
+    "exceptions": [
+      {
+        "label": "PatternSyntaxException",
+        "detail": "El texto no representa una expresión regular válida."
+      }
+    ]
+  },
+  "Matcher.find()": {
+    "intro": ["Busca el siguiente tramo del texto que coincide con el patrón."],
+    "returns": [
+      "true si encuentra un tramo. Tras una coincidencia puedes consultar group(), start() y end()."
+    ],
+    "caveats": [
+      "Para comprobar si coincide la entrada completa, usa matches()."
+    ]
+  },
+  "PreparedStatement.setString()": {
+    "intro": [
+      "Asocia un valor textual a una posición de parámetro de la sentencia."
+    ],
+    "parameters": [
+      {
+        "label": "parameterIndex",
+        "detail": "Posición del marcador, empezando en 1."
+      },
+      {
+        "label": "x",
+        "detail": "Texto que recibe la base de datos como valor del parámetro."
+      }
+    ],
+    "caveats": [
+      "Los parámetros representan valores. Los nombres de tabla o columna requieren una consulta construida con nombres autorizados."
+    ]
+  },
+  "ResultSet.next()": {
+    "intro": ["Mueve el cursor a la fila siguiente del resultado."],
+    "returns": [
+      "true si el cursor quedó sobre una fila válida. false indica que alcanzó el final."
+    ],
+    "caveats": [
+      "El cursor comienza antes de la primera fila. Usa next() antes de leer una columna."
+    ]
+  },
+  "HttpClient.sendAsync()": {
+    "intro": [
+      "Inicia una petición HTTP y devuelve un futuro para recibir la respuesta con el cuerpo procesado."
+    ],
+    "caveats": [
+      "Trata por separado un fallo al comunicarse y un código de estado HTTP. Una respuesta 404 sigue siendo una respuesta recibida."
+    ]
+  },
+  "Thread.startVirtualThread()": {
+    "intro": ["Crea e inicia un hilo virtual que ejecutará una tarea."],
+    "returns": ["El objeto Thread que representa el hilo iniciado."],
+    "caveats": [
+      "En VCode, ejecuta este ejemplo con un JDK local de Java 21 o posterior."
+    ]
+  },
+  "Collectors.counting()": {
+    "intro": ["Crea un colector que cuenta cuántos elementos recibe."],
+    "returns": ["Un Long que vale 0 si el flujo está vacío."],
+    "caveats": [
+      "Esta operación requiere el JDK local en VCode. Para el recuento pequeño del laboratorio, usa Collectors.summingInt(elemento -> 1)."
+    ]
+  }
+}

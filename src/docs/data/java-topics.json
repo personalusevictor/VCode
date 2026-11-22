@@ -1,0 +1,704 @@
+[
+  {
+    "name": "java.lang.Object",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Base común de los objetos. Define contratos de igualdad, representación y código hash."
+  },
+  {
+    "name": "java.lang.String",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Texto inmutable. Sus índices miden unidades UTF-16. Para contar puntos de código usa las operaciones específicas de Unicode."
+  },
+  {
+    "name": "java.lang.StringBuilder",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Acumula y modifica texto en un búfer antes de producir un String."
+  },
+  {
+    "name": "java.lang.CharSequence",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Contrato de lectura para una secuencia de caracteres, cualquiera que sea su implementación."
+  },
+  {
+    "name": "java.lang.Character",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Inspecciona caracteres y puntos de código. Ofrece conversiones y consultas sobre propiedades Unicode."
+  },
+  {
+    "name": "java.lang.Integer",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Envuelve un int y ofrece conversiones y operaciones sobre enteros de 32 bits."
+  },
+  {
+    "name": "java.lang.Long",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Envuelve un long y ofrece conversiones y operaciones sobre enteros de 64 bits."
+  },
+  {
+    "name": "java.lang.Double",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Envuelve un double y contiene utilidades para valores de punto flotante."
+  },
+  {
+    "name": "java.lang.Boolean",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Envuelve un boolean y convierte entre su representación de texto y un valor lógico."
+  },
+  {
+    "name": "java.lang.Math",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Funciones numéricas y operaciones exactas que señalan el desbordamiento entero."
+  },
+  {
+    "name": "java.lang.Enum",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Base de los tipos enumerados. Define su nombre, posición y orden natural."
+  },
+  {
+    "name": "java.lang.Record",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Base de los records. El lenguaje genera los accesores y el comportamiento de valor para sus componentes."
+  },
+  {
+    "name": "java.lang.System",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Acceso a propiedades de ejecución, flujos estándar y operaciones del sistema de la máquina virtual."
+  },
+  {
+    "name": "java.lang.Class",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Representa un tipo en ejecución. Permite consultar miembros, jerarquía, anotaciones y otros metadatos."
+  },
+  {
+    "name": "java.lang.Throwable",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Agrupa las excepciones y los errores que Java puede lanzar y capturar."
+  },
+  {
+    "name": "java.lang.Exception",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Base de las excepciones que una aplicación puede gestionar."
+  },
+  {
+    "name": "java.lang.RuntimeException",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Base de las excepciones de ejecución. No se exige declararlas ni capturarlas."
+  },
+  {
+    "name": "java.lang.AutoCloseable",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Contrato de recursos que se cierran al salir de try-with-resources."
+  },
+  {
+    "name": "java.math.BigDecimal",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Decimal de precisión arbitraria con escala y reglas explícitas de redondeo. Adecuado para cálculos monetarios."
+  },
+  {
+    "name": "java.math.BigInteger",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Entero de precisión arbitraria para valores fuera del rango de los tipos primitivos."
+  },
+  {
+    "name": "java.math.RoundingMode",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Reglas para redondear un número cuando se reduce su precisión o su escala."
+  },
+  {
+    "name": "java.math.MathContext",
+    "group": "Tipos y números",
+    "lesson": 3,
+    "summary": "Agrupa precisión y modo de redondeo para operaciones decimales."
+  },
+  {
+    "name": "java.util.Collection",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Contrato básico de colecciones de elementos. Algunas operaciones de modificación son opcionales."
+  },
+  {
+    "name": "java.util.List",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Colección ordenada en la que se accede por posición. Admite elementos repetidos si la implementación lo permite."
+  },
+  {
+    "name": "java.util.ArrayList",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Lista redimensionable respaldada por un array. Acceder por índice cuesta tiempo constante."
+  },
+  {
+    "name": "java.util.LinkedList",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Lista enlazada que también implementa Deque. Acceder a un índice exige recorrer enlaces."
+  },
+  {
+    "name": "java.util.Set",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Colección de elementos sin duplicados según el criterio de igualdad de su implementación."
+  },
+  {
+    "name": "java.util.HashSet",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Conjunto basado en hash. No ofrece un orden de iteración definido."
+  },
+  {
+    "name": "java.util.LinkedHashSet",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Conjunto con orden de iteración definido según el orden de encuentro."
+  },
+  {
+    "name": "java.util.TreeSet",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Conjunto ordenado que permite consultar vecinos, intervalos y extremos."
+  },
+  {
+    "name": "java.util.Map",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Asocia claves con valores. Cada clave identifica como máximo una asignación."
+  },
+  {
+    "name": "java.util.Map$Entry",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Vista de una pareja clave-valor. La posibilidad de actualizarla depende de su origen."
+  },
+  {
+    "name": "java.util.HashMap",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Mapa basado en hash. Su orden de iteración puede cambiar."
+  },
+  {
+    "name": "java.util.LinkedHashMap",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Mapa que conserva un orden de encuentro y puede configurarse por orden de acceso."
+  },
+  {
+    "name": "java.util.TreeMap",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Mapa ordenado por claves con operaciones de navegación e intervalos."
+  },
+  {
+    "name": "java.util.Deque",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Cola de dos extremos que admite usos como pila y como cola."
+  },
+  {
+    "name": "java.util.ArrayDeque",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Deque redimensionable que no admite elementos null. Útil para pilas y colas en memoria."
+  },
+  {
+    "name": "java.util.Queue",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Cola con operaciones distintas para insertar, consultar y retirar el siguiente elemento."
+  },
+  {
+    "name": "java.util.PriorityQueue",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Cola que extrae según una prioridad comparada. Su iteración no representa el orden de extracción."
+  },
+  {
+    "name": "java.util.Iterator",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Recorre una secuencia elemento a elemento y, cuando la implementación lo admite, permite eliminar durante el recorrido."
+  },
+  {
+    "name": "java.util.Arrays",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Operaciones sobre arrays como ordenar, buscar, comparar y copiar tramos."
+  },
+  {
+    "name": "java.util.Collections",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Utilidades para ordenar, transformar y envolver colecciones existentes."
+  },
+  {
+    "name": "java.util.Comparator",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Define un criterio de orden y permite componer desempates."
+  },
+  {
+    "name": "java.util.Objects",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Ayudas para igualdad, comparación y validación de referencias."
+  },
+  {
+    "name": "java.util.Optional",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Representa la presencia o ausencia de un valor no nulo."
+  },
+  {
+    "name": "java.util.OptionalInt",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Representa un entero opcional sin envolverlo en Integer."
+  },
+  {
+    "name": "java.util.Locale",
+    "group": "Colecciones",
+    "lesson": 6,
+    "summary": "Describe una configuración regional para formatos, colación y conversiones de texto."
+  },
+  {
+    "name": "java.util.stream.Stream",
+    "group": "Flujos",
+    "lesson": 8,
+    "summary": "Secuencia que se transforma de forma perezosa y se consume con una operación terminal."
+  },
+  {
+    "name": "java.util.stream.IntStream",
+    "group": "Flujos",
+    "lesson": 8,
+    "summary": "Flujo de enteros primitivos con operaciones como rango, suma y promedio."
+  },
+  {
+    "name": "java.util.stream.LongStream",
+    "group": "Flujos",
+    "lesson": 8,
+    "summary": "Flujo de enteros long con reducciones numéricas sin empaquetar elementos."
+  },
+  {
+    "name": "java.util.stream.DoubleStream",
+    "group": "Flujos",
+    "lesson": 8,
+    "summary": "Flujo de números double con reducciones y estadísticas numéricas."
+  },
+  {
+    "name": "java.util.stream.Collectors",
+    "group": "Flujos",
+    "lesson": 8,
+    "summary": "Factorías de colectores para agrupar, resumir y combinar elementos de un stream."
+  },
+  {
+    "name": "java.util.stream.Collector",
+    "group": "Flujos",
+    "lesson": 8,
+    "summary": "Protocolo para reducir elementos a un resultado mediante acumulación y combinación."
+  },
+  {
+    "name": "java.util.function.Function",
+    "group": "Funciones",
+    "lesson": 8,
+    "summary": "Transforma una entrada en un resultado y puede componerse con otras funciones."
+  },
+  {
+    "name": "java.util.function.Predicate",
+    "group": "Funciones",
+    "lesson": 8,
+    "summary": "Comprueba una condición y se puede combinar mediante operaciones lógicas."
+  },
+  {
+    "name": "java.util.function.Consumer",
+    "group": "Funciones",
+    "lesson": 8,
+    "summary": "Recibe un valor para ejecutar una acción sin valor de retorno."
+  },
+  {
+    "name": "java.util.function.Supplier",
+    "group": "Funciones",
+    "lesson": 8,
+    "summary": "Proporciona un valor sin recibir argumentos. Permite aplazar un cálculo."
+  },
+  {
+    "name": "java.util.function.BiFunction",
+    "group": "Funciones",
+    "lesson": 8,
+    "summary": "Combina dos entradas para producir un resultado."
+  },
+  {
+    "name": "java.util.function.UnaryOperator",
+    "group": "Funciones",
+    "lesson": 8,
+    "summary": "Transforma un valor en otro del mismo tipo."
+  },
+  {
+    "name": "java.util.regex.Pattern",
+    "group": "Texto y patrones",
+    "lesson": 8,
+    "summary": "Representación compilada de una expresión regular, reutilizable con diferentes textos."
+  },
+  {
+    "name": "java.util.regex.Matcher",
+    "group": "Texto y patrones",
+    "lesson": 8,
+    "summary": "Estado de búsqueda de un patrón en una entrada concreta."
+  },
+  {
+    "name": "java.time.LocalDate",
+    "group": "Tiempo",
+    "lesson": 9,
+    "summary": "Fecha del calendario sin hora ni zona horaria."
+  },
+  {
+    "name": "java.time.LocalTime",
+    "group": "Tiempo",
+    "lesson": 9,
+    "summary": "Hora local sin fecha y sin zona horaria."
+  },
+  {
+    "name": "java.time.LocalDateTime",
+    "group": "Tiempo",
+    "lesson": 9,
+    "summary": "Fecha y hora de calendario sin asociarlas a una zona."
+  },
+  {
+    "name": "java.time.Instant",
+    "group": "Tiempo",
+    "lesson": 9,
+    "summary": "Punto de la línea temporal que puede convertirse a diferentes zonas."
+  },
+  {
+    "name": "java.time.Duration",
+    "group": "Tiempo",
+    "lesson": 9,
+    "summary": "Cantidad temporal expresada en segundos y nanosegundos."
+  },
+  {
+    "name": "java.time.Period",
+    "group": "Tiempo",
+    "lesson": 9,
+    "summary": "Cantidad de calendario expresada en años, meses y días."
+  },
+  {
+    "name": "java.time.ZonedDateTime",
+    "group": "Tiempo",
+    "lesson": 9,
+    "summary": "Combina fecha, hora y región horaria con sus reglas de desplazamiento."
+  },
+  {
+    "name": "java.time.ZoneId",
+    "group": "Tiempo",
+    "lesson": 9,
+    "summary": "Identifica una zona horaria. Permite consultar sus reglas."
+  },
+  {
+    "name": "java.time.ZoneOffset",
+    "group": "Tiempo",
+    "lesson": 9,
+    "summary": "Desplazamiento fijo respecto a UTC."
+  },
+  {
+    "name": "java.time.OffsetDateTime",
+    "group": "Tiempo",
+    "lesson": 9,
+    "summary": "Fecha y hora con un desplazamiento fijo respecto a UTC."
+  },
+  {
+    "name": "java.time.Clock",
+    "group": "Tiempo",
+    "lesson": 9,
+    "summary": "Fuente de tiempo intercambiable. Útil para probar código que usa la hora actual."
+  },
+  {
+    "name": "java.time.format.DateTimeFormatter",
+    "group": "Tiempo",
+    "lesson": 9,
+    "summary": "Define cómo leer y presentar una fecha u hora con reglas de formato."
+  },
+  {
+    "name": "java.lang.Thread",
+    "group": "Concurrencia",
+    "lesson": 10,
+    "summary": "Unidad de ejecución. Java 21 dispone de hilos de plataforma y de hilos virtuales."
+  },
+  {
+    "name": "java.lang.Thread$Builder",
+    "group": "Concurrencia",
+    "lesson": 10,
+    "summary": "Configura un hilo antes de crearlo o iniciarlo."
+  },
+  {
+    "name": "java.util.concurrent.Executors",
+    "group": "Concurrencia",
+    "lesson": 10,
+    "summary": "Factorías para crear ejecutores que administran el trabajo de varias tareas."
+  },
+  {
+    "name": "java.util.concurrent.Executor",
+    "group": "Concurrencia",
+    "lesson": 10,
+    "summary": "Recibe tareas para ejecutarlas según una política."
+  },
+  {
+    "name": "java.util.concurrent.ExecutorService",
+    "group": "Concurrencia",
+    "lesson": 10,
+    "summary": "Gestiona la ejecución de tareas y el ciclo de vida del ejecutor."
+  },
+  {
+    "name": "java.util.concurrent.ScheduledExecutorService",
+    "group": "Concurrencia",
+    "lesson": 10,
+    "summary": "Ejecuta tareas con retraso o siguiendo una programación periódica."
+  },
+  {
+    "name": "java.util.concurrent.Future",
+    "group": "Concurrencia",
+    "lesson": 10,
+    "summary": "Representa el resultado futuro de una tarea y permite cancelarla."
+  },
+  {
+    "name": "java.util.concurrent.CompletableFuture",
+    "group": "Concurrencia",
+    "lesson": 10,
+    "summary": "Permite completar, combinar y recuperar resultados asíncronos."
+  },
+  {
+    "name": "java.util.concurrent.CompletionStage",
+    "group": "Concurrencia",
+    "lesson": 10,
+    "summary": "Contrato para encadenar etapas de procesamiento asíncrono."
+  },
+  {
+    "name": "java.util.concurrent.TimeUnit",
+    "group": "Concurrencia",
+    "lesson": 10,
+    "summary": "Unidades de tiempo y conversiones usadas por APIs concurrentes."
+  },
+  {
+    "name": "java.util.concurrent.ConcurrentHashMap",
+    "group": "Concurrencia",
+    "lesson": 10,
+    "summary": "Mapa diseñado para acceso concurrente con operaciones atómicas sobre claves."
+  },
+  {
+    "name": "java.util.concurrent.BlockingQueue",
+    "group": "Concurrencia",
+    "lesson": 10,
+    "summary": "Cola con operaciones que pueden esperar a que haya elementos o espacio."
+  },
+  {
+    "name": "java.util.concurrent.CountDownLatch",
+    "group": "Concurrencia",
+    "lesson": 10,
+    "summary": "Permite esperar a que se alcancen varios hitos de otras tareas."
+  },
+  {
+    "name": "java.util.concurrent.atomic.AtomicInteger",
+    "group": "Concurrencia",
+    "lesson": 10,
+    "summary": "Entero compartido con operaciones atómicas como sumar o comparar e intercambiar."
+  },
+  {
+    "name": "java.util.concurrent.atomic.AtomicReference",
+    "group": "Concurrencia",
+    "lesson": 10,
+    "summary": "Referencia compartida con operaciones atómicas sobre su valor."
+  },
+  {
+    "name": "java.nio.file.Path",
+    "group": "Archivos y flujos",
+    "lesson": 7,
+    "summary": "Representa una ruta. Permite resolver, combinar y comparar componentes."
+  },
+  {
+    "name": "java.nio.file.Files",
+    "group": "Archivos y flujos",
+    "lesson": 7,
+    "summary": "Operaciones para leer, escribir, recorrer y consultar el sistema de archivos."
+  },
+  {
+    "name": "java.nio.file.FileSystem",
+    "group": "Archivos y flujos",
+    "lesson": 7,
+    "summary": "Organiza las rutas y capacidades de un proveedor de sistema de archivos."
+  },
+  {
+    "name": "java.nio.file.StandardOpenOption",
+    "group": "Archivos y flujos",
+    "lesson": 7,
+    "summary": "Opciones para controlar cómo se abre o crea un archivo."
+  },
+  {
+    "name": "java.nio.charset.Charset",
+    "group": "Archivos y flujos",
+    "lesson": 7,
+    "summary": "Codifica texto en bytes y decodifica bytes en texto según un repertorio."
+  },
+  {
+    "name": "java.nio.charset.StandardCharsets",
+    "group": "Archivos y flujos",
+    "lesson": 7,
+    "summary": "Constantes de las codificaciones estándar que Java garantiza."
+  },
+  {
+    "name": "java.nio.ByteBuffer",
+    "group": "Archivos y flujos",
+    "lesson": 7,
+    "summary": "Vista con posición, límite y capacidad para producir y consumir bytes."
+  },
+  {
+    "name": "java.io.InputStream",
+    "group": "Archivos y flujos",
+    "lesson": 7,
+    "summary": "Flujo de entrada de bytes."
+  },
+  {
+    "name": "java.io.OutputStream",
+    "group": "Archivos y flujos",
+    "lesson": 7,
+    "summary": "Flujo de salida de bytes."
+  },
+  {
+    "name": "java.io.Reader",
+    "group": "Archivos y flujos",
+    "lesson": 7,
+    "summary": "Flujo de entrada de caracteres."
+  },
+  {
+    "name": "java.io.Writer",
+    "group": "Archivos y flujos",
+    "lesson": 7,
+    "summary": "Flujo de salida de caracteres."
+  },
+  {
+    "name": "java.io.BufferedReader",
+    "group": "Archivos y flujos",
+    "lesson": 7,
+    "summary": "Lee caracteres mediante un búfer y permite obtener líneas completas."
+  },
+  {
+    "name": "java.io.BufferedWriter",
+    "group": "Archivos y flujos",
+    "lesson": 7,
+    "summary": "Agrupa escrituras de caracteres antes de enviarlas al destino."
+  },
+  {
+    "name": "java.io.PrintStream",
+    "group": "Archivos y flujos",
+    "lesson": 7,
+    "summary": "Imprime texto y valores sobre un flujo de bytes."
+  },
+  {
+    "name": "java.io.IOException",
+    "group": "Archivos y flujos",
+    "lesson": 7,
+    "summary": "Fallo de entrada o salida que el código que llama puede gestionar."
+  },
+  {
+    "name": "java.net.URI",
+    "group": "Red y HTTP",
+    "lesson": 11,
+    "summary": "Identificador de recurso que puede analizarse, resolverse o normalizarse sin abrir una conexión."
+  },
+  {
+    "name": "java.net.URL",
+    "group": "Red y HTTP",
+    "lesson": 11,
+    "summary": "Localiza un recurso y proporciona acceso a la conexión de su protocolo."
+  },
+  {
+    "name": "java.net.http.HttpClient",
+    "group": "Red y HTTP",
+    "lesson": 11,
+    "summary": "Cliente HTTP que envía peticiones de forma síncrona o asíncrona."
+  },
+  {
+    "name": "java.net.http.HttpClient$Builder",
+    "group": "Red y HTTP",
+    "lesson": 11,
+    "summary": "Configura políticas del cliente antes de construirlo."
+  },
+  {
+    "name": "java.net.http.HttpRequest",
+    "group": "Red y HTTP",
+    "lesson": 11,
+    "summary": "Petición HTTP preparada con método, destino, cabeceras y cuerpo."
+  },
+  {
+    "name": "java.net.http.HttpRequest$Builder",
+    "group": "Red y HTTP",
+    "lesson": 11,
+    "summary": "Construye una petición y define su método, cabeceras y tiempo límite."
+  },
+  {
+    "name": "java.net.http.HttpResponse",
+    "group": "Red y HTTP",
+    "lesson": 11,
+    "summary": "Respuesta HTTP con estado, cabeceras y un cuerpo procesado."
+  },
+  {
+    "name": "java.net.http.HttpResponse$BodyHandlers",
+    "group": "Red y HTTP",
+    "lesson": 11,
+    "summary": "Factorías que eligen cómo transformar el cuerpo al recibir una respuesta HTTP."
+  },
+  {
+    "name": "java.sql.Connection",
+    "group": "JDBC",
+    "lesson": 11,
+    "summary": "Conexión JDBC que crea sentencias y controla transacciones."
+  },
+  {
+    "name": "java.sql.PreparedStatement",
+    "group": "JDBC",
+    "lesson": 11,
+    "summary": "Sentencia SQL con parámetros tipados y preparada para varias ejecuciones."
+  },
+  {
+    "name": "java.sql.ResultSet",
+    "group": "JDBC",
+    "lesson": 11,
+    "summary": "Cursor sobre filas de una consulta. Proporciona acceso por columna."
+  },
+  {
+    "name": "java.sql.SQLException",
+    "group": "JDBC",
+    "lesson": 11,
+    "summary": "Error JDBC con mensaje, estado SQL y código del proveedor."
+  },
+  {
+    "name": "java.sql.DriverManager",
+    "group": "JDBC",
+    "lesson": 11,
+    "summary": "Selecciona controladores JDBC y abre conexiones por URL."
+  },
+  {
+    "name": "javax.sql.DataSource",
+    "group": "JDBC",
+    "lesson": 11,
+    "summary": "Factoría de conexiones JDBC que se puede configurar e inyectar en una aplicación."
+  }
+]

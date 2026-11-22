@@ -1,0 +1,20 @@
+Partes de las fichas de React se han adaptado de la documentación oficial,
+publicada por el equipo de React y sus colaboradores:
+https://github.com/reactjs/react.dev
+https://github.com/reactjs/es.react.dev
+
+Partes de las fichas de TypeScript se han adaptado de la documentación
+oficial de Microsoft y sus colaboradores:
+https://github.com/microsoft/TypeScript-Website
+
+Texto adaptado bajo Creative Commons Attribution 4.0 International:
+https://creativecommons.org/licenses/by/4.0/
+
+Se han seleccionado, reestructurado y adaptado fragmentos de Markdown.
+Cada ficha enlaza al documento de origen. Los ejemplos identificados
+para el laboratorio se han redactado para VCode.
+
+Huellas SHA-256 de los archivos fuente importados:
+reactjs/react.dev              4e2cff4a1fcf8959253e2e51e6d6cde49b8f57a2e17a2bbf325bf36bb4254da7
+reactjs/es.react.dev           ef55854706a8607008d0138acb526403c2f098120430133e2c881424b33dbee7
+microsoft/TypeScript-Website   25ad25ad1b0545a3bc4362ca92eba7171d2d64bc82588085babdc58475772540

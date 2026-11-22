@@ -1,0 +1,2273 @@
+[
+  {
+    "title": "FROM",
+    "source": "lang_select.html#fromclause",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 1,
+    "summary": "Determina qué relación proporciona las filas de una consulta.",
+    "syntax": "SELECT nombre FROM cursos;",
+    "body": [
+      "La fuente puede ser una tabla, una vista, una subconsulta o una unión de varias fuentes. Puedes poner un alias para identificar sus columnas."
+    ],
+    "notes": [
+      "Sin FROM, un SELECT de expresiones en SQLite evalúa una fila de entrada implícita."
+    ],
+    "aliases": ["origen de filas", "tabla de consulta"],
+    "related": ["SELECT", "JOIN", "AS"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de FROM",
+      "description": "La consulta lee los dos valores desde una relación temporal.",
+      "code": "WITH cursos(nombre) AS (VALUES ('React'), ('HTML'))\n       SELECT nombre FROM cursos ORDER BY nombre;",
+      "expected": "HTML\nReact",
+      "expectedRows": [["HTML"], ["React"]]
+    }
+  },
+  {
+    "title": "WHERE",
+    "source": "lang_select.html#whereclause",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 2,
+    "summary": "Conserva las filas que hacen verdadera una condición antes de agruparlas.",
+    "syntax": "SELECT tema FROM cursos WHERE minutos >= 20;",
+    "body": [
+      "La condición se aplica a cada fila. Las filas donde el resultado es falso o NULL quedan fuera."
+    ],
+    "notes": ["Usa HAVING para una condición sobre un grupo ya calculado."],
+    "aliases": ["filtro de filas", "cláusula where", "filtrar registros"],
+    "related": ["HAVING", "BETWEEN", "IS NULL"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de WHERE",
+      "description": "La fila de Java tiene duración desconocida y tampoco satisface la comparación.",
+      "code": "WITH sesiones(tema, minutos) AS (VALUES ('HTML', 15), ('React', 30), ('Java', NULL))\n       SELECT tema FROM sesiones WHERE minutos >= 20;",
+      "expected": "React",
+      "expectedRows": [["React"]]
+    }
+  },
+  {
+    "title": "GROUP BY",
+    "source": "lang_select.html#resultset",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 4,
+    "summary": "Agrupa filas con los mismos valores de clave para calcular un resultado por grupo.",
+    "syntax": "SELECT tema, SUM(minutos) AS total FROM sesiones GROUP BY tema;",
+    "body": [
+      "Se evalúan funciones agregadas, como SUM y COUNT, sobre las filas de cada grupo. Varios NULL en una clave quedan en el mismo grupo."
+    ],
+    "notes": [
+      "Escribe en SELECT las claves agrupadas y cálculos agregados. Una columna ajena al grupo podría tomar un valor de una fila arbitraria en SQLite."
+    ],
+    "aliases": ["group by", "agrupar datos", "agregación por tema"],
+    "related": ["HAVING", "WHERE", "COUNT()"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de GROUP BY",
+      "description": "Cada tema produce una fila con su total acumulado.",
+      "code": "WITH bloques(tema, minutos) AS (VALUES ('SQL', 15), ('Java', 35), ('SQL', 20))\n       SELECT tema, SUM(minutos) AS total FROM bloques GROUP BY tema ORDER BY tema;",
+      "expected": "Java | 35\nSQL | 35",
+      "expectedRows": [
+        ["Java", 35],
+        ["SQL", 35]
+      ]
+    }
+  },
+  {
+    "title": "HAVING",
+    "source": "lang_select.html#resultset",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 4,
+    "summary": "Conserva los grupos cuyo resultado agregado satisface una condición.",
+    "syntax": "SELECT tema, COUNT(*) AS bloques FROM sesiones GROUP BY tema HAVING COUNT(*) >= 2;",
+    "body": [
+      "WHERE actúa antes de crear los grupos y HAVING actúa después. Puedes exigir, por ejemplo, que el grupo tenga suficientes filas."
+    ],
+    "notes": [
+      "Filtrar filas después de agregarlas cambia el significado. Coloca las condiciones de cada fila en WHERE."
+    ],
+    "aliases": ["filtro de grupos", "filtrar count", "having count"],
+    "related": ["GROUP BY", "WHERE", "COUNT()"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de HAVING",
+      "description": "Java queda fuera porque solo tiene un bloque.",
+      "code": "WITH bloques(tema) AS (VALUES ('SQL'), ('Java'), ('SQL'))\n       SELECT tema, COUNT(*) AS bloques FROM bloques GROUP BY tema HAVING COUNT(*) >= 2;",
+      "expected": "SQL | 2",
+      "expectedRows": [["SQL", 2]]
+    }
+  },
+  {
+    "title": "DISTINCT",
+    "source": "lang_select.html#distinct",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 2,
+    "summary": "Elimina filas duplicadas del resultado de SELECT.",
+    "syntax": "SELECT DISTINCT tema, nivel FROM sesiones;",
+    "body": [
+      "La comparación se aplica a todas las expresiones seleccionadas. Si incluyes nivel, cada combinación distinta de tema y nivel puede aparecer."
+    ],
+    "notes": [
+      "DISTINCT no fija el orden. Añade ORDER BY si la secuencia importa."
+    ],
+    "aliases": ["quitar duplicados", "select distinct", "filas únicas"],
+    "related": ["SELECT", "ORDER BY", "UNION"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de DISTINCT",
+      "description": "Quedan dos pares únicos, aunque el tema sea el mismo.",
+      "code": "WITH cursos(tema, nivel) AS (\n         VALUES ('Java', 'Inicial'), ('Java', 'Inicial'), ('Java', 'Medio')\n       )\n       SELECT DISTINCT tema, nivel FROM cursos ORDER BY nivel;",
+      "expected": "Java | Inicial\nJava | Medio",
+      "expectedRows": [
+        ["Java", "Inicial"],
+        ["Java", "Medio"]
+      ]
+    }
+  },
+  {
+    "title": "JOIN",
+    "source": "lang_select.html#fromclause",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 5,
+    "summary": "Combina filas de dos fuentes según una condición.",
+    "syntax": "SELECT t.nombre, h.horas FROM temas AS t JOIN horarios AS h ON h.tema_id = t.id;",
+    "body": [
+      "Por cada coincidencia se produce una fila resultante. Si una fila tiene tres coincidencias, puede aparecer tres veces."
+    ],
+    "notes": [
+      "Haz que la condición represente la relación correcta. Una condición ausente o demasiado amplia puede multiplicar los resultados."
+    ],
+    "aliases": ["unir tablas", "combinar registros", "join sql"],
+    "related": ["INNER JOIN", "LEFT JOIN", "FULL OUTER JOIN"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de JOIN",
+      "description": "Como SQL tiene dos horarios, aparecen dos filas.",
+      "code": "WITH temas(id, nombre) AS (VALUES (1, 'SQL'), (2, 'Java')),\n            horarios(tema_id, horas) AS (VALUES (1, 2), (1, 3))\n       SELECT temas.nombre, horarios.horas\n       FROM temas JOIN horarios ON horarios.tema_id = temas.id\n       ORDER BY horarios.horas;",
+      "expected": "SQL | 2\nSQL | 3",
+      "expectedRows": [
+        ["SQL", 2],
+        ["SQL", 3]
+      ]
+    }
+  },
+  {
+    "title": "INNER JOIN",
+    "source": "lang_select.html#fromclause",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 5,
+    "summary": "Devuelve las combinaciones que cumplen la condición de unión.",
+    "syntax": "SELECT a.nombre FROM alumnos AS a INNER JOIN inscripciones AS i ON i.alumno_id = a.id;",
+    "body": [
+      "En SQLite, JOIN con condición tiene la misma lógica de coincidencias que INNER JOIN."
+    ],
+    "notes": [
+      "Usa EXISTS si solo quieres confirmar que hay al menos una coincidencia; así evitas multiplicar las filas de la izquierda."
+    ],
+    "aliases": ["inner join", "unión interna", "coincidencias entre tablas"],
+    "related": ["JOIN", "LEFT JOIN", "EXISTS"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de INNER JOIN",
+      "description": "Solo el identificador 2 está presente en las dos fuentes.",
+      "code": "WITH a(id) AS (VALUES (1), (2)), b(id) AS (VALUES (2), (3))\n       SELECT a.id FROM a INNER JOIN b ON a.id = b.id;",
+      "expected": "2",
+      "expectedRows": [[2]]
+    }
+  },
+  {
+    "title": "LEFT JOIN",
+    "source": "lang_select.html#fromclause",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 5,
+    "summary": "Incluye todas las filas izquierdas y rellena con NULL las columnas derechas sin coincidencia.",
+    "syntax": "SELECT a.nombre, i.curso_id FROM alumnos AS a LEFT JOIN inscripciones AS i ON i.alumno_id = a.id;",
+    "body": [
+      "Una condición en ON limita qué filas derechas coinciden. Una condición en WHERE se evalúa una vez hecha la unión."
+    ],
+    "notes": [
+      "Si quieres mantener las filas sin coincidencia, pon las restricciones sobre la coincidencia en ON. Un WHERE sobre una columna derecha puede descartarlas."
+    ],
+    "aliases": ["left outer join", "unión izquierda", "left join null"],
+    "related": ["JOIN", "RIGHT JOIN", "WHERE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de LEFT JOIN",
+      "description": "Luz sigue en la salida aunque no tenga inscripción.",
+      "code": "WITH a(id, nombre) AS (VALUES (1, 'Ana'), (2, 'Luz')),\n            b(alumno_id, tema) AS (VALUES (1, 'SQL'))\n       SELECT a.nombre, b.tema FROM a LEFT JOIN b ON a.id = b.alumno_id ORDER BY a.id;",
+      "expected": "Ana | SQL\nLuz | NULL",
+      "expectedRows": [
+        ["Ana", "SQL"],
+        ["Luz", null]
+      ]
+    }
+  },
+  {
+    "title": "RIGHT JOIN",
+    "source": "lang_select.html#rjoin",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 5,
+    "summary": "Incluye todas las filas derechas y rellena con NULL las columnas izquierdas sin coincidencia.",
+    "syntax": "SELECT a.nombre, p.codigo FROM alumnos AS a RIGHT JOIN plazas AS p ON a.id = p.alumno_id;",
+    "body": [
+      "Puedes expresar la misma relación con LEFT JOIN intercambiando el orden de las fuentes y ajustando las referencias."
+    ],
+    "notes": [
+      "SQLite incorporó RIGHT JOIN en la versión 3.39. Si tu entorno usa una anterior, usa la forma equivalente con LEFT JOIN."
+    ],
+    "aliases": ["right outer join", "unión derecha", "right join sqlite"],
+    "related": ["LEFT JOIN", "FULL OUTER JOIN", "JOIN"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de RIGHT JOIN",
+      "description": "La plaza 20 aparece aunque no haya una fila del alumno.",
+      "code": "WITH a(id, nombre) AS (VALUES (1, 'Ana')),\n            b(id, alumno_id) AS (VALUES (10, 1), (20, 2))\n       SELECT a.nombre, b.id FROM a RIGHT JOIN b ON a.id = b.alumno_id ORDER BY b.id;",
+      "expected": "Ana | 10\nNULL | 20",
+      "expectedRows": [
+        ["Ana", 10],
+        [null, 20]
+      ]
+    }
+  },
+  {
+    "title": "FULL OUTER JOIN",
+    "source": "lang_select.html#fulljoin",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 5,
+    "summary": "Conserva las coincidencias y las filas sin pareja de los dos lados.",
+    "syntax": "SELECT a.id, b.id FROM origen AS a FULL OUTER JOIN destino AS b ON a.id = b.id;",
+    "body": [
+      "Los datos que solo están a un lado producen NULL en las columnas del otro. También puedes escribir FULL JOIN."
+    ],
+    "notes": [
+      "SQLite admite esta unión desde la versión 3.39. Si necesitas identificar ausencias, elige columnas que sepas que no son NULL en una coincidencia."
+    ],
+    "aliases": ["full join", "unión externa completa", "full outer"],
+    "related": ["LEFT JOIN", "RIGHT JOIN", "COALESCE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de FULL OUTER JOIN",
+      "description": "Se distinguen los tres casos según qué lado aporta el identificador.",
+      "code": "WITH a(id) AS (VALUES (1), (2)), b(id) AS (VALUES (2), (3))\n       SELECT a.id AS origen, b.id AS destino\n       FROM a FULL OUTER JOIN b ON a.id = b.id ORDER BY COALESCE(a.id, b.id);",
+      "expected": "1 | NULL\n2 | 2\nNULL | 3",
+      "expectedRows": [
+        [1, null],
+        [2, 2],
+        [null, 3]
+      ]
+    }
+  },
+  {
+    "title": "CROSS JOIN",
+    "source": "lang_select.html#crossjoin",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 5,
+    "summary": "Genera todas las parejas de filas de dos fuentes cuando no hay condición.",
+    "syntax": "SELECT dia, turno FROM dias CROSS JOIN turnos;",
+    "body": [
+      "Úsalo para generar combinaciones deliberadas. Dos listas de tamaños N y M pueden producir N por M filas."
+    ],
+    "notes": [
+      "SQLite también utiliza CROSS JOIN como límite para reordenar los operandos de una unión. Reserva ese control para problemas medidos del plan de ejecución."
+    ],
+    "aliases": ["producto cartesiano", "todas las combinaciones", "cross join"],
+    "related": ["JOIN", "EXPLAIN QUERY PLAN"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de CROSS JOIN",
+      "description": "Cada día se combina con los dos turnos.",
+      "code": "WITH dias(dia) AS (VALUES ('Lun'), ('Mar')),\n            turnos(turno) AS (VALUES ('Mañana'), ('Tarde'))\n       SELECT dia, turno FROM dias CROSS JOIN turnos ORDER BY dia, turno;",
+      "expected": "Lun | Mañana\nLun | Tarde\nMar | Mañana\nMar | Tarde",
+      "expectedRows": [
+        ["Lun", "Mañana"],
+        ["Lun", "Tarde"],
+        ["Mar", "Mañana"],
+        ["Mar", "Tarde"]
+      ]
+    }
+  },
+  {
+    "title": "USING",
+    "source": "lang_select.html#fromclause",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 5,
+    "summary": "Define una coincidencia entre columnas con el mismo nombre en ambos lados de una unión.",
+    "syntax": "SELECT tema_id FROM admisiones JOIN sesiones USING (tema_id);",
+    "body": [
+      "Cada columna listada participa en una comparación de igualdad. La columna duplicada del lado derecho se omite del resultado combinado."
+    ],
+    "notes": [
+      "Usa ON cuando los nombres no coincidan o la relación necesite otras condiciones."
+    ],
+    "aliases": ["join using", "unir por columna común"],
+    "related": ["JOIN", "INNER JOIN", "LEFT JOIN"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de USING",
+      "description": "El identificador compartido aparece una sola vez en las columnas.",
+      "code": "WITH a(id, nombre) AS (VALUES (1, 'SQL')),\n            b(id, nivel) AS (VALUES (1, 'Inicial'))\n       SELECT * FROM a JOIN b USING (id);",
+      "expected": "1 | SQL | Inicial",
+      "expectedRows": [[1, "SQL", "Inicial"]]
+    }
+  },
+  {
+    "title": "ORDER BY",
+    "source": "lang_select.html#orderby",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 2,
+    "summary": "Ordena las filas del resultado con las claves y direcciones que indiques.",
+    "syntax": "SELECT tema, minutos FROM sesiones ORDER BY minutos DESC, tema ASC;",
+    "body": [
+      "Las claves posteriores resuelven empates de las anteriores. Puedes pedir NULLS FIRST o NULLS LAST para controlar la posición de los valores ausentes."
+    ],
+    "notes": [
+      "Añade una clave final única si necesitas un orden estable de paginación o exportación."
+    ],
+    "aliases": ["order by", "ordenar asc desc", "nulls first nulls last"],
+    "related": ["LIMIT", "OFFSET", "DISTINCT"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de ORDER BY",
+      "description": "Los dos totales iguales se ordenan por tema.",
+      "code": "WITH bloques(tema, minutos) AS (VALUES ('HTML', NULL), ('Java', 25), ('SQL', 25))\n       SELECT tema, minutos FROM bloques ORDER BY minutos DESC NULLS LAST, tema;",
+      "expected": "Java | 25\nSQL | 25\nHTML | NULL",
+      "expectedRows": [
+        ["Java", 25],
+        ["SQL", 25],
+        ["HTML", null]
+      ]
+    }
+  },
+  {
+    "title": "LIMIT",
+    "source": "lang_select.html#limitoffset",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 2,
+    "summary": "Acota el número máximo de filas que devuelve una consulta.",
+    "syntax": "SELECT nombre FROM cursos ORDER BY id LIMIT 3;",
+    "body": [
+      "El límite se aplica al resultado completo, incluso si procede de un SELECT compuesto."
+    ],
+    "notes": [
+      "Acompaña LIMIT de ORDER BY para expresar qué filas deben quedar. En SQLite, LIMIT -1 indica ausencia de cota superior."
+    ],
+    "aliases": ["limitar filas", "top resultados", "limit sql"],
+    "related": ["OFFSET", "ORDER BY", "SELECT"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de LIMIT",
+      "description": "La cota se aplica tras ordenar por posición.",
+      "code": "WITH niveles(orden, nombre) AS (VALUES (3, 'Alto'), (1, 'Base'), (2, 'Medio'))\n       SELECT nombre FROM niveles ORDER BY orden LIMIT 2;",
+      "expected": "Base\nMedio",
+      "expectedRows": [["Base"], ["Medio"]]
+    }
+  },
+  {
+    "title": "OFFSET",
+    "source": "lang_select.html#limitoffset",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 2,
+    "summary": "Omite una cantidad de filas antes de devolver las del límite.",
+    "syntax": "SELECT nombre FROM cursos ORDER BY id LIMIT 20 OFFSET 40;",
+    "body": [
+      "LIMIT marca cuántas filas se devuelven; OFFSET decide cuántas se saltan primero."
+    ],
+    "notes": [
+      "En conjuntos grandes o que cambian mientras se navega, paginar con una clave conocida puede ser más estable que saltar una cantidad fija."
+    ],
+    "aliases": ["offset sql", "saltar filas", "paginación"],
+    "related": ["LIMIT", "ORDER BY"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de OFFSET",
+      "description": "Al saltar el primer resultado, la página queda en CSS.",
+      "code": "WITH cursos(id, nombre) AS (VALUES (1, 'HTML'), (2, 'CSS'), (3, 'SQL'))\n       SELECT nombre FROM cursos ORDER BY id LIMIT 1 OFFSET 1;",
+      "expected": "CSS",
+      "expectedRows": [["CSS"]]
+    }
+  },
+  {
+    "title": "AS",
+    "source": "lang_select.html#resultset",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 1,
+    "summary": "Da un nombre de salida a una expresión y permite nombrar una fuente en FROM.",
+    "syntax": "SELECT c.nombre AS curso FROM cursos AS c;",
+    "body": [
+      "Usa el alias de tabla para originar cada columna y el de columna para reconocer el dato devuelto."
+    ],
+    "notes": [
+      "SQLite admite determinados usos adicionales de alias. Para que un filtro sea más portable, calcula antes el alias en una subconsulta y úsalo en su consulta exterior."
+    ],
+    "aliases": ["alias sql", "alias de columna", "alias de tabla"],
+    "related": ["FROM", "SELECT"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de AS",
+      "description": "La salida recibe dos nombres explícitos.",
+      "code": "WITH cursos(id, nombre) AS (VALUES (12, 'SQL'))\n       SELECT c.nombre AS curso, c.id AS codigo FROM cursos AS c;",
+      "expected": "SQL | 12",
+      "expectedRows": [["SQL", 12]]
+    }
+  },
+  {
+    "title": "VALUES",
+    "source": "lang_select.html#values",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 1,
+    "summary": "Construye filas a partir de expresiones especificadas directamente.",
+    "syntax": "VALUES (1, 'HTML'), (2, 'SQL');",
+    "body": [
+      "Puedes usar VALUES como origen de una CTE, en un INSERT o como una consulta de pequeñas muestras."
+    ],
+    "notes": [
+      "Mantén el mismo número de expresiones en cada fila. Los valores pueden incorporar conversiones y parámetros según el contexto."
+    ],
+    "aliases": ["valores inline", "filas literales", "tabla temporal values"],
+    "related": ["WITH", "INSERT", "SELECT"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de VALUES",
+      "description": "La CTE da nombre y columnas a dos filas escritas en el código.",
+      "code": "WITH cursos(id, tema) AS (VALUES (2, 'SQL'), (1, 'HTML'))\n       SELECT id, tema FROM cursos ORDER BY id;",
+      "expected": "1 | HTML\n2 | SQL",
+      "expectedRows": [
+        [1, "HTML"],
+        [2, "SQL"]
+      ]
+    }
+  },
+  {
+    "title": "UNION ALL",
+    "source": "lang_select.html#compound",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 6,
+    "summary": "Añade las filas de las consultas y conserva duplicados.",
+    "syntax": "SELECT id FROM primero UNION ALL SELECT id FROM segundo;",
+    "body": [
+      "Cada SELECT aporta todas sus filas a un resultado compuesto. Las columnas se asocian por posición."
+    ],
+    "notes": [
+      "Usa UNION si necesitas eliminar duplicados. Aplica un ORDER BY al resultado final para fijar el orden."
+    ],
+    "aliases": ["operador compuesto", "consultas combinadas"],
+    "related": ["SELECT", "ORDER BY"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de UNION ALL",
+      "description": "El identificador 2 aparece en las dos fuentes. La operación decide cómo tratarlo.",
+      "code": "WITH primero(id) AS (VALUES (1), (2)), segundo(id) AS (VALUES (2), (3))\nSELECT id FROM primero UNION ALL SELECT id FROM segundo ORDER BY id;",
+      "expected": "1\n2\n2\n3",
+      "expectedRows": [[1], [2], [2], [3]]
+    }
+  },
+  {
+    "title": "UNION",
+    "source": "lang_select.html#compound",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 6,
+    "summary": "Reúne los resultados de dos consultas y elimina filas repetidas.",
+    "syntax": "SELECT id FROM primero UNION SELECT id FROM segundo;",
+    "body": [
+      "Los dos SELECT deben producir el mismo número de columnas. Se compara la fila completa para decidir duplicados."
+    ],
+    "notes": [
+      "Conserva UNION ALL cuando las repeticiones importen o si ya sabes que las fuentes son disjuntas."
+    ],
+    "aliases": ["operador compuesto", "consultas combinadas"],
+    "related": ["SELECT", "ORDER BY"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de UNION",
+      "description": "El identificador 2 aparece en las dos fuentes. La operación decide cómo tratarlo.",
+      "code": "WITH primero(id) AS (VALUES (1), (2)), segundo(id) AS (VALUES (2), (3))\nSELECT id FROM primero UNION SELECT id FROM segundo ORDER BY id;",
+      "expected": "1\n2\n3",
+      "expectedRows": [[1], [2], [3]]
+    }
+  },
+  {
+    "title": "INTERSECT",
+    "source": "lang_select.html#compound",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 6,
+    "summary": "Devuelve las filas distintas que aparecen en las dos consultas.",
+    "syntax": "SELECT id FROM primero INTERSECT SELECT id FROM segundo;",
+    "body": [
+      "Las columnas se comparan por posición en ambos lados. El resultado contiene cada fila común una vez."
+    ],
+    "notes": [
+      "Si mezclas varios operadores compuestos, revisa el agrupamiento y usa subconsultas para expresar la intención."
+    ],
+    "aliases": ["operador compuesto", "consultas combinadas"],
+    "related": ["SELECT", "ORDER BY"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de INTERSECT",
+      "description": "El identificador 2 aparece en las dos fuentes. La operación decide cómo tratarlo.",
+      "code": "WITH primero(id) AS (VALUES (1), (2)), segundo(id) AS (VALUES (2), (3))\nSELECT id FROM primero INTERSECT SELECT id FROM segundo ORDER BY id;",
+      "expected": "2",
+      "expectedRows": [[2]]
+    }
+  },
+  {
+    "title": "EXCEPT",
+    "source": "lang_select.html#compound",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 6,
+    "summary": "Devuelve las filas distintas de la primera consulta que no aparecen en la segunda.",
+    "syntax": "SELECT id FROM primero EXCEPT SELECT id FROM segundo;",
+    "body": [
+      "Compara las columnas por posición. Invertir las consultas invierte qué conjunto se toma como origen."
+    ],
+    "notes": [
+      "Si tienes que conservar duplicados o datos de otras columnas, evalúa si NOT EXISTS expresa mejor lo que buscas."
+    ],
+    "aliases": ["operador compuesto", "consultas combinadas"],
+    "related": ["SELECT", "ORDER BY"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de EXCEPT",
+      "description": "El identificador 2 aparece en las dos fuentes. La operación decide cómo tratarlo.",
+      "code": "WITH primero(id) AS (VALUES (1), (2)), segundo(id) AS (VALUES (2), (3))\nSELECT id FROM primero EXCEPT SELECT id FROM segundo ORDER BY id;",
+      "expected": "1",
+      "expectedRows": [[1]]
+    }
+  },
+  {
+    "title": "Subconsulta correlacionada",
+    "source": "lang_expr.html#cosub",
+    "area": "queries",
+    "group": "Consultas",
+    "guide": 6,
+    "summary": "Usa valores de la fila exterior dentro de una consulta anidada.",
+    "syntax": "SELECT t.nombre FROM temas AS t WHERE EXISTS (SELECT 1 FROM sesiones AS s WHERE s.tema_id = t.id);",
+    "body": [
+      "Las referencias a t.id pertenecen a la consulta exterior. EXISTS comprueba la presencia de al menos una fila relacionada."
+    ],
+    "notes": [
+      "Da nombres diferentes a las fuentes internas y externas para que se vea de dónde viene cada columna."
+    ],
+    "aliases": [
+      "correlated subquery",
+      "subconsulta por fila",
+      "consulta correlacionada"
+    ],
+    "related": ["EXISTS", "JOIN", "WITH"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de Subconsulta correlacionada",
+      "description": "La consulta interior encuentra dos filas, pero la exterior solo devuelve el tema una vez.",
+      "code": "WITH temas(id,nombre) AS (VALUES (1,'SQL'), (2,'Java')),\n            bloques(tema_id) AS (VALUES (1), (1))\n       SELECT t.nombre FROM temas AS t\n       WHERE EXISTS (SELECT 1 FROM bloques AS b WHERE b.tema_id = t.id);",
+      "expected": "SQL",
+      "expectedRows": [["SQL"]]
+    }
+  },
+  {
+    "title": "CASE",
+    "source": "lang_expr.html#case",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 3,
+    "summary": "Elige un valor entre varias alternativas dentro de una expresión.",
+    "syntax": "CASE WHEN minutos >= 30 THEN 'Largo' ELSE 'Corto' END",
+    "body": [
+      "La forma buscada prueba condiciones WHEN en orden. La forma CASE valor compara ese valor con las expresiones de cada WHEN."
+    ],
+    "notes": [
+      "Si no coincide ninguna rama y no escribes ELSE, la expresión devuelve NULL."
+    ],
+    "aliases": ["case when", "condicional sql", "else end"],
+    "related": ["IS NULL", "COALESCE", "WHERE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de CASE",
+      "description": "Las tres ramas distinguen duración corta, duración larga y dato ausente.",
+      "code": "WITH bloques(minutos) AS (VALUES (15), (30), (NULL))\n       SELECT CASE WHEN minutos IS NULL THEN 'Sin dato'\n                   WHEN minutos >= 30 THEN 'Largo'\n                   ELSE 'Corto' END AS clase\n       FROM bloques ORDER BY minutos IS NULL, minutos;",
+      "expected": "Corto\nLargo\nSin dato",
+      "expectedRows": [["Corto"], ["Largo"], ["Sin dato"]]
+    }
+  },
+  {
+    "title": "BETWEEN",
+    "source": "lang_expr.html#between",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 2,
+    "summary": "Comprueba que un valor está entre dos límites incluidos.",
+    "syntax": "WHERE minutos BETWEEN 15 AND 30",
+    "body": [
+      "La comparación se parece a comprobar el límite inferior y el superior. BETWEEN evalúa una vez la expresión comparada."
+    ],
+    "notes": [
+      "Ambos extremos se incluyen. Para intervalos de tiempo que no deban compartir frontera, usa >= y < con límites escritos."
+    ],
+    "aliases": ["rango inclusivo", "entre dos valores", "between and"],
+    "related": ["WHERE", "IN"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de BETWEEN",
+      "description": "Los dos extremos coinciden y 31 queda fuera.",
+      "code": "SELECT 15 BETWEEN 15 AND 30 AS inicio, 30 BETWEEN 15 AND 30 AS fin, 31 BETWEEN 15 AND 30 AS fuera;",
+      "expected": "1 | 1 | 0",
+      "expectedRows": [[1, 1, 0]]
+    }
+  },
+  {
+    "title": "IN",
+    "source": "lang_expr.html#in_op",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 2,
+    "summary": "Comprueba si un valor pertenece a una lista o al resultado de una subconsulta.",
+    "syntax": "WHERE curso IN ('HTML', 'CSS')",
+    "body": [
+      "Una coincidencia produce verdadero. Sin coincidencias, la presencia de NULL puede hacer que el resultado sea desconocido."
+    ],
+    "notes": [
+      "En una lista escrita, pon comillas a valores de texto. Para datos variables desde un programa, usa parámetros o una subconsulta."
+    ],
+    "aliases": ["pertenece a lista", "entero en lista", "in sql"],
+    "related": ["NOT IN", "EXISTS", "IS NULL"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de IN",
+      "description": "La coincidencia directa da 1. El segundo caso tiene resultado NULL.",
+      "code": "SELECT 'SQL' IN ('HTML', 'SQL') AS coincide, 'Java' IN ('SQL', NULL) AS desconocido;",
+      "expected": "1 | NULL",
+      "expectedRows": [[1, null]]
+    }
+  },
+  {
+    "title": "NOT IN",
+    "source": "lang_expr.html#in_op",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 3,
+    "summary": "Comprueba que un valor queda fuera de la lista o consulta de la derecha.",
+    "syntax": "WHERE id NOT IN (SELECT alumno_id FROM inscripciones)",
+    "body": [
+      "Con una coincidencia devuelve falso. Cuando no hay coincidencia y la lista contiene NULL, el resultado puede ser NULL."
+    ],
+    "notes": [
+      "Si la columna de la subconsulta puede ser NULL, filtra esos valores o formula la ausencia con NOT EXISTS."
+    ],
+    "aliases": ["not in null", "excluir lista", "no pertenece"],
+    "related": ["IN", "EXISTS", "IS NULL"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de NOT IN",
+      "description": "El NULL hace que el primer descarte sea desconocido.",
+      "code": "SELECT 2 NOT IN (1, NULL) AS desconocido, 2 NOT IN (1, 3) AS ausente;",
+      "expected": "NULL | 1",
+      "expectedRows": [[null, 1]]
+    }
+  },
+  {
+    "title": "EXISTS",
+    "source": "lang_expr.html#exists_op",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 6,
+    "summary": "Devuelve 1 si una subconsulta produce al menos una fila y 0 si no produce ninguna.",
+    "syntax": "WHERE EXISTS (SELECT 1 FROM reservas WHERE reservas.curso_id = cursos.id)",
+    "body": [
+      "Las columnas proyectadas no afectan a la comprobación. Incluso una fila que solo contiene NULL cuenta como existente."
+    ],
+    "notes": [
+      "Usa NOT EXISTS para comprobar ausencia. Si cruzas la tabla en FROM mediante JOIN, sus coincidencias pueden multiplicar las filas de salida."
+    ],
+    "aliases": ["exists subconsulta", "not exists", "hay una fila"],
+    "related": ["Subconsulta correlacionada", "IN", "LEFT JOIN"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de EXISTS",
+      "description": "La primera consulta produce una fila con NULL y la segunda no produce filas.",
+      "code": "SELECT EXISTS (SELECT NULL) AS hay_fila, EXISTS (SELECT 1 WHERE 0) AS vacio;",
+      "expected": "1 | 0",
+      "expectedRows": [[1, 0]]
+    }
+  },
+  {
+    "title": "IS NULL",
+    "source": "lang_expr.html#isisnot",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 3,
+    "summary": "Comprueba si una expresión tiene un valor nulo sin propagar un resultado desconocido.",
+    "syntax": "WHERE fecha_entrega IS NULL",
+    "body": [
+      "Usa IS NOT NULL para comprobar lo contrario. Comparar con = NULL produce NULL, incluso cuando el valor es nulo."
+    ],
+    "notes": [
+      "NULL representa ausencia o desconocimiento. Una cadena vacía y el número cero son valores distintos de NULL."
+    ],
+    "aliases": [
+      "isnull",
+      "is not null",
+      "es nulo",
+      "null sql",
+      "comparar null"
+    ],
+    "related": ["IS DISTINCT FROM", "COALESCE", "WHERE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de IS NULL",
+      "description": "Solo la primera operación comprueba correctamente la ausencia.",
+      "code": "SELECT NULL IS NULL AS ausente, '' IS NULL AS texto_vacio, NULL = NULL AS igualdad;",
+      "expected": "1 | 0 | NULL",
+      "expectedRows": [[1, 0, null]]
+    }
+  },
+  {
+    "title": "IS DISTINCT FROM",
+    "source": "lang_expr.html#isdf",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 3,
+    "summary": "Compara dos expresiones considerando NULL como un caso con resultado definido.",
+    "syntax": "WHERE valor_anterior IS DISTINCT FROM valor_nuevo",
+    "body": [
+      "Dos NULL se consideran iguales para esta comparación. Uno nulo y otro no nulo se consideran distintos."
+    ],
+    "notes": [
+      "IS NOT DISTINCT FROM invierte el resultado. SQLite también admite IS e IS NOT, con reglas propias al comparar literales booleanos."
+    ],
+    "aliases": [
+      "is not distinct from",
+      "null safe comparison",
+      "comparar nulos"
+    ],
+    "related": ["IS NULL", "CASE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de IS DISTINCT FROM",
+      "description": "Comparar dos ausencias da 0 para la distinción.",
+      "code": "SELECT NULL IS DISTINCT FROM NULL AS iguales, NULL IS DISTINCT FROM 7 AS cambio;",
+      "expected": "0 | 1",
+      "expectedRows": [[0, 1]]
+    }
+  },
+  {
+    "title": "LIKE",
+    "source": "lang_expr.html#like",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 2,
+    "summary": "Compara texto con un patrón que puede contener comodines.",
+    "syntax": "WHERE tema LIKE 'Java%'",
+    "body": [
+      "El carácter % cubre cualquier cantidad de caracteres. El guion bajo representa exactamente uno. ESCAPE permite tratar un comodín como texto literal."
+    ],
+    "notes": [
+      "El comportamiento predeterminado de mayúsculas de LIKE en SQLite se limita a ASCII. No lo uses como comparación Unicode general."
+    ],
+    "aliases": ["patrón de texto", "like sql", "escape like", "comodín %"],
+    "related": ["GLOB", "WHERE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de LIKE",
+      "description": "El signo de exclamación hace que el guion bajo se compare literalmente.",
+      "code": "WITH temas(nombre) AS (VALUES ('Java_1'), ('JavaX1'), ('Java_2'))\n       SELECT nombre FROM temas WHERE nombre LIKE 'Java!_%' ESCAPE '!' ORDER BY nombre;",
+      "expected": "Java_1\nJava_2",
+      "expectedRows": [["Java_1"], ["Java_2"]]
+    }
+  },
+  {
+    "title": "GLOB",
+    "source": "lang_expr.html#glob",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 2,
+    "summary": "Compara un texto con un patrón de estilo glob, sensible a mayúsculas.",
+    "syntax": "WHERE archivo GLOB '*.sql'",
+    "body": [
+      "Sus comodines incluyen * para una secuencia, ? para un carácter y clases entre corchetes."
+    ],
+    "notes": [
+      "GLOB forma parte del dialecto SQLite. Otros motores pueden requerir otra función de patrones."
+    ],
+    "aliases": ["glob sql", "patrón archivo", "comodín asterisco"],
+    "related": ["LIKE", "REGEXP"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de GLOB",
+      "description": "Solo coincide la extensión con las mismas minúsculas.",
+      "code": "WITH archivos(nombre) AS (VALUES ('curso.sql'), ('curso.SQL'), ('notas.txt'))\n       SELECT nombre FROM archivos WHERE nombre GLOB '*.sql';",
+      "expected": "curso.sql",
+      "expectedRows": [["curso.sql"]]
+    }
+  },
+  {
+    "title": "REGEXP",
+    "source": "lang_expr.html#regexp",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 2,
+    "summary": "Envía una coincidencia de patrón al método regexp definido por la aplicación.",
+    "syntax": "WHERE identificador REGEXP '^[A-Z][0-9]+$'",
+    "body": [
+      "SQLite interpreta el operador como una llamada a regexp con el patrón y el valor. Las reglas de sintaxis de expresiones regulares las proporciona la implementación."
+    ],
+    "notes": [
+      "La biblioteca SQLite no define regexp por defecto. El laboratorio carece de esa función registrada."
+    ],
+    "aliases": ["regexp sqlite", "regex sql", "expresión regular"],
+    "related": ["LIKE", "GLOB"]
+  },
+  {
+    "title": "CAST",
+    "source": "lang_expr.html#castexpr",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 3,
+    "summary": "Convierte explícitamente un valor mediante la afinidad del tipo de destino.",
+    "syntax": "SELECT CAST(texto AS INTEGER) AS numero FROM datos;",
+    "body": [
+      "SQLite admite conversiones entre almacenamiento numérico, texto y BLOB. Las conversiones explícitas y las afinidades de columna aplican reglas diferentes."
+    ],
+    "notes": [
+      "CAST puede convertir cadenas parciales o inválidas a un número. Valida la entrada si debes distinguir entre cero y texto que no representa un entero."
+    ],
+    "aliases": ["cast sql", "convertir datos", "convertir texto a número"],
+    "related": ["Afinidad de tipos", "STRICT", "IS NULL"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de CAST",
+      "description": "SQLite acepta el prefijo numérico y conserva NULL al convertirlo.",
+      "code": "SELECT CAST('25 min' AS INTEGER) AS entero, CAST(3.9 AS INTEGER) AS truncado, CAST(NULL AS TEXT) AS ausente;",
+      "expected": "25 | 3 | NULL",
+      "expectedRows": [[25, 3, null]]
+    }
+  },
+  {
+    "title": "COLLATE",
+    "source": "lang_expr.html#collateop",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 2,
+    "summary": "Elige la regla que se aplica al comparar texto en una expresión.",
+    "syntax": "SELECT tema FROM cursos ORDER BY tema COLLATE NOCASE;",
+    "body": [
+      "BINARY compara según la secuencia interna. NOCASE ignora diferencias de mayúsculas en caracteres ASCII. RTRIM ignora espacios finales de determinadas comparaciones."
+    ],
+    "notes": [
+      "Elige la misma intercalación si vas a comparar y ordenar mediante un índice. Para texto internacional puede hacer falta una intercalación específica."
+    ],
+    "aliases": ["intercalación sql", "collate nocase", "comparación texto"],
+    "related": ["ORDER BY", "LIKE", "CREATE INDEX"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de COLLATE",
+      "description": "Cambiar la intercalación cambia el resultado de la igualdad.",
+      "code": "SELECT ('SQL' COLLATE NOCASE) = 'sql' AS nocase, 'SQL' COLLATE BINARY = 'sql' AS binario;",
+      "expected": "1 | 0",
+      "expectedRows": [[1, 0]]
+    }
+  },
+  {
+    "title": "Concatenación ||",
+    "source": "lang_expr.html#binaryops",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 3,
+    "summary": "Combina expresiones de texto utilizando el operador ||.",
+    "syntax": "SELECT nombre || ' · ' || nivel AS etiqueta FROM cursos;",
+    "body": [
+      "En SQLite, si uno de los operandos es NULL la concatenación produce NULL. Puedes decidir cómo sustituirlo con COALESCE."
+    ],
+    "notes": [
+      "Los motores SQL pueden ofrecer otras formas de concatenar. Revisa en particular el tratamiento de NULL."
+    ],
+    "aliases": [
+      "",
+      "",
+      " concatenar",
+      "concatenación sql",
+      "concatenar cadenas"
+    ],
+    "related": ["COALESCE", "CAST", "IS NULL"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de Concatenación ||",
+      "description": "La segunda etiqueta queda nula porque uno de sus operandos falta.",
+      "code": "SELECT 'VCode' || ' · ' || 'SQL' AS etiqueta, 'SQL' || NULL AS ausente;",
+      "expected": "VCode · SQL | NULL",
+      "expectedRows": [["VCode · SQL", null]]
+    }
+  },
+  {
+    "title": "AND, OR y NOT",
+    "source": "lang_expr.html#booleanexpr",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 3,
+    "summary": "Combina condiciones según la lógica booleana de SQL y su valor desconocido.",
+    "syntax": "WHERE activo = 1 AND (nivel = 'medio' OR nivel IS NULL)",
+    "body": [
+      "AND exige que se cumplan las dos condiciones para dar verdadero. OR da verdadero si al menos una es verdadera. NOT conserva la incertidumbre cuando su argumento es NULL."
+    ],
+    "notes": [
+      "Usa paréntesis para expresar cómo se agrupan las condiciones. En WHERE se conservan únicamente filas con la condición verdadera."
+    ],
+    "aliases": ["and or not", "lógica tres valores", "operadores booleanos"],
+    "related": ["WHERE", "IS NULL", "CASE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de AND, OR y NOT",
+      "description": "Las dos primeras operaciones tienen un resultado conocido a pesar del NULL.",
+      "code": "SELECT 0 AND NULL AS falso, 1 OR NULL AS verdadero, NOT NULL AS desconocido;",
+      "expected": "0 | 1 | NULL",
+      "expectedRows": [[0, 1, null]]
+    }
+  },
+  {
+    "title": "Operadores JSON -> y ->>",
+    "source": "lang_expr.html#extract",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 6,
+    "summary": "Extrae un componente de un documento JSON con representación JSON o valor SQL.",
+    "syntax": "SELECT dato -> '$.total', dato ->> '$.total' FROM entradas;",
+    "body": [
+      "El operador -> devuelve el subcomponente en representación JSON textual. ->> devuelve el valor convertido a un tipo SQL."
+    ],
+    "notes": [
+      "Distingue un texto JSON que contiene null de un NULL SQL. Revisa el tipo si vas a sumar o comparar el resultado."
+    ],
+    "aliases": ["arrow json", "operador json", "extraer json", "->>", "->"],
+    "related": ["json_extract()", "CAST"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de Operadores JSON -> y ->>",
+      "description": "El primer valor sigue siendo texto y el segundo es un entero SQL.",
+      "code": "WITH datos(valor) AS (VALUES ('{\"total\":25}'))\n       SELECT valor -> '$.total' AS json, valor ->> '$.total' AS numero,\n              typeof(valor ->> '$.total') AS tipo FROM datos;",
+      "expected": "25 | 25 | integer",
+      "expectedRows": [["25", 25, "integer"]]
+    }
+  },
+  {
+    "title": "Parámetros SQL",
+    "source": "lang_expr.html#varparam",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 17,
+    "summary": "Reserva lugares para datos que la aplicación vincula a una sentencia preparada.",
+    "syntax": "SELECT tema FROM cursos WHERE nivel = :nivel AND minutos >= ?;",
+    "body": [
+      "SQLite admite parámetros posicionales y nombres como :nivel o @nivel. Se preparan como parte de la consulta y se vinculan antes de ejecutarla."
+    ],
+    "notes": [
+      "Un parámetro representa un valor, como un texto o número. Para elegir una columna o dirección de orden, selecciona una variante SQL prevista en tu programa."
+    ],
+    "aliases": [
+      "bind parameter",
+      "parámetros nombrados",
+      "sentencia preparada",
+      "placeholder sql"
+    ],
+    "related": ["WHERE", "INSERT", "UPDATE"],
+    "example": {
+      "language": "sql",
+      "title": "Cambia el filtro sin editar la consulta",
+      "description": "Cambia :tema a Java o ajusta :minimo en el laboratorio. Los valores se vinculan después de preparar el código SQL.",
+      "code": "WITH bloques(tema, minutos) AS (VALUES ('SQL', 25), ('Java', 35), ('SQL', 10))\nSELECT tema, minutos FROM bloques WHERE tema = :tema AND minutos >= :minimo;",
+      "parameters": {
+        ":tema": "SQL",
+        ":minimo": "20"
+      },
+      "expected": "SQL | 25",
+      "expectedRows": [["SQL", 25]]
+    }
+  },
+  {
+    "title": "OVER",
+    "source": "windowfunctions.html",
+    "area": "window",
+    "group": "Ventanas",
+    "guide": 10,
+    "summary": "Convierte una función en un cálculo de ventana que conserva las filas de entrada.",
+    "syntax": "SELECT tema, SUM(minutos) OVER (PARTITION BY tema) AS total FROM bloques;",
+    "body": [
+      "Dentro de OVER puedes definir la partición, el orden y el marco. Cada fila recibe el resultado calculado en su conjunto correspondiente."
+    ],
+    "notes": [
+      "Si añades ORDER BY dentro de OVER, algunas funciones agregadas cambian su marco predeterminado. Para obtener un acumulado por fila, escribe el marco explícitamente."
+    ],
+    "aliases": ["over sql", "función ventana", "window function"],
+    "related": ["PARTITION BY", "Marcos ROWS y RANGE", "row_number()"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de OVER",
+      "description": "El total se repite en cada fila de la misma partición.",
+      "code": "WITH bloques(id,tema,minutos) AS (VALUES (1,'Java',20), (2,'Java',15), (3,'SQL',30))\n       SELECT tema, minutos, SUM(minutos) OVER (PARTITION BY tema) AS total FROM bloques ORDER BY id;",
+      "expected": "Java | 20 | 35\nJava | 15 | 35\nSQL | 30 | 30",
+      "expectedRows": [
+        ["Java", 20, 35],
+        ["Java", 15, 35],
+        ["SQL", 30, 30]
+      ]
+    }
+  },
+  {
+    "title": "PARTITION BY",
+    "source": "windowfunctions.html",
+    "area": "window",
+    "group": "Ventanas",
+    "guide": 10,
+    "summary": "Divide el cálculo de una función de ventana en grupos independientes.",
+    "syntax": "ROW_NUMBER() OVER (PARTITION BY tema ORDER BY minutos DESC, id)",
+    "body": [
+      "Cada grupo mantiene sus propias posiciones y valores agregados. Sin PARTITION BY, toda la entrada usa una sola partición."
+    ],
+    "notes": [
+      "Si hay empates y asignas posiciones, incluye una clave única en el orden de la ventana."
+    ],
+    "aliases": ["partición sql", "ventana por grupo", "partition by"],
+    "related": ["OVER", "row_number()", "GROUP BY"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de PARTITION BY",
+      "description": "El contador vuelve a uno en la partición de SQL.",
+      "code": "WITH b(id,tema,minutos) AS (VALUES (1,'Java',20), (2,'Java',35), (3,'SQL',30))\n       SELECT tema, minutos, row_number() OVER (PARTITION BY tema ORDER BY minutos DESC, id) AS posicion\n       FROM b ORDER BY tema, posicion;",
+      "expected": "Java | 35 | 1\nJava | 20 | 2\nSQL | 30 | 1",
+      "expectedRows": [
+        ["Java", 35, 1],
+        ["Java", 20, 2],
+        ["SQL", 30, 1]
+      ]
+    }
+  },
+  {
+    "title": "Marcos ROWS y RANGE",
+    "source": "windowfunctions.html#frame_specifications",
+    "area": "window",
+    "group": "Ventanas",
+    "guide": 10,
+    "summary": "Acota qué filas de una partición intervienen en el cálculo de una fila.",
+    "syntax": "SUM(minutos) OVER (ORDER BY dia ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)",
+    "body": [
+      "ROWS cuenta posiciones de filas. RANGE usa la clave de orden para definir fronteras y puede incluir varias filas empatadas."
+    ],
+    "notes": [
+      "Escribe cómo resolver empates cuando necesites un resultado reproducible con ROWS. Algunas funciones, como row_number, no usan el marco para su cálculo."
+    ],
+    "aliases": [
+      "rows between",
+      "range between",
+      "marco de ventana",
+      "unbounded preceding"
+    ],
+    "related": ["OVER", "PARTITION BY", "ORDER BY"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de Marcos ROWS y RANGE",
+      "description": "RANGE reúne los empates del primer día, mientras ROWS avanza por fila.",
+      "code": "WITH b(id,dia,minutos) AS (VALUES (1,1,10), (2,1,20), (3,2,5))\n       SELECT id,\n           SUM(minutos) OVER (ORDER BY dia, id ROWS UNBOUNDED PRECEDING) AS por_fila,\n           SUM(minutos) OVER (ORDER BY dia RANGE UNBOUNDED PRECEDING) AS por_dia\n       FROM b ORDER BY id;",
+      "expected": "1 | 10 | 30\n2 | 30 | 30\n3 | 35 | 35",
+      "expectedRows": [
+        [1, 10, 30],
+        [2, 30, 30],
+        [3, 35, 35]
+      ]
+    }
+  },
+  {
+    "title": "PRIMARY KEY",
+    "source": "lang_createtable.html#primkeyconst",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 7,
+    "summary": "Define la clave con la que se identifica cada fila de una tabla.",
+    "syntax": "CREATE TABLE lecciones (curso TEXT, numero INTEGER, PRIMARY KEY (curso, numero));",
+    "body": [
+      "Una sola columna o una combinación de columnas puede formar la clave. En una tabla con rowid, una declaración INTEGER PRIMARY KEY ordinaria puede ser un alias del rowid."
+    ],
+    "notes": [
+      "En tablas SQLite ordinarias, algunas claves primarias de otros tipos admiten NULL por compatibilidad. Declara NOT NULL cuando la regla del modelo requiera un dato."
+    ],
+    "aliases": ["clave primaria", "primary key compuesta", "id único"],
+    "related": ["FOREIGN KEY", "UNIQUE", "WITHOUT ROWID"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de PRIMARY KEY",
+      "description": "El número 1 se reutiliza en otro curso porque la pareja completa cambia.",
+      "code": "CREATE TABLE plan_pk (\n           curso TEXT NOT NULL, numero INTEGER NOT NULL,\n           PRIMARY KEY (curso, numero)\n       );\n       INSERT INTO plan_pk VALUES ('SQL', 1), ('SQL', 2), ('Java', 1);\n       SELECT curso, numero FROM plan_pk ORDER BY curso, numero;",
+      "expected": "Java | 1\nSQL | 1\nSQL | 2",
+      "expectedRows": [
+        ["Java", 1],
+        ["SQL", 1],
+        ["SQL", 2]
+      ]
+    }
+  },
+  {
+    "title": "FOREIGN KEY",
+    "source": "foreignkeys.html",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 7,
+    "summary": "Vincula los valores de una tabla hija con una clave de otra tabla.",
+    "syntax": "FOREIGN KEY (curso_id) REFERENCES cursos(id) ON DELETE CASCADE",
+    "body": [
+      "Una restricción puede tener varias columnas. SQLite verifica que existe una clave padre compatible si los valores de la hija requieren una referencia."
+    ],
+    "notes": [
+      "Habilita foreign_keys al abrir cada conexión. ON DELETE CASCADE borra las filas hijas relacionadas; elige esa política solo si quieres ese comportamiento."
+    ],
+    "aliases": [
+      "foreign key",
+      "clave foránea",
+      "referencial",
+      "references cascade"
+    ],
+    "related": [
+      "PRIMARY KEY",
+      "PRAGMA foreign_keys",
+      "PRAGMA foreign_key_check"
+    ],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de FOREIGN KEY",
+      "description": "Eliminar el primer padre elimina solo el hijo que lo referencia.",
+      "code": "PRAGMA foreign_keys = ON;\n       CREATE TABLE plan_padre (id INTEGER PRIMARY KEY);\n       CREATE TABLE plan_hijo (\n           id INTEGER PRIMARY KEY, plan_id INTEGER,\n           FOREIGN KEY (plan_id) REFERENCES plan_padre(id) ON DELETE CASCADE\n       );\n       INSERT INTO plan_padre VALUES (1), (2);\n       INSERT INTO plan_hijo VALUES (10, 1), (20, 2);\n       DELETE FROM plan_padre WHERE id = 1;\n       SELECT id, plan_id FROM plan_hijo;",
+      "expected": "20 | 2",
+      "expectedRows": [[20, 2]]
+    }
+  },
+  {
+    "title": "UNIQUE",
+    "source": "lang_createtable.html#uniqueconst",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 7,
+    "summary": "Impide que dos filas tengan la misma combinación de valores no nulos en la clave indicada.",
+    "syntax": "UNIQUE (curso_id, posicion)",
+    "body": [
+      "Puedes declarar restricciones únicas diferentes dentro de una misma tabla. UNIQUE también permite definir el destino de un UPSERT."
+    ],
+    "notes": [
+      "SQLite trata los NULL como distintos para esta restricción. Si un valor siempre debe existir y ser único, combina las dos reglas."
+    ],
+    "aliases": [
+      "unique constraint",
+      "restricción única",
+      "unicidad",
+      "duplicados"
+    ],
+    "related": ["PRIMARY KEY", "NOT NULL", "UPSERT"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de UNIQUE",
+      "description": "La segunda inserción de Java Base se omite por la restricción de la pareja.",
+      "code": "CREATE TABLE plan_unico (tema TEXT, nivel TEXT, UNIQUE (tema, nivel));\n       INSERT INTO plan_unico VALUES ('Java','Base'), ('Java','Medio');\n       INSERT OR IGNORE INTO plan_unico VALUES ('Java','Base');\n       SELECT tema, nivel FROM plan_unico ORDER BY nivel;",
+      "expected": "Java | Base\nJava | Medio",
+      "expectedRows": [
+        ["Java", "Base"],
+        ["Java", "Medio"]
+      ]
+    }
+  },
+  {
+    "title": "CHECK",
+    "source": "lang_createtable.html#ckconst",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 7,
+    "summary": "Valida una expresión de cada fila al escribirla.",
+    "syntax": "minutos INTEGER CHECK (minutos BETWEEN 1 AND 180)",
+    "body": [
+      "SQLite rechaza el cambio si la expresión da cero. Una condición con resultado NULL no produce una infracción de CHECK."
+    ],
+    "notes": [
+      "Añade NOT NULL si la ausencia también debe ser inválida. CHECK expresa reglas locales de una fila y no admite subconsultas."
+    ],
+    "aliases": [
+      "check constraint",
+      "validación tabla",
+      "restricción de valores"
+    ],
+    "related": ["NOT NULL", "BETWEEN", "CREATE TABLE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de CHECK",
+      "description": "El intervalo rechaza cero y permite NULL, que el criterio no convierte en falso.",
+      "code": "CREATE TABLE plan_check (minutos INTEGER CHECK (minutos BETWEEN 1 AND 180));\n       INSERT INTO plan_check VALUES (25), (NULL);\n       INSERT OR IGNORE INTO plan_check VALUES (0);\n       SELECT minutos FROM plan_check ORDER BY minutos IS NULL;",
+      "expected": "25\nNULL",
+      "expectedRows": [[25], [null]]
+    }
+  },
+  {
+    "title": "NOT NULL",
+    "source": "lang_createtable.html#notnullconst",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 7,
+    "summary": "Exige que una columna tenga un valor distinto de NULL cuando se escribe.",
+    "syntax": "tema TEXT NOT NULL",
+    "body": [
+      "La regla se comprueba en inserciones y actualizaciones de la columna. Un valor vacío de texto cuenta como valor presente."
+    ],
+    "notes": [
+      "Si también quieres prohibir texto vacío o cantidades fuera de un intervalo, añade CHECK."
+    ],
+    "aliases": [
+      "not null constraint",
+      "columna obligatoria",
+      "valor requerido"
+    ],
+    "related": ["IS NULL", "CHECK", "DEFAULT"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de NOT NULL",
+      "description": "Se guardan SQL y la cadena vacía. La ausencia se omite.",
+      "code": "CREATE TABLE plan_requerido (tema TEXT NOT NULL);\n       INSERT INTO plan_requerido VALUES ('SQL'), ('');\n       INSERT OR IGNORE INTO plan_requerido VALUES (NULL);\n       SELECT COUNT(*) AS filas, SUM(tema = '') AS vacios FROM plan_requerido;",
+      "expected": "2 | 1",
+      "expectedRows": [[2, 1]]
+    }
+  },
+  {
+    "title": "DEFAULT",
+    "source": "lang_createtable.html#dfltval",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 7,
+    "summary": "Define el valor que recibe una columna cuando la inserción no proporciona uno.",
+    "syntax": "nivel TEXT DEFAULT 'inicial'",
+    "body": [
+      "Un valor predeterminado puede ser un literal, un valor temporal reconocido o una expresión permitida entre paréntesis."
+    ],
+    "notes": [
+      "Un NULL explícito se conserva si la columna lo admite. Omitir la columna aplica el valor predeterminado."
+    ],
+    "aliases": ["valor por defecto", "valor predeterminado", "default sql"],
+    "related": ["NOT NULL", "INSERT", "CREATE TABLE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de DEFAULT",
+      "description": "La primera fila omite la columna y la segunda proporciona NULL.",
+      "code": "CREATE TABLE plan_default (id INTEGER PRIMARY KEY, nivel TEXT DEFAULT 'inicial');\n       INSERT INTO plan_default (id) VALUES (1);\n       INSERT INTO plan_default VALUES (2, NULL);\n       SELECT id, nivel FROM plan_default ORDER BY id;",
+      "expected": "1 | inicial\n2 | NULL",
+      "expectedRows": [
+        [1, "inicial"],
+        [2, null]
+      ]
+    }
+  },
+  {
+    "title": "GENERATED ALWAYS AS",
+    "source": "gencol.html",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 7,
+    "summary": "Deriva el valor de una columna a partir de expresiones de la misma fila.",
+    "syntax": "total INTEGER GENERATED ALWAYS AS (unidades * precio) STORED",
+    "body": [
+      "Una columna VIRTUAL calcula su valor al leerlo. Una STORED lo calcula al escribir y almacena el resultado."
+    ],
+    "notes": [
+      "Las expresiones deben cumplir reglas de determinismo y usar datos de la misma fila. No escribas directamente en la columna derivada."
+    ],
+    "aliases": [
+      "generated column",
+      "columna calculada",
+      "virtual stored",
+      "columna derivada"
+    ],
+    "related": ["CREATE TABLE", "PRAGMA table_xinfo"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de GENERATED ALWAYS AS",
+      "description": "Al subir las unidades, el total se vuelve a calcular.",
+      "code": "CREATE TABLE plan_total (\n           unidades INTEGER, minutos INTEGER,\n           total INTEGER GENERATED ALWAYS AS (unidades * minutos) STORED\n       );\n       INSERT INTO plan_total (unidades, minutos) VALUES (3, 20);\n       UPDATE plan_total SET unidades = 4;\n       SELECT total FROM plan_total;",
+      "expected": "80",
+      "expectedRows": [[80]]
+    }
+  },
+  {
+    "title": "STRICT",
+    "source": "stricttables.html",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 7,
+    "summary": "Activa comprobaciones más estrictas de tipo en una tabla SQLite.",
+    "syntax": "CREATE TABLE plan (id INTEGER PRIMARY KEY, minutos INTEGER NOT NULL) STRICT;",
+    "body": [
+      "Cada columna usa un tipo admitido. SQLite intenta conversiones sin pérdida según las reglas y rechaza valores incompatibles."
+    ],
+    "notes": [
+      "La opción se aplica por tabla. ANY conserva la clase de almacenamiento del valor en una tabla STRICT."
+    ],
+    "aliases": ["strict table", "tipado estricto sqlite", "tabla estricta"],
+    "related": ["Afinidad de tipos", "CAST", "CREATE TABLE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de STRICT",
+      "description": "La cadena 25 se puede guardar como entero sin pérdida.",
+      "code": "CREATE TABLE plan_strict (id INTEGER PRIMARY KEY, minutos INTEGER NOT NULL) STRICT;\n       INSERT INTO plan_strict VALUES (1, '25');\n       SELECT id, minutos, typeof(minutos) FROM plan_strict;",
+      "expected": "1 | 25 | integer",
+      "expectedRows": [[1, 25, "integer"]]
+    }
+  },
+  {
+    "title": "WITHOUT ROWID",
+    "source": "withoutrowid.html",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 7,
+    "summary": "Usa la clave primaria de la tabla como clave de almacenamiento.",
+    "syntax": "CREATE TABLE plan (tema TEXT, numero INTEGER, PRIMARY KEY (tema, numero)) WITHOUT ROWID;",
+    "body": [
+      "La tabla requiere una clave primaria. Este formato puede favorecer determinadas claves compuestas y cambia cómo se accede a las filas."
+    ],
+    "notes": [
+      "No hay identificador rowid independiente y AUTOINCREMENT no se admite. Mide con tus datos antes de elegir el formato por rendimiento."
+    ],
+    "aliases": [
+      "sin rowid",
+      "without rowid sqlite",
+      "clave primaria almacenamiento"
+    ],
+    "related": ["PRIMARY KEY", "CREATE TABLE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de WITHOUT ROWID",
+      "description": "La tabla utiliza la pareja declarada como identidad de sus filas.",
+      "code": "CREATE TABLE plan_compuesto (\n           tema TEXT, numero INTEGER,\n           PRIMARY KEY (tema, numero)\n       ) WITHOUT ROWID;\n       INSERT INTO plan_compuesto VALUES ('SQL', 2), ('SQL', 1);\n       SELECT tema, numero FROM plan_compuesto ORDER BY tema, numero;",
+      "expected": "SQL | 1\nSQL | 2",
+      "expectedRows": [
+        ["SQL", 1],
+        ["SQL", 2]
+      ]
+    }
+  },
+  {
+    "title": "Afinidad de tipos",
+    "source": "datatype3.html#type_affinity",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 7,
+    "summary": "Describe el tipo de almacenamiento preferido de una columna ordinaria de SQLite.",
+    "syntax": "CREATE TABLE plan (minutos NUMERIC, etiqueta TEXT);",
+    "body": [
+      "SQLite distingue el valor almacenado de la afinidad de la columna. La afinidad puede convertir números escritos como texto durante una inserción o comparación."
+    ],
+    "notes": [
+      "Comprueba el valor con typeof cuando investigues una conversión. Usa STRICT cuando necesites que la tabla rechace tipos incompatibles."
+    ],
+    "aliases": [
+      "type affinity",
+      "tipos sqlite",
+      "dynamic typing sqlite",
+      "afinidad texto entero"
+    ],
+    "related": ["CAST", "STRICT", "typeof()"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de Afinidad de tipos",
+      "description": "La columna TEXT conserva una representación textual y NUMERIC guarda un entero.",
+      "code": "CREATE TABLE plan_afinidad (texto TEXT, numero NUMERIC);\n       INSERT INTO plan_afinidad VALUES (25, '25');\n       SELECT typeof(texto), typeof(numero) FROM plan_afinidad;",
+      "expected": "text | integer",
+      "expectedRows": [["text", "integer"]]
+    }
+  },
+  {
+    "title": "CREATE TABLE AS",
+    "source": "lang_createtable.html#createtabas",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 7,
+    "summary": "Crea una tabla y la rellena con las filas de una consulta.",
+    "syntax": "CREATE TABLE resumen AS SELECT tema, SUM(minutos) AS total FROM sesiones GROUP BY tema;",
+    "body": [
+      "Los nombres de las columnas vienen de la consulta. La tabla nueva tiene sus propios datos y no cambia al modificar la fuente."
+    ],
+    "notes": [
+      "Esta forma no copia claves primarias ni otras restricciones. Si son importantes, declara el esquema y luego usa INSERT ... SELECT."
+    ],
+    "aliases": ["create table as select", "ctas", "tabla desde consulta"],
+    "related": ["CREATE TABLE", "CREATE VIEW", "INSERT"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de CREATE TABLE AS",
+      "description": "La consulta abastece los valores iniciales de la tabla.",
+      "code": "CREATE TABLE resumen_vcode AS\n       SELECT 'SQL' AS tema, 40 AS total;\n       SELECT tema, total FROM resumen_vcode;",
+      "expected": "SQL | 40",
+      "expectedRows": [["SQL", 40]]
+    }
+  },
+  {
+    "title": "Índice parcial",
+    "source": "partialindex.html",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 11,
+    "summary": "Indexa solo las filas que cumplen la condición WHERE del índice.",
+    "syntax": "CREATE INDEX plan_pendientes ON plan (fecha) WHERE estado = 'pendiente';",
+    "body": [
+      "Puede reducir el índice si tu consulta suele recorrer una fracción pequeña de la tabla. Para usarlo, el planificador debe reconocer que la consulta satisface su condición."
+    ],
+    "notes": [
+      "Expresa la condición como parte estable del esquema. Los usos de funciones no deterministas o parámetros en el predicado del índice no están permitidos."
+    ],
+    "aliases": ["partial index", "índice con where", "index parcial sqlite"],
+    "related": ["CREATE INDEX", "EXPLAIN QUERY PLAN"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de Índice parcial",
+      "description": "La consulta incluye la condición que define las filas del índice.",
+      "code": "CREATE TABLE plan_parcial (id INTEGER PRIMARY KEY, activo INTEGER, fecha TEXT);\n       CREATE INDEX pendientes_vcode ON plan_parcial (fecha) WHERE activo = 1;\n       INSERT INTO plan_parcial VALUES (1,1,'2026-01-01'), (2,0,'2026-01-01');\n       SELECT id FROM plan_parcial WHERE activo = 1 AND fecha = '2026-01-01';",
+      "expected": "1",
+      "expectedRows": [[1]]
+    }
+  },
+  {
+    "title": "Índice sobre expresiones",
+    "source": "expridx.html",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 11,
+    "summary": "Indexa el resultado de una expresión basada en columnas de la tabla.",
+    "syntax": "CREATE INDEX plan_normalizado ON plan (lower(tema));",
+    "body": [
+      "El planificador puede usar el índice cuando encuentra la misma expresión en la consulta. Una equivalencia algebraica por sí sola no garantiza coincidencia."
+    ],
+    "notes": [
+      "Usa expresiones deterministas sin subconsultas. Repite la expresión de forma consistente en el filtro o el orden."
+    ],
+    "aliases": ["expression index", "índice de función", "index lower"],
+    "related": ["CREATE INDEX", "EXPLAIN QUERY PLAN"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de Índice sobre expresiones",
+      "description": "La condición usa la expresión que se declaró en el índice.",
+      "code": "CREATE TABLE plan_expr (tema TEXT);\n       CREATE INDEX tema_normalizado ON plan_expr (lower(tema));\n       INSERT INTO plan_expr VALUES ('SQL'), ('Java');\n       SELECT tema FROM plan_expr WHERE lower(tema) = 'sql';",
+      "expected": "SQL",
+      "expectedRows": [["SQL"]]
+    }
+  },
+  {
+    "title": "CREATE TRIGGER",
+    "source": "lang_createtrigger.html",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 7,
+    "summary": "Registra sentencias que se ejecutan en respuesta a una operación sobre una fila.",
+    "syntax": "CREATE TRIGGER registrar AFTER UPDATE ON plan BEGIN INSERT INTO historial VALUES (NEW.id); END;",
+    "body": [
+      "En un UPDATE puedes consultar valores OLD y NEW. En INSERT hay un NEW y en DELETE un OLD. Los triggers de SQLite se ejecutan por cada fila afectada."
+    ],
+    "notes": [
+      "Mantén el efecto acotado y documenta qué operaciones lo activan. Para reglas que se pueden expresar como una restricción, usa primero esa restricción."
+    ],
+    "aliases": ["trigger sqlite", "disparador", "old new", "after update"],
+    "related": ["DROP TRIGGER", "CHECK", "UPDATE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de CREATE TRIGGER",
+      "description": "El trigger registra ambos valores al actualizar la duración.",
+      "code": "CREATE TABLE plan_trigger (id INTEGER PRIMARY KEY, minutos INTEGER);\n       CREATE TABLE registro_trigger (anterior INTEGER, nuevo INTEGER);\n       CREATE TRIGGER historial_vcode AFTER UPDATE OF minutos ON plan_trigger\n       BEGIN\n           INSERT INTO registro_trigger VALUES (OLD.minutos, NEW.minutos);\n       END;\n       INSERT INTO plan_trigger VALUES (1, 20);\n       UPDATE plan_trigger SET minutos = 35 WHERE id = 1;\n       SELECT anterior, nuevo FROM registro_trigger;",
+      "expected": "20 | 35",
+      "expectedRows": [[20, 35]]
+    }
+  },
+  {
+    "title": "CREATE VIRTUAL TABLE",
+    "source": "lang_createvtab.html",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 7,
+    "summary": "Crea una tabla cuyo comportamiento proporciona un módulo de SQLite.",
+    "syntax": "CREATE VIRTUAL TABLE documentos USING fts4(tema, texto);",
+    "body": [
+      "Una tabla virtual se consulta como una tabla, pero el módulo define cómo almacena o calcula sus datos. Los módulos disponibles dependen de la compilación."
+    ],
+    "notes": [
+      "El laboratorio incluye FTS3 y FTS4. Antes de usar otro módulo, comprueba la lista de tu conexión con PRAGMA module_list."
+    ],
+    "aliases": [
+      "tabla virtual",
+      "virtual table sqlite",
+      "fts4",
+      "búsqueda texto completo"
+    ],
+    "related": ["MATCH", "CREATE TABLE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de CREATE VIRTUAL TABLE",
+      "description": "El módulo FTS4 encuentra la palabra en el contenido del segundo documento.",
+      "code": "CREATE VIRTUAL TABLE docs_vcode USING fts4(tema, texto);\n       INSERT INTO docs_vcode VALUES ('Java', 'clases y genericos'), ('SQL', 'tablas y consultas');\n       SELECT tema FROM docs_vcode WHERE docs_vcode MATCH 'consultas';",
+      "expected": "SQL",
+      "expectedRows": [["SQL"]]
+    }
+  },
+  {
+    "title": "MATCH",
+    "source": "lang_expr.html#match",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 6,
+    "summary": "Delega una coincidencia de consulta al comportamiento de una tabla virtual o aplicación.",
+    "syntax": "SELECT tema FROM documentos WHERE documentos MATCH 'consultas';",
+    "body": [
+      "En las tablas FTS, MATCH interpreta la expresión como una consulta de texto completo con reglas del módulo."
+    ],
+    "notes": [
+      "La semántica de MATCH depende de la implementación. El ejemplo usa FTS4, disponible en el laboratorio."
+    ],
+    "aliases": ["match fts", "texto completo", "buscar dentro documentos"],
+    "related": ["CREATE VIRTUAL TABLE", "LIKE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de MATCH",
+      "description": "La coincidencia se evalúa con el índice de texto del módulo.",
+      "code": "CREATE VIRTUAL TABLE lista_vcode USING fts4(tema, notas);\n       INSERT INTO lista_vcode VALUES ('HTML', 'guía de etiquetas'), ('SQL', 'guía de tablas');\n       SELECT tema FROM lista_vcode WHERE lista_vcode MATCH 'tablas';",
+      "expected": "SQL",
+      "expectedRows": [["SQL"]]
+    }
+  },
+  {
+    "title": "DROP TABLE",
+    "source": "lang_droptable.html",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 7,
+    "summary": "Elimina una tabla y los objetos que dependen directamente de ella, como sus índices y triggers.",
+    "syntax": "DROP TABLE IF EXISTS borrador;",
+    "body": [
+      "IF EXISTS permite ejecutar la orden cuando el objeto ya falta. Si las claves foráneas están activadas, se aplican las reglas correspondientes al eliminar filas."
+    ],
+    "notes": [
+      "Comprueba el esquema y el nombre de tabla antes de incorporarlo a una migración. Dentro del laboratorio cada ejecución usa su propia base temporal."
+    ],
+    "aliases": ["eliminar tabla", "drop table if exists", "borrar esquema"],
+    "related": ["CREATE TABLE", "DROP INDEX", "DROP TRIGGER"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de DROP TABLE",
+      "description": "La consulta al catálogo comprueba que la tabla desapareció.",
+      "code": "CREATE TABLE borrador_vcode (id INTEGER);\n       DROP TABLE borrador_vcode;\n       SELECT COUNT(*) AS tablas FROM sqlite_schema WHERE name = 'borrador_vcode';",
+      "expected": "0",
+      "expectedRows": [[0]]
+    }
+  },
+  {
+    "title": "DROP INDEX",
+    "source": "lang_dropindex.html",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 11,
+    "summary": "Retira un índice creado para una tabla.",
+    "syntax": "DROP INDEX IF EXISTS plan_por_tema;",
+    "body": [
+      "La tabla y sus filas se conservan. A partir de ese momento, las búsquedas y escrituras se planifican con los índices restantes."
+    ],
+    "notes": [
+      "Para eliminar un índice generado automáticamente por una restricción, revisa antes la restricción de la tabla."
+    ],
+    "aliases": ["eliminar índice", "drop index if exists", "quitar índice"],
+    "related": ["CREATE INDEX", "EXPLAIN QUERY PLAN"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de DROP INDEX",
+      "description": "El catálogo ya no contiene el índice borrado.",
+      "code": "CREATE TABLE plan_sin_indice (tema TEXT);\n       CREATE INDEX indice_vcode ON plan_sin_indice (tema);\n       DROP INDEX indice_vcode;\n       SELECT COUNT(*) AS indices FROM sqlite_schema WHERE name = 'indice_vcode';",
+      "expected": "0",
+      "expectedRows": [[0]]
+    }
+  },
+  {
+    "title": "DROP VIEW",
+    "source": "lang_dropview.html",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 7,
+    "summary": "Elimina la definición de una vista.",
+    "syntax": "DROP VIEW IF EXISTS resumen;",
+    "body": [
+      "La vista representa una consulta guardada. Borrarla elimina esa definición; los datos de las tablas base siguen disponibles."
+    ],
+    "notes": [
+      "Revisa si otras vistas o consultas dependen de su nombre antes de quitarla."
+    ],
+    "aliases": ["eliminar vista", "drop view if exists", "borrar view"],
+    "related": ["CREATE VIEW", "CREATE TABLE AS"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de DROP VIEW",
+      "description": "La fuente de la vista sigue disponible tras borrar la definición.",
+      "code": "CREATE TABLE plan_lectura (tema TEXT);\n       INSERT INTO plan_lectura VALUES ('SQL');\n       CREATE VIEW lectura_vcode AS SELECT tema FROM plan_lectura;\n       DROP VIEW lectura_vcode;\n       SELECT tema FROM plan_lectura;",
+      "expected": "SQL",
+      "expectedRows": [["SQL"]]
+    }
+  },
+  {
+    "title": "DROP TRIGGER",
+    "source": "lang_droptrigger.html",
+    "area": "schema",
+    "group": "Esquema",
+    "guide": 7,
+    "summary": "Elimina el disparador identificado por nombre.",
+    "syntax": "DROP TRIGGER IF EXISTS registrar;",
+    "body": [
+      "Las siguientes escrituras dejan de activar esa definición. Borrarla no deshace los cambios que ya realizó."
+    ],
+    "notes": [
+      "Si cambias una regla de negocio, comprueba también qué datos históricos creó el trigger anterior."
+    ],
+    "aliases": [
+      "eliminar trigger",
+      "borrar disparador",
+      "drop trigger if exists"
+    ],
+    "related": ["CREATE TRIGGER", "DROP TABLE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de DROP TRIGGER",
+      "description": "El catálogo confirma que el disparador fue eliminado.",
+      "code": "CREATE TABLE plan_sin_trigger (id INTEGER);\n       CREATE TRIGGER disparador_vcode AFTER INSERT ON plan_sin_trigger BEGIN SELECT 1; END;\n       DROP TRIGGER disparador_vcode;\n       SELECT COUNT(*) AS disparadores FROM sqlite_schema WHERE name = 'disparador_vcode';",
+      "expected": "0",
+      "expectedRows": [[0]]
+    }
+  },
+  {
+    "title": "REPLACE",
+    "source": "lang_replace.html",
+    "area": "write",
+    "group": "Escritura",
+    "guide": 8,
+    "summary": "Ejecuta la estrategia INSERT OR REPLACE de SQLite.",
+    "syntax": "REPLACE INTO lecciones (id, titulo) VALUES (3, 'Consultas');",
+    "body": [
+      "Cuando hay un conflicto de clave primaria o unicidad, la estrategia puede borrar la fila anterior e insertar una nueva."
+    ],
+    "notes": [
+      "Si quieres actualizar columnas seleccionadas y conservar las restantes, usa UPSERT con DO UPDATE."
+    ],
+    "aliases": ["insert or replace", "reemplazar fila", "conflicto replace"],
+    "related": ["INSERT", "UPSERT", "ON CONFLICT"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de REPLACE",
+      "description": "La fila nueva recibe el valor por defecto de minutos.",
+      "code": "CREATE TABLE plan_replace (id INTEGER PRIMARY KEY, tema TEXT, minutos INTEGER DEFAULT 0);\n       INSERT INTO plan_replace VALUES (1, 'SQL', 35);\n       REPLACE INTO plan_replace (id, tema) VALUES (1, 'Java');\n       SELECT id, tema, minutos FROM plan_replace;",
+      "expected": "1 | Java | 0",
+      "expectedRows": [[1, "Java", 0]]
+    }
+  },
+  {
+    "title": "COMMIT",
+    "source": "lang_transaction.html",
+    "area": "transactions",
+    "group": "Transacciones",
+    "guide": 9,
+    "summary": "Finaliza una transacción y mantiene los cambios realizados con éxito.",
+    "syntax": "BEGIN;\nUPDATE cuentas SET saldo = saldo - 10 WHERE id = 1;\nCOMMIT;",
+    "body": [
+      "Si la confirmación encuentra un bloqueo u otra situación recuperable, la aplicación debe distinguir el error y decidir cómo continuar."
+    ],
+    "notes": [
+      "END es otro nombre para COMMIT en SQLite. Un COMMIT que falla no confirma cambios."
+    ],
+    "aliases": [
+      "commit transaction",
+      "end transaction",
+      "confirmar transacción"
+    ],
+    "related": ["BEGIN", "ROLLBACK", "SAVEPOINT"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de COMMIT",
+      "description": "El dato se conserva tras confirmar la transacción.",
+      "code": "CREATE TABLE avance_commit (tema TEXT);\n       BEGIN;\n       INSERT INTO avance_commit VALUES ('SQL');\n       COMMIT;\n       SELECT tema FROM avance_commit;",
+      "expected": "SQL",
+      "expectedRows": [["SQL"]]
+    }
+  },
+  {
+    "title": "ROLLBACK",
+    "source": "lang_transaction.html",
+    "area": "transactions",
+    "group": "Transacciones",
+    "guide": 9,
+    "summary": "Cancela la transacción activa y deshace sus cambios.",
+    "syntax": "BEGIN;\nUPDATE cuentas SET saldo = 0;\nROLLBACK;",
+    "body": [
+      "La forma sin TO vuelve al estado anterior a la transacción. Usa un punto de guardado si necesitas revertir solo parte del trabajo."
+    ],
+    "notes": [
+      "Revisa cómo tu biblioteca de acceso informa de los errores y del estado de la transacción. Un fallo de sentencia no siempre deshace toda la transacción."
+    ],
+    "aliases": [
+      "rollback transaction",
+      "cancelar transacción",
+      "deshacer cambios"
+    ],
+    "related": ["COMMIT", "ROLLBACK TO", "BEGIN"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de ROLLBACK",
+      "description": "La consulta devuelve el valor anterior a la actualización cancelada.",
+      "code": "CREATE TABLE avance_rollback (minutos INTEGER);\n       INSERT INTO avance_rollback VALUES (30);\n       BEGIN;\n       UPDATE avance_rollback SET minutos = 70;\n       ROLLBACK;\n       SELECT minutos FROM avance_rollback;",
+      "expected": "30",
+      "expectedRows": [[30]]
+    }
+  },
+  {
+    "title": "ROLLBACK TO",
+    "source": "lang_savepoint.html",
+    "area": "transactions",
+    "group": "Transacciones",
+    "guide": 9,
+    "summary": "Deshace los cambios posteriores a un punto de guardado sin cerrar toda la transacción.",
+    "syntax": "ROLLBACK TO revisar_cambios;",
+    "body": [
+      "El punto nombrado permanece utilizable. Los puntos más recientes se descartan y puedes continuar desde el estado recuperado."
+    ],
+    "notes": [
+      "ROLLBACK sin TO cancela toda la transacción. Si ya no necesitas el punto, usa RELEASE."
+    ],
+    "aliases": [
+      "rollback to savepoint",
+      "revertir punto",
+      "deshacer parcialmente"
+    ],
+    "related": ["ROLLBACK", "SAVEPOINT", "RELEASE SAVEPOINT"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de ROLLBACK TO",
+      "description": "Solo se conserva la escritura hecha antes del punto de guardado.",
+      "code": "CREATE TABLE restaurar_vcode (tema TEXT);\n       BEGIN;\n       INSERT INTO restaurar_vcode VALUES ('SQL');\n       SAVEPOINT propuesta;\n       INSERT INTO restaurar_vcode VALUES ('React');\n       ROLLBACK TO propuesta;\n       RELEASE propuesta;\n       COMMIT;\n       SELECT tema FROM restaurar_vcode;",
+      "expected": "SQL",
+      "expectedRows": [["SQL"]]
+    }
+  },
+  {
+    "title": "RELEASE SAVEPOINT",
+    "source": "lang_savepoint.html",
+    "area": "transactions",
+    "group": "Transacciones",
+    "guide": 9,
+    "summary": "Retira un punto de guardado nombrado y los que se crearon después.",
+    "syntax": "RELEASE SAVEPOINT revision;",
+    "body": [
+      "Si existe una transacción exterior, liberar un punto no la confirma. Un ROLLBACK exterior todavía puede deshacer esos cambios."
+    ],
+    "notes": [
+      "Cuando RELEASE retira el punto más exterior que inició la transacción, actúa como confirmación."
+    ],
+    "aliases": ["release", "liberar savepoint", "cerrar punto de guardado"],
+    "related": ["SAVEPOINT", "ROLLBACK TO", "COMMIT"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de RELEASE SAVEPOINT",
+      "description": "Liberar el punto interior no impide deshacer el cambio con el ROLLBACK exterior.",
+      "code": "CREATE TABLE liberar_vcode (tema TEXT);\n       BEGIN;\n       SAVEPOINT interno;\n       INSERT INTO liberar_vcode VALUES ('SQL');\n       RELEASE interno;\n       ROLLBACK;\n       SELECT COUNT(*) AS cambios_guardados FROM liberar_vcode;",
+      "expected": "0",
+      "expectedRows": [[0]]
+    }
+  },
+  {
+    "title": "EXPLAIN",
+    "source": "lang_explain.html",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 11,
+    "summary": "Devuelve las instrucciones de la máquina virtual de SQLite para una sentencia.",
+    "syntax": "EXPLAIN SELECT tema FROM cursos WHERE id = 2;",
+    "body": [
+      "El motor prepara un programa de operaciones. EXPLAIN permite inspeccionarlo desde una herramienta de diagnóstico."
+    ],
+    "notes": [
+      "Para una pregunta como «¿usa un índice?», EXPLAIN QUERY PLAN suele ser más legible. La representación interna puede cambiar por versión."
+    ],
+    "aliases": [
+      "explain sqlite",
+      "bytecode sqlite",
+      "instrucciones máquina virtual"
+    ],
+    "related": ["EXPLAIN QUERY PLAN", "CREATE INDEX"],
+    "example": {
+      "language": "sql",
+      "title": "Lee el programa de una consulta constante",
+      "description": "Integer carga 25 y ResultRow emite su valor. Los números y operaciones corresponden al SQLite del laboratorio.",
+      "code": "EXPLAIN SELECT 25 AS minutos;",
+      "expected": "0 | Init | 0 | 4 | 0 | NULL | 0 | NULL\n1 | Integer | 25 | 1 | 0 | NULL | 0 | NULL\n2 | ResultRow | 1 | 1 | 0 | NULL | 0 | NULL\n3 | Halt | 0 | 0 | 0 | NULL | 0 | NULL\n4 | Goto | 0 | 1 | 0 | NULL | 0 | NULL",
+      "expectedRows": [
+        [0, "Init", 0, 4, 0, null, 0, null],
+        [1, "Integer", 25, 1, 0, null, 0, null],
+        [2, "ResultRow", 1, 1, 0, null, 0, null],
+        [3, "Halt", 0, 0, 0, null, 0, null],
+        [4, "Goto", 0, 1, 0, null, 0, null]
+      ]
+    }
+  },
+  {
+    "title": "EXPLAIN QUERY PLAN",
+    "source": "eqp.html",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 11,
+    "summary": "Resume el plan que SQLite elige para ejecutar una consulta.",
+    "syntax": "EXPLAIN QUERY PLAN SELECT id FROM cursos WHERE nivel = 'inicial';",
+    "body": [
+      "SCAN indica un recorrido y SEARCH identifica un acceso que restringe qué filas se buscan. La salida puede nombrar el índice utilizado."
+    ],
+    "notes": [
+      "El formato está pensado para investigar consultas. Evita usar su texto como contrato estable de un programa."
+    ],
+    "aliases": [
+      "plan ejecución",
+      "explain query plan",
+      "scan search",
+      "usa un índice"
+    ],
+    "related": ["EXPLAIN", "CREATE INDEX", "ANALYZE"],
+    "example": {
+      "language": "sql",
+      "title": "Comprueba si el filtro encuentra su índice",
+      "description": "La columna detail identifica el índice que cubre la búsqueda y la salida. Cambia el filtro o quita el índice para comparar.",
+      "code": "CREATE TABLE plan_vcode (id INTEGER PRIMARY KEY, tema TEXT);\nCREATE INDEX vcode_por_tema ON plan_vcode (tema);\nINSERT INTO plan_vcode VALUES (1, 'SQL'), (2, 'Java');\nEXPLAIN QUERY PLAN SELECT id FROM plan_vcode WHERE tema = 'SQL';",
+      "expected": "2 | 0 | 56 | SEARCH plan_vcode USING COVERING INDEX vcode_por_tema (tema=?)",
+      "expectedRows": [
+        [
+          2,
+          0,
+          56,
+          "SEARCH plan_vcode USING COVERING INDEX vcode_por_tema (tema=?)"
+        ]
+      ]
+    }
+  },
+  {
+    "title": "INDEXED BY",
+    "source": "lang_indexedby.html",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 11,
+    "summary": "Exige que una consulta use un índice específico para una fuente de datos.",
+    "syntax": "SELECT tema FROM cursos INDEXED BY cursos_por_tema WHERE tema = 'SQL';",
+    "body": [
+      "SQLite rechaza la preparación si el índice no se puede usar. Es un requisito de ejecución, con un comportamiento más estricto que el de una sugerencia."
+    ],
+    "notes": [
+      "Úsalo cuando tengas una razón comprobada para fijar el acceso. Normalmente conviene examinar el plan y las estadísticas."
+    ],
+    "aliases": ["index hint sqlite", "forzar índice", "not indexed"],
+    "related": ["CREATE INDEX", "EXPLAIN QUERY PLAN"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de INDEXED BY",
+      "description": "La consulta puede ejecutarse porque el índice exigido es aplicable.",
+      "code": "CREATE TABLE plan_forzado (tema TEXT);\n       CREATE INDEX forzado_vcode ON plan_forzado (tema);\n       INSERT INTO plan_forzado VALUES ('Java'), ('SQL');\n       SELECT tema FROM plan_forzado INDEXED BY forzado_vcode WHERE tema = 'SQL';",
+      "expected": "SQL",
+      "expectedRows": [["SQL"]]
+    }
+  },
+  {
+    "title": "ANALYZE",
+    "source": "lang_analyze.html",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 11,
+    "summary": "Recopila estadísticas que ayudan al planificador a comparar formas de ejecutar consultas.",
+    "syntax": "ANALYZE cursos;",
+    "body": [
+      "Las estadísticas de tablas e índices se guardan en tablas internas como sqlite_stat1. Pueden cambiar si cambia la distribución de los datos."
+    ],
+    "notes": [
+      "Para mantenimiento habitual considera PRAGMA optimize. Usa ANALYZE cuando quieras generar estadísticas para un esquema u objeto concreto."
+    ],
+    "aliases": ["analizar base", "estadísticas sqlite", "sqlite_stat1"],
+    "related": ["PRAGMA optimize", "EXPLAIN QUERY PLAN", "CREATE INDEX"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de ANALYZE",
+      "description": "SQLite registra estadísticas para el índice de esta tabla.",
+      "code": "CREATE TABLE plan_analizado (tema TEXT);\n       CREATE INDEX analisis_vcode ON plan_analizado (tema);\n       INSERT INTO plan_analizado VALUES ('SQL'), ('SQL'), ('Java');\n       ANALYZE plan_analizado;\n       SELECT idx FROM sqlite_stat1 WHERE tbl = 'plan_analizado' AND idx = 'analisis_vcode';",
+      "expected": "analisis_vcode",
+      "expectedRows": [["analisis_vcode"]]
+    }
+  },
+  {
+    "title": "ATTACH DATABASE",
+    "source": "lang_attach.html",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 7,
+    "summary": "Asocia una base adicional a la conexión con un nombre de esquema.",
+    "syntax": "ATTACH DATABASE ':memory:' AS apuntes;",
+    "body": [
+      "Después puedes usar nombres como apuntes.temas para dirigir una operación a esa base. main identifica la base principal y temp aloja objetos temporales."
+    ],
+    "notes": [
+      "Cuando una aplicación abre archivos, elige rutas previstas por ella. En el laboratorio resulta práctico usar una base adicional en memoria."
+    ],
+    "aliases": ["attach sqlite", "adjuntar base", "segunda base"],
+    "related": ["DETACH DATABASE", "CREATE TABLE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de ATTACH DATABASE",
+      "description": "El nombre cualificado lee la tabla de la base en memoria adjunta.",
+      "code": "ATTACH DATABASE ':memory:' AS apuntes;\n       CREATE TABLE apuntes.temas (nombre TEXT);\n       INSERT INTO apuntes.temas VALUES ('Consultas');\n       SELECT nombre FROM apuntes.temas;",
+      "expected": "Consultas",
+      "expectedRows": [["Consultas"]]
+    }
+  },
+  {
+    "title": "DETACH DATABASE",
+    "source": "lang_detach.html",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 7,
+    "summary": "Desconecta una base adjunta de la conexión actual.",
+    "syntax": "DETACH DATABASE apuntes;",
+    "body": [
+      "A partir de ese momento el esquema deja de estar disponible en esa conexión. Desconectar una base de archivo no borra su archivo."
+    ],
+    "notes": [
+      "No se puede desconectar main ni temp. Termina antes el trabajo activo con el esquema que deseas retirar."
+    ],
+    "aliases": ["detach sqlite", "desconectar base", "desadjuntar esquema"],
+    "related": ["ATTACH DATABASE", "COMMIT"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de DETACH DATABASE",
+      "description": "La lista de bases ya no incluye el esquema desconectado.",
+      "code": "ATTACH DATABASE ':memory:' AS apuntes;\n       DETACH DATABASE apuntes;\n       SELECT COUNT(*) AS adjuntas FROM pragma_database_list WHERE name = 'apuntes';",
+      "expected": "0",
+      "expectedRows": [[0]]
+    }
+  },
+  {
+    "title": "REINDEX",
+    "source": "lang_reindex.html",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 11,
+    "summary": "Reconstruye índices seleccionados a partir de los datos actuales.",
+    "syntax": "REINDEX cursos_por_tema;",
+    "body": [
+      "Se puede aplicar por índice, tabla o nombre de intercalación. Puede ser necesario cuando cambia una función de comparación usada por un índice."
+    ],
+    "notes": [
+      "Para cambiar las columnas indexadas, define un índice nuevo o sustituye su definición mediante una migración."
+    ],
+    "aliases": ["reconstruir índice", "reindex sqlite", "reindexar"],
+    "related": ["CREATE INDEX", "ANALYZE", "COLLATE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de REINDEX",
+      "description": "Reconstruir el índice conserva las filas de la tabla.",
+      "code": "CREATE TABLE plan_reindex (tema TEXT);\n       CREATE INDEX reindex_vcode ON plan_reindex (tema);\n       INSERT INTO plan_reindex VALUES ('Java'), ('SQL');\n       REINDEX reindex_vcode;\n       SELECT tema FROM plan_reindex WHERE tema = 'SQL';",
+      "expected": "SQL",
+      "expectedRows": [["SQL"]]
+    }
+  },
+  {
+    "title": "VACUUM",
+    "source": "lang_vacuum.html",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 11,
+    "summary": "Reconstruye una base SQLite para recuperar espacio y reorganizar su almacenamiento.",
+    "syntax": "VACUUM;",
+    "body": [
+      "En una base de archivo puede compactar páginas y recuperar espacio libre. VACUUM INTO crea una copia reconstruida en otro destino."
+    ],
+    "notes": [
+      "Se ejecuta fuera de una transacción activa y puede requerir espacio adicional. Usa una ruta controlada si generas una copia en archivo."
+    ],
+    "aliases": ["compactar base", "vacuum into", "liberar espacio sqlite"],
+    "related": ["PRAGMA integrity_check", "ANALYZE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de VACUUM",
+      "description": "La reconstrucción conserva el dato que quedó tras la eliminación.",
+      "code": "CREATE TABLE plan_vacuum (tema TEXT);\n       INSERT INTO plan_vacuum VALUES ('SQL'), ('Java');\n       DELETE FROM plan_vacuum WHERE tema = 'Java';\n       VACUUM;\n       SELECT tema FROM plan_vacuum;",
+      "expected": "SQL",
+      "expectedRows": [["SQL"]]
+    }
+  },
+  {
+    "title": "Comentarios SQL",
+    "source": "lang_comment.html",
+    "area": "expressions",
+    "group": "Expresiones",
+    "guide": 1,
+    "summary": "Documenta una sentencia con comentarios de línea o de bloque.",
+    "syntax": "-- Un comentario hasta el final de la línea\n/* Un comentario de bloque */\nSELECT 1;",
+    "body": [
+      "Los comentarios funcionan como separadores en el código SQL. El formato de bloque termina al encontrar */."
+    ],
+    "notes": [
+      "SQLite no anida comentarios de bloque. Usa los comentarios para decisiones que ayudan a entender la consulta."
+    ],
+    "aliases": ["sql comment", "comentario sql", "comentar línea"],
+    "related": ["SELECT", "Parámetros SQL"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de Comentarios SQL",
+      "description": "Los comentarios no forman parte del valor calculado.",
+      "code": "-- Duración fija para la prueba\n       SELECT 25 /* minutos */ AS duracion;",
+      "expected": "25",
+      "expectedRows": [[25]]
+    }
+  },
+  {
+    "title": "PRAGMA",
+    "source": "pragma.html",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 11,
+    "summary": "Consulta o modifica detalles de SQLite mediante instrucciones específicas del motor.",
+    "syntax": "PRAGMA foreign_keys;\nPRAGMA foreign_keys = ON;",
+    "body": [
+      "Algunas formas devuelven filas y otras cambian la configuración. Varias pragmas de lectura también se pueden consultar como funciones que devuelven tablas."
+    ],
+    "notes": [
+      "Un nombre desconocido puede ser ignorado. Confirma la ortografía y la versión cuando una instrucción no devuelva los datos esperados."
+    ],
+    "aliases": ["pragma sqlite", "configurar conexión", "instrucción pragma"],
+    "related": [
+      "PRAGMA foreign_keys",
+      "PRAGMA table_xinfo",
+      "PRAGMA user_version"
+    ],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de PRAGMA",
+      "description": "La consulta confirma que la conexión temporal aplica las claves foráneas.",
+      "code": "PRAGMA foreign_keys = ON;\n       PRAGMA foreign_keys;",
+      "expected": "1",
+      "expectedRows": [[1]]
+    }
+  },
+  {
+    "title": "PRAGMA foreign_keys",
+    "source": "pragma.html#pragma_foreign_keys",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 7,
+    "summary": "Controla si la conexión aplica las restricciones de clave foránea.",
+    "syntax": "PRAGMA foreign_keys = ON;",
+    "body": [
+      "Configúralo al abrir la conexión. Puedes consultar el valor actual usando la misma instrucción sin asignación."
+    ],
+    "notes": [
+      "Cambiar el valor durante una transacción activa no tiene efecto. Para revisar datos existentes, usa foreign_key_check."
+    ],
+    "aliases": [
+      "pragma foreign keys",
+      "activar claves foráneas",
+      "foreign_keys sqlite"
+    ],
+    "related": ["FOREIGN KEY", "PRAGMA foreign_key_check", "PRAGMA"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de PRAGMA foreign_keys",
+      "description": "La forma de tabla permite consultar el valor con SELECT.",
+      "code": "PRAGMA foreign_keys = ON;\n       SELECT foreign_keys FROM pragma_foreign_keys;",
+      "expected": "1",
+      "expectedRows": [[1]]
+    }
+  },
+  {
+    "title": "PRAGMA foreign_key_check",
+    "source": "pragma.html#pragma_foreign_key_check",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 7,
+    "summary": "Devuelve una fila por cada infracción de clave foránea detectada.",
+    "syntax": "PRAGMA foreign_key_check;",
+    "body": [
+      "El resultado indica la tabla hija, el identificador cuando existe, la tabla padre y la clave afectada. Con un nombre de tabla puedes limitar el examen."
+    ],
+    "notes": [
+      "Una salida vacía indica que no se detectaron infracciones en el ámbito consultado. La comprobación no modifica los datos."
+    ],
+    "aliases": [
+      "foreign key check",
+      "comprobar claves foráneas",
+      "verificar referencias"
+    ],
+    "related": ["FOREIGN KEY", "PRAGMA foreign_keys", "PRAGMA integrity_check"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de PRAGMA foreign_key_check",
+      "description": "La base de prueba contiene una referencia ausente para que la comprobación pueda detectarla.",
+      "code": "PRAGMA foreign_keys = OFF;\n       CREATE TABLE revision_padre (id INTEGER PRIMARY KEY);\n       CREATE TABLE revision_hija (curso_id INTEGER REFERENCES revision_padre(id));\n       INSERT INTO revision_hija VALUES (7);\n       PRAGMA foreign_keys = ON;\n       SELECT \"table\", parent FROM pragma_foreign_key_check;",
+      "expected": "revision_hija | revision_padre",
+      "expectedRows": [["revision_hija", "revision_padre"]]
+    }
+  },
+  {
+    "title": "PRAGMA table_xinfo",
+    "source": "pragma.html#pragma_table_xinfo",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 7,
+    "summary": "Enumera las columnas de una tabla, incluidas columnas generadas y columnas ocultas.",
+    "syntax": "PRAGMA table_xinfo(plan);",
+    "body": [
+      "Incluye el nombre, tipo, valor por defecto y otras propiedades de cada columna. La columna hidden distingue las columnas ordinarias y especiales."
+    ],
+    "notes": [
+      "Usa table_xinfo cuando table_info no muestra las columnas que te interesan. Las tablas virtuales pueden aportar columnas ocultas propias."
+    ],
+    "aliases": [
+      "table xinfo",
+      "columnas ocultas",
+      "inspeccionar columnas sqlite",
+      "table_info"
+    ],
+    "related": ["PRAGMA", "GENERATED ALWAYS AS", "CREATE TABLE"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de PRAGMA table_xinfo",
+      "description": "La columna derivada almacenada aparece con un código diferente.",
+      "code": "CREATE TABLE plan_xinfo (minutos INTEGER, total INTEGER AS (minutos * 2) STORED);\n       SELECT name, hidden FROM pragma_table_xinfo('plan_xinfo') ORDER BY cid;",
+      "expected": "minutos | 0\ntotal | 3",
+      "expectedRows": [
+        ["minutos", 0],
+        ["total", 3]
+      ]
+    }
+  },
+  {
+    "title": "PRAGMA index_list",
+    "source": "pragma.html#pragma_index_list",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 11,
+    "summary": "Muestra qué índices pertenecen a una tabla.",
+    "syntax": "PRAGMA index_list(plan);",
+    "body": [
+      "La salida incluye su nombre, si es único, su origen y si se trata de un índice parcial."
+    ],
+    "notes": [
+      "Para conocer las columnas de un índice, consulta index_info o index_xinfo. Selecciona los campos deseados si vas a producir un informe."
+    ],
+    "aliases": ["index list", "listar índices", "pragma index list"],
+    "related": ["CREATE INDEX", "Índice parcial", "PRAGMA"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de PRAGMA index_list",
+      "description": "El catálogo indica que el índice exige unicidad.",
+      "code": "CREATE TABLE plan_indices (tema TEXT);\n       CREATE UNIQUE INDEX indice_tema_vcode ON plan_indices (tema);\n       SELECT name, \"unique\" FROM pragma_index_list('plan_indices');",
+      "expected": "indice_tema_vcode | 1",
+      "expectedRows": [["indice_tema_vcode", 1]]
+    }
+  },
+  {
+    "title": "PRAGMA user_version",
+    "source": "pragma.html#pragma_user_version",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 7,
+    "summary": "Lee o escribe un entero que la aplicación puede usar para versionar su esquema.",
+    "syntax": "PRAGMA user_version = 3;",
+    "body": [
+      "SQLite guarda el valor en la cabecera de la base. La aplicación decide qué significa y qué pasos corresponden a cada versión."
+    ],
+    "notes": [
+      "La versión declarada no ejecuta ninguna migración. Actualízala cuando el cambio de esquema se haya aplicado según tu flujo."
+    ],
+    "aliases": ["user version", "versión esquema", "sqlite migraciones"],
+    "related": ["PRAGMA", "ALTER TABLE", "COMMIT"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de PRAGMA user_version",
+      "description": "La lectura devuelve el entero que se guardó.",
+      "code": "PRAGMA user_version = 3;\n       PRAGMA user_version;",
+      "expected": "3",
+      "expectedRows": [[3]]
+    }
+  },
+  {
+    "title": "PRAGMA integrity_check",
+    "source": "pragma.html#pragma_integrity_check",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 11,
+    "summary": "Comprueba la consistencia interna de la base de datos y algunos tipos de restricciones.",
+    "syntax": "PRAGMA integrity_check;",
+    "body": [
+      "Si la comprobación no encuentra problemas, devuelve ok. Si los detecta, puede devolver filas con los detalles."
+    ],
+    "notes": [
+      "Comprueba las claves foráneas con foreign_key_check. Usa quick_check cuando necesites una comprobación más rápida con alcance menor."
+    ],
+    "aliases": ["integrity check", "integridad sqlite", "quick check"],
+    "related": ["PRAGMA foreign_key_check", "VACUUM", "PRAGMA"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de PRAGMA integrity_check",
+      "description": "La base temporal creada por el ejemplo supera la comprobación.",
+      "code": "CREATE TABLE plan_integridad (id INTEGER PRIMARY KEY, tema TEXT);\n       INSERT INTO plan_integridad VALUES (1, 'SQL');\n       PRAGMA integrity_check;",
+      "expected": "ok",
+      "expectedRows": [["ok"]]
+    }
+  },
+  {
+    "title": "PRAGMA query_only",
+    "source": "pragma.html#pragma_query_only",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 11,
+    "summary": "Evita cambios directos mediante sentencias SQL en la conexión mientras está activo.",
+    "syntax": "PRAGMA query_only = ON;",
+    "body": [
+      "La conexión puede seguir leyendo datos. Los intentos directos de crear o escribir tablas devuelven un error de solo lectura."
+    ],
+    "notes": [
+      "No lo confundas con abrir un archivo de forma estrictamente inmutable. Esta opción pertenece a la configuración de la conexión."
+    ],
+    "aliases": ["query only", "solo lectura sqlite", "pragma query only"],
+    "related": ["PRAGMA", "SELECT"],
+    "example": {
+      "language": "sql",
+      "title": "Ejemplo de PRAGMA query_only",
+      "description": "La comprobación devuelve el estado de solo consultas.",
+      "code": "PRAGMA query_only = ON;\n       SELECT query_only FROM pragma_query_only;",
+      "expected": "1",
+      "expectedRows": [[1]]
+    }
+  },
+  {
+    "title": "PRAGMA optimize",
+    "source": "pragma.html#pragma_optimize",
+    "area": "administration",
+    "group": "Administración",
+    "guide": 11,
+    "summary": "Pide a SQLite que revise si conviene actualizar estadísticas u otros aspectos del planificador.",
+    "syntax": "PRAGMA optimize;",
+    "body": [
+      "La orden puede limitar su trabajo a los objetos que se han utilizado o cuya información parece necesaria. Su comportamiento concreto depende de la versión."
+    ],
+    "notes": [
+      "Para una investigación dirigida de una tabla, puedes ejecutar ANALYZE de forma explícita y comparar el plan con la misma consulta."
+    ],
+    "aliases": ["sqlite optimize", "optimizar estadísticas", "pragma optimize"],
+    "related": ["ANALYZE", "EXPLAIN QUERY PLAN", "PRAGMA"]
+  }
+]

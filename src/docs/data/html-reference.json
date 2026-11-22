@@ -23,7 +23,8 @@
     "related": ["tag-head", "tag-meta", "tag-h1"],
     "guide": 1,
     "preview": false,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/html"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/html",
+    "spec": "https://html.spec.whatwg.org/multipage/semantics.html#the-html-element"
   },
   {
     "id": "tag-head",
@@ -45,7 +46,8 @@
     "related": ["tag-html", "tag-meta", "tag-link"],
     "guide": 1,
     "preview": false,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/head"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/head",
+    "spec": "https://html.spec.whatwg.org/multipage/semantics.html#the-head-element"
   },
   {
     "id": "tag-meta",
@@ -66,6 +68,18 @@
       {
         "name": "http-equiv",
         "description": "Directiva que el navegador interpreta como determinada información de cabecera."
+      },
+      {
+        "name": "name",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-name"
+      },
+      {
+        "name": "content",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-content"
+      },
+      {
+        "name": "media",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-media"
       }
     ],
     "tips": [
@@ -75,7 +89,8 @@
     "related": ["tag-head", "tag-html", "tag-link"],
     "guide": 1,
     "preview": false,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta",
+    "spec": "https://html.spec.whatwg.org/multipage/semantics.html#the-meta-element"
   },
   {
     "id": "tag-link",
@@ -96,6 +111,58 @@
       {
         "name": "media",
         "description": "Condición de medios para aplicar el recurso, cuando corresponda."
+      },
+      {
+        "name": "crossorigin",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-crossorigin"
+      },
+      {
+        "name": "as",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-as"
+      },
+      {
+        "name": "hreflang",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-hreflang"
+      },
+      {
+        "name": "type",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-type"
+      },
+      {
+        "name": "sizes",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-sizes"
+      },
+      {
+        "name": "imagesrcset",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-imagesrcset"
+      },
+      {
+        "name": "imagesizes",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-imagesizes"
+      },
+      {
+        "name": "referrerpolicy",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-referrerpolicy"
+      },
+      {
+        "name": "integrity",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-integrity"
+      },
+      {
+        "name": "blocking",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-blocking"
+      },
+      {
+        "name": "color",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-color"
+      },
+      {
+        "name": "disabled",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-disabled"
+      },
+      {
+        "name": "fetchpriority",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-fetchpriority"
       }
     ],
     "tips": [
@@ -105,7 +172,8 @@
     "related": ["tag-head", "tag-a", "tag-meta"],
     "guide": 9,
     "preview": false,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/link"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/link",
+    "spec": "https://html.spec.whatwg.org/multipage/semantics.html#the-link-element"
   },
   {
     "id": "tag-header",
@@ -127,7 +195,8 @@
     "related": ["tag-nav", "tag-main", "tag-footer"],
     "guide": 3,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/header"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/header",
+    "spec": "https://html.spec.whatwg.org/multipage/sections.html#the-header-element"
   },
   {
     "id": "tag-nav",
@@ -149,7 +218,8 @@
     "related": ["tag-a", "tag-header", "tag-footer"],
     "guide": 3,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/nav"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/nav",
+    "spec": "https://html.spec.whatwg.org/multipage/sections.html#the-nav-element"
   },
   {
     "id": "tag-main",
@@ -171,7 +241,8 @@
     "related": ["tag-header", "tag-section", "tag-article"],
     "guide": 3,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/main"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/main",
+    "spec": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-main-element"
   },
   {
     "id": "tag-section",
@@ -193,7 +264,8 @@
     "related": ["tag-article", "tag-h1", "tag-main"],
     "guide": 3,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/section"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/section",
+    "spec": "https://html.spec.whatwg.org/multipage/sections.html#the-section-element"
   },
   {
     "id": "tag-article",
@@ -215,7 +287,8 @@
     "related": ["tag-section", "tag-header", "tag-footer"],
     "guide": 3,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/article"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/article",
+    "spec": "https://html.spec.whatwg.org/multipage/sections.html#the-article-element"
   },
   {
     "id": "tag-aside",
@@ -237,7 +310,8 @@
     "related": ["tag-article", "tag-section", "tag-main"],
     "guide": 3,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/aside"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/aside",
+    "spec": "https://html.spec.whatwg.org/multipage/sections.html#the-aside-element"
   },
   {
     "id": "tag-footer",
@@ -259,7 +333,8 @@
     "related": ["tag-header", "tag-article", "tag-a"],
     "guide": 3,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/footer"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/footer",
+    "spec": "https://html.spec.whatwg.org/multipage/sections.html#the-footer-element"
   },
   {
     "id": "tag-h1",
@@ -281,7 +356,8 @@
     "related": ["tag-section", "tag-article", "tag-p"],
     "guide": 2,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/Heading_Elements"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/Heading_Elements",
+    "spec": "https://html.spec.whatwg.org/multipage/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements"
   },
   {
     "id": "tag-p",
@@ -303,7 +379,8 @@
     "related": ["tag-strong", "tag-a", "tag-ul"],
     "guide": 2,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/p"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/p",
+    "spec": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-p-element"
   },
   {
     "id": "tag-a",
@@ -324,6 +401,26 @@
       {
         "name": "rel",
         "description": "Relación con el destino; noopener evita acceso mediante window.opener."
+      },
+      {
+        "name": "download",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-download"
+      },
+      {
+        "name": "ping",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#ping"
+      },
+      {
+        "name": "hreflang",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-hreflang"
+      },
+      {
+        "name": "type",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-type"
+      },
+      {
+        "name": "referrerpolicy",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-referrerpolicy"
       }
     ],
     "tips": [
@@ -333,7 +430,8 @@
     "related": ["tag-nav", "tag-button", "tag-p"],
     "guide": 2,
     "preview": false,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-a-element"
   },
   {
     "id": "tag-strong",
@@ -355,7 +453,8 @@
     "related": ["tag-p", "tag-h1", "tag-a"],
     "guide": 2,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/strong"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/strong",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-strong-element"
   },
   {
     "id": "tag-ul",
@@ -377,7 +476,8 @@
     "related": ["tag-nav", "tag-p", "tag-a"],
     "guide": 2,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/ul"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/ul",
+    "spec": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-ul-element"
   },
   {
     "id": "tag-pre",
@@ -399,7 +499,8 @@
     "related": ["tag-p", "tag-strong", "tag-h1"],
     "guide": 2,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/pre"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/pre",
+    "spec": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-pre-element"
   },
   {
     "id": "tag-img",
@@ -424,6 +525,54 @@
       {
         "name": "loading",
         "description": "lazy difiere la carga; no lo apliques a la imagen principal que debe verse enseguida."
+      },
+      {
+        "name": "src",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-src"
+      },
+      {
+        "name": "srcset",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-srcset"
+      },
+      {
+        "name": "sizes",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-sizes"
+      },
+      {
+        "name": "crossorigin",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-crossorigin"
+      },
+      {
+        "name": "usemap",
+        "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-hyperlink-usemap"
+      },
+      {
+        "name": "ismap",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-ismap"
+      },
+      {
+        "name": "controls",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-controls"
+      },
+      {
+        "name": "width",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-width"
+      },
+      {
+        "name": "height",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-height"
+      },
+      {
+        "name": "referrerpolicy",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-referrerpolicy"
+      },
+      {
+        "name": "decoding",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-decoding"
+      },
+      {
+        "name": "fetchpriority",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-fetchpriority"
       }
     ],
     "tips": [
@@ -433,7 +582,8 @@
     "related": ["tag-video", "tag-a", "tag-html"],
     "guide": 4,
     "preview": false,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img",
+    "spec": "https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element"
   },
   {
     "id": "tag-video",
@@ -458,6 +608,42 @@
       {
         "name": "muted / playsinline",
         "description": "Silencia inicialmente y permite reproducción integrada cuando el navegador la admite."
+      },
+      {
+        "name": "src",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-src"
+      },
+      {
+        "name": "crossorigin",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-crossorigin"
+      },
+      {
+        "name": "autoplay",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-autoplay"
+      },
+      {
+        "name": "playsinline",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-video-playsinline"
+      },
+      {
+        "name": "loading",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-loading"
+      },
+      {
+        "name": "loop",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-loop"
+      },
+      {
+        "name": "muted",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-muted"
+      },
+      {
+        "name": "width",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-width"
+      },
+      {
+        "name": "height",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-height"
       }
     ],
     "tips": [
@@ -467,7 +653,8 @@
     "related": ["tag-img", "tag-html", "tag-a"],
     "guide": 4,
     "preview": false,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video",
+    "spec": "https://html.spec.whatwg.org/multipage/media.html#the-video-element"
   },
   {
     "id": "tag-table",
@@ -489,7 +676,8 @@
     "related": ["tag-h1", "tag-p", "tag-section"],
     "guide": 5,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/table"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/table",
+    "spec": "https://html.spec.whatwg.org/multipage/tables.html#the-table-element"
   },
   {
     "id": "tag-form",
@@ -514,6 +702,26 @@
       {
         "name": "novalidate",
         "description": "Omite la validación interactiva del navegador al enviar."
+      },
+      {
+        "name": "accept-charset",
+        "source": "https://html.spec.whatwg.org/multipage/forms.html#attr-form-accept-charset"
+      },
+      {
+        "name": "autocomplete",
+        "source": "https://html.spec.whatwg.org/multipage/forms.html#attr-form-autocomplete"
+      },
+      {
+        "name": "name",
+        "source": "https://html.spec.whatwg.org/multipage/forms.html#attr-form-name"
+      },
+      {
+        "name": "rel",
+        "source": "https://html.spec.whatwg.org/multipage/forms.html#attr-form-rel"
+      },
+      {
+        "name": "target",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-target"
       }
     ],
     "tips": [
@@ -523,7 +731,8 @@
     "related": ["tag-input", "tag-label", "tag-button"],
     "guide": 6,
     "preview": false,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/form"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/form",
+    "spec": "https://html.spec.whatwg.org/multipage/forms.html#the-form-element"
   },
   {
     "id": "tag-label",
@@ -545,7 +754,8 @@
     "related": ["tag-input", "tag-textarea", "tag-select"],
     "guide": 6,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/label"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/label",
+    "spec": "https://html.spec.whatwg.org/multipage/forms.html#the-label-element"
   },
   {
     "id": "tag-input",
@@ -574,6 +784,130 @@
       {
         "name": "min / max / pattern",
         "description": "Restricciones cuyo efecto depende del tipo de control."
+      },
+      {
+        "name": "accept",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-accept"
+      },
+      {
+        "name": "alpha",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-alpha"
+      },
+      {
+        "name": "alt",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-alt"
+      },
+      {
+        "name": "checked",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-checked"
+      },
+      {
+        "name": "colorspace",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-colorspace"
+      },
+      {
+        "name": "dirname",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-dirname"
+      },
+      {
+        "name": "disabled",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled"
+      },
+      {
+        "name": "form",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form"
+      },
+      {
+        "name": "formaction",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formaction"
+      },
+      {
+        "name": "formenctype",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formenctype"
+      },
+      {
+        "name": "formmethod",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formmethod"
+      },
+      {
+        "name": "formnovalidate",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formnovalidate"
+      },
+      {
+        "name": "formtarget",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formtarget"
+      },
+      {
+        "name": "height",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-height"
+      },
+      {
+        "name": "list",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-list"
+      },
+      {
+        "name": "max",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-max"
+      },
+      {
+        "name": "maxlength",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-maxlength"
+      },
+      {
+        "name": "min",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-min"
+      },
+      {
+        "name": "minlength",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength"
+      },
+      {
+        "name": "multiple",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-multiple"
+      },
+      {
+        "name": "pattern",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-pattern"
+      },
+      {
+        "name": "placeholder",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-placeholder"
+      },
+      {
+        "name": "popovertarget",
+        "source": "https://html.spec.whatwg.org/multipage/popover.html#attr-popovertarget"
+      },
+      {
+        "name": "popovertargetaction",
+        "source": "https://html.spec.whatwg.org/multipage/popover.html#attr-popovertargetaction"
+      },
+      {
+        "name": "readonly",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly"
+      },
+      {
+        "name": "size",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-size"
+      },
+      {
+        "name": "src",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-src"
+      },
+      {
+        "name": "step",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-step"
+      },
+      {
+        "name": "switch",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-switch"
+      },
+      {
+        "name": "value",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-value"
+      },
+      {
+        "name": "width",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-width"
       }
     ],
     "tips": [
@@ -583,7 +917,8 @@
     "related": ["tag-label", "tag-form", "tag-button"],
     "guide": 6,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input",
+    "spec": "https://html.spec.whatwg.org/multipage/input.html#the-input-element"
   },
   {
     "id": "tag-button",
@@ -604,6 +939,54 @@
       {
         "name": "name / value",
         "description": "Datos del botón de envío activado que pueden viajar con el formulario."
+      },
+      {
+        "name": "command",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-command"
+      },
+      {
+        "name": "commandfor",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-commandfor"
+      },
+      {
+        "name": "form",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form"
+      },
+      {
+        "name": "formaction",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formaction"
+      },
+      {
+        "name": "formenctype",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formenctype"
+      },
+      {
+        "name": "formmethod",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formmethod"
+      },
+      {
+        "name": "formnovalidate",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formnovalidate"
+      },
+      {
+        "name": "formtarget",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formtarget"
+      },
+      {
+        "name": "name",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-name"
+      },
+      {
+        "name": "popovertarget",
+        "source": "https://html.spec.whatwg.org/multipage/popover.html#attr-popovertarget"
+      },
+      {
+        "name": "popovertargetaction",
+        "source": "https://html.spec.whatwg.org/multipage/popover.html#attr-popovertargetaction"
+      },
+      {
+        "name": "value",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-value"
       }
     ],
     "tips": [
@@ -613,7 +996,8 @@
     "related": ["tag-form", "tag-a", "tag-input"],
     "guide": 6,
     "preview": false,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button",
+    "spec": "https://html.spec.whatwg.org/multipage/form-elements.html#the-button-element"
   },
   {
     "id": "tag-textarea",
@@ -634,6 +1018,54 @@
       {
         "name": "required / readonly",
         "description": "Exige contenido o permite leerlo sin editarlo, respectivamente."
+      },
+      {
+        "name": "autocomplete",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete"
+      },
+      {
+        "name": "cols",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-cols"
+      },
+      {
+        "name": "dirname",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-dirname"
+      },
+      {
+        "name": "disabled",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled"
+      },
+      {
+        "name": "form",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form"
+      },
+      {
+        "name": "minlength",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-minlength"
+      },
+      {
+        "name": "name",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-name"
+      },
+      {
+        "name": "placeholder",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-placeholder"
+      },
+      {
+        "name": "readonly",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-readonly"
+      },
+      {
+        "name": "required",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-required"
+      },
+      {
+        "name": "rows",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-rows"
+      },
+      {
+        "name": "wrap",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-wrap"
       }
     ],
     "tips": [
@@ -643,7 +1075,8 @@
     "related": ["tag-label", "tag-form", "tag-input"],
     "guide": 6,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/textarea"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/textarea",
+    "spec": "https://html.spec.whatwg.org/multipage/form-elements.html#the-textarea-element"
   },
   {
     "id": "tag-select",
@@ -664,6 +1097,22 @@
       {
         "name": "required",
         "description": "Exige una selección válida antes de enviar."
+      },
+      {
+        "name": "autocomplete",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete"
+      },
+      {
+        "name": "disabled",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled"
+      },
+      {
+        "name": "form",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form"
+      },
+      {
+        "name": "size",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-select-size"
       }
     ],
     "tips": [
@@ -673,7 +1122,8 @@
     "related": ["tag-label", "tag-form", "tag-input"],
     "guide": 6,
     "preview": true,
-    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/select"
+    "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/select",
+    "spec": "https://html.spec.whatwg.org/multipage/form-elements.html#the-select-element"
   },
   {
     "id": "tag-details",
@@ -707,5 +1157,1957 @@
     "note": "El evento toggle se dispara cuando cambia el estado. Puedes observarlo con JavaScript sin reemplazar el comportamiento nativo.",
     "spec": "https://html.spec.whatwg.org/multipage/interactive-elements.html#the-details-element",
     "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/details"
+  },
+  {
+    "id": "tag-abbr",
+    "title": "<abbr>",
+    "description": "Abreviatura con desarrollo",
+    "detail": "Escribe el significado también en texto si resulta esencial: el atributo title no siempre es accesible.",
+    "group": "texto",
+    "code": "<p>Estudia <abbr title=\"Desarrollo de Aplicaciones Web\">DAW</abbr>.</p>",
+    "attributes": [],
+    "tips": [
+      "Escribe el significado también en texto si resulta esencial: el atributo title no siempre es accesible."
+    ],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-abbr-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-abbr-element"
+  },
+  {
+    "id": "tag-address",
+    "title": "<address>",
+    "description": "Información de contacto",
+    "detail": "Se refiere al artículo o documento más cercano, no a cualquier dirección postal.",
+    "group": "semantica",
+    "code": "<address><a href=\"mailto:equipo@example.com\">Equipo editorial</a></address>",
+    "attributes": [],
+    "tips": [
+      "Se refiere al artículo o documento más cercano, no a cualquier dirección postal."
+    ],
+    "related": ["tag-header", "tag-nav", "tag-main"],
+    "guide": 3,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/sections.html#the-address-element",
+    "spec": "https://html.spec.whatwg.org/multipage/sections.html#the-address-element"
+  },
+  {
+    "id": "tag-area",
+    "title": "<area>",
+    "description": "Región de un mapa de imagen",
+    "detail": "Asocia el mapa con usemap y ofrece un texto alternativo a cada enlace.",
+    "group": "multimedia",
+    "code": "<map name=\"mapa\"><area shape=\"rect\" coords=\"0,0,120,60\" href=\"#sala\" alt=\"Sala de estudio\"></map>",
+    "attributes": [
+      {
+        "name": "alt",
+        "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-area-alt"
+      },
+      {
+        "name": "coords",
+        "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-area-coords"
+      },
+      {
+        "name": "shape",
+        "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-area-shape"
+      },
+      {
+        "name": "href",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-href"
+      },
+      {
+        "name": "target",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-target"
+      },
+      {
+        "name": "download",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-download"
+      },
+      {
+        "name": "ping",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#ping"
+      },
+      {
+        "name": "rel",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-rel"
+      },
+      {
+        "name": "referrerpolicy",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-referrerpolicy"
+      }
+    ],
+    "tips": [
+      "Asocia el mapa con usemap y ofrece un texto alternativo a cada enlace."
+    ],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/image-maps.html#the-area-element",
+    "spec": "https://html.spec.whatwg.org/multipage/image-maps.html#the-area-element"
+  },
+  {
+    "id": "tag-audio",
+    "title": "<audio>",
+    "description": "Reproductor de audio",
+    "detail": "Incluye una transcripción para audio con información esencial.",
+    "group": "multimedia",
+    "code": "<audio controls src=\"entrevista.ogg\">Escucha la entrevista.</audio>",
+    "attributes": [
+      {
+        "name": "src",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-src"
+      },
+      {
+        "name": "crossorigin",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-crossorigin"
+      },
+      {
+        "name": "preload",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-preload"
+      },
+      {
+        "name": "autoplay",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-autoplay"
+      },
+      {
+        "name": "loading",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-loading"
+      },
+      {
+        "name": "loop",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-loop"
+      },
+      {
+        "name": "muted",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-muted"
+      },
+      {
+        "name": "controls",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-controls"
+      }
+    ],
+    "tips": ["Incluye una transcripción para audio con información esencial."],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": false,
+    "source": "https://html.spec.whatwg.org/multipage/media.html#the-audio-element",
+    "spec": "https://html.spec.whatwg.org/multipage/media.html#the-audio-element"
+  },
+  {
+    "id": "tag-b",
+    "title": "<b>",
+    "description": "Llama la atención sin indicar importancia",
+    "detail": "Para indicar importancia semántica, usa strong.",
+    "group": "texto",
+    "code": "<p>Busca la tarjeta <b>Proyectos</b>.</p>",
+    "attributes": [],
+    "tips": ["Para indicar importancia semántica, usa strong."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-b-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-b-element"
+  },
+  {
+    "id": "tag-base",
+    "title": "<base>",
+    "description": "URL base para enlaces relativos",
+    "detail": "Un solo base con href puede cambiar incluso el destino de enlaces de fragmento.",
+    "group": "documento",
+    "code": "<base href=\"https://example.com/guias/\">",
+    "attributes": [
+      {
+        "name": "href",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-base-href"
+      },
+      {
+        "name": "target",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-base-target"
+      }
+    ],
+    "tips": [
+      "Un solo base con href puede cambiar incluso el destino de enlaces de fragmento."
+    ],
+    "related": ["tag-html", "tag-head", "tag-meta"],
+    "guide": 1,
+    "preview": false,
+    "source": "https://html.spec.whatwg.org/multipage/semantics.html#the-base-element",
+    "spec": "https://html.spec.whatwg.org/multipage/semantics.html#the-base-element"
+  },
+  {
+    "id": "tag-bdi",
+    "title": "<bdi>",
+    "description": "Aislamiento bidireccional",
+    "detail": "Úsalo cuando la dirección dependa de texto externo, como un nombre.",
+    "group": "texto",
+    "code": "<p>Autor: <bdi>علي</bdi> — 3 artículos</p>",
+    "attributes": [],
+    "tips": [
+      "Úsalo cuando la dirección dependa de texto externo, como un nombre."
+    ],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-bdi-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-bdi-element"
+  },
+  {
+    "id": "tag-bdo",
+    "title": "<bdo>",
+    "description": "Fuerza la dirección de escritura",
+    "detail": "Usa dir y reserva este elemento para una inversión deliberada.",
+    "group": "texto",
+    "code": "<bdo dir=\"rtl\">ABC</bdo>",
+    "attributes": [],
+    "tips": ["Usa dir y reserva este elemento para una inversión deliberada."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-bdo-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-bdo-element"
+  },
+  {
+    "id": "tag-blockquote",
+    "title": "<blockquote>",
+    "description": "Cita en bloque",
+    "detail": "cite indica la URL de origen y no muestra una atribución visible.",
+    "group": "texto",
+    "code": "<blockquote cite=\"https://example.com/fuente\"><p>Lee el manual antes de desplegar.</p></blockquote>",
+    "attributes": [
+      {
+        "name": "cite",
+        "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-blockquote-cite"
+      }
+    ],
+    "tips": [
+      "cite indica la URL de origen y no muestra una atribución visible."
+    ],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-blockquote-element",
+    "spec": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-blockquote-element"
+  },
+  {
+    "id": "tag-body",
+    "title": "<body>",
+    "description": "Contenido del documento",
+    "detail": "El contenido que se presenta a la persona lectora pertenece al body.",
+    "group": "documento",
+    "code": "<body><main><h1>Biblioteca</h1></main></body>",
+    "attributes": [
+      {
+        "name": "onafterprint",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onafterprint"
+      },
+      {
+        "name": "onbeforeprint",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onbeforeprint"
+      },
+      {
+        "name": "onbeforeunload",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onbeforeunload"
+      },
+      {
+        "name": "onhashchange",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onhashchange"
+      },
+      {
+        "name": "onlanguagechange",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onlanguagechange"
+      },
+      {
+        "name": "onmessage",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onmessage"
+      },
+      {
+        "name": "onmessageerror",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onmessageerror"
+      },
+      {
+        "name": "onoffline",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onoffline"
+      },
+      {
+        "name": "ononline",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-ononline"
+      },
+      {
+        "name": "onpageswap",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onpageswap"
+      },
+      {
+        "name": "onpagehide",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onpagehide"
+      },
+      {
+        "name": "onpagereveal",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onpagereveal"
+      },
+      {
+        "name": "onpageshow",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onpageshow"
+      },
+      {
+        "name": "onpopstate",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onpopstate"
+      },
+      {
+        "name": "onrejectionhandled",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onrejectionhandled"
+      },
+      {
+        "name": "onstorage",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onstorage"
+      },
+      {
+        "name": "onunhandledrejection",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onunhandledrejection"
+      },
+      {
+        "name": "onunload",
+        "source": "https://html.spec.whatwg.org/multipage/webappapis.html#handler-window-onunload"
+      }
+    ],
+    "tips": [
+      "El contenido que se presenta a la persona lectora pertenece al body."
+    ],
+    "related": ["tag-html", "tag-head", "tag-meta"],
+    "guide": 1,
+    "preview": false,
+    "source": "https://html.spec.whatwg.org/multipage/sections.html#the-body-element",
+    "spec": "https://html.spec.whatwg.org/multipage/sections.html#the-body-element"
+  },
+  {
+    "id": "tag-br",
+    "title": "<br>",
+    "description": "Salto de línea dentro del texto",
+    "detail": "Para separar párrafos usa p. Controla las distancias mediante CSS.",
+    "group": "texto",
+    "code": "<p>Calle del Mar, 7<br>Santa Cruz de La Palma</p>",
+    "attributes": [],
+    "tips": [
+      "Para separar párrafos usa p. Controla las distancias mediante CSS."
+    ],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-br-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-br-element"
+  },
+  {
+    "id": "tag-canvas",
+    "title": "<canvas>",
+    "description": "Lienzo de dibujo programable",
+    "detail": "El contenido alternativo debe transmitir lo que el dibujo no comunica a tecnologías de asistencia.",
+    "group": "multimedia",
+    "code": "<canvas width=\"320\" height=\"180\">Gráfico de temperaturas</canvas>",
+    "attributes": [
+      {
+        "name": "width",
+        "source": "https://html.spec.whatwg.org/multipage/canvas.html#attr-canvas-width"
+      },
+      {
+        "name": "height",
+        "source": "https://html.spec.whatwg.org/multipage/canvas.html#attr-canvas-height"
+      }
+    ],
+    "tips": [
+      "El contenido alternativo debe transmitir lo que el dibujo no comunica a tecnologías de asistencia."
+    ],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/canvas.html#the-canvas-element",
+    "spec": "https://html.spec.whatwg.org/multipage/canvas.html#the-canvas-element"
+  },
+  {
+    "id": "tag-caption",
+    "title": "<caption>",
+    "description": "Título de una tabla",
+    "detail": "Coloca caption antes de las filas para explicar de qué trata la tabla.",
+    "group": "multimedia",
+    "code": "<table><caption>Horas de estudio</caption><tr><td>8 horas</td></tr></table>",
+    "attributes": [],
+    "tips": [
+      "Coloca caption antes de las filas para explicar de qué trata la tabla."
+    ],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/tables.html#the-caption-element",
+    "spec": "https://html.spec.whatwg.org/multipage/tables.html#the-caption-element"
+  },
+  {
+    "id": "tag-cite",
+    "title": "<cite>",
+    "description": "Título de una obra",
+    "detail": "Representa el nombre de la obra, no el de su autor.",
+    "group": "texto",
+    "code": "<p>Estoy leyendo <cite>La invención de Morel</cite>.</p>",
+    "attributes": [],
+    "tips": ["Representa el nombre de la obra, no el de su autor."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-cite-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-cite-element"
+  },
+  {
+    "id": "tag-code",
+    "title": "<code>",
+    "description": "Fragmento de código",
+    "detail": "Combínalo con pre si necesitas preservar sangría y saltos de línea.",
+    "group": "texto",
+    "code": "<p>Llama a <code>console.log()</code>.</p>",
+    "attributes": [],
+    "tips": [
+      "Combínalo con pre si necesitas preservar sangría y saltos de línea."
+    ],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-code-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-code-element"
+  },
+  {
+    "id": "tag-col",
+    "title": "<col>",
+    "description": "Columna de una tabla",
+    "detail": "Solo determinadas propiedades CSS se aplican a una columna.",
+    "group": "multimedia",
+    "code": "<table><colgroup><col span=\"2\"></colgroup><tr><td>A</td><td>B</td></tr></table>",
+    "attributes": [
+      {
+        "name": "span",
+        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-col-span"
+      }
+    ],
+    "tips": ["Solo determinadas propiedades CSS se aplican a una columna."],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/tables.html#the-col-element",
+    "spec": "https://html.spec.whatwg.org/multipage/tables.html#the-col-element"
+  },
+  {
+    "id": "tag-colgroup",
+    "title": "<colgroup>",
+    "description": "Conjunto de columnas",
+    "detail": "Declara el grupo antes de las filas; usa span o elementos col hijos.",
+    "group": "multimedia",
+    "code": "<table><colgroup span=\"2\"></colgroup><tr><td>A</td><td>B</td></tr></table>",
+    "attributes": [
+      {
+        "name": "span",
+        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-colgroup-span"
+      }
+    ],
+    "tips": [
+      "Declara el grupo antes de las filas; usa span o elementos col hijos."
+    ],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/tables.html#the-colgroup-element",
+    "spec": "https://html.spec.whatwg.org/multipage/tables.html#the-colgroup-element"
+  },
+  {
+    "id": "tag-data",
+    "title": "<data>",
+    "description": "Valor asociado a un texto legible",
+    "detail": "Para fechas y horas, usa time con datetime.",
+    "group": "texto",
+    "code": "<data value=\"VC-012\">Cuaderno azul</data>",
+    "attributes": [
+      {
+        "name": "value",
+        "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#attr-data-value"
+      }
+    ],
+    "tips": ["Para fechas y horas, usa time con datetime."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-data-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-data-element"
+  },
+  {
+    "id": "tag-datalist",
+    "title": "<datalist>",
+    "description": "Sugerencias para un campo",
+    "detail": "Las sugerencias no restringen por sí solas los valores posibles.",
+    "group": "formularios",
+    "code": "<input list=\"islas\" aria-label=\"Isla\"><datalist id=\"islas\"><option value=\"La Palma\"></datalist>",
+    "attributes": [],
+    "tips": [
+      "Las sugerencias no restringen por sí solas los valores posibles."
+    ],
+    "related": ["tag-form", "tag-label", "tag-input"],
+    "guide": 6,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/form-elements.html#the-datalist-element",
+    "spec": "https://html.spec.whatwg.org/multipage/form-elements.html#the-datalist-element"
+  },
+  {
+    "id": "tag-dd",
+    "title": "<dd>",
+    "description": "Descripción de un término",
+    "detail": "Asocia la descripción al dt precedente dentro de dl.",
+    "group": "texto",
+    "code": "<dl><dt>HTTP</dt><dd>Protocolo de intercambio de mensajes.</dd></dl>",
+    "attributes": [],
+    "tips": ["Asocia la descripción al dt precedente dentro de dl."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-dd-element",
+    "spec": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-dd-element"
+  },
+  {
+    "id": "tag-del",
+    "title": "<del>",
+    "description": "Texto retirado",
+    "detail": "Puedes identificar la fecha de la revisión con datetime.",
+    "group": "texto",
+    "code": "<p>Entrega: <del>lunes</del> martes.</p>",
+    "attributes": [
+      {
+        "name": "cite",
+        "source": "https://html.spec.whatwg.org/multipage/edits.html#attr-mod-cite"
+      },
+      {
+        "name": "datetime",
+        "source": "https://html.spec.whatwg.org/multipage/edits.html#attr-mod-datetime"
+      }
+    ],
+    "tips": ["Puedes identificar la fecha de la revisión con datetime."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/edits.html#the-del-element",
+    "spec": "https://html.spec.whatwg.org/multipage/edits.html#the-del-element"
+  },
+  {
+    "id": "tag-dfn",
+    "title": "<dfn>",
+    "description": "Primera definición de un término",
+    "detail": "Incluye la definición en el texto que rodea al término.",
+    "group": "texto",
+    "code": "<p>Una <dfn>consulta</dfn> es una petición de datos.</p>",
+    "attributes": [],
+    "tips": ["Incluye la definición en el texto que rodea al término."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-dfn-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-dfn-element"
+  },
+  {
+    "id": "tag-dialog",
+    "title": "<dialog>",
+    "description": "Cuadro de diálogo",
+    "detail": "Usa showModal() para una ventana modal que gestione el foco y la interacción de fondo.",
+    "group": "interaccion",
+    "code": "<dialog open><p>Configuración de la sesión</p><form method=\"dialog\"><button>Cerrar</button></form></dialog>",
+    "attributes": [
+      {
+        "name": "open",
+        "source": "https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-dialog-open"
+      }
+    ],
+    "tips": [
+      "Usa showModal() para una ventana modal que gestione el foco y la interacción de fondo."
+    ],
+    "related": ["tag-details", "tag-summary"],
+    "guide": 8,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/interactive-elements.html#the-dialog-element",
+    "spec": "https://html.spec.whatwg.org/multipage/interactive-elements.html#the-dialog-element"
+  },
+  {
+    "id": "tag-div",
+    "title": "<div>",
+    "description": "Contenedor genérico de bloques",
+    "detail": "Úsalo cuando no exista un elemento con significado apropiado.",
+    "group": "semantica",
+    "code": "<div class=\"tarjeta\"><p>Borrador guardado.</p></div>",
+    "attributes": [],
+    "tips": ["Úsalo cuando no exista un elemento con significado apropiado."],
+    "related": ["tag-header", "tag-nav", "tag-main"],
+    "guide": 3,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-div-element",
+    "spec": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-div-element"
+  },
+  {
+    "id": "tag-dl",
+    "title": "<dl>",
+    "description": "Lista de términos y descripciones",
+    "detail": "Una lista puede representar pares de nombres y valores, no solo glosarios.",
+    "group": "texto",
+    "code": "<dl><dt>Versión</dt><dd>2.0</dd><dt>Licencia</dt><dd>MIT</dd></dl>",
+    "attributes": [],
+    "tips": [
+      "Una lista puede representar pares de nombres y valores, no solo glosarios."
+    ],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-dl-element",
+    "spec": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-dl-element"
+  },
+  {
+    "id": "tag-dt",
+    "title": "<dt>",
+    "description": "Nombre en una lista de descripciones",
+    "detail": "El término y su descripción son elementos distintos.",
+    "group": "texto",
+    "code": "<dl><dt>Duración</dt><dd>15 minutos</dd></dl>",
+    "attributes": [],
+    "tips": ["El término y su descripción son elementos distintos."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-dt-element",
+    "spec": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-dt-element"
+  },
+  {
+    "id": "tag-em",
+    "title": "<em>",
+    "description": "Énfasis dentro de la frase",
+    "detail": "La posición del énfasis puede cambiar el significado; la cursiva visual es tarea de CSS.",
+    "group": "texto",
+    "code": "<p>Guarda <em>antes</em> de salir.</p>",
+    "attributes": [],
+    "tips": [
+      "La posición del énfasis puede cambiar el significado; la cursiva visual es tarea de CSS."
+    ],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-em-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-em-element"
+  },
+  {
+    "id": "tag-embed",
+    "title": "<embed>",
+    "description": "Recurso externo incrustado",
+    "detail": "Ofrece también un enlace independiente si el recurso no se puede mostrar.",
+    "group": "multimedia",
+    "code": "<embed src=\"manual.pdf\" type=\"application/pdf\" width=\"400\" height=\"280\">",
+    "attributes": [
+      {
+        "name": "src",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-embed-src"
+      },
+      {
+        "name": "type",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-embed-type"
+      },
+      {
+        "name": "width",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-width"
+      },
+      {
+        "name": "height",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-height"
+      }
+    ],
+    "tips": [
+      "Ofrece también un enlace independiente si el recurso no se puede mostrar."
+    ],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": false,
+    "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-embed-element",
+    "spec": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-embed-element"
+  },
+  {
+    "id": "tag-fieldset",
+    "title": "<fieldset>",
+    "description": "Agrupa controles relacionados",
+    "detail": "Utiliza legend para dar nombre al grupo.",
+    "group": "formularios",
+    "code": "<fieldset><legend>Avisos</legend><label><input type=\"checkbox\"> Correo</label></fieldset>",
+    "attributes": [
+      {
+        "name": "disabled",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-fieldset-disabled"
+      },
+      {
+        "name": "form",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form"
+      },
+      {
+        "name": "name",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-name"
+      }
+    ],
+    "tips": ["Utiliza legend para dar nombre al grupo."],
+    "related": ["tag-form", "tag-label", "tag-input"],
+    "guide": 6,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/form-elements.html#the-fieldset-element",
+    "spec": "https://html.spec.whatwg.org/multipage/form-elements.html#the-fieldset-element"
+  },
+  {
+    "id": "tag-figcaption",
+    "title": "<figcaption>",
+    "description": "Pie de una figura",
+    "detail": "Ubícalo como primer o último hijo de figure.",
+    "group": "multimedia",
+    "code": "<figure><pre>npm run dev</pre><figcaption>Arranque local</figcaption></figure>",
+    "attributes": [],
+    "tips": ["Ubícalo como primer o último hijo de figure."],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-figcaption-element",
+    "spec": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-figcaption-element"
+  },
+  {
+    "id": "tag-figure",
+    "title": "<figure>",
+    "description": "Contenido autónomo con pie opcional",
+    "detail": [
+      "Contenido autónomo con pie opcional",
+      "<figure><pre>npm run build</pre><figcaption>Compilar el proyecto</figcaption></figure>"
+    ],
+    "group": "multimedia",
+    "code": "<figure><pre>npm run build</pre><figcaption>Compilar el proyecto</figcaption></figure>",
+    "attributes": [],
+    "tips": [
+      [
+        "Contenido autónomo con pie opcional",
+        "<figure><pre>npm run build</pre><figcaption>Compilar el proyecto</figcaption></figure>"
+      ]
+    ],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-figure-element",
+    "spec": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-figure-element"
+  },
+  {
+    "id": "tag-h2",
+    "title": "<h2>",
+    "description": "Encabezado de segundo nivel",
+    "detail": "Elige el nivel de acuerdo con la estructura del documento.",
+    "group": "texto",
+    "code": "<h1>Guía de HTML</h1><h2>Estructura del documento</h2>",
+    "attributes": [],
+    "tips": ["Elige el nivel de acuerdo con la estructura del documento."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements",
+    "spec": "https://html.spec.whatwg.org/multipage/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements"
+  },
+  {
+    "id": "tag-h3",
+    "title": "<h3>",
+    "description": "Encabezado de tercer nivel",
+    "detail": "Elige el nivel de acuerdo con la estructura del documento.",
+    "group": "texto",
+    "code": "<h2>Formularios</h2><h3>Campos requeridos</h3>",
+    "attributes": [],
+    "tips": ["Elige el nivel de acuerdo con la estructura del documento."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements",
+    "spec": "https://html.spec.whatwg.org/multipage/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements"
+  },
+  {
+    "id": "tag-h4",
+    "title": "<h4>",
+    "description": "Encabezado de cuarto nivel",
+    "detail": "Elige el nivel de acuerdo con la estructura del documento.",
+    "group": "texto",
+    "code": "<h3>Campos requeridos</h3><h4>Correo electrónico</h4>",
+    "attributes": [],
+    "tips": ["Elige el nivel de acuerdo con la estructura del documento."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements",
+    "spec": "https://html.spec.whatwg.org/multipage/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements"
+  },
+  {
+    "id": "tag-h5",
+    "title": "<h5>",
+    "description": "Encabezado de quinto nivel",
+    "detail": "Elige el nivel de acuerdo con la estructura del documento.",
+    "group": "texto",
+    "code": "<h4>Compatibilidad</h4><h5>Navegadores móviles</h5>",
+    "attributes": [],
+    "tips": ["Elige el nivel de acuerdo con la estructura del documento."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements",
+    "spec": "https://html.spec.whatwg.org/multipage/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements"
+  },
+  {
+    "id": "tag-h6",
+    "title": "<h6>",
+    "description": "Encabezado de sexto nivel",
+    "detail": "Elige el nivel de acuerdo con la estructura del documento.",
+    "group": "texto",
+    "code": "<h5>Validación nativa</h5><h6>Mensajes en español</h6>",
+    "attributes": [],
+    "tips": ["Elige el nivel de acuerdo con la estructura del documento."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements",
+    "spec": "https://html.spec.whatwg.org/multipage/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements"
+  },
+  {
+    "id": "tag-hgroup",
+    "title": "<hgroup>",
+    "description": "Encabezado con subtítulo relacionado",
+    "detail": "El encabezado es h1–h6; el párrafo aporta un subtítulo sin crear otro nivel.",
+    "group": "semantica",
+    "code": "<hgroup><h1>La biblioteca</h1><p>Guías de programación</p></hgroup>",
+    "attributes": [],
+    "tips": [
+      "El encabezado es h1–h6; el párrafo aporta un subtítulo sin crear otro nivel."
+    ],
+    "related": ["tag-header", "tag-nav", "tag-main"],
+    "guide": 3,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/sections.html#the-hgroup-element",
+    "spec": "https://html.spec.whatwg.org/multipage/sections.html#the-hgroup-element"
+  },
+  {
+    "id": "tag-hr",
+    "title": "<hr>",
+    "description": "Cambio temático",
+    "detail": "Para un separador puramente visual utiliza un borde CSS.",
+    "group": "semantica",
+    "code": "<p>Planeamos la estructura.</p><hr><p>Después empezamos a construir.</p>",
+    "attributes": [],
+    "tips": ["Para un separador puramente visual utiliza un borde CSS."],
+    "related": ["tag-header", "tag-nav", "tag-main"],
+    "guide": 3,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-hr-element",
+    "spec": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-hr-element"
+  },
+  {
+    "id": "tag-i",
+    "title": "<i>",
+    "description": "Voz o expresión diferenciada",
+    "detail": "Usa em para enfatizar y CSS para cursiva puramente decorativa.",
+    "group": "texto",
+    "code": "<p>El concepto de <i lang=\"en\">progressive enhancement</i> orienta el ejemplo.</p>",
+    "attributes": [],
+    "tips": ["Usa em para enfatizar y CSS para cursiva puramente decorativa."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-i-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-i-element"
+  },
+  {
+    "id": "tag-iframe",
+    "title": "<iframe>",
+    "description": "Documento navegable incrustado",
+    "detail": "Da un título descriptivo y limita las capacidades con sandbox cuando sea posible.",
+    "group": "multimedia",
+    "code": "<iframe title=\"Mensaje de bienvenida\" sandbox srcdoc=\"<p>Hola desde el marco.</p>\"></iframe>",
+    "attributes": [
+      {
+        "name": "src",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-src"
+      },
+      {
+        "name": "srcdoc",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-srcdoc"
+      },
+      {
+        "name": "name",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-name"
+      },
+      {
+        "name": "sandbox",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-sandbox"
+      },
+      {
+        "name": "allow",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-allow"
+      },
+      {
+        "name": "allowfullscreen",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-allowfullscreen"
+      },
+      {
+        "name": "width",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-width"
+      },
+      {
+        "name": "height",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-height"
+      },
+      {
+        "name": "referrerpolicy",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-referrerpolicy"
+      },
+      {
+        "name": "loading",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-loading"
+      }
+    ],
+    "tips": [
+      "Da un título descriptivo y limita las capacidades con sandbox cuando sea posible."
+    ],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": false,
+    "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element",
+    "spec": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element"
+  },
+  {
+    "id": "tag-ins",
+    "title": "<ins>",
+    "description": "Texto incorporado en una revisión",
+    "detail": "Puedes usar cite para enlazar el documento que explica el cambio.",
+    "group": "texto",
+    "code": "<p>Incluye <ins datetime=\"2026-11-21\">práctica adicional</ins>.</p>",
+    "attributes": [
+      {
+        "name": "cite",
+        "source": "https://html.spec.whatwg.org/multipage/edits.html#attr-mod-cite"
+      },
+      {
+        "name": "datetime",
+        "source": "https://html.spec.whatwg.org/multipage/edits.html#attr-mod-datetime"
+      }
+    ],
+    "tips": [
+      "Puedes usar cite para enlazar el documento que explica el cambio."
+    ],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/edits.html#the-ins-element",
+    "spec": "https://html.spec.whatwg.org/multipage/edits.html#the-ins-element"
+  },
+  {
+    "id": "tag-kbd",
+    "title": "<kbd>",
+    "description": "Entrada de teclado",
+    "detail": "Identifica una entrada de la persona usuaria, a diferencia de samp.",
+    "group": "texto",
+    "code": "<p>Pulsa <kbd>Ctrl</kbd> + <kbd>K</kbd>.</p>",
+    "attributes": [],
+    "tips": [
+      "Identifica una entrada de la persona usuaria, a diferencia de samp."
+    ],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-kbd-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-kbd-element"
+  },
+  {
+    "id": "tag-legend",
+    "title": "<legend>",
+    "description": "Nombre de un grupo de controles",
+    "detail": "Debe encabezar su fieldset.",
+    "group": "formularios",
+    "code": "<fieldset><legend>Formato</legend><label><input type=\"radio\" name=\"tipo\"> PDF</label></fieldset>",
+    "attributes": [],
+    "tips": ["Debe encabezar su fieldset."],
+    "related": ["tag-form", "tag-label", "tag-input"],
+    "guide": 6,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/form-elements.html#the-legend-element",
+    "spec": "https://html.spec.whatwg.org/multipage/form-elements.html#the-legend-element"
+  },
+  {
+    "id": "tag-li",
+    "title": "<li>",
+    "description": "Elemento de una lista",
+    "detail": "Usa un contenedor ul, ol o menu según el propósito.",
+    "group": "texto",
+    "code": "<ul><li>Revisar CSS</li><li>Probar el formulario</li></ul>",
+    "attributes": [
+      {
+        "name": "value",
+        "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-li-value"
+      }
+    ],
+    "tips": ["Usa un contenedor ul, ol o menu según el propósito."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-li-element",
+    "spec": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-li-element"
+  },
+  {
+    "id": "tag-map",
+    "title": "<map>",
+    "description": "Mapa de regiones de una imagen",
+    "detail": "El nombre debe corresponder con el fragmento indicado en usemap.",
+    "group": "multimedia",
+    "code": "<img src=\"plano.png\" alt=\"Plano\" usemap=\"#plano\"><map name=\"plano\"><area shape=\"default\" href=\"#entrada\" alt=\"Entrada\"></map>",
+    "attributes": [
+      {
+        "name": "name",
+        "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-map-name"
+      }
+    ],
+    "tips": [
+      "El nombre debe corresponder con el fragmento indicado en usemap."
+    ],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": false,
+    "source": "https://html.spec.whatwg.org/multipage/image-maps.html#the-map-element",
+    "spec": "https://html.spec.whatwg.org/multipage/image-maps.html#the-map-element"
+  },
+  {
+    "id": "tag-mark",
+    "title": "<mark>",
+    "description": "Fragmento resaltado por su relevancia",
+    "detail": "Es útil al señalar la coincidencia de una búsqueda.",
+    "group": "texto",
+    "code": "<p>Resultado: <mark>Grid</mark> adaptable.</p>",
+    "attributes": [],
+    "tips": ["Es útil al señalar la coincidencia de una búsqueda."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-mark-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-mark-element"
+  },
+  {
+    "id": "tag-menu",
+    "title": "<menu>",
+    "description": "Lista de comandos",
+    "detail": "Conserva elementos interactivos nativos para que sean operables por teclado.",
+    "group": "semantica",
+    "code": "<menu><li><button type=\"button\">Duplicar</button></li></menu>",
+    "attributes": [],
+    "tips": [
+      "Conserva elementos interactivos nativos para que sean operables por teclado."
+    ],
+    "related": ["tag-header", "tag-nav", "tag-main"],
+    "guide": 3,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-menu-element",
+    "spec": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-menu-element"
+  },
+  {
+    "id": "tag-meter",
+    "title": "<meter>",
+    "description": "Medición dentro de un rango conocido",
+    "detail": "Para el avance de un proceso usa progress.",
+    "group": "formularios",
+    "code": "<meter min=\"0\" max=\"100\" value=\"64\">64 %</meter>",
+    "attributes": [
+      {
+        "name": "value",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-value"
+      },
+      {
+        "name": "min",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-min"
+      },
+      {
+        "name": "max",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-max"
+      },
+      {
+        "name": "low",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-low"
+      },
+      {
+        "name": "high",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-high"
+      },
+      {
+        "name": "optimum",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-optimum"
+      }
+    ],
+    "tips": ["Para el avance de un proceso usa progress."],
+    "related": ["tag-form", "tag-label", "tag-input"],
+    "guide": 6,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/form-elements.html#the-meter-element",
+    "spec": "https://html.spec.whatwg.org/multipage/form-elements.html#the-meter-element"
+  },
+  {
+    "id": "tag-noscript",
+    "title": "<noscript>",
+    "description": "Alternativa cuando no hay scripting",
+    "detail": "El contenido permitido cambia si está dentro de head.",
+    "group": "documento",
+    "code": "<noscript><p>Consulta las guías desde el índice estático.</p></noscript>",
+    "attributes": [],
+    "tips": ["El contenido permitido cambia si está dentro de head."],
+    "related": ["tag-html", "tag-head", "tag-meta"],
+    "guide": 1,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/scripting.html#the-noscript-element",
+    "spec": "https://html.spec.whatwg.org/multipage/scripting.html#the-noscript-element"
+  },
+  {
+    "id": "tag-object",
+    "title": "<object>",
+    "description": "Incrusta un recurso externo con alternativa",
+    "detail": "Mantén un enlace alternativo al recurso.",
+    "group": "multimedia",
+    "code": "<object data=\"manual.pdf\" type=\"application/pdf\"><a href=\"manual.pdf\">Descargar manual</a></object>",
+    "attributes": [
+      {
+        "name": "data",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-object-data"
+      },
+      {
+        "name": "type",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-object-type"
+      },
+      {
+        "name": "name",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-object-name"
+      },
+      {
+        "name": "form",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form"
+      },
+      {
+        "name": "width",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-width"
+      },
+      {
+        "name": "height",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-height"
+      }
+    ],
+    "tips": ["Mantén un enlace alternativo al recurso."],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": false,
+    "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-object-element",
+    "spec": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-object-element"
+  },
+  {
+    "id": "tag-ol",
+    "title": "<ol>",
+    "description": "Lista en la que importa el orden",
+    "detail": "Usa start para continuar una numeración o reversed para invertirla.",
+    "group": "texto",
+    "code": "<ol><li>Instala las dependencias.</li><li>Abre el proyecto.</li></ol>",
+    "attributes": [
+      {
+        "name": "reversed",
+        "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-ol-reversed"
+      },
+      {
+        "name": "start",
+        "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-ol-start"
+      },
+      {
+        "name": "type",
+        "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-ol-type"
+      }
+    ],
+    "tips": [
+      "Usa start para continuar una numeración o reversed para invertirla."
+    ],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-ol-element",
+    "spec": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-ol-element"
+  },
+  {
+    "id": "tag-optgroup",
+    "title": "<optgroup>",
+    "description": "Agrupa opciones de selección",
+    "detail": "label proporciona el nombre del grupo.",
+    "group": "formularios",
+    "code": "<select aria-label=\"Isla\"><optgroup label=\"Canarias\"><option>La Palma</option></optgroup></select>",
+    "attributes": [
+      {
+        "name": "disabled",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-optgroup-disabled"
+      },
+      {
+        "name": "label",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-optgroup-label"
+      }
+    ],
+    "tips": ["label proporciona el nombre del grupo."],
+    "related": ["tag-form", "tag-label", "tag-input"],
+    "guide": 6,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/form-elements.html#the-optgroup-element",
+    "spec": "https://html.spec.whatwg.org/multipage/form-elements.html#the-optgroup-element"
+  },
+  {
+    "id": "tag-option",
+    "title": "<option>",
+    "description": "Opción seleccionable",
+    "detail": "value es el valor enviado; la etiqueta visible puede ser distinta.",
+    "group": "formularios",
+    "code": "<select aria-label=\"Nivel\"><option value=\"base\">Fundamentos</option></select>",
+    "attributes": [
+      {
+        "name": "disabled",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-option-disabled"
+      },
+      {
+        "name": "label",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-option-label"
+      },
+      {
+        "name": "selected",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-option-selected"
+      },
+      {
+        "name": "value",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-option-value"
+      }
+    ],
+    "tips": [
+      "value es el valor enviado; la etiqueta visible puede ser distinta."
+    ],
+    "related": ["tag-form", "tag-label", "tag-input"],
+    "guide": 6,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/form-elements.html#the-option-element",
+    "spec": "https://html.spec.whatwg.org/multipage/form-elements.html#the-option-element"
+  },
+  {
+    "id": "tag-output",
+    "title": "<output>",
+    "description": "Resultado de un cálculo",
+    "detail": "Se puede asociar a controles mediante for y el identificador de cada control.",
+    "group": "formularios",
+    "code": "<form oninput=\"total.value = Number(a.value) + Number(b.value)\"><input name=\"a\" type=\"number\" aria-label=\"Primer número\"><input name=\"b\" type=\"number\" aria-label=\"Segundo número\"><output name=\"total\">0</output></form>",
+    "attributes": [
+      {
+        "name": "for",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-output-for"
+      },
+      {
+        "name": "form",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form"
+      },
+      {
+        "name": "name",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-name"
+      }
+    ],
+    "tips": [
+      "Se puede asociar a controles mediante for y el identificador de cada control."
+    ],
+    "related": ["tag-form", "tag-label", "tag-input"],
+    "guide": 6,
+    "preview": false,
+    "source": "https://html.spec.whatwg.org/multipage/form-elements.html#the-output-element",
+    "spec": "https://html.spec.whatwg.org/multipage/form-elements.html#the-output-element"
+  },
+  {
+    "id": "tag-picture",
+    "title": "<picture>",
+    "description": "Fuentes alternativas de una imagen",
+    "detail": "Incluye img al final para el texto alternativo y la alternativa por defecto.",
+    "group": "multimedia",
+    "code": "<picture><source media=\"(min-width: 800px)\" srcset=\"panorama.webp\"><img src=\"retrato.webp\" alt=\"Panorama de la isla\"></picture>",
+    "attributes": [],
+    "tips": [
+      "Incluye img al final para el texto alternativo y la alternativa por defecto."
+    ],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": false,
+    "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#the-picture-element",
+    "spec": "https://html.spec.whatwg.org/multipage/embedded-content.html#the-picture-element"
+  },
+  {
+    "id": "tag-progress",
+    "title": "<progress>",
+    "description": "Avance de un proceso",
+    "detail": "Omite value si todavía no conoces el progreso.",
+    "group": "formularios",
+    "code": "<label>Descarga <progress max=\"100\" value=\"60\">60 %</progress></label>",
+    "attributes": [
+      {
+        "name": "value",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-progress-value"
+      },
+      {
+        "name": "max",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-progress-max"
+      }
+    ],
+    "tips": ["Omite value si todavía no conoces el progreso."],
+    "related": ["tag-form", "tag-label", "tag-input"],
+    "guide": 6,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/form-elements.html#the-progress-element",
+    "spec": "https://html.spec.whatwg.org/multipage/form-elements.html#the-progress-element"
+  },
+  {
+    "id": "tag-q",
+    "title": "<q>",
+    "description": "Cita breve dentro de una frase",
+    "detail": "Las comillas las aporta la presentación del navegador.",
+    "group": "texto",
+    "code": "<p>La guía indica <q>guarda una copia</q>.</p>",
+    "attributes": [
+      {
+        "name": "cite",
+        "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#attr-q-cite"
+      }
+    ],
+    "tips": ["Las comillas las aporta la presentación del navegador."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-q-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-q-element"
+  },
+  {
+    "id": "tag-rp",
+    "title": "<rp>",
+    "description": "Paréntesis alternativo para ruby",
+    "detail": "Sirve como alternativa cuando la anotación ruby se presenta en línea.",
+    "group": "texto",
+    "code": "<ruby>日<rp>(</rp><rt>ひ</rt><rp>)</rp></ruby>",
+    "attributes": [],
+    "tips": [
+      "Sirve como alternativa cuando la anotación ruby se presenta en línea."
+    ],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-rp-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-rp-element"
+  },
+  {
+    "id": "tag-rt",
+    "title": "<rt>",
+    "description": "Texto de anotación ruby",
+    "detail": "Representa la lectura o anotación del texto base en ruby.",
+    "group": "texto",
+    "code": "<ruby>月<rt>つき</rt></ruby>",
+    "attributes": [],
+    "tips": ["Representa la lectura o anotación del texto base en ruby."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-rt-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-rt-element"
+  },
+  {
+    "id": "tag-ruby",
+    "title": "<ruby>",
+    "description": "Texto con anotación encima o junto al original",
+    "detail": "Conserva el orden entre el texto base y su anotación.",
+    "group": "texto",
+    "code": "<ruby>狐<rp>(</rp><rt>きつね</rt><rp>)</rp></ruby>",
+    "attributes": [],
+    "tips": ["Conserva el orden entre el texto base y su anotación."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-ruby-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-ruby-element"
+  },
+  {
+    "id": "tag-s",
+    "title": "<s>",
+    "description": "Contenido que ya no es exacto o relevante",
+    "detail": "Usa del si quieres marcar una eliminación editorial.",
+    "group": "texto",
+    "code": "<p><s>Plazas disponibles</s> Inscripción cerrada.</p>",
+    "attributes": [],
+    "tips": ["Usa del si quieres marcar una eliminación editorial."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-s-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-s-element"
+  },
+  {
+    "id": "tag-samp",
+    "title": "<samp>",
+    "description": "Salida de un programa",
+    "detail": "Usa code para el código fuente y kbd para la entrada.",
+    "group": "texto",
+    "code": "<p>La terminal mostró <samp>Compilación completada</samp>.</p>",
+    "attributes": [],
+    "tips": ["Usa code para el código fuente y kbd para la entrada."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-samp-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-samp-element"
+  },
+  {
+    "id": "tag-script",
+    "title": "<script>",
+    "description": "Carga o inserción de JavaScript",
+    "detail": "Los módulos se difieren por defecto y resuelven importaciones relativas a su URL.",
+    "group": "documento",
+    "code": "<script type=\"module\" src=\"./inicio.js\"></script>",
+    "attributes": [
+      {
+        "name": "src",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-src"
+      },
+      {
+        "name": "type",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-type"
+      },
+      {
+        "name": "nomodule",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-nomodule"
+      },
+      {
+        "name": "async",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-async"
+      },
+      {
+        "name": "defer",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-defer"
+      },
+      {
+        "name": "crossorigin",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-crossorigin"
+      },
+      {
+        "name": "integrity",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-integrity"
+      },
+      {
+        "name": "referrerpolicy",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-referrerpolicy"
+      },
+      {
+        "name": "blocking",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-blocking"
+      },
+      {
+        "name": "fetchpriority",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-fetchpriority"
+      }
+    ],
+    "tips": [
+      "Los módulos se difieren por defecto y resuelven importaciones relativas a su URL."
+    ],
+    "related": ["tag-html", "tag-head", "tag-meta"],
+    "guide": 1,
+    "preview": false,
+    "source": "https://html.spec.whatwg.org/multipage/scripting.html#the-script-element",
+    "spec": "https://html.spec.whatwg.org/multipage/scripting.html#the-script-element"
+  },
+  {
+    "id": "tag-search",
+    "title": "<search>",
+    "description": "Región de búsqueda o filtrado",
+    "detail": "El contenedor define una región; el formulario proporciona interacción.",
+    "group": "semantica",
+    "code": "<search><form><label>Buscar <input type=\"search\" name=\"q\"></label><button>Ir</button></form></search>",
+    "attributes": [],
+    "tips": [
+      "El contenedor define una región; el formulario proporciona interacción."
+    ],
+    "related": ["tag-header", "tag-nav", "tag-main"],
+    "guide": 3,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-search-element",
+    "spec": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-search-element"
+  },
+  {
+    "id": "tag-selectedcontent",
+    "title": "<selectedcontent>",
+    "description": "Refleja la opción seleccionada en un select personalizable",
+    "detail": "Comprueba compatibilidad del select personalizable y conserva una alternativa nativa.",
+    "group": "formularios",
+    "code": "<select aria-label=\"Nivel\"><button><selectedcontent></selectedcontent></button><option>Básico</option><option>Avanzado</option></select>",
+    "attributes": [],
+    "tips": [
+      "Comprueba compatibilidad del select personalizable y conserva una alternativa nativa."
+    ],
+    "related": ["tag-form", "tag-label", "tag-input"],
+    "guide": 6,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/form-elements.html#the-selectedcontent-element",
+    "spec": "https://html.spec.whatwg.org/multipage/form-elements.html#the-selectedcontent-element"
+  },
+  {
+    "id": "tag-slot",
+    "title": "<slot>",
+    "description": "Punto de inserción de un árbol Shadow DOM",
+    "detail": "El contenido asignado usa slot con el mismo nombre.",
+    "group": "documento",
+    "code": "<template shadowrootmode=\"open\"><slot name=\"titulo\">Sin título</slot></template>",
+    "attributes": [
+      {
+        "name": "name",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-slot-name"
+      }
+    ],
+    "tips": ["El contenido asignado usa slot con el mismo nombre."],
+    "related": ["tag-html", "tag-head", "tag-meta"],
+    "guide": 1,
+    "preview": false,
+    "source": "https://html.spec.whatwg.org/multipage/scripting.html#the-slot-element",
+    "spec": "https://html.spec.whatwg.org/multipage/scripting.html#the-slot-element"
+  },
+  {
+    "id": "tag-small",
+    "title": "<small>",
+    "description": "Comentario secundario o letra pequeña",
+    "detail": "No se elige solo para hacer un título más pequeño.",
+    "group": "texto",
+    "code": "<p>Prueba gratuita. <small>Consulta las condiciones.</small></p>",
+    "attributes": [],
+    "tips": ["No se elige solo para hacer un título más pequeño."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-small-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-small-element"
+  },
+  {
+    "id": "tag-source",
+    "title": "<source>",
+    "description": "Alternativa de imagen o medio",
+    "detail": "Respeta el orden de preferencia y deja img como alternativa en picture.",
+    "group": "multimedia",
+    "code": "<picture><source srcset=\"portada.avif\" type=\"image/avif\"><img src=\"portada.jpg\" alt=\"Portada\"></picture>",
+    "attributes": [
+      {
+        "name": "type",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-source-type"
+      },
+      {
+        "name": "media",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-source-media"
+      },
+      {
+        "name": "src",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-source-src"
+      },
+      {
+        "name": "srcset",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-source-srcset"
+      },
+      {
+        "name": "sizes",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-source-sizes"
+      },
+      {
+        "name": "width",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-width"
+      },
+      {
+        "name": "height",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-height"
+      }
+    ],
+    "tips": [
+      "Respeta el orden de preferencia y deja img como alternativa en picture."
+    ],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": false,
+    "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#the-source-element",
+    "spec": "https://html.spec.whatwg.org/multipage/embedded-content.html#the-source-element"
+  },
+  {
+    "id": "tag-span",
+    "title": "<span>",
+    "description": "Agrupación genérica dentro del texto",
+    "detail": "No modifica por sí mismo el significado.",
+    "group": "texto",
+    "code": "<p>Estado: <span class=\"estado\">Preparado</span></p>",
+    "attributes": [],
+    "tips": ["No modifica por sí mismo el significado."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-span-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-span-element"
+  },
+  {
+    "id": "tag-style",
+    "title": "<style>",
+    "description": "Estilos incrustados",
+    "detail": "En sitios grandes suele convenir una hoja reutilizable.",
+    "group": "documento",
+    "code": "<style>.nota { color: navy; }</style><p class=\"nota\">En revisión</p>",
+    "attributes": [
+      {
+        "name": "media",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-style-media"
+      },
+      {
+        "name": "blocking",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-style-blocking"
+      }
+    ],
+    "tips": ["En sitios grandes suele convenir una hoja reutilizable."],
+    "related": ["tag-html", "tag-head", "tag-meta"],
+    "guide": 1,
+    "preview": false,
+    "source": "https://html.spec.whatwg.org/multipage/semantics.html#the-style-element",
+    "spec": "https://html.spec.whatwg.org/multipage/semantics.html#the-style-element"
+  },
+  {
+    "id": "tag-sub",
+    "title": "<sub>",
+    "description": "Subíndice con significado",
+    "detail": "Úsalo cuando la posición forme parte de la notación.",
+    "group": "texto",
+    "code": "<p>H<sub>2</sub>O</p>",
+    "attributes": [],
+    "tips": ["Úsalo cuando la posición forme parte de la notación."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-sub-and-sup-elements",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-sub-and-sup-elements"
+  },
+  {
+    "id": "tag-summary",
+    "title": "<summary>",
+    "description": "Título interactivo de un desplegable",
+    "detail": "Colócalo como primer hijo de details y describe qué se despliega.",
+    "group": "interaccion",
+    "code": "<details><summary>Ver requisitos</summary><p>Solo necesitas un navegador.</p></details>",
+    "attributes": [],
+    "tips": [
+      "Colócalo como primer hijo de details y describe qué se despliega."
+    ],
+    "related": ["tag-details", "tag-dialog"],
+    "guide": 8,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/interactive-elements.html#the-summary-element",
+    "spec": "https://html.spec.whatwg.org/multipage/interactive-elements.html#the-summary-element"
+  },
+  {
+    "id": "tag-sup",
+    "title": "<sup>",
+    "description": "Superíndice con significado",
+    "detail": "No lo utilices para ajustar visualmente la posición.",
+    "group": "texto",
+    "code": "<p>Área: 10 m<sup>2</sup></p>",
+    "attributes": [],
+    "tips": ["No lo utilices para ajustar visualmente la posición."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-sub-and-sup-elements",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-sub-and-sup-elements"
+  },
+  {
+    "id": "tag-tbody",
+    "title": "<tbody>",
+    "description": "Grupo de filas de datos",
+    "detail": "Es útil para separar las filas de datos del encabezado y pie.",
+    "group": "multimedia",
+    "code": "<table><tbody><tr><td>HTML</td><td>12</td></tr></tbody></table>",
+    "attributes": [],
+    "tips": ["Es útil para separar las filas de datos del encabezado y pie."],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/tables.html#the-tbody-element",
+    "spec": "https://html.spec.whatwg.org/multipage/tables.html#the-tbody-element"
+  },
+  {
+    "id": "tag-td",
+    "title": "<td>",
+    "description": "Celda de datos",
+    "detail": "Usa th si la celda identifica una fila o columna.",
+    "group": "multimedia",
+    "code": "<table><tr><td>Avanzado</td><td>30 min</td></tr></table>",
+    "attributes": [
+      {
+        "name": "colspan",
+        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-tdth-colspan"
+      },
+      {
+        "name": "rowspan",
+        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-tdth-rowspan"
+      },
+      {
+        "name": "headers",
+        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-tdth-headers"
+      }
+    ],
+    "tips": ["Usa th si la celda identifica una fila o columna."],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/tables.html#the-td-element",
+    "spec": "https://html.spec.whatwg.org/multipage/tables.html#the-td-element"
+  },
+  {
+    "id": "tag-template",
+    "title": "<template>",
+    "description": "Fragmento inerte reutilizable",
+    "detail": "Clona template.content para insertar una copia en el documento.",
+    "group": "documento",
+    "code": "<template id=\"fila\"><li class=\"resultado\">Resultado</li></template>",
+    "attributes": [
+      {
+        "name": "for",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-for"
+      },
+      {
+        "name": "shadowrootmode",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootmode"
+      },
+      {
+        "name": "shadowrootdelegatesfocus",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootdelegatesfocus"
+      },
+      {
+        "name": "shadowrootserializable",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootserializable"
+      },
+      {
+        "name": "shadowrootslotassignment",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootslotassignment"
+      },
+      {
+        "name": "shadowrootclonable",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootclonable"
+      },
+      {
+        "name": "shadowrootcustomelementregistry",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootcustomelementregistry"
+      }
+    ],
+    "tips": ["Clona template.content para insertar una copia en el documento."],
+    "related": ["tag-html", "tag-head", "tag-meta"],
+    "guide": 1,
+    "preview": false,
+    "source": "https://html.spec.whatwg.org/multipage/scripting.html#the-template-element",
+    "spec": "https://html.spec.whatwg.org/multipage/scripting.html#the-template-element"
+  },
+  {
+    "id": "tag-tfoot",
+    "title": "<tfoot>",
+    "description": "Grupo de filas de resumen",
+    "detail": "Empléalo para totales y resúmenes de tabla.",
+    "group": "multimedia",
+    "code": "<table><tbody><tr><td>8</td></tr></tbody><tfoot><tr><th>Total</th><td>8</td></tr></tfoot></table>",
+    "attributes": [],
+    "tips": ["Empléalo para totales y resúmenes de tabla."],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/tables.html#the-tfoot-element",
+    "spec": "https://html.spec.whatwg.org/multipage/tables.html#the-tfoot-element"
+  },
+  {
+    "id": "tag-th",
+    "title": "<th>",
+    "description": "Celda de encabezado",
+    "detail": "scope explicita si el encabezado se aplica a filas o columnas.",
+    "group": "multimedia",
+    "code": "<table><tr><th scope=\"col\">Tema</th><th scope=\"col\">Horas</th></tr><tr><td>SQL</td><td>2</td></tr></table>",
+    "attributes": [
+      {
+        "name": "colspan",
+        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-tdth-colspan"
+      },
+      {
+        "name": "rowspan",
+        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-tdth-rowspan"
+      },
+      {
+        "name": "headers",
+        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-tdth-headers"
+      },
+      {
+        "name": "scope",
+        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope"
+      },
+      {
+        "name": "abbr",
+        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-th-abbr"
+      }
+    ],
+    "tips": ["scope explicita si el encabezado se aplica a filas o columnas."],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/tables.html#the-th-element",
+    "spec": "https://html.spec.whatwg.org/multipage/tables.html#the-th-element"
+  },
+  {
+    "id": "tag-thead",
+    "title": "<thead>",
+    "description": "Grupo de filas de encabezado",
+    "detail": "Agrupa encabezados sin sustituir las celdas th.",
+    "group": "multimedia",
+    "code": "<table><thead><tr><th scope=\"col\">Tema</th></tr></thead><tbody><tr><td>CSS</td></tr></tbody></table>",
+    "attributes": [],
+    "tips": ["Agrupa encabezados sin sustituir las celdas th."],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/tables.html#the-thead-element",
+    "spec": "https://html.spec.whatwg.org/multipage/tables.html#the-thead-element"
+  },
+  {
+    "id": "tag-time",
+    "title": "<time>",
+    "description": "Fecha u hora legible por máquinas",
+    "detail": [
+      "Fecha u hora legible por máquinas",
+      "<time datetime=\"2026-11-21\">21 de noviembre</time>"
+    ],
+    "group": "texto",
+    "code": "<time datetime=\"2026-11-21\">21 de noviembre</time>",
+    "attributes": [
+      {
+        "name": "datetime",
+        "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#attr-time-datetime"
+      }
+    ],
+    "tips": [
+      [
+        "Fecha u hora legible por máquinas",
+        "<time datetime=\"2026-11-21\">21 de noviembre</time>"
+      ]
+    ],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-time-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-time-element"
+  },
+  {
+    "id": "tag-title",
+    "title": "<title>",
+    "description": "Título del documento",
+    "detail": "Un título específico orienta en pestañas, historial y lectores de pantalla.",
+    "group": "documento",
+    "code": "<head><title>Formularios HTML · VCode</title></head>",
+    "attributes": [],
+    "tips": [
+      "Un título específico orienta en pestañas, historial y lectores de pantalla."
+    ],
+    "related": ["tag-html", "tag-head", "tag-meta"],
+    "guide": 1,
+    "preview": false,
+    "source": "https://html.spec.whatwg.org/multipage/semantics.html#the-title-element",
+    "spec": "https://html.spec.whatwg.org/multipage/semantics.html#the-title-element"
+  },
+  {
+    "id": "tag-tr",
+    "title": "<tr>",
+    "description": "Fila de tabla",
+    "detail": "Incluye celdas td o th dentro de cada fila.",
+    "group": "multimedia",
+    "code": "<table><tr><th scope=\"row\">HTML</th><td>12</td></tr></table>",
+    "attributes": [],
+    "tips": ["Incluye celdas td o th dentro de cada fila."],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/tables.html#the-tr-element",
+    "spec": "https://html.spec.whatwg.org/multipage/tables.html#the-tr-element"
+  },
+  {
+    "id": "tag-track",
+    "title": "<track>",
+    "description": "Pista de texto sincronizada",
+    "detail": "Para subtítulos proporciona una pista WebVTT válida.",
+    "group": "multimedia",
+    "code": "<video controls src=\"sesion.mp4\"><track kind=\"captions\" src=\"es.vtt\" srclang=\"es\" label=\"Español\"></video>",
+    "attributes": [
+      {
+        "name": "default",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-track-default"
+      },
+      {
+        "name": "kind",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-track-kind"
+      },
+      {
+        "name": "label",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-track-label"
+      },
+      {
+        "name": "src",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-track-src"
+      },
+      {
+        "name": "srclang",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-track-srclang"
+      }
+    ],
+    "tips": ["Para subtítulos proporciona una pista WebVTT válida."],
+    "related": ["tag-img", "tag-video", "tag-table"],
+    "guide": 4,
+    "preview": false,
+    "source": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+    "spec": "https://html.spec.whatwg.org/multipage/media.html#the-track-element"
+  },
+  {
+    "id": "tag-u",
+    "title": "<u>",
+    "description": "Anotación no articulada",
+    "detail": "No lo uses solo para subrayar texto; puede confundirse con un enlace.",
+    "group": "texto",
+    "code": "<p>Corrección: <u>programasión</u> → programación.</p>",
+    "attributes": [],
+    "tips": [
+      "No lo uses solo para subrayar texto; puede confundirse con un enlace."
+    ],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-u-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-u-element"
+  },
+  {
+    "id": "tag-var",
+    "title": "<var>",
+    "description": "Variable de una expresión",
+    "detail": "Representa nombres de variables, incluso fuera de ejemplos de código.",
+    "group": "texto",
+    "code": "<p>El radio <var>r</var> se mide en metros.</p>",
+    "attributes": [],
+    "tips": [
+      "Representa nombres de variables, incluso fuera de ejemplos de código."
+    ],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-var-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-var-element"
+  },
+  {
+    "id": "tag-wbr",
+    "title": "<wbr>",
+    "description": "Oportunidad de salto de línea",
+    "detail": "Solo permite el salto si hace falta; br lo fuerza.",
+    "group": "texto",
+    "code": "<p>vcode<wbr>Documentation<wbr>Index</p>",
+    "attributes": [],
+    "tips": ["Solo permite el salto si hace falta; br lo fuerza."],
+    "related": ["tag-h1", "tag-p", "tag-a"],
+    "guide": 2,
+    "preview": true,
+    "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-wbr-element",
+    "spec": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-wbr-element"
   }
 ]

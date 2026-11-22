@@ -1,0 +1,9 @@
+El catálogo de atributos y los vínculos entre elementos y atributos
+se han adaptado del HTML Living Standard de WHATWG
+(Apple, Google, Mozilla y Microsoft).
+
+https://html.spec.whatwg.org/multipage/indices.html
+https://creativecommons.org/licenses/by/4.0/
+
+Se han seleccionado y estructurado los elementos, ámbitos y valores del
+índice. Las fichas enlazan a las secciones originales correspondientes.

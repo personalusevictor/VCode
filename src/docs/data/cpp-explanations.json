@@ -1,0 +1,158 @@
+{
+  "std::vector::at()": {
+    "intro": [
+      "Accede a un elemento por índice y comprueba que esté dentro del vector."
+    ],
+    "parameters": [
+      {
+        "label": "n",
+        "detail": "Posición basada en cero. Debe ser menor que size()."
+      }
+    ],
+    "returns": [
+      "Una referencia al elemento. La sobrecarga const devuelve una referencia const."
+    ],
+    "exceptions": [
+      {
+        "label": "std::out_of_range",
+        "detail": "La posición solicitada queda fuera de la secuencia."
+      }
+    ],
+    "caveats": [
+      "El entorno C++ del laboratorio compila sin soporte de excepciones. Para probar el caso fuera de rango usa un compilador nativo."
+    ]
+  },
+  "std::vector::operator[]()": {
+    "intro": [
+      "Accede a una posición del vector y devuelve una referencia al elemento."
+    ],
+    "caveats": [
+      "En C++20 debes garantizar que el índice esté dentro de [0, size()). Una posición inválida provoca comportamiento indefinido."
+    ]
+  },
+  "std::vector::erase()": {
+    "intro": [
+      "Elimina un elemento o un intervalo de elementos consecutivos del vector."
+    ],
+    "returns": [
+      "Un iterador a la posición que sigue al tramo eliminado, o end() si se retiró hasta el final."
+    ],
+    "caveats": [
+      "Invalida los iteradores y referencias a partir de la posición eliminada. En un recorrido, usa el iterador retornado para continuar."
+    ]
+  },
+  "std::vector::clear()": {
+    "intro": ["Destruye los elementos y deja el vector vacío."],
+    "caveats": [
+      "No reduce por sí sola la capacidad. Los iteradores y referencias a elementos dejan de ser válidos."
+    ]
+  },
+  "std::unordered_map::contains()": {
+    "intro": [
+      "Comprueba si hay una entrada cuya clave es equivalente a la solicitada."
+    ],
+    "returns": [
+      "true si existe una coincidencia. La consulta no inserta ninguna entrada."
+    ],
+    "caveats": [
+      "La sobrecarga que acepta otro tipo de clave requiere hash y comparación transparentes adecuados."
+    ]
+  },
+  "std::unordered_map::operator[]()": {
+    "intro": [
+      "Devuelve el valor asociado a una clave o crea una entrada con valor inicializado si faltaba."
+    ],
+    "caveats": [
+      "Para saber si la clave existe sin insertar usa contains() o find(). Si la inserción provoca un rehash, los iteradores previos dejan de ser válidos."
+    ]
+  },
+  "std::map::lower_bound()": {
+    "intro": [
+      "Obtiene la primera entrada cuya clave no va antes de la clave buscada según el comparador del mapa."
+    ],
+    "returns": [
+      "Un iterador a la primera entrada del intervalo o end() si no existe."
+    ],
+    "caveats": [
+      "Usa el comparador del mapa para interpretar el resultado. Un orden descendente cambia qué significa ir antes."
+    ]
+  },
+  "std::deque::push_front()": {
+    "intro": ["Inserta un elemento delante de los que ya existen en la cola."],
+    "caveats": [
+      "La inserción en un extremo mantiene las referencias a los elementos existentes. Los iteradores se invalidan."
+    ]
+  },
+  "std::optional::value_or()": {
+    "intro": [
+      "Devuelve el valor contenido o un valor alternativo convertido al tipo de optional."
+    ],
+    "returns": [
+      "Un valor de tipo T, que se copia o mueve según la sobrecarga."
+    ],
+    "caveats": [
+      "La expresión usada como argumento se evalúa al llamar a value_or incluso si el optional tiene valor."
+    ]
+  },
+  "std::optional::has_value()": {
+    "intro": ["Indica si el optional tiene un valor construido."],
+    "returns": [
+      "true cuando contiene un valor. Un optional<bool> con false también tiene valor."
+    ]
+  },
+  "std::variant::index()": {
+    "intro": [
+      "Indica qué alternativa está activa por su posición en la lista de tipos."
+    ],
+    "returns": [
+      "El índice basado en cero o std::variant_npos si la variante quedó sin valor por una excepción."
+    ]
+  },
+  "std::unique_ptr::release()": {
+    "intro": ["Entrega el puntero y deja el propietario exclusivo vacío."],
+    "returns": [
+      "El puntero que estaba gestionado antes de liberar la propiedad."
+    ],
+    "caveats": [
+      "No destruye el objeto. Quien recibe el puntero debe encargarse de su vida útil. Para transferir a otro unique_ptr, usa std::move."
+    ]
+  },
+  "std::weak_ptr::lock()": {
+    "intro": [
+      "Intenta obtener un shared_ptr que mantiene vivo el objeto observado."
+    ],
+    "returns": [
+      "Un shared_ptr que comparte el control si el objeto sigue vivo, o un shared_ptr vacío si ya se liberó."
+    ],
+    "caveats": [
+      "Usa el valor de retorno para decidir si puedes acceder al objeto. No supongas que una comprobación anterior de expired() sigue siendo válida."
+    ]
+  },
+  "std::jthread::request_stop()": {
+    "intro": ["Solicita que la tarea asociada termine de forma cooperativa."],
+    "returns": [
+      "true si esta llamada es la primera que solicita la parada en ese estado."
+    ],
+    "caveats": [
+      "La tarea necesita observar su stop_token para salir. Ejecuta la parte de concurrencia en un compilador nativo."
+    ]
+  },
+  "std::filesystem::path::lexically_normal()": {
+    "intro": [
+      "Simplifica una ruta según sus componentes de texto, incluidos . y .. donde se pueden resolver léxicamente."
+    ],
+    "returns": ["Otra ruta con la forma normalizada."],
+    "caveats": [
+      "No abre archivos ni resuelve enlaces simbólicos. La ruta resultante puede no existir."
+    ]
+  },
+  "std::chrono::duration::count()": {
+    "intro": ["Devuelve cuántos ticks representa la duración."],
+    "returns": [
+      "El número en el tipo de representación Rep. El significado de cada tick depende del Period de la duración."
+    ],
+    "caveats": [
+      "Convierte a una unidad explícita antes de comparar el resultado numérico de dos tipos de duración."
+    ]
+  }
+}

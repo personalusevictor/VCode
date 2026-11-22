@@ -1,0 +1,20 @@
+Parte del contenido de las fichas web se ha adaptado de MDN Web Docs
+(https://developer.mozilla.org/) por los colaboradores de Mozilla.
+
+Texto adaptado bajo Creative Commons Attribution-ShareAlike 2.5 Generic:
+https://creativecommons.org/licenses/by-sa/2.5/
+
+Se han seleccionado y reestructurado secciones de cada documento, convertido
+el Markdown a texto y cotejado la sintaxis inglesa. Cada ficha enlaza a su
+página de origen. Este conjunto de adaptaciones mantiene la misma licencia.
+Los ejemplos identificados para el laboratorio se han redactado para VCode.
+
+Política de atribución de MDN:
+https://developer.mozilla.org/en-US/docs/MDN/Writing_guidelines/Attrib_copyright_license
+Repositorios de origen:
+https://github.com/mdn/content
+https://github.com/mdn/translated-content
+
+Huellas SHA-256 de los archivos fuente importados:
+mdn/content           aede1eabad0ac9c56853cfa6006273a0223e4230d3f98dbf5d64fc012d57c5ca
+mdn/translated-content 6a472fbb50238ca9743ccaea22ed46d921535b3b57f368a460e83d6980d94d74

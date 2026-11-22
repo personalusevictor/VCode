@@ -1,0 +1,855 @@
+{
+  "abbr": {
+    "th": "Alternative label to use for the header cell when referencing the cell in other contexts"
+  },
+  "accept": {
+    "input": "Hint for expected file type in file upload controls"
+  },
+  "accept-charset": {
+    "form": "Character encodings to use for form submission"
+  },
+  "accesskey": {
+    "HTML elements": "Keyboard shortcut to activate or focus element"
+  },
+  "action": {
+    "form": "URL to use for form submission"
+  },
+  "allow": {
+    "iframe": "Permissions policy to be applied to the iframe's contents"
+  },
+  "allowfullscreen": {
+    "iframe": "Whether to allow the iframe's contents to use requestFullscreen()"
+  },
+  "alpha": {
+    "input": "Allow the color's alpha component to be set"
+  },
+  "alt": {
+    "area": "Replacement text for use when images are not available",
+    "img": "Replacement text for use when images are not available",
+    "input": "Replacement text for use when images are not available"
+  },
+  "as": {
+    "link": "Destination for a preload request (for rel=\"preload\" and rel=\"modulepreload\")"
+  },
+  "async": {
+    "script": "Execute script when available, without blocking while fetching"
+  },
+  "autocapitalize": {
+    "HTML elements": "Recommended autocapitalization behavior (for supported input methods)"
+  },
+  "autocomplete": {
+    "form": "Default setting for autofill feature for controls in the form",
+    "input": "Hint for form autofill feature",
+    "select": "Hint for form autofill feature",
+    "textarea": "Hint for form autofill feature"
+  },
+  "autocorrect": {
+    "HTML elements": "Recommended autocorrection behavior (for supported input methods)"
+  },
+  "autofocus": {
+    "HTML elements": "Automatically focus the element when the page is loaded"
+  },
+  "autoplay": {
+    "audio": "Hint that the media resource can be started automatically when the page is loaded",
+    "video": "Hint that the media resource can be started automatically when the page is loaded"
+  },
+  "blocking": {
+    "link": "Whether the element is potentially render-blocking",
+    "script": "Whether the element is potentially render-blocking",
+    "style": "Whether the element is potentially render-blocking"
+  },
+  "charset": {
+    "meta": "Character encoding declaration"
+  },
+  "checked": {
+    "input": "Whether the control is checked"
+  },
+  "cite": {
+    "blockquote": "Link to the source of the quotation or more information about the edit",
+    "del": "Link to the source of the quotation or more information about the edit",
+    "ins": "Link to the source of the quotation or more information about the edit",
+    "q": "Link to the source of the quotation or more information about the edit"
+  },
+  "class": {
+    "HTML elements": "Classes to which the element belongs"
+  },
+  "closedby": {
+    "dialog": "Which user actions will close the dialog"
+  },
+  "color": {
+    "link": "Color to use when customizing a site's icon (for rel=\"mask-icon\")"
+  },
+  "colorspace": {
+    "input": "The color space of the serialized color"
+  },
+  "cols": {
+    "textarea": "Maximum number of characters per line"
+  },
+  "colspan": {
+    "td": "Number of columns that the cell is to span",
+    "th": "Number of columns that the cell is to span"
+  },
+  "command": {
+    "button": "Indicates to the targeted element which action to take."
+  },
+  "commandfor": {
+    "button": "Targets another element to be invoked."
+  },
+  "content": {
+    "meta": "Value of the element"
+  },
+  "contenteditable": {
+    "HTML elements": "Whether the element is editable"
+  },
+  "controls": {
+    "audio": "Show user agent controls",
+    "video": "Show user agent controls",
+    "img": "Show user agent controls"
+  },
+  "coords": {
+    "area": "Coordinates for the shape to be created in an image map"
+  },
+  "crossorigin": {
+    "audio": "How the element handles crossorigin requests",
+    "img": "How the element handles crossorigin requests",
+    "link": "How the element handles crossorigin requests",
+    "script": "How the element handles crossorigin requests",
+    "video": "How the element handles crossorigin requests"
+  },
+  "data": {
+    "object": "Address of the resource"
+  },
+  "datetime": {
+    "del": "Date and (optionally) time of the change",
+    "ins": "Date and (optionally) time of the change",
+    "time": "Machine-readable value"
+  },
+  "decoding": {
+    "img": "Decoding hint to use when processing this image for presentation"
+  },
+  "default": {
+    "track": "Enable the track if no other text track is more suitable"
+  },
+  "defer": {
+    "script": "Defer script execution"
+  },
+  "dir": {
+    "HTML elements": "The text directionality of the element",
+    "bdo": "The text directionality of the element"
+  },
+  "dirname": {
+    "input": "Name of form control to use for sending the element's directionality in form submission",
+    "textarea": "Name of form control to use for sending the element's directionality in form submission"
+  },
+  "disabled": {
+    "button": "Whether the form control is disabled",
+    "input": "Whether the form control is disabled",
+    "optgroup": "Whether the form control is disabled",
+    "option": "Whether the form control is disabled",
+    "select": "Whether the form control is disabled",
+    "textarea": "Whether the form control is disabled",
+    "form-associated custom elements": "Whether the form control is disabled",
+    "fieldset": "Whether the descendant form controls, except any inside legend, are disabled",
+    "link": "Whether the link is disabled"
+  },
+  "download": {
+    "a": "Whether to download the resource instead of navigating to it, and its filename if so",
+    "area": "Whether to download the resource instead of navigating to it, and its filename if so"
+  },
+  "draggable": {
+    "HTML elements": "Whether the element is draggable"
+  },
+  "enctype": {
+    "form": "Entry list encoding type to use for form submission"
+  },
+  "enterkeyhint": {
+    "HTML elements": "Hint for selecting an enter key action"
+  },
+  "fetchpriority": {
+    "img": "Sets the priority for fetches initiated by the element",
+    "link": "Sets the priority for fetches initiated by the element",
+    "script": "Sets the priority for fetches initiated by the element"
+  },
+  "for": {
+    "label": "Associate the label with form control",
+    "output": "Specifies controls from which the output was calculated",
+    "template": "Updates existing content"
+  },
+  "form": {
+    "button": "Associates the element with a form element",
+    "fieldset": "Associates the element with a form element",
+    "input": "Associates the element with a form element",
+    "object": "Associates the element with a form element",
+    "output": "Associates the element with a form element",
+    "select": "Associates the element with a form element",
+    "textarea": "Associates the element with a form element",
+    "form-associated custom elements": "Associates the element with a form element"
+  },
+  "formaction": {
+    "button": "URL to use for form submission",
+    "input": "URL to use for form submission"
+  },
+  "formenctype": {
+    "button": "Entry list encoding type to use for form submission",
+    "input": "Entry list encoding type to use for form submission"
+  },
+  "formmethod": {
+    "button": "Variant to use for form submission",
+    "input": "Variant to use for form submission"
+  },
+  "formnovalidate": {
+    "button": "Bypass form control validation for form submission",
+    "input": "Bypass form control validation for form submission"
+  },
+  "formtarget": {
+    "button": "Navigable for form submission",
+    "input": "Navigable for form submission"
+  },
+  "headers": {
+    "td": "The header cells for this cell",
+    "th": "The header cells for this cell"
+  },
+  "headingoffset": {
+    "HTML elements": "Offsets heading levels for descendants"
+  },
+  "headingreset": {
+    "HTML elements": "Prevents a heading offset computation from traversing beyond the element with the attribute"
+  },
+  "height": {
+    "canvas": "Vertical dimension",
+    "embed": "Vertical dimension",
+    "iframe": "Vertical dimension",
+    "img": "Vertical dimension",
+    "input": "Vertical dimension",
+    "object": "Vertical dimension",
+    "source": "Vertical dimension",
+    "picture": "Vertical dimension",
+    "video": "Vertical dimension"
+  },
+  "hidden": {
+    "HTML elements": "Whether the element is relevant"
+  },
+  "high": {
+    "meter": "Low limit of high range"
+  },
+  "href": {
+    "a": "Address of the hyperlink",
+    "area": "Address of the hyperlink",
+    "link": "Address of the hyperlink",
+    "base": "Document base URL"
+  },
+  "hreflang": {
+    "a": "Language of the linked resource",
+    "link": "Language of the linked resource"
+  },
+  "http-equiv": {
+    "meta": "Pragma directive"
+  },
+  "id": {
+    "HTML elements": "The element's ID"
+  },
+  "imagesizes": {
+    "link": "Image sizes for different page layouts (for rel=\"preload\")"
+  },
+  "imagesrcset": {
+    "link": "Images to use in different situations, e.g., high-resolution displays, small monitors, etc. (for rel=\"preload\")"
+  },
+  "inert": {
+    "HTML elements": "Whether the element is inert."
+  },
+  "inputmode": {
+    "HTML elements": "Hint for selecting an input modality"
+  },
+  "integrity": {
+    "link": "Integrity metadata used in Subresource Integrity checks [SRI]",
+    "script": "Integrity metadata used in Subresource Integrity checks [SRI]"
+  },
+  "is": {
+    "HTML elements": "Creates a customized built-in element"
+  },
+  "ismap": {
+    "img": "Whether the image is a server-side image map"
+  },
+  "itemid": {
+    "HTML elements": "Global identifier for a microdata item"
+  },
+  "itemprop": {
+    "HTML elements": "Property names of a microdata item"
+  },
+  "itemref": {
+    "HTML elements": "Referenced elements"
+  },
+  "itemscope": {
+    "HTML elements": "Introduces a microdata item"
+  },
+  "itemtype": {
+    "HTML elements": "Item types of a microdata item"
+  },
+  "kind": {
+    "track": "The type of text track"
+  },
+  "label": {
+    "optgroup": "User-visible label",
+    "option": "User-visible label",
+    "track": "User-visible label"
+  },
+  "lang": {
+    "HTML elements": "Language of the element"
+  },
+  "list": {
+    "input": "List of autocomplete options"
+  },
+  "loading": {
+    "iframe": "Used when determining loading deferral",
+    "img": "Used when determining loading deferral",
+    "audio": "Used when determining loading deferral",
+    "video": "Used when determining loading deferral"
+  },
+  "loop": {
+    "audio": "Whether to loop the media resource",
+    "video": "Whether to loop the media resource"
+  },
+  "low": {
+    "meter": "High limit of low range"
+  },
+  "max": {
+    "input": "Maximum value",
+    "meter": "Upper bound of range",
+    "progress": "Upper bound of range"
+  },
+  "maxlength": {
+    "input": "Maximum length of value",
+    "textarea": "Maximum length of value"
+  },
+  "media": {
+    "link": "Applicable media",
+    "meta": "Applicable media",
+    "source": "Applicable media",
+    "style": "Applicable media"
+  },
+  "method": {
+    "form": "Variant to use for form submission"
+  },
+  "min": {
+    "input": "Minimum value",
+    "meter": "Lower bound of range"
+  },
+  "minlength": {
+    "input": "Minimum length of value",
+    "textarea": "Minimum length of value"
+  },
+  "multiple": {
+    "input": "Whether to allow multiple values",
+    "select": "Whether to allow multiple values"
+  },
+  "muted": {
+    "audio": "Whether to mute the media resource by default",
+    "video": "Whether to mute the media resource by default"
+  },
+  "name": {
+    "button": "Name of the element to use for form submission and in the form.elements API",
+    "fieldset": "Name of the element to use for form submission and in the form.elements API",
+    "input": "Name of the element to use for form submission and in the form.elements API",
+    "output": "Name of the element to use for form submission and in the form.elements API",
+    "select": "Name of the element to use for form submission and in the form.elements API",
+    "textarea": "Name of the element to use for form submission and in the form.elements API",
+    "form-associated custom elements": "Name of the element to use for form submission and in the form.elements API",
+    "details": "Name of group of mutually-exclusive details elements",
+    "form": "Name of form to use in the document.forms API",
+    "iframe": "Name of content navigable",
+    "object": "Name of content navigable",
+    "map": "Name of image map to reference from the usemap attribute",
+    "meta": "Metadata name",
+    "slot": "Name of shadow tree slot"
+  },
+  "nomodule": {
+    "script": "Prevents execution in user agents that support module scripts"
+  },
+  "nonce": {
+    "HTML elements": "Cryptographic nonce used in Content Security Policy checks [CSP]"
+  },
+  "novalidate": {
+    "form": "Bypass form control validation for form submission"
+  },
+  "open": {
+    "details": "Whether the details are visible",
+    "dialog": "Whether the dialog box is showing"
+  },
+  "optimum": {
+    "meter": "Optimum value in gauge"
+  },
+  "pattern": {
+    "input": "Pattern to be matched by the form control's value"
+  },
+  "ping": {
+    "a": "URLs to ping",
+    "area": "URLs to ping"
+  },
+  "placeholder": {
+    "input": "User-visible label to be placed within the form control",
+    "textarea": "User-visible label to be placed within the form control"
+  },
+  "playsinline": {
+    "video": "Encourage the user agent to display video content within the element's playback area"
+  },
+  "popover": {
+    "HTML elements": "Makes the element a popover element"
+  },
+  "popovertarget": {
+    "button": "Targets a popover element to toggle, show, or hide",
+    "input": "Targets a popover element to toggle, show, or hide"
+  },
+  "popovertargetaction": {
+    "button": "Indicates whether a targeted popover element is to be toggled, shown, or hidden",
+    "input": "Indicates whether a targeted popover element is to be toggled, shown, or hidden"
+  },
+  "poster": {
+    "video": "Poster frame to show prior to video playback"
+  },
+  "preload": {
+    "audio": "Hints how much buffering the media resource will likely need",
+    "video": "Hints how much buffering the media resource will likely need"
+  },
+  "readonly": {
+    "input": "Whether to allow the value to be edited by the user",
+    "textarea": "Whether to allow the value to be edited by the user",
+    "form-associated custom elements": "Affects willValidate, plus any behavior added by the custom element author"
+  },
+  "referrerpolicy": {
+    "a": "Referrer policy for fetches initiated by the element",
+    "area": "Referrer policy for fetches initiated by the element",
+    "iframe": "Referrer policy for fetches initiated by the element",
+    "img": "Referrer policy for fetches initiated by the element",
+    "link": "Referrer policy for fetches initiated by the element",
+    "script": "Referrer policy for fetches initiated by the element"
+  },
+  "rel": {
+    "a": "Relationship between the location in the document containing the hyperlink and the destination resource",
+    "area": "Relationship between the location in the document containing the hyperlink and the destination resource",
+    "link": "Relationship between the document containing the hyperlink and the destination resource"
+  },
+  "required": {
+    "input": "Whether the control is required for form submission",
+    "select": "Whether the control is required for form submission",
+    "textarea": "Whether the control is required for form submission"
+  },
+  "reversed": {
+    "ol": "Number the list backwards"
+  },
+  "rows": {
+    "textarea": "Number of lines to show"
+  },
+  "rowspan": {
+    "td": "Number of rows that the cell is to span",
+    "th": "Number of rows that the cell is to span"
+  },
+  "sandbox": {
+    "iframe": "Security rules for nested content"
+  },
+  "scope": {
+    "th": "Specifies which cells the header cell applies to"
+  },
+  "selected": {
+    "option": "Whether the option is selected by default"
+  },
+  "shadowrootclonable": {
+    "template": "Sets clonable on a declarative shadow root"
+  },
+  "shadowrootcustomelementregistry": {
+    "template": "Enables declarative shadow roots to indicate they will use a custom element registry"
+  },
+  "shadowrootdelegatesfocus": {
+    "template": "Sets delegates focus on a declarative shadow root"
+  },
+  "shadowrootmode": {
+    "template": "Enables streaming declarative shadow roots"
+  },
+  "shadowrootserializable": {
+    "template": "Sets serializable on a declarative shadow root"
+  },
+  "shadowrootslotassignment": {
+    "template": "Sets slot assignment on a declarative shadow root"
+  },
+  "shape": {
+    "area": "The kind of shape to be created in an image map"
+  },
+  "size": {
+    "input": "Size of the control",
+    "select": "Size of the control"
+  },
+  "sizes": {
+    "link": "Sizes of the icons (for rel=\"icon\")",
+    "img": "Image sizes for different page layouts",
+    "source": "Image sizes for different page layouts"
+  },
+  "slot": {
+    "HTML elements": "The element's desired slot"
+  },
+  "span": {
+    "col": "Number of columns spanned by the element",
+    "colgroup": "Number of columns spanned by the element"
+  },
+  "spellcheck": {
+    "HTML elements": "Whether the element is to have its spelling and grammar checked"
+  },
+  "src": {
+    "audio": "Address of the resource",
+    "embed": "Address of the resource",
+    "iframe": "Address of the resource",
+    "img": "Address of the resource",
+    "input": "Address of the resource",
+    "script": "Address of the resource",
+    "source": "Address of the resource",
+    "video": "Address of the resource",
+    "track": "Address of the resource"
+  },
+  "srcdoc": {
+    "iframe": "A document to render in the iframe"
+  },
+  "srclang": {
+    "track": "Language of the text track"
+  },
+  "srcset": {
+    "img": "Images to use in different situations, e.g., high-resolution displays, small monitors, etc.",
+    "source": "Images to use in different situations, e.g., high-resolution displays, small monitors, etc."
+  },
+  "start": {
+    "ol": "Starting value of the list"
+  },
+  "step": {
+    "input": "Granularity to be matched by the form control's value"
+  },
+  "style": {
+    "HTML elements": "Presentational and formatting instructions"
+  },
+  "switch": {
+    "input": "Whether the control is a switch"
+  },
+  "tabindex": {
+    "HTML elements": "Whether the element is focusable and sequentially focusable, and the relative order of the element for the purposes of sequential focus navigation"
+  },
+  "target": {
+    "a": "Navigable for hyperlink navigation",
+    "area": "Navigable for hyperlink navigation",
+    "base": "Default navigable for hyperlink navigation and form submission",
+    "form": "Navigable for form submission"
+  },
+  "title": {
+    "HTML elements": "Advisory information for the element",
+    "abbr": "Full term or expansion of abbreviation",
+    "dfn": "Full term or expansion of abbreviation",
+    "input": "Description of pattern (when used with pattern attribute)",
+    "link": "CSS style sheet set name",
+    "style": "CSS style sheet set name"
+  },
+  "translate": {
+    "HTML elements": "Whether the element is to be translated when the page is localized"
+  },
+  "type": {
+    "a": "Hint for the type of the referenced resource",
+    "link": "Hint for the type of the referenced resource",
+    "button": "Type of button",
+    "embed": "Type of embedded resource",
+    "object": "Type of embedded resource",
+    "source": "Type of embedded resource",
+    "input": "Type of form control",
+    "ol": "Kind of list marker",
+    "script": "Type of script"
+  },
+  "usemap": {
+    "img": "Name of image map to use"
+  },
+  "value": {
+    "button": "Value to be used for form submission",
+    "option": "Value to be used for form submission",
+    "data": "Machine-readable value",
+    "input": "Value of the form control",
+    "li": "Ordinal value of the list item",
+    "meter": "Current value of the element",
+    "progress": "Current value of the element"
+  },
+  "width": {
+    "canvas": "Horizontal dimension",
+    "embed": "Horizontal dimension",
+    "iframe": "Horizontal dimension",
+    "img": "Horizontal dimension",
+    "input": "Horizontal dimension",
+    "object": "Horizontal dimension",
+    "source": "Horizontal dimension",
+    "picture": "Horizontal dimension",
+    "video": "Horizontal dimension"
+  },
+  "wrap": {
+    "textarea": "How the value of the form control is to be wrapped for form submission"
+  },
+  "writingsuggestions": {
+    "HTML elements": "Whether the element can offer writing suggestions or not."
+  },
+  "onafterprint": {
+    "body": "Maneja el evento afterprint de Window."
+  },
+  "onauxclick": {
+    "HTML elements": "Maneja el evento auxclick."
+  },
+  "onbeforeinput": {
+    "HTML elements": "Maneja el evento beforeinput."
+  },
+  "onbeforematch": {
+    "HTML elements": "Maneja el evento beforematch."
+  },
+  "onbeforeprint": {
+    "body": "Maneja el evento beforeprint de Window."
+  },
+  "onbeforeunload": {
+    "body": "Maneja el evento beforeunload de Window."
+  },
+  "onbeforetoggle": {
+    "HTML elements": "Maneja el evento beforetoggle."
+  },
+  "onblur": {
+    "HTML elements": "Maneja el evento blur."
+  },
+  "oncancel": {
+    "HTML elements": "Maneja el evento cancel."
+  },
+  "oncanplay": {
+    "HTML elements": "Maneja el evento canplay."
+  },
+  "oncanplaythrough": {
+    "HTML elements": "Maneja el evento canplaythrough."
+  },
+  "onchange": {
+    "HTML elements": "Maneja el evento change."
+  },
+  "onclick": {
+    "HTML elements": "Maneja el evento click."
+  },
+  "onclose": {
+    "HTML elements": "Maneja el evento close."
+  },
+  "oncommand": {
+    "HTML elements": "Maneja el evento command."
+  },
+  "oncontextlost": {
+    "HTML elements": "Maneja el evento contextlost."
+  },
+  "oncontextmenu": {
+    "HTML elements": "Maneja el evento contextmenu."
+  },
+  "oncontextrestored": {
+    "HTML elements": "Maneja el evento contextrestored."
+  },
+  "oncopy": {
+    "HTML elements": "Maneja el evento copy."
+  },
+  "oncuechange": {
+    "HTML elements": "Maneja el evento cuechange."
+  },
+  "oncut": {
+    "HTML elements": "Maneja el evento cut."
+  },
+  "ondblclick": {
+    "HTML elements": "Maneja el evento dblclick."
+  },
+  "ondrag": {
+    "HTML elements": "Maneja el evento drag."
+  },
+  "ondragend": {
+    "HTML elements": "Maneja el evento dragend."
+  },
+  "ondragenter": {
+    "HTML elements": "Maneja el evento dragenter."
+  },
+  "ondragleave": {
+    "HTML elements": "Maneja el evento dragleave."
+  },
+  "ondragover": {
+    "HTML elements": "Maneja el evento dragover."
+  },
+  "ondragstart": {
+    "HTML elements": "Maneja el evento dragstart."
+  },
+  "ondrop": {
+    "HTML elements": "Maneja el evento drop."
+  },
+  "ondurationchange": {
+    "HTML elements": "Maneja el evento durationchange."
+  },
+  "onemptied": {
+    "HTML elements": "Maneja el evento emptied."
+  },
+  "onended": {
+    "HTML elements": "Maneja el evento ended."
+  },
+  "onerror": {
+    "HTML elements": "Maneja el evento error."
+  },
+  "onfocus": {
+    "HTML elements": "Maneja el evento focus."
+  },
+  "onformdata": {
+    "HTML elements": "Maneja el evento formdata."
+  },
+  "onhashchange": {
+    "body": "Maneja el evento hashchange de Window."
+  },
+  "oninput": {
+    "HTML elements": "Maneja el evento input."
+  },
+  "oninvalid": {
+    "HTML elements": "Maneja el evento invalid."
+  },
+  "onkeydown": {
+    "HTML elements": "Maneja el evento keydown."
+  },
+  "onkeypress": {
+    "HTML elements": "Maneja el evento keypress."
+  },
+  "onkeyup": {
+    "HTML elements": "Maneja el evento keyup."
+  },
+  "onlanguagechange": {
+    "body": "Maneja el evento languagechange de Window."
+  },
+  "onload": {
+    "HTML elements": "Maneja el evento load."
+  },
+  "onloadeddata": {
+    "HTML elements": "Maneja el evento loadeddata."
+  },
+  "onloadedmetadata": {
+    "HTML elements": "Maneja el evento loadedmetadata."
+  },
+  "onloadstart": {
+    "HTML elements": "Maneja el evento loadstart."
+  },
+  "onmessage": {
+    "body": "Maneja el evento message de Window."
+  },
+  "onmessageerror": {
+    "body": "Maneja el evento messageerror de Window."
+  },
+  "onmousedown": {
+    "HTML elements": "Maneja el evento mousedown."
+  },
+  "onmouseenter": {
+    "HTML elements": "Maneja el evento mouseenter."
+  },
+  "onmouseleave": {
+    "HTML elements": "Maneja el evento mouseleave."
+  },
+  "onmousemove": {
+    "HTML elements": "Maneja el evento mousemove."
+  },
+  "onmouseout": {
+    "HTML elements": "Maneja el evento mouseout."
+  },
+  "onmouseover": {
+    "HTML elements": "Maneja el evento mouseover."
+  },
+  "onmouseup": {
+    "HTML elements": "Maneja el evento mouseup."
+  },
+  "onoffline": {
+    "body": "Maneja el evento offline de Window."
+  },
+  "ononline": {
+    "body": "Maneja el evento online de Window."
+  },
+  "onpagehide": {
+    "body": "Maneja el evento pagehide de Window."
+  },
+  "onpagereveal": {
+    "body": "Maneja el evento pagereveal de Window."
+  },
+  "onpageshow": {
+    "body": "Maneja el evento pageshow de Window."
+  },
+  "onpageswap": {
+    "body": "Maneja el evento pageswap de Window."
+  },
+  "onpaste": {
+    "HTML elements": "Maneja el evento paste."
+  },
+  "onpause": {
+    "HTML elements": "Maneja el evento pause."
+  },
+  "onplay": {
+    "HTML elements": "Maneja el evento play."
+  },
+  "onplaying": {
+    "HTML elements": "Maneja el evento playing."
+  },
+  "onpopstate": {
+    "body": "Maneja el evento popstate de Window."
+  },
+  "onprogress": {
+    "HTML elements": "Maneja el evento progress."
+  },
+  "onratechange": {
+    "HTML elements": "Maneja el evento ratechange."
+  },
+  "onreset": {
+    "HTML elements": "Maneja el evento reset."
+  },
+  "onresize": {
+    "HTML elements": "Maneja el evento resize."
+  },
+  "onrejectionhandled": {
+    "body": "Maneja el evento rejectionhandled de Window."
+  },
+  "onscroll": {
+    "HTML elements": "Maneja el evento scroll."
+  },
+  "onscrollend": {
+    "HTML elements": "Maneja el evento scrollend."
+  },
+  "onsecuritypolicyviolation": {
+    "HTML elements": "Maneja el evento securitypolicyviolation."
+  },
+  "onseeked": {
+    "HTML elements": "Maneja el evento seeked."
+  },
+  "onseeking": {
+    "HTML elements": "Maneja el evento seeking."
+  },
+  "onselect": {
+    "HTML elements": "Maneja el evento select."
+  },
+  "onslotchange": {
+    "HTML elements": "Maneja el evento slotchange."
+  },
+  "onstalled": {
+    "HTML elements": "Maneja el evento stalled."
+  },
+  "onstorage": {
+    "body": "Maneja el evento storage de Window."
+  },
+  "onsubmit": {
+    "HTML elements": "Maneja el evento submit."
+  },
+  "onsuspend": {
+    "HTML elements": "Maneja el evento suspend."
+  },
+  "ontimeupdate": {
+    "HTML elements": "Maneja el evento timeupdate."
+  },
+  "ontoggle": {
+    "HTML elements": "Maneja el evento toggle."
+  },
+  "onunhandledrejection": {
+    "body": "Maneja el evento unhandledrejection de Window."
+  },
+  "onunload": {
+    "body": "Maneja el evento unload de Window."
+  },
+  "onvolumechange": {
+    "HTML elements": "Maneja el evento volumechange."
+  },
+  "onwaiting": {
+    "HTML elements": "Maneja el evento waiting."
+  },
+  "onwheel": {
+    "HTML elements": "Maneja el evento wheel."
+  }
+}
