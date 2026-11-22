@@ -6,6 +6,9 @@
   pointer-events: none;
   contain: layout paint;
 }
+.vcode-pointer-layer[data-dialog] {
+  position: absolute;
+}
 .vcode-pointer-outline {
   position: absolute;
   top: 0;
@@ -27,31 +30,54 @@
 }
 .vcode-pointer-outline[data-mode="magnet"],
 .vcode-pointer-outline[data-mode="bubble"] {
-  background: color-mix(in srgb, var(--blue) 7%, transparent);
-  border-color: color-mix(in srgb, var(--blue) 45%, transparent);
+  background: color-mix(in srgb, var(--blue) 9%, transparent);
+  border-color: color-mix(in srgb, var(--blue) 39%, transparent);
+}
+.vcode-pointer-outline[data-bordered] {
+  border-color: transparent;
+}
+.vcode-pointer-outline[data-mode="magnet"][data-tab] {
+  background: linear-gradient(
+    color-mix(in srgb, var(--blue) 9%, transparent),
+    color-mix(in srgb, var(--blue) 4%, transparent) 78%,
+    transparent
+  );
 }
 .vcode-pointer-outline[data-mode="dot"][data-on-mark="true"] {
   background: #f0f7ff;
   border-color: #88b8ff;
 }
-.vcode-pointer-outline[data-pressed="true"] {
+.vcode-pointer-outline[data-pressed="true"]:is(
+    [data-mode="magnet"],
+    [data-mode="bubble"]
+  ) {
   background: color-mix(in srgb, var(--blue) 20%, transparent);
 }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   html.vcode-pointer-active
     :is(
-      .home-world,
-      .home-world *,
+      .main-content,
+      .main-content *,
       .home-navigation,
       .home-navigation *,
       .home-footer,
-      .home-footer *
+      .home-footer *,
+      .search-dialog,
+      .search-dialog *
+    ):not(
+      input,
+      textarea,
+      select,
+      [contenteditable="true"],
+      [contenteditable="true"] *,
+      iframe,
+      pre,
+      pre *,
+      [data-native-pointer],
+      [data-native-pointer] *,
+      :disabled
     ) {
     cursor: none !important;
-  }
-  html.vcode-pointer-active
-    :is(input, textarea, select, [contenteditable="true"], iframe, pre, code) {
-    cursor: auto !important;
   }
 }
 @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {

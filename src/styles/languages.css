@@ -4,7 +4,7 @@
 }
 .language-tabs {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-columns: repeat(9, minmax(0, 1fr));
   border-bottom: 1px solid var(--line);
   gap: 5px;
 }
@@ -20,7 +20,7 @@
   color: var(--muted);
   font-size: 13px;
   border-bottom: 2px solid transparent;
-  border-radius: 0;
+  border-radius: 8px 8px 0 0;
   transition:
     color 0.15s,
     border-color 0.15s;
@@ -45,9 +45,9 @@
     height: 16px;
   }
 }
-@media (max-width: 640px) {
+@media (max-width: 730px) {
   .language-tabs {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0;
   }
   .language-tabs > button {
@@ -78,11 +78,11 @@
     min-height: 36px;
   }
 }
-.language-tabs > button {
-  border-radius: 0;
-}
 .language-tabs > button:hover {
   color: var(--ink);
+}
+.language-tabs > button[aria-selected="false"]:hover {
+  border-bottom-color: color-mix(in srgb, var(--muted) 45%, var(--line));
 }
 .language-tabs > button:focus-visible {
   outline: 2px solid var(--blue);
@@ -396,7 +396,7 @@
   border-radius: 0;
 }
 .sculpture-entry:focus-visible {
-  outline: 2px solid #c54c25;
+  outline: 2px solid var(--sculpture-ink, var(--blue));
   outline-offset: 5px;
 }
 .sculpture-open {
@@ -409,8 +409,36 @@
   font-size: 10px;
   color: var(--muted);
 }
-.sculpture-entry:hover .sculpture-open {
-  color: #b94b28;
+.sculpture-entry[data-language="html"] {
+  --sculpture-ink: light-dark(#a83916, #ff9c78);
+}
+.sculpture-entry[data-language="css"] {
+  --sculpture-ink: light-dark(#165788, #78bdff);
+}
+.sculpture-entry[data-language="javascript"] {
+  --sculpture-ink: light-dark(#705b00, #f6dc52);
+}
+.sculpture-entry[data-language="typescript"] {
+  --sculpture-ink: light-dark(#1d5a95, #85bdff);
+}
+.sculpture-entry[data-language="react"] {
+  --sculpture-ink: light-dark(#09677d, #69dcec);
+}
+.sculpture-entry[data-language="php"] {
+  --sculpture-ink: light-dark(#4e4883, #b8b0f2);
+}
+.sculpture-entry[data-language="java"] {
+  --sculpture-ink: light-dark(#a03524, #ff9e86);
+}
+.sculpture-entry[data-language="cpp"] {
+  --sculpture-ink: light-dark(#164e79, #91c9f6);
+}
+.sculpture-entry[data-language="sql"] {
+  --sculpture-ink: light-dark(#225f7b, #83c3e2);
+}
+.sculpture-entry:is(:hover, :focus-visible) .sculpture-open {
+  color: var(--sculpture-ink, var(--blue));
+  font-weight: 600;
 }
 .language-context {
   font-size: 12px;

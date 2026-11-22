@@ -5,6 +5,7 @@ export default function LanguageArtwork({ course, paused = false }) {
   return (
     <a
       className="language-artwork language-artwork-sculpture sculpture-entry"
+      data-language={course.id}
       href={`#course/${course.id}`}
       aria-label={`Aprende ${course.name}`}
     >

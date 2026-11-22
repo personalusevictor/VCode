@@ -8,33 +8,57 @@ import React, {
 } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import NativePointer from "../components/NativePointer.jsx";
 import LanguageExplorer from "./LanguageExplorer.jsx";
+import { Mark } from "../../app/Brand";
+import ErrorBoundary from "../../app/ErrorBoundary";
+import loadChromeMark from "../scene/loadChromeMark";
 import { advanceStory, brandPose, smoother } from "../motion/brandMotion.js";
-const ChromeMark = lazy(() => import("../scene/ChromeMark.jsx"));
+const ChromeMark = lazy(loadChromeMark);
 gsap.registerPlugin(ScrollTrigger);
 export default function ChromeStory({
   motionPaused = false,
   onProgress,
   onPresented,
+  scenePointer,
 }) {
-  const [staticScene, setStaticScene] = useState(false);
-  const [presented, setPresented] = useState(false);
+  const [scene, setScene] = useState("loading");
+  const staticScene = scene === "static";
+  const presented = scene !== "loading";
   const root = useRef(),
     controller = useRef(),
     latest = useRef(0);
+  useEffect(() => {
+    scenePointer.current = (point) => controller.current?.point(point);
+    return () => {
+      scenePointer.current = null;
+    };
+  }, [scenePointer]);
   const ready = useCallback((api) => {
     controller.current = api;
     api?.update(latest.current);
   }, []);
   const showPoster = useCallback(() => {
-    setStaticScene(true);
+    setScene("static");
     onPresented?.();
   }, [onPresented]);
   const scenePresented = useCallback(() => {
-    setPresented(true);
+    setScene("rendered");
     onPresented?.();
   }, [onPresented]);
+  useEffect(() => {
+    if (presented) return;
+    let timer;
+    const watch = () => {
+      window.clearTimeout(timer);
+      if (!document.hidden) timer = window.setTimeout(showPoster, 10000);
+    };
+    watch();
+    document.addEventListener("visibilitychange", watch);
+    return () => {
+      window.clearTimeout(timer);
+      document.removeEventListener("visibilitychange", watch);
+    };
+  }, [presented, showPoster]);
   useEffect(() => {
     const node = root.current,
       explorer = node.querySelector(".story-explorer");
@@ -142,9 +166,6 @@ export default function ChromeStory({
       ref={root}
       aria-label="Presentación de VCode"
     >
-      <NativePointer
-        onScenePoint={(point) => controller.current?.point(point)}
-      />
       <div className="story-stage">
         <h1 className="sr-only">
           VCode. Aprende y consulta lenguajes de programación.
@@ -157,14 +178,26 @@ export default function ChromeStory({
           </div>
         </div>
         <div className="story-model">
-          <Suspense fallback={null}>
-            <ChromeMark
-              paused={motionPaused}
-              onReady={ready}
-              onFallback={showPoster}
-              onPresented={scenePresented}
-            />
-          </Suspense>
+          {staticScene ? (
+            <div
+              className="chrome-mark is-fallback"
+              role="img"
+              aria-label="Símbolo de VCode, vista estática."
+            >
+              <Mark className="chrome-fallback-symbol" />
+            </div>
+          ) : (
+            <ErrorBoundary fallback={null} onError={showPoster}>
+              <Suspense fallback={null}>
+                <ChromeMark
+                  paused={motionPaused}
+                  onReady={ready}
+                  onFallback={showPoster}
+                  onPresented={scenePresented}
+                />
+              </Suspense>
+            </ErrorBoundary>
+          )}
         </div>
         <div className="story-explorer" inert aria-hidden="true">
           <LanguageExplorer paused={motionPaused} />

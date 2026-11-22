@@ -12,7 +12,20 @@ function readTheme() {
 
 export function PreferencesProvider({ children }) {
   const [theme, setTheme] = useState(readTheme);
-  const [motionPaused, setMotionPaused] = useState(false);
+  const [motionPaused, setMotionPaused] = useState(() => {
+    try {
+      return localStorage.getItem("vcode-motion-paused") === "true";
+    } catch {
+      return false;
+    }
+  });
+  const [searchShortcut, setSearchShortcut] = useState(() => {
+    try {
+      return localStorage.getItem("vcode-search-shortcut") !== "false";
+    } catch {
+      return true;
+    }
+  });
   const [reducedMotion, setReducedMotion] = useState(
     () => matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
@@ -25,10 +38,24 @@ export function PreferencesProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
+    try {
+      localStorage.setItem("vcode-motion-paused", String(motionPaused));
+    } catch {}
+  }, [motionPaused]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("vcode-search-shortcut", String(searchShortcut));
+    } catch {}
+  }, [searchShortcut]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.dataset.theme = theme;
+    const background = getComputedStyle(root).getPropertyValue("--bg").trim();
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute("content", theme === "dark" ? "#11151b" : "#f2f1eb");
+      ?.setAttribute("content", background);
     try {
       localStorage.setItem("vcode-theme", theme);
     } catch {}
@@ -36,7 +63,15 @@ export function PreferencesProvider({ children }) {
 
   return (
     <PreferencesContext.Provider
-      value={{ theme, setTheme, motionPaused, setMotionPaused, reducedMotion }}
+      value={{
+        theme,
+        setTheme,
+        motionPaused,
+        setMotionPaused,
+        reducedMotion,
+        searchShortcut,
+        setSearchShortcut,
+      }}
     >
       {children}
     </PreferencesContext.Provider>

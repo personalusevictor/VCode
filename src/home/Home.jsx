@@ -1,16 +1,21 @@
-import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
-import ContourBackground from "./scene/ContourBackground.jsx";
+import React, { useCallback, useLayoutEffect, useRef } from "react";
 import Essentials from "./sections/Essentials.jsx";
 import Library from "./sections/Library.jsx";
 import { smoother } from "./motion/brandMotion.js";
 import ChromeStory from "./sections/ChromeStory.jsx";
-import Entrance from "./motion/Entrance";
 import useSectionReveals from "./motion/useSectionReveals";
+import "../styles/hero.css";
+import "../styles/languages.css";
+import "../styles/library.css";
+import "../styles/tools.css";
 
-export default function Home({ motionPaused = false, onPresented }) {
+export default function Home({
+  motionPaused = false,
+  onPresented,
+  onAmbient,
+  scenePointer,
+}) {
   const world = useRef();
-  const [sceneReady, setSceneReady] = useState(false);
-  const scenePresented = useCallback(() => setSceneReady(true), []);
   useSectionReveals(world, motionPaused);
   useLayoutEffect(() => {
     const node = world.current;
@@ -44,26 +49,19 @@ export default function Home({ motionPaused = false, onPresented }) {
       reduced.removeEventListener("change", measure);
     };
   }, []);
-  const progress = useCallback((p) => {
-    world.current?.style.setProperty(
-      "--home-wave-opacity",
-      1 - 0.7 * smoother((p - 0.4) / 0.4),
-    );
-  }, []);
+  const progress = useCallback(
+    (p) => {
+      onAmbient(1 - 0.7 * smoother((p - 0.4) / 0.4));
+    },
+    [onAmbient],
+  );
   return (
     <div className="home-world" ref={world}>
-      <Entrance
-        paused={motionPaused}
-        ready={sceneReady}
-        onComplete={onPresented}
-      />
-      <div className="home-ambient" aria-hidden="true">
-        <ContourBackground paused={motionPaused} />
-      </div>
       <ChromeStory
         motionPaused={motionPaused}
         onProgress={progress}
-        onPresented={scenePresented}
+        onPresented={onPresented}
+        scenePointer={scenePointer}
       />
       <Library paused={motionPaused} />
       <Essentials />
