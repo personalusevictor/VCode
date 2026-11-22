@@ -9,6 +9,10 @@ import { writePhpReference } from "./build-php-reference.mjs";
 import { restoreReferenceSnapshots } from "./reference-snapshots.mjs";
 
 restoreReferenceSnapshots();
+await Promise.all([
+  import("./build-reference.mjs"),
+  import("./build-quick-reference.mjs"),
+]);
 
 const read = (name) =>
   JSON.parse(

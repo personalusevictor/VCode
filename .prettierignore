@@ -16,3 +16,5 @@ src/docs/data/java-se-types.json
 src/docs/data/cpp20-catalog.json
 src/docs/data/sqlite-catalog.json
 src/data/search-index.json
+src/docs/data/css-reference.json
+src/docs/data/quick-reference.json

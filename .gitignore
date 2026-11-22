@@ -21,6 +21,8 @@ dist/
 /src/docs/data/php/
 /src/docs/data/web/
 /src/docs/data/cpp20-catalog.json
+/src/docs/data/css-reference.json
+/src/docs/data/quick-reference.json
 /src/docs/data/framework-catalog.json
 /src/docs/data/java-catalog.json
 /src/docs/data/java-hierarchy.json
