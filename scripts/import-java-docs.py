@@ -28,22 +28,26 @@ API = "https://docs.oracle.com/en/java/javase/21/docs/api/"
 
 
 class ParagraphText(HTMLParser):
+    boundary = "\x00"
+
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.parts = []
 
     def handle_starttag(self, tag, attrs):
-        if tag in {"p", "br", "pre", "li", "tr", "blockquote", "h2", "h3", "h4"}:
-            self.parts.append("\n\n")
+        if tag in {"p", "pre", "li", "tr", "blockquote", "h2", "h3", "h4"}:
+            self.parts.append(self.boundary)
+        elif tag == "br":
+            self.parts.append(" ")
         elif tag in {"td", "th"}:
             self.parts.append(" · ")
 
     def handle_endtag(self, tag):
         if tag in {"p", "pre", "li", "tr", "blockquote", "h2", "h3", "h4"}:
-            self.parts.append("\n\n")
+            self.parts.append(self.boundary)
 
     def handle_data(self, text):
-        self.parts.append(text)
+        self.parts.append(re.sub(r"\n\s*\n", self.boundary, text))
 
 
 def paragraphs(raw):
@@ -67,7 +71,7 @@ def paragraphs(raw):
     parser.feed(raw)
     return [
         value
-        for part in re.split(r"\n\s*\n", "".join(parser.parts))
+        for part in "".join(parser.parts).split(parser.boundary)
         if (value := " ".join(unescape(part).split()).strip(" ·"))
         and re.search(r"[A-Za-z]{2}", value)
     ]

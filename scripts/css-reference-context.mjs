@@ -175,6 +175,228 @@ const sides = {
 };
 
 const notes = {
+  "palette-mix()": [
+    "Mezcla paletas de una fuente de color. Los colores con el mismo índice se interpolan entre sí, y los porcentajes controlan cuánto aporta cada paleta al resultado de font-palette.",
+  ],
+  "scroll()": [
+    "Vincula el progreso de una animación a la posición de desplazamiento de un contenedor. Sin argumentos se usa el contenedor desplazable más cercano en el eje de bloque. Con root se usa el documento.",
+    "@keyframes avance { to { transform: scaleX(1); } }\n.barra {\n  transform: scaleX(0);\n  transform-origin: left;\n  animation: avance linear both;\n  animation-timeline: scroll(root block);\n}",
+  ],
+  "view()": [
+    "Vincula una animación a la posición de un elemento al entrar, cruzar y salir de la zona visible de su contenedor desplazable. El eje y los márgenes de esa zona se pueden personalizar.",
+    "@keyframes aparecer { from { opacity: 0; } }\n.tarjeta {\n  animation: aparecer linear both;\n  animation-timeline: view(block);\n  animation-range: entry;\n}",
+  ],
+  "background-tbd": [
+    "Abrevia varias capas de imagen de fondo sin cambiar background-color. El nombre es provisional en el borrador, por lo que para código actual puedes usar las propiedades de imagen, posición y repetición por separado.",
+  ],
+  "fit-tolerance": [
+    "Establece cuánto pueden diferir las pistas para considerarlas empatadas al colocar el siguiente elemento en Grid Lanes. Una tolerancia mayor favorece seguir el orden de las pistas cuando sus tamaños son parecidos.",
+  ],
+  "copy-into": [
+    "Guarda como fragmento con nombre el elemento, su contenido o su texto. El borrador permite reutilizar ese fragmento en contenido generado, por ejemplo en la cabecera de una página impresa.",
+  ],
+  size: [
+    "Abrevia width y height en una declaración. Si se omite la segunda medida, el borrador usa la primera en ambas dimensiones. El descriptor size de @page tiene otro ámbito.",
+  ],
+  "max-size": [
+    "Abrevia max-width y max-height. Con una sola medida se aplica el mismo límite en ambos ejes físicos. Es una propiedad en borrador.",
+  ],
+  "min-size": [
+    "Abrevia min-width y min-height. Con una sola medida se aplica el mismo mínimo en ambos ejes físicos. Es una propiedad en borrador.",
+  ],
+  "scroll-axis-lock": [
+    "Controla si el navegador puede restringir temporalmente un gesto de desplazamiento a un solo eje. auto permite ese bloqueo y none lo impide en el modelo del borrador.",
+  ],
+  "spatial-navigation-action": [
+    "Controla cómo se combinan el movimiento de foco y el desplazamiento en un contenedor cuando el usuario navega por direcciones. Con focus se prioriza seleccionar el siguiente elemento enfocable.",
+  ],
+  "spatial-navigation-contain": [
+    "Declara un límite para agrupar candidatos a foco durante la navegación direccional. Pertenece al borrador de navegación espacial.",
+  ],
+  "spatial-navigation-function": [
+    "Selecciona el algoritmo que puntúa los candidatos al mover el foco por direcciones. El modo grid del borrador prioriza las relaciones de fila y columna.",
+  ],
+  "window-drag": [
+    "Designa una zona desde la que un gesto puede mover la ventana de la aplicación. En el borrador, ese gesto se dedica a mover la ventana, así que reserva la zona para elementos que no necesiten recibir el arrastre.",
+  ],
+  "stroke-alignment": [
+    "Propone colocar el trazo respecto al contorno de una forma SVG, ya sea centrado, hacia dentro o hacia fuera. La alineación puede cambiar cuánto ocupa la forma al dibujarse.",
+  ],
+  "stroke-dashadjust": [
+    "Ajusta los trazos discontinuos o sus huecos para que al recorrer cada subtrazado se complete un número entero de repeticiones. El borrador permite estirar o comprimir el patrón.",
+  ],
+  "stroke-dashcorner": [
+    "Reserva un tramo visible en los vértices de una figura con trazo discontinuo. El resto del patrón se dibuja entre esos tramos de esquina.",
+  ],
+  "@custom-selector": [
+    "Define un nombre reutilizable para un conjunto de selectores. Permite declarar una sola vez una lista como los seis encabezados HTML. Es una propuesta de CSS Extensions.",
+  ],
+  "@historical-forms · @font-feature-values": [
+    "Bloque de valores tipográficos que aparece en la gramática de @font-feature-values. Las formas históricas dependen de la fuente. Para pedir esa variante se usa font-variant-alternates: historical-forms.",
+  ],
+  "::interest-button": [
+    "Representa un control visual voluntario para mostrar información que ofrece el elemento de origen. Se dibuja al asignarle content. La interacción por teclado sigue correspondiendo al elemento de origen.",
+  ],
+  "::nth-fragment()": [
+    "Selecciona por número un fragmento generado de un elemento. La propuesta permite cambiar el fondo o las métricas tipográficas de un fragmento sin cambiar el texto original.",
+  ],
+  ":current()": [
+    "Prueba el elemento que se está mostrando y, si no coincide con los selectores del argumento, busca el ancestro coincidente más cercano. Es una propuesta para contenido con un estado de presentación actual.",
+  ],
+  ":first-of-page": [
+    "En el borrador de contenido paginado, elige el primer elemento de la página que coincide con el resto del selector. Por ejemplo, permite recuperar el primer encabezado para la cabecera impresa.",
+  ],
+  ":last-of-page": [
+    "En el borrador de contenido paginado, elige el último elemento de la página que coincide con el resto del selector. Puede usarse para construir cabeceras que indican el intervalo de una página.",
+  ],
+  ":nth-of-page()": [
+    "Selecciona un elemento según su posición entre las coincidencias del selector en esa página. La numeración se refiere a los elementos de la página.",
+  ],
+  ":start-of-page": [
+    "Selecciona la primera coincidencia de una página si tampoco la precede un hermano suyo o de sus ancestros que aparezca en esa misma página.",
+  ],
+  ":nth()": [
+    "Selecciona páginas impresas por su posición usando una expresión An+B. Puede limitarse a un grupo de páginas con nombre. El índice es independiente del contador que se imprime.",
+  ],
+  "color-layers()": [
+    "Compone dos o más capas de color en un solo color. El modo de mezcla opcional decide cómo se combinan las capas, teniendo en cuenta sus transparencias.",
+  ],
+  "hdr-color()": [
+    "Define colores de referencia para distintos márgenes de brillo HDR. El borrador indica cómo obtener el color intermedio según la capacidad efectiva de la pantalla.",
+  ],
+  "ictcp()": [
+    "Expresa un color en ICtCp. I indica la intensidad, mientras que Ct y Cp representan dos ejes cromáticos. Está pensado para una gama amplia y luminancias HDR.",
+  ],
+  "jzazbz()": [
+    "Expresa un color HDR con una componente de claridad Jz y dos componentes cromáticas az y bz. Es la representación cartesiana de este espacio de color.",
+  ],
+  "jzczhz()": [
+    "Expresa el mismo espacio de Jzazbz con claridad, croma y ángulo de tono. Esta representación polar permite razonar sobre el giro del tono.",
+  ],
+  "repeat() · <auto-repeat-line-color>, <auto-repeat-line-style>, <auto-repeat-line-width>, <repeat-line-color>, <repeat-line-style>, <repeat-line-width>":
+    [
+      "Repite una secuencia de colores, estilos o grosores de los separadores de filas o columnas. El primer argumento fija cuántas veces se repite el patrón o deja que se ajuste con auto.",
+    ],
+  "snap-block() · float": [
+    "Ajusta un flotante a un borde del eje de bloque cuando queda suficientemente cerca. El argumento de longitud indica el alcance de la función para la colocación paginada.",
+  ],
+  "snap-inline() · float": [
+    "Ajusta un flotante a un borde del eje de escritura cuando queda suficientemente cerca. El eje depende del modo de escritura del elemento.",
+  ],
+  "wcag2() · contrast-color()": [
+    "Indica el umbral de contraste que debe aplicar contrast-color() según WCAG 2.1. El borrador admite una relación numérica o combinaciones como aa large.",
+  ],
+  "@container · fallback": [
+    "Comprueba la alternativa de posición aplicada a un contenedor anclado. Puede distinguir opciones de position-try-fallbacks para ajustar el estilo de su contenido según el lado en que termine colocado.",
+  ],
+  "block-step": [
+    "Abrevia la medida, la ubicación y el redondeo del ajuste vertical o lógico de una caja. El borrador permite alinear cajas de tamaños distintos con un mismo ritmo.",
+  ],
+  "block-step-size": [
+    "Fija la unidad a la que se ajusta el tamaño exterior de las cajas de bloque. Una unidad de 1.5rem permite que ocupen múltiplos de esa medida en el eje de bloque.",
+  ],
+  "block-step-insert": [
+    "Determina si el ajuste de block-step-size se aplica al margen, al relleno o al área de contenido. La ubicación cambia dónde se ve ese espacio.",
+  ],
+  "block-step-align": [
+    "Reparte el espacio de block-step-size alrededor de la caja. Con center se divide entre ambos lados y con start se añade al lado final.",
+  ],
+  "block-step-round": [
+    "Decide si la caja se ajusta al múltiplo superior, inferior o más cercano. En el borrador, un empate con nearest se resuelve hacia arriba.",
+  ],
+  "line-grid": [
+    "Nombra una cuadrícula de líneas que puede compartirse entre cajas. El objetivo del borrador es alinear renglones en columnas o áreas de texto distintas.",
+  ],
+  "line-snap": [
+    "Ajusta la posición de las líneas de texto a la cuadrícula de líneas activa. Se combina con line-grid; son propiedades en borrador.",
+  ],
+  "box-snap": [
+    "Ajusta los bordes de una caja a la cuadrícula de líneas. Este borrador distingue la alineación de cajas de la alineación de renglones con line-snap.",
+  ],
+  "float-reference": [
+    "Selecciona qué caja toma como referencia un flotante. El borrador permite colocarlo con respecto a una página, columna o región, además de al flujo normal.",
+  ],
+  "float-defer": [
+    "Traslada un flotante de página o columna a otro fragmento. Un valor positivo cuenta hacia delante y uno negativo cuenta desde el final según las reglas del borrador.",
+  ],
+  "float-offset": [
+    "Propone desplazar un flotante con respecto al borde junto al que se colocó. Se usa junto a la posición de float en el modelo de flotantes paginados.",
+  ],
+  "flow-into": [
+    "Envía el contenido a un flujo con nombre. Las regiones que usan flow-from con ese nombre reciben el contenido por orden.",
+  ],
+  "flow-from": [
+    "Convierte una caja en receptora de un flujo registrado con flow-into. Si varias regiones usan el mismo nombre, el contenido puede continuar de una a otra.",
+  ],
+  "region-fragment": [
+    "Indica qué pasa con el contenido sobrante en la última región de un flujo. El valor auto respeta overflow y break corta el flujo como si pudiera continuar en otra región.",
+  ],
+  "image-animation": [
+    "Propone controlar la reproducción de imágenes con varios fotogramas, como GIF o PNG animados. Puedes combinarlo con una alternativa de movimiento reducido.",
+  ],
+  ":animated-image": [
+    "Selecciona elementos de imagen animados, incluso cuando la reproducción está en pausa. El borrador permite usarlo para mostrar controles solo donde resulten pertinentes.",
+  ],
+  "initial-letter-align": [
+    "Determina las métricas tipográficas que alinean una inicial destacada con las líneas vecinas. La elección depende del sistema de escritura.",
+  ],
+  "initial-letter-wrap": [
+    "Controla cómo rodea el texto una inicial destacada. El borrador incluye opciones que tienen en cuenta la forma de la letra y el espacio que la rodea.",
+  ],
+  "inline-sizing": [
+    "Controla el área donde se dibujan el fondo y los bordes de una caja en línea. El valor stretch del borrador hace que se extiendan hasta los límites usados para su alineación.",
+  ],
+  "line-fit-edge": [
+    "Elige las métricas tipográficas que contribuyen a calcular cuánto ocupa una caja en línea dentro del renglón, por ejemplo la altura de las mayúsculas o la línea base.",
+  ],
+  "margin-break": [
+    "Controla si los márgenes se conservan o se descartan junto a un salto de página, de columna o de línea. El borrador permite distinguir los dos lados del salto.",
+  ],
+  "marker-side": [
+    "Determina si una viñeta situada fuera del contenido sigue la dirección del elemento de lista o la de su contenedor. Es útil cuando una lista mezcla texto de izquierda a derecha y de derecha a izquierda.",
+  ],
+  "min-intrinsic-sizing": [
+    "Permite reducir a cero la contribución del tamaño mínimo intrínseco en condiciones concretas. El valor zero-if-scroll del borrador sirve para que el contenido largo de un contenedor desplazable no fuerce el crecimiento de su padre.",
+  ],
+  "ruby-merge": [
+    "Determina si las anotaciones ruby se colocan por separado sobre sus bases o comparten una caja. Si hay un salto de línea, se mantiene la relación entre la anotación y su base.",
+  ],
+  "text-decoration-skip-self": [
+    "Controla si las líneas decorativas que vienen de un antepasado atraviesan el elemento. El borrador permite elegir qué líneas se omiten, como el subrayado o el tachado.",
+  ],
+  "text-decoration-skip-box": [
+    "Controla qué cajas se saltan al dibujar la decoración del texto. Pertenece a un borrador de CSS Text Decoration.",
+  ],
+  "text-decoration-skip-spaces": [
+    "Controla si las líneas decorativas atraviesan los espacios. En el borrador se pueden tratar de forma distinta los espacios interiores y los situados en los extremos.",
+  ],
+  "text-emphasis-skip": [
+    "Selecciona los tipos de caracteres sobre los que se omiten marcas de énfasis tipográfico, como espacios o signos de puntuación.",
+  ],
+  "@supports-condition": [
+    "Da nombre a una prueba de soporte reutilizable en @supports o @when. Las declaraciones de su bloque se evalúan como prueba. La regla sigue en borrador.",
+  ],
+  "@location": [
+    "Asocia un nombre CSS a un patrón de URL. Otras reglas del borrador, como @navigation o :link-to(), pueden comprobar la misma ubicación usando ese nombre.",
+  ],
+  "@navigation": [
+    "Aplica estilos condicionales según la navegación del documento. El borrador permite comprobar ubicaciones de origen y destino, el tipo de navegación o su fase.",
+  ],
+  ":link-to()": [
+    "Selecciona enlaces cuyo destino coincide con una URL o un patrón nombrado. En el borrador se puede reutilizar un patrón definido con @location.",
+  ],
+  ":navigation-source": [
+    "Selecciona el elemento de origen de una navegación, cuando el navegador lo conoce. Puede servir para asociar estilos al enlace que inició el cambio de página.",
+  ],
+  "url-pattern()": [
+    "Expresa un patrón de URL que pueden usar las pruebas de navegación CSS. El patrón puede representar un grupo de rutas en vez de una dirección exacta.",
+  ],
+  "stripes()": [
+    "Define una lista de bandas de color y sus anchuras. Esta función del borrador representa bandas separadas, sin la transición gradual de un degradado.",
+  ],
+  "@font-face · font-size": [
+    "Descriptor del borrador para indicar los tamaños en los que se utiliza una cara. Se aplica al seleccionar la cara, mientras que la propiedad font-size solicita el tamaño del texto.",
+  ],
   "event-trigger": [
     "Declara un disparador de animación a partir de su nombre y los eventos que lo activan. Pertenece al borrador de Animation Triggers.",
   ],
@@ -778,7 +1000,54 @@ const eventConditions = {
     "al recibirse una pulsación de tecla. Su cadena opcional limita las teclas que activan el evento",
 };
 
+const snapTarget = {
+  ":snapped": "",
+  ":snapped-block": "en el eje de bloque",
+  ":snapped-inline": "en el eje de escritura",
+  ":snapped-x": "en el eje horizontal",
+  ":snapped-y": "en el eje vertical",
+};
+
+const directionalFocus = {
+  "nav-up": "arriba",
+  "nav-down": "abajo",
+  "nav-left": "a la izquierda",
+  "nav-right": "a la derecha",
+};
+
 export function cssReferenceContext(title, source) {
+  if (Object.hasOwn(snapTarget, title)) {
+    const axis = snapTarget[title];
+    return [
+      `Selector del borrador de Scroll Snap que identifica el elemento al que se ajusta el desplazamiento${axis ? ` ${axis}` : ""}. Comprueba el soporte y considera una consulta de contenedor scroll-state(snapped) para aplicar estilos según este estado.`,
+    ];
+  }
+  if (Object.hasOwn(directionalFocus, title)) {
+    return [
+      `Designa el destino del foco al navegar ${directionalFocus} en dispositivos con navegación direccional. El valor auto deja la decisión al navegador. La propiedad pertenece al borrador de CSS UI.`,
+    ];
+  }
+  const inset = /^(?:(row|column)-)?rule-inset(?:-(start|end))?$/.exec(title);
+  if (inset) {
+    const axis = { row: "las filas", column: "las columnas" }[inset[1]];
+    const edge = { start: "en su inicio", end: "en su final" }[inset[2]];
+    return [
+      `Ajusta la longitud de los separadores que se dibujan en el espacio entre ${axis || "filas y columnas"} ${edge || "por ambos extremos"}. Un valor positivo acorta el separador y uno negativo puede prolongarlo, según la geometría del cruce.`,
+    ];
+  }
+  const scriptMetric =
+    /^@font-face · (subscript|superscript)-(size|position)-override$/.exec(
+      title,
+    );
+  if (scriptMetric) {
+    const script =
+      scriptMetric[1] === "subscript" ? "subíndice" : "superíndice";
+    const metric =
+      scriptMetric[2] === "size" ? "el tamaño" : "el desplazamiento";
+    return [
+      `Cambia ${metric} que se usa al sintetizar un ${script} con font-variant-position. El primer valor corresponde al eje horizontal y el segundo, si se indica, al vertical.`,
+    ];
+  }
   if (
     source?.includes("/animation-triggers-1/") &&
     Object.hasOwn(eventConditions, title)

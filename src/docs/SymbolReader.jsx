@@ -51,6 +51,7 @@ export default function SymbolReader({ id, original, section }) {
   const [error, setError] = useState(false);
   const web = hasWebReference(id);
   const example = details?.example || webExampleById(id);
+  const introduction = details?.introSpanish || details?.intro;
   const entry = original || details;
   usePageTitle(entry?.title || "Referencia");
   useEffect(() => {
@@ -163,11 +164,12 @@ export default function SymbolReader({ id, original, section }) {
               .join(" · ")}
           </p>
         )}
-        {entry.detail && (!details || details.locale !== "es") && (
-          <p>{entry.detail}</p>
-        )}
+        {entry.detail &&
+          (!details || (details.locale !== "es" && !details.introSpanish)) && (
+            <p>{entry.detail}</p>
+          )}
         {!entry.detail && !web && entry.summary && (
-          <p lang="en">{entry.summary}</p>
+          <p lang={entry.locale || "en"}>{entry.summary}</p>
         )}
         {details?.locale === "en-US" && (
           <small className="doc-original-language">
@@ -176,12 +178,12 @@ export default function SymbolReader({ id, original, section }) {
               : "Referencia ampliada en inglés"}
           </small>
         )}
-        {details && (
+        {introduction?.length > 0 && (
           <div
             lang={details.introSpanish ? "es" : details.locale}
             className="doc-reference-intro"
           >
-            {(details.introSpanish || details.intro).map((paragraph, index) =>
+            {introduction.map((paragraph, index) =>
               paragraph === entry.detail &&
               details.locale !== "es" &&
               !details.introSpanish ? null : (
@@ -242,13 +244,15 @@ export default function SymbolReader({ id, original, section }) {
                     <dt>
                       <a href={source} target="_blank" rel="noreferrer">
                         {elements
-                          .map((element) =>
-                            /^[a-z][a-z0-9-]*$/.test(element)
+                          .map((element) => {
+                            if (element === "HTML elements")
+                              return "Elementos HTML";
+                            if (element === "form-associated custom elements")
+                              return "Elementos personalizados asociados a formularios";
+                            return /^[a-z][a-z0-9-]*$/.test(element)
                               ? `<${element}>`
-                              : element === "HTML elements"
-                                ? "Elementos HTML"
-                                : element,
-                          )
+                              : element;
+                          })
                           .join(", ")}
                       </a>
                     </dt>

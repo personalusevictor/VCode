@@ -1,4 +1,70 @@
 {
+  "php_version_id": {
+    "summary": "Representa la versión de PHP como entero para compararla con una versión mínima.",
+    "description": [
+      "Se calcula como mayor × 10000 + menor × 100 + revisión. Por ejemplo, PHP 8.3.2 se representa como 80302.",
+      "Úsalo para decidir si el código puede usar una característica de una versión concreta. La disponibilidad de una extensión se comprueba aparte con extension_loaded()."
+    ],
+    "examples": [
+      {
+        "title": "Reconstruye el número de versión",
+        "code": "<?php\n$id = PHP_MAJOR_VERSION * 10000\n    + PHP_MINOR_VERSION * 100\n    + PHP_RELEASE_VERSION;\n\nvar_export($id === PHP_VERSION_ID);",
+        "output": "true",
+        "runnable": true
+      }
+    ],
+    "related": ["PHP_VERSION", "version_compare", "extension_loaded"]
+  },
+  "php_int_max": {
+    "summary": "Mayor valor que puede almacenar el tipo int de esta compilación de PHP.",
+    "description": [
+      "El límite depende de la arquitectura de la compilación. Consulta PHP_INT_SIZE para conocer el tamaño de int y PHP_INT_MIN para su límite inferior.",
+      "Una operación aritmética que rebasa el rango de int se evalúa como float. Con números grandes puede perderse exactitud."
+    ],
+    "examples": [
+      {
+        "title": "Comprueba el tipo antes y después del límite",
+        "code": "<?php\necho get_debug_type(PHP_INT_MAX), PHP_EOL;\necho get_debug_type(PHP_INT_MAX + 1), PHP_EOL;",
+        "output": "int\nfloat",
+        "runnable": true
+      }
+    ],
+    "related": ["PHP_INT_MIN", "PHP_INT_SIZE", "get_debug_type"]
+  },
+  "php_int_min": {
+    "summary": "Menor valor que puede almacenar el tipo int de esta compilación de PHP.",
+    "description": [
+      "En las compilaciones habituales equivale a -PHP_INT_MAX - 1. Al bajar del límite, una operación aritmética puede producir un float en lugar de un entero exacto."
+    ],
+    "related": ["PHP_INT_MAX", "PHP_INT_SIZE"]
+  },
+  "php_int_size": {
+    "summary": "Cantidad de bytes que ocupa un valor del tipo int en la compilación de PHP.",
+    "description": [
+      "El valor habitual es 4 en una compilación de 32 bits y 8 en una de 64 bits. Esta constante describe el tipo numérico, sin contar el espacio que PHP usa para gestionar una variable."
+    ],
+    "related": ["PHP_INT_MIN", "PHP_INT_MAX"]
+  },
+  "php_sapi": {
+    "summary": "Identifica la interfaz desde la que se ejecuta PHP.",
+    "description": [
+      "Por ejemplo, cli corresponde a la línea de comandos, cli-server al servidor incorporado y fpm-fcgi a PHP-FPM. php_sapi_name() entrega el mismo identificador en esta ejecución."
+    ],
+    "related": ["php_sapi_name", "PHP_BINARY", "PHP_OS_FAMILY"]
+  },
+  "recursivedirectoryiterator": {
+    "summary": "Recorre un directorio y permite entrar en sus subdirectorios.",
+    "description": [
+      "RecursiveDirectoryIterator expone las entradas del directorio actual y devuelve un iterador hijo cuando la entrada puede recorrerse. Envuelve la instancia con RecursiveIteratorIterator para recorrer el árbol en un solo foreach.",
+      "Usa FilesystemIterator::SKIP_DOTS para omitir las entradas «.» y «..». Los enlaces simbólicos a directorios solo se siguen si se solicita con FOLLOW_SYMLINKS. Si activas esa opción, controla los ciclos."
+    ],
+    "related": [
+      "RecursiveIteratorIterator",
+      "FilesystemIterator",
+      "RecursiveDirectoryIterator::hasChildren",
+      "RecursiveDirectoryIterator::getChildren"
+    ]
+  },
   "session_status": {
     "summary": "Indica si PHP tiene una sesión activa en la petición actual.",
     "description": [
