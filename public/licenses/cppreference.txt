@@ -1,0 +1,10 @@
+cppreference contributors
+
+English reference excerpts are adapted from cppreference.com, using the HTML
+archive dated 9 February 2025. VCode converts article markup to plain text,
+selects portions relevant to its C++20 index and keeps a link to each article.
+
+Archive: https://en.cppreference.com/Cppreference:Archives
+Attribution and license: https://en.cppreference.com/Cppreference:Copyrights
+Creative Commons Attribution-ShareAlike 3.0 Unported:
+https://creativecommons.org/licenses/by-sa/3.0/

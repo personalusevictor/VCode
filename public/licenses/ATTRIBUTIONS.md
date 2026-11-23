@@ -21,3 +21,15 @@ Application dependencies and their licenses are distributed through npm and list
 - three: three-LICENSE.txt
 - lucide-react: lucide-react-LICENSE.txt
 - GSAP: GSAP-NOTICE.txt; terms at https://gsap.com/standard-license
+
+### Reference documentation
+
+Java SE 21 reference prose is adapted from OpenJDK source documentation at
+[jdk-21+35](https://github.com/openjdk/jdk21/tree/jdk-21%2B35). The import
+preserves source links and uses plain text for the app. Copyright notices and
+source code are available at the linked files. See [OpenJDK](openjdk.txt)
+for the GNU GPL version 2 and Classpath Exception notices.
+
+Additional C++ reference prose is adapted from cppreference.com under
+[CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
+See [cppreference](cppreference.txt) for the source archive and attribution.
