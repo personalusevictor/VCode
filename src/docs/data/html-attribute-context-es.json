@@ -1,0 +1,556 @@
+{
+  "purposes": {
+    "abbr": {
+      "Alternative label to use for the header cell when referencing the cell in other contexts": "Etiqueta abreviada de la celda de encabezado para usarla al referirse a ella desde otro contexto."
+    },
+    "accept": {
+      "Hint for expected file type in file upload controls": "Orienta al selector de archivos sobre qué formatos acepta el control. Valida el archivo también al recibirlo."
+    },
+    "accept-charset": {
+      "Character encodings to use for form submission": "Especifica la codificación de caracteres con la que se envía el formulario."
+    },
+    "accesskey": {
+      "Keyboard shortcut to activate or focus element": "Sugiere una tecla de acceso rápido para activar el elemento o llevar el foco a él."
+    },
+    "action": {
+      "URL to use for form submission": "Dirección a la que se envían los datos del formulario."
+    },
+    "allow": {
+      "Permissions policy to be applied to the iframe's contents": "Declara qué funciones del navegador quedan habilitadas para el documento del iframe."
+    },
+    "allowfullscreen": {
+      "Whether to allow the iframe's contents to use requestFullscreen()": "Permite que el contenido del iframe solicite el modo de pantalla completa."
+    },
+    "alpha": {
+      "Allow the color's alpha component to be set": "Permite ajustar la transparencia del color seleccionado."
+    },
+    "alt": {
+      "Replacement text for use when images are not available": "Texto que sustituye la imagen y comunica para qué sirve cuando no se puede ver."
+    },
+    "as": {
+      "Destination for a preload request (for rel=\"preload\" and rel=\"modulepreload\")": "Indica qué clase de recurso se precarga con el enlace."
+    },
+    "async": {
+      "Execute script when available, without blocking while fetching": "Ejecuta el script cuando está disponible. Su descarga no detiene el análisis del HTML."
+    },
+    "autocapitalize": {
+      "Recommended autocapitalization behavior (for supported input methods)": "Sugiere cómo usar mayúsculas al escribir con un método de entrada compatible."
+    },
+    "autocomplete": {
+      "Default setting for autofill feature for controls in the form": "Configura el comportamiento predeterminado del autocompletado en los controles del formulario.",
+      "Hint for form autofill feature": "Identifica qué dato puede completar el navegador en este control."
+    },
+    "autocorrect": {
+      "Recommended autocorrection behavior (for supported input methods)": "Sugiere si el sistema de entrada debe corregir el texto al escribir."
+    },
+    "autofocus": {
+      "Automatically focus the element when the page is loaded": "Lleva el foco al elemento al cargar la página o al mostrar el diálogo o panel que lo contiene."
+    },
+    "autoplay": {
+      "Hint that the media resource can be started automatically when the page is loaded": "Solicita que el audio o vídeo empiece automáticamente. El navegador puede exigir interacción previa."
+    },
+    "blocking": {
+      "Whether the element is potentially render-blocking": "Indica qué procesamiento puede bloquear este recurso, como el primer renderizado."
+    },
+    "charset": {
+      "Character encoding declaration": "Declara la codificación de caracteres del documento HTML."
+    },
+    "checked": {
+      "Whether the control is checked": "Marca inicialmente una casilla o selecciona inicialmente un botón de opción."
+    },
+    "cite": {
+      "Link to the source of the quotation or more information about the edit": "Enlaza a la fuente de la cita o a información sobre el cambio de contenido."
+    },
+    "class": {
+      "Classes to which the element belongs": "Identifica las clases del elemento para estilos y otras búsquedas."
+    },
+    "closedby": {
+      "Which user actions will close the dialog": "Determina qué acciones de la persona pueden cerrar el diálogo."
+    },
+    "color": {
+      "Color to use when customizing a site's icon (for rel=\"mask-icon\")": "Indica el color usado por algunos navegadores con un icono de tipo mask-icon."
+    },
+    "colorspace": {
+      "The color space of the serialized color": "Selecciona el espacio de color en el que se representa el valor del control."
+    },
+    "cols": {
+      "Maximum number of characters per line": "Define el ancho visible aproximado del área de texto en caracteres."
+    },
+    "colspan": {
+      "Number of columns that the cell is to span": "Indica cuántas columnas ocupa la celda."
+    },
+    "command": {
+      "Indicates to the targeted element which action to take.": "Especifica la acción que el botón solicita al elemento de destino."
+    },
+    "commandfor": {
+      "Targets another element to be invoked.": "Identifica el elemento sobre el que actúa el botón."
+    },
+    "content": {
+      "Value of the element": "Proporciona el valor de los metadatos declarados con meta."
+    },
+    "contenteditable": {
+      "Whether the element is editable": "Controla si la persona puede editar el contenido del elemento."
+    },
+    "controls": {
+      "Show user agent controls": "Pide al navegador que muestre los controles de reproducción disponibles."
+    },
+    "coords": {
+      "Coordinates for the shape to be created in an image map": "Define las coordenadas de una zona del mapa de imagen según la forma escogida."
+    },
+    "crossorigin": {
+      "How the element handles crossorigin requests": "Controla cómo se solicita el recurso cuando está en otro origen."
+    },
+    "data": {
+      "Address of the resource": "Dirección del recurso que incrusta object."
+    },
+    "datetime": {
+      "Date and (optionally) time of the change": "Indica la fecha y, opcionalmente, la hora del cambio.",
+      "Machine-readable value": "Proporciona una fecha, hora, duración u otro valor temporal en un formato reconocible por programas."
+    },
+    "decoding": {
+      "Decoding hint to use when processing this image for presentation": "Sugiere cuándo puede decodificarse la imagen para presentarla."
+    },
+    "default": {
+      "Enable the track if no other text track is more suitable": "Activa esta pista si no hay otra que encaje mejor con las preferencias de la persona."
+    },
+    "defer": {
+      "Defer script execution": "En un script clásico externo, aplaza su ejecución hasta que termine de analizarse el documento."
+    },
+    "dir": {
+      "The text directionality of the element": "Indica en qué dirección se presenta el texto del elemento."
+    },
+    "dirname": {
+      "Name of form control to use for sending the element's directionality in form submission": "Nombre del campo adicional con el que se envía la dirección del texto del control."
+    },
+    "disabled": {
+      "Whether the form control is disabled": "Deshabilita el control de formulario o la opción.",
+      "Whether the descendant form controls, except any inside legend, are disabled": "Deshabilita los controles del grupo salvo los que estén en su primer elemento legend.",
+      "Whether the link is disabled": "Deshabilita el recurso enlazado cuando el tipo de enlace lo permite."
+    },
+    "download": {
+      "Whether to download the resource instead of navigating to it, and its filename if so": "Solicita descargar el recurso en lugar de navegar a él. Puede sugerir un nombre de archivo."
+    },
+    "draggable": {
+      "Whether the element is draggable": "Indica si el elemento puede arrastrarse."
+    },
+    "enctype": {
+      "Entry list encoding type to use for form submission": "Selecciona cómo se codifican los datos del formulario al enviarlos."
+    },
+    "enterkeyhint": {
+      "Hint for selecting an enter key action": "Sugiere la acción que muestra la tecla de entrada del teclado en pantalla."
+    },
+    "fetchpriority": {
+      "Sets the priority for fetches initiated by the element": "Da una prioridad relativa a la descarga del recurso del elemento."
+    },
+    "for": {
+      "Associate the label with form control": "Asocia la etiqueta con un control mediante el identificador del control.",
+      "Specifies controls from which the output was calculated": "Identifica los controles que intervienen en el cálculo del resultado.",
+      "Updates existing content": "Identifica contenido existente que actualizará la plantilla."
+    },
+    "form": {
+      "Associates the element with a form element": "Asocia el elemento con un formulario, incluso si está fuera de él."
+    },
+    "formaction": {
+      "URL to use for form submission": "Sobrescribe la URL de destino del formulario cuando se activa este control."
+    },
+    "formenctype": {
+      "Entry list encoding type to use for form submission": "Sobrescribe la codificación del formulario cuando se activa este control."
+    },
+    "formmethod": {
+      "Variant to use for form submission": "Sobrescribe el método del formulario cuando se activa este control."
+    },
+    "formnovalidate": {
+      "Bypass form control validation for form submission": "Permite que el formulario se envíe desde este control sin la validación nativa."
+    },
+    "formtarget": {
+      "Navigable for form submission": "Indica dónde se muestra la respuesta al enviar el formulario con este control."
+    },
+    "headers": {
+      "The header cells for this cell": "Identifica las celdas de encabezado asociadas con esta celda."
+    },
+    "headingoffset": {
+      "Offsets heading levels for descendants": "Ajusta el nivel semántico de los encabezados descendientes."
+    },
+    "headingreset": {
+      "Prevents a heading offset computation from traversing beyond the element with the attribute": "Impide que el ajuste de niveles de encabezado busque más allá del elemento."
+    },
+    "height": {
+      "Vertical dimension": "Fija la dimensión vertical del recurso o del área reservada para él."
+    },
+    "hidden": {
+      "Whether the element is relevant": "Indica si el elemento debe quedar oculto en su estado actual."
+    },
+    "high": {
+      "Low limit of high range": "Define a partir de qué valor empieza el intervalo alto del medidor."
+    },
+    "href": {
+      "Address of the hyperlink": "Dirección de destino cuando se sigue el enlace.",
+      "Document base URL": "Dirección base con la que se resuelven las URL relativas del documento."
+    },
+    "hreflang": {
+      "Language of the linked resource": "Identifica el idioma del recurso al que apunta el enlace."
+    },
+    "http-equiv": {
+      "Pragma directive": "Selecciona una directiva que el navegador interpreta a partir de los metadatos."
+    },
+    "id": {
+      "The element's ID": "Identificador único del elemento dentro de su árbol."
+    },
+    "imagesizes": {
+      "Image sizes for different page layouts (for rel=\"preload\")": "Indica el tamaño esperado de la imagen precargada según el diseño de la página."
+    },
+    "imagesrcset": {
+      "Images to use in different situations, e.g., high-resolution displays, small monitors, etc. (for rel=\"preload\")": "Enumera variantes de la imagen que se precarga para que el navegador elija la adecuada."
+    },
+    "inert": {
+      "Whether the element is inert.": "Hace que el elemento y sus descendientes queden fuera de la interacción normal."
+    },
+    "inputmode": {
+      "Hint for selecting an input modality": "Sugiere la clase de teclado o método de entrada más cómodo para el dato esperado."
+    },
+    "integrity": {
+      "Integrity metadata used in Subresource Integrity checks [SRI]": "Incluye hashes que el navegador puede comparar con el recurso descargado para verificar su integridad."
+    },
+    "is": {
+      "Creates a customized built-in element": "Identifica el nombre registrado de un elemento incorporado personalizado."
+    },
+    "ismap": {
+      "Whether the image is a server-side image map": "Indica que las coordenadas del clic en la imagen se envían como parte del enlace."
+    },
+    "itemid": {
+      "Global identifier for a microdata item": "Identifica globalmente un elemento de microdatos mediante una URL."
+    },
+    "itemprop": {
+      "Property names of a microdata item": "Da nombre a las propiedades que aporta el elemento al elemento de microdatos."
+    },
+    "itemref": {
+      "Referenced elements": "Incorpora al elemento de microdatos propiedades de otros elementos mediante sus identificadores."
+    },
+    "itemscope": {
+      "Introduces a microdata item": "Marca el inicio de un elemento de microdatos."
+    },
+    "itemtype": {
+      "Item types of a microdata item": "Indica los tipos a los que pertenece el elemento de microdatos."
+    },
+    "kind": {
+      "The type of text track": "Distingue pistas de subtítulos, descripciones, capítulos u otros datos."
+    },
+    "label": {
+      "User-visible label": "Texto que identifica la opción, grupo o pista ante la persona."
+    },
+    "lang": {
+      "Language of the element": "Declara el idioma del contenido del elemento."
+    },
+    "list": {
+      "List of autocomplete options": "Identifica el datalist del que se obtienen sugerencias para el campo."
+    },
+    "loading": {
+      "Used when determining loading deferral": "Indica si el navegador puede aplazar la carga del recurso hasta que esté cerca de la zona visible."
+    },
+    "loop": {
+      "Whether to loop the media resource": "Reinicia la reproducción al llegar al final del recurso."
+    },
+    "low": {
+      "High limit of low range": "Define hasta qué valor llega el intervalo bajo del medidor."
+    },
+    "max": {
+      "Maximum value": "Mayor valor permitido en el campo.",
+      "Upper bound of range": "Extremo superior de la escala del elemento."
+    },
+    "maxlength": {
+      "Maximum length of value": "Limita la longitud del valor que puede introducir la persona."
+    },
+    "media": {
+      "Applicable media": "Define en qué medios o condiciones se aplica el recurso o los metadatos."
+    },
+    "method": {
+      "Variant to use for form submission": "Selecciona el método de envío del formulario."
+    },
+    "min": {
+      "Minimum value": "Menor valor permitido en el campo.",
+      "Lower bound of range": "Extremo inferior de la escala del medidor."
+    },
+    "minlength": {
+      "Minimum length of value": "Exige una longitud mínima al valor que introduce la persona."
+    },
+    "multiple": {
+      "Whether to allow multiple values": "Permite introducir o seleccionar más de un valor."
+    },
+    "muted": {
+      "Whether to mute the media resource by default": "Silencia inicialmente el audio o vídeo."
+    },
+    "name": {
+      "Name of the element to use for form submission and in the form.elements API": "Nombre del control para el envío y para acceder a él desde form.elements.",
+      "Name of group of mutually-exclusive details elements": "Agrupa secciones details para que como máximo se abra una a la vez.",
+      "Name of form to use in the document.forms API": "Nombre con el que puede localizarse el formulario en document.forms.",
+      "Name of content navigable": "Da nombre al contexto de navegación del contenido incrustado.",
+      "Name of image map to reference from the usemap attribute": "Nombre del mapa de imagen que se referencia con usemap.",
+      "Metadata name": "Identifica el metadato que contiene el elemento meta.",
+      "Name of shadow tree slot": "Identifica el slot del árbol de sombra que recibe contenido con ese nombre."
+    },
+    "nomodule": {
+      "Prevents execution in user agents that support module scripts": "Evita que se ejecute el script clásico en navegadores que admiten módulos."
+    },
+    "nonce": {
+      "Cryptographic nonce used in Content Security Policy checks [CSP]": "Valor criptográfico que una política de seguridad de contenido puede usar para autorizar el recurso."
+    },
+    "novalidate": {
+      "Bypass form control validation for form submission": "Permite enviar el formulario sin ejecutar la validación nativa de los controles."
+    },
+    "open": {
+      "Whether the details are visible": "Hace que el contenido desplegable de details esté abierto.",
+      "Whether the dialog box is showing": "Indica que el diálogo se muestra."
+    },
+    "optimum": {
+      "Optimum value in gauge": "Marca en la escala el valor que se considera óptimo."
+    },
+    "pattern": {
+      "Pattern to be matched by the form control's value": "Expresión regular que define qué valores acepta el control."
+    },
+    "ping": {
+      "URLs to ping": "Direcciones a las que el navegador puede enviar una notificación cuando se sigue el enlace."
+    },
+    "placeholder": {
+      "User-visible label to be placed within the form control": "Muestra una pista dentro del campo vacío. Usa una etiqueta visible para identificar el campo."
+    },
+    "playsinline": {
+      "Encourage the user agent to display video content within the element's playback area": "Solicita que el vídeo permanezca en su área en vez de abrirse automáticamente a pantalla completa."
+    },
+    "popover": {
+      "Makes the element a popover element": "Declara un panel emergente que puede mostrarse en la capa superior del navegador."
+    },
+    "popovertarget": {
+      "Targets a popover element to toggle, show, or hide": "Identifica el panel emergente al que controla el botón."
+    },
+    "popovertargetaction": {
+      "Indicates whether a targeted popover element is to be toggled, shown, or hidden": "Selecciona si el control muestra, oculta o alterna el panel emergente."
+    },
+    "poster": {
+      "Poster frame to show prior to video playback": "Dirección de la imagen visible antes de que se reproduzca el vídeo."
+    },
+    "preload": {
+      "Hints how much buffering the media resource will likely need": "Sugiere cuántos datos del recurso multimedia debe preparar el navegador de antemano."
+    },
+    "readonly": {
+      "Whether to allow the value to be edited by the user": "Impide editar el valor sin deshabilitar el control.",
+      "Affects willValidate, plus any behavior added by the custom element author": "Afecta a willValidate y puede activar el comportamiento que defina el autor del elemento personalizado."
+    },
+    "referrerpolicy": {
+      "Referrer policy for fetches initiated by the element": "Selecciona cuánta información sobre la página de origen se envía al solicitar el recurso."
+    },
+    "rel": {
+      "Relationship between the location in the document containing the hyperlink and the destination resource": "Describe la relación entre el enlace y su destino.",
+      "Relationship between the document containing the hyperlink and the destination resource": "Describe la relación entre el enlace y su destino."
+    },
+    "required": {
+      "Whether the control is required for form submission": "Exige un valor o una selección válida al enviar el formulario."
+    },
+    "reversed": {
+      "Number the list backwards": "Ordena los números de la lista de mayor a menor."
+    },
+    "rows": {
+      "Number of lines to show": "Configura cuántas líneas de texto muestra el control."
+    },
+    "rowspan": {
+      "Number of rows that the cell is to span": "Indica cuántas filas ocupa la celda."
+    },
+    "sandbox": {
+      "Security rules for nested content": "Aplica restricciones al contenido incrustado y permite levantar algunas de forma selectiva."
+    },
+    "scope": {
+      "Specifies which cells the header cell applies to": "Indica qué filas, columnas o grupos describe la celda de encabezado."
+    },
+    "selected": {
+      "Whether the option is selected by default": "Selecciona esta opción inicialmente."
+    },
+    "shadowrootclonable": {
+      "Sets clonable on a declarative shadow root": "Permite incluir la raíz de sombra declarativa al clonar el elemento anfitrión."
+    },
+    "shadowrootcustomelementregistry": {
+      "Enables declarative shadow roots to indicate they will use a custom element registry": "Indica que la raíz de sombra declarativa usará su propio registro de elementos personalizados."
+    },
+    "shadowrootdelegatesfocus": {
+      "Sets delegates focus on a declarative shadow root": "Pide delegar el foco desde el elemento anfitrión hacia un elemento del árbol de sombra."
+    },
+    "shadowrootmode": {
+      "Enables streaming declarative shadow roots": "Crea una raíz de sombra declarativa y elige si es abierta o cerrada."
+    },
+    "shadowrootserializable": {
+      "Sets serializable on a declarative shadow root": "Permite incluir la raíz de sombra al serializar el HTML con las opciones que correspondan."
+    },
+    "shadowrootslotassignment": {
+      "Sets slot assignment on a declarative shadow root": "Elige si los nodos se asignan a los slots por nombre o mediante una llamada explícita."
+    },
+    "shape": {
+      "The kind of shape to be created in an image map": "Selecciona si la zona del mapa de imagen es un círculo, un polígono, un rectángulo o el área predeterminada."
+    },
+    "size": {
+      "Size of the control": "Ajusta el ancho visible de input o cuántas opciones se muestran a la vez en select."
+    },
+    "sizes": {
+      "Sizes of the icons (for rel=\"icon\")": "Enumera las dimensiones de los iconos enlazados.",
+      "Image sizes for different page layouts": "Indica el espacio que ocupará la imagen según el diseño de la página."
+    },
+    "slot": {
+      "The element's desired slot": "Identifica el slot del componente al que se asigna este elemento."
+    },
+    "span": {
+      "Number of columns spanned by the element": "Indica cuántas columnas representa un elemento col o colgroup."
+    },
+    "spellcheck": {
+      "Whether the element is to have its spelling and grammar checked": "Sugiere si el navegador debe revisar la ortografía y la gramática."
+    },
+    "src": {
+      "Address of the resource": "Dirección del recurso que el elemento carga."
+    },
+    "srcdoc": {
+      "A document to render in the iframe": "Proporciona el HTML del documento que se muestra dentro del iframe."
+    },
+    "srclang": {
+      "Language of the text track": "Idioma del texto de la pista multimedia."
+    },
+    "srcset": {
+      "Images to use in different situations, e.g., high-resolution displays, small monitors, etc.": "Ofrece archivos de imagen alternativos para que el navegador elija según el tamaño y la densidad de pantalla."
+    },
+    "start": {
+      "Starting value of the list": "Determina el número con el que comienza la lista ordenada."
+    },
+    "step": {
+      "Granularity to be matched by the form control's value": "Controla la separación entre valores numéricos o temporales admitidos en el campo."
+    },
+    "style": {
+      "Presentational and formatting instructions": "Aplica declaraciones CSS directamente al elemento."
+    },
+    "switch": {
+      "Whether the control is a switch": "Indica que el control representa un interruptor."
+    },
+    "tabindex": {
+      "Whether the element is focusable and sequentially focusable, and the relative order of the element for the purposes of sequential focus navigation": "Controla si el elemento admite foco y cómo participa en el recorrido con el teclado."
+    },
+    "target": {
+      "Navigable for hyperlink navigation": "Selecciona dónde se abre el enlace, por ejemplo en la pestaña actual o en otra.",
+      "Default navigable for hyperlink navigation and form submission": "Determina el destino predeterminado de los enlaces y los envíos de formularios.",
+      "Navigable for form submission": "Selecciona dónde se presenta la respuesta del formulario."
+    },
+    "title": {
+      "Advisory information for the element": "Añade información complementaria sobre el elemento.",
+      "Full term or expansion of abbreviation": "Contiene la forma desarrollada de la abreviatura o el término que se define.",
+      "Description of pattern (when used with pattern attribute)": "Describe el formato esperado por pattern en lenguaje comprensible.",
+      "Title of the link": "Da un título al recurso enlazado.",
+      "CSS style sheet set name": "Identifica el conjunto de hojas de estilo al que pertenece esta hoja."
+    },
+    "translate": {
+      "Whether the element is to be translated when the page is localized": "Indica si el contenido y los atributos traducibles se deben localizar."
+    },
+    "type": {
+      "Hint for the type of the referenced resource": "Sugiere el tipo del recurso al que apunta el enlace.",
+      "Type of button": "Determina si el botón envía el formulario, lo restaura o realiza una acción propia.",
+      "Type of embedded resource": "Declara el tipo MIME del recurso que se incrusta.",
+      "Type of form control": "Selecciona el tipo de campo, con sus controles y reglas de validación.",
+      "Kind of list marker": "Selecciona el estilo de numeración de una lista ordenada.",
+      "Type of script": "Selecciona si el elemento contiene un script clásico, un módulo u otro tipo de datos."
+    },
+    "usemap": {
+      "Name of image map to use": "Identifica el mapa que define las zonas activas de la imagen."
+    },
+    "value": {
+      "Value to be used for form submission": "Dato que se envía cuando el botón o la opción participa en el formulario.",
+      "Machine-readable value": "Proporciona la representación del contenido que pueden leer los programas.",
+      "Value of the form control": "Configura el valor inicial del control según el tipo de campo.",
+      "Ordinal value of the list item": "Asigna un número explícito a un elemento de una lista ordenada.",
+      "Current value of the element": "Indica el estado actual del medidor o del indicador de progreso."
+    },
+    "width": {
+      "Horizontal dimension": "Fija la dimensión horizontal del recurso o del área reservada para él."
+    },
+    "wrap": {
+      "How the value of the form control is to be wrapped for form submission": "Controla si se añaden saltos de línea al texto enviado por el formulario según el ancho del campo."
+    },
+    "writingsuggestions": {
+      "Whether the element can offer writing suggestions or not.": "Indica si se ofrecen sugerencias de escritura en las zonas donde la persona puede editar texto."
+    }
+  },
+  "values": {
+    "Text*": "Texto. Consulta las restricciones del elemento.",
+    "Set of comma-separated tokens* consisting of valid MIME type strings with no parameters or audio/*, video/*, or image/*": "Lista separada por comas de tipos MIME sin parámetros o patrones como audio/*, video/* e image/*. También admite extensiones de archivo válidas, como .pdf.",
+    "ASCII case-insensitive match for \"UTF-8\"": "UTF-8. Se admiten diferencias de mayúsculas y minúsculas ASCII.",
+    "Ordered set of unique space-separated tokens, none of which are identical to another, each consisting of one code point in length": "Lista ordenada de valores únicos separados por espacios. Cada valor tiene un punto de código.",
+    "Valid non-empty URL potentially surrounded by spaces": "URL válida y no vacía. Puede tener espacios alrededor.",
+    "Serialized permissions policy": "Política de permisos en formato de texto.",
+    "Boolean attribute": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+    "Preload destination, for rel=\"preload\"; module preload destination, for rel=\"modulepreload\"": "Destino admitido para la precarga, como script, style, font o image, según el tipo de enlace.",
+    "\"on\"; \"off\"; \"none\"; \"sentences\"; \"words\"; \"characters\"": "«on», «off», «none», «sentences», «words», «characters».",
+    "\"on\"; \"off\"": "«on», «off».",
+    "Autofill field name and related tokens*": "Nombre del dato de autocompletado y, si procede, palabras clave que lo acotan.",
+    "\"on\"; \"off\"; the empty string": "«on», «off», la cadena vacía.",
+    "Unordered set of unique space-separated tokens*": "Lista sin orden de valores únicos separados por espacios.",
+    "\"utf-8\"": "«utf-8».",
+    "Valid URL potentially surrounded by spaces": "URL válida, con espacios opcionales alrededor.",
+    "Set of space-separated tokens": "Lista de valores separados por espacios.",
+    "\"any\"; \"closerequest\"; \"none\";": "«any», «closerequest», «none».",
+    "CSS <color>": "Color CSS válido.",
+    "\"limited-srgb\"; \"display-p3\"": "«limited-srgb», «display-p3».",
+    "Valid non-negative integer greater than zero": "Entero mayor que cero.",
+    "\"toggle-popover\"; \"show-popover\"; \"hide-popover\"; \"close\"; \"request-close\"; \"show-modal\"; a custom command keyword": "«toggle-popover», «show-popover», «hide-popover», «close», «request-close», «show-modal» o un comando personalizado que empiece con dos guiones.",
+    "ID*": "Identificador de elemento. Consulta las restricciones del atributo.",
+    "\"true\"; \"false\"; \"plaintext-only\"; the empty string": "«true», «false», «plaintext-only», la cadena vacía.",
+    "Valid list of floating-point numbers*": "Lista válida de números de punto flotante.",
+    "\"anonymous\"; \"use-credentials\"; the empty string": "«anonymous», «use-credentials», la cadena vacía.",
+    "Valid date string with optional time": "Fecha válida con hora opcional.",
+    "Valid month string, valid date string, valid yearless date string, valid time string, valid local date and time string, valid time-zone offset string, valid global date and time string, valid week string, valid non-negative integer, or valid duration string": "Mes, fecha, fecha sin año, hora, fecha y hora locales, desplazamiento de zona horaria, fecha y hora globales, semana, entero no negativo o duración, en un formato HTML válido.",
+    "\"sync\"; \"async\"; \"auto\"": "«sync», «async», «auto».",
+    "\"ltr\"; \"rtl\"; \"auto\"": "«ltr», «rtl», «auto».",
+    "\"ltr\"; \"rtl\"": "«ltr», «rtl».",
+    "Text": "Texto.",
+    "\"true\"; \"false\"": "«true», «false».",
+    "\"application/x-www-form-urlencoded\"; \"multipart/form-data\"; \"text/plain\"": "«application/x-www-form-urlencoded», «multipart/form-data», «text/plain».",
+    "\"enter\"; \"done\"; \"go\"; \"next\"; \"previous\"; \"search\"; \"send\"": "«enter», «done», «go», «next», «previous», «search», «send».",
+    "\"auto\"; \"high\"; \"low\"": "«auto», «high», «low».",
+    "Unordered set of unique space-separated tokens consisting of IDs*": "Lista sin orden de identificadores únicos separados por espacios.",
+    "\"get\"; \"post\"; \"dialog\"": "«get», «post», «dialog».",
+    "Valid navigable target name or keyword": "Nombre válido de un contexto de navegación o palabra reservada como _self o _blank.",
+    "Valid non-negative integer between 0 and 8": "Entero del 0 al 8, inclusive.",
+    "Valid non-negative integer": "Entero no negativo.",
+    "\"until-found\"; \"hidden\"; the empty string": "«until-found», «hidden», la cadena vacía.",
+    "Valid floating-point number*": "Número válido de punto flotante. El elemento puede imponer restricciones adicionales.",
+    "Valid BCP 47 language tag": "Etiqueta de idioma BCP 47 válida, como es o es-ES.",
+    "\"content-type\"; \"default-style\"; \"refresh\"; \"x-ua-compatible\"; \"content-security-policy\"": "«content-type», «default-style», «refresh», «x-ua-compatible», «content-security-policy».",
+    "Valid source size list": "Lista válida de tamaños de origen de una imagen.",
+    "Comma-separated list of image candidate strings": "Lista de candidatos de imagen separados por comas. Cada candidato puede incluir un descriptor de ancho o densidad.",
+    "\"none\"; \"text\"; \"tel\"; \"email\"; \"url\"; \"numeric\"; \"decimal\"; \"search\"": "«none», «text», «tel», «email», «url», «numeric», «decimal», «search».",
+    "Valid custom element name of a defined customized built-in element": "Nombre registrado válido de un elemento incorporado personalizado.",
+    "Unordered set of unique space-separated tokens consisting of valid absolute URLs, defined property names, or text*": "Lista sin orden de valores únicos separados por espacios. Puede incluir URL absolutas, nombres de propiedades definidos o texto, según el contexto.",
+    "Unordered set of unique space-separated tokens consisting of valid absolute URLs*": "Lista sin orden de URL absolutas válidas, únicas y separadas por espacios.",
+    "\"subtitles\"; \"captions\"; \"descriptions\"; \"chapters\"; \"metadata\"": "«subtitles», «captions», «descriptions», «chapters», «metadata».",
+    "Valid BCP 47 language tag or the empty string": "Etiqueta de idioma BCP 47 válida o la cadena vacía.",
+    "\"lazy\"; \"eager\"": "«lazy», «eager».",
+    "Varies*": "Depende del elemento o del tipo de control. Consulta la especificación.",
+    "Valid media query list": "Lista válida de consultas de medios.",
+    "Regular expression matching the JavaScript Pattern production": "Expresión regular que cumple la gramática Pattern de JavaScript.",
+    "Set of space-separated tokens consisting of valid non-empty URLs": "Lista de URL válidas no vacías, separadas por espacios.",
+    "\"auto\"; \"manual\"; \"hint\"; the empty string": "«auto», «manual», «hint», la cadena vacía.",
+    "\"toggle\"; \"show\"; \"hide\"": "«toggle», «show», «hide».",
+    "\"none\"; \"metadata\"; \"auto\"; the empty string": "«none», «metadata», «auto», la cadena vacía.",
+    "Referrer policy": "Palabra clave válida de la política de referencia, como no-referrer o strict-origin-when-cross-origin.",
+    "Unordered set of unique space-separated tokens, ASCII case-insensitive, consisting of \"allow-downloads\"\"allow-forms\"\"allow-modals\"\"allow-orientation-lock\"\"allow-pointer-lock\"\"allow-popups\"\"allow-popups-to-escape-sandbox\"\"allow-presentation\"\"allow-same-origin\"\"allow-scripts\"\"allow-top-navigation\"\"allow-top-navigation-by-user-activation\"\"allow-top-navigation-to-custom-protocols\"": "Lista de valores únicos separados por espacios, sin distinguir mayúsculas y minúsculas ASCII. Valores admitidos: allow-downloads, allow-forms, allow-modals, allow-orientation-lock, allow-pointer-lock, allow-popups, allow-popups-to-escape-sandbox, allow-presentation, allow-same-origin, allow-scripts, allow-top-navigation, allow-top-navigation-by-user-activation, allow-top-navigation-to-custom-protocols.",
+    "\"row\"; \"col\"; \"rowgroup\"; \"colgroup\"": "«row», «col», «rowgroup», «colgroup».",
+    "\"open\"; \"closed\"": "«open», «closed».",
+    "\"named\"; \"manual\"": "«named», «manual».",
+    "\"circle\"; \"default\"; \"poly\"; \"rect\"": "«circle», «default», «poly», «rect».",
+    "Unordered set of unique space-separated tokens, ASCII case-insensitive, consisting of sizes*": "Lista de tamaños únicos separados por espacios, como 32x32 64x64. También se admite any para iconos escalables.",
+    "\"true\"; \"false\"; the empty string": "«true», «false», la cadena vacía.",
+    "The source of an iframe srcdoc document*": "Código HTML válido para el documento del iframe.",
+    "Valid integer": "Entero válido.",
+    "Valid floating-point number greater than zero, or \"any\"": "Número de punto flotante mayor que cero o la palabra clave any.",
+    "CSS declarations*": "Declaraciones CSS válidas, como color: navy.",
+    "\"yes\"; \"no\"; the empty string": "«yes», «no», la cadena vacía.",
+    "Valid MIME type string": "Tipo MIME válido, como text/css.",
+    "\"submit\"; \"reset\"; \"button\"": "«submit», «reset», «button».",
+    "input type keyword": "Palabra clave de tipo de campo. Por ejemplo, text, email, number, checkbox o date.",
+    "\"1\"; \"a\"; \"A\"; \"i\"; \"I\"": "«1», «a», «A», «i», «I».",
+    "\"module\"; \"importmap\"; \"speculationrules\"; a valid MIME type string that is not a JavaScript MIME type essence match": "«module», «importmap», «speculationrules» o un tipo MIME válido que no sea de JavaScript. El script clásico se declara habitualmente sin type.",
+    "Valid hash-name reference*": "Referencia con # seguido del nombre de un mapa de imagen.",
+    "Valid floating-point number": "Número válido de punto flotante.",
+    "\"soft\"; \"hard\"": "«soft», «hard»."
+  }
+}

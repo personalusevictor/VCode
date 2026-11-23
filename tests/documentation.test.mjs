@@ -66,6 +66,15 @@ test("los enlaces del índice y del buscador resuelven a contenido real", () => 
   );
 });
 
+test("las fichas del índice CSS tienen una explicación junto a la sintaxis", () => {
+  const catalogIds = new Set(web.map(({ id }) => id));
+  for (const entry of read("../src/docs/data/css-reference.json"))
+    assert.ok(entry.detail || catalogIds.has(entry.id), entry.id);
+  const scroll = symbols.find(({ id }) => id === "css-functions-scroll()");
+  assert.match(scroll.detail, /desplazamiento/);
+  assert.match(scroll.example, /animation-timeline: scroll/);
+});
+
 test("cada referencia tiene un ejemplo, atributos, recomendaciones y enlaces válidos", () => {
   assert.equal(new Set(references.map(({ id }) => id)).size, references.length);
   for (const entry of references) {
@@ -327,6 +336,13 @@ test("PHP publica todas las fichas por ruta y resuelve las conexiones sin un ín
   assert.match(timeout.summary, /en segundos/);
   assert.ok(timeout.source.endsWith("#constant.curlopt-timeout"));
   assert.ok(timeout.connections.some(({ title }) => title === "curl_setopt()"));
+  const diagnostic = recovered.get("php-constant-pgsql_diag_sqlstate");
+  assert.match(diagnostic.usageContext, /diagnóstico de PostgreSQL/);
+  assert.ok(
+    diagnostic.connections.some(
+      ({ id }) => id === "php-function-pg_result_error_field",
+    ),
+  );
   assert.ok(
     recovered
       .get("php-constant-php_session_active")
@@ -705,9 +721,15 @@ test("todos los elementos del índice HTML y sus atributos consultables se cruza
   for (const [name, id] of Object.entries(names)) {
     const entry = attrs.find((candidate) => candidate.id === id);
     assert.equal(entry?.title, name);
+    assert.equal(entry.locale, "es", id);
     assert.ok(
       entry.contexts.length &&
-        entry.contexts.every((context) => context.elements.length),
+        entry.contexts.every(
+          (context) =>
+            context.elements.length &&
+            context.locale === "es" &&
+            context.values,
+        ),
       id,
     );
     assert.ok(
@@ -719,7 +741,7 @@ test("todos los elementos del índice HTML y sus atributos consultables se cruza
   assert.ok(
     contexts.some(
       ({ elements, values }) =>
-        elements.includes("button") && values.includes('"submit"'),
+        elements.includes("button") && values.includes("«submit»"),
     ),
   );
   assert.ok(contexts.some(({ elements }) => elements.includes("input")));

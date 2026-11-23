@@ -1,589 +1,589 @@
 {
   "abbr": {
-    "th": "Alternative label to use for the header cell when referencing the cell in other contexts"
+    "th": "Etiqueta abreviada de la celda de encabezado para usarla al referirse a ella desde otro contexto."
   },
   "accept": {
-    "input": "Hint for expected file type in file upload controls"
+    "input": "Orienta al selector de archivos sobre qué formatos acepta el control. Valida el archivo también al recibirlo."
   },
   "accept-charset": {
-    "form": "Character encodings to use for form submission"
+    "form": "Especifica la codificación de caracteres con la que se envía el formulario."
   },
   "accesskey": {
-    "HTML elements": "Keyboard shortcut to activate or focus element"
+    "HTML elements": "Sugiere una tecla de acceso rápido para activar el elemento o llevar el foco a él."
   },
   "action": {
-    "form": "URL to use for form submission"
+    "form": "Dirección a la que se envían los datos del formulario."
   },
   "allow": {
-    "iframe": "Permissions policy to be applied to the iframe's contents"
+    "iframe": "Declara qué funciones del navegador quedan habilitadas para el documento del iframe."
   },
   "allowfullscreen": {
-    "iframe": "Whether to allow the iframe's contents to use requestFullscreen()"
+    "iframe": "Permite que el contenido del iframe solicite el modo de pantalla completa."
   },
   "alpha": {
-    "input": "Allow the color's alpha component to be set"
+    "input": "Permite ajustar la transparencia del color seleccionado."
   },
   "alt": {
-    "area": "Replacement text for use when images are not available",
-    "img": "Replacement text for use when images are not available",
-    "input": "Replacement text for use when images are not available"
+    "area": "Texto que sustituye la imagen y comunica para qué sirve cuando no se puede ver.",
+    "img": "Texto que sustituye la imagen y comunica para qué sirve cuando no se puede ver.",
+    "input": "Texto que sustituye la imagen y comunica para qué sirve cuando no se puede ver."
   },
   "as": {
-    "link": "Destination for a preload request (for rel=\"preload\" and rel=\"modulepreload\")"
+    "link": "Indica qué clase de recurso se precarga con el enlace."
   },
   "async": {
-    "script": "Execute script when available, without blocking while fetching"
+    "script": "Ejecuta el script cuando está disponible. Su descarga no detiene el análisis del HTML."
   },
   "autocapitalize": {
-    "HTML elements": "Recommended autocapitalization behavior (for supported input methods)"
+    "HTML elements": "Sugiere cómo usar mayúsculas al escribir con un método de entrada compatible."
   },
   "autocomplete": {
-    "form": "Default setting for autofill feature for controls in the form",
-    "input": "Hint for form autofill feature",
-    "select": "Hint for form autofill feature",
-    "textarea": "Hint for form autofill feature"
+    "form": "Configura el comportamiento predeterminado del autocompletado en los controles del formulario.",
+    "input": "Identifica qué dato puede completar el navegador en este control.",
+    "select": "Identifica qué dato puede completar el navegador en este control.",
+    "textarea": "Identifica qué dato puede completar el navegador en este control."
   },
   "autocorrect": {
-    "HTML elements": "Recommended autocorrection behavior (for supported input methods)"
+    "HTML elements": "Sugiere si el sistema de entrada debe corregir el texto al escribir."
   },
   "autofocus": {
-    "HTML elements": "Automatically focus the element when the page is loaded"
+    "HTML elements": "Lleva el foco al elemento al cargar la página o al mostrar el diálogo o panel que lo contiene."
   },
   "autoplay": {
-    "audio": "Hint that the media resource can be started automatically when the page is loaded",
-    "video": "Hint that the media resource can be started automatically when the page is loaded"
+    "audio": "Solicita que el audio o vídeo empiece automáticamente. El navegador puede exigir interacción previa.",
+    "video": "Solicita que el audio o vídeo empiece automáticamente. El navegador puede exigir interacción previa."
   },
   "blocking": {
-    "link": "Whether the element is potentially render-blocking",
-    "script": "Whether the element is potentially render-blocking",
-    "style": "Whether the element is potentially render-blocking"
+    "link": "Indica qué procesamiento puede bloquear este recurso, como el primer renderizado.",
+    "script": "Indica qué procesamiento puede bloquear este recurso, como el primer renderizado.",
+    "style": "Indica qué procesamiento puede bloquear este recurso, como el primer renderizado."
   },
   "charset": {
-    "meta": "Character encoding declaration"
+    "meta": "Declara la codificación de caracteres del documento HTML."
   },
   "checked": {
-    "input": "Whether the control is checked"
+    "input": "Marca inicialmente una casilla o selecciona inicialmente un botón de opción."
   },
   "cite": {
-    "blockquote": "Link to the source of the quotation or more information about the edit",
-    "del": "Link to the source of the quotation or more information about the edit",
-    "ins": "Link to the source of the quotation or more information about the edit",
-    "q": "Link to the source of the quotation or more information about the edit"
+    "blockquote": "Enlaza a la fuente de la cita o a información sobre el cambio de contenido.",
+    "del": "Enlaza a la fuente de la cita o a información sobre el cambio de contenido.",
+    "ins": "Enlaza a la fuente de la cita o a información sobre el cambio de contenido.",
+    "q": "Enlaza a la fuente de la cita o a información sobre el cambio de contenido."
   },
   "class": {
-    "HTML elements": "Classes to which the element belongs"
+    "HTML elements": "Identifica las clases del elemento para estilos y otras búsquedas."
   },
   "closedby": {
-    "dialog": "Which user actions will close the dialog"
+    "dialog": "Determina qué acciones de la persona pueden cerrar el diálogo."
   },
   "color": {
-    "link": "Color to use when customizing a site's icon (for rel=\"mask-icon\")"
+    "link": "Indica el color usado por algunos navegadores con un icono de tipo mask-icon."
   },
   "colorspace": {
-    "input": "The color space of the serialized color"
+    "input": "Selecciona el espacio de color en el que se representa el valor del control."
   },
   "cols": {
-    "textarea": "Maximum number of characters per line"
+    "textarea": "Define el ancho visible aproximado del área de texto en caracteres."
   },
   "colspan": {
-    "td": "Number of columns that the cell is to span",
-    "th": "Number of columns that the cell is to span"
+    "td": "Indica cuántas columnas ocupa la celda.",
+    "th": "Indica cuántas columnas ocupa la celda."
   },
   "command": {
-    "button": "Indicates to the targeted element which action to take."
+    "button": "Especifica la acción que el botón solicita al elemento de destino."
   },
   "commandfor": {
-    "button": "Targets another element to be invoked."
+    "button": "Identifica el elemento sobre el que actúa el botón."
   },
   "content": {
-    "meta": "Value of the element"
+    "meta": "Proporciona el valor de los metadatos declarados con meta."
   },
   "contenteditable": {
-    "HTML elements": "Whether the element is editable"
+    "HTML elements": "Controla si la persona puede editar el contenido del elemento."
   },
   "controls": {
-    "audio": "Show user agent controls",
-    "video": "Show user agent controls",
-    "img": "Show user agent controls"
+    "audio": "Pide al navegador que muestre los controles de reproducción disponibles.",
+    "video": "Pide al navegador que muestre los controles de reproducción disponibles.",
+    "img": "Pide al navegador que muestre los controles de reproducción disponibles."
   },
   "coords": {
-    "area": "Coordinates for the shape to be created in an image map"
+    "area": "Define las coordenadas de una zona del mapa de imagen según la forma escogida."
   },
   "crossorigin": {
-    "audio": "How the element handles crossorigin requests",
-    "img": "How the element handles crossorigin requests",
-    "link": "How the element handles crossorigin requests",
-    "script": "How the element handles crossorigin requests",
-    "video": "How the element handles crossorigin requests"
+    "audio": "Controla cómo se solicita el recurso cuando está en otro origen.",
+    "img": "Controla cómo se solicita el recurso cuando está en otro origen.",
+    "link": "Controla cómo se solicita el recurso cuando está en otro origen.",
+    "script": "Controla cómo se solicita el recurso cuando está en otro origen.",
+    "video": "Controla cómo se solicita el recurso cuando está en otro origen."
   },
   "data": {
-    "object": "Address of the resource"
+    "object": "Dirección del recurso que incrusta object."
   },
   "datetime": {
-    "del": "Date and (optionally) time of the change",
-    "ins": "Date and (optionally) time of the change",
-    "time": "Machine-readable value"
+    "del": "Indica la fecha y, opcionalmente, la hora del cambio.",
+    "ins": "Indica la fecha y, opcionalmente, la hora del cambio.",
+    "time": "Proporciona una fecha, hora, duración u otro valor temporal en un formato reconocible por programas."
   },
   "decoding": {
-    "img": "Decoding hint to use when processing this image for presentation"
+    "img": "Sugiere cuándo puede decodificarse la imagen para presentarla."
   },
   "default": {
-    "track": "Enable the track if no other text track is more suitable"
+    "track": "Activa esta pista si no hay otra que encaje mejor con las preferencias de la persona."
   },
   "defer": {
-    "script": "Defer script execution"
+    "script": "En un script clásico externo, aplaza su ejecución hasta que termine de analizarse el documento."
   },
   "dir": {
-    "HTML elements": "The text directionality of the element",
-    "bdo": "The text directionality of the element"
+    "HTML elements": "Indica en qué dirección se presenta el texto del elemento.",
+    "bdo": "Indica en qué dirección se presenta el texto del elemento."
   },
   "dirname": {
-    "input": "Name of form control to use for sending the element's directionality in form submission",
-    "textarea": "Name of form control to use for sending the element's directionality in form submission"
+    "input": "Nombre del campo adicional con el que se envía la dirección del texto del control.",
+    "textarea": "Nombre del campo adicional con el que se envía la dirección del texto del control."
   },
   "disabled": {
-    "button": "Whether the form control is disabled",
-    "input": "Whether the form control is disabled",
-    "optgroup": "Whether the form control is disabled",
-    "option": "Whether the form control is disabled",
-    "select": "Whether the form control is disabled",
-    "textarea": "Whether the form control is disabled",
-    "form-associated custom elements": "Whether the form control is disabled",
-    "fieldset": "Whether the descendant form controls, except any inside legend, are disabled",
-    "link": "Whether the link is disabled"
+    "button": "Deshabilita el control de formulario o la opción.",
+    "input": "Deshabilita el control de formulario o la opción.",
+    "optgroup": "Deshabilita el control de formulario o la opción.",
+    "option": "Deshabilita el control de formulario o la opción.",
+    "select": "Deshabilita el control de formulario o la opción.",
+    "textarea": "Deshabilita el control de formulario o la opción.",
+    "form-associated custom elements": "Deshabilita el control de formulario o la opción.",
+    "fieldset": "Deshabilita los controles del grupo salvo los que estén en su primer elemento legend.",
+    "link": "Deshabilita el recurso enlazado cuando el tipo de enlace lo permite."
   },
   "download": {
-    "a": "Whether to download the resource instead of navigating to it, and its filename if so",
-    "area": "Whether to download the resource instead of navigating to it, and its filename if so"
+    "a": "Solicita descargar el recurso en lugar de navegar a él. Puede sugerir un nombre de archivo.",
+    "area": "Solicita descargar el recurso en lugar de navegar a él. Puede sugerir un nombre de archivo."
   },
   "draggable": {
-    "HTML elements": "Whether the element is draggable"
+    "HTML elements": "Indica si el elemento puede arrastrarse."
   },
   "enctype": {
-    "form": "Entry list encoding type to use for form submission"
+    "form": "Selecciona cómo se codifican los datos del formulario al enviarlos."
   },
   "enterkeyhint": {
-    "HTML elements": "Hint for selecting an enter key action"
+    "HTML elements": "Sugiere la acción que muestra la tecla de entrada del teclado en pantalla."
   },
   "fetchpriority": {
-    "img": "Sets the priority for fetches initiated by the element",
-    "link": "Sets the priority for fetches initiated by the element",
-    "script": "Sets the priority for fetches initiated by the element"
+    "img": "Da una prioridad relativa a la descarga del recurso del elemento.",
+    "link": "Da una prioridad relativa a la descarga del recurso del elemento.",
+    "script": "Da una prioridad relativa a la descarga del recurso del elemento."
   },
   "for": {
-    "label": "Associate the label with form control",
-    "output": "Specifies controls from which the output was calculated",
-    "template": "Updates existing content"
+    "label": "Asocia la etiqueta con un control mediante el identificador del control.",
+    "output": "Identifica los controles que intervienen en el cálculo del resultado.",
+    "template": "Identifica contenido existente que actualizará la plantilla."
   },
   "form": {
-    "button": "Associates the element with a form element",
-    "fieldset": "Associates the element with a form element",
-    "input": "Associates the element with a form element",
-    "object": "Associates the element with a form element",
-    "output": "Associates the element with a form element",
-    "select": "Associates the element with a form element",
-    "textarea": "Associates the element with a form element",
-    "form-associated custom elements": "Associates the element with a form element"
+    "button": "Asocia el elemento con un formulario, incluso si está fuera de él.",
+    "fieldset": "Asocia el elemento con un formulario, incluso si está fuera de él.",
+    "input": "Asocia el elemento con un formulario, incluso si está fuera de él.",
+    "object": "Asocia el elemento con un formulario, incluso si está fuera de él.",
+    "output": "Asocia el elemento con un formulario, incluso si está fuera de él.",
+    "select": "Asocia el elemento con un formulario, incluso si está fuera de él.",
+    "textarea": "Asocia el elemento con un formulario, incluso si está fuera de él.",
+    "form-associated custom elements": "Asocia el elemento con un formulario, incluso si está fuera de él."
   },
   "formaction": {
-    "button": "URL to use for form submission",
-    "input": "URL to use for form submission"
+    "button": "Sobrescribe la URL de destino del formulario cuando se activa este control.",
+    "input": "Sobrescribe la URL de destino del formulario cuando se activa este control."
   },
   "formenctype": {
-    "button": "Entry list encoding type to use for form submission",
-    "input": "Entry list encoding type to use for form submission"
+    "button": "Sobrescribe la codificación del formulario cuando se activa este control.",
+    "input": "Sobrescribe la codificación del formulario cuando se activa este control."
   },
   "formmethod": {
-    "button": "Variant to use for form submission",
-    "input": "Variant to use for form submission"
+    "button": "Sobrescribe el método del formulario cuando se activa este control.",
+    "input": "Sobrescribe el método del formulario cuando se activa este control."
   },
   "formnovalidate": {
-    "button": "Bypass form control validation for form submission",
-    "input": "Bypass form control validation for form submission"
+    "button": "Permite que el formulario se envíe desde este control sin la validación nativa.",
+    "input": "Permite que el formulario se envíe desde este control sin la validación nativa."
   },
   "formtarget": {
-    "button": "Navigable for form submission",
-    "input": "Navigable for form submission"
+    "button": "Indica dónde se muestra la respuesta al enviar el formulario con este control.",
+    "input": "Indica dónde se muestra la respuesta al enviar el formulario con este control."
   },
   "headers": {
-    "td": "The header cells for this cell",
-    "th": "The header cells for this cell"
+    "td": "Identifica las celdas de encabezado asociadas con esta celda.",
+    "th": "Identifica las celdas de encabezado asociadas con esta celda."
   },
   "headingoffset": {
-    "HTML elements": "Offsets heading levels for descendants"
+    "HTML elements": "Ajusta el nivel semántico de los encabezados descendientes."
   },
   "headingreset": {
-    "HTML elements": "Prevents a heading offset computation from traversing beyond the element with the attribute"
+    "HTML elements": "Impide que el ajuste de niveles de encabezado busque más allá del elemento."
   },
   "height": {
-    "canvas": "Vertical dimension",
-    "embed": "Vertical dimension",
-    "iframe": "Vertical dimension",
-    "img": "Vertical dimension",
-    "input": "Vertical dimension",
-    "object": "Vertical dimension",
-    "source": "Vertical dimension",
-    "picture": "Vertical dimension",
-    "video": "Vertical dimension"
+    "canvas": "Fija la dimensión vertical del recurso o del área reservada para él.",
+    "embed": "Fija la dimensión vertical del recurso o del área reservada para él.",
+    "iframe": "Fija la dimensión vertical del recurso o del área reservada para él.",
+    "img": "Fija la dimensión vertical del recurso o del área reservada para él.",
+    "input": "Fija la dimensión vertical del recurso o del área reservada para él.",
+    "object": "Fija la dimensión vertical del recurso o del área reservada para él.",
+    "source": "Fija la dimensión vertical del recurso o del área reservada para él.",
+    "picture": "Fija la dimensión vertical del recurso o del área reservada para él.",
+    "video": "Fija la dimensión vertical del recurso o del área reservada para él."
   },
   "hidden": {
-    "HTML elements": "Whether the element is relevant"
+    "HTML elements": "Indica si el elemento debe quedar oculto en su estado actual."
   },
   "high": {
-    "meter": "Low limit of high range"
+    "meter": "Define a partir de qué valor empieza el intervalo alto del medidor."
   },
   "href": {
-    "a": "Address of the hyperlink",
-    "area": "Address of the hyperlink",
-    "link": "Address of the hyperlink",
-    "base": "Document base URL"
+    "a": "Dirección de destino cuando se sigue el enlace.",
+    "area": "Dirección de destino cuando se sigue el enlace.",
+    "link": "Dirección de destino cuando se sigue el enlace.",
+    "base": "Dirección base con la que se resuelven las URL relativas del documento."
   },
   "hreflang": {
-    "a": "Language of the linked resource",
-    "link": "Language of the linked resource"
+    "a": "Identifica el idioma del recurso al que apunta el enlace.",
+    "link": "Identifica el idioma del recurso al que apunta el enlace."
   },
   "http-equiv": {
-    "meta": "Pragma directive"
+    "meta": "Selecciona una directiva que el navegador interpreta a partir de los metadatos."
   },
   "id": {
-    "HTML elements": "The element's ID"
+    "HTML elements": "Identificador único del elemento dentro de su árbol."
   },
   "imagesizes": {
-    "link": "Image sizes for different page layouts (for rel=\"preload\")"
+    "link": "Indica el tamaño esperado de la imagen precargada según el diseño de la página."
   },
   "imagesrcset": {
-    "link": "Images to use in different situations, e.g., high-resolution displays, small monitors, etc. (for rel=\"preload\")"
+    "link": "Enumera variantes de la imagen que se precarga para que el navegador elija la adecuada."
   },
   "inert": {
-    "HTML elements": "Whether the element is inert."
+    "HTML elements": "Hace que el elemento y sus descendientes queden fuera de la interacción normal."
   },
   "inputmode": {
-    "HTML elements": "Hint for selecting an input modality"
+    "HTML elements": "Sugiere la clase de teclado o método de entrada más cómodo para el dato esperado."
   },
   "integrity": {
-    "link": "Integrity metadata used in Subresource Integrity checks [SRI]",
-    "script": "Integrity metadata used in Subresource Integrity checks [SRI]"
+    "link": "Incluye hashes que el navegador puede comparar con el recurso descargado para verificar su integridad.",
+    "script": "Incluye hashes que el navegador puede comparar con el recurso descargado para verificar su integridad."
   },
   "is": {
-    "HTML elements": "Creates a customized built-in element"
+    "HTML elements": "Identifica el nombre registrado de un elemento incorporado personalizado."
   },
   "ismap": {
-    "img": "Whether the image is a server-side image map"
+    "img": "Indica que las coordenadas del clic en la imagen se envían como parte del enlace."
   },
   "itemid": {
-    "HTML elements": "Global identifier for a microdata item"
+    "HTML elements": "Identifica globalmente un elemento de microdatos mediante una URL."
   },
   "itemprop": {
-    "HTML elements": "Property names of a microdata item"
+    "HTML elements": "Da nombre a las propiedades que aporta el elemento al elemento de microdatos."
   },
   "itemref": {
-    "HTML elements": "Referenced elements"
+    "HTML elements": "Incorpora al elemento de microdatos propiedades de otros elementos mediante sus identificadores."
   },
   "itemscope": {
-    "HTML elements": "Introduces a microdata item"
+    "HTML elements": "Marca el inicio de un elemento de microdatos."
   },
   "itemtype": {
-    "HTML elements": "Item types of a microdata item"
+    "HTML elements": "Indica los tipos a los que pertenece el elemento de microdatos."
   },
   "kind": {
-    "track": "The type of text track"
+    "track": "Distingue pistas de subtítulos, descripciones, capítulos u otros datos."
   },
   "label": {
-    "optgroup": "User-visible label",
-    "option": "User-visible label",
-    "track": "User-visible label"
+    "optgroup": "Texto que identifica la opción, grupo o pista ante la persona.",
+    "option": "Texto que identifica la opción, grupo o pista ante la persona.",
+    "track": "Texto que identifica la opción, grupo o pista ante la persona."
   },
   "lang": {
-    "HTML elements": "Language of the element"
+    "HTML elements": "Declara el idioma del contenido del elemento."
   },
   "list": {
-    "input": "List of autocomplete options"
+    "input": "Identifica el datalist del que se obtienen sugerencias para el campo."
   },
   "loading": {
-    "iframe": "Used when determining loading deferral",
-    "img": "Used when determining loading deferral",
-    "audio": "Used when determining loading deferral",
-    "video": "Used when determining loading deferral"
+    "iframe": "Indica si el navegador puede aplazar la carga del recurso hasta que esté cerca de la zona visible.",
+    "img": "Indica si el navegador puede aplazar la carga del recurso hasta que esté cerca de la zona visible.",
+    "audio": "Indica si el navegador puede aplazar la carga del recurso hasta que esté cerca de la zona visible.",
+    "video": "Indica si el navegador puede aplazar la carga del recurso hasta que esté cerca de la zona visible."
   },
   "loop": {
-    "audio": "Whether to loop the media resource",
-    "video": "Whether to loop the media resource"
+    "audio": "Reinicia la reproducción al llegar al final del recurso.",
+    "video": "Reinicia la reproducción al llegar al final del recurso."
   },
   "low": {
-    "meter": "High limit of low range"
+    "meter": "Define hasta qué valor llega el intervalo bajo del medidor."
   },
   "max": {
-    "input": "Maximum value",
-    "meter": "Upper bound of range",
-    "progress": "Upper bound of range"
+    "input": "Mayor valor permitido en el campo.",
+    "meter": "Extremo superior de la escala del elemento.",
+    "progress": "Extremo superior de la escala del elemento."
   },
   "maxlength": {
-    "input": "Maximum length of value",
-    "textarea": "Maximum length of value"
+    "input": "Limita la longitud del valor que puede introducir la persona.",
+    "textarea": "Limita la longitud del valor que puede introducir la persona."
   },
   "media": {
-    "link": "Applicable media",
-    "meta": "Applicable media",
-    "source": "Applicable media",
-    "style": "Applicable media"
+    "link": "Define en qué medios o condiciones se aplica el recurso o los metadatos.",
+    "meta": "Define en qué medios o condiciones se aplica el recurso o los metadatos.",
+    "source": "Define en qué medios o condiciones se aplica el recurso o los metadatos.",
+    "style": "Define en qué medios o condiciones se aplica el recurso o los metadatos."
   },
   "method": {
-    "form": "Variant to use for form submission"
+    "form": "Selecciona el método de envío del formulario."
   },
   "min": {
-    "input": "Minimum value",
-    "meter": "Lower bound of range"
+    "input": "Menor valor permitido en el campo.",
+    "meter": "Extremo inferior de la escala del medidor."
   },
   "minlength": {
-    "input": "Minimum length of value",
-    "textarea": "Minimum length of value"
+    "input": "Exige una longitud mínima al valor que introduce la persona.",
+    "textarea": "Exige una longitud mínima al valor que introduce la persona."
   },
   "multiple": {
-    "input": "Whether to allow multiple values",
-    "select": "Whether to allow multiple values"
+    "input": "Permite introducir o seleccionar más de un valor.",
+    "select": "Permite introducir o seleccionar más de un valor."
   },
   "muted": {
-    "audio": "Whether to mute the media resource by default",
-    "video": "Whether to mute the media resource by default"
+    "audio": "Silencia inicialmente el audio o vídeo.",
+    "video": "Silencia inicialmente el audio o vídeo."
   },
   "name": {
-    "button": "Name of the element to use for form submission and in the form.elements API",
-    "fieldset": "Name of the element to use for form submission and in the form.elements API",
-    "input": "Name of the element to use for form submission and in the form.elements API",
-    "output": "Name of the element to use for form submission and in the form.elements API",
-    "select": "Name of the element to use for form submission and in the form.elements API",
-    "textarea": "Name of the element to use for form submission and in the form.elements API",
-    "form-associated custom elements": "Name of the element to use for form submission and in the form.elements API",
-    "details": "Name of group of mutually-exclusive details elements",
-    "form": "Name of form to use in the document.forms API",
-    "iframe": "Name of content navigable",
-    "object": "Name of content navigable",
-    "map": "Name of image map to reference from the usemap attribute",
-    "meta": "Metadata name",
-    "slot": "Name of shadow tree slot"
+    "button": "Nombre del control para el envío y para acceder a él desde form.elements.",
+    "fieldset": "Nombre del control para el envío y para acceder a él desde form.elements.",
+    "input": "Nombre del control para el envío y para acceder a él desde form.elements.",
+    "output": "Nombre del control para el envío y para acceder a él desde form.elements.",
+    "select": "Nombre del control para el envío y para acceder a él desde form.elements.",
+    "textarea": "Nombre del control para el envío y para acceder a él desde form.elements.",
+    "form-associated custom elements": "Nombre del control para el envío y para acceder a él desde form.elements.",
+    "details": "Agrupa secciones details para que como máximo se abra una a la vez.",
+    "form": "Nombre con el que puede localizarse el formulario en document.forms.",
+    "iframe": "Da nombre al contexto de navegación del contenido incrustado.",
+    "object": "Da nombre al contexto de navegación del contenido incrustado.",
+    "map": "Nombre del mapa de imagen que se referencia con usemap.",
+    "meta": "Identifica el metadato que contiene el elemento meta.",
+    "slot": "Identifica el slot del árbol de sombra que recibe contenido con ese nombre."
   },
   "nomodule": {
-    "script": "Prevents execution in user agents that support module scripts"
+    "script": "Evita que se ejecute el script clásico en navegadores que admiten módulos."
   },
   "nonce": {
-    "HTML elements": "Cryptographic nonce used in Content Security Policy checks [CSP]"
+    "HTML elements": "Valor criptográfico que una política de seguridad de contenido puede usar para autorizar el recurso."
   },
   "novalidate": {
-    "form": "Bypass form control validation for form submission"
+    "form": "Permite enviar el formulario sin ejecutar la validación nativa de los controles."
   },
   "open": {
-    "details": "Whether the details are visible",
-    "dialog": "Whether the dialog box is showing"
+    "details": "Hace que el contenido desplegable de details esté abierto.",
+    "dialog": "Indica que el diálogo se muestra."
   },
   "optimum": {
-    "meter": "Optimum value in gauge"
+    "meter": "Marca en la escala el valor que se considera óptimo."
   },
   "pattern": {
-    "input": "Pattern to be matched by the form control's value"
+    "input": "Expresión regular que define qué valores acepta el control."
   },
   "ping": {
-    "a": "URLs to ping",
-    "area": "URLs to ping"
+    "a": "Direcciones a las que el navegador puede enviar una notificación cuando se sigue el enlace.",
+    "area": "Direcciones a las que el navegador puede enviar una notificación cuando se sigue el enlace."
   },
   "placeholder": {
-    "input": "User-visible label to be placed within the form control",
-    "textarea": "User-visible label to be placed within the form control"
+    "input": "Muestra una pista dentro del campo vacío. Usa una etiqueta visible para identificar el campo.",
+    "textarea": "Muestra una pista dentro del campo vacío. Usa una etiqueta visible para identificar el campo."
   },
   "playsinline": {
-    "video": "Encourage the user agent to display video content within the element's playback area"
+    "video": "Solicita que el vídeo permanezca en su área en vez de abrirse automáticamente a pantalla completa."
   },
   "popover": {
-    "HTML elements": "Makes the element a popover element"
+    "HTML elements": "Declara un panel emergente que puede mostrarse en la capa superior del navegador."
   },
   "popovertarget": {
-    "button": "Targets a popover element to toggle, show, or hide",
-    "input": "Targets a popover element to toggle, show, or hide"
+    "button": "Identifica el panel emergente al que controla el botón.",
+    "input": "Identifica el panel emergente al que controla el botón."
   },
   "popovertargetaction": {
-    "button": "Indicates whether a targeted popover element is to be toggled, shown, or hidden",
-    "input": "Indicates whether a targeted popover element is to be toggled, shown, or hidden"
+    "button": "Selecciona si el control muestra, oculta o alterna el panel emergente.",
+    "input": "Selecciona si el control muestra, oculta o alterna el panel emergente."
   },
   "poster": {
-    "video": "Poster frame to show prior to video playback"
+    "video": "Dirección de la imagen visible antes de que se reproduzca el vídeo."
   },
   "preload": {
-    "audio": "Hints how much buffering the media resource will likely need",
-    "video": "Hints how much buffering the media resource will likely need"
+    "audio": "Sugiere cuántos datos del recurso multimedia debe preparar el navegador de antemano.",
+    "video": "Sugiere cuántos datos del recurso multimedia debe preparar el navegador de antemano."
   },
   "readonly": {
-    "input": "Whether to allow the value to be edited by the user",
-    "textarea": "Whether to allow the value to be edited by the user",
-    "form-associated custom elements": "Affects willValidate, plus any behavior added by the custom element author"
+    "input": "Impide editar el valor sin deshabilitar el control.",
+    "textarea": "Impide editar el valor sin deshabilitar el control.",
+    "form-associated custom elements": "Afecta a willValidate y puede activar el comportamiento que defina el autor del elemento personalizado."
   },
   "referrerpolicy": {
-    "a": "Referrer policy for fetches initiated by the element",
-    "area": "Referrer policy for fetches initiated by the element",
-    "iframe": "Referrer policy for fetches initiated by the element",
-    "img": "Referrer policy for fetches initiated by the element",
-    "link": "Referrer policy for fetches initiated by the element",
-    "script": "Referrer policy for fetches initiated by the element"
+    "a": "Selecciona cuánta información sobre la página de origen se envía al solicitar el recurso.",
+    "area": "Selecciona cuánta información sobre la página de origen se envía al solicitar el recurso.",
+    "iframe": "Selecciona cuánta información sobre la página de origen se envía al solicitar el recurso.",
+    "img": "Selecciona cuánta información sobre la página de origen se envía al solicitar el recurso.",
+    "link": "Selecciona cuánta información sobre la página de origen se envía al solicitar el recurso.",
+    "script": "Selecciona cuánta información sobre la página de origen se envía al solicitar el recurso."
   },
   "rel": {
-    "a": "Relationship between the location in the document containing the hyperlink and the destination resource",
-    "area": "Relationship between the location in the document containing the hyperlink and the destination resource",
-    "link": "Relationship between the document containing the hyperlink and the destination resource"
+    "a": "Describe la relación entre el enlace y su destino.",
+    "area": "Describe la relación entre el enlace y su destino.",
+    "link": "Describe la relación entre el enlace y su destino."
   },
   "required": {
-    "input": "Whether the control is required for form submission",
-    "select": "Whether the control is required for form submission",
-    "textarea": "Whether the control is required for form submission"
+    "input": "Exige un valor o una selección válida al enviar el formulario.",
+    "select": "Exige un valor o una selección válida al enviar el formulario.",
+    "textarea": "Exige un valor o una selección válida al enviar el formulario."
   },
   "reversed": {
-    "ol": "Number the list backwards"
+    "ol": "Ordena los números de la lista de mayor a menor."
   },
   "rows": {
-    "textarea": "Number of lines to show"
+    "textarea": "Configura cuántas líneas de texto muestra el control."
   },
   "rowspan": {
-    "td": "Number of rows that the cell is to span",
-    "th": "Number of rows that the cell is to span"
+    "td": "Indica cuántas filas ocupa la celda.",
+    "th": "Indica cuántas filas ocupa la celda."
   },
   "sandbox": {
-    "iframe": "Security rules for nested content"
+    "iframe": "Aplica restricciones al contenido incrustado y permite levantar algunas de forma selectiva."
   },
   "scope": {
-    "th": "Specifies which cells the header cell applies to"
+    "th": "Indica qué filas, columnas o grupos describe la celda de encabezado."
   },
   "selected": {
-    "option": "Whether the option is selected by default"
+    "option": "Selecciona esta opción inicialmente."
   },
   "shadowrootclonable": {
-    "template": "Sets clonable on a declarative shadow root"
+    "template": "Permite incluir la raíz de sombra declarativa al clonar el elemento anfitrión."
   },
   "shadowrootcustomelementregistry": {
-    "template": "Enables declarative shadow roots to indicate they will use a custom element registry"
+    "template": "Indica que la raíz de sombra declarativa usará su propio registro de elementos personalizados."
   },
   "shadowrootdelegatesfocus": {
-    "template": "Sets delegates focus on a declarative shadow root"
+    "template": "Pide delegar el foco desde el elemento anfitrión hacia un elemento del árbol de sombra."
   },
   "shadowrootmode": {
-    "template": "Enables streaming declarative shadow roots"
+    "template": "Crea una raíz de sombra declarativa y elige si es abierta o cerrada."
   },
   "shadowrootserializable": {
-    "template": "Sets serializable on a declarative shadow root"
+    "template": "Permite incluir la raíz de sombra al serializar el HTML con las opciones que correspondan."
   },
   "shadowrootslotassignment": {
-    "template": "Sets slot assignment on a declarative shadow root"
+    "template": "Elige si los nodos se asignan a los slots por nombre o mediante una llamada explícita."
   },
   "shape": {
-    "area": "The kind of shape to be created in an image map"
+    "area": "Selecciona si la zona del mapa de imagen es un círculo, un polígono, un rectángulo o el área predeterminada."
   },
   "size": {
-    "input": "Size of the control",
-    "select": "Size of the control"
+    "input": "Ajusta el ancho visible de input o cuántas opciones se muestran a la vez en select.",
+    "select": "Ajusta el ancho visible de input o cuántas opciones se muestran a la vez en select."
   },
   "sizes": {
-    "link": "Sizes of the icons (for rel=\"icon\")",
-    "img": "Image sizes for different page layouts",
-    "source": "Image sizes for different page layouts"
+    "link": "Enumera las dimensiones de los iconos enlazados.",
+    "img": "Indica el espacio que ocupará la imagen según el diseño de la página.",
+    "source": "Indica el espacio que ocupará la imagen según el diseño de la página."
   },
   "slot": {
-    "HTML elements": "The element's desired slot"
+    "HTML elements": "Identifica el slot del componente al que se asigna este elemento."
   },
   "span": {
-    "col": "Number of columns spanned by the element",
-    "colgroup": "Number of columns spanned by the element"
+    "col": "Indica cuántas columnas representa un elemento col o colgroup.",
+    "colgroup": "Indica cuántas columnas representa un elemento col o colgroup."
   },
   "spellcheck": {
-    "HTML elements": "Whether the element is to have its spelling and grammar checked"
+    "HTML elements": "Sugiere si el navegador debe revisar la ortografía y la gramática."
   },
   "src": {
-    "audio": "Address of the resource",
-    "embed": "Address of the resource",
-    "iframe": "Address of the resource",
-    "img": "Address of the resource",
-    "input": "Address of the resource",
-    "script": "Address of the resource",
-    "source": "Address of the resource",
-    "video": "Address of the resource",
-    "track": "Address of the resource"
+    "audio": "Dirección del recurso que el elemento carga.",
+    "embed": "Dirección del recurso que el elemento carga.",
+    "iframe": "Dirección del recurso que el elemento carga.",
+    "img": "Dirección del recurso que el elemento carga.",
+    "input": "Dirección del recurso que el elemento carga.",
+    "script": "Dirección del recurso que el elemento carga.",
+    "source": "Dirección del recurso que el elemento carga.",
+    "video": "Dirección del recurso que el elemento carga.",
+    "track": "Dirección del recurso que el elemento carga."
   },
   "srcdoc": {
-    "iframe": "A document to render in the iframe"
+    "iframe": "Proporciona el HTML del documento que se muestra dentro del iframe."
   },
   "srclang": {
-    "track": "Language of the text track"
+    "track": "Idioma del texto de la pista multimedia."
   },
   "srcset": {
-    "img": "Images to use in different situations, e.g., high-resolution displays, small monitors, etc.",
-    "source": "Images to use in different situations, e.g., high-resolution displays, small monitors, etc."
+    "img": "Ofrece archivos de imagen alternativos para que el navegador elija según el tamaño y la densidad de pantalla.",
+    "source": "Ofrece archivos de imagen alternativos para que el navegador elija según el tamaño y la densidad de pantalla."
   },
   "start": {
-    "ol": "Starting value of the list"
+    "ol": "Determina el número con el que comienza la lista ordenada."
   },
   "step": {
-    "input": "Granularity to be matched by the form control's value"
+    "input": "Controla la separación entre valores numéricos o temporales admitidos en el campo."
   },
   "style": {
-    "HTML elements": "Presentational and formatting instructions"
+    "HTML elements": "Aplica declaraciones CSS directamente al elemento."
   },
   "switch": {
-    "input": "Whether the control is a switch"
+    "input": "Indica que el control representa un interruptor."
   },
   "tabindex": {
-    "HTML elements": "Whether the element is focusable and sequentially focusable, and the relative order of the element for the purposes of sequential focus navigation"
+    "HTML elements": "Controla si el elemento admite foco y cómo participa en el recorrido con el teclado."
   },
   "target": {
-    "a": "Navigable for hyperlink navigation",
-    "area": "Navigable for hyperlink navigation",
-    "base": "Default navigable for hyperlink navigation and form submission",
-    "form": "Navigable for form submission"
+    "a": "Selecciona dónde se abre el enlace, por ejemplo en la pestaña actual o en otra.",
+    "area": "Selecciona dónde se abre el enlace, por ejemplo en la pestaña actual o en otra.",
+    "base": "Determina el destino predeterminado de los enlaces y los envíos de formularios.",
+    "form": "Selecciona dónde se presenta la respuesta del formulario."
   },
   "title": {
-    "HTML elements": "Advisory information for the element",
-    "abbr": "Full term or expansion of abbreviation",
-    "dfn": "Full term or expansion of abbreviation",
-    "input": "Description of pattern (when used with pattern attribute)",
-    "link": "CSS style sheet set name",
-    "style": "CSS style sheet set name"
+    "HTML elements": "Añade información complementaria sobre el elemento.",
+    "abbr": "Contiene la forma desarrollada de la abreviatura o el término que se define.",
+    "dfn": "Contiene la forma desarrollada de la abreviatura o el término que se define.",
+    "input": "Describe el formato esperado por pattern en lenguaje comprensible.",
+    "link": "Identifica el conjunto de hojas de estilo al que pertenece esta hoja.",
+    "style": "Identifica el conjunto de hojas de estilo al que pertenece esta hoja."
   },
   "translate": {
-    "HTML elements": "Whether the element is to be translated when the page is localized"
+    "HTML elements": "Indica si el contenido y los atributos traducibles se deben localizar."
   },
   "type": {
-    "a": "Hint for the type of the referenced resource",
-    "link": "Hint for the type of the referenced resource",
-    "button": "Type of button",
-    "embed": "Type of embedded resource",
-    "object": "Type of embedded resource",
-    "source": "Type of embedded resource",
-    "input": "Type of form control",
-    "ol": "Kind of list marker",
-    "script": "Type of script"
+    "a": "Sugiere el tipo del recurso al que apunta el enlace.",
+    "link": "Sugiere el tipo del recurso al que apunta el enlace.",
+    "button": "Determina si el botón envía el formulario, lo restaura o realiza una acción propia.",
+    "embed": "Declara el tipo MIME del recurso que se incrusta.",
+    "object": "Declara el tipo MIME del recurso que se incrusta.",
+    "source": "Declara el tipo MIME del recurso que se incrusta.",
+    "input": "Selecciona el tipo de campo, con sus controles y reglas de validación.",
+    "ol": "Selecciona el estilo de numeración de una lista ordenada.",
+    "script": "Selecciona si el elemento contiene un script clásico, un módulo u otro tipo de datos."
   },
   "usemap": {
-    "img": "Name of image map to use"
+    "img": "Identifica el mapa que define las zonas activas de la imagen."
   },
   "value": {
-    "button": "Value to be used for form submission",
-    "option": "Value to be used for form submission",
-    "data": "Machine-readable value",
-    "input": "Value of the form control",
-    "li": "Ordinal value of the list item",
-    "meter": "Current value of the element",
-    "progress": "Current value of the element"
+    "button": "Dato que se envía cuando el botón o la opción participa en el formulario.",
+    "option": "Dato que se envía cuando el botón o la opción participa en el formulario.",
+    "data": "Proporciona la representación del contenido que pueden leer los programas.",
+    "input": "Configura el valor inicial del control según el tipo de campo.",
+    "li": "Asigna un número explícito a un elemento de una lista ordenada.",
+    "meter": "Indica el estado actual del medidor o del indicador de progreso.",
+    "progress": "Indica el estado actual del medidor o del indicador de progreso."
   },
   "width": {
-    "canvas": "Horizontal dimension",
-    "embed": "Horizontal dimension",
-    "iframe": "Horizontal dimension",
-    "img": "Horizontal dimension",
-    "input": "Horizontal dimension",
-    "object": "Horizontal dimension",
-    "source": "Horizontal dimension",
-    "picture": "Horizontal dimension",
-    "video": "Horizontal dimension"
+    "canvas": "Fija la dimensión horizontal del recurso o del área reservada para él.",
+    "embed": "Fija la dimensión horizontal del recurso o del área reservada para él.",
+    "iframe": "Fija la dimensión horizontal del recurso o del área reservada para él.",
+    "img": "Fija la dimensión horizontal del recurso o del área reservada para él.",
+    "input": "Fija la dimensión horizontal del recurso o del área reservada para él.",
+    "object": "Fija la dimensión horizontal del recurso o del área reservada para él.",
+    "source": "Fija la dimensión horizontal del recurso o del área reservada para él.",
+    "picture": "Fija la dimensión horizontal del recurso o del área reservada para él.",
+    "video": "Fija la dimensión horizontal del recurso o del área reservada para él."
   },
   "wrap": {
-    "textarea": "How the value of the form control is to be wrapped for form submission"
+    "textarea": "Controla si se añaden saltos de línea al texto enviado por el formulario según el ancho del campo."
   },
   "writingsuggestions": {
-    "HTML elements": "Whether the element can offer writing suggestions or not."
+    "HTML elements": "Indica si se ofrecen sugerencias de escritura en las zonas donde la persona puede editar texto."
   },
   "onafterprint": {
     "body": "Maneja el evento afterprint de Window."

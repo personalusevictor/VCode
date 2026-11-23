@@ -347,5 +347,230 @@
       }
     ],
     "specification": "https://streams.spec.whatwg.org/#rs-get-reader"
+  },
+  {
+    "id": "css-functions-clamp()",
+    "locale": "es",
+    "intro": [
+      "Limita un valor preferido entre un mínimo y un máximo. Por ejemplo, clamp(1rem, 2vw + .5rem, 2rem) deja crecer el tamaño con la ventana dentro de esos límites."
+    ],
+    "parameters": [
+      {
+        "label": "min",
+        "detail": "Límite inferior. Si supera al máximo, prevalece el mínimo."
+      },
+      {
+        "label": "val",
+        "detail": "Valor preferido. Se usa cuando queda dentro de los límites."
+      },
+      {
+        "label": "max",
+        "detail": "Límite superior. Se usa si el valor preferido lo supera y el mínimo no es mayor."
+      }
+    ],
+    "returns": [
+      "clamp(MIN, VAL, MAX) equivale a max(MIN, min(VAL, MAX)). Los tres valores deben poder combinarse como un mismo tipo CSS."
+    ],
+    "accessibility": [
+      "Para el tamaño de texto, usa medidas relativas y comprueba que el usuario puede ampliarlo hasta el 200 % sin que un máximo fijo lo impida."
+    ]
+  },
+  {
+    "id": "css-functions-min()",
+    "locale": "es",
+    "intro": [
+      "Elige el menor resultado entre varios cálculos CSS. width: min(100%, 42rem) deja que un bloque se reduzca con su contenedor y limita su ancho a 42rem."
+    ],
+    "parameters": [
+      {
+        "label": "expresiones",
+        "detail": "Una o varias expresiones separadas por comas. Pueden mezclar unidades compatibles, usar paréntesis o incluir otras funciones matemáticas."
+      }
+    ],
+    "accessibility": [
+      "Si lo aplicas al tamaño del texto, comprueba que el límite permite ampliarlo hasta el 200 %."
+    ]
+  },
+  {
+    "id": "css-functions-max()",
+    "locale": "es",
+    "intro": [
+      "Elige el mayor resultado entre varios cálculos CSS. padding-inline: max(1rem, 4vw) mantiene al menos 1rem de relleno y permite que crezca en pantallas anchas."
+    ],
+    "parameters": [
+      {
+        "label": "expresiones",
+        "detail": "Una o varias expresiones separadas por comas. Cada expresión debe producir un valor de tipo compatible con las demás."
+      }
+    ],
+    "accessibility": [
+      "Si lo aplicas al tamaño del texto, elige un mínimo legible en unidades relativas y prueba el zoom del navegador."
+    ]
+  },
+  {
+    "id": "css-functions-attr()",
+    "locale": "es",
+    "intro": [
+      "Lee un atributo del elemento y lo convierte en un valor CSS. En un pseudoelemento como ::before, se lee el atributo del elemento que lo genera."
+    ],
+    "parameters": [
+      {
+        "label": "<attr-name>",
+        "detail": "Nombre del atributo. La distinción entre mayúsculas y minúsculas sigue las reglas del documento."
+      },
+      {
+        "label": "<attr-type>",
+        "detail": "Cómo se interpreta el valor. raw-string conserva el texto. También puedes pedir una unidad o un tipo compatible, por ejemplo px o type(<number>)."
+      },
+      {
+        "label": "<fallback-value>",
+        "detail": "Valor alternativo si falta el atributo o la conversión al tipo solicitado falla."
+      }
+    ],
+    "returns": [
+      "Sin tipo explícito, el valor se mantiene como texto. Un atributo vacío sigue siendo un texto vacío. Sin valor alternativo, la ausencia de un atributo sin tipo produce una cadena vacía y un fallo con tipo produce el valor garantizado como inválido."
+    ],
+    "caveats": [
+      "El uso en content tiene un soporte más amplio. Si lees valores con tipo en otras propiedades, comprueba el soporte y deja una declaración alternativa."
+    ]
+  },
+  {
+    "id": "css-selectors-%3Alang()",
+    "locale": "es",
+    "intro": [
+      "Selecciona elementos según el idioma del documento. En HTML, un elemento puede heredar el idioma del antepasado más cercano que declara lang."
+    ],
+    "body": [
+      ":lang(es) coincide también con variantes como es-ES o es-MX. Es útil para cambiar detalles tipográficos como las comillas sin agregar clases a todos los fragmentos."
+    ],
+    "parameters": [
+      {
+        "label": "<language-code>",
+        "detail": "Uno o varios rangos de idioma BCP 47 separados por comas. La comparación ignora las diferencias entre mayúsculas y minúsculas."
+      }
+    ]
+  },
+  {
+    "id": "css-selectors-%3Anot()",
+    "locale": "es",
+    "intro": [
+      "Selecciona elementos que quedan fuera de todos los selectores del argumento. Por ejemplo, input:not([disabled]) selecciona los campos que no tienen el atributo disabled."
+    ],
+    "body": [
+      "La especificidad procede del selector más específico de la lista. Por ejemplo, #principal:not(#auxiliar) cuenta con dos selectores de ID.",
+      "El contexto importa. Para excluir enlaces de una tabla, aplica la negación al enlace completo con a:not(table a)."
+    ],
+    "parameters": [
+      {
+        "label": "selectores",
+        "detail": "Uno o varios selectores separados por comas. No admite pseudoelementos como ::before en la lista."
+      }
+    ]
+  },
+  {
+    "id": "javascript-api-Object.hasOwn()",
+    "locale": "es",
+    "intro": [
+      "Comprueba si una propiedad pertenece directamente al objeto, incluso si su valor es null o undefined."
+    ],
+    "body": [
+      "Es útil con objetos sin prototipo o que tienen una propiedad llamada hasOwnProperty. El operador in también incluye las propiedades que se heredan."
+    ],
+    "parameters": [
+      {
+        "label": "obj",
+        "detail": "Objeto donde se comprueba la propiedad."
+      },
+      {
+        "label": "prop",
+        "detail": "Clave de la propiedad, como una cadena o un símbolo."
+      }
+    ],
+    "returns": [
+      "true si la clave es propia del objeto. En los demás casos devuelve false."
+    ],
+    "exceptions": [
+      {
+        "label": "TypeError",
+        "detail": "Se lanza si obj es null o undefined y no se puede convertir en objeto."
+      }
+    ]
+  },
+  {
+    "id": "web-javascript-global_objects-regexp-escape",
+    "locale": "es",
+    "intro": [
+      "Escapa el texto para que una expresión regular lo busque de forma literal. Úsalo al construir un patrón con RegExp() a partir de texto que podría incluir puntos, paréntesis u otros símbolos."
+    ],
+    "body": [
+      "Además de los metacaracteres, la función escapa algunas letras o cifras iniciales para evitar que se unan a una secuencia situada antes del texto.",
+      "También tiene en cuenta espacios, saltos de línea y signos como el guion. Algunos de ellos necesitan escapes hexadecimales o Unicode."
+    ],
+    "parameters": [
+      {
+        "label": "string",
+        "detail": "Cadena que se va a tratar como texto literal."
+      }
+    ],
+    "returns": [
+      "Una cadena escapada que se puede incorporar como fragmento literal en el patrón de RegExp()."
+    ],
+    "exceptions": [
+      {
+        "label": "TypeError",
+        "detail": "Se lanza si el argumento no es una cadena."
+      }
+    ]
+  },
+  {
+    "id": "web-javascript-web-api-url-canparse_static",
+    "locale": "es",
+    "intro": [
+      "Comprueba si una dirección se puede analizar como URL. Admite una dirección absoluta o una ruta relativa junto con una URL base."
+    ],
+    "body": [
+      "Sigue las mismas reglas de análisis que new URL(). El resultado describe el formato de la dirección. La existencia o la respuesta del recurso se comprueban aparte."
+    ],
+    "parameters": [
+      {
+        "label": "url",
+        "detail": "Dirección absoluta o relativa. Se convierte a texto antes del análisis."
+      },
+      {
+        "label": "base",
+        "detail": "Dirección base válida para resolver url si es relativa."
+      }
+    ],
+    "returns": [
+      "true si las entradas permiten analizar una URL. En caso contrario, devuelve false."
+    ]
+  },
+  {
+    "id": "web-javascript-web-api-document-write",
+    "locale": "es",
+    "intro": [
+      "Escribe HTML en el flujo del documento. Es un método obsoleto que puede alterar el analizador e incluso borrar lo que ya se ha cargado."
+    ],
+    "body": [
+      "Al ejecutarlo sobre un documento cargado, normalmente se abre un nuevo flujo y se borra el contenido anterior. Si se llama mientras el analizador procesa un script en línea, puede insertar contenido en ese flujo.",
+      "Para añadir texto a una página, crea un elemento y asigna textContent. Evita insertar contenido no confiable como HTML."
+    ],
+    "parameters": [
+      {
+        "label": "markup, …, markupN",
+        "detail": "Cadenas o valores TrustedHTML que se insertan en el flujo, en el orden recibido."
+      }
+    ],
+    "returns": ["undefined."],
+    "exceptions": [
+      {
+        "label": "InvalidStateError",
+        "detail": "Puede producirse si el documento es XML o mientras el analizador ejecuta el constructor de un elemento personalizado."
+      },
+      {
+        "label": "TypeError",
+        "detail": "Puede producirse al pasar una cadena cuando se exige TrustedHTML y no hay una política predeterminada."
+      }
+    ]
   }
 ]

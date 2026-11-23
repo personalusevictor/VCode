@@ -109,6 +109,7 @@ def read_attribute_rows(index, caption):
 
 def read_attributes(index):
     merged = {}
+    translations = json.loads((DATA / "html-attribute-context-es.json").read_text())
     tables = [
         ("html-attributes", "List of attributes (excluding event handler content attributes)"),
         ("html-events", "List of event handler content attributes"),
@@ -137,6 +138,11 @@ def read_attributes(index):
                     "name": name,
                     "href": urljoin(HTML + "indices.html", event_link),
                 }
+            else:
+                purpose = translations["purposes"].get(title, {}).get(context["purpose"])
+                values = translations["values"].get(context["values"])
+                if purpose and values:
+                    context.update(purpose=purpose, values=values, locale="es")
             if title in merged:
                 entry = merged[title]
                 entry["appliesTo"] = list(dict.fromkeys(entry["appliesTo"] + scope))
@@ -150,6 +156,7 @@ def read_attributes(index):
                 "group": group,
                 "appliesTo": scope,
                 "summary": context["purpose"],
+                "locale": context.get("locale", "en"),
                 "contexts": [context],
                 "source": source,
             }

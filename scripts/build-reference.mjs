@@ -301,6 +301,21 @@ const pageBoxes = {
   "@right-middle": "el centro del margen derecho",
   "@right-bottom": "la parte inferior del margen derecho",
 };
+const metadataTranslations = {
+  "see individual properties": "Consulta cada propiedad que abrevia",
+  "depends on user agent": "Depende del navegador",
+  "not defined for shorthand properties": "Sin valor propio en el atajo",
+  "n/a": "No se aplica",
+  "n/a (see prose)": "No se aplica. Consulta la especificación",
+  "the guaranteed-invalid value": "Valor garantizado como inválido",
+  "yes?": "Por determinar en el borrador",
+  "?": "Por determinar en el borrador",
+  "no (but see prose)": "No. Consulta las excepciones en la especificación",
+  "no (but see prose, above)":
+    "No. Consulta las excepciones en la especificación",
+};
+const translateMetadata = (value) =>
+  metadataTranslations[value.toLowerCase()] || value;
 const entries = features.map(([kind, entry]) => {
   const title = entry.scope
     ? `${entry.scope} · ${entry.name}`
@@ -325,8 +340,8 @@ const entries = features.map(([kind, entry]) => {
     source: entry.href,
     ...(detail && { detail, example }),
     ...(entry.syntax && { syntax: entry.syntax }),
-    ...(entry.initial && { initial: entry.initial }),
-    ...(entry.inherited && { inherited: entry.inherited }),
+    ...(entry.initial && { initial: translateMetadata(entry.initial) }),
+    ...(entry.inherited && { inherited: translateMetadata(entry.inherited) }),
     ...(entry.legacyAliasOf && { alias: entry.legacyAliasOf }),
   };
 });

@@ -6,13 +6,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["th"],
-    "summary": "Alternative label to use for the header cell when referencing the cell in other contexts",
+    "summary": "Etiqueta abreviada de la celda de encabezado para usarla al referirse a ella desde otro contexto.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["th"],
-        "purpose": "Alternative label to use for the header cell when referencing the cell in other contexts",
-        "values": "Text*",
-        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-th-abbr"
+        "purpose": "Etiqueta abreviada de la celda de encabezado para usarla al referirse a ella desde otro contexto.",
+        "values": "Texto. Consulta las restricciones del elemento.",
+        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-th-abbr",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-th-abbr"
@@ -24,13 +26,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input"],
-    "summary": "Hint for expected file type in file upload controls",
+    "summary": "Orienta al selector de archivos sobre qué formatos acepta el control. Valida el archivo también al recibirlo.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input"],
-        "purpose": "Hint for expected file type in file upload controls",
-        "values": "Set of comma-separated tokens* consisting of valid MIME type strings with no parameters or audio/*, video/*, or image/*",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-accept"
+        "purpose": "Orienta al selector de archivos sobre qué formatos acepta el control. Valida el archivo también al recibirlo.",
+        "values": "Lista separada por comas de tipos MIME sin parámetros o patrones como audio/*, video/* e image/*. También admite extensiones de archivo válidas, como .pdf.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-accept",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-accept"
@@ -42,13 +46,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["form"],
-    "summary": "Character encodings to use for form submission",
+    "summary": "Especifica la codificación de caracteres con la que se envía el formulario.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["form"],
-        "purpose": "Character encodings to use for form submission",
-        "values": "ASCII case-insensitive match for \"UTF-8\"",
-        "source": "https://html.spec.whatwg.org/multipage/forms.html#attr-form-accept-charset"
+        "purpose": "Especifica la codificación de caracteres con la que se envía el formulario.",
+        "values": "UTF-8. Se admiten diferencias de mayúsculas y minúsculas ASCII.",
+        "source": "https://html.spec.whatwg.org/multipage/forms.html#attr-form-accept-charset",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/forms.html#attr-form-accept-charset"
@@ -60,13 +66,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Keyboard shortcut to activate or focus element",
+    "summary": "Sugiere una tecla de acceso rápido para activar el elemento o llevar el foco a él.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Keyboard shortcut to activate or focus element",
-        "values": "Ordered set of unique space-separated tokens, none of which are identical to another, each consisting of one code point in length",
-        "source": "https://html.spec.whatwg.org/multipage/interaction.html#the-accesskey-attribute"
+        "purpose": "Sugiere una tecla de acceso rápido para activar el elemento o llevar el foco a él.",
+        "values": "Lista ordenada de valores únicos separados por espacios. Cada valor tiene un punto de código.",
+        "source": "https://html.spec.whatwg.org/multipage/interaction.html#the-accesskey-attribute",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/interaction.html#the-accesskey-attribute"
@@ -78,13 +86,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["form"],
-    "summary": "URL to use for form submission",
+    "summary": "Dirección a la que se envían los datos del formulario.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["form"],
-        "purpose": "URL to use for form submission",
-        "values": "Valid non-empty URL potentially surrounded by spaces",
-        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-action"
+        "purpose": "Dirección a la que se envían los datos del formulario.",
+        "values": "URL válida y no vacía. Puede tener espacios alrededor.",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-action",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-action"
@@ -96,13 +106,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["iframe"],
-    "summary": "Permissions policy to be applied to the iframe's contents",
+    "summary": "Declara qué funciones del navegador quedan habilitadas para el documento del iframe.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["iframe"],
-        "purpose": "Permissions policy to be applied to the iframe's contents",
-        "values": "Serialized permissions policy",
-        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-allow"
+        "purpose": "Declara qué funciones del navegador quedan habilitadas para el documento del iframe.",
+        "values": "Política de permisos en formato de texto.",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-allow",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-allow"
@@ -114,13 +126,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["iframe"],
-    "summary": "Whether to allow the iframe's contents to use requestFullscreen()",
+    "summary": "Permite que el contenido del iframe solicite el modo de pantalla completa.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["iframe"],
-        "purpose": "Whether to allow the iframe's contents to use requestFullscreen()",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-allowfullscreen"
+        "purpose": "Permite que el contenido del iframe solicite el modo de pantalla completa.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-allowfullscreen",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-allowfullscreen"
@@ -132,13 +146,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input"],
-    "summary": "Allow the color's alpha component to be set",
+    "summary": "Permite ajustar la transparencia del color seleccionado.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input"],
-        "purpose": "Allow the color's alpha component to be set",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-alpha"
+        "purpose": "Permite ajustar la transparencia del color seleccionado.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-alpha",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-alpha"
@@ -150,13 +166,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["area", "img", "input"],
-    "summary": "Replacement text for use when images are not available",
+    "summary": "Texto que sustituye la imagen y comunica para qué sirve cuando no se puede ver.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["area", "img", "input"],
-        "purpose": "Replacement text for use when images are not available",
-        "values": "Text*",
-        "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-area-alt"
+        "purpose": "Texto que sustituye la imagen y comunica para qué sirve cuando no se puede ver.",
+        "values": "Texto. Consulta las restricciones del elemento.",
+        "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-area-alt",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-area-alt"
@@ -168,13 +186,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["link"],
-    "summary": "Destination for a preload request (for rel=\"preload\" and rel=\"modulepreload\")",
+    "summary": "Indica qué clase de recurso se precarga con el enlace.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["link"],
-        "purpose": "Destination for a preload request (for rel=\"preload\" and rel=\"modulepreload\")",
-        "values": "Preload destination, for rel=\"preload\"; module preload destination, for rel=\"modulepreload\"",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-as"
+        "purpose": "Indica qué clase de recurso se precarga con el enlace.",
+        "values": "Destino admitido para la precarga, como script, style, font o image, según el tipo de enlace.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-as",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-as"
@@ -186,13 +206,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["script"],
-    "summary": "Execute script when available, without blocking while fetching",
+    "summary": "Ejecuta el script cuando está disponible. Su descarga no detiene el análisis del HTML.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["script"],
-        "purpose": "Execute script when available, without blocking while fetching",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-async"
+        "purpose": "Ejecuta el script cuando está disponible. Su descarga no detiene el análisis del HTML.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-async",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-async"
@@ -204,13 +226,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Recommended autocapitalization behavior (for supported input methods)",
+    "summary": "Sugiere cómo usar mayúsculas al escribir con un método de entrada compatible.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Recommended autocapitalization behavior (for supported input methods)",
-        "values": "\"on\"; \"off\"; \"none\"; \"sentences\"; \"words\"; \"characters\"",
-        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-autocapitalize"
+        "purpose": "Sugiere cómo usar mayúsculas al escribir con un método de entrada compatible.",
+        "values": "«on», «off», «none», «sentences», «words», «characters».",
+        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-autocapitalize",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-autocapitalize"
@@ -222,19 +246,22 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["form", "input", "select", "textarea"],
-    "summary": "Default setting for autofill feature for controls in the form",
+    "summary": "Configura el comportamiento predeterminado del autocompletado en los controles del formulario.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["form"],
-        "purpose": "Default setting for autofill feature for controls in the form",
-        "values": "\"on\"; \"off\"",
-        "source": "https://html.spec.whatwg.org/multipage/forms.html#attr-form-autocomplete"
+        "purpose": "Configura el comportamiento predeterminado del autocompletado en los controles del formulario.",
+        "values": "«on», «off».",
+        "source": "https://html.spec.whatwg.org/multipage/forms.html#attr-form-autocomplete",
+        "locale": "es"
       },
       {
         "elements": ["input", "select", "textarea"],
-        "purpose": "Hint for form autofill feature",
-        "values": "Autofill field name and related tokens*",
-        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete"
+        "purpose": "Identifica qué dato puede completar el navegador en este control.",
+        "values": "Nombre del dato de autocompletado y, si procede, palabras clave que lo acotan.",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/forms.html#attr-form-autocomplete"
@@ -246,13 +273,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Recommended autocorrection behavior (for supported input methods)",
+    "summary": "Sugiere si el sistema de entrada debe corregir el texto al escribir.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Recommended autocorrection behavior (for supported input methods)",
-        "values": "\"on\"; \"off\"; the empty string",
-        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-autocorrect"
+        "purpose": "Sugiere si el sistema de entrada debe corregir el texto al escribir.",
+        "values": "«on», «off», la cadena vacía.",
+        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-autocorrect",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-autocorrect"
@@ -264,13 +293,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Automatically focus the element when the page is loaded",
+    "summary": "Lleva el foco al elemento al cargar la página o al mostrar el diálogo o panel que lo contiene.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Automatically focus the element when the page is loaded",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-fe-autofocus"
+        "purpose": "Lleva el foco al elemento al cargar la página o al mostrar el diálogo o panel que lo contiene.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-fe-autofocus",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-fe-autofocus"
@@ -282,13 +313,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["audio", "video"],
-    "summary": "Hint that the media resource can be started automatically when the page is loaded",
+    "summary": "Solicita que el audio o vídeo empiece automáticamente. El navegador puede exigir interacción previa.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["audio", "video"],
-        "purpose": "Hint that the media resource can be started automatically when the page is loaded",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-autoplay"
+        "purpose": "Solicita que el audio o vídeo empiece automáticamente. El navegador puede exigir interacción previa.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-autoplay",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-autoplay"
@@ -300,13 +333,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["link", "script", "style"],
-    "summary": "Whether the element is potentially render-blocking",
+    "summary": "Indica qué procesamiento puede bloquear este recurso, como el primer renderizado.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["link", "script", "style"],
-        "purpose": "Whether the element is potentially render-blocking",
-        "values": "Unordered set of unique space-separated tokens*",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-blocking"
+        "purpose": "Indica qué procesamiento puede bloquear este recurso, como el primer renderizado.",
+        "values": "Lista sin orden de valores únicos separados por espacios.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-blocking",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-blocking"
@@ -318,13 +353,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["meta"],
-    "summary": "Character encoding declaration",
+    "summary": "Declara la codificación de caracteres del documento HTML.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["meta"],
-        "purpose": "Character encoding declaration",
-        "values": "\"utf-8\"",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-charset"
+        "purpose": "Declara la codificación de caracteres del documento HTML.",
+        "values": "«utf-8».",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-charset",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-charset"
@@ -336,13 +373,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input"],
-    "summary": "Whether the control is checked",
+    "summary": "Marca inicialmente una casilla o selecciona inicialmente un botón de opción.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input"],
-        "purpose": "Whether the control is checked",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-checked"
+        "purpose": "Marca inicialmente una casilla o selecciona inicialmente un botón de opción.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-checked",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-checked"
@@ -354,13 +393,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["blockquote", "del", "ins", "q"],
-    "summary": "Link to the source of the quotation or more information about the edit",
+    "summary": "Enlaza a la fuente de la cita o a información sobre el cambio de contenido.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["blockquote", "del", "ins", "q"],
-        "purpose": "Link to the source of the quotation or more information about the edit",
-        "values": "Valid URL potentially surrounded by spaces",
-        "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-blockquote-cite"
+        "purpose": "Enlaza a la fuente de la cita o a información sobre el cambio de contenido.",
+        "values": "URL válida, con espacios opcionales alrededor.",
+        "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-blockquote-cite",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-blockquote-cite"
@@ -372,13 +413,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Classes to which the element belongs",
+    "summary": "Identifica las clases del elemento para estilos y otras búsquedas.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Classes to which the element belongs",
-        "values": "Set of space-separated tokens",
-        "source": "https://html.spec.whatwg.org/multipage/dom.html#classes"
+        "purpose": "Identifica las clases del elemento para estilos y otras búsquedas.",
+        "values": "Lista de valores separados por espacios.",
+        "source": "https://html.spec.whatwg.org/multipage/dom.html#classes",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/dom.html#classes",
@@ -392,13 +435,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["dialog"],
-    "summary": "Which user actions will close the dialog",
+    "summary": "Determina qué acciones de la persona pueden cerrar el diálogo.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["dialog"],
-        "purpose": "Which user actions will close the dialog",
-        "values": "\"any\"; \"closerequest\"; \"none\";",
-        "source": "https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-dialog-closedby"
+        "purpose": "Determina qué acciones de la persona pueden cerrar el diálogo.",
+        "values": "«any», «closerequest», «none».",
+        "source": "https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-dialog-closedby",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-dialog-closedby"
@@ -410,13 +455,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["link"],
-    "summary": "Color to use when customizing a site's icon (for rel=\"mask-icon\")",
+    "summary": "Indica el color usado por algunos navegadores con un icono de tipo mask-icon.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["link"],
-        "purpose": "Color to use when customizing a site's icon (for rel=\"mask-icon\")",
-        "values": "CSS <color>",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-color"
+        "purpose": "Indica el color usado por algunos navegadores con un icono de tipo mask-icon.",
+        "values": "Color CSS válido.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-color",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-color"
@@ -428,13 +475,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input"],
-    "summary": "The color space of the serialized color",
+    "summary": "Selecciona el espacio de color en el que se representa el valor del control.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input"],
-        "purpose": "The color space of the serialized color",
-        "values": "\"limited-srgb\"; \"display-p3\"",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-colorspace"
+        "purpose": "Selecciona el espacio de color en el que se representa el valor del control.",
+        "values": "«limited-srgb», «display-p3».",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-colorspace",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-colorspace"
@@ -446,13 +495,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["textarea"],
-    "summary": "Maximum number of characters per line",
+    "summary": "Define el ancho visible aproximado del área de texto en caracteres.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["textarea"],
-        "purpose": "Maximum number of characters per line",
-        "values": "Valid non-negative integer greater than zero",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-cols"
+        "purpose": "Define el ancho visible aproximado del área de texto en caracteres.",
+        "values": "Entero mayor que cero.",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-cols",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-cols"
@@ -464,13 +515,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["td", "th"],
-    "summary": "Number of columns that the cell is to span",
+    "summary": "Indica cuántas columnas ocupa la celda.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["td", "th"],
-        "purpose": "Number of columns that the cell is to span",
-        "values": "Valid non-negative integer greater than zero",
-        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-tdth-colspan"
+        "purpose": "Indica cuántas columnas ocupa la celda.",
+        "values": "Entero mayor que cero.",
+        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-tdth-colspan",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-tdth-colspan"
@@ -482,13 +535,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["button"],
-    "summary": "Indicates to the targeted element which action to take.",
+    "summary": "Especifica la acción que el botón solicita al elemento de destino.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["button"],
-        "purpose": "Indicates to the targeted element which action to take.",
-        "values": "\"toggle-popover\"; \"show-popover\"; \"hide-popover\"; \"close\"; \"request-close\"; \"show-modal\"; a custom command keyword",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-command"
+        "purpose": "Especifica la acción que el botón solicita al elemento de destino.",
+        "values": "«toggle-popover», «show-popover», «hide-popover», «close», «request-close», «show-modal» o un comando personalizado que empiece con dos guiones.",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-command",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-command"
@@ -500,13 +555,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["button"],
-    "summary": "Targets another element to be invoked.",
+    "summary": "Identifica el elemento sobre el que actúa el botón.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["button"],
-        "purpose": "Targets another element to be invoked.",
-        "values": "ID*",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-commandfor"
+        "purpose": "Identifica el elemento sobre el que actúa el botón.",
+        "values": "Identificador de elemento. Consulta las restricciones del atributo.",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-commandfor",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-commandfor"
@@ -518,13 +575,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["meta"],
-    "summary": "Value of the element",
+    "summary": "Proporciona el valor de los metadatos declarados con meta.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["meta"],
-        "purpose": "Value of the element",
-        "values": "Text*",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-content"
+        "purpose": "Proporciona el valor de los metadatos declarados con meta.",
+        "values": "Texto. Consulta las restricciones del elemento.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-content",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-content"
@@ -536,13 +595,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Whether the element is editable",
+    "summary": "Controla si la persona puede editar el contenido del elemento.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Whether the element is editable",
-        "values": "\"true\"; \"false\"; \"plaintext-only\"; the empty string",
-        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-contenteditable"
+        "purpose": "Controla si la persona puede editar el contenido del elemento.",
+        "values": "«true», «false», «plaintext-only», la cadena vacía.",
+        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-contenteditable",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-contenteditable"
@@ -554,13 +615,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["audio", "video", "img"],
-    "summary": "Show user agent controls",
+    "summary": "Pide al navegador que muestre los controles de reproducción disponibles.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["audio", "video", "img"],
-        "purpose": "Show user agent controls",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-controls"
+        "purpose": "Pide al navegador que muestre los controles de reproducción disponibles.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-controls",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-controls"
@@ -572,13 +635,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["area"],
-    "summary": "Coordinates for the shape to be created in an image map",
+    "summary": "Define las coordenadas de una zona del mapa de imagen según la forma escogida.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["area"],
-        "purpose": "Coordinates for the shape to be created in an image map",
-        "values": "Valid list of floating-point numbers*",
-        "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-area-coords"
+        "purpose": "Define las coordenadas de una zona del mapa de imagen según la forma escogida.",
+        "values": "Lista válida de números de punto flotante.",
+        "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-area-coords",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-area-coords"
@@ -590,13 +655,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["audio", "img", "link", "script", "video"],
-    "summary": "How the element handles crossorigin requests",
+    "summary": "Controla cómo se solicita el recurso cuando está en otro origen.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["audio", "img", "link", "script", "video"],
-        "purpose": "How the element handles crossorigin requests",
-        "values": "\"anonymous\"; \"use-credentials\"; the empty string",
-        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-crossorigin"
+        "purpose": "Controla cómo se solicita el recurso cuando está en otro origen.",
+        "values": "«anonymous», «use-credentials», la cadena vacía.",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-crossorigin",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-crossorigin"
@@ -608,13 +675,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["object"],
-    "summary": "Address of the resource",
+    "summary": "Dirección del recurso que incrusta object.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["object"],
-        "purpose": "Address of the resource",
-        "values": "Valid non-empty URL potentially surrounded by spaces",
-        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-object-data"
+        "purpose": "Dirección del recurso que incrusta object.",
+        "values": "URL válida y no vacía. Puede tener espacios alrededor.",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-object-data",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-object-data"
@@ -626,19 +695,22 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["del", "ins", "time"],
-    "summary": "Date and (optionally) time of the change",
+    "summary": "Indica la fecha y, opcionalmente, la hora del cambio.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["del", "ins"],
-        "purpose": "Date and (optionally) time of the change",
-        "values": "Valid date string with optional time",
-        "source": "https://html.spec.whatwg.org/multipage/edits.html#attr-mod-datetime"
+        "purpose": "Indica la fecha y, opcionalmente, la hora del cambio.",
+        "values": "Fecha válida con hora opcional.",
+        "source": "https://html.spec.whatwg.org/multipage/edits.html#attr-mod-datetime",
+        "locale": "es"
       },
       {
         "elements": ["time"],
-        "purpose": "Machine-readable value",
-        "values": "Valid month string, valid date string, valid yearless date string, valid time string, valid local date and time string, valid time-zone offset string, valid global date and time string, valid week string, valid non-negative integer, or valid duration string",
-        "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#attr-time-datetime"
+        "purpose": "Proporciona una fecha, hora, duración u otro valor temporal en un formato reconocible por programas.",
+        "values": "Mes, fecha, fecha sin año, hora, fecha y hora locales, desplazamiento de zona horaria, fecha y hora globales, semana, entero no negativo o duración, en un formato HTML válido.",
+        "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#attr-time-datetime",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/edits.html#attr-mod-datetime"
@@ -650,13 +722,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["img"],
-    "summary": "Decoding hint to use when processing this image for presentation",
+    "summary": "Sugiere cuándo puede decodificarse la imagen para presentarla.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["img"],
-        "purpose": "Decoding hint to use when processing this image for presentation",
-        "values": "\"sync\"; \"async\"; \"auto\"",
-        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-decoding"
+        "purpose": "Sugiere cuándo puede decodificarse la imagen para presentarla.",
+        "values": "«sync», «async», «auto».",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-decoding",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-decoding"
@@ -668,13 +742,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["track"],
-    "summary": "Enable the track if no other text track is more suitable",
+    "summary": "Activa esta pista si no hay otra que encaje mejor con las preferencias de la persona.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["track"],
-        "purpose": "Enable the track if no other text track is more suitable",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-track-default"
+        "purpose": "Activa esta pista si no hay otra que encaje mejor con las preferencias de la persona.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-track-default",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/media.html#attr-track-default"
@@ -686,13 +762,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["script"],
-    "summary": "Defer script execution",
+    "summary": "En un script clásico externo, aplaza su ejecución hasta que termine de analizarse el documento.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["script"],
-        "purpose": "Defer script execution",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-defer"
+        "purpose": "En un script clásico externo, aplaza su ejecución hasta que termine de analizarse el documento.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-defer",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-defer"
@@ -704,19 +782,22 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements", "bdo"],
-    "summary": "The text directionality of the element",
+    "summary": "Indica en qué dirección se presenta el texto del elemento.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "The text directionality of the element",
-        "values": "\"ltr\"; \"rtl\"; \"auto\"",
-        "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-dir"
+        "purpose": "Indica en qué dirección se presenta el texto del elemento.",
+        "values": "«ltr», «rtl», «auto».",
+        "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-dir",
+        "locale": "es"
       },
       {
         "elements": ["bdo"],
-        "purpose": "The text directionality of the element",
-        "values": "\"ltr\"; \"rtl\"",
-        "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-bdo-element"
+        "purpose": "Indica en qué dirección se presenta el texto del elemento.",
+        "values": "«ltr», «rtl».",
+        "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-bdo-element",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-dir"
@@ -728,13 +809,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input", "textarea"],
-    "summary": "Name of form control to use for sending the element's directionality in form submission",
+    "summary": "Nombre del campo adicional con el que se envía la dirección del texto del control.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input", "textarea"],
-        "purpose": "Name of form control to use for sending the element's directionality in form submission",
-        "values": "Text*",
-        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-dirname"
+        "purpose": "Nombre del campo adicional con el que se envía la dirección del texto del control.",
+        "values": "Texto. Consulta las restricciones del elemento.",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-dirname",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-dirname"
@@ -756,7 +839,8 @@
       "fieldset",
       "link"
     ],
-    "summary": "Whether the form control is disabled",
+    "summary": "Deshabilita el control de formulario o la opción.",
+    "locale": "es",
     "contexts": [
       {
         "elements": [
@@ -768,21 +852,24 @@
           "textarea",
           "form-associated custom elements"
         ],
-        "purpose": "Whether the form control is disabled",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled"
+        "purpose": "Deshabilita el control de formulario o la opción.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled",
+        "locale": "es"
       },
       {
         "elements": ["fieldset"],
-        "purpose": "Whether the descendant form controls, except any inside legend, are disabled",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-fieldset-disabled"
+        "purpose": "Deshabilita los controles del grupo salvo los que estén en su primer elemento legend.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-fieldset-disabled",
+        "locale": "es"
       },
       {
         "elements": ["link"],
-        "purpose": "Whether the link is disabled",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-disabled"
+        "purpose": "Deshabilita el recurso enlazado cuando el tipo de enlace lo permite.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-disabled",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled"
@@ -794,13 +881,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["a", "area"],
-    "summary": "Whether to download the resource instead of navigating to it, and its filename if so",
+    "summary": "Solicita descargar el recurso en lugar de navegar a él. Puede sugerir un nombre de archivo.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["a", "area"],
-        "purpose": "Whether to download the resource instead of navigating to it, and its filename if so",
-        "values": "Text",
-        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-download"
+        "purpose": "Solicita descargar el recurso en lugar de navegar a él. Puede sugerir un nombre de archivo.",
+        "values": "Texto.",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-download",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-download"
@@ -812,13 +901,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Whether the element is draggable",
+    "summary": "Indica si el elemento puede arrastrarse.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Whether the element is draggable",
-        "values": "\"true\"; \"false\"",
-        "source": "https://html.spec.whatwg.org/multipage/dnd.html#attr-draggable"
+        "purpose": "Indica si el elemento puede arrastrarse.",
+        "values": "«true», «false».",
+        "source": "https://html.spec.whatwg.org/multipage/dnd.html#attr-draggable",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/dnd.html#attr-draggable"
@@ -830,13 +921,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["form"],
-    "summary": "Entry list encoding type to use for form submission",
+    "summary": "Selecciona cómo se codifican los datos del formulario al enviarlos.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["form"],
-        "purpose": "Entry list encoding type to use for form submission",
-        "values": "\"application/x-www-form-urlencoded\"; \"multipart/form-data\"; \"text/plain\"",
-        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-enctype"
+        "purpose": "Selecciona cómo se codifican los datos del formulario al enviarlos.",
+        "values": "«application/x-www-form-urlencoded», «multipart/form-data», «text/plain».",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-enctype",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-enctype"
@@ -848,13 +941,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Hint for selecting an enter key action",
+    "summary": "Sugiere la acción que muestra la tecla de entrada del teclado en pantalla.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Hint for selecting an enter key action",
-        "values": "\"enter\"; \"done\"; \"go\"; \"next\"; \"previous\"; \"search\"; \"send\"",
-        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-enterkeyhint"
+        "purpose": "Sugiere la acción que muestra la tecla de entrada del teclado en pantalla.",
+        "values": "«enter», «done», «go», «next», «previous», «search», «send».",
+        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-enterkeyhint",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-enterkeyhint"
@@ -866,13 +961,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["img", "link", "script"],
-    "summary": "Sets the priority for fetches initiated by the element",
+    "summary": "Da una prioridad relativa a la descarga del recurso del elemento.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["img", "link", "script"],
-        "purpose": "Sets the priority for fetches initiated by the element",
-        "values": "\"auto\"; \"high\"; \"low\"",
-        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-fetchpriority"
+        "purpose": "Da una prioridad relativa a la descarga del recurso del elemento.",
+        "values": "«auto», «high», «low».",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-fetchpriority",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-fetchpriority"
@@ -884,25 +981,29 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["label", "output", "template"],
-    "summary": "Associate the label with form control",
+    "summary": "Asocia la etiqueta con un control mediante el identificador del control.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["label"],
-        "purpose": "Associate the label with form control",
-        "values": "ID*",
-        "source": "https://html.spec.whatwg.org/multipage/forms.html#attr-label-for"
+        "purpose": "Asocia la etiqueta con un control mediante el identificador del control.",
+        "values": "Identificador de elemento. Consulta las restricciones del atributo.",
+        "source": "https://html.spec.whatwg.org/multipage/forms.html#attr-label-for",
+        "locale": "es"
       },
       {
         "elements": ["output"],
-        "purpose": "Specifies controls from which the output was calculated",
-        "values": "Unordered set of unique space-separated tokens consisting of IDs*",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-output-for"
+        "purpose": "Identifica los controles que intervienen en el cálculo del resultado.",
+        "values": "Lista sin orden de identificadores únicos separados por espacios.",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-output-for",
+        "locale": "es"
       },
       {
         "elements": ["template"],
-        "purpose": "Updates existing content",
-        "values": "Text",
-        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-for"
+        "purpose": "Identifica contenido existente que actualizará la plantilla.",
+        "values": "Texto.",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-for",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/forms.html#attr-label-for"
@@ -923,7 +1024,8 @@
       "textarea",
       "form-associated custom elements"
     ],
-    "summary": "Associates the element with a form element",
+    "summary": "Asocia el elemento con un formulario, incluso si está fuera de él.",
+    "locale": "es",
     "contexts": [
       {
         "elements": [
@@ -936,9 +1038,10 @@
           "textarea",
           "form-associated custom elements"
         ],
-        "purpose": "Associates the element with a form element",
-        "values": "ID*",
-        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form"
+        "purpose": "Asocia el elemento con un formulario, incluso si está fuera de él.",
+        "values": "Identificador de elemento. Consulta las restricciones del atributo.",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form"
@@ -950,13 +1053,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["button", "input"],
-    "summary": "URL to use for form submission",
+    "summary": "Sobrescribe la URL de destino del formulario cuando se activa este control.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["button", "input"],
-        "purpose": "URL to use for form submission",
-        "values": "Valid non-empty URL potentially surrounded by spaces",
-        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formaction"
+        "purpose": "Sobrescribe la URL de destino del formulario cuando se activa este control.",
+        "values": "URL válida y no vacía. Puede tener espacios alrededor.",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formaction",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formaction"
@@ -968,13 +1073,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["button", "input"],
-    "summary": "Entry list encoding type to use for form submission",
+    "summary": "Sobrescribe la codificación del formulario cuando se activa este control.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["button", "input"],
-        "purpose": "Entry list encoding type to use for form submission",
-        "values": "\"application/x-www-form-urlencoded\"; \"multipart/form-data\"; \"text/plain\"",
-        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formenctype"
+        "purpose": "Sobrescribe la codificación del formulario cuando se activa este control.",
+        "values": "«application/x-www-form-urlencoded», «multipart/form-data», «text/plain».",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formenctype",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formenctype"
@@ -986,13 +1093,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["button", "input"],
-    "summary": "Variant to use for form submission",
+    "summary": "Sobrescribe el método del formulario cuando se activa este control.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["button", "input"],
-        "purpose": "Variant to use for form submission",
-        "values": "\"get\"; \"post\"; \"dialog\"",
-        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formmethod"
+        "purpose": "Sobrescribe el método del formulario cuando se activa este control.",
+        "values": "«get», «post», «dialog».",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formmethod",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formmethod"
@@ -1004,13 +1113,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["button", "input"],
-    "summary": "Bypass form control validation for form submission",
+    "summary": "Permite que el formulario se envíe desde este control sin la validación nativa.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["button", "input"],
-        "purpose": "Bypass form control validation for form submission",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formnovalidate"
+        "purpose": "Permite que el formulario se envíe desde este control sin la validación nativa.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formnovalidate",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formnovalidate"
@@ -1022,13 +1133,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["button", "input"],
-    "summary": "Navigable for form submission",
+    "summary": "Indica dónde se muestra la respuesta al enviar el formulario con este control.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["button", "input"],
-        "purpose": "Navigable for form submission",
-        "values": "Valid navigable target name or keyword",
-        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formtarget"
+        "purpose": "Indica dónde se muestra la respuesta al enviar el formulario con este control.",
+        "values": "Nombre válido de un contexto de navegación o palabra reservada como _self o _blank.",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formtarget",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formtarget"
@@ -1040,13 +1153,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["td", "th"],
-    "summary": "The header cells for this cell",
+    "summary": "Identifica las celdas de encabezado asociadas con esta celda.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["td", "th"],
-        "purpose": "The header cells for this cell",
-        "values": "Unordered set of unique space-separated tokens consisting of IDs*",
-        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-tdth-headers"
+        "purpose": "Identifica las celdas de encabezado asociadas con esta celda.",
+        "values": "Lista sin orden de identificadores únicos separados por espacios.",
+        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-tdth-headers",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-tdth-headers"
@@ -1058,13 +1173,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Offsets heading levels for descendants",
+    "summary": "Ajusta el nivel semántico de los encabezados descendientes.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Offsets heading levels for descendants",
-        "values": "Valid non-negative integer between 0 and 8",
-        "source": "https://html.spec.whatwg.org/multipage/sections.html#attr-headingoffset"
+        "purpose": "Ajusta el nivel semántico de los encabezados descendientes.",
+        "values": "Entero del 0 al 8, inclusive.",
+        "source": "https://html.spec.whatwg.org/multipage/sections.html#attr-headingoffset",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/sections.html#attr-headingoffset"
@@ -1076,13 +1193,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Prevents a heading offset computation from traversing beyond the element with the attribute",
+    "summary": "Impide que el ajuste de niveles de encabezado busque más allá del elemento.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Prevents a heading offset computation from traversing beyond the element with the attribute",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/sections.html#attr-headingreset"
+        "purpose": "Impide que el ajuste de niveles de encabezado busque más allá del elemento.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/sections.html#attr-headingreset",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/sections.html#attr-headingreset"
@@ -1104,7 +1223,8 @@
       "picture",
       "video"
     ],
-    "summary": "Vertical dimension",
+    "summary": "Fija la dimensión vertical del recurso o del área reservada para él.",
+    "locale": "es",
     "contexts": [
       {
         "elements": [
@@ -1118,9 +1238,10 @@
           "picture",
           "video"
         ],
-        "purpose": "Vertical dimension",
-        "values": "Valid non-negative integer",
-        "source": "https://html.spec.whatwg.org/multipage/canvas.html#attr-canvas-height"
+        "purpose": "Fija la dimensión vertical del recurso o del área reservada para él.",
+        "values": "Entero no negativo.",
+        "source": "https://html.spec.whatwg.org/multipage/canvas.html#attr-canvas-height",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/canvas.html#attr-canvas-height"
@@ -1132,13 +1253,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Whether the element is relevant",
+    "summary": "Indica si el elemento debe quedar oculto en su estado actual.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Whether the element is relevant",
-        "values": "\"until-found\"; \"hidden\"; the empty string",
-        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-hidden"
+        "purpose": "Indica si el elemento debe quedar oculto en su estado actual.",
+        "values": "«until-found», «hidden», la cadena vacía.",
+        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-hidden",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-hidden",
@@ -1152,13 +1275,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["meter"],
-    "summary": "Low limit of high range",
+    "summary": "Define a partir de qué valor empieza el intervalo alto del medidor.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["meter"],
-        "purpose": "Low limit of high range",
-        "values": "Valid floating-point number*",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-high"
+        "purpose": "Define a partir de qué valor empieza el intervalo alto del medidor.",
+        "values": "Número válido de punto flotante. El elemento puede imponer restricciones adicionales.",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-high",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-high"
@@ -1170,25 +1295,29 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["a", "area", "link", "base"],
-    "summary": "Address of the hyperlink",
+    "summary": "Dirección de destino cuando se sigue el enlace.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["a", "area"],
-        "purpose": "Address of the hyperlink",
-        "values": "Valid URL potentially surrounded by spaces",
-        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-href"
+        "purpose": "Dirección de destino cuando se sigue el enlace.",
+        "values": "URL válida, con espacios opcionales alrededor.",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-href",
+        "locale": "es"
       },
       {
         "elements": ["link"],
-        "purpose": "Address of the hyperlink",
-        "values": "Valid non-empty URL potentially surrounded by spaces",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-href"
+        "purpose": "Dirección de destino cuando se sigue el enlace.",
+        "values": "URL válida y no vacía. Puede tener espacios alrededor.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-href",
+        "locale": "es"
       },
       {
         "elements": ["base"],
-        "purpose": "Document base URL",
-        "values": "Valid URL potentially surrounded by spaces",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-base-href"
+        "purpose": "Dirección base con la que se resuelven las URL relativas del documento.",
+        "values": "URL válida, con espacios opcionales alrededor.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-base-href",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-href"
@@ -1200,13 +1329,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["a", "link"],
-    "summary": "Language of the linked resource",
+    "summary": "Identifica el idioma del recurso al que apunta el enlace.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["a", "link"],
-        "purpose": "Language of the linked resource",
-        "values": "Valid BCP 47 language tag",
-        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-hreflang"
+        "purpose": "Identifica el idioma del recurso al que apunta el enlace.",
+        "values": "Etiqueta de idioma BCP 47 válida, como es o es-ES.",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-hreflang",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-hreflang"
@@ -1218,13 +1349,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["meta"],
-    "summary": "Pragma directive",
+    "summary": "Selecciona una directiva que el navegador interpreta a partir de los metadatos.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["meta"],
-        "purpose": "Pragma directive",
-        "values": "\"content-type\"; \"default-style\"; \"refresh\"; \"x-ua-compatible\"; \"content-security-policy\"",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-equiv"
+        "purpose": "Selecciona una directiva que el navegador interpreta a partir de los metadatos.",
+        "values": "«content-type», «default-style», «refresh», «x-ua-compatible», «content-security-policy».",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-equiv",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-equiv"
@@ -1236,13 +1369,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "The element's ID",
+    "summary": "Identificador único del elemento dentro de su árbol.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "The element's ID",
-        "values": "Text*",
-        "source": "https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute"
+        "purpose": "Identificador único del elemento dentro de su árbol.",
+        "values": "Texto. Consulta las restricciones del elemento.",
+        "source": "https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute",
@@ -1256,13 +1391,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["link"],
-    "summary": "Image sizes for different page layouts (for rel=\"preload\")",
+    "summary": "Indica el tamaño esperado de la imagen precargada según el diseño de la página.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["link"],
-        "purpose": "Image sizes for different page layouts (for rel=\"preload\")",
-        "values": "Valid source size list",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-imagesizes"
+        "purpose": "Indica el tamaño esperado de la imagen precargada según el diseño de la página.",
+        "values": "Lista válida de tamaños de origen de una imagen.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-imagesizes",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-imagesizes"
@@ -1274,13 +1411,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["link"],
-    "summary": "Images to use in different situations, e.g., high-resolution displays, small monitors, etc. (for rel=\"preload\")",
+    "summary": "Enumera variantes de la imagen que se precarga para que el navegador elija la adecuada.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["link"],
-        "purpose": "Images to use in different situations, e.g., high-resolution displays, small monitors, etc. (for rel=\"preload\")",
-        "values": "Comma-separated list of image candidate strings",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-imagesrcset"
+        "purpose": "Enumera variantes de la imagen que se precarga para que el navegador elija la adecuada.",
+        "values": "Lista de candidatos de imagen separados por comas. Cada candidato puede incluir un descriptor de ancho o densidad.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-imagesrcset",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-imagesrcset"
@@ -1292,13 +1431,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Whether the element is inert.",
+    "summary": "Hace que el elemento y sus descendientes queden fuera de la interacción normal.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Whether the element is inert.",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/interaction.html#the-inert-attribute"
+        "purpose": "Hace que el elemento y sus descendientes queden fuera de la interacción normal.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/interaction.html#the-inert-attribute",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/interaction.html#the-inert-attribute",
@@ -1312,13 +1453,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Hint for selecting an input modality",
+    "summary": "Sugiere la clase de teclado o método de entrada más cómodo para el dato esperado.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Hint for selecting an input modality",
-        "values": "\"none\"; \"text\"; \"tel\"; \"email\"; \"url\"; \"numeric\"; \"decimal\"; \"search\"",
-        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-inputmode"
+        "purpose": "Sugiere la clase de teclado o método de entrada más cómodo para el dato esperado.",
+        "values": "«none», «text», «tel», «email», «url», «numeric», «decimal», «search».",
+        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-inputmode",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-inputmode"
@@ -1330,13 +1473,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["link", "script"],
-    "summary": "Integrity metadata used in Subresource Integrity checks [SRI]",
+    "summary": "Incluye hashes que el navegador puede comparar con el recurso descargado para verificar su integridad.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["link", "script"],
-        "purpose": "Integrity metadata used in Subresource Integrity checks [SRI]",
-        "values": "Text",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-integrity"
+        "purpose": "Incluye hashes que el navegador puede comparar con el recurso descargado para verificar su integridad.",
+        "values": "Texto.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-integrity",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-integrity"
@@ -1348,13 +1493,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Creates a customized built-in element",
+    "summary": "Identifica el nombre registrado de un elemento incorporado personalizado.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Creates a customized built-in element",
-        "values": "Valid custom element name of a defined customized built-in element",
-        "source": "https://html.spec.whatwg.org/multipage/custom-elements.html#attr-is"
+        "purpose": "Identifica el nombre registrado de un elemento incorporado personalizado.",
+        "values": "Nombre registrado válido de un elemento incorporado personalizado.",
+        "source": "https://html.spec.whatwg.org/multipage/custom-elements.html#attr-is",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/custom-elements.html#attr-is"
@@ -1366,13 +1513,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["img"],
-    "summary": "Whether the image is a server-side image map",
+    "summary": "Indica que las coordenadas del clic en la imagen se envían como parte del enlace.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["img"],
-        "purpose": "Whether the image is a server-side image map",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-ismap"
+        "purpose": "Indica que las coordenadas del clic en la imagen se envían como parte del enlace.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-ismap",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-ismap"
@@ -1384,13 +1533,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Global identifier for a microdata item",
+    "summary": "Identifica globalmente un elemento de microdatos mediante una URL.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Global identifier for a microdata item",
-        "values": "Valid URL potentially surrounded by spaces",
-        "source": "https://html.spec.whatwg.org/multipage/microdata.html#attr-itemid"
+        "purpose": "Identifica globalmente un elemento de microdatos mediante una URL.",
+        "values": "URL válida, con espacios opcionales alrededor.",
+        "source": "https://html.spec.whatwg.org/multipage/microdata.html#attr-itemid",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/microdata.html#attr-itemid"
@@ -1402,13 +1553,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Property names of a microdata item",
+    "summary": "Da nombre a las propiedades que aporta el elemento al elemento de microdatos.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Property names of a microdata item",
-        "values": "Unordered set of unique space-separated tokens consisting of valid absolute URLs, defined property names, or text*",
-        "source": "https://html.spec.whatwg.org/multipage/microdata.html#names:-the-itemprop-attribute"
+        "purpose": "Da nombre a las propiedades que aporta el elemento al elemento de microdatos.",
+        "values": "Lista sin orden de valores únicos separados por espacios. Puede incluir URL absolutas, nombres de propiedades definidos o texto, según el contexto.",
+        "source": "https://html.spec.whatwg.org/multipage/microdata.html#names:-the-itemprop-attribute",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/microdata.html#names:-the-itemprop-attribute"
@@ -1420,13 +1573,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Referenced elements",
+    "summary": "Incorpora al elemento de microdatos propiedades de otros elementos mediante sus identificadores.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Referenced elements",
-        "values": "Unordered set of unique space-separated tokens consisting of IDs*",
-        "source": "https://html.spec.whatwg.org/multipage/microdata.html#attr-itemref"
+        "purpose": "Incorpora al elemento de microdatos propiedades de otros elementos mediante sus identificadores.",
+        "values": "Lista sin orden de identificadores únicos separados por espacios.",
+        "source": "https://html.spec.whatwg.org/multipage/microdata.html#attr-itemref",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/microdata.html#attr-itemref"
@@ -1438,13 +1593,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Introduces a microdata item",
+    "summary": "Marca el inicio de un elemento de microdatos.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Introduces a microdata item",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/microdata.html#attr-itemscope"
+        "purpose": "Marca el inicio de un elemento de microdatos.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/microdata.html#attr-itemscope",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/microdata.html#attr-itemscope"
@@ -1456,13 +1613,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Item types of a microdata item",
+    "summary": "Indica los tipos a los que pertenece el elemento de microdatos.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Item types of a microdata item",
-        "values": "Unordered set of unique space-separated tokens consisting of valid absolute URLs*",
-        "source": "https://html.spec.whatwg.org/multipage/microdata.html#attr-itemtype"
+        "purpose": "Indica los tipos a los que pertenece el elemento de microdatos.",
+        "values": "Lista sin orden de URL absolutas válidas, únicas y separadas por espacios.",
+        "source": "https://html.spec.whatwg.org/multipage/microdata.html#attr-itemtype",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/microdata.html#attr-itemtype"
@@ -1474,13 +1633,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["track"],
-    "summary": "The type of text track",
+    "summary": "Distingue pistas de subtítulos, descripciones, capítulos u otros datos.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["track"],
-        "purpose": "The type of text track",
-        "values": "\"subtitles\"; \"captions\"; \"descriptions\"; \"chapters\"; \"metadata\"",
-        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-track-kind"
+        "purpose": "Distingue pistas de subtítulos, descripciones, capítulos u otros datos.",
+        "values": "«subtitles», «captions», «descriptions», «chapters», «metadata».",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-track-kind",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/media.html#attr-track-kind"
@@ -1492,13 +1653,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["optgroup", "option", "track"],
-    "summary": "User-visible label",
+    "summary": "Texto que identifica la opción, grupo o pista ante la persona.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["optgroup", "option", "track"],
-        "purpose": "User-visible label",
-        "values": "Text",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-optgroup-label"
+        "purpose": "Texto que identifica la opción, grupo o pista ante la persona.",
+        "values": "Texto.",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-optgroup-label",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-optgroup-label"
@@ -1510,13 +1673,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Language of the element",
+    "summary": "Declara el idioma del contenido del elemento.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Language of the element",
-        "values": "Valid BCP 47 language tag or the empty string",
-        "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-lang"
+        "purpose": "Declara el idioma del contenido del elemento.",
+        "values": "Etiqueta de idioma BCP 47 válida o la cadena vacía.",
+        "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-lang",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-lang",
@@ -1530,13 +1695,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input"],
-    "summary": "List of autocomplete options",
+    "summary": "Identifica el datalist del que se obtienen sugerencias para el campo.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input"],
-        "purpose": "List of autocomplete options",
-        "values": "ID*",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-list"
+        "purpose": "Identifica el datalist del que se obtienen sugerencias para el campo.",
+        "values": "Identificador de elemento. Consulta las restricciones del atributo.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-list",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-list"
@@ -1548,13 +1715,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["iframe", "img", "audio", "video"],
-    "summary": "Used when determining loading deferral",
+    "summary": "Indica si el navegador puede aplazar la carga del recurso hasta que esté cerca de la zona visible.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["iframe", "img", "audio", "video"],
-        "purpose": "Used when determining loading deferral",
-        "values": "\"lazy\"; \"eager\"",
-        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-loading"
+        "purpose": "Indica si el navegador puede aplazar la carga del recurso hasta que esté cerca de la zona visible.",
+        "values": "«lazy», «eager».",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-loading",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-loading"
@@ -1566,13 +1735,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["audio", "video"],
-    "summary": "Whether to loop the media resource",
+    "summary": "Reinicia la reproducción al llegar al final del recurso.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["audio", "video"],
-        "purpose": "Whether to loop the media resource",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-loop"
+        "purpose": "Reinicia la reproducción al llegar al final del recurso.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-loop",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-loop"
@@ -1584,13 +1755,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["meter"],
-    "summary": "High limit of low range",
+    "summary": "Define hasta qué valor llega el intervalo bajo del medidor.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["meter"],
-        "purpose": "High limit of low range",
-        "values": "Valid floating-point number*",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-low"
+        "purpose": "Define hasta qué valor llega el intervalo bajo del medidor.",
+        "values": "Número válido de punto flotante. El elemento puede imponer restricciones adicionales.",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-low",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-low"
@@ -1602,19 +1775,22 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input", "meter", "progress"],
-    "summary": "Maximum value",
+    "summary": "Mayor valor permitido en el campo.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input"],
-        "purpose": "Maximum value",
-        "values": "Varies*",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-max"
+        "purpose": "Mayor valor permitido en el campo.",
+        "values": "Depende del elemento o del tipo de control. Consulta la especificación.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-max",
+        "locale": "es"
       },
       {
         "elements": ["meter", "progress"],
-        "purpose": "Upper bound of range",
-        "values": "Valid floating-point number*",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-max"
+        "purpose": "Extremo superior de la escala del elemento.",
+        "values": "Número válido de punto flotante. El elemento puede imponer restricciones adicionales.",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-max",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-max"
@@ -1626,13 +1802,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input", "textarea"],
-    "summary": "Maximum length of value",
+    "summary": "Limita la longitud del valor que puede introducir la persona.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input", "textarea"],
-        "purpose": "Maximum length of value",
-        "values": "Valid non-negative integer",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-maxlength"
+        "purpose": "Limita la longitud del valor que puede introducir la persona.",
+        "values": "Entero no negativo.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-maxlength",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-maxlength"
@@ -1644,13 +1822,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["link", "meta", "source", "style"],
-    "summary": "Applicable media",
+    "summary": "Define en qué medios o condiciones se aplica el recurso o los metadatos.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["link", "meta", "source", "style"],
-        "purpose": "Applicable media",
-        "values": "Valid media query list",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-media"
+        "purpose": "Define en qué medios o condiciones se aplica el recurso o los metadatos.",
+        "values": "Lista válida de consultas de medios.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-media",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-media"
@@ -1662,13 +1842,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["form"],
-    "summary": "Variant to use for form submission",
+    "summary": "Selecciona el método de envío del formulario.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["form"],
-        "purpose": "Variant to use for form submission",
-        "values": "\"get\"; \"post\"; \"dialog\"",
-        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-method"
+        "purpose": "Selecciona el método de envío del formulario.",
+        "values": "«get», «post», «dialog».",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-method",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-method"
@@ -1680,19 +1862,22 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input", "meter"],
-    "summary": "Minimum value",
+    "summary": "Menor valor permitido en el campo.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input"],
-        "purpose": "Minimum value",
-        "values": "Varies*",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-min"
+        "purpose": "Menor valor permitido en el campo.",
+        "values": "Depende del elemento o del tipo de control. Consulta la especificación.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-min",
+        "locale": "es"
       },
       {
         "elements": ["meter"],
-        "purpose": "Lower bound of range",
-        "values": "Valid floating-point number*",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-min"
+        "purpose": "Extremo inferior de la escala del medidor.",
+        "values": "Número válido de punto flotante. El elemento puede imponer restricciones adicionales.",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-min",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-min"
@@ -1704,13 +1889,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input", "textarea"],
-    "summary": "Minimum length of value",
+    "summary": "Exige una longitud mínima al valor que introduce la persona.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input", "textarea"],
-        "purpose": "Minimum length of value",
-        "values": "Valid non-negative integer",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength"
+        "purpose": "Exige una longitud mínima al valor que introduce la persona.",
+        "values": "Entero no negativo.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength"
@@ -1722,13 +1909,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input", "select"],
-    "summary": "Whether to allow multiple values",
+    "summary": "Permite introducir o seleccionar más de un valor.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input", "select"],
-        "purpose": "Whether to allow multiple values",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-multiple"
+        "purpose": "Permite introducir o seleccionar más de un valor.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-multiple",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-multiple"
@@ -1740,13 +1929,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["audio", "video"],
-    "summary": "Whether to mute the media resource by default",
+    "summary": "Silencia inicialmente el audio o vídeo.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["audio", "video"],
-        "purpose": "Whether to mute the media resource by default",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-muted"
+        "purpose": "Silencia inicialmente el audio o vídeo.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-muted",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-muted"
@@ -1773,7 +1964,8 @@
       "meta",
       "slot"
     ],
-    "summary": "Name of the element to use for form submission and in the form.elements API",
+    "summary": "Nombre del control para el envío y para acceder a él desde form.elements.",
+    "locale": "es",
     "contexts": [
       {
         "elements": [
@@ -1785,45 +1977,52 @@
           "textarea",
           "form-associated custom elements"
         ],
-        "purpose": "Name of the element to use for form submission and in the form.elements API",
-        "values": "Text*",
-        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-name"
+        "purpose": "Nombre del control para el envío y para acceder a él desde form.elements.",
+        "values": "Texto. Consulta las restricciones del elemento.",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-name",
+        "locale": "es"
       },
       {
         "elements": ["details"],
-        "purpose": "Name of group of mutually-exclusive details elements",
-        "values": "Text*",
-        "source": "https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-details-name"
+        "purpose": "Agrupa secciones details para que como máximo se abra una a la vez.",
+        "values": "Texto. Consulta las restricciones del elemento.",
+        "source": "https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-details-name",
+        "locale": "es"
       },
       {
         "elements": ["form"],
-        "purpose": "Name of form to use in the document.forms API",
-        "values": "Text*",
-        "source": "https://html.spec.whatwg.org/multipage/forms.html#attr-form-name"
+        "purpose": "Nombre con el que puede localizarse el formulario en document.forms.",
+        "values": "Texto. Consulta las restricciones del elemento.",
+        "source": "https://html.spec.whatwg.org/multipage/forms.html#attr-form-name",
+        "locale": "es"
       },
       {
         "elements": ["iframe", "object"],
-        "purpose": "Name of content navigable",
-        "values": "Valid navigable target name or keyword",
-        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-name"
+        "purpose": "Da nombre al contexto de navegación del contenido incrustado.",
+        "values": "Nombre válido de un contexto de navegación o palabra reservada como _self o _blank.",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-name",
+        "locale": "es"
       },
       {
         "elements": ["map"],
-        "purpose": "Name of image map to reference from the usemap attribute",
-        "values": "Text*",
-        "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-map-name"
+        "purpose": "Nombre del mapa de imagen que se referencia con usemap.",
+        "values": "Texto. Consulta las restricciones del elemento.",
+        "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-map-name",
+        "locale": "es"
       },
       {
         "elements": ["meta"],
-        "purpose": "Metadata name",
-        "values": "Text*",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-name"
+        "purpose": "Identifica el metadato que contiene el elemento meta.",
+        "values": "Texto. Consulta las restricciones del elemento.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-name",
+        "locale": "es"
       },
       {
         "elements": ["slot"],
-        "purpose": "Name of shadow tree slot",
-        "values": "Text",
-        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-slot-name"
+        "purpose": "Identifica el slot del árbol de sombra que recibe contenido con ese nombre.",
+        "values": "Texto.",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-slot-name",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-name"
@@ -1835,13 +2034,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["script"],
-    "summary": "Prevents execution in user agents that support module scripts",
+    "summary": "Evita que se ejecute el script clásico en navegadores que admiten módulos.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["script"],
-        "purpose": "Prevents execution in user agents that support module scripts",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-nomodule"
+        "purpose": "Evita que se ejecute el script clásico en navegadores que admiten módulos.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-nomodule",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-nomodule"
@@ -1853,13 +2054,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Cryptographic nonce used in Content Security Policy checks [CSP]",
+    "summary": "Valor criptográfico que una política de seguridad de contenido puede usar para autorizar el recurso.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Cryptographic nonce used in Content Security Policy checks [CSP]",
-        "values": "Text",
-        "source": "https://html.spec.whatwg.org/multipage/urls-and-fetching.html#attr-nonce"
+        "purpose": "Valor criptográfico que una política de seguridad de contenido puede usar para autorizar el recurso.",
+        "values": "Texto.",
+        "source": "https://html.spec.whatwg.org/multipage/urls-and-fetching.html#attr-nonce",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/urls-and-fetching.html#attr-nonce"
@@ -1871,13 +2074,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["form"],
-    "summary": "Bypass form control validation for form submission",
+    "summary": "Permite enviar el formulario sin ejecutar la validación nativa de los controles.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["form"],
-        "purpose": "Bypass form control validation for form submission",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-novalidate"
+        "purpose": "Permite enviar el formulario sin ejecutar la validación nativa de los controles.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-novalidate",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-novalidate"
@@ -1889,19 +2094,22 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["details", "dialog"],
-    "summary": "Whether the details are visible",
+    "summary": "Hace que el contenido desplegable de details esté abierto.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["details"],
-        "purpose": "Whether the details are visible",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-details-open"
+        "purpose": "Hace que el contenido desplegable de details esté abierto.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-details-open",
+        "locale": "es"
       },
       {
         "elements": ["dialog"],
-        "purpose": "Whether the dialog box is showing",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-dialog-open"
+        "purpose": "Indica que el diálogo se muestra.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-dialog-open",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-details-open"
@@ -1913,13 +2121,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["meter"],
-    "summary": "Optimum value in gauge",
+    "summary": "Marca en la escala el valor que se considera óptimo.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["meter"],
-        "purpose": "Optimum value in gauge",
-        "values": "Valid floating-point number*",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-optimum"
+        "purpose": "Marca en la escala el valor que se considera óptimo.",
+        "values": "Número válido de punto flotante. El elemento puede imponer restricciones adicionales.",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-optimum",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-optimum"
@@ -1931,13 +2141,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input"],
-    "summary": "Pattern to be matched by the form control's value",
+    "summary": "Expresión regular que define qué valores acepta el control.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input"],
-        "purpose": "Pattern to be matched by the form control's value",
-        "values": "Regular expression matching the JavaScript Pattern production",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-pattern"
+        "purpose": "Expresión regular que define qué valores acepta el control.",
+        "values": "Expresión regular que cumple la gramática Pattern de JavaScript.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-pattern",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-pattern"
@@ -1949,13 +2161,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["a", "area"],
-    "summary": "URLs to ping",
+    "summary": "Direcciones a las que el navegador puede enviar una notificación cuando se sigue el enlace.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["a", "area"],
-        "purpose": "URLs to ping",
-        "values": "Set of space-separated tokens consisting of valid non-empty URLs",
-        "source": "https://html.spec.whatwg.org/multipage/links.html#ping"
+        "purpose": "Direcciones a las que el navegador puede enviar una notificación cuando se sigue el enlace.",
+        "values": "Lista de URL válidas no vacías, separadas por espacios.",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#ping",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/links.html#ping"
@@ -1967,13 +2181,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input", "textarea"],
-    "summary": "User-visible label to be placed within the form control",
+    "summary": "Muestra una pista dentro del campo vacío. Usa una etiqueta visible para identificar el campo.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input", "textarea"],
-        "purpose": "User-visible label to be placed within the form control",
-        "values": "Text*",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-placeholder"
+        "purpose": "Muestra una pista dentro del campo vacío. Usa una etiqueta visible para identificar el campo.",
+        "values": "Texto. Consulta las restricciones del elemento.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-placeholder",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-placeholder"
@@ -1985,13 +2201,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["video"],
-    "summary": "Encourage the user agent to display video content within the element's playback area",
+    "summary": "Solicita que el vídeo permanezca en su área en vez de abrirse automáticamente a pantalla completa.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["video"],
-        "purpose": "Encourage the user agent to display video content within the element's playback area",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-video-playsinline"
+        "purpose": "Solicita que el vídeo permanezca en su área en vez de abrirse automáticamente a pantalla completa.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-video-playsinline",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/media.html#attr-video-playsinline"
@@ -2003,13 +2221,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Makes the element a popover element",
+    "summary": "Declara un panel emergente que puede mostrarse en la capa superior del navegador.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Makes the element a popover element",
-        "values": "\"auto\"; \"manual\"; \"hint\"; the empty string",
-        "source": "https://html.spec.whatwg.org/multipage/popover.html#attr-popover"
+        "purpose": "Declara un panel emergente que puede mostrarse en la capa superior del navegador.",
+        "values": "«auto», «manual», «hint», la cadena vacía.",
+        "source": "https://html.spec.whatwg.org/multipage/popover.html#attr-popover",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/popover.html#attr-popover",
@@ -2023,13 +2243,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["button", "input"],
-    "summary": "Targets a popover element to toggle, show, or hide",
+    "summary": "Identifica el panel emergente al que controla el botón.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["button", "input"],
-        "purpose": "Targets a popover element to toggle, show, or hide",
-        "values": "ID*",
-        "source": "https://html.spec.whatwg.org/multipage/popover.html#attr-popovertarget"
+        "purpose": "Identifica el panel emergente al que controla el botón.",
+        "values": "Identificador de elemento. Consulta las restricciones del atributo.",
+        "source": "https://html.spec.whatwg.org/multipage/popover.html#attr-popovertarget",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/popover.html#attr-popovertarget"
@@ -2041,13 +2263,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["button", "input"],
-    "summary": "Indicates whether a targeted popover element is to be toggled, shown, or hidden",
+    "summary": "Selecciona si el control muestra, oculta o alterna el panel emergente.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["button", "input"],
-        "purpose": "Indicates whether a targeted popover element is to be toggled, shown, or hidden",
-        "values": "\"toggle\"; \"show\"; \"hide\"",
-        "source": "https://html.spec.whatwg.org/multipage/popover.html#attr-popovertargetaction"
+        "purpose": "Selecciona si el control muestra, oculta o alterna el panel emergente.",
+        "values": "«toggle», «show», «hide».",
+        "source": "https://html.spec.whatwg.org/multipage/popover.html#attr-popovertargetaction",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/popover.html#attr-popovertargetaction"
@@ -2059,13 +2283,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["video"],
-    "summary": "Poster frame to show prior to video playback",
+    "summary": "Dirección de la imagen visible antes de que se reproduzca el vídeo.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["video"],
-        "purpose": "Poster frame to show prior to video playback",
-        "values": "Valid non-empty URL potentially surrounded by spaces",
-        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-video-poster"
+        "purpose": "Dirección de la imagen visible antes de que se reproduzca el vídeo.",
+        "values": "URL válida y no vacía. Puede tener espacios alrededor.",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-video-poster",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/media.html#attr-video-poster"
@@ -2077,13 +2303,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["audio", "video"],
-    "summary": "Hints how much buffering the media resource will likely need",
+    "summary": "Sugiere cuántos datos del recurso multimedia debe preparar el navegador de antemano.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["audio", "video"],
-        "purpose": "Hints how much buffering the media resource will likely need",
-        "values": "\"none\"; \"metadata\"; \"auto\"; the empty string",
-        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-preload"
+        "purpose": "Sugiere cuántos datos del recurso multimedia debe preparar el navegador de antemano.",
+        "values": "«none», «metadata», «auto», la cadena vacía.",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-preload",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-preload"
@@ -2095,19 +2323,22 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input", "textarea", "form-associated custom elements"],
-    "summary": "Whether to allow the value to be edited by the user",
+    "summary": "Impide editar el valor sin deshabilitar el control.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input", "textarea"],
-        "purpose": "Whether to allow the value to be edited by the user",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly"
+        "purpose": "Impide editar el valor sin deshabilitar el control.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly",
+        "locale": "es"
       },
       {
         "elements": ["form-associated custom elements"],
-        "purpose": "Affects willValidate, plus any behavior added by the custom element author",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/custom-elements.html#attr-face-readonly"
+        "purpose": "Afecta a willValidate y puede activar el comportamiento que defina el autor del elemento personalizado.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/custom-elements.html#attr-face-readonly",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly"
@@ -2119,13 +2350,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["a", "area", "iframe", "img", "link", "script"],
-    "summary": "Referrer policy for fetches initiated by the element",
+    "summary": "Selecciona cuánta información sobre la página de origen se envía al solicitar el recurso.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["a", "area", "iframe", "img", "link", "script"],
-        "purpose": "Referrer policy for fetches initiated by the element",
-        "values": "Referrer policy",
-        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-referrerpolicy"
+        "purpose": "Selecciona cuánta información sobre la página de origen se envía al solicitar el recurso.",
+        "values": "Palabra clave válida de la política de referencia, como no-referrer o strict-origin-when-cross-origin.",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-referrerpolicy",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-referrerpolicy"
@@ -2137,19 +2370,22 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["a", "area", "link"],
-    "summary": "Relationship between the location in the document containing the hyperlink and the destination resource",
+    "summary": "Describe la relación entre el enlace y su destino.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["a", "area"],
-        "purpose": "Relationship between the location in the document containing the hyperlink and the destination resource",
-        "values": "Unordered set of unique space-separated tokens*",
-        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-rel"
+        "purpose": "Describe la relación entre el enlace y su destino.",
+        "values": "Lista sin orden de valores únicos separados por espacios.",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-rel",
+        "locale": "es"
       },
       {
         "elements": ["link"],
-        "purpose": "Relationship between the document containing the hyperlink and the destination resource",
-        "values": "Unordered set of unique space-separated tokens*",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-rel"
+        "purpose": "Describe la relación entre el enlace y su destino.",
+        "values": "Lista sin orden de valores únicos separados por espacios.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-rel",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-rel"
@@ -2161,13 +2397,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input", "select", "textarea"],
-    "summary": "Whether the control is required for form submission",
+    "summary": "Exige un valor o una selección válida al enviar el formulario.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input", "select", "textarea"],
-        "purpose": "Whether the control is required for form submission",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-required"
+        "purpose": "Exige un valor o una selección válida al enviar el formulario.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-required",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-required"
@@ -2179,13 +2417,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["ol"],
-    "summary": "Number the list backwards",
+    "summary": "Ordena los números de la lista de mayor a menor.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["ol"],
-        "purpose": "Number the list backwards",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-ol-reversed"
+        "purpose": "Ordena los números de la lista de mayor a menor.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-ol-reversed",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-ol-reversed"
@@ -2197,13 +2437,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["textarea"],
-    "summary": "Number of lines to show",
+    "summary": "Configura cuántas líneas de texto muestra el control.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["textarea"],
-        "purpose": "Number of lines to show",
-        "values": "Valid non-negative integer greater than zero",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-rows"
+        "purpose": "Configura cuántas líneas de texto muestra el control.",
+        "values": "Entero mayor que cero.",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-rows",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-rows"
@@ -2215,13 +2457,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["td", "th"],
-    "summary": "Number of rows that the cell is to span",
+    "summary": "Indica cuántas filas ocupa la celda.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["td", "th"],
-        "purpose": "Number of rows that the cell is to span",
-        "values": "Valid non-negative integer",
-        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-tdth-rowspan"
+        "purpose": "Indica cuántas filas ocupa la celda.",
+        "values": "Entero no negativo.",
+        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-tdth-rowspan",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-tdth-rowspan"
@@ -2233,13 +2477,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["iframe"],
-    "summary": "Security rules for nested content",
+    "summary": "Aplica restricciones al contenido incrustado y permite levantar algunas de forma selectiva.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["iframe"],
-        "purpose": "Security rules for nested content",
-        "values": "Unordered set of unique space-separated tokens, ASCII case-insensitive, consisting of \"allow-downloads\"\"allow-forms\"\"allow-modals\"\"allow-orientation-lock\"\"allow-pointer-lock\"\"allow-popups\"\"allow-popups-to-escape-sandbox\"\"allow-presentation\"\"allow-same-origin\"\"allow-scripts\"\"allow-top-navigation\"\"allow-top-navigation-by-user-activation\"\"allow-top-navigation-to-custom-protocols\"",
-        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-sandbox"
+        "purpose": "Aplica restricciones al contenido incrustado y permite levantar algunas de forma selectiva.",
+        "values": "Lista de valores únicos separados por espacios, sin distinguir mayúsculas y minúsculas ASCII. Valores admitidos: allow-downloads, allow-forms, allow-modals, allow-orientation-lock, allow-pointer-lock, allow-popups, allow-popups-to-escape-sandbox, allow-presentation, allow-same-origin, allow-scripts, allow-top-navigation, allow-top-navigation-by-user-activation, allow-top-navigation-to-custom-protocols.",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-sandbox",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-sandbox"
@@ -2251,13 +2497,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["th"],
-    "summary": "Specifies which cells the header cell applies to",
+    "summary": "Indica qué filas, columnas o grupos describe la celda de encabezado.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["th"],
-        "purpose": "Specifies which cells the header cell applies to",
-        "values": "\"row\"; \"col\"; \"rowgroup\"; \"colgroup\"",
-        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope"
+        "purpose": "Indica qué filas, columnas o grupos describe la celda de encabezado.",
+        "values": "«row», «col», «rowgroup», «colgroup».",
+        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope"
@@ -2269,13 +2517,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["option"],
-    "summary": "Whether the option is selected by default",
+    "summary": "Selecciona esta opción inicialmente.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["option"],
-        "purpose": "Whether the option is selected by default",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-option-selected"
+        "purpose": "Selecciona esta opción inicialmente.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-option-selected",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-option-selected"
@@ -2287,13 +2537,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["template"],
-    "summary": "Sets clonable on a declarative shadow root",
+    "summary": "Permite incluir la raíz de sombra declarativa al clonar el elemento anfitrión.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["template"],
-        "purpose": "Sets clonable on a declarative shadow root",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootclonable"
+        "purpose": "Permite incluir la raíz de sombra declarativa al clonar el elemento anfitrión.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootclonable",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootclonable"
@@ -2305,13 +2557,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["template"],
-    "summary": "Enables declarative shadow roots to indicate they will use a custom element registry",
+    "summary": "Indica que la raíz de sombra declarativa usará su propio registro de elementos personalizados.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["template"],
-        "purpose": "Enables declarative shadow roots to indicate they will use a custom element registry",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootcustomelementregistry"
+        "purpose": "Indica que la raíz de sombra declarativa usará su propio registro de elementos personalizados.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootcustomelementregistry",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootcustomelementregistry"
@@ -2323,13 +2577,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["template"],
-    "summary": "Sets delegates focus on a declarative shadow root",
+    "summary": "Pide delegar el foco desde el elemento anfitrión hacia un elemento del árbol de sombra.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["template"],
-        "purpose": "Sets delegates focus on a declarative shadow root",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootdelegatesfocus"
+        "purpose": "Pide delegar el foco desde el elemento anfitrión hacia un elemento del árbol de sombra.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootdelegatesfocus",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootdelegatesfocus"
@@ -2341,13 +2597,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["template"],
-    "summary": "Enables streaming declarative shadow roots",
+    "summary": "Crea una raíz de sombra declarativa y elige si es abierta o cerrada.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["template"],
-        "purpose": "Enables streaming declarative shadow roots",
-        "values": "\"open\"; \"closed\"",
-        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootmode"
+        "purpose": "Crea una raíz de sombra declarativa y elige si es abierta o cerrada.",
+        "values": "«open», «closed».",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootmode",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootmode"
@@ -2359,13 +2617,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["template"],
-    "summary": "Sets serializable on a declarative shadow root",
+    "summary": "Permite incluir la raíz de sombra al serializar el HTML con las opciones que correspondan.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["template"],
-        "purpose": "Sets serializable on a declarative shadow root",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootserializable"
+        "purpose": "Permite incluir la raíz de sombra al serializar el HTML con las opciones que correspondan.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootserializable",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootserializable"
@@ -2377,13 +2637,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["template"],
-    "summary": "Sets slot assignment on a declarative shadow root",
+    "summary": "Elige si los nodos se asignan a los slots por nombre o mediante una llamada explícita.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["template"],
-        "purpose": "Sets slot assignment on a declarative shadow root",
-        "values": "\"named\"; \"manual\"",
-        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootslotassignment"
+        "purpose": "Elige si los nodos se asignan a los slots por nombre o mediante una llamada explícita.",
+        "values": "«named», «manual».",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootslotassignment",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-template-shadowrootslotassignment"
@@ -2395,13 +2657,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["area"],
-    "summary": "The kind of shape to be created in an image map",
+    "summary": "Selecciona si la zona del mapa de imagen es un círculo, un polígono, un rectángulo o el área predeterminada.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["area"],
-        "purpose": "The kind of shape to be created in an image map",
-        "values": "\"circle\"; \"default\"; \"poly\"; \"rect\"",
-        "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-area-shape"
+        "purpose": "Selecciona si la zona del mapa de imagen es un círculo, un polígono, un rectángulo o el área predeterminada.",
+        "values": "«circle», «default», «poly», «rect».",
+        "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-area-shape",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-area-shape"
@@ -2413,13 +2677,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input", "select"],
-    "summary": "Size of the control",
+    "summary": "Ajusta el ancho visible de input o cuántas opciones se muestran a la vez en select.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input", "select"],
-        "purpose": "Size of the control",
-        "values": "Valid non-negative integer greater than zero",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-size"
+        "purpose": "Ajusta el ancho visible de input o cuántas opciones se muestran a la vez en select.",
+        "values": "Entero mayor que cero.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-size",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-size"
@@ -2431,19 +2697,22 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["link", "img", "source"],
-    "summary": "Sizes of the icons (for rel=\"icon\")",
+    "summary": "Enumera las dimensiones de los iconos enlazados.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["link"],
-        "purpose": "Sizes of the icons (for rel=\"icon\")",
-        "values": "Unordered set of unique space-separated tokens, ASCII case-insensitive, consisting of sizes*",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-sizes"
+        "purpose": "Enumera las dimensiones de los iconos enlazados.",
+        "values": "Lista de tamaños únicos separados por espacios, como 32x32 64x64. También se admite any para iconos escalables.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-sizes",
+        "locale": "es"
       },
       {
         "elements": ["img", "source"],
-        "purpose": "Image sizes for different page layouts",
-        "values": "Valid source size list",
-        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-sizes"
+        "purpose": "Indica el espacio que ocupará la imagen según el diseño de la página.",
+        "values": "Lista válida de tamaños de origen de una imagen.",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-sizes",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-sizes"
@@ -2455,13 +2724,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "The element's desired slot",
+    "summary": "Identifica el slot del componente al que se asigna este elemento.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "The element's desired slot",
-        "values": "Text",
-        "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-slot"
+        "purpose": "Identifica el slot del componente al que se asigna este elemento.",
+        "values": "Texto.",
+        "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-slot",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-slot"
@@ -2473,13 +2744,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["col", "colgroup"],
-    "summary": "Number of columns spanned by the element",
+    "summary": "Indica cuántas columnas representa un elemento col o colgroup.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["col", "colgroup"],
-        "purpose": "Number of columns spanned by the element",
-        "values": "Valid non-negative integer greater than zero",
-        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-col-span"
+        "purpose": "Indica cuántas columnas representa un elemento col o colgroup.",
+        "values": "Entero mayor que cero.",
+        "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-col-span",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/tables.html#attr-col-span"
@@ -2491,13 +2764,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Whether the element is to have its spelling and grammar checked",
+    "summary": "Sugiere si el navegador debe revisar la ortografía y la gramática.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Whether the element is to have its spelling and grammar checked",
-        "values": "\"true\"; \"false\"; the empty string",
-        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-spellcheck"
+        "purpose": "Sugiere si el navegador debe revisar la ortografía y la gramática.",
+        "values": "«true», «false», la cadena vacía.",
+        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-spellcheck",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-spellcheck"
@@ -2519,7 +2794,8 @@
       "video",
       "track"
     ],
-    "summary": "Address of the resource",
+    "summary": "Dirección del recurso que el elemento carga.",
+    "locale": "es",
     "contexts": [
       {
         "elements": [
@@ -2533,9 +2809,10 @@
           "video",
           "track"
         ],
-        "purpose": "Address of the resource",
-        "values": "Valid non-empty URL potentially surrounded by spaces",
-        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-src"
+        "purpose": "Dirección del recurso que el elemento carga.",
+        "values": "URL válida y no vacía. Puede tener espacios alrededor.",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-src",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/media.html#attr-media-src"
@@ -2547,13 +2824,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["iframe"],
-    "summary": "A document to render in the iframe",
+    "summary": "Proporciona el HTML del documento que se muestra dentro del iframe.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["iframe"],
-        "purpose": "A document to render in the iframe",
-        "values": "The source of an iframe srcdoc document*",
-        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-srcdoc"
+        "purpose": "Proporciona el HTML del documento que se muestra dentro del iframe.",
+        "values": "Código HTML válido para el documento del iframe.",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-srcdoc",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-srcdoc"
@@ -2565,13 +2844,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["track"],
-    "summary": "Language of the text track",
+    "summary": "Idioma del texto de la pista multimedia.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["track"],
-        "purpose": "Language of the text track",
-        "values": "Valid BCP 47 language tag",
-        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-track-srclang"
+        "purpose": "Idioma del texto de la pista multimedia.",
+        "values": "Etiqueta de idioma BCP 47 válida, como es o es-ES.",
+        "source": "https://html.spec.whatwg.org/multipage/media.html#attr-track-srclang",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/media.html#attr-track-srclang"
@@ -2583,13 +2864,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["img", "source"],
-    "summary": "Images to use in different situations, e.g., high-resolution displays, small monitors, etc.",
+    "summary": "Ofrece archivos de imagen alternativos para que el navegador elija según el tamaño y la densidad de pantalla.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["img", "source"],
-        "purpose": "Images to use in different situations, e.g., high-resolution displays, small monitors, etc.",
-        "values": "Comma-separated list of image candidate strings",
-        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-srcset"
+        "purpose": "Ofrece archivos de imagen alternativos para que el navegador elija según el tamaño y la densidad de pantalla.",
+        "values": "Lista de candidatos de imagen separados por comas. Cada candidato puede incluir un descriptor de ancho o densidad.",
+        "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-srcset",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-srcset"
@@ -2601,13 +2884,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["ol"],
-    "summary": "Starting value of the list",
+    "summary": "Determina el número con el que comienza la lista ordenada.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["ol"],
-        "purpose": "Starting value of the list",
-        "values": "Valid integer",
-        "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-ol-start"
+        "purpose": "Determina el número con el que comienza la lista ordenada.",
+        "values": "Entero válido.",
+        "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-ol-start",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-ol-start"
@@ -2619,13 +2904,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input"],
-    "summary": "Granularity to be matched by the form control's value",
+    "summary": "Controla la separación entre valores numéricos o temporales admitidos en el campo.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input"],
-        "purpose": "Granularity to be matched by the form control's value",
-        "values": "Valid floating-point number greater than zero, or \"any\"",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-step"
+        "purpose": "Controla la separación entre valores numéricos o temporales admitidos en el campo.",
+        "values": "Número de punto flotante mayor que cero o la palabra clave any.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-step",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-step"
@@ -2637,13 +2924,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Presentational and formatting instructions",
+    "summary": "Aplica declaraciones CSS directamente al elemento.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Presentational and formatting instructions",
-        "values": "CSS declarations*",
-        "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-style"
+        "purpose": "Aplica declaraciones CSS directamente al elemento.",
+        "values": "Declaraciones CSS válidas, como color: navy.",
+        "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-style",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-style"
@@ -2655,13 +2944,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["input"],
-    "summary": "Whether the control is a switch",
+    "summary": "Indica que el control representa un interruptor.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["input"],
-        "purpose": "Whether the control is a switch",
-        "values": "Boolean attribute",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-switch"
+        "purpose": "Indica que el control representa un interruptor.",
+        "values": "Atributo booleano. Su presencia lo activa, incluso si se escribe con el valor «false». Para desactivarlo, omítelo.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-switch",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-switch"
@@ -2673,13 +2964,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Whether the element is focusable and sequentially focusable, and the relative order of the element for the purposes of sequential focus navigation",
+    "summary": "Controla si el elemento admite foco y cómo participa en el recorrido con el teclado.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Whether the element is focusable and sequentially focusable, and the relative order of the element for the purposes of sequential focus navigation",
-        "values": "Valid integer",
-        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-tabindex"
+        "purpose": "Controla si el elemento admite foco y cómo participa en el recorrido con el teclado.",
+        "values": "Entero válido.",
+        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-tabindex",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-tabindex",
@@ -2693,25 +2986,29 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["a", "area", "base", "form"],
-    "summary": "Navigable for hyperlink navigation",
+    "summary": "Selecciona dónde se abre el enlace, por ejemplo en la pestaña actual o en otra.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["a", "area"],
-        "purpose": "Navigable for hyperlink navigation",
-        "values": "Valid navigable target name or keyword",
-        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-target"
+        "purpose": "Selecciona dónde se abre el enlace, por ejemplo en la pestaña actual o en otra.",
+        "values": "Nombre válido de un contexto de navegación o palabra reservada como _self o _blank.",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-target",
+        "locale": "es"
       },
       {
         "elements": ["base"],
-        "purpose": "Default navigable for hyperlink navigation and form submission",
-        "values": "Valid navigable target name or keyword",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-base-target"
+        "purpose": "Determina el destino predeterminado de los enlaces y los envíos de formularios.",
+        "values": "Nombre válido de un contexto de navegación o palabra reservada como _self o _blank.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-base-target",
+        "locale": "es"
       },
       {
         "elements": ["form"],
-        "purpose": "Navigable for form submission",
-        "values": "Valid navigable target name or keyword",
-        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-target"
+        "purpose": "Selecciona dónde se presenta la respuesta del formulario.",
+        "values": "Nombre válido de un contexto de navegación o palabra reservada como _self o _blank.",
+        "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-target",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-target"
@@ -2723,37 +3020,43 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements", "abbr", "dfn", "input", "link", "style"],
-    "summary": "Advisory information for the element",
+    "summary": "Añade información complementaria sobre el elemento.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Advisory information for the element",
-        "values": "Text",
-        "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-title"
+        "purpose": "Añade información complementaria sobre el elemento.",
+        "values": "Texto.",
+        "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-title",
+        "locale": "es"
       },
       {
         "elements": ["abbr", "dfn"],
-        "purpose": "Full term or expansion of abbreviation",
-        "values": "Text",
-        "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#attr-abbr-title"
+        "purpose": "Contiene la forma desarrollada de la abreviatura o el término que se define.",
+        "values": "Texto.",
+        "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#attr-abbr-title",
+        "locale": "es"
       },
       {
         "elements": ["input"],
-        "purpose": "Description of pattern (when used with pattern attribute)",
-        "values": "Text",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-title"
+        "purpose": "Describe el formato esperado por pattern en lenguaje comprensible.",
+        "values": "Texto.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-title",
+        "locale": "es"
       },
       {
         "elements": ["link"],
-        "purpose": "Title of the link",
-        "values": "Text",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-title"
+        "purpose": "Da un título al recurso enlazado.",
+        "values": "Texto.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-title",
+        "locale": "es"
       },
       {
         "elements": ["link", "style"],
-        "purpose": "CSS style sheet set name",
-        "values": "Text",
-        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-title"
+        "purpose": "Identifica el conjunto de hojas de estilo al que pertenece esta hoja.",
+        "values": "Texto.",
+        "source": "https://html.spec.whatwg.org/multipage/semantics.html#attr-link-title",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-title"
@@ -2765,13 +3068,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Whether the element is to be translated when the page is localized",
+    "summary": "Indica si el contenido y los atributos traducibles se deben localizar.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Whether the element is to be translated when the page is localized",
-        "values": "\"yes\"; \"no\"; the empty string",
-        "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-translate"
+        "purpose": "Indica si el contenido y los atributos traducibles se deben localizar.",
+        "values": "«yes», «no», la cadena vacía.",
+        "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-translate",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/dom.html#attr-translate"
@@ -2793,43 +3098,50 @@
       "ol",
       "script"
     ],
-    "summary": "Hint for the type of the referenced resource",
+    "summary": "Sugiere el tipo del recurso al que apunta el enlace.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["a", "link"],
-        "purpose": "Hint for the type of the referenced resource",
-        "values": "Valid MIME type string",
-        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-type"
+        "purpose": "Sugiere el tipo del recurso al que apunta el enlace.",
+        "values": "Tipo MIME válido, como text/css.",
+        "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-type",
+        "locale": "es"
       },
       {
         "elements": ["button"],
-        "purpose": "Type of button",
-        "values": "\"submit\"; \"reset\"; \"button\"",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-type"
+        "purpose": "Determina si el botón envía el formulario, lo restaura o realiza una acción propia.",
+        "values": "«submit», «reset», «button».",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-type",
+        "locale": "es"
       },
       {
         "elements": ["embed", "object", "source"],
-        "purpose": "Type of embedded resource",
-        "values": "Valid MIME type string",
-        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-embed-type"
+        "purpose": "Declara el tipo MIME del recurso que se incrusta.",
+        "values": "Tipo MIME válido, como text/css.",
+        "source": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-embed-type",
+        "locale": "es"
       },
       {
         "elements": ["input"],
-        "purpose": "Type of form control",
-        "values": "input type keyword",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-type"
+        "purpose": "Selecciona el tipo de campo, con sus controles y reglas de validación.",
+        "values": "Palabra clave de tipo de campo. Por ejemplo, text, email, number, checkbox o date.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-type",
+        "locale": "es"
       },
       {
         "elements": ["ol"],
-        "purpose": "Kind of list marker",
-        "values": "\"1\"; \"a\"; \"A\"; \"i\"; \"I\"",
-        "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-ol-type"
+        "purpose": "Selecciona el estilo de numeración de una lista ordenada.",
+        "values": "«1», «a», «A», «i», «I».",
+        "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-ol-type",
+        "locale": "es"
       },
       {
         "elements": ["script"],
-        "purpose": "Type of script",
-        "values": "\"module\"; \"importmap\"; \"speculationrules\"; a valid MIME type string that is not a JavaScript MIME type essence match",
-        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-type"
+        "purpose": "Selecciona si el elemento contiene un script clásico, un módulo u otro tipo de datos.",
+        "values": "«module», «importmap», «speculationrules» o un tipo MIME válido que no sea de JavaScript. El script clásico se declara habitualmente sin type.",
+        "source": "https://html.spec.whatwg.org/multipage/scripting.html#attr-script-type",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-type"
@@ -2841,13 +3153,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["img"],
-    "summary": "Name of image map to use",
+    "summary": "Identifica el mapa que define las zonas activas de la imagen.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["img"],
-        "purpose": "Name of image map to use",
-        "values": "Valid hash-name reference*",
-        "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-hyperlink-usemap"
+        "purpose": "Identifica el mapa que define las zonas activas de la imagen.",
+        "values": "Referencia con # seguido del nombre de un mapa de imagen.",
+        "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-hyperlink-usemap",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/image-maps.html#attr-hyperlink-usemap"
@@ -2867,37 +3181,43 @@
       "meter",
       "progress"
     ],
-    "summary": "Value to be used for form submission",
+    "summary": "Dato que se envía cuando el botón o la opción participa en el formulario.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["button", "option"],
-        "purpose": "Value to be used for form submission",
-        "values": "Text",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-value"
+        "purpose": "Dato que se envía cuando el botón o la opción participa en el formulario.",
+        "values": "Texto.",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-value",
+        "locale": "es"
       },
       {
         "elements": ["data"],
-        "purpose": "Machine-readable value",
-        "values": "Text*",
-        "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#attr-data-value"
+        "purpose": "Proporciona la representación del contenido que pueden leer los programas.",
+        "values": "Texto. Consulta las restricciones del elemento.",
+        "source": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#attr-data-value",
+        "locale": "es"
       },
       {
         "elements": ["input"],
-        "purpose": "Value of the form control",
-        "values": "Varies*",
-        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-value"
+        "purpose": "Configura el valor inicial del control según el tipo de campo.",
+        "values": "Depende del elemento o del tipo de control. Consulta la especificación.",
+        "source": "https://html.spec.whatwg.org/multipage/input.html#attr-input-value",
+        "locale": "es"
       },
       {
         "elements": ["li"],
-        "purpose": "Ordinal value of the list item",
-        "values": "Valid integer",
-        "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-li-value"
+        "purpose": "Asigna un número explícito a un elemento de una lista ordenada.",
+        "values": "Entero válido.",
+        "source": "https://html.spec.whatwg.org/multipage/grouping-content.html#attr-li-value",
+        "locale": "es"
       },
       {
         "elements": ["meter", "progress"],
-        "purpose": "Current value of the element",
-        "values": "Valid floating-point number",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-value"
+        "purpose": "Indica el estado actual del medidor o del indicador de progreso.",
+        "values": "Número válido de punto flotante.",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-meter-value",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-value"
@@ -2919,7 +3239,8 @@
       "picture",
       "video"
     ],
-    "summary": "Horizontal dimension",
+    "summary": "Fija la dimensión horizontal del recurso o del área reservada para él.",
+    "locale": "es",
     "contexts": [
       {
         "elements": [
@@ -2933,9 +3254,10 @@
           "picture",
           "video"
         ],
-        "purpose": "Horizontal dimension",
-        "values": "Valid non-negative integer",
-        "source": "https://html.spec.whatwg.org/multipage/canvas.html#attr-canvas-width"
+        "purpose": "Fija la dimensión horizontal del recurso o del área reservada para él.",
+        "values": "Entero no negativo.",
+        "source": "https://html.spec.whatwg.org/multipage/canvas.html#attr-canvas-width",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/canvas.html#attr-canvas-width"
@@ -2947,13 +3269,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["textarea"],
-    "summary": "How the value of the form control is to be wrapped for form submission",
+    "summary": "Controla si se añaden saltos de línea al texto enviado por el formulario según el ancho del campo.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["textarea"],
-        "purpose": "How the value of the form control is to be wrapped for form submission",
-        "values": "\"soft\"; \"hard\"",
-        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-wrap"
+        "purpose": "Controla si se añaden saltos de línea al texto enviado por el formulario según el ancho del campo.",
+        "values": "«soft», «hard».",
+        "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-wrap",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-wrap"
@@ -2965,13 +3289,15 @@
     "description": "Atributo HTML",
     "group": "html-attributes",
     "appliesTo": ["HTML elements"],
-    "summary": "Whether the element can offer writing suggestions or not.",
+    "summary": "Indica si se ofrecen sugerencias de escritura en las zonas donde la persona puede editar texto.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
-        "purpose": "Whether the element can offer writing suggestions or not.",
-        "values": "\"true\"; \"false\"; the empty string",
-        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-writingsuggestions"
+        "purpose": "Indica si se ofrecen sugerencias de escritura en las zonas donde la persona puede editar texto.",
+        "values": "«true», «false», la cadena vacía.",
+        "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-writingsuggestions",
+        "locale": "es"
       }
     ],
     "source": "https://html.spec.whatwg.org/multipage/interaction.html#attr-writingsuggestions"
@@ -2984,6 +3310,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento afterprint de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -3008,6 +3335,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento auxclick.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3032,6 +3360,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento beforeinput.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3056,6 +3385,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento beforematch.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3080,6 +3410,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento beforeprint de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -3104,6 +3435,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento beforeunload de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -3128,6 +3460,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento beforetoggle.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3152,6 +3485,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento blur.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3176,6 +3510,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento cancel.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3200,6 +3535,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento canplay.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3224,6 +3560,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento canplaythrough.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3248,6 +3585,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento change.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3272,6 +3610,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento click.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3296,6 +3635,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento close.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3320,6 +3660,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento command.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3344,6 +3685,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento contextlost.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3368,6 +3710,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento contextmenu.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3392,6 +3735,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento contextrestored.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3416,6 +3760,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento copy.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3440,6 +3785,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento cuechange.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3464,6 +3810,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento cut.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3488,6 +3835,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento dblclick.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3512,6 +3860,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento drag.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3536,6 +3885,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento dragend.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3560,6 +3910,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento dragenter.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3584,6 +3935,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento dragleave.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3608,6 +3960,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento dragover.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3632,6 +3985,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento dragstart.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3656,6 +4010,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento drop.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3680,6 +4035,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento durationchange.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3704,6 +4060,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento emptied.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3728,6 +4085,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento ended.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3752,6 +4110,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento error.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3776,6 +4135,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento focus.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3800,6 +4160,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento formdata.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3824,6 +4185,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento hashchange de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -3848,6 +4210,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento input.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3872,6 +4235,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento invalid.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3896,6 +4260,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento keydown.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3920,6 +4285,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento keypress.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3944,6 +4310,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento keyup.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -3968,6 +4335,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento languagechange de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -3992,6 +4360,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento load.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4016,6 +4385,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento loadeddata.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4040,6 +4410,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento loadedmetadata.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4064,6 +4435,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento loadstart.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4088,6 +4460,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento message de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -4112,6 +4485,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento messageerror de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -4136,6 +4510,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento mousedown.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4160,6 +4535,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento mouseenter.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4184,6 +4560,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento mouseleave.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4208,6 +4585,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento mousemove.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4232,6 +4610,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento mouseout.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4256,6 +4635,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento mouseover.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4280,6 +4660,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento mouseup.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4304,6 +4685,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento offline de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -4328,6 +4710,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento online de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -4352,6 +4735,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento pagehide de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -4376,6 +4760,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento pagereveal de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -4400,6 +4785,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento pageshow de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -4424,6 +4810,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento pageswap de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -4448,6 +4835,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento paste.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4472,6 +4860,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento pause.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4496,6 +4885,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento play.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4520,6 +4910,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento playing.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4544,6 +4935,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento popstate de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -4568,6 +4960,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento progress.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4592,6 +4985,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento ratechange.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4616,6 +5010,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento reset.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4640,6 +5035,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento resize.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4664,6 +5060,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento rejectionhandled de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -4688,6 +5085,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento scroll.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4712,6 +5110,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento scrollend.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4736,6 +5135,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento securitypolicyviolation.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4760,6 +5160,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento seeked.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4784,6 +5185,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento seeking.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4808,6 +5210,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento select.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4832,6 +5235,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento slotchange.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4856,6 +5260,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento stalled.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4880,6 +5285,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento storage de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -4904,6 +5310,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento submit.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4928,6 +5335,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento suspend.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4952,6 +5360,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento timeupdate.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -4976,6 +5385,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento toggle.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -5000,6 +5410,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento unhandledrejection de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -5024,6 +5435,7 @@
     "group": "html-events",
     "appliesTo": ["body"],
     "summary": "Maneja el evento unload de Window.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["body"],
@@ -5048,6 +5460,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento volumechange.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -5072,6 +5485,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento waiting.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],
@@ -5096,6 +5510,7 @@
     "group": "html-events",
     "appliesTo": ["HTML elements"],
     "summary": "Maneja el evento wheel.",
+    "locale": "es",
     "contexts": [
       {
         "elements": ["HTML elements"],

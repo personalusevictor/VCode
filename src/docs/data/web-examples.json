@@ -626,6 +626,14 @@
     "runnable": false
   },
   {
+    "id": "web-java-se-java.lang.Character.toCodePoint",
+    "language": "java",
+    "title": "Recupera el punto de código de un emoji",
+    "description": "El punto de código U+1F98A se representa con dos unidades UTF-16. Comprueba que forman un par válido y conviértelas de vuelta en un solo número.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int zorro = 0x1F98A;\n        char alto = Character.highSurrogate(zorro);\n        char bajo = Character.lowSurrogate(zorro);\n\n        System.out.println(Character.isSurrogatePair(alto, bajo));\n        System.out.println(Character.toCodePoint(alto, bajo));\n    }\n}",
+    "expected": "true\n129418"
+  },
+  {
     "id": "web-sql-hex",
     "language": "sql",
     "title": "Compara los bytes de un número y un BLOB",
