@@ -229,6 +229,59 @@ function PhpArticle({ entry, section }) {
         section={section}
       >
         <div lang={entry.locale}>
+          {entry.aliasDocumentation && (
+            <div lang={entry.aliasDocumentation.locale}>
+              <Information
+                id="alias-usage"
+                title="Qué hace la operación"
+                lines={entry.aliasDocumentation.description}
+              />
+              <Information
+                id="alias-return"
+                title="Qué devuelve la operación"
+                lines={entry.aliasDocumentation.returns}
+              />
+            </div>
+          )}
+          {entry.parameterUses?.length > 0 && (
+            <ReferenceSection
+              id="used-in-parameters"
+              title="Dónde aparece en parámetros"
+            >
+              <dl className="doc-attributes">
+                {entry.parameterUses.map(
+                  ({ id, title, parameter, note, locale }) => (
+                    <div key={`${id}/${parameter}`}>
+                      <dt>
+                        <a href={`#symbol/${id}?section=parameters`}>
+                          <code>{title}</code>
+                        </a>
+                        {" · "}
+                        <code>{parameter}</code>
+                      </dt>
+                      <dd lang={locale}>{note}</dd>
+                    </div>
+                  ),
+                )}
+              </dl>
+            </ReferenceSection>
+          )}
+          {entry.returnUses?.length > 0 && (
+            <ReferenceSection id="used-as-return" title="Dónde se devuelve">
+              <dl className="doc-attributes">
+                {entry.returnUses.map(({ id, title, meaning }) => (
+                  <div key={id}>
+                    <dt>
+                      <a href={`#symbol/${id}`}>
+                        <code>{title}</code>
+                      </a>
+                    </dt>
+                    <dd>{meaning}</dd>
+                  </div>
+                ))}
+              </dl>
+            </ReferenceSection>
+          )}
           {entry.alias ? (
             <ReferenceSection id="alias" title="Referencia principal">
               {alias ? (

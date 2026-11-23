@@ -174,6 +174,102 @@ const featured = {
     "Mezcla colores en el espacio indicado. El espacio de color influye en el resultado de la interpolación.",
     ".tarjeta { background: color-mix(in oklab, royalblue 20%, white); }",
   ],
+  "background-position-block": [
+    "Coloca la imagen de fondo en el eje de bloque. En el modo de escritura horizontal, este eje es vertical. El porcentaje se calcula sobre el espacio que queda en ese eje después de descontar el tamaño de la imagen.",
+    ".portada { background-position-block: end 1rem; }",
+  ],
+  "background-position-inline": [
+    "Coloca la imagen de fondo en el eje en el que avanza el texto. El lado que corresponde a start o end depende del modo y la dirección de escritura.",
+    ".portada { background-position-inline: start 2rem; }",
+  ],
+  "background-position-x": [
+    "Ajusta la posición horizontal de cada imagen de fondo. Un 0% alinea sus bordes izquierdos con los del área de posicionamiento y un 100% alinea sus bordes derechos.",
+    ".portada { background-position-x: right 1rem; }",
+  ],
+  "background-position-y": [
+    "Ajusta la posición vertical de cada imagen de fondo. Con un 50%, la imagen y su área de posicionamiento quedan centradas en ese eje.",
+    ".portada { background-position-y: bottom 1rem; }",
+  ],
+  "background-repeat-block": [
+    "Controla si la imagen se repite en el eje de bloque. Elige no-repeat para una copia, space para separar copias enteras o round para ajustarlas al espacio disponible.",
+    ".patron { background-repeat-block: no-repeat; }",
+  ],
+  "background-repeat-inline": [
+    "Controla cómo se repite la imagen en el eje en el que avanza el texto. Con varias capas, puedes indicar un comportamiento distinto para cada imagen con una lista separada por comas.",
+    ".patron { background-repeat-inline: repeat, no-repeat; }",
+  ],
+  "background-repeat-x": [
+    "Controla la repetición horizontal del fondo por capas. El valor no-repeat conserva una sola copia en ese eje.",
+    ".patron { background-repeat-x: no-repeat; }",
+  ],
+  "background-repeat-y": [
+    "Controla la repetición vertical del fondo. El valor round ajusta el tamaño de las copias para que quepa un número entero en ese eje.",
+    ".patron { background-repeat-y: round; }",
+  ],
+  "@font-feature-values": [
+    "Define nombres para variantes OpenType de familias concretas. Actívalas en font-variant-alternates. Cada índice depende de las variantes que incluya la fuente.",
+    '@font-feature-values "Mi Serif" { @swash { curvas: 1; } }\n.firma { font-family: "Mi Serif", serif; font-variant-alternates: swash(curvas); }',
+  ],
+  "@annotation · @font-feature-values": [
+    "Da un nombre a un estilo de anotación, como caracteres enmarcados, si la fuente lo incluye. Se activa con annotation() y cada nombre se asocia a un solo índice.",
+    '@font-feature-values "Mi Serif" { @annotation { marco: 1; } }\n.nota { font-variant-alternates: annotation(marco); }',
+  ],
+  "@character-variant · @font-feature-values": [
+    "Da un nombre a una variante de caracteres de una fuente. El primer entero elige la característica OpenType cv y el segundo, si aparece, elige la variante dentro de ella.",
+    '@font-feature-values "Mi Serif" { @character-variant { alternativa: 2 1; } }\n.titulo { font-variant-alternates: character-variant(alternativa); }',
+  ],
+  "@ornaments · @font-feature-values": [
+    "Da un nombre a un juego de glifos ornamentales de la fuente. Usa ornaments() en font-variant-alternates para seleccionar el nombre.",
+    '@font-feature-values "Mi Serif" { @ornaments { flor: 1; } }\n.adornos { font-variant-alternates: ornaments(flor); }',
+  ],
+  "@styleset · @font-feature-values": [
+    "Da un nombre a uno o varios conjuntos estilísticos de la fuente. Puedes combinar varios índices en una misma declaración y activar la combinación con styleset().",
+    '@font-feature-values "Mi Serif" { @styleset { editorial: 4 5; } }\n.titulo { font-variant-alternates: styleset(editorial); }',
+  ],
+  "@stylistic · @font-feature-values": [
+    "Da un nombre a una alternativa estilística concreta de la fuente. Cada nombre se vincula a un solo índice y se puede seleccionar con stylistic().",
+    '@font-feature-values "Mi Serif" { @stylistic { expresiva: 1; } }\n.titulo { font-variant-alternates: stylistic(expresiva); }',
+  ],
+  "@swash · @font-feature-values": [
+    "Da un nombre a un conjunto de trazos caligráficos alternativos. El índice corresponde a una opción de la fuente y se activa con swash().",
+    '@font-feature-values "Mi Serif" { @swash { curvas: 1; } }\n.firma { font-variant-alternates: swash(curvas); }',
+  ],
+  "@container · aspect-ratio": [
+    "Comprueba la relación entre el ancho y el alto de la caja de contenido del contenedor. Para consultar ambos ejes, establece container-type: size.",
+    ".panel { container-type: size; }\n@container (aspect-ratio > 4 / 3) { .grafica { display: grid; } }",
+  ],
+  "@container · block-size": [
+    "Consulta el tamaño de la caja de contenido en el eje de bloque. En un modo de escritura horizontal, mide la altura. El contenedor necesita admitir consultas de tamaño en ese eje.",
+    ".panel { container-type: size; }\n@container (block-size > 20rem) { .detalle { display: block; } }",
+  ],
+  "@container · inline-size": [
+    "Consulta el tamaño disponible en la dirección en que avanza el texto. Con container-type: inline-size, el diseño de un componente puede responder al espacio que le da su contenedor.",
+    ".panel { container-type: inline-size; }\n@container (inline-size > 32rem) { .tarjetas { grid-template-columns: repeat(2, 1fr); } }",
+  ],
+  "@container · height": [
+    "Consulta el alto físico de la caja de contenido del contenedor. Usa container-type: size si el eje consultado es el de bloque.",
+    ".panel { container-type: size; }\n@container (height >= 30rem) { .grafica { min-height: 24rem; } }",
+  ],
+  "@container · orientation": [
+    "Comprueba la orientación de la caja de contenido del contenedor. portrait coincide cuando el alto es mayor o igual que el ancho y landscape cuando el ancho es mayor.",
+    ".panel { container-type: size; }\n@container (orientation: landscape) { .tarjetas { display: grid; } }",
+  ],
+  "@container · scrollable": [
+    "Detecta si queda contenido oculto al que se puede llegar desplazando el contenedor en la dirección consultada. La condición puede cambiar al llegar a un extremo del desplazamiento.",
+    ".lista { container-type: scroll-state; overflow: auto; }\n@container scroll-state(scrollable: bottom) { .aviso { opacity: 1; } }",
+  ],
+  "@container · snapped": [
+    "Detecta si un elemento objetivo está encajado en un eje de su contenedor de desplazamiento con scroll snap.",
+    ".diapositiva { container-type: scroll-state; scroll-snap-align: start; }\n@container scroll-state(snapped: x) { .pie { opacity: 1; } }",
+  ],
+  "@container · stuck": [
+    "Detecta que un elemento con position: sticky se ha pegado al borde indicado. Permite cambiar el estilo de sus descendientes mientras se mantiene adherido.",
+    ".barra { container-type: scroll-state; position: sticky; top: 0; }\n@container scroll-state(stuck: top) { .titulo { text-decoration: underline; } }",
+  ],
+  "@container · width": [
+    "Consulta el ancho físico de la caja de contenido del contenedor. Se puede combinar con operadores de rango para adaptar los elementos que contiene.",
+    ".panel { container-type: size; }\n@container (width >= 40rem) { .tarjetas { grid-template-columns: repeat(3, 1fr); } }",
+  ],
 };
 const features = [
   ...Object.keys(labels)
@@ -186,13 +282,39 @@ const features = [
     ]),
   ),
 ];
+const pageBoxes = {
+  "@top-left-corner": "la esquina superior izquierda",
+  "@top-left": "la parte izquierda del margen superior",
+  "@top-center": "el centro del margen superior",
+  "@top-right": "la parte derecha del margen superior",
+  "@top-right-corner": "la esquina superior derecha",
+  "@bottom-left-corner": "la esquina inferior izquierda",
+  "@bottom-left": "la parte izquierda del margen inferior",
+  "@bottom-center": "el centro del margen inferior",
+  "@bottom-right": "la parte derecha del margen inferior",
+  "@bottom-right-corner": "la esquina inferior derecha",
+  "@left-top": "la parte superior del margen izquierdo",
+  "@left-middle": "el centro del margen izquierdo",
+  "@left-bottom": "la parte inferior del margen izquierdo",
+  "@right-top": "la parte superior del margen derecho",
+  "@right-middle": "el centro del margen derecho",
+  "@right-bottom": "la parte inferior del margen derecho",
+};
 const entries = features.map(([kind, entry]) => {
   const title = entry.scope
     ? `${entry.scope} · ${entry.name}`
     : entry.for?.length
       ? `${entry.name} · ${entry.for.join(", ")}`
       : entry.name;
-  const [detail, example] = featured[title] || [];
+  const box = entry.for?.includes("@page") && pageBoxes[entry.name];
+  const [detail, example] =
+    featured[title] ||
+    (box
+      ? [
+          `Dentro de @page, coloca contenido en ${box} de cada página impresa. Usa content para generar texto, imágenes o el número de página.`,
+          `@page {\n  ${entry.name} { content: "Página " counter(page); }\n}`,
+        ]
+      : []);
   return {
     id: `css-${kind}-${encodeURIComponent(title)}`,
     title,
@@ -208,6 +330,38 @@ const entries = features.map(([kind, entry]) => {
   };
 });
 const unique = [...new Map(entries.map((entry) => [entry.id, entry])).values()];
+const webCatalog = new URL(
+  "../src/docs/data/web-catalog.json",
+  import.meta.url,
+);
+const cssArticles = fs.existsSync(webCatalog)
+  ? JSON.parse(fs.readFileSync(webCatalog, "utf8")).filter(
+      ({ language }) => language === "css",
+    )
+  : [];
+const byTitle = new Map(
+  [...unique, ...cssArticles].map((entry) => [
+    `${entry.group}/${entry.title}`,
+    entry,
+  ]),
+);
+for (const entry of unique) {
+  if (entry.detail) continue;
+  const property = entry.alias && `css-properties/${entry.alias}`;
+  const scoped = /^(.*?) · (?:filter|<basic-shape>|<transform-function>)$/.exec(
+    entry.title,
+  );
+  const canonical = byTitle.get(
+    property || (scoped && `css-functions/${scoped[1]}`),
+  );
+  if (!canonical || canonical.id === entry.id) continue;
+  entry.relatedReference = { id: canonical.id, title: canonical.title };
+  if (entry.alias) {
+    entry.detail = `${entry.title} es un alias de ${canonical.title}. Consulta la propiedad principal para ver sus valores y ejemplos.`;
+  } else {
+    entry.detail = canonical.detail || canonical.summary;
+  }
+}
 fs.writeFileSync(
   new URL("../src/docs/data/css-reference.json", import.meta.url),
   JSON.stringify(unique, null, 2) + "\n",
