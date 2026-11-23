@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import webref from "@webref/css";
+import { cssReferenceContext } from "./css-reference-context.mjs";
 
 const css = await webref.listAll();
 const labels = {
@@ -314,7 +315,7 @@ const entries = features.map(([kind, entry]) => {
           `Dentro de @page, coloca contenido en ${box} de cada página impresa. Usa content para generar texto, imágenes o el número de página.`,
           `@page {\n  ${entry.name} { content: "Página " counter(page); }\n}`,
         ]
-      : []);
+      : cssReferenceContext(title, entry.href));
   return {
     id: `css-${kind}-${encodeURIComponent(title)}`,
     title,
@@ -345,12 +346,47 @@ const byTitle = new Map(
     entry,
   ]),
 );
+const syntaxTerms = {
+  "alpha-value":
+    "Opacidad como número o porcentaje. Cero es transparente y el máximo es opaco.",
+  angle: "Ángulo expresado con una unidad como deg, rad o turn.",
+  "boolean-condition": "Condición que se evalúa como verdadera o falsa.",
+  "calc-sum": "Expresión aritmética compatible con las reglas de calc().",
+  color:
+    "Valor de color CSS, como un nombre, un hexadecimal o una función de color.",
+  "custom-ident":
+    "Nombre que puedes elegir respetando las palabras reservadas del contexto.",
+  "dashed-ident":
+    "Identificador elegido por el autor que empieza por dos guiones, como --galeria.",
+  "declaration-list": "Lista de declaraciones CSS dentro de un bloque.",
+  "declaration-value":
+    "Secuencia de valores que se puede escribir tras los dos puntos de una declaración.",
+  "easing-function":
+    "Función que ajusta cómo cambia el progreso de una animación o transición.",
+  image: "Imagen CSS, que puede venir de una URL o generarse con un degradado.",
+  integer:
+    "Número entero sin parte decimal. La sintaxis puede limitar su rango.",
+  length: "Distancia con una unidad de longitud, como px o rem.",
+  "length-percentage":
+    "Longitud o porcentaje. El lugar donde se usa determina la base del porcentaje.",
+  number: "Número sin unidad que puede incluir una parte decimal.",
+  percentage:
+    "Número seguido de %. El contexto indica sobre qué cantidad se calcula.",
+  "rule-list": "Lista de reglas CSS completas.",
+  "selector-list": "Uno o varios selectores CSS separados por comas.",
+  string: "Texto CSS entre comillas. Las comillas delimitan la cadena.",
+  time: "Duración con una unidad como s o ms.",
+  "transform-list":
+    "Lista de funciones de transformación que se aplican como una secuencia.",
+  url: "Referencia a un recurso. Una URL relativa se resuelve contra la base del documento o de la hoja que la define.",
+};
 for (const entry of unique) {
   if (entry.detail) continue;
   const property = entry.alias && `css-properties/${entry.alias}`;
-  const scoped = /^(.*?) · (?:filter|<basic-shape>|<transform-function>)$/.exec(
-    entry.title,
-  );
+  const scoped =
+    /^(.*?) · (?:filter|<basic-shape>|<transform-function>|transform)$/.exec(
+      entry.title,
+    );
   const canonical = byTitle.get(
     property || (scoped && `css-functions/${scoped[1]}`),
   );
@@ -359,8 +395,25 @@ for (const entry of unique) {
   if (entry.alias) {
     entry.detail = `${entry.title} es un alias de ${canonical.title}. Consulta la propiedad principal para ver sus valores y ejemplos.`;
   } else {
-    entry.detail = canonical.detail || canonical.summary;
+    entry.detail = `${scoped[1]} es una función que se admite en el contexto indicado. Su ficha principal explica los argumentos, el resultado y los ejemplos de uso.`;
   }
+}
+for (const entry of unique) {
+  if (entry.detail || !entry.syntax) continue;
+  const terms = new Set(
+    Array.from(
+      entry.syntax.matchAll(/<([a-z-]+)(?:\s+\[[^\]]+\])?>/g),
+      (match) => match[1],
+    ),
+  );
+  const explanations = [...terms].flatMap((name) => {
+    const explanation = Object.hasOwn(syntaxTerms, name) && syntaxTerms[name];
+    if (!explanation) return [];
+    const label = `<${name}>`;
+    const reference = byTitle.get(`css-values/${label}`);
+    return [{ label, explanation, ...(reference && { id: reference.id }) }];
+  });
+  if (explanations.length) entry.syntaxTerms = explanations;
 }
 fs.writeFileSync(
   new URL("../src/docs/data/css-reference.json", import.meta.url),

@@ -607,5 +607,49 @@
     "description": "Obtén el lector, lee un fragmento y libera el bloqueo. La salida diferencia la lectura bloqueada de la disponibilidad posterior.",
     "code": "const flujo = new ReadableStream({\n  start(control) {\n    control.enqueue(\"Biblioteca\");\n    control.close();\n  },\n});\n\nconst lector = flujo.getReader();\nconsole.log(\"Bloqueado: \" + flujo.locked);\ntry {\n  console.log((await lector.read()).value);\n} finally {\n  lector.releaseLock();\n}\nconsole.log(\"Bloqueado: \" + flujo.locked);",
     "expected": "Bloqueado: true\nBiblioteca\nBloqueado: false"
+  },
+  {
+    "id": "web-java-se-java.lang.String.valueOf",
+    "language": "java",
+    "title": "Convierte un objeto y copia caracteres",
+    "description": "Declarar el tipo del argumento permite ver qué sobrecarga se usa. La cadena que sale del arreglo conserva los caracteres originales aunque el arreglo cambie.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        Object ausente = null;\n        char[] letras = {'V', 'C', 'o', 'd', 'e'};\n\n        String nombre = String.valueOf(letras);\n        letras[0] = 'X';\n\n        System.out.println(String.valueOf(ausente));\n        System.out.println(nombre);\n    }\n}",
+    "expected": "null\nVCode"
+  },
+  {
+    "id": "web-java-se-java.nio.ByteBuffer.flip",
+    "language": "java",
+    "title": "Lee los bytes que acabas de escribir",
+    "description": "Después de flip(), position vuelve a cero y limit coincide con los bytes escritos. get() lee solo hasta ese límite. Este ejemplo usa java.nio y está preparado para ejecutarse con un JDK.",
+    "code": "import java.nio.ByteBuffer;\n\npublic class Main {\n    public static void main(String[] args) {\n        var buffer = ByteBuffer.allocate(8);\n        buffer.put((byte) 10).put((byte) 20);\n        buffer.flip();\n\n        while (buffer.hasRemaining()) {\n            System.out.println(buffer.get());\n        }\n    }\n}",
+    "expected": "10\n20",
+    "runnable": false
+  },
+  {
+    "id": "web-sql-hex",
+    "language": "sql",
+    "title": "Compara los bytes de un número y un BLOB",
+    "description": "SQLite convierte el número a texto antes de codificarlo. Un BLOB aporta sus bytes directamente.",
+    "code": "SELECT hex(123) AS bytes_del_texto,\n       hex(X'7B') AS bytes_del_blob;",
+    "expectedRows": [["313233", "7B"]],
+    "expected": "313233 | 7B"
+  },
+  {
+    "id": "web-sql-json_type",
+    "language": "sql",
+    "title": "Distingue un valor JSON null de una clave ausente",
+    "description": "La primera consulta devuelve el texto null. La ausencia de la clave produce NULL de SQL.",
+    "code": "SELECT json_type('{\"nivel\":null}', '$.nivel') AS tipo_json,\n       json_type('{\"nivel\":null}', '$.ausente') IS NULL AS sin_clave;",
+    "expectedRows": [["null", 1]],
+    "expected": "null | 1"
+  },
+  {
+    "id": "web-sql-iif",
+    "language": "sql",
+    "title": "Elige una etiqueta según las horas",
+    "description": "Se usa un único par de condición y alternativa, suficiente para dos resultados.",
+    "code": "SELECT iif(12 >= 10, 'Curso largo', 'Curso breve') AS etiqueta;",
+    "expectedRows": [["Curso largo"]],
+    "expected": "Curso largo"
   }
 ]

@@ -229,6 +229,15 @@ function PhpArticle({ entry, section }) {
         section={section}
       >
         <div lang={entry.locale}>
+          {entry.usageContext && (
+            <div lang="es">
+              <Information
+                id="usage-context"
+                title="Dónde se usa"
+                lines={[entry.usageContext]}
+              />
+            </div>
+          )}
           {entry.aliasDocumentation && (
             <div lang={entry.aliasDocumentation.locale}>
               <Information

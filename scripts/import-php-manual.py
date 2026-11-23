@@ -81,7 +81,14 @@ def parse_doc(path, entities):
         part if index % 2 else ENTITY.sub(lambda match: substitute(match, ()), part)
         for index, part in enumerate(parts)
     )
-    return ET.fromstring(converted)
+    root = ET.fromstring(converted)
+    # A standalone fragment normally inherits the DocBook namespace from
+    # the manual page that includes it, for example the cURL option list.
+    if not root.tag.startswith("{"):
+        for element in root.iter():
+            if not element.tag.startswith("{"):
+                element.tag = "{" + NS["d"] + "}" + element.tag
+    return root
 
 def section(node, role):
     return node.find(f"d:refsect1[@role='{role}']", NS)

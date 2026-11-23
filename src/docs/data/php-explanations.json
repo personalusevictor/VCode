@@ -92,19 +92,22 @@
     ]
   },
   "pdo::fetch_assoc": {
-    "summary": "Recupera una fila de PDO con los nombres de las columnas como claves.",
+    "summary": "Devuelve cada fila como un arreglo cuyas claves son los nombres de las columnas.",
     "description": [
       "Configura este modo al llamar a fetch() o fetchAll(). Si tu consulta produce columnas con nombres repetidos, usa alias para que cada clave represente un valor distinto."
     ],
     "examples": [
       {
-        "title": "Recupera una fila con claves de texto",
-        "code": "<?php\n$base = new PDO('sqlite::memory:');\n$fila = $base->query(\"SELECT 'PHP' AS lenguaje, 25 AS minutos\")\n             ->fetch(PDO::FETCH_ASSOC);\necho $fila['lenguaje'], ': ', $fila['minutos'], ' min', PHP_EOL;",
-        "output": "PHP: 25 min",
+        "title": "Lee una fila por nombre de columna",
+        "code": "<?php\n$db = new PDO('sqlite::memory:');\n$consulta = $db->query(\"SELECT 'CSS' AS curso, 12 AS lecciones\");\n$fila = $consulta->fetch(PDO::FETCH_ASSOC);\n\necho $fila['curso'], ': ', $fila['lecciones'], PHP_EOL;",
+        "output": "CSS: 12",
         "runnable": true
       }
     ],
-    "related": ["PDO", "PDOStatement::fetch", "PDOStatement::fetchAll"]
+    "related": ["PDO", "PDOStatement::fetch", "PDOStatement::fetchAll"],
+    "notes": [
+      "Si la consulta selecciona varias columnas con el mismo nombre, usa alias SQL distintos para poder distinguir sus valores."
+    ]
   },
   "$_get": {
     "summary": "Contiene los parámetros de la cadena de consulta de la URL.",
@@ -122,5 +125,280 @@
     ],
     "typeName": "array",
     "related": ["parse_str", "filter_input", "$_POST"]
+  },
+  "pdo::param_int": {
+    "summary": "Declara que un parámetro de una consulta preparada se vincula como entero.",
+    "notes": [
+      "Valida que el valor sea un entero en tu aplicación. La constante describe el tipo de vinculación y no sustituye la validación."
+    ],
+    "examples": [
+      {
+        "title": "Pasa un número de lecciones a una consulta",
+        "code": "<?php\n$db = new PDO('sqlite::memory:');\n$consulta = $db->prepare('SELECT :lecciones + 1');\n$consulta->bindValue(':lecciones', 12, PDO::PARAM_INT);\n$consulta->execute();\n\necho $consulta->fetchColumn(), PHP_EOL;",
+        "output": "13",
+        "runnable": true
+      }
+    ]
+  },
+  "mysqli_type_decimal": {
+    "summary": "Identifica una columna DECIMAL en los metadatos de mysqli.",
+    "notes": [
+      "El tipo de columna y el tipo del valor PHP devuelto son conceptos distintos. Conserva la precisión decimal al manejar importes."
+    ],
+    "examples": [
+      {
+        "title": "Distingue los decimales en el resultado",
+        "code": "<?php\n// $resultado es un mysqli_result obtenido de una consulta.\nforeach ($resultado->fetch_fields() as $columna) {\n    if ($columna->type === MYSQLI_TYPE_DECIMAL\n        || $columna->type === MYSQLI_TYPE_NEWDECIMAL) {\n        echo $columna->name, PHP_EOL;\n    }\n}",
+        "runnable": false
+      }
+    ]
+  },
+  "ziparchive::cm_deflate": {
+    "summary": "Selecciona el método Deflate para comprimir una entrada de un archivo ZIP.",
+    "notes": [
+      "Úsalo para datos como texto, JSON o CSV. Las imágenes que ya están comprimidas suelen ganar poco espacio al volver a comprimirlas."
+    ],
+    "examples": [
+      {
+        "title": "Comprime una entrada de texto",
+        "code": "<?php\n// $zip es un ZipArchive abierto para escribir.\n$zip->addFromString('indice.txt', 'HTML, CSS y JavaScript');\nif (!$zip->setCompressionName('indice.txt', ZipArchive::CM_DEFLATE)) {\n    throw new RuntimeException('No se pudo elegir Deflate');\n}\n$zip->close();",
+        "runnable": false
+      }
+    ]
+  },
+  "curlopt_timeout": {
+    "summary": "Limita cuánto puede durar una transferencia cURL en total, en segundos.",
+    "notes": [
+      "Incluye el tiempo de conexión. Si la transferencia supera el límite, comprueba el resultado de curl_exec() y el código de curl_errno()."
+    ]
+  },
+  "memcached::res_notfound": {
+    "summary": "Indica que la clave solicitada no existe en Memcached.",
+    "notes": [
+      "Después de get(), compara getResultCode() con RES_NOTFOUND. Un false devuelto por get() también puede ser el valor almacenado para una clave existente."
+    ],
+    "examples": [
+      {
+        "title": "Distingue una clave que falta de un valor false",
+        "code": "<?php\n// $cache es un cliente Memcached conectado.\n$preferencia = $cache->get('tema-oscuro');\nif ($cache->getResultCode() === Memcached::RES_NOTFOUND) {\n    $preferencia = false; // Valor que queremos usar si falta la clave.\n}",
+        "runnable": false
+      }
+    ]
+  },
+  "curlhandle": {
+    "summary": "Objeto que conserva la configuración y el estado de una transferencia cURL.",
+    "description": [
+      "Se obtiene con curl_init(). Configura sus opciones, ejecuta la transferencia y consulta su información usando el mismo manejador."
+    ]
+  },
+  "curlmultihandle": {
+    "summary": "Objeto que coordina varias transferencias cURL de forma concurrente.",
+    "description": [
+      "Se obtiene con curl_multi_init(). Añade cada CurlHandle al manejador múltiple y consulta por separado el resultado de cada transferencia."
+    ]
+  },
+  "imagick": {
+    "summary": "Abre, transforma, compone y exporta imágenes con ImageMagick.",
+    "description": [
+      "La instancia puede contener una secuencia de imágenes. Comprueba el fotograma activo cuando el archivo tenga varias páginas o cuadros. Los formatos disponibles dependen de la instalación de ImageMagick."
+    ]
+  },
+  "imagickdraw": {
+    "summary": "Acumula instrucciones de dibujo vectorial para aplicarlas a una imagen de Imagick.",
+    "description": [
+      "Configura el relleno, el trazo o la fuente y añade las formas que quieras dibujar. Aplica la lista de instrucciones con Imagick::drawImage()."
+    ]
+  },
+  "imagickkernel": {
+    "summary": "Define un núcleo o matriz de coeficientes para operaciones de procesamiento de imágenes.",
+    "description": [
+      "El núcleo describe cómo influyen los píxeles vecinos. Se puede usar al aplicar operaciones morfológicas y otras transformaciones que aceptan un núcleo."
+    ]
+  },
+  "imagickpixel": {
+    "summary": "Representa un color con sus canales, por ejemplo el relleno de una forma.",
+    "description": [
+      "Puede crearse a partir de una cadena de color o recuperarse de una imagen. Consulta los valores de sus canales cuando necesites trabajar con el color numéricamente."
+    ]
+  },
+  "imagickpixeliterator": {
+    "summary": "Recorre los píxeles de una imagen fila a fila.",
+    "description": [
+      "Obtén los píxeles de la fila actual, modifica los que necesites y sincroniza la fila con syncIterator() antes de seguir avanzando si quieres guardar los cambios."
+    ]
+  },
+  "mysql_xdevapi\\baseresult": {
+    "summary": "Interfaz común de resultados de la extensión MySQL X DevAPI.",
+    "description": [
+      "Las clases concretas añaden operaciones según el tipo de resultado. Por ejemplo, una consulta de filas y una operación de escritura no exponen exactamente los mismos datos."
+    ]
+  },
+  "mysql_xdevapi\\collectionadd": {
+    "summary": "Prepara la inserción de uno o varios documentos en una colección de MySQL.",
+    "description": [
+      "Se obtiene al llamar a Collection::add(). Usa execute() para enviar la operación y consultar su resultado."
+    ]
+  },
+  "mysql_xdevapi\\collectionfind": {
+    "summary": "Prepara una consulta de documentos de una colección de MySQL.",
+    "description": [
+      "Puedes vincular valores, elegir campos, ordenar y limitar documentos antes de llamar a execute(). El resultado permite recuperar los documentos encontrados."
+    ]
+  },
+  "mysql_xdevapi\\collectionmodify": {
+    "summary": "Prepara cambios sobre los documentos que coinciden con un filtro.",
+    "description": [
+      "Encadena operaciones como set(), unset() o patch() según el cambio que quieras aplicar. execute() realiza la modificación."
+    ]
+  },
+  "mysql_xdevapi\\collectionremove": {
+    "summary": "Prepara el borrado de los documentos que coinciden con una condición.",
+    "description": [
+      "Vincula los valores del filtro antes de ejecutar. Puedes ordenar o limitar la operación cuando quieras borrar solo una parte de las coincidencias."
+    ]
+  },
+  "mysql_xdevapi\\columnresult": {
+    "summary": "Describe una columna de un resultado de MySQL X DevAPI.",
+    "description": [
+      "Permite consultar datos como el nombre, tipo y origen de la columna. Se usa al inspeccionar el esquema de una consulta."
+    ]
+  },
+  "mysql_xdevapi\\crudoperationbindable": {
+    "summary": "Interfaz que identifica operaciones CRUD con parámetros vinculables.",
+    "description": [
+      "bind() asigna datos a los marcadores de la operación antes de ejecutar."
+    ]
+  },
+  "mysql_xdevapi\\crudoperationlimitable": {
+    "summary": "Interfaz de las operaciones que permiten limitar la cantidad de resultados o elementos afectados.",
+    "description": [
+      "El límite forma parte de la operación que se envía al servidor."
+    ]
+  },
+  "mysql_xdevapi\\crudoperationskippable": {
+    "summary": "Interfaz de operaciones que admiten saltar un número de entradas.",
+    "description": [
+      "Se utiliza en consultas que admiten un desplazamiento, por ejemplo al paginar."
+    ]
+  },
+  "mysql_xdevapi\\crudoperationsortable": {
+    "summary": "Interfaz de operaciones que permiten ordenar las coincidencias.",
+    "description": [
+      "El orden es especialmente útil cuando se combina con un límite."
+    ]
+  },
+  "mysql_xdevapi\\databaseobject": {
+    "summary": "Interfaz común para objetos de base de datos de MySQL X DevAPI.",
+    "description": [
+      "Las implementaciones concretas representan objetos que se identifican dentro de una sesión."
+    ]
+  },
+  "mysql_xdevapi\\docresult": {
+    "summary": "Resultado que contiene documentos devueltos por una operación de colección.",
+    "description": [
+      "Usa fetchOne() para leer un documento o fetchAll() para obtener todos los pendientes."
+    ]
+  },
+  "mysql_xdevapi\\exception": {
+    "summary": "Excepción que puede producir la extensión MySQL X DevAPI.",
+    "description": [
+      "Consulta el código y el mensaje para decidir cómo manejar el error. Mantén el detalle de conexión fuera de los mensajes que muestras al usuario."
+    ]
+  },
+  "mysql_xdevapi\\executionstatus": {
+    "summary": "Objeto que representa el estado de ejecución de una operación de MySQL X DevAPI.",
+    "description": [
+      "Consulta la clase de resultado de la operación concreta para obtener datos como filas afectadas o avisos."
+    ]
+  },
+  "mysql_xdevapi\\fieldmetadata": {
+    "summary": "Tipo asociado a los metadatos de un campo en la extensión MySQL X DevAPI.",
+    "description": [
+      "Si necesitas inspeccionar columnas devueltas por una consulta, consulta los métodos de metadatos del resultado compatible con tu versión."
+    ]
+  },
+  "mysql_xdevapi\\rowresult": {
+    "summary": "Resultado tabular que contiene las filas devueltas por una consulta.",
+    "description": [
+      "Permite recuperar filas y examinar los nombres y tipos de las columnas."
+    ]
+  },
+  "mysql_xdevapi\\schemaobject": {
+    "summary": "Interfaz común para objetos que pertenecen a un esquema de MySQL.",
+    "description": [
+      "Distingue los objetos de un esquema de otros objetos de la sesión global de base de datos."
+    ]
+  },
+  "mysql_xdevapi\\sqlstatement": {
+    "summary": "Representa una sentencia SQL que se prepara desde una sesión de MySQL X DevAPI.",
+    "description": [
+      "Usa bind() con sus parámetros y execute() para obtener el resultado. Algunas sentencias pueden proporcionar más de un conjunto de resultados."
+    ]
+  },
+  "mysql_xdevapi\\sqlstatementresult": {
+    "summary": "Resultado de ejecutar una sentencia SQL con MySQL X DevAPI.",
+    "description": [
+      "Puede contener filas y metadatos, o información de escritura como el número de filas afectadas. Usa hasData() antes de asumir que existe un conjunto de filas."
+    ]
+  },
+  "ui\\exception\\invalidargumentexception": {
+    "summary": "Excepción de la extensión UI que indica un argumento no válido.",
+    "description": [
+      "Comprueba los valores y tipos que admite la operación que reportó el error."
+    ]
+  },
+  "ui\\exception\\runtimeexception": {
+    "summary": "Excepción que indica que la extensión UI no pudo completar una operación en ejecución.",
+    "description": [
+      "Usa el mensaje de la excepción y el punto donde se lanzó para identificar la operación que falló."
+    ]
+  },
+  "collator": {
+    "summary": "Compara y ordena texto según las reglas de una configuración regional.",
+    "description": [
+      "Usa compare() para comparar dos cadenas y sort() u otra variante cuando necesites ordenar una lista. Puedes configurar la fuerza de comparación para decidir cuánto importan los acentos y las mayúsculas."
+    ]
+  },
+  "intlcalendar": {
+    "summary": "Representa un calendario de ICU asociado a una zona horaria y una configuración regional.",
+    "description": [
+      "Consulta o cambia campos como año, mes y día de forma individual. Puedes convertir el calendario a un objeto DateTime cuando necesites trabajar con las API de fechas de PHP."
+    ]
+  },
+  "intlcodepointbreakiterator": {
+    "summary": "Recorre un texto UTF-8 avanzando por puntos de código Unicode.",
+    "description": [
+      "Sirve para localizar límites de puntos de código. Si quieres recorrer lo que la persona percibe como un carácter, usa un iterador de límites de caracteres o las funciones grapheme."
+    ]
+  },
+  "intltimezone": {
+    "summary": "Representa una zona horaria de ICU y permite consultar sus reglas.",
+    "description": [
+      "Crea la zona con un identificador de la base de zonas horarias. Usa getOffset() cuando quieras conocer el desplazamiento para una fecha concreta."
+    ]
+  },
+  "gdfont": {
+    "summary": "Objeto que representa una fuente de mapa de bits cargada en GD.",
+    "description": [
+      "Se obtiene al cargar una fuente con imageloadfont(). Las funciones de dibujo de texto de GD también aceptan identificadores de fuentes incorporadas."
+    ]
+  },
+  "gdimage": {
+    "summary": "Objeto que representa una imagen usada por la extensión GD.",
+    "description": [
+      "Desde PHP 8 las funciones de GD devuelven este objeto en lugar del recurso anterior. Obtén una instancia con imagecreatetruecolor() o con la función que lee el formato del archivo."
+    ]
+  },
+  "addressinfo": {
+    "summary": "Objeto que representa una dirección de red resuelta por la extensión sockets.",
+    "description": [
+      "Obtén instancias con socket_addrinfo_lookup() y consulta sus datos con socket_addrinfo_explain(). Se pueden usar para preparar una conexión o asociar un socket."
+    ]
+  },
+  "socket": {
+    "summary": "Objeto que identifica un socket abierto en PHP.",
+    "description": [
+      "Créalo con socket_create() u otra operación de la extensión. Pásalo a las funciones de conexión, lectura o escritura. En PHP 8 sustituye al recurso que usaban las versiones anteriores."
+    ]
   }
 }
