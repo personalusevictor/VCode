@@ -331,10 +331,28 @@ export default function SymbolReader({ id, original, section }) {
               {entry.alias && (
                 <div>
                   <dt>Alias de</dt>
-                  <dd>{entry.alias}</dd>
+                  <dd>
+                    {entry.relatedReference ? (
+                      <a href={`#symbol/${entry.relatedReference.id}`}>
+                        {entry.alias}
+                      </a>
+                    ) : (
+                      entry.alias
+                    )}
+                  </dd>
                 </div>
               )}
             </dl>
+          </ReferenceSection>
+        )}
+        {entry.relatedReference && !entry.alias && (
+          <ReferenceSection id="canonical" title="Referencia principal">
+            <a
+              className="work-link"
+              href={`#symbol/${entry.relatedReference.id}`}
+            >
+              {entry.relatedReference.title} <ArrowUpRight size={14} />
+            </a>
           </ReferenceSection>
         )}
         <ReferenceLessons
@@ -344,6 +362,20 @@ export default function SymbolReader({ id, original, section }) {
         />
       </ReferenceBody>
       <div className="doc-source">
+        {details?.documentationSource && (
+          <a
+            href={details.documentationSource}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {details.inheritedDocumentation
+              ? "Contrato heredado · OpenJDK 21"
+              : entry.language === "java"
+                ? "Documentación de OpenJDK 21"
+                : "Documentación de cppreference"}{" "}
+            <ArrowUpRight size={15} />
+          </a>
+        )}
         {details?.specification && (
           <a href={details.specification} target="_blank" rel="noreferrer">
             Especificación del lenguaje <ArrowUpRight size={15} />

@@ -309,6 +309,18 @@ test("PHP publica todas las fichas por ruta y resuelve las conexiones sin un ín
     }
   }
   assert.equal(recovered.size, php.length);
+  const alias = recovered.get("php-function-session_commit");
+  assert.equal(alias.aliasLink.id, "php-function-session_write_close");
+  assert.ok(alias.aliasDocumentation.description.length);
+  const input = recovered.get("php-constant-input_get").parameterUses[0];
+  assert.equal(input.id, "php-function-filter_has_var");
+  assert.match(input.note, /INPUT_GET/);
+  assert.ok(
+    recovered
+      .get("php-constant-php_session_active")
+      .returnUses.some(({ id }) => id === "php-function-session_status"),
+  );
+
   assert.deepEqual(
     recovered
       .get("php-function-session_status")
@@ -410,6 +422,28 @@ test("Java conserva sus enlaces y separa las sobrecargas públicas", () => {
       (entry) => entry.id === id,
     );
   };
+  const valueOf = record(
+    java.find(({ title }) => title === "String.valueOf()").id,
+  );
+  const array = valueOf.overloads.find(({ signature }) =>
+    signature.includes("valueOf(char[])"),
+  );
+  const object = valueOf.overloads.find(({ signature }) =>
+    signature.includes("valueOf(Object)"),
+  );
+  assert.equal(array.parameters[0].label, "data");
+  assert.equal(object.parameters[0].label, "obj");
+  assert.match(object.returns[0], /null/);
+  const inherited = record(
+    "web-java-se-java.lang.reflect.Constructor.getParameterCount",
+  );
+  assert.equal(inherited.inheritedDocumentation, true);
+  assert.ok(inherited.documentationSource.endsWith("/Executable.java"));
+  const enumMethod = record(
+    "web-java-se-java.lang.reflect.ClassFileFormatVersion.values",
+  );
+  assert.equal(enumMethod.locale, "es");
+  assert.match(enumMethod.intro[0], /orden/);
   const list = record("java-api-List");
   assert.ok(
     list.hierarchy.some(({ types }) =>
@@ -452,6 +486,18 @@ test("un tipo Java grande se publica con sus miembros en un bloque comprimido", 
 
 test("C++20 enlaza los tipos con firmas públicas y conserva rutas existentes", () => {
   const containers = read("../src/docs/data/web/cpp20-containers.json");
+  const capacity = containers.find(
+    ({ title }) => title === "std::vector::capacity()",
+  );
+  assert.match(capacity.intro[0], /allocated space/);
+  assert.match(capacity.documentationSource, /vector\/capacity$/);
+  assert.ok(capacity.complexity.length);
+  const at = containers.find(({ title }) => title === "std::array::at()");
+  assert.equal(at.parameters[0].label, "pos");
+  const cbegin = containers.find(
+    ({ title }) => title === "std::vector::cbegin()",
+  );
+  assert.match(cbegin.documentationSource, /vector\/begin$/);
   const vector = containers.find(({ id }) => id === "cpp-api-std%3A%3Avector");
   const erase = containers.find(
     ({ title }) => title === "std::vector::erase()",

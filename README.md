@@ -82,6 +82,13 @@ La búsqueda lee el catálogo comprimido de cada lenguaje en segundo plano. Abri
 
 `python3 scripts/import-cpp-reference.py <draft-n4861>/source` contrasta declaraciones y miembros públicos con el borrador N4861 de WG21. El importador vincula cada ficha con su cláusula y conserva los enlaces anteriores. La selección de la biblioteca está en `src/docs/data/cpp-topics.json`, `src/docs/data/cpp-functions.json` y `src/docs/data/cpp-explanations.json`. El mismo importador coteja las fichas de sintaxis de `src/docs/data/cpp-language-topics.json` y registra sus ejemplos y enlaces a guías.
 
+## Ampliar Java y C++ con documentación de referencia
+
+Desde un clon limpio, ejecuta `node scripts/reference-snapshots.mjs restore` antes de actualizar las fichas. VCode conserva la firma de la versión que estudias y enlaza la fuente de cada ampliación.
+
+- Java SE 21. Ejecuta `python3 scripts/import-java-docs.py <jdk-21+35.tar.gz> --generated-sources <src.zip>` con un JDK 21 o posterior y después `node scripts/reference-snapshots.mjs pack java`. Usa el [archivo de OpenJDK 21](https://github.com/openjdk/jdk21/archive/refs/tags/jdk-21%2B35.tar.gz) con SHA-256 `2807380de58faf3157f37ed95920fb9e892ef5fe5b85d16b6dac974f45c9aa45`. Para las clases generadas, extrae `lib/src.zip` de la distribución [Temurin 21+35](https://github.com/adoptium/temurin21-binaries/releases/tag/jdk-21%2B35) de la misma versión. Las explicaciones de la fuente original están en inglés y se atribuyen a [OpenJDK](public/licenses/openjdk.txt).
+- C++20. Ejecuta `python3 scripts/import-cppreference-docs.py <html-book-20250209.zip>` y después `node scripts/reference-snapshots.mjs pack cpp`. La [edición del 9 de febrero de 2025](https://en.cppreference.com/Cppreference:Archives) usada aquí tiene SHA-256 `5389f2635f1417f05319b11f065ceecd1a8442c9143e2c127409137396b0c81c`. Los extractos adaptados se atribuyen a [cppreference](public/licenses/cppreference.txt).
+
 ## Editor del laboratorio
 
 El laboratorio carga el analizador de sintaxis correspondiente al lenguaje activo. El editor admite números de línea, plegado, búsqueda, autocompletado y diagnósticos de TypeScript junto al código. Pulsa Control o Comando junto a Intro para ejecutar. Escape seguido de Tab devuelve la navegación por teclado a los controles del laboratorio.
