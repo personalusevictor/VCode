@@ -42,6 +42,75 @@ function Definitions({ id, title, label, items, locale }) {
   );
 }
 
+function OverloadDocumentation({ overloads, locale }) {
+  return (
+    <ReferenceSection
+      id="overloads"
+      title="Detalles por sobrecarga"
+      label="Sobrecargas"
+    >
+      {overloads.map((entry) => (
+        <div key={entry.signature} className="reference-overload">
+          <CodeBlock language="Java" code={entry.signature} />
+          {[...(entry.intro || []), ...(entry.body || [])].map(
+            (text, index) => (
+              <p key={index} lang={locale}>
+                {text}
+              </p>
+            ),
+          )}
+          {entry.parameters?.length > 0 && (
+            <>
+              <h3>Parámetros</h3>
+              <dl className="doc-attributes">
+                {entry.parameters.map(({ label, detail }, index) => (
+                  <div key={index}>
+                    <dt>{label}</dt>
+                    <dd lang={locale}>{detail}</dd>
+                  </div>
+                ))}
+              </dl>
+            </>
+          )}
+          {entry.returns?.length > 0 && (
+            <>
+              <h3>Valor devuelto</h3>
+              {entry.returns.map((text, index) => (
+                <p key={index} lang={locale}>
+                  {text}
+                </p>
+              ))}
+            </>
+          )}
+          {entry.exceptions?.length > 0 && (
+            <>
+              <h3>Excepciones</h3>
+              <dl className="doc-attributes">
+                {entry.exceptions.map(({ label, detail }, index) => (
+                  <div key={index}>
+                    <dt>{label}</dt>
+                    <dd lang={locale}>{detail}</dd>
+                  </div>
+                ))}
+              </dl>
+            </>
+          )}
+          {entry.caveats?.length > 0 && (
+            <>
+              <h3>Ten en cuenta</h3>
+              {entry.caveats.map((text, index) => (
+                <p key={index} lang={locale}>
+                  {text}
+                </p>
+              ))}
+            </>
+          )}
+        </div>
+      ))}
+    </ReferenceSection>
+  );
+}
+
 export default function WebReferenceDetails({ data, language, children }) {
   return (
     <>
@@ -119,6 +188,12 @@ export default function WebReferenceDetails({ data, language, children }) {
         locale={data.locale}
       />
       <Paragraphs
+        id="complexity"
+        title="Complejidad"
+        items={data.complexity}
+        locale={data.locale}
+      />
+      <Paragraphs
         id="returns"
         title="Valor devuelto"
         items={data.returns}
@@ -148,6 +223,12 @@ export default function WebReferenceDetails({ data, language, children }) {
         items={data.accessibility}
         locale={data.locale}
       />
+      {data.overloads?.length > 0 && (
+        <OverloadDocumentation
+          overloads={data.overloads}
+          locale={data.locale}
+        />
+      )}
       {children}
       {data.related?.length > 0 && (
         <ReferenceSection

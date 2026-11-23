@@ -1449,3 +1449,9 @@
 .php-example-choice .choice-menu {
   width: min(100%, 380px);
 }
+
+.reference-overload + .reference-overload {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
