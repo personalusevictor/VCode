@@ -503,7 +503,7 @@ def class_entries(en, es, primary_entities, localized_entities, routines, overri
         record.update({
             "declaration": declaration,
             "members": members.get(name.casefold(), []),
-            "related": relationships,
+            "related": list(dict.fromkeys([*relationships, *custom.get("related", [])])),
             "examples": custom.get("examples", examples(intro)),
             "notes": custom.get("notes", []),
         })
