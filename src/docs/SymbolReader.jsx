@@ -60,7 +60,11 @@ export default function SymbolReader({ id, original, section }) {
         id,
         href: `#symbol/${id}`,
         kind: "reference",
-        summary: entry.summary || entry.detail || entry.intro?.[0],
+        summary:
+          entry.summary ||
+          entry.detail ||
+          entry.introSpanish?.[0] ||
+          entry.intro?.[0],
       });
   }, [id, entry]);
   useEffect(() => {
@@ -167,13 +171,20 @@ export default function SymbolReader({ id, original, section }) {
         )}
         {details?.locale === "en-US" && (
           <small className="doc-original-language">
-            Referencia ampliada en inglés
+            {details.introSpanish
+              ? "Algunos detalles están en inglés"
+              : "Referencia ampliada en inglés"}
           </small>
         )}
         {details && (
-          <div lang={details.locale} className="doc-reference-intro">
-            {details.intro.map((paragraph, index) =>
-              paragraph === entry.detail && details.locale !== "es" ? null : (
+          <div
+            lang={details.introSpanish ? "es" : details.locale}
+            className="doc-reference-intro"
+          >
+            {(details.introSpanish || details.intro).map((paragraph, index) =>
+              paragraph === entry.detail &&
+              details.locale !== "es" &&
+              !details.introSpanish ? null : (
                 <p key={index}>{paragraph}</p>
               ),
             )}
@@ -305,6 +316,24 @@ export default function SymbolReader({ id, original, section }) {
             label="Gramática"
           >
             <CodeBlock language="Gramática CSS" code={entry.syntax} />
+            {entry.syntaxTerms?.length > 0 && (
+              <dl className="doc-attributes">
+                {entry.syntaxTerms.map(({ label, id: target, explanation }) => (
+                  <div key={label}>
+                    <dt>
+                      {target ? (
+                        <a href={`#symbol/${target}`}>
+                          <code>{label}</code>
+                        </a>
+                      ) : (
+                        <code>{label}</code>
+                      )}
+                    </dt>
+                    <dd>{explanation}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
           </ReferenceSection>
         )}
         {(entry.initial || entry.inherited || entry.alias) && (

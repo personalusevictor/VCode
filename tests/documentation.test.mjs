@@ -315,6 +315,18 @@ test("PHP publica todas las fichas por ruta y resuelve las conexiones sin un ín
   const input = recovered.get("php-constant-input_get").parameterUses[0];
   assert.equal(input.id, "php-function-filter_has_var");
   assert.match(input.note, /INPUT_GET/);
+  const mysqlType = recovered.get("php-constant-mysqli_type_decimal");
+  assert.match(mysqlType.usageContext, /metadatos/);
+  assert.ok(
+    mysqlType.connections.some(
+      ({ title }) => title === "mysqli_result::fetch_field()",
+    ),
+  );
+  const timeout = recovered.get("php-constant-curlopt_timeout");
+  assert.equal(timeout.locale, "es");
+  assert.match(timeout.summary, /en segundos/);
+  assert.ok(timeout.source.endsWith("#constant.curlopt-timeout"));
+  assert.ok(timeout.connections.some(({ title }) => title === "curl_setopt()"));
   assert.ok(
     recovered
       .get("php-constant-php_session_active")
@@ -434,11 +446,18 @@ test("Java conserva sus enlaces y separa las sobrecargas públicas", () => {
   assert.equal(array.parameters[0].label, "data");
   assert.equal(object.parameters[0].label, "obj");
   assert.match(object.returns[0], /null/);
+  assert.equal(valueOf.locale, "es");
+  assert.match(valueOf.intro[0], /Convierte un valor/);
   const inherited = record(
     "web-java-se-java.lang.reflect.Constructor.getParameterCount",
   );
   assert.equal(inherited.inheritedDocumentation, true);
   assert.ok(inherited.documentationSource.endsWith("/Executable.java"));
+  assert.match(inherited.returns[0], /parámetros formales/);
+  const flip = record("web-java-se-java.nio.ByteBuffer.flip");
+  assert.match(flip.body[0], /nuevo límite/);
+  const repeat = record("web-java-se-java.lang.StringBuilder.repeat");
+  assert.match(repeat.intro[0], /copias/);
   const enumMethod = record(
     "web-java-se-java.lang.reflect.ClassFileFormatVersion.values",
   );
@@ -489,7 +508,8 @@ test("C++20 enlaza los tipos con firmas públicas y conserva rutas existentes", 
   const capacity = containers.find(
     ({ title }) => title === "std::vector::capacity()",
   );
-  assert.match(capacity.intro[0], /allocated space/);
+  assert.equal(capacity.locale, "es");
+  assert.match(capacity.intro[0], /espacio/);
   assert.match(capacity.documentationSource, /vector\/capacity$/);
   assert.ok(capacity.complexity.length);
   const at = containers.find(({ title }) => title === "std::array::at()");
@@ -498,6 +518,14 @@ test("C++20 enlaza los tipos con firmas públicas y conserva rutas existentes", 
     ({ title }) => title === "std::vector::cbegin()",
   );
   assert.match(cbegin.documentationSource, /vector\/begin$/);
+  const clocks = read("../src/docs/data/web/cpp20-time.json");
+  const steady = clocks.find(
+    ({ title }) => title === "std::chrono::system_clock::is_steady",
+  );
+  assert.match(steady.signatures[0], /valor no especificado/);
+  assert.ok(
+    clocks.some(({ title }) => title === "std::chrono::system_clock::now()"),
+  );
   const vector = containers.find(({ id }) => id === "cpp-api-std%3A%3Avector");
   const erase = containers.find(
     ({ title }) => title === "std::vector::erase()",

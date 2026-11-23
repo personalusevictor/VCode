@@ -218,8 +218,12 @@ for (const [language, entries] of Map.groupBy(
 }
 const javaShards = new Set(java.map(({ web: shard }) => shard));
 for (const shard of javaShards) {
-  if (shard.startsWith("java-se-"))
-    writeSearch(`reference-${shard}`, read(`web/${shard}`));
+  if (!shard.startsWith("java-se-")) continue;
+  const entries = read(`web/${shard}`).map((entry) => {
+    if (entry.introSpanish) delete entry.intro;
+    return entry;
+  });
+  writeSearch(`reference-${shard}`, entries, { level: 9 });
 }
 writeSearch("java-hierarchy", read("java-hierarchy"));
 const writeFirstPages = (name, entries, references) => {

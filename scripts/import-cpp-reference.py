@@ -7,6 +7,7 @@ from pathlib import Path
 import re
 from urllib.parse import quote
 
+from cpp_reference_context import details_for
 from reference_syntax import syntax_shards
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -59,6 +60,9 @@ def markup(match):
         return "/* definido por la implementación */"
     if "\\seebelow" in annotation:
         return "/* ver especificación */"
+    if re.fullmatch(r"\\unspec(?:nc)?(?:\{\})?;?", annotation):
+        suffix = ";" if annotation.endswith(";") else ""
+        return "/* valor no especificado */" + suffix
     tokens = re.findall(r"\{([^{}]+)\}", annotation)
     return tokens[-1] if tokens else ""
 
@@ -242,6 +246,10 @@ def build_reference(source_dir, topics, functions, syntax, manual, legacy, expla
                 detail["description"] = f"{kind} de {title}"
             if legacy_title in explanations:
                 detail.update(explanations[legacy_title])
+            if not detail.get("intro"):
+                context = details_for(title, member, detail["signatures"])
+                if context:
+                    detail.update(context)
             cls["members"].append({"id": member_id, "title": member, "kind": kind})
             shards[scope].append(detail)
 

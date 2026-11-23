@@ -14,6 +14,8 @@ import tarfile
 from tempfile import TemporaryDirectory
 from zipfile import ZipFile
 
+from java_reference_context import localized_context
+
 DATA = Path(__file__).resolve().parents[1] / "src/docs/data"
 TAGS = re.compile(
     r"^\s*@(param|return|throws|exception|deprecated|apiNote|implSpec|implNote|"
@@ -119,6 +121,21 @@ def signatures_by_type(entry):
         match = re.search(r"\b" + re.escape(actual_name) + r"\(([^()]*)\)", signature)
         if match:
             yield (owner, "call", name, normalized_types(match[1])), signature
+
+
+def unambiguous_variants(entry):
+    groups = defaultdict(list)
+    for key, signature in signatures_by_type(entry):
+        groups[key].append(signature)
+    for key, signatures in groups.items():
+        if len(signatures) == 1:
+            yield key, signatures[0]
+            continue
+        arguments = {signature.partition("(")[2].partition(")")[0] for signature in signatures}
+        if len(arguments) == 1:
+            # javap includes bridge methods with the same arguments and a
+            # wider return type. They implement one source-level operation.
+            yield key, signatures[0]
 
 
 def openjdk_sources(archive, directory):
@@ -249,11 +266,10 @@ def update(docs):
         for item in entries:
             if any(item.get(key) for key in ("intro", "body", "parameters", "returns", "caveats", "exceptions", "overloads")):
                 continue
-            variants = list(signatures_by_type(item))
-            counts = Counter(key for key, _ in variants)
+            variants = list(unambiguous_variants(item))
             matches = [
                 (signature, docs[key]) for key, signature in variants
-                if counts[key] == 1 and key in docs
+                if key in docs
             ]
             kind = "source"
             if not matches and (details := enum_documentation(item, parents)):
@@ -266,24 +282,34 @@ def update(docs):
             if not matches and item.get("owner"):
                 kind = "inherited"
                 for key, signature in variants:
-                    if not signature or " static " in signature or counts[key] != 1:
+                    if not signature or " static " in signature:
                         continue
                     doc = inherited_docs(key, item["owner"]["id"], parents, index, docs)
                     if doc:
                         matches.append((signature, doc))
             if not matches:
+                owner = item.get("owner", {}).get("title")
+                if owner and item.get("aliases"):
+                    name = item["aliases"][0].rsplit(".", 1)[-1]
+                    context = localized_context(owner, name)
+                    if context:
+                        intro, body = context
+                        item.update(intro=[intro], body=[body], locale="es")
+                        index[item["id"]]["summary"] = intro
+                        totals["es"] += 1
+                        changed = True
                 continue
             signature, (source, content) = matches[0]
             item["locale"] = "en-US"
             item["documentationSource"] = source
             if kind == "inherited":
                 item["inheritedDocumentation"] = True
-            if len(item.get("signatures", [])) > 1 and signature:
+            if len(variants) > 1 and signature:
                 item["overloads"] = [
                     {"signature": method, **fields} for method, (_, fields) in matches
                 ]
                 intros = {tuple(fields.get("intro", [])) for _, (_, fields) in matches}
-                if len(intros) == 1 and len(matches) == len(item["signatures"]):
+                if len(intros) == 1 and len(matches) == len(variants):
                     item["intro"] = list(next(iter(intros)))
             else:
                 item.update(content)
