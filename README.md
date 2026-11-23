@@ -50,6 +50,8 @@ La portada respeta la preferencia de movimiento reducido. El menú de configurac
 
 Los archivos de `vendor/reference` guardan una copia comprimida de las fichas importadas. VCode la expande al preparar el desarrollo, las pruebas o la compilación. Los índices de búsqueda se regeneran a partir de esas fichas y de las lecciones.
 
+Las explicaciones en español conservan las firmas, los ejemplos y los nombres de las API. Cuando solo está traducida la introducción, la ficha indica qué idioma conservan los detalles y enlaza con la documentación de origen.
+
 Para renovar un catálogo, ejecuta primero `node scripts/reference-snapshots.mjs restore` en un clon limpio. Aplica el importador del lenguaje y guarda el resultado con `node scripts/reference-snapshots.mjs pack <grupo>`. Los grupos son `web`, `framework`, `php`, `java`, `cpp` y `sql`. Incluye las notas de atribución si cambia la versión de la fuente.
 
 El [flujo de contribución](CONTRIBUTING.md) describe cómo se integran y publican los cambios.

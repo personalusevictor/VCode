@@ -33,3 +33,7 @@ for the GNU GPL version 2 and Classpath Exception notices.
 Additional C++ reference prose is adapted from cppreference.com under
 [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
 See [cppreference](cppreference.txt) for the source archive and attribution.
+
+VCode publishes Spanish adaptations of the linked reference prose. The
+original documents remain available from their respective entries. Signatures,
+code examples, and API identifiers retain the syntax of the original language.
