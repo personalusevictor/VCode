@@ -2266,5 +2266,215 @@
     "body": [
       "La sobrecarga para valores temporales mueve la vista en lugar de copiarla."
     ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Asubrange": {
+    "body": [
+      "Convierte un par de iterador y centinela en una vista: std::ranges::subrange(v.begin() + 2, v.end()). Lo devuelven algoritmos como std::ranges::equal_range o std::ranges::search.",
+      "Se puede descomponer con enlaces estructurados, auto [inicio, fin] = sub;, y next(), prev() y advance() desplazan el inicio."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Asubrange%3A%3Abegin": {
+    "body": [
+      "Si el iterador no se puede copiar, la segunda sobrecarga lo mueve fuera del subrange, que deja de ser utilizable."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Asubrange%3A%3Aempty": {
+    "intro": ["Comprueba si el subrange está vacío."],
+    "returns": ["true si begin() == end(); false en caso contrario."]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Asubrange%3A%3Aend": {
+    "intro": ["Devuelve el centinela que marca el final del subrange."],
+    "returns": ["El centinela almacenado."]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Atake_view": {
+    "body": [
+      "Se obtiene normalmente con std::views::take(n): std::views::iota(1) | std::views::take(3) da 1, 2 y 3. Si el rango tiene menos de n elementos, se recorren todos.",
+      "Es la forma habitual de cortar un rango infinito."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Atake_view%3A%3Abase": {
+    "body": [
+      "La sobrecarga para valores temporales mueve la vista en lugar de copiarla."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Atake_while_view": {
+    "body": [
+      "Se obtiene normalmente con std::views::take_while(pred). Por ejemplo, numeros | std::views::take_while([](int n) { return n < 10; }) se detiene en el primer número mayor o igual que 10.",
+      "Los elementos posteriores no se evalúan, aunque vuelvan a cumplir el predicado. Es el complemento de drop_while_view."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Atake_while_view%3A%3Abase": {
+    "body": [
+      "La sobrecarga para valores temporales mueve la vista en lugar de copiarla."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Atransform_view": {
+    "body": [
+      "Se obtiene normalmente con std::views::transform(f): v | std::views::transform([](int n) { return n * n; }) recorre los cuadrados de v sin crear otro contenedor.",
+      "La función se llama cada vez que se desreferencia un iterador, así que no conviene que tenga efectos secundarios ni que sea costosa si vas a leer varias veces el mismo elemento."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Atransform_view%3A%3Abase": {
+    "body": [
+      "La sobrecarga para valores temporales mueve la vista en lugar de copiarla."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Atransform_view%3A%3Abegin": {
+    "intro": ["Devuelve un iterador al primer elemento del transform_view."],
+    "body": [
+      "Desreferenciar el iterador llama a la función sobre el elemento correspondiente de la vista base."
+    ]
+  },
+  "web-cpp20-std%3A%3Aratio": {
+    "body": [
+      "num y den son la fracción reducida: std::ratio<2, 4>::num es 1 y den es 2. La biblioteca define alias como std::milli (1/1000) o std::kilo (1000/1).",
+      "Se opera en tiempo de compilación con std::ratio_add, std::ratio_multiply o std::ratio_less. Es el tipo que usa std::chrono::duration para el periodo de cada tick."
+    ]
+  },
+  "web-cpp20-std%3A%3Arecursive_mutex": {
+    "body": [
+      "Es útil cuando una función que tiene el mutex llama a otra que también lo bloquea. Lleva la cuenta de cuántas veces lo ha bloqueado el hilo y solo se libera al llegar a cero.",
+      "Suele indicar un diseño mejorable; separar las funciones internas que no bloquean evita necesitarlo."
+    ]
+  },
+  "web-cpp20-std%3A%3Arecursive_mutex%3A%3Aoperator%3D": {
+    "body": [
+      "Un mutex no se puede asignar porque los hilos que lo usan dependen de su identidad."
+    ]
+  },
+  "web-cpp20-std%3A%3Arecursive_mutex%3A%3Arecursive_mutex": {
+    "body": [
+      "No se puede copiar ni mover. Si el sistema no puede crearlo, lanza std::system_error."
+    ]
+  },
+  "web-cpp20-std%3A%3Areference_wrapper": {
+    "body": [
+      "Se crea con std::ref(x) o std::cref(x). Permite guardar referencias en contenedores, como std::vector<std::reference_wrapper<int>>, o pasar argumentos por referencia a std::thread y std::bind, que copian por defecto.",
+      "Se convierte implícitamente a T&, y get() devuelve la referencia de forma explícita."
+    ]
+  },
+  "web-cpp20-std%3A%3Areference_wrapper%3A%3Aget": {
+    "body": [
+      "Es necesario, por ejemplo, para llamar a métodos del objeto: envoltorio.get().metodo()."
+    ]
+  },
+  "web-cpp20-std%3A%3Areference_wrapper%3A%3Aoperator%28%29": {
+    "body": [
+      "Así, std::ref(funcion) se puede pasar donde se espera un invocable sin copiar el objeto función."
+    ]
+  },
+  "web-cpp20-std%3A%3Areverse_iterator": {
+    "body": [
+      "Lo devuelven rbegin() y rend() de los contenedores. base() devuelve el iterador original, que apunta una posición después del elemento visible.",
+      "Para borrar el elemento al que apunta un reverse_iterator r, usa contenedor.erase(std::next(r).base())."
+    ]
+  },
+  "web-cpp20-std%3A%3Areverse_iterator%3A%3Aiter_swap": {
+    "body": [
+      "Lo encuentra la búsqueda dependiente de argumentos y lo usa std::ranges::iter_swap."
+    ]
+  },
+  "web-cpp20-std%3A%3Areverse_iterator%3A%3Aoperator%2B": {
+    "body": ["El resultado es reverse_iterator(base() - n)."]
+  },
+  "web-cpp20-std%3A%3Areverse_iterator%3A%3Aoperator%2B%2B": {
+    "body": [
+      "Por eso un bucle de rbegin() a rend() recorre el contenedor desde el último elemento hasta el primero."
+    ]
+  },
+  "web-cpp20-std%3A%3Areverse_iterator%3A%3Aoperator%2B%3D": {
+    "body": ["Retrocede n posiciones el iterador base."],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Areverse_iterator%3A%3Aoperator*": {
+    "body": [
+      "Equivale a *std::prev(base()). Por eso rbegin() se construye a partir de end() y desreferenciarlo da el último elemento."
+    ]
+  },
+  "web-cpp20-std%3A%3Areverse_iterator%3A%3Aoperator-": {
+    "body": [
+      "Retroceder en el recorrido inverso equivale a avanzar el iterador base: el resultado es reverse_iterator(base() + n)."
+    ]
+  },
+  "web-cpp20-std%3A%3Areverse_iterator%3A%3Aoperator-%3D": {
+    "body": ["Avanza n posiciones el iterador base."],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Areverse_iterator%3A%3Aoperator-%3E": {
+    "body": [
+      "Accede al mismo elemento que operator*, es decir, al anterior a base()."
+    ]
+  },
+  "web-cpp20-std%3A%3Areverse_iterator%3A%3Aoperator--": {
+    "body": ["La forma posfija devuelve una copia con la posición anterior."]
+  },
+  "web-cpp20-std%3A%3Aset": {
+    "body": [
+      "insert() añade un valor solo si no existe y devuelve un par con el iterador y si se insertó. find(), contains() (C++20) y count() comprueban si un valor está; buscar, insertar y borrar cuestan O(log n).",
+      "Los elementos son constantes: para cambiar uno hay que borrarlo e insertarlo de nuevo, porque su posición depende de su valor."
+    ]
+  },
+  "web-cpp20-std%3A%3Aset%3A%3Aempty": {
+    "intro": [
+      "Comprueba si el contenedor no tiene elementos, es decir, si begin() == end()."
+    ],
+    "body": ["Para vaciar el contenedor se usa clear(), no empty()."]
+  },
+  "web-cpp20-std%3A%3Aset%3A%3Afind": {
+    "body": [
+      "Si solo necesitas saber si el valor está, contains() (C++20) es más claro.",
+      "Las sobrecargas con plantilla permiten buscar con otro tipo, como una std::string_view, si el comparador es transparente (por ejemplo std::less<>)."
+    ]
+  },
+  "web-cpp20-std%3A%3Aset%3A%3Aget_allocator": {
+    "intro": ["Devuelve el asignador asociado al contenedor."],
+    "body": [
+      "Es útil con asignadores con estado o polimórficos, como los de std::pmr."
+    ]
+  },
+  "web-cpp20-std%3A%3Aset%3A%3Asize": {
+    "intro": [
+      "Devuelve el número de elementos del contenedor, es decir, std::distance(begin(), end())."
+    ],
+    "body": [
+      "Cada valor cuenta una sola vez, porque std::set no admite repetidos."
+    ]
+  },
+  "web-cpp20-std%3A%3Aset%3A%3Avalue_comp": {
+    "body": [
+      "En los conjuntos el valor es la propia clave, así que value_comp() y key_comp() devuelven el mismo comparador."
+    ]
+  },
+  "web-cpp20-std%3A%3Ashared_future": {
+    "body": [
+      "A diferencia de std::future, se puede copiar y get() se puede llamar varias veces, desde varios hilos, porque devuelve una referencia constante al resultado.",
+      "Se obtiene con future::share() o construyéndolo a partir de un future con std::move."
+    ]
+  },
+  "web-cpp20-std%3A%3Ashared_future%3A%3Ashared_future": {
+    "body": [
+      "La sobrecarga desde future<R>&& toma el estado compartido del future, que queda sin estado (valid() devuelve false). El constructor por defecto crea un shared_future sin estado."
+    ]
+  },
+  "web-cpp20-std%3A%3Ashared_future%3A%3A~shared_future": {
+    "intro": [
+      "Si *this es el último objeto que se refiere al estado compartido, lo destruye. En caso contrario, no hace nada."
+    ]
+  },
+  "web-cpp20-std%3A%3Ashared_mutex": {
+    "body": [
+      "Varios hilos pueden leer a la vez con lock_shared(), normalmente a través de std::shared_lock, mientras que un escritor necesita exclusividad con lock(), a través de std::unique_lock o std::lock_guard.",
+      "Es útil para datos que se leen mucho más de lo que se escriben. Existe desde C++17."
+    ]
+  },
+  "web-cpp20-std%3A%3Ashared_mutex%3A%3Aoperator%3D": {
+    "body": [
+      "Un mutex no se puede asignar porque los hilos que lo usan dependen de su identidad."
+    ]
+  },
+  "web-cpp20-std%3A%3Ashared_mutex%3A%3Ashared_mutex": {
+    "body": [
+      "No se puede copiar ni mover. Si el sistema no puede crearlo, lanza std::system_error."
+    ]
   }
 }
