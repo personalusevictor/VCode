@@ -37511,12 +37511,810 @@
       "Si la fuente es null o un UIResource, se consulta la tabla de valores predeterminados con la clave fontKey. Todos los métodos get de UIDefaults lanzan una NullPointerException si se les pasa null. Por eso, salvo que se indique lo contrario, cada uno de los métodos install de LookAndFeel lanza una NullPointerException si el valor actual es null o un UIResource y la clave de valores predeterminados indicada es null. Además, salvo que se especifique lo contrario, todos los métodos install lanzan una NullPointerException si se les pasa un componente null."
     ]
   },
+  "web-java-se-javax.swing.RowFilter%24Entry.getStringValue": {
+    "body": [
+      "Esta implementación llama a getValue(index).toString() tras comprobar que no es null. Las subclases que ofrezcan una conversión a cadena distinta deberían sobrescribir este método si es necesario."
+    ],
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice del valor que se obtiene"
+      }
+    ],
+    "returns": ["cadena no nula en el índice indicado"],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index < 0 || >= getValueCount"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.SpinnerDateModel.setStart": {
+    "body": [
+      "Normalmente esta propiedad es un Date, aunque es posible usar un Comparable con un método compareTo para Dates. Por ejemplo, start podría ser una instancia de una clase como esta:",
+      "MyStartDate implements Comparable { long t = 12345; public int compareTo(Date d) { return (t < d.getTime() ? -1 : (t == d.getTime() ? 0 : 1)); } public int compareTo(Object o) { return compareTo((Date)o); } }",
+      "Ten en cuenta que el ejemplo anterior lanzará una ClassCastException si el Object pasado a compareTo(Object) no es un Date.",
+      "Este método lanza un ChangeEvent si start ha cambiado."
+    ],
+    "parameters": [
+      {
+        "label": "start",
+        "detail": "define la primera fecha de la secuencia"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.SwingWorker": {
+    "body": [
+      "Al escribir una aplicación multihilo con Swing, hay que tener en cuenta dos restricciones (consulta",
+      "Concurrency in Swing para más detalles):",
+      "Las tareas que consumen mucho tiempo no deben ejecutarse en el hilo de despacho de eventos. De lo contrario, la aplicación deja de responder.",
+      "Solo se debe acceder a los componentes Swing desde el hilo de despacho de eventos.",
+      "Estas restricciones implican que una aplicación gráfica con cálculos intensivos necesita al menos dos hilos: 1) un hilo que realice la tarea larga y 2) el hilo de despacho de eventos (EDT) para todas las actividades relacionadas con la GUI. Esto supone comunicación entre hilos, que puede ser complicada de implementar.",
+      "SwingWorker está pensado para situaciones en las que necesitas ejecutar una tarea larga en un hilo en segundo plano y actualizar la UI al terminar o mientras se procesa. Las subclases de SwingWorker deben implementar el método doInBackground para realizar el cálculo en segundo plano.",
+      "Flujo de trabajo",
+      "En el ciclo de vida de un SwingWorker intervienen tres hilos:",
+      "Hilo actual: en este hilo se llama al método execute. Programa el SwingWorker para ejecutarse en un hilo trabajador y retorna de inmediato. Se puede esperar a que termine el SwingWorker con los métodos get.",
+      "Hilo trabajador: en este hilo se llama al método doInBackground. Aquí deben producirse todas las actividades en segundo plano. Para notificar a los PropertyChangeListener los cambios de propiedades ligadas, usa los métodos firePropertyChange y getPropertyChangeSupport. Por defecto hay dos propiedades ligadas disponibles: state y progress.",
+      "Hilo de despacho de eventos: en este hilo ocurren todas las actividades relacionadas con Swing. SwingWorker invoca los métodos process y done y notifica a los PropertyChangeListener en este hilo.",
+      "A menudo, el hilo actual es el hilo de despacho de eventos.",
+      "Antes de invocar el método doInBackground en un hilo trabajador, SwingWorker notifica a los PropertyChangeListener el cambio de la propiedad state a StateValue.STARTED. Cuando termina doInBackground, se ejecuta el método done. Después, SwingWorker notifica a los PropertyChangeListener el cambio de la propiedad state a StateValue.DONE.",
+      "SwingWorker está pensado para ejecutarse una sola vez. Ejecutar un SwingWorker más de una vez no hará que se invoque doInBackground dos veces.",
+      "Ejemplo de uso",
+      "El siguiente ejemplo ilustra el caso de uso más sencillo. Se realiza cierto procesamiento en segundo plano y, al terminar, se actualiza un componente Swing.",
+      "Supongamos que queremos encontrar el \"sentido de la vida\" y mostrar el resultado en un JLabel.",
+      "final JLabel label; class MeaningOfLifeFinder extends SwingWorker<String, Object> { @Override public String doInBackground() { return findTheMeaningOfLife(); }",
+      "@Override protected void done() { try { label.setText(get()); } catch (Exception ignore) { } } }",
+      "(new MeaningOfLifeFinder()).execute();",
+      "El siguiente ejemplo es útil cuando quieres procesar los datos en el hilo de despacho de eventos a medida que están listos.",
+      "Ahora queremos encontrar los N primeros números primos y mostrar los resultados en un JTextArea. Mientras se calcula, queremos actualizar el progreso en un JProgressBar. Por último, también queremos imprimir los números primos en System.out.",
+      "class PrimeNumbersTask extends SwingWorker<List<Integer>, Integer> { PrimeNumbersTask(JTextArea textArea, int numbersToFind) { //initialize }",
+      "@Override public List<Integer> doInBackground() { while (! enough && ! isCancelled()) { number = nextPrimeNumber(); publish(number); setProgress(100 * numbers.size() / numbersToFind); } } return numbers; }",
+      "@Override protected void process(List<Integer> chunks) { for (int number : chunks) { textArea.append(number + \"\\n\"); } } }",
+      "JTextArea textArea = new JTextArea(); final JProgressBar progressBar = new JProgressBar(0, 100); PrimeNumbersTask task = new PrimeNumbersTask(textArea, N); task.addPropertyChangeListener( new PropertyChangeListener() { public void propertyChange(PropertyChangeEvent evt) { if (\"progress\".equals(evt.getPropertyName())) { progressBar.setValue((Integer)evt.getNewValue()); } } });",
+      "task.execute(); System.out.println(task.get()); //prints all prime numbers we have got",
+      "Como SwingWorker implementa Runnable, un SwingWorker puede enviarse a un java.util.concurrent.Executor para su ejecución."
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de resultado que devuelven los métodos doInBackground y get de este SwingWorker"
+      },
+      {
+        "label": "<V>",
+        "detail": "el tipo usado para transportar resultados intermedios en los métodos publish y process de este SwingWorker"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.SwingWorker.firePropertyChange": {
+    "body": [
+      "Este SwingWorker será el origen de todos los eventos generados.",
+      "Cuando se llama fuera del hilo de despacho de eventos, los PropertyChangeListener se notifican de forma asíncrona en el hilo de despacho de eventos.",
+      "Nota: esto es solo un envoltorio de conveniencia. Todo el trabajo se delega en el PropertyChangeSupport obtenido de getPropertyChangeSupport."
+    ],
+    "parameters": [
+      {
+        "label": "propertyName",
+        "detail": "el nombre programático de la propiedad que cambió"
+      },
+      {
+        "label": "oldValue",
+        "detail": "el valor anterior de la propiedad"
+      },
+      {
+        "label": "newValue",
+        "detail": "el nuevo valor de la propiedad"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.SwingWorker.get": {
+    "overloads": [
+      {
+        "intro": [
+          "Nota: llamar a get en el hilo de despacho de eventos bloquea el procesamiento de todos los eventos, incluidos los repintados, hasta que termina este SwingWorker."
+        ],
+        "body": [
+          "Si quieres que el SwingWorker bloquee en el hilo de despacho de eventos, te recomendamos usar un diálogo modal.",
+          "Por ejemplo:",
+          "class SwingWorkerCompletionWaiter implements PropertyChangeListener { private JDialog dialog;",
+          "public SwingWorkerCompletionWaiter(JDialog dialog) { this.dialog = dialog; }",
+          "public void propertyChange(PropertyChangeEvent event) { if (\"state\".equals(event.getPropertyName()) && SwingWorker.StateValue.DONE == event.getNewValue()) { dialog.setVisible(false); dialog.dispose(); } } } JDialog dialog = new JDialog(owner, true); swingWorker.addPropertyChangeListener( new SwingWorkerCompletionWaiter(dialog)); swingWorker.execute(); //the dialog will be visible until the SwingWorker is done dialog.setVisible(true);"
+        ]
+      },
+      {
+        "intro": ["Consulta get para más detalles."]
+      }
+    ]
+  },
+  "web-java-se-javax.swing.Timer.getListeners": {
+    "body": [
+      "Puedes especificar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los listeners de acciones de una instancia t de Timer con el siguiente código:",
+      "ActionListener[] als = (ActionListener[])(t.getListeners(ActionListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de clase EventListener que se solicita"
+      },
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este temporizador, o un array vacío si no se ha añadido ningún listener de ese tipo"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.UIDefaults%24ActiveValue.createValue": {
+    "parameters": [
+      {
+        "label": "table",
+        "detail": "una tabla UIDefaults"
+      }
+    ],
+    "returns": ["el Object creado"]
+  },
+  "web-java-se-javax.swing.UIDefaults%24LazyInputMap.createValue": {
+    "parameters": [
+      {
+        "label": "table",
+        "detail": "una tabla UIDefaults"
+      }
+    ],
+    "returns": ["el InputMap"]
+  },
+  "web-java-se-javax.swing.UIDefaults%24LazyValue.createValue": {
+    "parameters": [
+      {
+        "label": "table",
+        "detail": "una tabla UIDefaults"
+      }
+    ],
+    "returns": ["el Object creado"]
+  },
+  "web-java-se-javax.swing.UIDefaults%24ProxyLazyValue.createValue": {
+    "parameters": [
+      {
+        "label": "table",
+        "detail": "una tabla UIDefaults"
+      }
+    ],
+    "returns": ["el Object creado"]
+  },
+  "web-java-se-javax.swing.event.EventListenerList": {
+    "body": [
+      "Las principales ventajas de esta clase son que resulta relativamente barata cuando no hay listeners, que centraliza en un solo lugar la serialización de las listas de listeners de eventos y que ofrece cierto grado de seguridad multihilo (si se usa correctamente).",
+      "Ejemplo de uso: supongamos que se define una clase que emite FooEvents y se quiere permitir a sus usuarios registrar FooListeners y recibir notificaciones cuando ocurran FooEvents. Habría que añadir lo siguiente a la definición de la clase:",
+      "EventListenerList listenerList = new EventListenerList(); FooEvent fooEvent = null;",
+      "public void addFooListener(FooListener l) { listenerList.add(FooListener.class, l); }",
+      "public void removeFooListener(FooListener l) { listenerList.remove(FooListener.class, l); }",
+      "// Notify all listeners that have registered interest for // notification on this event type. The event instance // is lazily created using the parameters passed into // the fire method.",
+      "protected void fireFooXXX() { // Guaranteed to return a non-null array Object[] listeners = listenerList.getListenerList(); // Process the listeners last to first, notifying // those that are interested in this event for (int i = listeners.length-2; i>=0; i-=2) { if (listeners[i]==FooListener.class) { // Lazily create the event: if (fooEvent == null) fooEvent = new FooEvent(this); ((FooListener)listeners[i+1]).fooXXX(fooEvent); } } }",
+      "foo debe cambiarse por el nombre adecuado, y fireFooXxx por el nombre de método adecuado. Debe existir un método fire por cada método de notificación de la interfaz FooListener.",
+      "Advertencia: los objetos serializados de esta clase no serán compatibles con futuras versiones de Swing. El soporte de serialización actual es adecuado para almacenamiento a corto plazo o RMI entre aplicaciones que ejecutan la misma versión de Swing. Desde la 1.4, el paquete java.beans incluye soporte para el almacenamiento a largo plazo de todos los JavaBeans. Consulta java.beans.XMLEncoder."
+    ]
+  },
+  "web-java-se-javax.swing.event.EventListenerList.getListenerList": {
+    "intro": [
+      "Devuelve la lista de listeners de eventos como un array de pares tipo de listener-listener. Ten en cuenta que, por motivos de rendimiento, esta implementación devuelve la estructura de datos real en la que se almacenan internamente los listeners. Este método garantiza devolver un array no nulo, de modo que no hace falta comprobar null en los métodos fire. Si no hay listeners, debe devolverse un array de Object de longitud cero."
+    ],
+    "body": [
+      "¡¡¡ADVERTENCIA!!! NO debe modificarse en absoluto el contenido de este array; si hace falta alguna manipulación, debe hacerse sobre una copia del array devuelto y no sobre el propio array."
+    ],
+    "returns": ["array de pares tipo de listener-listener"]
+  },
+  "web-java-se-javax.swing.event.HyperlinkListener": {
+    "intro": ["HyperlinkListener"]
+  },
+  "web-java-se-javax.swing.event.ListDataListener": {
+    "intro": ["ListDataListener"]
+  },
+  "web-java-se-javax.swing.event.MenuKeyListener": {
+    "intro": ["MenuKeyListener"]
+  },
+  "web-java-se-javax.swing.event.PopupMenuListener.popupMenuWillBecomeInvisible": {
+    "intro": [
+      "Este método se llama antes de que el menú emergente se vuelva invisible. Ten en cuenta que un JPopupMenu puede volverse invisible en cualquier momento."
+    ],
+    "parameters": [
+      {
+        "label": "e",
+        "detail": "un PopupMenuEvent que contiene el origen del evento"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.event.TreeModelEvent.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Se usa para crear un evento cuando se han cambiado, insertado o eliminado nodos, identificando la ruta al padre de los elementos modificados como un array de Objects. Todos los objetos modificados son hermanos y descendientes directos (no nietos) del padre indicado. Las posiciones donde se produjeron las inserciones, eliminaciones o cambios se especifican con un array de int. Los índices de ese array deben estar ordenados, de menor a mayor."
+        ],
+        "body": [
+          "Para los cambios, los índices del modelo corresponden exactamente a los índices de los elementos que se muestran actualmente en la UI. Por eso no es realmente crítico que los índices no estén en su orden exacto. Pero tras varias inserciones o eliminaciones, los elementos de la UI ya no corresponden a los del modelo. Por tanto, es crítico especificar bien los índices en inserciones y eliminaciones.",
+          "Para las inserciones, los índices representan el estado final del árbol, una vez realizadas. Como los índices deben especificarse en orden, la forma más natural de procesarlas es hacer las inserciones empezando por el índice más bajo y avanzando hacia el más alto. Acumula sobre la marcha un Vector de objetos Integer con las posiciones de inserción y luego conviértelo en un array de int para crear el evento. Cuando el índice de posición es cero, el nodo se inserta al principio de la lista. Cuando el índice de posición es igual al tamaño de la lista, el nodo se «inserta» al final de la lista (se añade).",
+          "Para las eliminaciones, los índices representan el estado inicial del árbol, antes de que se produzcan. Como los índices deben especificarse en orden, la forma más natural de procesarlas es usar un contador de eliminaciones. Empieza inicializando el contador a cero y recorre la lista de menor a mayor. Cada vez que hagas una eliminación, suma el valor actual del contador a la posición donde se produjo y añade el resultado a un Vector de posiciones de eliminación con addElement(). Después incrementa el contador. Así, las posiciones guardadas en el Vector reflejan el efecto de todas las eliminaciones anteriores y representan la posición de cada objeto en el árbol inicial. (También podrías empezar por el índice más alto y retroceder hacia el más bajo, acumulando el Vector de posiciones de eliminación con insertElementAt(Integer, 0).) Produzcas como produzcas el Vector de posiciones iniciales, después tendrás que convertir el Vector de objetos Integer en un array de int para crear el evento.",
+          "Notas:",
+          "Igual que el método insertNodeInto de la clase DefaultTreeModel, insertElementAt añade al final del Vector cuando el índice coincide con su tamaño. Así que puedes usar insertElementAt(Integer, 0) incluso cuando el vector está vacío.",
+          "Para crear un evento de nodo cambiado para el nodo raíz, especifica el padre y los índices de hijos como null."
+        ],
+        "parameters": [
+          {
+            "label": "source",
+            "detail": "el Object responsable de generar el evento (normalmente el creador del objeto de evento pasa this como valor)"
+          },
+          {
+            "label": "path",
+            "detail": "un array de Object que identifica la ruta al padre de los elementos modificados, donde el primer elemento del array es el Object almacenado en el nodo raíz y el último es el Object almacenado en el nodo padre"
+          },
+          {
+            "label": "childIndices",
+            "detail": "un array de int que especifica los índices de los elementos eliminados. Los índices deben estar ordenados, de menor a mayor"
+          },
+          {
+            "label": "children",
+            "detail": "un array de Object con los objetos insertados, eliminados o cambiados"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Se usa para crear un evento cuando se han cambiado, insertado o eliminado nodos, identificando la ruta al padre de los elementos modificados como un objeto TreePath. Para saber cómo especificar los índices y los objetos, consulta TreeModelEvent(Object,Object[],int[],Object[])."
+        ],
+        "parameters": [
+          {
+            "label": "source",
+            "detail": "el Object responsable de generar el evento (normalmente el creador del objeto de evento pasa this como valor)"
+          },
+          {
+            "label": "path",
+            "detail": "un objeto TreePath que identifica la ruta al padre de los elementos modificados"
+          },
+          {
+            "label": "childIndices",
+            "detail": "un array de int que especifica los índices de los elementos modificados"
+          },
+          {
+            "label": "children",
+            "detail": "un array de Object con los objetos insertados, eliminados o cambiados"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Se usa para crear un evento cuando la estructura de nodos ha cambiado de algún modo, identificando la ruta a la raíz de un subárbol modificado como un array de Objects. Un evento de cambio de estructura puede implicar, por ejemplo, que unos nodos intercambien su posición, o puede englobar varias inserciones y eliminaciones en el subárbol que parte del nodo, donde los cambios pueden haberse producido en distintos niveles del subárbol."
+        ],
+        "body": [
+          "Nota:",
+          "JTree contrae todos los nodos bajo el nodo indicado, de modo que solo sean visibles sus hijos inmediatos."
+        ],
+        "parameters": [
+          {
+            "label": "source",
+            "detail": "el Object responsable de generar el evento (normalmente el creador del objeto de evento pasa this como valor)"
+          },
+          {
+            "label": "path",
+            "detail": "un array de Object que identifica la ruta a la raíz del subárbol modificado, donde el primer elemento del array es el objeto almacenado en el nodo raíz y el último es el objeto almacenado en el nodo cambiado"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Se usa para crear un evento cuando la estructura de nodos ha cambiado de algún modo, identificando la ruta a la raíz del subárbol modificado como un objeto TreePath. Para más información sobre la especificación de este evento, consulta TreeModelEvent(Object,Object[])."
+        ],
+        "parameters": [
+          {
+            "label": "source",
+            "detail": "el Object responsable de generar el evento (normalmente el creador del objeto de evento pasa this como valor)"
+          },
+          {
+            "label": "path",
+            "detail": "un objeto TreePath que identifica la ruta al cambio. En DefaultTreeModel, este objeto contiene un array de objetos de datos de usuario, pero una subclase de TreePath podría usar un mecanismo totalmente distinto, por ejemplo un número de ID de nodo"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.swing.event.TreeSelectionEvent.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Representa un cambio en la selección de un TreeSelectionModel. paths identifica las rutas que se han añadido a la selección o eliminado de ella."
+        ],
+        "parameters": [
+          {
+            "label": "source",
+            "detail": "origen del evento"
+          },
+          {
+            "label": "paths",
+            "detail": "las rutas que han cambiado en la selección"
+          },
+          {
+            "label": "areNew",
+            "detail": "un array boolean que indica si las rutas de paths son nuevas en la selección"
+          },
+          {
+            "label": "oldLeadSelectionPath",
+            "detail": "la ruta de selección principal anterior"
+          },
+          {
+            "label": "newLeadSelectionPath",
+            "detail": "la nueva ruta de selección principal"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Representa un cambio en la selección de un TreeSelectionModel. path identifica la ruta que se ha añadido a la selección o eliminado de ella."
+        ],
+        "parameters": [
+          {
+            "label": "source",
+            "detail": "origen del evento"
+          },
+          {
+            "label": "path",
+            "detail": "la ruta que ha cambiado en la selección"
+          },
+          {
+            "label": "isNew",
+            "detail": "si la ruta es nueva en la selección; false significa que path se eliminó de la selección."
+          },
+          {
+            "label": "oldLeadSelectionPath",
+            "detail": "la ruta de selección principal anterior"
+          },
+          {
+            "label": "newLeadSelectionPath",
+            "detail": "la nueva ruta de selección principal"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.swing.plaf.ComponentUI.getBaseline": {
+    "intro": [
+      "Devuelve la línea base, medida desde la parte superior del componente. Este método está pensado sobre todo para que los LayoutManagers alineen componentes por su línea base. Un valor menor que 0 indica que el componente no tiene una línea base razonable y que los LayoutManagers no deben alinearlo por ella."
+    ],
+    "body": [
+      "Este método devuelve -1. Las subclases que tengan una línea base con sentido deberían sobrescribirlo adecuadamente."
+    ],
+    "parameters": [
+      {
+        "label": "c",
+        "detail": "el JComponent cuya línea base se solicita"
+      },
+      {
+        "label": "width",
+        "detail": "la anchura para la que se obtiene la línea base"
+      },
+      {
+        "label": "height",
+        "detail": "la altura para la que se obtiene la línea base"
+      }
+    ],
+    "returns": [
+      "la línea base o un valor < 0 que indica que no hay una línea base razonable"
+    ],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si c es null"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si width o height es < 0"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.plaf.PopupMenuUI.isPopupTrigger": {
+    "intro": [
+      "Devuelve si el MouseEvent dado es el evento que dispara el menú emergente en la plataforma"
+    ],
+    "parameters": [
+      {
+        "label": "e",
+        "detail": "un MouseEvent"
+      }
+    ],
+    "returns": ["true si el MouseEvent e dispara el menú emergente"]
+  },
+  "web-java-se-javax.swing.plaf.basic.BasicButtonUI": {
+    "intro": ["Implementación de BasicButton"]
+  },
+  "web-java-se-javax.swing.plaf.basic.BasicCheckBoxMenuItemUI": {
+    "intro": ["Implementación de BasicCheckboxMenuItem"]
+  },
+  "web-java-se-javax.swing.plaf.basic.BasicGraphicsUtils.drawStringUnderlineCharAt": {
+    "overloads": [
+      {
+        "intro": [
+          "Dibuja una cadena con el Graphics g en la posición (x, y), igual que haría g.drawString. El carácter de índice underlinedIndex de text se subraya. Si el índice está fuera de los límites de text (incluido < 0), no se subraya nada."
+        ],
+        "parameters": [
+          {
+            "label": "g",
+            "detail": "Graphics con el que dibujar"
+          },
+          {
+            "label": "text",
+            "detail": "String que se dibuja"
+          },
+          {
+            "label": "underlinedIndex",
+            "detail": "Índice del carácter de text que se subraya"
+          },
+          {
+            "label": "x",
+            "detail": "coordenada x en la que dibujar"
+          },
+          {
+            "label": "y",
+            "detail": "coordenada y en la que dibujar"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Dibuja la cadena dada en la posición indicada subrayando el carácter indicado. El componente proporcionado se usa para consultar las propiedades del texto y las sugerencias de antialiasing."
+        ],
+        "body": [
+          "El parámetro underlinedIndex apunta a un valor char (unidad de código Unicode) de la cadena dada. Si el char del índice subrayado está en el rango de sustitutos altos y el char del índice siguiente está en el rango de sustitutos bajos, se subraya el carácter suplementario que corresponde a ese par de sustitutos.",
+          "No se subraya ningún carácter si el índice es negativo o mayor que la longitud de la cadena (index < 0 || index >= string.length()) o si el char del índice dado está en el rango de sustitutos bajos."
+        ],
+        "parameters": [
+          {
+            "label": "c",
+            "detail": "el componente que mostrará la cadena; puede ser null"
+          },
+          {
+            "label": "g",
+            "detail": "el contexto gráfico; no debe ser null"
+          },
+          {
+            "label": "string",
+            "detail": "la cadena que se muestra; puede ser null"
+          },
+          {
+            "label": "underlinedIndex",
+            "detail": "índice de un valor char (unidad de código Unicode) de la cadena que se subraya"
+          },
+          {
+            "label": "x",
+            "detail": "la coordenada x en la que dibujar el texto"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada y en la que dibujar el texto"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si el g indicado es null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.swing.plaf.basic.BasicLabelUI.getMaximumSize": {
+    "intro": [],
+    "returns": ["getPreferredSize(c)"]
+  },
+  "web-java-se-javax.swing.plaf.basic.BasicLabelUI.getMinimumSize": {
+    "intro": [],
+    "returns": ["getPreferredSize(c)"]
+  },
+  "web-java-se-javax.swing.plaf.basic.BasicMenuItemUI": {
+    "intro": ["Implementación de BasicMenuItem"]
+  },
+  "web-java-se-javax.swing.plaf.basic.BasicPanelUI": {
+    "intro": ["Implementación de BasicPanel"]
+  },
+  "web-java-se-javax.swing.plaf.basic.BasicPopupMenuUI.isPopupTrigger": {
+    "intro": [
+      "Devuelve si el MouseEvent dado es el evento que dispara el menú emergente en la plataforma"
+    ],
+    "parameters": [
+      {
+        "label": "e",
+        "detail": "un MouseEvent"
+      }
+    ],
+    "returns": ["true si el MouseEvent e dispara el menú emergente"]
+  },
+  "web-java-se-javax.swing.plaf.basic.BasicRadioButtonMenuItemUI": {
+    "intro": ["Implementación de BasicRadioButtonMenuItem"]
+  },
+  "web-java-se-javax.swing.plaf.basic.BasicScrollPaneUI.getMaximumSize": {
+    "intro": [],
+    "returns": ["new Dimension(Short.MAX_VALUE, Short.MAX_VALUE)"]
+  },
+  "web-java-se-javax.swing.plaf.basic.BasicTableHeaderUI": {
+    "intro": ["Implementación de BasicTableHeaderUI"]
+  },
+  "web-java-se-javax.swing.plaf.basic.BasicTableUI": {
+    "intro": ["Implementación de BasicTableUI"]
+  },
+  "web-java-se-javax.swing.plaf.basic.BasicToggleButtonUI": {
+    "intro": ["Implementación de BasicToggleButton"]
+  },
+  "web-java-se-javax.swing.plaf.basic.BasicViewportUI": {
+    "intro": ["Implementación de BasicViewport"]
+  },
+  "web-java-se-javax.swing.plaf.multi.MultiLookAndFeel.getID": {
+    "returns": ["\"Multiplex\""]
+  },
+  "web-java-se-javax.swing.plaf.nimbus.AbstractRegionPainter%24PaintContext.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un nuevo PaintContext que no intenta almacenar en caché ni escalar imágenes en caché."
+        ],
+        "parameters": [
+          {
+            "label": "insets",
+            "detail": "Los márgenes de estiramiento. Puede ser null. Si es null, se asume 0, 0, 0, 0."
+          },
+          {
+            "label": "canvasSize",
+            "detail": "El tamaño del lienzo usado al codificar los distintos valores x/y. Puede ser null. Si es null, se asume que no hay valores codificados y cualquier llamada a uno de los métodos \"decode\" devolverá el valor pasado."
+          },
+          {
+            "label": "inverted",
+            "detail": "Si se \"invierte\" el significado de la cuadrícula de 9 casillas y de los márgenes de estiramiento"
+          }
+        ]
+      },
+      {
+        "intro": ["Crea un nuevo PaintContext."],
+        "parameters": [
+          {
+            "label": "insets",
+            "detail": "Los márgenes de estiramiento. Puede ser null. Si es null, se asume 0, 0, 0, 0."
+          },
+          {
+            "label": "canvasSize",
+            "detail": "El tamaño del lienzo usado al codificar los distintos valores x/y. Puede ser null. Si es null, se asume que no hay valores codificados y cualquier llamada a uno de los métodos \"decode\" devolverá el valor pasado."
+          },
+          {
+            "label": "inverted",
+            "detail": "Si se \"invierte\" el significado de la cuadrícula de 9 casillas y de los márgenes de estiramiento"
+          },
+          {
+            "label": "cacheMode",
+            "detail": "Una sugerencia sobre qué modo de caché usar. Si es null, se establece sin caché."
+          },
+          {
+            "label": "maxH",
+            "detail": "La escala máxima en dirección horizontal que se usará antes de desistir y redibujar desde cero. Por ejemplo, si maxH es 2, se intentará escalar cualquier imagen en caché hasta 2 veces el ancho del lienzo antes de redibujar desde cero. Valores razonables de maxH pueden mejorar el rendimiento del pintado. Si es demasiado alto, los gráficos pueden verse mal con niveles de zoom altos. Debe ser >= 1."
+          },
+          {
+            "label": "maxV",
+            "detail": "La escala máxima en dirección vertical que se usará antes de desistir y redibujar desde cero. Por ejemplo, si maxV es 2, se intentará escalar cualquier imagen en caché hasta 2 veces el alto del lienzo antes de redibujar desde cero. Valores razonables de maxV pueden mejorar el rendimiento del pintado. Si es demasiado alto, los gráficos pueden verse mal con niveles de zoom altos. Debe ser >= 1."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.swing.plaf.nimbus.NimbusLookAndFeel.register": {
+    "body": [
+      "Las Region representan Components y áreas dentro de Components que actúan como zonas de pintado independientes. Una vez registradas en NimbusLookAndFeel, los NimbusStyle de estas Region pueden obtenerse mediante el método getStyle.",
+      "NimbusLookAndFeel usa un esquema de nombres estándar para las entradas de la tabla UIDefaults. La clave de cada propiedad, estado, painter y demás valor predeterminado registrado en UIDefaults para una Region concreta empezará con el prefijo indicado",
+      "Por ejemplo, supón que tienes un componente llamado JFoo y que lo registras en NimbusLookAndFeel de esta manera:",
+      "laf.register(NimbusFooUI.FOO_REGION, \"Foo\");",
+      "En este caso, podrías registrar propiedades para este componente en UIDefaults de la siguiente manera:",
+      "UIManager.put(\"Foo.background\", new ColorUIResource(Color.BLACK)); UIManager.put(\"Foo.Enabled.backgroundPainter\", new FooBackgroundPainter());",
+      "También es posible registrar en Nimbus un componente con nombre. Por ejemplo, supón que quieres dar al fondo de un JPanel llamado \"MyPanel\" un estilo distinto al de los demás JPanel. Podrías conseguirlo así:",
+      "laf.register(Region.PANEL, \"\\\"MyPanel\\\"\"); UIManager.put(\"\\\"MyPanel\\\".background\", new ColorUIResource(Color.RED));"
+    ],
+    "parameters": [
+      {
+        "label": "region",
+        "detail": "La Region de Synth que se registra. Por ejemplo, Button, ScrollBarThumb o NimbusFooUI.FOO_REGION."
+      },
+      {
+        "label": "prefix",
+        "detail": "El prefijo de UIDefaults. Por ejemplo, podría ser ComboBox o, si es un componente con nombre, \"MyComboBox\", o incluso algo como ToolBar.\"MyComboBox\".\"ComboBox.arrowButton\""
+      }
+    ]
+  },
+  "web-java-se-javax.swing.plaf.nimbus.NimbusLookAndFeel.shouldUpdateStyleOnAncestorChanged": {
+    "intro": [],
+    "returns": ["true"]
+  },
+  "web-java-se-javax.swing.plaf.nimbus.NimbusStyle": {
+    "body": [
+      "Esta clase lee y obtiene correctamente los valores colocados en UIDefaults según las convenciones de nombres estándar de Nimbus. Crea y obtiene los painters, fuentes, colores y demás datos almacenados allí.",
+      "NimbusStyle también permite sobrescribir ajustes componente a componente. NimbusStyle comprueba en el mapa de propiedades de cliente del componente la clave \"Nimbus.Overrides\". Si el valor asociado a esta clave es una instancia de UIDefaults, los valores de esa tabla sobrescriben los valores predeterminados estándar de Nimbus en UIManager, pero solo para esa instancia del componente.",
+      "Opcionalmente, puedes especificar la propiedad de cliente \"Nimbus.Overrides.InheritDefaults\". Si es true, indica que primero deben leerse los valores predeterminados de UIManager y después reemplazarse con los de las propiedades de cliente del componente. Si es false, solo se usan los valores del mapa de propiedades de cliente del componente. Si no se especifica, se asume true.",
+      "Debes especificar \"Nimbus.Overrides\" para que \"Nimbus.Overrides.InheritDefaults\" tenga algún efecto. \"Nimbus.Overrides\" indica si hay sobrescrituras, mientras que \"Nimbus.Overrides.InheritDefaults\" indica si esas sobrescrituras deben inicializarse primero con los valores predeterminados de UIManager.",
+      "El NimbusStyle se recarga cada vez que se lanza un evento de cambio de propiedad en un componente para \"Nimbus.Overrides\" o \"Nimbus.Overrides.InheritDefaults\". Así, por ejemplo, asignar un nuevo UIDefaults a un componente hace que el estilo se recargue.",
+      "Los valores solo se leen de UIManager una vez y luego se almacenan en caché. Si necesitas volver a leerlos (por ejemplo, si se está recargando la UI), descarta este NimbusStyle y obtén uno nuevo de NimbusLookAndFeel con NimbusLookAndFeel.getStyle.",
+      "La API principal de esta clase que interesa a los autores de componentes de terceros son los tres métodos que obtienen painters: #getBackgroundPainter, #getForegroundPainter y #getBorderPainter.",
+      "NimbusStyle permite especificar estados personalizados o modificar el orden de los estados. Synth (y por tanto Nimbus) tiene el concepto de \"estado\". Por ejemplo, un JButton puede estar en el estado \"MOUSE_OVER\", en el estado \"ENABLED\" o en el estado \"DISABLED\". Todos estos son estados \"estándar\" definidos en Synth y que se aplican a todas las Region de Synth.",
+      "Sin embargo, a veces necesitas un estado personalizado. Por ejemplo, quieres que JButton se renderice de otra forma si su padre es un JToolbar. En Nimbus, estos estados personalizados se especifican incluyendo una clave especial en UIDefaults. Las siguientes entradas de UIDefaults definen tres estados para este botón:",
+      "JButton.States = Enabled, Disabled, Toolbar JButton[Enabled].backgroundPainter = somePainter JButton[Disabled].background = BLUE JButton[Toolbar].backgroundPainter = someOtherPaint",
+      "Como ves, la entrada JButton.States enumera los estados que admitirá el estilo de JButton. Después especificas los ajustes de cada estado. Si no especificas la entrada JButton.States, se asumen los estados estándar de Synth. Si especificas la entrada pero la lista de estados está vacía o es null, también se asumen los estados estándar de Synth."
+    ]
+  },
   "web-java-se-javax.swing.plaf.nimbus.State.toString": {
     "returns": ["una representación en cadena del objeto."],
     "caveats": [
       "En general, toString devuelve una cadena que «representa textualmente» el objeto. Debería ser una representación concisa pero informativa y fácil de leer. Se recomienda que todas las subclases sobrescriban este método. La cadena no tiene por qué ser estable en el tiempo ni entre ejecuciones de la JVM.",
       "El toString de Object devuelve una cadena con el nombre de la clase de la que el objeto es instancia, el carácter arroba '@' y la representación hexadecimal sin signo del código hash del objeto. Es decir, devuelve una cadena igual al valor de:",
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
+    ]
+  },
+  "web-java-se-javax.swing.plaf.synth.ColorType": {
+    "body": [
+      "Cada SynthStyle tiene un conjunto de ColorType a los que se accede mediante el método getColor(SynthContext, ColorType). installDefaults de SynthStyle instala el color FOREGROUND como primer plano del Component y el color BACKGROUND como fondo del componente (suponiendo que no hayas especificado explícitamente colores de primer plano y fondo). Algunos componentes admiten más propiedades basadas en colores; por ejemplo, JList tiene la propiedad selectionForeground, que se asigna a FOREGROUND con el estado de componente SynthConstants.SELECTED.",
+      "El siguiente ejemplo muestra un SynthStyle personalizado que devuelve un Color rojo para el estado DISABLED y negro en los demás casos.",
+      "class MyStyle extends SynthStyle { private Color disabledColor = new ColorUIResource(Color.RED); private Color color = new ColorUIResource(Color.BLACK); protected Color getColorForState(SynthContext context, ColorType type){ if (context.getComponentState() == SynthConstants.DISABLED) { return disabledColor; } return color; } }"
+    ]
+  },
+  "web-java-se-javax.swing.plaf.synth.SynthLabelUI.getMaximumSize": {
+    "intro": [],
+    "returns": ["getPreferredSize(c)"]
+  },
+  "web-java-se-javax.swing.plaf.synth.SynthLabelUI.getMinimumSize": {
+    "intro": [],
+    "returns": ["getPreferredSize(c)"]
+  },
+  "web-java-se-javax.swing.plaf.synth.SynthPainter": {
+    "body": [
+      "Las instancias de SynthPainter se obtienen del método javax.swing.plaf.synth.SynthStyle.getPainter.",
+      "Normalmente se proporciona un SynthPainter mediante el formato de archivo de Synth. El siguiente ejemplo registra para todos los JButton un painter que renderiza la imagen myImage.png:",
+      "<style id=\"buttonStyle\"> <imagePainter path=\"myImage.png\" sourceInsets=\"2 2 2 2\" paintCenter=\"true\" stretch=\"true\"/> <insets top=\"2\" bottom=\"2\" left=\"2\" right=\"2\"/> </style> <bind style=\"buttonStyle\" type=\"REGION\" key=\"button\"/>",
+      "SynthPainter es abstracta en el sentido de que no pinta nada: todos sus métodos están vacíos. Aunque ninguno de estos métodos declara lanzar excepciones, las subclases pueden asumir que se les pasan argumentos válidos y, si no es así, pueden lanzar una NullPointerException o una IllegalArgumentException en respuesta a argumentos no válidos."
+    ]
+  },
+  "web-java-se-javax.swing.table.AbstractTableModel": {
+    "body": [
+      "public int getRowCount(); public int getColumnCount(); public Object getValueAt(int row, int column);",
+      "Advertencia: los objetos serializados de esta clase no serán compatibles con futuras versiones de Swing. El soporte de serialización actual es adecuado para almacenamiento a corto plazo o RMI entre aplicaciones que ejecutan la misma versión de Swing. Desde la 1.4, el paquete java.beans incluye soporte para el almacenamiento a largo plazo de todos los JavaBeans. Consulta java.beans.XMLEncoder."
+    ]
+  },
+  "web-java-se-javax.swing.table.AbstractTableModel.getListeners": {
+    "body": [
+      "Puedes especificar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los listeners de modelo de tabla de un modelo m con el siguiente código:",
+      "TableModelListener[] tmls = (TableModelListener[])(m.getListeners(TableModelListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de listener"
+      },
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners solicitados"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este componente, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.table.DefaultTableCellRenderer": {
+    "body": [
+      "Nota de implementación: esta clase hereda de JLabel, una clase de componente estándar. Sin embargo, JTable emplea un mecanismo propio para renderizar sus celdas y por eso requiere un comportamiento ligeramente modificado de su renderizador de celdas. La clase tabla define un único renderizador de celdas y lo usa como un sello de goma para renderizar todas las celdas de la tabla: renderiza la primera celda, cambia el contenido del renderizador, desplaza el origen a la nueva posición, vuelve a dibujarlo, y así sucesivamente. El componente JLabel estándar no se diseñó para usarse así, y queremos evitar que se dispare una revalidación cada vez que se dibuja la celda. Eso reduciría mucho el rendimiento, porque el mensaje de revalidación subiría por la jerarquía del contenedor para determinar si se ven afectados otros componentes. Como el renderizador solo tiene padre durante una operación de pintado, también queremos evitar el coste de recorrer la jerarquía en las operaciones de pintado. Por eso esta clase sobrescribe los métodos validate, invalidate, revalidate, repaint y firePropertyChange para que no hagan nada, y sobrescribe el método isOpaque, únicamente para mejorar el rendimiento. Si escribes tu propio renderizador, ten en cuenta esta consideración de rendimiento.",
+      "Advertencia: los objetos serializados de esta clase no serán compatibles con futuras versiones de Swing. El soporte de serialización actual es adecuado para almacenamiento a corto plazo o RMI entre aplicaciones que ejecutan la misma versión de Swing. Desde la 1.4, el paquete java.beans incluye soporte para el almacenamiento a largo plazo de todos los JavaBeans. Consulta java.beans.XMLEncoder."
+    ]
+  },
+  "web-java-se-javax.swing.table.DefaultTableColumnModel.getColumn": {
+    "parameters": [
+      {
+        "label": "columnIndex",
+        "detail": "el índice de la columna deseada"
+      }
+    ],
+    "returns": ["el objeto TableColumn de la columna en columnIndex"],
+    "exceptions": [
+      {
+        "label": "ArrayIndexOutOfBoundsException",
+        "detail": "si columnIndex está fuera de rango: (columnIndex < 0 || columnIndex >= getColumnCount())"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.table.DefaultTableColumnModel.getListeners": {
+    "body": [
+      "Puedes especificar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los listeners de modelo de columnas de un DefaultTableColumnModel m con el siguiente código:",
+      "ColumnModelListener[] cmls = (ColumnModelListener[])(m.getListeners(ColumnModelListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de listener"
+      },
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners solicitados"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este modelo, o un array vacío si no se ha añadido ningún listener de ese tipo"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.table.DefaultTableModel.moveRow": {
+    "body": [
+      "Ejemplos de movimientos:",
+      "1. moveRow(1,3,5); a|B|C|D|e|f|g|h|i|j|k - antes a|e|f|g|h|B|C|D|i|j|k - después",
+      "2. moveRow(6,7,1); a|b|c|d|e|f|G|H|i|j|k - antes a|G|H|b|c|d|e|f|i|j|k - después"
+    ],
+    "parameters": [
+      {
+        "label": "start",
+        "detail": "el índice de la fila inicial que se mueve"
+      },
+      {
+        "label": "end",
+        "detail": "el índice de la fila final que se mueve"
+      },
+      {
+        "label": "to",
+        "detail": "el destino de las filas que se mueven"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "ArrayIndexOutOfBoundsException",
+        "detail": "si alguno de los elementos se moviera fuera del rango de la tabla"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.table.TableModel": {
+    "body": [
+      "El JTable puede configurarse para mostrar cualquier modelo de datos que implemente la interfaz TableModel con un par de líneas de código:",
+      "TableModel myData = new MyTableModel(); JTable table = new JTable(myData);",
+      "Para más documentación, consulta Creating a Table Model en The Java Tutorial."
+    ]
+  },
+  "web-java-se-javax.swing.table.TableRowSorter": {
+    "body": [
+      "TableModel myModel = createMyTableModel(); JTable table = new JTable(myModel); table.setRowSorter(new TableRowSorter(myModel));",
+      "Esto hace todas las conexiones necesarias para que, cuando el usuario haga el gesto adecuado, como hacer clic en la cabecera de una columna, la tabla se ordene visualmente.",
+      "Los métodos de JTable basados en filas y el modelo de selección de JTable se refieren a la vista y no al modelo subyacente. Por tanto, es necesario convertir entre ambos. Por ejemplo, para obtener la selección en términos de myModel hay que convertir los índices:",
+      "int[] selection = table.getSelectedRows(); for (int i = 0; i < selection.length; i++) { selection[i] = table.convertRowIndexToModel(selection[i]); }",
+      "Del mismo modo, para seleccionar una fila del JTable a partir de una coordenada del modelo subyacente, haz lo inverso:",
+      "table.setRowSelectionInterval(table.convertRowIndexToView(row), table.convertRowIndexToView(row));",
+      "El ejemplo anterior supone que no has habilitado el filtrado. Si lo has habilitado, convertRowIndexToView devolverá -1 para las posiciones que no sean visibles en la vista.",
+      "TableRowSorter usa Comparators para hacer las comparaciones. Así se elige el Comparator de una columna:",
+      "Si se ha especificado un Comparator para la columna con el método setComparator, se usa ese.",
+      "Si la clase de la columna devuelta por getColumnClass es String, se usa el Comparator que devuelve Collator.getInstance().",
+      "Si la clase de la columna implementa Comparable, se usa un Comparator que invoca el método compareTo.",
+      "Si se ha especificado un TableStringConverter, se usa para convertir los valores a Strings y luego se usa el Comparator que devuelve Collator.getInstance().",
+      "En otro caso, se usa el Comparator que devuelve Collator.getInstance() sobre el resultado de llamar a toString en los objetos.",
+      "Además de ordenar, TableRowSorter permite filtrar. El filtro se especifica con el método setFilter. El siguiente ejemplo solo mostrará las filas que contengan la cadena \"foo\":",
+      "TableModel myModel = createMyTableModel(); TableRowSorter sorter = new TableRowSorter(myModel); sorter.setRowFilter(RowFilter.regexFilter(\".*foo.*\")); JTable table = new JTable(myModel); table.setRowSorter(sorter);",
+      "Si cambia la estructura del modelo subyacente (se invoca el método modelStructureChanged), se restablecen a sus valores predeterminados: los Comparators por columna, el orden de ordenación actual y si cada columna es ordenable. El orden predeterminado es el natural (el mismo que el del modelo), y las columnas son ordenables por defecto.",
+      "TableRowSorter tiene un parámetro de tipo formal: el tipo del modelo. Pasar un tipo que corresponda exactamente a tu modelo permite filtrar según tu modelo sin hacer casts. Consulta la documentación de RowFilter para ver un ejemplo.",
+      "ADVERTENCIA: DefaultTableModel devuelve Object como clase de columna. Por eso todas las comparaciones se harán con toString, lo que puede ser innecesariamente costoso. Si la columna solo contiene un tipo de valor, como Integer, deberías sobrescribir getColumnClass y devolver la Class adecuada. Esto aumentará muchísimo el rendimiento de esta clase."
+    ],
+    "parameters": [
+      {
+        "label": "<M>",
+        "detail": "el tipo del modelo, que debe ser una implementación de TableModel"
+      }
     ]
   },
   "web-java-se-javax.swing.text.JTextComponent.setComponentOrientation": {
