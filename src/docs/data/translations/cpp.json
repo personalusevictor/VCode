@@ -939,6 +939,35 @@
       "Lo encuentra la búsqueda dependiente de argumentos y lo usa std::ranges::iter_swap."
     ]
   },
+  "web-cpp20-std%3A%3Acounted_iterator%3A%3Aoperator%2B": {
+    "body": [
+      "La cuenta del resultado disminuye en n; n no debe superar count()."
+    ]
+  },
+  "web-cpp20-std%3A%3Acounted_iterator%3A%3Aoperator%2B%2B": {
+    "body": [
+      "La cuenta debe ser mayor que cero antes de avanzar. La versión posfija devuelve una copia del valor anterior cuando el iterador base es de avance (forward)."
+    ]
+  },
+  "web-cpp20-std%3A%3Acounted_iterator%3A%3Aoperator%2B%3D": {
+    "body": ["La cuenta restante disminuye en n; n no debe superar count()."],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Acounted_iterator%3A%3Aoperator%3C%3D%3E": {
+    "body": [
+      "Ambos iteradores deben referirse a la misma secuencia; a partir de este operador se generan <, <=, > y >=."
+    ]
+  },
+  "web-cpp20-std%3A%3Acounted_iterator%3A%3Aoperator%3D%3D": {
+    "body": [
+      "Ambos iteradores deben referirse a la misma secuencia. Así se puede comparar un counted_iterator con std::default_sentinel para saber si ha llegado al final."
+    ]
+  },
+  "web-cpp20-std%3A%3Acounted_iterator%3A%3Aoperator*": {
+    "body": [
+      "La cuenta restante debe ser mayor que cero; desreferenciar cuando vale 0 es comportamiento indefinido."
+    ]
+  },
   "web-cpp20-std%3A%3Acounted_iterator%3A%3Aoperator-": {
     "body": [
       "La distancia entre dos counted_iterator se calcula con sus cuentas: y.count() - x.count(). Ambos deben referirse a la misma secuencia."
@@ -951,6 +980,209 @@
   "web-cpp20-std%3A%3Acounted_iterator%3A%3Aoperator--": {
     "body": [
       "La versión prefija devuelve una referencia al iterador modificado y la posfija una copia del valor anterior."
+    ]
+  },
+  "web-cpp20-std%3A%3Acounting_semaphore": {
+    "body": [
+      "acquire() resta un permiso o espera hasta que haya uno, y release() devuelve permisos y despierta a los hilos que esperan. try_acquire(), try_acquire_for() y try_acquire_until() lo intentan sin esperar o con un límite de tiempo.",
+      "Sirve, por ejemplo, para limitar cuántos hilos usan un recurso a la vez. std::binary_semaphore es counting_semaphore<1>. Existe desde C++20."
+    ]
+  },
+  "web-cpp20-std%3A%3Acounting_semaphore%3A%3Acounting_semaphore": {
+    "body": [
+      "desired no puede ser negativo ni superar max(). No se puede copiar ni mover."
+    ]
+  },
+  "web-cpp20-std%3A%3Acounting_semaphore%3A%3Aoperator%3D": {
+    "body": [
+      "Un semáforo no se puede asignar porque los hilos que lo usan dependen de su estado interno."
+    ]
+  },
+  "web-cpp20-std%3A%3Adeque": {
+    "body": [
+      "push_front(), push_back(), pop_front() y pop_back() trabajan en los extremos en tiempo constante, y el acceso por índice también es O(1).",
+      "Guarda los elementos en bloques de tamaño fijo, así que no son contiguos y no tiene data(). Añadir por los extremos no mueve los elementos existentes."
+    ],
+    "caveats": [
+      "Insertar en cualquier extremo invalida los iteradores, pero no las referencias a los elementos."
+    ]
+  },
+  "web-cpp20-std%3A%3Adeque%3A%3Aempty": {
+    "intro": [
+      "Comprueba si el contenedor no tiene elementos, es decir, si begin() == end()."
+    ],
+    "body": ["Para vaciar el contenedor se usa clear(), no empty()."]
+  },
+  "web-cpp20-std%3A%3Adeque%3A%3Aget_allocator": {
+    "intro": ["Devuelve el asignador asociado al contenedor."],
+    "body": [
+      "Es útil con asignadores con estado o polimórficos, como los de std::pmr."
+    ]
+  },
+  "web-cpp20-std%3A%3Adeque%3A%3Asize": {
+    "intro": [
+      "Devuelve el número de elementos del contenedor, es decir, std::distance(begin(), end())."
+    ],
+    "body": [
+      "El resultado es de tipo sin signo; compáralo con valores del mismo tipo para evitar avisos del compilador."
+    ]
+  },
+  "web-cpp20-std%3A%3Aenable_shared_from_this": {
+    "body": [
+      "Una clase hereda de enable_shared_from_this<Clase> y, dentro de sus métodos, llama a shared_from_this() para obtener un shared_ptr que comparte la propiedad con los que ya existen.",
+      "Crear un shared_ptr nuevo con std::shared_ptr<Clase>(this) crearía un segundo contador y el objeto se destruiría dos veces."
+    ],
+    "caveats": [
+      "El objeto debe estar ya gestionado por un shared_ptr; si no, shared_from_this() lanza std::bad_weak_ptr desde C++17."
+    ]
+  },
+  "web-cpp20-std%3A%3Aenable_shared_from_this%3A%3Aweak_from_this": {
+    "intro": [
+      "Devuelve un std::weak_ptr que observa la propiedad de *this compartida por los std::shared_ptr existentes."
+    ],
+    "body": [
+      "A diferencia de shared_from_this(), no lanza nada si el objeto no está gestionado por un shared_ptr: devuelve un weak_ptr vacío. Existe desde C++17."
+    ],
+    "returns": [
+      "Un weak_ptr que comparte el control de *this, o vacío si no hay ninguno."
+    ]
+  },
+  "web-cpp20-std%3A%3Aerror_code": {
+    "body": [
+      "value() devuelve el número de error y category() su categoría, como std::system_category() o std::generic_category(). message() da una descripción legible y la conversión a bool indica si hay error.",
+      "Muchas funciones de <filesystem> tienen una sobrecarga que recibe un error_code& en lugar de lanzar excepciones."
+    ]
+  },
+  "web-cpp20-std%3A%3Aerror_code%3A%3Acategory": {
+    "body": [
+      "La categoría da sentido al número: el mismo valor puede significar cosas distintas en categorías distintas."
+    ]
+  },
+  "web-cpp20-std%3A%3Aerror_code%3A%3Aclear": {
+    "intro": [
+      "Restablece el código de error al valor 0 con la categoría std::system_category()."
+    ],
+    "body": ["Después de la llamada, la conversión a bool devuelve false."]
+  },
+  "web-cpp20-std%3A%3Aerror_code%3A%3Avalue": {
+    "body": [
+      "Para comparar errores de forma portable, compara el error_code con un valor de std::errc en lugar de con el número."
+    ]
+  },
+  "web-cpp20-std%3A%3Aerror_condition": {
+    "body": [
+      "Mientras error_code guarda el error concreto del sistema, error_condition representa su significado portable. Comparar un error_code con std::errc::no_such_file_or_directory funciona en cualquier plataforma gracias a ellas.",
+      "value(), category() y message() funcionan igual que en error_code."
+    ]
+  },
+  "web-cpp20-std%3A%3Aerror_condition%3A%3Acategory": {
+    "body": [
+      "Normalmente es std::generic_category(), que corresponde a los valores de std::errc."
+    ]
+  },
+  "web-cpp20-std%3A%3Aerror_condition%3A%3Aclear": {
+    "body": ["Después de la llamada, la conversión a bool devuelve false."]
+  },
+  "web-cpp20-std%3A%3Aerror_condition%3A%3Aoperator%20bool": {
+    "intro": ["Comprueba si el valor de error almacenado no es cero."],
+    "body": [
+      "Es explícita, así que funciona en condiciones como if (condicion) pero no se convierte a bool de forma implícita en otros contextos."
+    ]
+  },
+  "web-cpp20-std%3A%3Aerror_condition%3A%3Avalue": {
+    "body": [
+      "El significado del valor depende de la categoría devuelta por category()."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Adirectory_entry": {
+    "body": [
+      "Es el valor que se obtiene al recorrer un directory_iterator. path() da la ruta y métodos como is_regular_file(), is_directory() o file_size() consultan el archivo.",
+      "Puede guardar en caché la información obtenida al recorrer el directorio, lo que evita llamadas extra al sistema. refresh() la actualiza."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Adirectory_entry%3A%3Aoperator%3C%3D%3E": {
+    "body": [
+      "Equivale a comparar path() con path(); permite ordenar entradas, por ejemplo después de recorrer un directorio."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Adirectory_entry%3A%3Aoperator%3D%3D": {
+    "body": [
+      "Para saber si dos rutas apuntan al mismo archivo, usa std::filesystem::equivalent()."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Adirectory_entry%3A%3Apath": {
+    "body": [
+      "La ruta incluye el directorio que se estaba recorriendo; filename() da solo el nombre de la entrada. También existe una conversión implícita a const path&."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Adirectory_entry%3A%3Astatus": {
+    "body": [
+      "La sobrecarga sin error_code lanza std::filesystem::filesystem_error si falla; la otra guarda el error en ec. Puede usar la información en caché de la entrada."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Adirectory_entry%3A%3Asymlink_status": {
+    "body": [
+      "Permite saber si la entrada es un enlace simbólico. La sobrecarga sin error_code lanza std::filesystem::filesystem_error si falla."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Adirectory_entry%3A%3A~directory_entry": {
+    "body": [
+      "Solo libera la ruta y la información en caché que guarda el objeto."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Adirectory_iterator": {
+    "intro": [
+      "Iterador sobre las entradas de un directorio que no recorre sus subdirectorios."
+    ],
+    "body": [
+      "Se usa directamente en un for de rango: for (const auto& entrada : std::filesystem::directory_iterator(\"datos\")) { ... }. Cada elemento es un directory_entry; . y .. se omiten.",
+      "El orden de las entradas no está especificado. Para recorrer también los subdirectorios, usa recursive_directory_iterator."
+    ],
+    "caveats": [
+      "Si se añaden o borran archivos durante el recorrido, no está especificado si el iterador los verá."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Adirectory_iterator%3A%3Aoperator%3D": {
+    "body": [
+      "Las copias comparten el mismo recorrido: avanzar una afecta a las demás. Es un iterador de entrada de una sola pasada."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Adirectory_iterator%3A%3A~directory_iterator": {
+    "body": [
+      "Cierra el manejador del directorio que mantenía abierto el sistema operativo."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Apath%3A%3Abegin": {
+    "intro": ["Devuelve un iterador al primer componente de la ruta."],
+    "body": [
+      "Los componentes son, en orden, el nombre de raíz (como C: en Windows), el directorio raíz, cada nombre de directorio o archivo y, si la ruta termina en separador, un componente vacío.",
+      "Cada elemento es un path con un solo componente: for (const auto& parte : ruta) { ... }."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Apath%3A%3Aclear": {
+    "body": ["Solo afecta al objeto path; no toca el sistema de archivos."]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Apath%3A%3Aend": {
+    "intro": [
+      "Devuelve un iterador al final de la secuencia de componentes de la ruta."
+    ],
+    "body": [
+      "Se usa junto con begin() para recorrer los componentes. No se debe desreferenciar."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Apath%3A%3Ais_absolute": {
+    "body": [
+      "En POSIX, una ruta que empieza por / es absoluta. En Windows hace falta nombre de raíz y directorio raíz, como C:\\; \\datos o C:datos no son absolutas."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Apath%3A%3Ais_relative": {
+    "body": [
+      "Equivale a !is_absolute(). std::filesystem::absolute() convierte una ruta relativa en absoluta usando el directorio actual."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Apath%3A%3A~path": {
+    "body": [
+      "Solo libera la cadena con la ruta; el archivo al que se refiere no se ve afectado."
     ]
   }
 }
