@@ -245,6 +245,245 @@
       "Representa texto plano dentro de un bloque. Es el nodo hoja más habitual del árbol."
     ]
   },
+  "php-class-commonmark-node-text-emphasis": {
+    "summary": "Nodo concreto Emphasis de CommonMark\\Node.",
+    "description": [
+      "Representa texto enfatizado, escrito entre * o _ simples. Al renderizar a HTML se convierte en <em>; el texto son sus nodos hijos."
+    ]
+  },
+  "php-class-commonmark-node-text-strong": {
+    "summary": "Nodo concreto Strong de CommonMark\\Node.",
+    "description": [
+      "Representa texto con énfasis fuerte, escrito entre ** o __. Al renderizar a HTML se convierte en <strong>; el texto son sus nodos hijos."
+    ]
+  },
+  "php-class-commonmark-node-thematicbreak": {
+    "summary": "Nodo concreto ThematicBreak de CommonMark\\Node.",
+    "description": [
+      "Representa una separación temática, una línea con ---, *** o ___. Al renderizar a HTML se convierte en <hr />."
+    ]
+  },
+  "php-class-commonmark-parser": {
+    "description": [
+      "Permite pasar el texto por partes con feed() y obtener el documento con finish(), que devuelve el CommonMark\\Node\\Document raíz. Es útil cuando el Markdown llega en trozos, por ejemplo desde un flujo.",
+      "Si tienes todo el texto de una vez, CommonMark\\Parse() hace lo mismo en una sola llamada."
+    ]
+  },
+  "php-class-compersisthelper": {
+    "description": [
+      "Envuelve las interfaces IPersistStream e IPersistFile de un objeto COM. LoadFromFile() y SaveToFile() respetan open_basedir, y LoadFromStream() y SaveToStream() trabajan con flujos de PHP.",
+      "Solo está disponible en Windows. Es final."
+    ]
+  },
+  "php-class-compileerror": {
+    "description": [
+      "Existe desde PHP 7.3 y es la clase padre de ParseError. Hereda de Error, así que no la captura un catch (Exception $e).",
+      "Normalmente aparece con eval() o al incluir un archivo cuyo código no se puede compilar."
+    ]
+  },
+  "php-class-componere-abstract-definition": {
+    "summary": "Clase abstracta final que representa una entrada de clase; no está pensada para usarse directamente.",
+    "description": [
+      "Es la base común de Componere\\Definition y Componere\\Patch, y reúne las operaciones para añadir métodos, propiedades e interfaces a un tipo."
+    ]
+  },
+  "php-class-componere-definition": {
+    "description": [
+      "Se construye con el nombre de la clase y, opcionalmente, una clase padre e interfaces. Después se añaden métodos, propiedades y constantes, y register() la pone a disposición del resto del programa.",
+      "En caso de que una Definition reemplace una clase existente, la clase existente será restaurada cuando la Definition sea destruida.",
+      "Pertenece a la extensión PECL componere, que no viene con PHP."
+    ]
+  },
+  "php-class-componere-method": {
+    "description": [
+      "Se crea a partir de un Closure y se añade a una Componere\\Definition o un Componere\\Patch. Permite marcar el método como privado, protegido o estático antes de añadirlo."
+    ]
+  },
+  "php-class-componere-patch": {
+    "description": [
+      "Se crea a partir de la instancia que se quiere modificar. apply() aplica los cambios y revert() devuelve la instancia a su tipo original.",
+      "Cuando se destruye un parche se revierte, de modo que los casos que fueron parcheados durante la vida del Parche son restaurados a su tipo formal."
+    ]
+  },
+  "php-class-componere-value": {
+    "description": [
+      "Se usa para dar valor a propiedades y constantes de una Componere\\Definition. Permite indicar la visibilidad (privada o protegida) y si la propiedad es estática."
+    ]
+  },
+  "php-class-countable": {
+    "description": [
+      "count($objeto) llama al método count() del objeto, que debe devolver un int.",
+      "Desde PHP 8.0, count() lanza TypeError si recibe un objeto que no implementa Countable. Para contar los elementos de un iterador cualquiera, usa iterator_count()."
+    ]
+  },
+  "php-class-curlfile": {
+    "description": [
+      "Se crea con new CURLFile($ruta, $tipoMime, $nombreEnvio) o con curl_file_create(). Al incluirlo en el array de CURLOPT_POSTFIELDS, cURL envía la petición como multipart/form-data y lee el archivo del disco.",
+      "La deserialización de las instancias CURLFile no está permitida. A partir de PHP 7.4.0, la serialización está prohibida en primer lugar."
+    ]
+  },
+  "php-class-curlhandle": {
+    "description": [
+      "Se obtiene con curl_init(). Configura sus opciones, ejecuta la transferencia y consulta su información usando el mismo manejador.",
+      "Sustituye desde PHP 8.0 al recurso curl. Es final y no se crea con new; curl_close() ya no hace falta porque se libera al dejar de usarse."
+    ]
+  },
+  "php-class-curlmultihandle": {
+    "description": [
+      "Se obtiene con curl_multi_init(). Añade cada CurlHandle al manejador múltiple y consulta por separado el resultado de cada transferencia.",
+      "El patrón habitual repite curl_multi_exec() mientras queden transferencias activas y espera con curl_multi_select(). Sustituye desde PHP 8.0 al recurso curl_multi."
+    ]
+  },
+  "php-class-curlsharehandle": {
+    "description": [
+      "Se obtiene con curl_share_init(). Con curl_share_setopt() y las constantes CURL_LOCK_DATA_* eliges qué se comparte, como cookies, la caché DNS o las sesiones SSL.",
+      "Cada CurlHandle se une al manejador compartido con la opción CURLOPT_SHARE."
+    ]
+  },
+  "php-class-curlsharepersistenthandle": {
+    "description": [
+      "Cada CurlHandle se une a él con la opción CURLOPT_SHARE, igual que con CurlShareHandle.",
+      "Como sobrevive a la petición, permite reutilizar datos como la caché DNS o las conexiones entre peticiones atendidas por el mismo proceso PHP."
+    ]
+  },
+  "php-class-curlstringfile": {
+    "description": [
+      "El constructor recibe el contenido, el nombre con el que se enviará el archivo y, opcionalmente, el tipo MIME. Evita escribir un archivo temporal solo para subirlo.",
+      "Existe desde PHP 8.1."
+    ]
+  },
+  "php-class-dateinvalidoperationexception": {
+    "description": [
+      "Un ejemplo de operación no soportada es el uso de un objeto DateInterval que representa especificaciones de tiempo como next weekday, ya que no se puede construir ninguna declaración lógica inversa.",
+      "Existe desde PHP 8.3 y hereda de DateException."
+    ]
+  },
+  "php-class-dateinvalidtimezoneexception": {
+    "description": [
+      "Por ejemplo, new DateTimeZone('Europa/Madrid') la lanza porque el identificador no existe. Usa DateTimeZone::listIdentifiers() para ver los válidos.",
+      "Existe desde PHP 8.3. Antes se lanzaba una Exception genérica."
+    ]
+  },
+  "php-class-datemalformedintervalstringexception": {
+    "description": [
+      "Por ejemplo, new DateInterval('1D') la lanza porque falta la P inicial del formato ISO 8601; la forma correcta es 'P1D'.",
+      "Existe desde PHP 8.3 y hereda de DateException."
+    ]
+  },
+  "php-class-datemalformedperiodstringexception": {
+    "description": [
+      "La cadena debe seguir el formato ISO 8601 de recurrencias, como 'R4/2024-01-01T00:00:00Z/P1D'.",
+      "Existe desde PHP 8.3 y hereda de DateException."
+    ]
+  },
+  "php-class-datemalformedstringexception": {
+    "description": [
+      "Esto puede ser un valor pasado a DateTimeImmutable::__construct, DateTimeImmutable::modify, DateTime::__construct, o DateTime::modify.",
+      "Existe desde PHP 8.3. Antes, el constructor lanzaba una Exception genérica y modify() emitía una advertencia y devolvía false."
+    ]
+  },
+  "php-class-dateobjecterror": {
+    "description": [
+      "Dado que las clases Date/Hora no son finales, estas clases pueden ser heredadas. Cuando el constructor padre no es llamado, este error es lanzado. Siempre es un error de programación.",
+      "Existe desde PHP 8.3. Para evitarlo, llama a parent::__construct() en el constructor de la subclase."
+    ]
+  },
+  "php-class-dateperiod": {
+    "description": [
+      "Un período de fechas permite iterar a través de un conjunto de fechas y horas, ocurriendo a intervalos regulares, durante un período determinado.",
+      "Se construye con una fecha de inicio, un DateInterval y un número de repeticiones o una fecha de fin. La constante DatePeriod::EXCLUDE_START_DATE omite la fecha inicial y DatePeriod::INCLUDE_END_DATE incluye la final.",
+      "Se recorre con foreach. Si la fecha de inicio es DateTimeImmutable, cada elemento también lo es."
+    ]
+  },
+  "php-class-daterangeerror": {
+    "description": [
+      "En sistemas de 64 bits no se produce en la práctica. Existe desde PHP 8.3 y hereda de DateError."
+    ]
+  },
+  "php-class-datetimeinterface": {
+    "description": [
+      "Las constantes comunes que permiten el formato de objetos DateTimeImmutable o DateTime mediante DateTimeImmutable::format y DateTime::format son también definidas en esta interfaz, como DateTimeInterface::ATOM o DateTimeInterface::RFC3339.",
+      "Úsala como tipo de parámetro cuando tu función solo lee la fecha y le da igual que sea mutable o inmutable."
+    ]
+  },
+  "php-class-datetimezone": {
+    "description": [
+      "El constructor acepta identificadores como 'Europe/Madrid', desplazamientos como '+02:00' y abreviaturas como 'CET'. Los identificadores son la opción recomendada porque aplican los cambios de horario de verano.",
+      "getOffset() devuelve el desplazamiento respecto a UTC en un momento dado, getTransitions() los cambios de horario y listIdentifiers() todas las zonas conocidas."
+    ]
+  },
+  "php-class-deflatecontext": {
+    "description": [
+      "Se obtiene con deflate_init() y se pasa a deflate_add() para comprimir datos por partes. Es final y no se crea con new."
+    ]
+  },
+  "php-class-directory": {
+    "description": [
+      "Tiene las propiedades path, con la ruta abierta, y handle, con el manejador. read() devuelve el siguiente nombre de entrada o false al terminar, rewind() vuelve al principio y close() cierra el directorio.",
+      "Para recorrer directorios con más información de cada archivo, DirectoryIterator o FilesystemIterator suelen ser más cómodos."
+    ]
+  },
+  "php-class-directoryiterator": {
+    "description": [
+      "En foreach, cada elemento es el mismo objeto actualizado con el archivo actual. Si quieres guardar los elementos, clónalos o guarda los datos que necesites, como getPathname().",
+      "Incluye las entradas . y ..; isDot() permite saltarlas. FilesystemIterator las omite por defecto y RecursiveDirectoryIterator recorre subdirectorios."
+    ]
+  },
+  "php-class-divisionbyzeroerror": {
+    "description": [
+      "Lo lanzan el operador %, intdiv() y, desde PHP 8.0, también el operador / cuando el divisor es cero.",
+      "Si necesitas el resultado IEEE 754 (INF, -INF o NAN) en lugar de un error, usa fdiv()."
+    ]
+  },
+  "php-class-domainexception": {
+    "description": [
+      "Por ejemplo, una función que solo acepta los valores 'asc' o 'desc' puede lanzarla si recibe otro.",
+      "Hereda de LogicException, que indica errores que deberían corregirse en el código."
+    ]
+  },
+  "php-class-domattr": {
+    "description": [
+      "Sus propiedades name, value y ownerElement dan el nombre, el valor y el elemento al que pertenece.",
+      "Normalmente se trabaja con DOMElement::setAttribute() y getAttribute(). DOMDocument::createAttribute() crea el nodo cuando necesitas manipularlo como objeto."
+    ]
+  },
+  "php-class-domcdatasection": {
+    "description": [
+      "Se crea con DOMDocument::createCDATASection(). Su contenido se guarda sin escapar caracteres como < o &, y al serializar aparece entre <![CDATA[ y ]]>."
+    ]
+  },
+  "php-class-domcharacterdata": {
+    "description": [
+      "Las propiedades data y length dan el texto y su longitud. Métodos como appendData(), insertData() o replaceData() modifican el texto por posiciones.",
+      "DOMText y DOMComment heredan de ella."
+    ]
+  },
+  "php-class-domchildnode": {
+    "summary": "Interfaz de los nodos que pueden tener un padre en el árbol DOM.",
+    "description": [
+      "Añade after(), before(), remove() y replaceWith(), que insertan, eliminan o sustituyen nodos respecto al actual sin pasar por el padre.",
+      "Existe desde PHP 8.0. La implementan DOMElement y DOMCharacterData."
+    ]
+  },
+  "php-class-domcomment": {
+    "description": [
+      "Se crea con DOMDocument::createComment(). Hereda de DOMCharacterData, así que su texto se lee y modifica con la propiedad data."
+    ]
+  },
+  "php-class-domdocument": {
+    "description": [
+      "Carga un documento con loadXML(), loadHTML() o load(), y lo serializa con saveXML() o saveHTML(). Los métodos create* crean nodos nuevos que luego se insertan en el árbol.",
+      "Para buscar nodos con expresiones, crea un DOMXPath sobre el documento.",
+      "loadHTML() usa el analizador HTML 4 de libxml. Desde PHP 8.4, Dom\\HTMLDocument analiza HTML5 de forma conforme al estándar."
+    ]
+  },
+  "php-class-domdocumentfragment": {
+    "summary": "Contenedor ligero de nodos que todavía no forman parte del documento.",
+    "description": [
+      "Agrupa varios nodos para insertarlos de una vez: al añadir el fragmento a otro nodo, se mueven sus hijos y el fragmento queda vacío.",
+      "appendXML() añade nodos a partir de una cadena XML. Se crea con DOMDocument::createDocumentFragment()."
+    ]
+  },
   "php-function-fann_set_activation_function": {
     "description": [
       "Establece la función de activación para la neurona número neuron en la capa número layer, contando al capa de entrada como capa 0.",
