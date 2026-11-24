@@ -1,0 +1,11 @@
+{
+  "php-function-fann_set_activation_function": {
+    "description": [
+      "Establece la función de activación para la neurona número neuron en la capa número layer, contando al capa de entrada como capa 0.",
+      "No es posible establecer funciones de activación para las neuronas de la capa de entrada.",
+      "Al elegir una función de activación, es importante observar que las funciones de activación tienen un rango diferente. FANN_SIGMOID está, p.ej., en el rango 0 - 1, mientras que FANN_SIGMOID_SYMMETRIC está en el rango -1 - 1, y FANN_LINEAR no tiene límites.",
+      "El valor de activation_function debe ser una de las constantes de funciones de activación.",
+      "El valor devuelto es una de las constantes de funciones de activación."
+    ]
+  }
+}

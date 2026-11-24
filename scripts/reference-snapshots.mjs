@@ -63,6 +63,19 @@ const translatedFields = [
   "values",
   "usage",
 ];
+// PHP shards follow the php.net layout instead of the web card layout.
+const phpFields = [
+  "summary",
+  "description",
+  "examples",
+  "notes",
+  "returnValues",
+  "errors",
+];
+const fieldsFor = (file) =>
+  file.startsWith("php/") ? phpFields : translatedFields;
+// The PHP index repeats each summary, so it only takes that field.
+const indexFields = { "php-catalog.json": ["summary"] };
 
 // Spanish text kept outside the snapshots, so a new import never discards it.
 function readTranslations(group) {
@@ -70,30 +83,47 @@ function readTranslations(group) {
   return existsSync(file) ? readFileSync(file, "utf8") : "";
 }
 
-function applyOverload(overload, translation) {
+function applyOverload(overload, translation, fields) {
   if (!translation) return overload;
   const result = { ...overload };
-  for (const field of translatedFields)
+  for (const field of fields)
     if (translation[field] !== undefined) result[field] = translation[field];
   return result;
 }
 
-export function applyTranslation(entry, translation) {
+export function applyTranslation(
+  entry,
+  translation,
+  fields = translatedFields,
+) {
   if (!translation) return entry;
   const result = { ...entry };
-  for (const field of translatedFields)
+  for (const field of fields)
     if (translation[field] !== undefined) result[field] = translation[field];
   if (Array.isArray(translation.overloads) && Array.isArray(entry.overloads))
     result.overloads = entry.overloads.map((overload, index) =>
-      applyOverload(overload, translation.overloads[index]),
+      applyOverload(overload, translation.overloads[index], fields),
     );
   result.locale = "es";
   delete result.introSpanish;
   return result;
 }
 
-function translate(content, overlay) {
+function applyIndex(entry, translation, fields) {
+  const result = { ...entry };
+  let changed = false;
+  for (const field of fields)
+    if (translation[field] !== undefined) {
+      result[field] = translation[field];
+      changed = true;
+    }
+  return changed ? result : entry;
+}
+
+function translate(file, content, overlay) {
   if (!overlay) return content;
+  const index = indexFields[file];
+  if (!index && !/^(php|web)\//.test(file)) return content;
   const entries = JSON.parse(content);
   if (!Array.isArray(entries)) return content;
   let changed = false;
@@ -101,7 +131,9 @@ function translate(content, overlay) {
     const translation = entry && overlay[entry.id];
     if (!translation) return entry;
     changed = true;
-    return applyTranslation(entry, translation);
+    return index
+      ? applyIndex(entry, translation, index)
+      : applyTranslation(entry, translation, fieldsFor(file));
   });
   return changed ? JSON.stringify(translated) : content;
 }
@@ -132,10 +164,7 @@ export function restoreReferenceSnapshots() {
         throw new Error(`Invalid reference snapshot path: ${file}`);
       const destination = resolve(catalog, file);
       mkdirSync(dirname(destination), { recursive: true });
-      writeFileSync(
-        destination,
-        file.startsWith("web/") ? translate(content, overlay) : content,
-      );
+      writeFileSync(destination, translate(file, content, overlay));
     }
     writeFileSync(
       stamp,
