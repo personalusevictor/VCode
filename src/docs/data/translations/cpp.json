@@ -2476,5 +2476,224 @@
     "body": [
       "No se puede copiar ni mover. Si el sistema no puede crearlo, lanza std::system_error."
     ]
+  },
+  "web-cpp20-std%3A%3Ashared_ptr%3A%3Aoperator*": {
+    "intro": [
+      "Desreferencia el puntero almacenado. El comportamiento es indefinido si el puntero almacenado es nulo."
+    ],
+    "body": [
+      "Equivale a *get(). Comprueba antes que no es nulo con if (ptr) si puede estar vacío."
+    ]
+  },
+  "web-cpp20-std%3A%3Ashared_ptr%3A%3Aoperator-%3E": {
+    "intro": [
+      "Permite acceder a un miembro del objeto apuntado. El comportamiento es indefinido si el puntero almacenado es nulo."
+    ],
+    "body": [
+      "Equivale a get(). Comprueba antes que no es nulo con if (ptr) si puede estar vacío."
+    ]
+  },
+  "web-cpp20-std%3A%3Ashared_ptr%3A%3Aswap": {
+    "intro": [
+      "Intercambia los punteros almacenados y la propiedad de *this y r. Los contadores de referencias no cambian."
+    ],
+    "body": [
+      "Como solo se intercambian los punteros internos, es rápido y no lanza excepciones."
+    ]
+  },
+  "web-cpp20-std%3A%3Aspan%3A%3Adata": {
+    "body": [
+      "Es útil para pasar los datos a funciones de C que reciben un puntero y un tamaño: funcion(s.data(), s.size())."
+    ]
+  },
+  "web-cpp20-std%3A%3Aspan%3A%3Aempty": {
+    "intro": ["Comprueba si el span está vacío."],
+    "returns": [
+      "true si el span está vacío (es decir, size() == 0); false en caso contrario."
+    ]
+  },
+  "web-cpp20-std%3A%3Aspan%3A%3Asize": {
+    "intro": ["Devuelve el número de elementos del span."],
+    "body": [
+      "Para un span de tamaño fijo, coincide con el parámetro Extent y se conoce al compilar."
+    ],
+    "returns": ["El número de elementos del span."]
+  },
+  "web-cpp20-std%3A%3Aspan%3A%3Asize_bytes": {
+    "returns": [
+      "El tamaño de la secuencia en bytes, es decir, size() * sizeof(element_type)."
+    ],
+    "body": [
+      "Es útil al trabajar con funciones que esperan un tamaño en bytes, como memcpy o las de E/S binaria."
+    ]
+  },
+  "web-cpp20-std%3A%3Aspan%3A%3A~span": {
+    "body": [
+      "Es trivial: un span solo guarda un puntero y, si su tamaño es dinámico, una longitud."
+    ]
+  },
+  "web-cpp20-std%3A%3Astack": {
+    "body": [
+      "push() apila, top() consulta el elemento de arriba y pop() lo quita. Por defecto usa std::deque como contenedor interno; también sirven std::vector y std::list.",
+      "No se puede recorrer: solo expone la cima."
+    ]
+  },
+  "web-cpp20-std%3A%3Astack%3A%3Aempty": {
+    "intro": [
+      "Comprueba si el contenedor interno no tiene elementos. Equivale a return c.empty();."
+    ],
+    "body": ["Compruébalo antes de llamar a top() o pop()."]
+  },
+  "web-cpp20-std%3A%3Astack%3A%3Apop": {
+    "intro": [
+      "Elimina el elemento de la cima de la pila. Equivale a c.pop_back()."
+    ],
+    "body": [
+      "No devuelve el elemento: léelo antes con top(). La pila no debe estar vacía."
+    ]
+  },
+  "web-cpp20-std%3A%3Astack%3A%3Apush": {
+    "intro": ["Añade el elemento indicado en la cima de la pila."],
+    "body": [
+      "Equivale a c.push_back(x). Para construir el elemento directamente en la pila, usa emplace()."
+    ]
+  },
+  "web-cpp20-std%3A%3Astack%3A%3Asize": {
+    "intro": [
+      "Devuelve el número de elementos del adaptador. Equivale a return c.size();."
+    ]
+  },
+  "web-cpp20-std%3A%3Astack%3A%3Aswap": {
+    "body": ["Equivale a usar swap sobre los contenedores internos."]
+  },
+  "web-cpp20-std%3A%3Astop_callback": {
+    "body": [
+      "Se construye con un std::stop_token y una función: cuando se solicita la parada, la función se ejecuta en el hilo que llamó a request_stop(). Si la parada ya se había solicitado, se ejecuta en el propio constructor.",
+      "Al destruirse, el registro se elimina. Es útil para despertar una espera que no comprueba el token, por ejemplo cerrando un socket. Existe desde C++20."
+    ]
+  },
+  "web-cpp20-std%3A%3Astop_callback%3A%3Aoperator%3D": {
+    "body": [
+      "No se puede copiar ni mover, porque el registro está ligado a su dirección en memoria."
+    ]
+  },
+  "web-cpp20-std%3A%3Astop_source": {
+    "body": [
+      "request_stop() solicita la parada, y get_token() da un std::stop_token que los hilos consultan con stop_requested(). Varias copias de un stop_source comparten el mismo estado.",
+      "std::jthread incluye su propio stop_source, accesible con get_stop_source(). Existe desde C++20."
+    ]
+  },
+  "web-cpp20-std%3A%3Astop_source%3A%3Aoperator%3D": {
+    "body": [
+      "La copia comparte el estado de parada; el movimiento lo traslada y deja el origen sin estado."
+    ],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Astop_source%3A%3Aoperator%3D%3D": {
+    "body": ["El operador != se genera a partir de este."]
+  },
+  "web-cpp20-std%3A%3Astop_source%3A%3Aswap": {
+    "intro": [
+      "Intercambia los estados de parada de *this y del otro stop_source."
+    ]
+  },
+  "web-cpp20-std%3A%3Astop_source%3A%3A~stop_source": {
+    "body": [
+      "Libera su referencia al estado de parada; el estado sigue existiendo mientras haya tokens u otras fuentes que lo usen."
+    ]
+  },
+  "web-cpp20-std%3A%3Astop_token": {
+    "body": [
+      "Solo permite consultar: stop_requested() indica si se ha pedido la parada y stop_possible() si alguna vez podrá pedirse. Para solicitarla hace falta el std::stop_source.",
+      "Las funciones que ejecuta un std::jthread pueden recibirlo como primer parámetro y comprobarlo en su bucle. Existe desde C++20."
+    ]
+  },
+  "web-cpp20-std%3A%3Astop_token%3A%3Aoperator%3D": {
+    "body": [
+      "La copia comparte el estado de parada; el movimiento lo traslada y deja el origen sin estado."
+    ],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Astop_token%3A%3Aoperator%3D%3D": {
+    "body": ["El operador != se genera a partir de este."]
+  },
+  "web-cpp20-std%3A%3Astop_token%3A%3Astop_token": {
+    "body": [
+      "El constructor por defecto crea un token sin estado: stop_possible() y stop_requested() devuelven false. Lo normal es obtenerlo con stop_source::get_token()."
+    ]
+  },
+  "web-cpp20-std%3A%3Astop_token%3A%3Aswap": {
+    "body": ["No lanza excepciones."]
+  },
+  "web-cpp20-std%3A%3Astop_token%3A%3A~stop_token": {
+    "body": ["Libera su referencia al estado de parada."]
+  },
+  "web-cpp20-std%3A%3Asub_match": {
+    "body": [
+      "Cada elemento de un std::match_results es un sub_match. matched indica si el grupo participó en la coincidencia, str() devuelve el texto como cadena y length() su longitud.",
+      "Hereda de std::pair: first y second son los iteradores al inicio y al final del texto capturado."
+    ]
+  },
+  "web-cpp20-std%3A%3Asub_match%3A%3Acompare": {
+    "body": [
+      "Equivale a str().compare(...). Si el grupo no participó en la coincidencia, se compara como una cadena vacía."
+    ]
+  },
+  "web-cpp20-std%3A%3Asub_match%3A%3Alength": {
+    "intro": ["Devuelve el número de caracteres de la coincidencia."],
+    "returns": [
+      "std::distance(first, second) si la coincidencia es válida; 0 en caso contrario."
+    ]
+  },
+  "web-cpp20-std%3A%3Asystem_error": {
+    "body": [
+      "La lanzan, por ejemplo, std::thread o std::mutex cuando falla una llamada al sistema. code() devuelve el std::error_code y what() un mensaje que lo incluye.",
+      "Hereda de std::runtime_error; std::filesystem::filesystem_error e std::ios_base::failure heredan de ella."
+    ]
+  },
+  "web-cpp20-std%3A%3Asystem_error%3A%3Acode": {
+    "body": [
+      "Compáralo con un valor de std::errc para tratar errores concretos de forma portable: if (e.code() == std::errc::permission_denied)."
+    ]
+  },
+  "web-cpp20-std%3A%3Asystem_error%3A%3Awhat": {
+    "body": [
+      "El texto incluye el mensaje pasado al constructor y la descripción del código de error, pero su formato exacto depende de la implementación."
+    ]
+  },
+  "web-cpp20-std%3A%3Athread": {
+    "body": [
+      "El constructor recibe la función y sus argumentos, y la ejecuta en un hilo nuevo: std::thread t(trabajo, 42);. Los argumentos se copian; usa std::ref para pasar referencias.",
+      "Antes de destruirlo hay que llamar a join(), que espera a que termine, o a detach(), que lo deja ejecutarse por su cuenta. Si se destruye siendo joinable, se llama a std::terminate. std::jthread evita este problema."
+    ]
+  },
+  "web-cpp20-std%3A%3Athread%3A%3Aswap": {
+    "intro": ["Intercambia los hilos asociados a dos objetos std::thread."],
+    "body": ["No lanza excepciones ni afecta a la ejecución de los hilos."]
+  },
+  "web-cpp20-std%3A%3Atuple": {
+    "body": [
+      "Se crea con std::make_tuple() o con la deducción de C++17: std::tuple t{1, \"dos\", 3.0};. std::get<0>(t) o std::get<double>(t) acceden a cada elemento.",
+      "Con los enlaces estructurados se puede escribir auto [a, b, c] = t;. std::tie() permite asignar los elementos a variables existentes, y la comparación es lexicográfica."
+    ]
+  },
+  "web-cpp20-std%3A%3Auniform_int_distribution": {
+    "body": [
+      "Se construye con los límites a y b, ambos incluidos, y se llama con un motor: std::uniform_int_distribution<int> dado(1, 6); int tirada = dado(motor);.",
+      "Evita el sesgo que introduce calcular motor() % n. Solo admite tipos enteros; para números reales usa std::uniform_real_distribution."
+    ]
+  },
+  "web-cpp20-std%3A%3Auniform_int_distribution%3A%3Aa": {
+    "body": [
+      "Es el valor mínimo que puede devolver la distribución, indicado en el constructor."
+    ]
+  },
+  "web-cpp20-std%3A%3Auniform_int_distribution%3A%3Ab": {
+    "body": [
+      "Es el valor máximo que puede devolver la distribución; está incluido en el intervalo."
+    ]
+  },
+  "web-cpp20-std%3A%3Auniform_int_distribution%3A%3Amax": {
+    "body": ["Coincide con b()."]
   }
 }
