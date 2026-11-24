@@ -40883,5 +40883,430 @@
         "detail": "El nuevo resolvedor de recursos que se establece. Este parámetro puede ser null."
       }
     ]
+  },
+  "web-java-se-javax.xml.xpath.XPathFactory.newInstance": {
+    "overloads": [
+      {
+        "intro": [
+          "Obtiene una nueva instancia de XPathFactory usando el modelo de objetos predeterminado, DEFAULT_OBJECT_MODEL_URI, el DOM del W3C."
+        ],
+        "body": [
+          "Este método equivale funcionalmente a:",
+          "newInstance(DEFAULT_OBJECT_MODEL_URI)",
+          "Como la implementación del DOM del W3C siempre está disponible, este método nunca falla."
+        ],
+        "returns": ["Instancia de XPathFactory."],
+        "exceptions": [
+          {
+            "label": "RuntimeException",
+            "detail": "Cuando falla la creación de un XPathFactory para el modelo de objetos predeterminado."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Obtiene una nueva instancia de XPathFactory usando el modelo de objetos indicado. Este método usa el mecanismo de búsqueda de JAXP para determinar y cargar la implementación de XPathFactory que admite el modelo de objetos indicado."
+        ],
+        "body": [
+          "Consejo para solucionar problemas:",
+          "Consulta java.util.Properties.load(java.io.InputStream) para ver exactamente cómo se analiza un archivo de propiedades. En particular, los dos puntos ':' deben escaparse en un archivo de propiedades, así que asegúrate de que las URI estén bien escapadas en él. Por ejemplo:",
+          "http\\://java.sun.com/jaxp/xpath/dom=org.acme.DomXPathFactory"
+        ],
+        "parameters": [
+          {
+            "label": "uri",
+            "detail": "Identifica el modelo de objetos subyacente. La especificación solo define la URI DEFAULT_OBJECT_MODEL_URI, http://java.sun.com/jaxp/xpath/dom, para el DOM del W3C (el paquete org.w3c.dom), y las implementaciones son libres de introducir otras URI para otros modelos de objetos."
+          }
+        ],
+        "returns": ["Instancia de XPathFactory."],
+        "exceptions": [
+          {
+            "label": "XPathFactoryConfigurationException",
+            "detail": "Si el modelo de objetos indicado no está disponible o si hay un error de configuración."
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "Si uri es null."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "Si uri es null o uri.length() == 0."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Obtiene una nueva instancia de XPathFactory a partir del nombre de clase de una fábrica. Se devuelve el XPathFactory si la clase de fábrica indicada admite el modelo de objetos indicado. Esta función es útil cuando hay varios proveedores en el classpath. Da más control a la aplicación, ya que puede especificar qué proveedor debe cargarse."
+        ],
+        "body": [
+          "Consejo para solucionar problemas",
+          "Establecer la propiedad del sistema jaxp.debug hace que este método imprima en System.err muchos mensajes de depuración sobre lo que hace y dónde busca.",
+          "Si tienes problemas, prueba:",
+          "java -Djaxp.debug=1 YourProgram ...."
+        ],
+        "parameters": [
+          {
+            "label": "uri",
+            "detail": "Identifica el modelo de objetos subyacente. La especificación solo define la URI DEFAULT_OBJECT_MODEL_URI, http://java.sun.com/jaxp/xpath/dom, para el DOM del W3C (el paquete org.w3c.dom), y las implementaciones son libres de introducir otras URI para otros modelos de objetos."
+          },
+          {
+            "label": "factoryClassName",
+            "detail": "nombre de clase completamente cualificado de la fábrica que proporciona la implementación de javax.xml.xpath.XPathFactory."
+          },
+          {
+            "label": "classLoader",
+            "detail": "ClassLoader usado para cargar la clase de la fábrica. Si es null, se usa el classLoader de contexto del Thread actual para cargarla."
+          }
+        ],
+        "returns": ["Nueva instancia de XPathFactory"],
+        "exceptions": [
+          {
+            "label": "XPathFactoryConfigurationException",
+            "detail": "si factoryClassName es null, o la clase de la fábrica no puede cargarse o instanciarse, o no admite el modelo de objetos indicado en el parámetro uri."
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "Si uri es null."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "Si uri es null o uri.length() == 0."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.xml.xpath.XPathNodes.get": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "Índice del elemento que se devuelve."
+      }
+    ],
+    "returns": ["El Node en la posición indicada."],
+    "exceptions": [
+      {
+        "label": "javax.xml.xpath.XPathException",
+        "detail": "Si el índice está fuera de rango (index < 0 || index >= size())"
+      }
+    ]
+  },
+  "web-java-se-org.ietf.jgss.GSSContext": {
+    "body": [
+      "Si el llamador instancia el contexto usando la instancia predeterminada de GSSManager, se garantiza que el mecanismo GSS-API Kerberos v5 está disponible para establecer el contexto. Este mecanismo se identifica con el Oid \"1.2.840.113554.1.2.2\" y se define en RFC 1964.",
+      "Antes de iniciar la fase de establecimiento del contexto, el iniciador puede solicitar características concretas para el contexto establecido. No todos los mecanismos subyacentes admiten todas las características que puede desear un llamador. Una vez establecido el contexto, el llamador puede comprobar las características y servicios reales que ofrece mediante varios métodos de consulta. Al usar el mecanismo GSS-API Kerberos v5 que ofrece la instancia predeterminada de GSSManager, todos los servicios opcionales estarán disponibles localmente. Son la autenticación mutua, la delegación de credenciales, la protección de confidencialidad e integridad, y la detección de repeticiones y secuenciación por mensaje. Ten en cuenta que, en GSS-API, la integridad del mensaje es requisito previo para su confidencialidad.",
+      "El establecimiento del contexto se produce en un bucle en el que el iniciador llama a initSecContext(byte[], int, int) y el aceptante llama a acceptSecContext(byte[], int, int) hasta que se establece el contexto. Durante este bucle, los métodos initSecContext y acceptSecContext producen tokens que la aplicación envía al otro extremo. El otro extremo pasa cada token como entrada a su acceptSecContext o initSecContext, según corresponda.",
+      "Durante la fase de establecimiento del contexto, se puede llamar al método isProtReady para saber si el contexto puede usarse para las operaciones por mensaje wrap(byte[], int, int, MessageProp) y getMIC(byte[], int, int, MessageProp). Esto permite a las aplicaciones usar operaciones por mensaje en contextos que aún no están completamente establecidos.",
+      "Una vez establecido el contexto o cuando el método isProtReady devuelve true, se pueden invocar las rutinas de consulta para determinar las características y servicios reales del contexto establecido. La aplicación también puede empezar a usar los métodos por mensaje wrap(byte[], int, int, MessageProp) y getMIC(byte[], int, int, MessageProp) para realizar operaciones criptográficas sobre datos proporcionados por la aplicación.",
+      "Cuando el contexto ya no se necesita, la aplicación debe llamar a dispose para liberar los recursos del sistema que pueda estar usando.",
+      "Un contexto de seguridad suele mantener información de secuenciación y detección de repeticiones sobre los tokens que procesa. Por tanto, el orden en que se presentan los tokens a este contexto para su procesamiento puede ser importante. Ten en cuenta también que ninguno de los métodos de esta interfaz está sincronizado. Por eso no es aconsejable compartir un GSSContext entre varios hilos salvo que haya alguna sincronización a nivel de aplicación.",
+      "Por último, distintos proveedores de mecanismos pueden imponer distintas restricciones de seguridad al uso de contextos GSS-API. El proveedor del mecanismo las documentará. La aplicación deberá asegurarse de tener los permisos adecuados si la capa del mecanismo realiza esas comprobaciones.",
+      "Los métodos de GSSContext basados en flujos quedaron obsoletos en Java SE 11. Estos métodos también se eliminaron de",
+      "RFC 8353: Generic Security Service API Version 2: Java Bindings Update por los siguientes motivos (consulta la sección 11): los métodos sobrecargados de GSSContext que usan flujos de entrada y salida para transportar los tokens GSS-API de autenticación y por mensaje, descritos en la sección 5.15 de RFC 5653, se eliminan en esa actualización porque el protocolo de transmisión debe definirlo la aplicación y no una biblioteca; además, es imposible implementarlos correctamente cuando el token no se delimita a sí mismo (no se puede determinar dónde termina) o cuando la biblioteca no conoce el formato del token (por ejemplo, al hacer de puente con otra biblioteca GSS). Estos métodos son initSecContext(InputStream, OutputStream), acceptSecContext(InputStream, OutputStream), wrap(InputStream, OutputStream, MessageProp), unwrap(InputStream, OutputStream, MessageProp), getMIC(InputStream, OutputStream, MessageProp) y verifyMIC(InputStream, InputStream, MessageProp).",
+      "El código de ejemplo siguiente muestra el uso de la interfaz GSSContext en el extremo iniciador. Se presentan distintas operaciones sobre el objeto GSSContext: instanciación del objeto, establecimiento de los flags deseados, establecimiento del contexto, consulta de los flags reales del contexto, operaciones por mensaje sobre datos de la aplicación y, por último, eliminación del contexto.",
+      "// Create a context using default credentials // and the implementation specific default mechanism GSSManager manager = ... GSSName targetName = ... GSSContext context = manager.createContext(targetName, null, null, GSSContext.INDEFINITE_LIFETIME);",
+      "// set desired context options prior to context establishment context.requestConf(true); context.requestMutualAuth(true); context.requestReplayDet(true); context.requestSequenceDet(true);",
+      "// establish a context between peers",
+      "byte[] inToken = new byte[0]; byte[] outToken;",
+      "// Loop while there still is a token to be processed",
+      "while (!context.isEstablished()) {",
+      "outToken = context.initSecContext(inToken, 0, inToken.length);",
+      "// send the output token if generated if (outToken != null) { sendToken(outToken); }",
+      "if (!context.isEstablished()) { inToken = readToken(); } }",
+      "// display context information System.out.println(\"Remaining lifetime in seconds = \" + context.getLifetime()); System.out.println(\"Context mechanism = \" + context.getMech()); System.out.println(\"Initiator = \" + context.getSrcName()); System.out.println(\"Acceptor = \" + context.getTargName());",
+      "if (context.getConfState()) { System.out.println(\"Confidentiality (i.e., privacy) is available\"); }",
+      "if (context.getIntegState()) { System.out.println(\"Integrity is available\"); }",
+      "// perform wrap on an application supplied message, appMsg, // using QOP = 0, and requesting privacy service byte[] appMsg = ...",
+      "MessageProp mProp = new MessageProp(0, true);",
+      "outToken = context.wrap(appMsg, 0, appMsg.length, mProp);",
+      "sendToken(outToken);",
+      "// perform unwrap on an incoming application message, and check // its privacy state and supplementary information inToken = readToken();",
+      "mProp = new MessageProp(0, true);",
+      "appMsg = context.unwrap(inToken, 0, inToken.length, mProp);",
+      "System.out.println(\"Was it encrypted? \" + mProp.getPrivacy()); System.out.println(\"Duplicate Token? \" + mProp.isDuplicateToken()); System.out.println(\"Old Token? \" + mProp.isOldToken()); System.out.println(\"Unsequenced Token? \" + mProp.isUnseqToken()); System.out.println(\"Gap Token? \" + mProp.isGapToken());",
+      "// the application determines if the privacy state and supplementary // information are acceptable",
+      "// release the local-end of the context context.dispose();"
+    ]
+  },
+  "web-java-se-org.ietf.jgss.GSSCredential": {
+    "body": [
+      "Las credenciales se instancian con uno de los métodos createCredential de la clase GSSManager. La creación de credenciales GSS-API no pretende ofrecer una función de \"inicio de sesión en la red\", ya que esa función implicaría crear credenciales nuevas en lugar de simplemente obtener un manejador de credenciales existentes. La sección sobre adquisición de credenciales de la descripción del paquete explica cómo se obtienen las credenciales existentes en la plataforma Java. Las implementaciones de GSS-API deben imponer una política local de control de acceso a los llamadores para impedir que llamadores no autorizados obtengan credenciales a las que no tienen derecho.",
+      "Las aplicaciones crean un objeto credencial pasándole los parámetros deseados. Después, la aplicación puede usar los métodos de consulta para obtener información concreta sobre el objeto credencial instanciado. Cuando la credencial ya no se necesita, la aplicación debe llamar al método dispose para liberar los recursos que mantiene el objeto credencial y destruir cualquier información criptográficamente sensible.",
+      "Este código de ejemplo muestra la creación de una implementación de GSSCredential para una entidad concreta, la consulta de sus campos y su liberación cuando ya no se necesita:",
+      "GSSManager manager = GSSManager.getInstance();",
+      "// start by creating a name object for the entity GSSName name = manager.createName(\"myusername\", GSSName.NT_USER_NAME);",
+      "// now acquire credentials for the entity GSSCredential cred = manager.createCredential(name, GSSCredential.ACCEPT_ONLY);",
+      "// display credential information - name, remaining lifetime, // and the mechanisms it has been acquired over System.out.println(cred.getName().toString()); System.out.println(cred.getRemainingLifetime());",
+      "Oid [] mechs = cred.getMechs(); if (mechs != null) { for (int i = 0; i< mechs.length; i++) System.out.println(mechs[i].toString()); }",
+      "// release system resources held by the credential cred.dispose();"
+    ]
+  },
+  "web-java-se-org.ietf.jgss.GSSManager": {
+    "body": [
+      "Se puede obtener una instancia de la subclase predeterminada de GSSManager mediante el método estático getInstance, pero las aplicaciones son libres de instanciar otras subclases de GSSManager. La instancia predeterminada de GSSManager admitirá el mecanismo GSS-API Kerberos v5, además de cualquier otro. Este mecanismo se identifica con el Oid \"1.2.840.113554.1.2.2\" y se define en RFC 1964.",
+      "Una subclase que extienda la clase abstracta GSSManager puede implementarse como una capa modular basada en proveedores que utilice alguna especificación conocida de proveedores de servicio. La API de GSSManager permite a la aplicación establecer preferencias de proveedor en esa implementación. Estos métodos también permiten a la implementación lanzar una excepción bien definida si no se admite la configuración basada en proveedores. Las aplicaciones que aspiren a ser portables deben tenerlo en cuenta y recuperarse limpiamente capturando la excepción.",
+      "Se prevé que haya tres formas principales de usar los proveedores:",
+      "A la aplicación no le importa qué proveedor se usa (el caso predeterminado).",
+      "La aplicación quiere que se use preferentemente un proveedor concreto, ya sea para un mecanismo concreto o siempre, independientemente del mecanismo.",
+      "La aplicación quiere usar los proveedores configurados localmente en la medida de lo posible, pero si falta soporte para uno o más mecanismos quiere recurrir a su propio proveedor.",
+      "La clase GSSManager tiene dos métodos que permiten estos modos de uso: addProviderAtFront(Provider, Oid) y addProviderAtEnd(Provider, Oid). Estos métodos crean una lista ordenada de pares <proveedor, oid>, donde cada par indica una preferencia de proveedor para un oid dado.",
+      "Es importante tener en cuenta que hay ciertas interacciones entre los distintos objetos GSS-API creados por un GSSManager, en las que el proveedor usado para un mecanismo concreto puede tener que ser el mismo en todos los objetos. Por ejemplo, si un GSSCredential contiene elementos de un proveedor p para un mecanismo m, en general debe pasarse a un GSSContext que use el proveedor p para el mecanismo m. Una regla sencilla que maximiza la portabilidad es no mezclar objetos creados por distintos GSSManager y, si es posible, crear una instancia de GSSManager distinta si la aplicación quiere invocar el método addProviderAtFront sobre un GSSManager que ya ha creado algún objeto.",
+      "Este es un código de ejemplo que muestra cómo podría usarse GSSManager:",
+      "GSSManager manager = GSSManager.getInstance();",
+      "Oid krb5Mechanism = new Oid(\"1.2.840.113554.1.2.2\"); Oid krb5PrincipalNameType = new Oid(\"1.2.840.113554.1.2.2.1\");",
+      "// Identify who the client wishes to be GSSName userName = manager.createName(\"duke\", GSSName.NT_USER_NAME);",
+      "// Identify the name of the server. This uses a Kerberos specific // name format. GSSName serverName = manager.createName(\"nfs/foo.sun.com\", krb5PrincipalNameType);",
+      "// Acquire credentials for the user GSSCredential userCreds = manager.createCredential(userName, GSSCredential.DEFAULT_LIFETIME, krb5Mechanism, GSSCredential.INITIATE_ONLY);",
+      "// Instantiate and initialize a security context that will be // established with the server GSSContext context = manager.createContext(serverName, krb5Mechanism, userCreds, GSSContext.DEFAULT_LIFETIME);",
+      "El lado del servidor podría usar la siguiente variante de este código:",
+      "// Acquire credentials for the server GSSCredential serverCreds = manager.createCredential(serverName, GSSCredential.DEFAULT_LIFETIME, krb5Mechanism, GSSCredential.ACCEPT_ONLY);",
+      "// Instantiate and initialize a security context that will // wait for an establishment request token from the client GSSContext context = manager.createContext(serverCreds);"
+    ]
+  },
+  "web-java-se-org.ietf.jgss.GSSManager.addProviderAtEnd": {
+    "body": [
+      "Llamar a este método repetidamente conserva los ajustes anteriores, pero les da más preferencia que a los nuevos, formando así una lista ordenada de pares proveedor-Oid que crece por el final. Por tanto, los ajustes de proveedor anteriores se usarán antes que este.",
+      "Si hay preferencias existentes que entran en conflicto con la que se establece aquí, el GSSManager debe ignorar esta solicitud.",
+      "Si la implementación de GSSManager no admite una SPI con arquitectura de proveedores intercambiables, debe lanzar una GSSException con el código de estado GSSException.UNAVAILABLE para indicar que la operación no está disponible.",
+      "Supón que una aplicación quiere que, cuando se necesite un mecanismo de Oid m1, se comprueben siempre primero los proveedores predeterminados del sistema, y solo cuando no admitan m1 se compruebe un proveedor A. Entonces haría la llamada:",
+      "GSSManager mgr = GSSManager.getInstance(); mgr.addProviderAtEnd(A, m1);",
+      "Ahora, si además quiere que, para todos los mecanismos, se compruebe el proveedor B después de todos los proveedores configurados, llamaría a:",
+      "mgr.addProviderAtEnd(B, null);",
+      "En la práctica, la lista de preferencias pasa a ser {..., (A, m1), (B, null)}.",
+      "Supón que más tarde se hace la siguiente llamada sobre la misma instancia de GSSManager:",
+      "mgr.addProviderAtEnd(B, m2)",
+      "entonces el ajuste anterior con el par (B, null) engloba a este y, por tanto, esta solicitud debe ignorarse. Lo mismo ocurriría si se hiciera una solicitud para los pares ya existentes (A, m1) o (B, null).",
+      "Ten en cuenta, sin embargo, que la siguiente llamada:",
+      "mgr.addProviderAtEnd(A, null)",
+      "no queda englobada por el ajuste anterior (A, m1), y la lista pasa a ser {..., (A, m1), (B, null), (A, null)}"
+    ],
+    "parameters": [
+      {
+        "label": "p",
+        "detail": "la instancia de proveedor que debe usarse cuando se necesite soporte para mech."
+      },
+      {
+        "label": "mech",
+        "detail": "el mecanismo para el que se establece el proveedor"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "GSSException",
+        "detail": "con los siguientes códigos de error principales: GSSException.UNAVAILABLE, GSSException.FAILURE"
+      }
+    ]
+  },
+  "web-java-se-org.ietf.jgss.GSSManager.getNamesForMech": {
+    "body": [
+      "La instancia predeterminada de GSSManager incluye soporte para el mecanismo Kerberos v5. Cuando se indica este mecanismo (\"1.2.840.113554.1.2.2\"), la lista devuelta contendrá al menos los siguientes tipos de nombre: GSSName.NT_HOSTBASED_SERVICE, GSSName.NT_EXPORT_NAME y el Oid específico de Kerberos v5 \"1.2.840.113554.1.2.2.1\". El espacio de nombres del Oid \"1.2.840.113554.1.2.2.1\" se define en RFC 1964."
+    ],
+    "parameters": [
+      {
+        "label": "mech",
+        "detail": "el Oid del mecanismo que se consulta"
+      }
+    ],
+    "returns": [
+      "un array de objetos Oid correspondientes a los tipos de nombre que admite el mecanismo."
+    ],
+    "exceptions": [
+      {
+        "label": "GSSException",
+        "detail": "con los siguientes códigos de error principales: GSSException.BAD_MECH GSSException.FAILURE"
+      }
+    ]
+  },
+  "web-java-se-org.ietf.jgss.GSSName": {
+    "body": [
+      "Como distintos mecanismos de autenticación pueden emplear distintos espacios de nombres para identificar a sus principales, el soporte de nombres de GSS-API es necesariamente complejo en entornos multimecanismo (o incluso en algunos entornos de un solo mecanismo cuando este admite varios espacios de nombres). Los distintos formatos de nombre y sus definiciones se identifican con Oids, y en esta interfaz se definen algunos tipos estándar. El formato de los nombres puede deducirse a partir del Oid único de su tipo de nombre.",
+      "A continuación se incluyen ejemplos de código que usan la interfaz GSSName. El código crea un GSSName, lo convierte en un MN, realiza una comparación, obtiene una representación imprimible del nombre, lo exporta a un array de bytes y luego lo vuelve a importar para obtener un nuevo GSSName.",
+      "GSSManager manager = GSSManager.getInstance();",
+      "// create a host based service name GSSName name = manager.createName(\"service@host\", GSSName.NT_HOSTBASED_SERVICE);",
+      "Oid krb5 = new Oid(\"1.2.840.113554.1.2.2\");",
+      "GSSName mechName = name.canonicalize(krb5);",
+      "// the above two steps are equivalent to the following GSSName mechName = manager.createName(\"service@host\", GSSName.NT_HOSTBASED_SERVICE, krb5);",
+      "// perform name comparison if (name.equals(mechName)) print(\"Names are equals.\");",
+      "// obtain textual representation of name and its printable // name type print(mechName.toString() + mechName.getStringNameType().toString());",
+      "// export and re-import the name byte [] exportName = mechName.export();",
+      "// create a new name object from the exported buffer GSSName newName = manager.createName(exportName, GSSName.NT_EXPORT_NAME);",
+      "Si hay un gestor de seguridad instalado, para crear un GSSName que contenga un elemento de nombre Kerberos sin indicar su reino (realm), debe concederse un ServicePermission cuyo principal de servicio esté como mínimo dentro del reino del elemento de nombre Kerberos. Por ejemplo, si el resultado de createName(\"user\", NT_USER_NAME) contiene el elemento de nombre Kerberos user@EXAMPLE.COM, debe concederse un ServicePermission con el principal de servicio host/www.example.com@EXAMPLE.COM (y cualquier acción). En caso contrario, la creación lanzará una GSSException con el código de error GSSException.FAILURE."
+    ]
+  },
+  "web-java-se-org.ietf.jgss.Oid": {
+    "body": [
+      "Los Oids son identificadores jerárquicos e interpretables globalmente que se usan en el framework GSS-API para identificar mecanismos y formatos de nombre.",
+      "La estructura y codificación de los Oids se definen en ISOIEC-8824 e ISOIEC-8825. Por ejemplo, la representación Oid del mecanismo Kerberos V5 es \"1.2.840.113554.1.2.2\"",
+      "La clase GSSName contiene objetos Oid públicos y estáticos que representan los tipos de nombre estándar definidos en GSS-API."
+    ]
+  },
+  "web-java-se-org.ietf.jgss.Oid.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Construye un objeto Oid a partir de la representación en cadena de sus componentes enteros."
+        ],
+        "parameters": [
+          {
+            "label": "strOid",
+            "detail": "la representación en cadena del oid separada por puntos. Por ejemplo, \"1.2.840.113554.1.2.2\"."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "GSSException",
+            "detail": "puede lanzarse si la cadena tiene un formato incorrecto"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un objeto Oid a partir de su codificación ASN.1 DER. Se refiere a la codificación completa, incluidas la etiqueta y la longitud. La estructura y codificación de los Oids se definen en ISOIEC-8824 e ISOIEC-8825. Este método es idéntico en funcionalidad a su equivalente con array de bytes."
+        ],
+        "parameters": [
+          {
+            "label": "derOid",
+            "detail": "flujo que contiene el oid codificado en DER"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "GSSException",
+            "detail": "puede lanzarse si la codificación DER no sigue el formato prescrito."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un objeto Oid a partir de su codificación ASN.1 DER. Se refiere a la codificación completa, incluidas la etiqueta y la longitud. La estructura y codificación de los Oids se definen en ISOIEC-8824 e ISOIEC-8825. Este método es idéntico en funcionalidad a su equivalente con InputStream."
+        ],
+        "parameters": [
+          {
+            "label": "data",
+            "detail": "array de bytes que contiene el oid codificado en DER"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "GSSException",
+            "detail": "puede lanzarse si la codificación DER no sigue el formato prescrito."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-org.w3c.dom.Document.adoptNode": {
+    "body": [
+      "ATTRIBUTE_NODE El atributo ownerElement se establece a null y el flag specified se pone a true en el Attr adoptado. Los descendientes del Attr de origen se adoptan recursivamente. DOCUMENT_FRAGMENT_NODE Los descendientes del nodo de origen se adoptan recursivamente. DOCUMENT_NODE",
+      "Los nodos Document no pueden adoptarse. DOCUMENT_TYPE_NODE",
+      "Los nodos DocumentType no pueden adoptarse. ELEMENT_NODE Se adoptan los nodos de atributo especificados del elemento de origen. Los atributos predeterminados se descartan, aunque si el documento que adopta define atributos predeterminados para este nombre de elemento, se asignan esos. Los descendientes del elemento de origen se adoptan recursivamente. ENTITY_NODE",
+      "Los nodos Entity no pueden adoptarse. ENTITY_REFERENCE_NODE Solo se adopta el propio nodo EntityReference; los descendientes se descartan, ya que los documentos de origen y destino pueden haber definido la entidad de forma distinta. Si el documento al que se importa proporciona una definición para este nombre de entidad, se asigna su valor. NOTATION_NODE Los nodos Notation no pueden adoptarse. PROCESSING_INSTRUCTION_NODE, TEXT_NODE, CDATA_SECTION_NODE, COMMENT_NODE Todos estos nodos pueden adoptarse. Sin particularidades.",
+      "Nota: como, a diferencia del método Document.importNode(), no crea nodos nuevos, este método no lanza una excepción INVALID_CHARACTER_ERR, y las aplicaciones deben usar el método Document.normalizeDocument() para comprobar si un nombre importado no es un nombre XML según la versión de XML en uso."
+    ],
+    "parameters": [
+      {
+        "label": "source",
+        "detail": "El nodo que se mueve a este documento."
+      }
+    ],
+    "returns": [
+      "El nodo adoptado, o null si la operación falla, por ejemplo cuando el nodo de origen procede de otra implementación."
+    ],
+    "exceptions": [
+      {
+        "label": "DOMException",
+        "detail": "NOT_SUPPORTED_ERR: se lanza si el nodo de origen es de tipo DOCUMENT o DOCUMENT_TYPE. NO_MODIFICATION_ALLOWED_ERR: se lanza si el nodo de origen es de solo lectura."
+      }
+    ]
+  },
+  "web-java-se-org.w3c.dom.Document.createAttributeNS": {
+    "body": [
+      "Según [XML Namespaces], las aplicaciones deben usar el valor null como parámetro namespaceURI de los métodos si no quieren espacio de nombres."
+    ],
+    "parameters": [
+      {
+        "label": "namespaceURI",
+        "detail": "La URI de espacio de nombres del atributo que se crea."
+      },
+      {
+        "label": "qualifiedName",
+        "detail": "El nombre cualificado del atributo que se instancia."
+      }
+    ],
+    "returns": [
+      "Un nuevo objeto Attr con los siguientes atributos:",
+      "Atributos del objeto Attr",
+      "Atributo · Valor",
+      "Node.nodeName · qualifiedName",
+      "Node.namespaceURI · namespaceURI",
+      "Node.prefix · prefijo, extraído de qualifiedName, o null si no hay prefijo",
+      "Node.localName · nombre local, extraído de qualifiedName",
+      "Attr.name · qualifiedName",
+      "Node.nodeValue · la cadena vacía"
+    ],
+    "exceptions": [
+      {
+        "label": "DOMException",
+        "detail": "INVALID_CHARACTER_ERR: se lanza si el qualifiedName indicado no es un nombre XML según la versión de XML en uso especificada en el atributo Document.xmlVersion. NAMESPACE_ERR: se lanza si qualifiedName es un nombre cualificado mal formado, si qualifiedName tiene prefijo y namespaceURI es null, si qualifiedName tiene el prefijo \"xml\" y namespaceURI es distinta de \" http://www.w3.org/XML/1998/namespace\", si qualifiedName o su prefijo es \"xmlns\" y namespaceURI es distinta de \"http://www.w3.org/2000/xmlns/\", o si namespaceURI es \"http://www.w3.org/2000/xmlns/\" y ni qualifiedName ni su prefijo son \"xmlns\". NOT_SUPPORTED_ERR: se lanza siempre si el documento actual no admite la característica \"XML\", ya que los espacios de nombres los define XML."
+      }
+    ]
+  },
+  "web-java-se-org.w3c.dom.Document.createElementNS": {
+    "body": [
+      "Según [XML Namespaces], las aplicaciones deben usar el valor null como parámetro namespaceURI de los métodos si no quieren espacio de nombres."
+    ],
+    "parameters": [
+      {
+        "label": "namespaceURI",
+        "detail": "La URI de espacio de nombres del elemento que se crea."
+      },
+      {
+        "label": "qualifiedName",
+        "detail": "El nombre cualificado del tipo de elemento que se instancia."
+      }
+    ],
+    "returns": [
+      "Un nuevo objeto Element con los siguientes atributos:",
+      "Atributos del objeto Element",
+      "Atributo · Valor",
+      "Node.nodeName · qualifiedName",
+      "Node.namespaceURI · namespaceURI",
+      "Node.prefix · prefijo, extraído de qualifiedName, o null si no hay prefijo",
+      "Node.localName · nombre local, extraído de qualifiedName",
+      "Element.tagName · qualifiedName"
+    ],
+    "exceptions": [
+      {
+        "label": "DOMException",
+        "detail": "INVALID_CHARACTER_ERR: se lanza si el qualifiedName indicado no es un nombre XML según la versión de XML en uso especificada en el atributo Document.xmlVersion. NAMESPACE_ERR: se lanza si qualifiedName es un nombre cualificado mal formado, si qualifiedName tiene prefijo y namespaceURI es null, si qualifiedName tiene el prefijo \"xml\" y namespaceURI es distinta de \" http://www.w3.org/XML/1998/namespace\" [XML Namespaces], si qualifiedName o su prefijo es \"xmlns\" y namespaceURI es distinta de \"http://www.w3.org/2000/xmlns/\", o si namespaceURI es \"http://www.w3.org/2000/xmlns/\" y ni qualifiedName ni su prefijo son \"xmlns\". NOT_SUPPORTED_ERR: se lanza siempre si el documento actual no admite la característica \"XML\", ya que los espacios de nombres los define XML."
+      }
+    ]
+  },
+  "web-java-se-org.w3c.dom.Document.importNode": {
+    "body": [
+      "Para todos los nodos, importar un nodo crea un objeto nodo propiedad del documento que importa, con valores de atributo idénticos a los nodeName y nodeType del nodo de origen, más los atributos relacionados con espacios de nombres (prefix, localName y namespaceURI). Como en la operación cloneNode, el nodo de origen no se modifica. Los datos de usuario asociados al nodo importado no se trasladan. Sin embargo, si se ha especificado algún UserDataHandler junto con los datos asociados, esos manejadores se llamarán con los parámetros adecuados antes de que este método retorne.",
+      "Se copia información adicional según el nodeType, intentando reproducir el comportamiento esperado si se copiara un fragmento de código XML o HTML de un documento a otro, teniendo en cuenta que en el caso de XML los dos documentos pueden tener DTD distintas. La siguiente lista describe las particularidades de cada tipo de nodo.",
+      "ATTRIBUTE_NODE El atributo ownerElement se establece a null y el flag specified se pone a true en el Attr generado. Los descendientes del Attr de origen se importan recursivamente y los nodos resultantes se reensamblan para formar el subárbol correspondiente. Ten en cuenta que el parámetro deep no tiene efecto en los nodos Attr; siempre llevan consigo sus hijos al importarse. DOCUMENT_FRAGMENT_NODE Si la opción deep era true, los descendientes del DocumentFragment de origen se importan recursivamente y los nodos resultantes se reensamblan bajo el DocumentFragment importado para formar el subárbol correspondiente. En caso contrario, simplemente se genera un DocumentFragment vacío. DOCUMENT_NODE Los nodos Document no pueden importarse. DOCUMENT_TYPE_NODE Los nodos DocumentType no pueden importarse. ELEMENT_NODE Se importan los nodos de atributo especificados del elemento de origen, y los nodos Attr generados se asocian al Element generado. Los atributos predeterminados no se copian, aunque si el documento al que se importa define atributos predeterminados para este nombre de elemento, se asignan esos. Si el parámetro deep de importNode era true, los descendientes del elemento de origen se importan recursivamente y los nodos resultantes se reensamblan para formar el subárbol correspondiente. ENTITY_NODE Los nodos Entity pueden importarse, aunque en la versión actual del DOM el DocumentType es de solo lectura. La posibilidad de añadir estos nodos importados a un DocumentType se considerará para una futura versión del DOM. Al importar, se copian los atributos publicId, systemId y notationName. Si se solicita una importación profunda, los descendientes de la Entity de origen se importan recursivamente y los nodos resultantes se reensamblan para formar el subárbol correspondiente.",
+      "ENTITY_REFERENCE_NODE Solo se copia la propia EntityReference, aunque se solicite una importación profunda, ya que los documentos de origen y destino pueden haber definido la entidad de forma distinta. Si el documento al que se importa proporciona una definición para este nombre de entidad, se asigna su valor. NOTATION_NODE",
+      "Los nodos Notation pueden importarse, aunque en la versión actual del DOM el DocumentType es de solo lectura. La posibilidad de añadir estos nodos importados a un DocumentType se considerará para una futura versión del DOM. Al importar, se copian los atributos publicId y systemId. Ten en cuenta que el parámetro deep no tiene efecto en este tipo de nodos, ya que no pueden tener hijos.",
+      "PROCESSING_INSTRUCTION_NODE El nodo importado copia sus valores target y data de los del nodo de origen. Ten en cuenta que el parámetro deep no tiene efecto en este tipo de nodos, ya que no pueden tener hijos. TEXT_NODE, CDATA_SECTION_NODE, COMMENT_NODE Estos tres tipos de nodos, que heredan de CharacterData, copian sus atributos data y length de los del nodo de origen. Ten en cuenta que el parámetro deep no tiene efecto en estos tipos de nodos, ya que no pueden tener hijos."
+    ],
+    "parameters": [
+      {
+        "label": "importedNode",
+        "detail": "El nodo que se importa."
+      },
+      {
+        "label": "deep",
+        "detail": "Si es true, importa recursivamente el subárbol bajo el nodo indicado; si es false, importa solo el propio nodo, como se ha explicado. No tiene efecto en los nodos que no pueden tener hijos ni en los nodos Attr y EntityReference."
+      }
+    ],
+    "returns": ["El nodo importado, que pertenece a este Document."],
+    "exceptions": [
+      {
+        "label": "DOMException",
+        "detail": "NOT_SUPPORTED_ERR: se lanza si no se admite el tipo de nodo que se importa. INVALID_CHARACTER_ERR: se lanza si uno de los nombres importados no es un nombre XML según la versión de XML en uso especificada en el atributo Document.xmlVersion. Esto puede ocurrir, por ejemplo, al importar un elemento XML 1.1 [XML 1.1] en un documento XML 1.0."
+      }
+    ]
   }
 }
