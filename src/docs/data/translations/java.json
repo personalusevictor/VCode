@@ -10691,6 +10691,693 @@
       "Las implementaciones de esta interfaz son inmutables, seguras para hilos y basadas en valor."
     ]
   },
+  "web-java-se-java.lang.foreign.Linker%24Option.captureCallState": {
+    "body": [
+      "Un method handle de bajada captura el estado de ejecución al invocarse escribiéndolo en un segmento nativo que le proporciona el usuario. Para ello, un method handle enlazado con esta opción tiene un parámetro MemorySegment adicional justo después de la dirección destino y de los parámetros SegmentAllocator opcionales. Este parámetro, el segmento de captura de estado, es el segmento nativo en el que se escribe el estado capturado.",
+      "El segmento de captura de estado debe tener un tamaño y una alineación compatibles con el layout que devuelve captureStateLayout. Ese layout es un layout de struct con un campo con nombre por cada valor capturado.",
+      "El estado capturado puede leerse del segmento creando var handles a partir del layout de captura de estado.",
+      "Este ejemplo muestra el uso de esta opción del linker: {@snippet lang = \"java\": MemorySegment targetAddress = ... Linker.Option ccs = Linker.Option.captureCallState(\"errno\"); MethodHandle handle = Linker.nativeLinker().downcallHandle(targetAddress, FunctionDescriptor.ofVoid(), ccs);",
+      "StructLayout capturedStateLayout = Linker.Option.captureStateLayout(); VarHandle errnoHandle = capturedStateLayout.varHandle(PathElement.groupElement(\"errno\")); try (Arena arena = Arena.ofConfined()) { MemorySegment capturedState = arena.allocate(capturedStateLayout); handle.invoke(capturedState); int errno = (int) errnoHandle.get(capturedState); // use errno } }"
+    ],
+    "parameters": [
+      {
+        "label": "capturedState",
+        "detail": "los nombres de los valores que se guardan."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si al menos uno de los nombres de capturedState no se admite en la plataforma actual."
+      }
+    ]
+  },
+  "web-java-se-java.lang.foreign.MemoryLayout.varHandle": {
+    "body": [
+      "El var handle devuelto tiene estas características:",
+      "su tipo se deriva del portador del layout de valor seleccionado;",
+      "tiene cero o más coordenadas de acceso de tipo long, una por cada elemento abierto de la ruta de layout indicada. El orden de estas coordenadas es el orden en que aparecen los elementos abiertos en la ruta.",
+      "La dirección final a la que accede el var handle devuelto se calcula así:",
+      "address = base(segment) + offset",
+      "Donde base(segment) es una función que devuelve la dirección base física del segmento de memoria accedido. En los segmentos nativos devuelve simplemente su dirección. En los segmentos del heap es más compleja, porque su dirección está virtualizada. El desplazamiento puede expresarse así:",
+      "offset = c_1 + c_2 + ... + c_m + (x_1 * s_1) + (x_2 * s_2) + ... + (x_n * s_n)",
+      "donde x_1, x_2, ... x_n son valores dinámicos pasados como argumentos long, mientras que c_1, c_2, ... c_m son constantes de desplazamiento estáticas y s_1, s_2, ... s_n constantes de paso estáticas, derivadas de la ruta de layout.",
+      "Además, los valores dinámicos deben respetar unos límites derivados de la ruta de layout, es decir, 0 <= x_i < b_i, con 1 <= i <= n; si no, se lanza IndexOutOfBoundsException.",
+      "La dirección base debe estar alineada según la restricción de alineación del layout raíz (este layout). Puede ser más estricta (pero no menos) que la del layout de valor seleccionado.",
+      "Pueden encadenarse varias rutas con elementos de desreferencia. Un elemento de desreferencia crea un segmento de memoria nativo nuevo cuya dirección base es la dirección leída al acceder a un segmento en el desplazamiento determinado por los elementos de ruta inmediatamente anteriores. Dicho de otro modo, si una ruta de layout contiene uno o más elementos de desreferencia, la dirección final a la que accede el var handle devuelto se calcula así:",
+      "address_1 = base(segment) + offset_1 address_2 = base(segment_1) + offset_2 ... address_k = base(segment_k-1) + offset_k",
+      "donde k es el número de elementos de desreferencia de la ruta, segment es el segmento de entrada, segment_1, ... segment_k-1 son los segmentos obtenidos al desreferenciar la dirección asociada a cada elemento de desreferencia (p. ej. segment_1 es un segmento nativo cuya dirección base es address_1), y offset_1, offset_2, ... offset_k son los desplazamientos calculados al evaluar los elementos de ruta posteriores a cada desreferencia (con el cálculo descrito arriba). En estos accesos más complejos, todos los accesos a memoria inmediatamente anteriores a una desreferencia (p. ej. los de las direcciones address_1, address_2, ..., address_k-1) se hacen con el modo de acceso VarHandle.AccessMode.GET."
+    ],
+    "parameters": [
+      {
+        "label": "elements",
+        "detail": "los elementos de la ruta de layout."
+      }
+    ],
+    "returns": [
+      "un var handle que accede a un segmento de memoria en el desplazamiento seleccionado por la ruta de layout dada."
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si la ruta de layout no está bien formada para este layout."
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si el layout seleccionado por la ruta no es un layout de valor."
+      }
+    ],
+    "caveats": [
+      "El var handle resultante tiene ciertas restricciones de modo de acceso, comunes a todos los var handles de vista de segmentos de memoria."
+    ]
+  },
+  "web-java-se-java.lang.foreign.MemorySegment": {
+    "body": [
+      "Hay dos tipos de segmentos de memoria:",
+      "Un segmento del heap está respaldado por una región de memoria dentro del heap de Java (una región \"on-heap\") y da acceso a ella.",
+      "Un segmento nativo está respaldado por una región de memoria fuera del heap de Java (una región \"off-heap\") y da acceso a ella.",
+      "Los segmentos del heap se obtienen con alguno de los métodos de fábrica MemorySegment.ofArray(int[]). Devuelven un segmento respaldado por la región del heap que contiene el array Java indicado.",
+      "Los segmentos nativos se obtienen con alguno de los métodos de fábrica Arena.allocate(long, long), que devuelven un segmento respaldado por una región fuera del heap recién reservada, del tamaño dado y alineada según la restricción indicada. También pueden obtenerse proyectando un archivo en una región nueva fuera del heap con FileChannel.map(FileChannel.MapMode, long, long, Arena) (en algunos sistemas esta operación se llama mmap). Los segmentos obtenidos así se llaman segmentos proyectados, y su contenido puede guardarse en el archivo proyectado en memoria y cargarse desde él.",
+      "Ambos tipos de segmento se leen y escriben con los mismos métodos, llamados operaciones de acceso. Una operación de acceso sobre un segmento siempre da acceso únicamente a la región para la que se obtuvo el segmento.",
+      "Características de los segmentos de memoria",
+      "Todo segmento de memoria tiene una dirección, expresada como long. Su naturaleza depende del tipo de segmento:",
+      "La dirección de un segmento del heap no es una dirección física, sino un desplazamiento dentro de la región que lo respalda. La región está en el heap de Java, así que la recolección de basura puede moverla en la memoria física, pero esto no se expone a los clientes de la API MemorySegment, que ven una dirección virtualizada estable. Un segmento del heap obtenido con uno de los métodos ofArray(int[]) tiene dirección cero.",
+      "La dirección de un segmento nativo (incluidos los proyectados) es la dirección física de la región de memoria que lo respalda.",
+      "Todo segmento de memoria tiene un tamaño. El de un segmento del heap se deriva del array Java del que se obtiene y es predecible entre runtimes de Java. El de un segmento nativo se pasa explícitamente (como en Arena.allocate(long, long)) o se deriva de un MemoryLayout (como en Arena.allocate(MemoryLayout)). El tamaño suele ser positivo, puede ser cero, pero nunca negativo.",
+      "La dirección y el tamaño de un segmento garantizan juntos que las operaciones de acceso no se salgan de los límites de la región que lo respalda. Es decir, un segmento de memoria tiene límites espaciales.",
+      "Todo segmento de memoria está asociado a un ámbito. Esto garantiza que no haya accesos cuando la región que lo respalda ya no está disponible (p. ej. cuando el ámbito asociado ya no está vivo). Es decir, un segmento de memoria tiene límites temporales.",
+      "Por último, los accesos a un segmento pueden estar sujetos a comprobaciones adicionales de confinamiento a un hilo. Los segmentos del heap pueden accederse desde cualquier hilo. En cambio, los nativos solo pueden accederse de forma compatible con el confinamiento del arena con el que se obtuvieron.",
+      "Acceso a segmentos de memoria",
+      "Un segmento de memoria puede leerse o escribirse con varias operaciones de acceso de esta clase (p. ej. get(ValueLayout.OfInt, long)). Cada operación recibe un layout de valor, que indica el tamaño y la forma del valor, y un desplazamiento en bytes. Por ejemplo, para leer un int de un segmento con el orden de bytes predeterminado puede usarse este código:",
+      "Si el valor está guardado en memoria en big-endian, la operación de acceso puede expresarse así:",
+      "Para accesos más complejos (p. ej. acceso a memoria estructurada), el cliente puede obtener un var handle que recibe un segmento y un desplazamiento long. Pueden obtenerse var handles más complejos adaptando un var handle de vista de segmento con las funciones combinadoras de var handles de la clase java.lang.invoke.MethodHandles:",
+      "También pueden obtenerse var handles complejos a partir de layouts de memoria indicando una ruta de layout:",
+      "Trocear segmentos de memoria",
+      "Los segmentos de memoria admiten troceado con asSlice(long, long). Trocear un segmento devuelve un segmento nuevo respaldado por la misma región de memoria que el original. Su dirección se deriva de la del original sumándole un desplazamiento (en bytes). Su tamaño se deriva implícitamente (restando el desplazamiento del tamaño del original) o se indica explícitamente. Es decir, un trozo tiene límites espaciales más estrictos que el segmento original:",
+      "Este código crea un segmento nativo de 100 bytes y luego un trozo que empieza en el desplazamiento 50 de segment y mide 10 bytes. Es decir, la dirección del trozo es segment.address() + 50 y su tamaño 10. Por eso, intentar leer un int en el desplazamiento 20 de slice lanza una excepción. Los trozos heredan los límites temporales del original: cuando el ámbito asociado a segment deja de estar vivo, slice también deja de ser accesible.",
+      "El cliente puede obtener un Stream de un segmento, que sirve para trocearlo (según un layout de elemento) e incluso para que varios hilos trabajen en paralelo sobre trozos disjuntos (para ello el segmento debe ser accesible desde varios hilos). Este código suma en paralelo todos los int de un segmento de memoria:",
+      "{@snippet lang = java: try (Arena arena = Arena.ofShared()) { SequenceLayout SEQUENCE_LAYOUT = MemoryLayout.sequenceLayout(1024, ValueLayout.JAVA_INT); MemorySegment segment = arena.allocate(SEQUENCE_LAYOUT); int sum = segment.elements(ValueLayout.JAVA_INT).parallel() .mapToInt(s -> s.get(ValueLayout.JAVA_INT, 0)) .sum(); } }",
+      "Alineación",
+      "Las operaciones de acceso a un segmento no solo están limitadas por sus límites espaciales y temporales, sino también por la restricción de alineación del layout de valor indicado. Una operación solo puede acceder a los desplazamientos del segmento que corresponden a direcciones físicas alineadas según el layout. Una dirección física está alineada según un layout si es múltiplo entero de su restricción de alineación. Por ejemplo, la dirección 1000 está alineada a 8 bytes (porque 1000 es múltiplo de 8), a 4 bytes y a 2 bytes; en cambio, la dirección 1004 está alineada a 4 y a 2 bytes, pero no a 8. Las operaciones de acceso deben respetar la alineación porque puede afectar a su rendimiento y también determinar qué operaciones están disponibles en una dirección física. Por ejemplo, las operaciones atómicas con java.lang.invoke.VarHandle solo se permiten en direcciones alineadas. Además, la alineación se aplica tanto si el segmento accedido es nativo como si es del heap.",
+      "Si el segmento accedido es nativo, su dirección física puede combinarse con el desplazamiento para obtener la dirección física destino. La siguiente pseudofunción lo muestra:",
+      "{@snippet lang = java: boolean isAligned(MemorySegment segment, long offset, MemoryLayout layout) { return ((segment.address() + offset) % layout.byteAlignment()) == 0; } }",
+      "Por ejemplo:",
+      "Un segmento nativo con dirección 1000 puede accederse con alineación de 8 bytes en los desplazamientos 0, 8, 16, 24, etc., porque las direcciones destino (1000, 1008, 1016, 1024) están alineadas a 8 bytes. No se permite el acceso en los desplazamientos 1-7, 9-15 o 17-23, porque las direcciones no estarían alineadas a 8 bytes.",
+      "Un segmento nativo con dirección 1000 puede accederse con alineación de 4 bytes en los desplazamientos 0, 4, 8, 12, etc., porque las direcciones destino (1000, 1004, 1008, 1012) están alineadas a 4 bytes. No se permite el acceso en los desplazamientos 1-3, 5-7 o 9-11, porque las direcciones no estarían alineadas a 4 bytes.",
+      "Un segmento nativo con dirección 1000 puede accederse con alineación de 2 bytes en los desplazamientos 0, 2, 4, 6, etc., porque las direcciones destino (1000, 1002, 1004, 1006) están alineadas a 2 bytes. No se permite el acceso en los desplazamientos 1, 3 o 5, porque las direcciones no estarían alineadas a 2 bytes.",
+      "Un segmento nativo con dirección 1004 puede accederse en los desplazamientos 0, 4, 8, 12, etc. con alineación de 4 bytes, y en 0, 2, 4, 6, etc. con alineación de 2 bytes. Con alineación de 8 bytes, en los desplazamientos 4, 12, 20, 28, etc.",
+      "Un segmento nativo con dirección 1006 puede accederse en los desplazamientos 0, 2, 4, 6, etc. con alineación de 2 bytes. Con alineación de 4 bytes, en 2, 6, 10, 14, etc. Con alineación de 8 bytes, en 2, 10, 18, 26, etc.",
+      "Un segmento nativo con dirección 1007 puede accederse en los desplazamientos 0, 1, 2, 3, etc. con alineación de 1 byte. Con alineación de 2 bytes, en 1, 3, 5, 7, etc. Con alineación de 4 bytes, en 1, 5, 9, 13, etc. Con alineación de 8 bytes, en 1, 9, 17, 25, etc.",
+      "La restricción de alineación usada para acceder a un segmento suele venir dada por la forma de la estructura de datos guardada en él. Por ejemplo, si el programador quiere guardar una secuencia de valores de 8 bytes en un segmento nativo, debe reservarlo indicando una alineación de 8 bytes, con Arena.allocate(long, long) o Arena.allocate(MemoryLayout). Estos métodos garantizan que la región fuera del heap que respalda el segmento empiece en una dirección alineada a 8 bytes. Después, el programador puede acceder a los desplazamientos que le interesen (0, 8, 16, 24, etc.) sabiendo que todos esos accesos están alineados.",
+      "Si el segmento accedido es del heap, saber si el acceso está alineado es más complejo. Su dirección física no se conoce y ni siquiera es fija (puede cambiar cuando la recolección de basura mueve el segmento). Por eso no puede combinarse con el desplazamiento para obtener una dirección física destino. Como la restricción de alineación siempre se refiere a direcciones físicas, en principio no es posible saber si un desplazamiento de un segmento del heap está alineado. Por ejemplo, supón que el programador elige una alineación de 8 bytes e intenta acceder al desplazamiento 16 de un segmento del heap. Si la dirección 0 del segmento corresponde a la dirección física 1000, la dirección destino (1016) estaría alineada; pero si corresponde a la 1004, la destino (1020) no lo estaría. No es deseable permitir accesos a direcciones que están alineadas según la restricción elegida por el programador pero puede que no lo estén de forma predecible en la memoria física (p. ej. por la plataforma o por la recolección de basura).",
+      "En la práctica, el runtime de Java coloca los arrays en memoria de forma que cada elemento de n bytes está en una dirección física alineada a n bytes (salvo en long[] y double[], donde la alineación depende de la plataforma, como se explica abajo). El runtime mantiene esta invariante aunque el array se mueva durante la recolección de basura. Las operaciones de acceso se basan en ella para saber si un desplazamiento de un segmento del heap corresponde a una dirección física alineada. Por ejemplo:",
+      "La dirección física inicial de un array short[] estará alineada a 2 bytes (p. ej. 1006), de modo que los short sucesivos están en direcciones alineadas a 2 bytes (p. ej. 1006, 1008, 1010, 1012, etc.). Un segmento del heap respaldado por un short[] puede accederse en los desplazamientos 0, 2, 4, 6, etc. con alineación de 2 bytes. No puede accederse en ningún desplazamiento con alineación de 4 bytes, porque no hay garantía de que la dirección destino esté alineada a 4 bytes: p. ej., el desplazamiento 0 correspondería a la dirección 1006 y el 1 a la 1007. Del mismo modo, no puede accederse en ningún desplazamiento con alineación de 8 bytes, porque no hay garantía de alineación a 8 bytes: p. ej., el desplazamiento 2 correspondería a la dirección 1008 pero el 4 a la 1010.",
+      "En plataformas de 64 bits, la dirección física inicial de un array long[] estará alineada a 8 bytes (p. ej. 1000), de modo que los long sucesivos están en direcciones alineadas a 8 bytes (p. ej. 1000, 1008, 1016, 1024, etc.). En esas plataformas, un segmento del heap respaldado por un long[] puede accederse en los desplazamientos 0, 8, 16, 24, etc. con alineación de 8 bytes. También en 0, 4, 8, 12, etc. con alineación de 4 bytes, porque las direcciones (1000, 1004, 1008, 1012) están alineadas a 4 bytes. Y en 0, 2, 4, 6, etc. con alineación de 2 bytes, porque las direcciones (p. ej. 1000, 1002, 1004, 1006) están alineadas a 2 bytes.",
+      "En plataformas de 32 bits, la dirección física inicial de un array long[] estará alineada a 4 bytes (p. ej. 1004), de modo que los long sucesivos están en direcciones alineadas a 4 bytes (p. ej. 1004, 1008, 1012, 1016, etc.). En esas plataformas, un segmento del heap respaldado por un long[] puede accederse en los desplazamientos 0, 4, 8, 12, etc. con alineación de 4 bytes, porque las direcciones (1004, 1008, 1012, 1016) están alineadas a 4 bytes. Y en 0, 2, 4, 6, etc. con alineación de 2 bytes, porque las direcciones (p. ej. 1000, 1002, 1004, 1006) están alineadas a 2 bytes.",
+      "Dicho de otro modo, los segmentos del heap tienen una alineación máxima (dependiente de la plataforma) que se deriva del tamaño de los elementos del array Java que los respalda, como muestra esta tabla:",
+      "Alineación máxima de los segmentos del heap",
+      "Tipo de array (de la región que lo respalda) · Alineación máxima admitida (en bytes)",
+      "boolean[] · ValueLayout.JAVA_BOOLEAN.byteAlignment()",
+      "byte[] · ValueLayout.JAVA_BYTE.byteAlignment()",
+      "char[] · ValueLayout.JAVA_CHAR.byteAlignment()",
+      "short[] · ValueLayout.JAVA_SHORT.byteAlignment()",
+      "int[] · ValueLayout.JAVA_INT.byteAlignment()",
+      "float[] · ValueLayout.JAVA_FLOAT.byteAlignment()",
+      "long[] · ValueLayout.JAVA_LONG.byteAlignment()",
+      "double[] · ValueLayout.JAVA_DOUBLE.byteAlignment()",
+      "Los segmentos del heap solo pueden accederse con un layout cuya alineación sea menor o igual que su alineación máxima. Intentar acceder con un layout de alineación mayor falla, como muestra este ejemplo:",
+      "En ese caso, el cliente tiene dos opciones. Puede usar un segmento del heap respaldado por otro tipo de array (p. ej. long[]) que admita una alineación máxima mayor. En concreto, la alineación máxima de long[] es ValueLayout.JAVA_LONG.byteAlignment(), un valor que depende de la plataforma (igual a ValueLayout.ADDRESS.byteSize()). Es decir, MemorySegment.ofArray(long[]) garantiza al menos alineación de 8 bytes en plataformas de 64 bits, pero solo de 4 bytes en las de 32 bits:",
+      "O bien puede invocar la operación de acceso con un layout no alineado. Todas las constantes de layout no alineado (p. ej. ValueLayout.JAVA_INT_UNALIGNED) tienen restricción de alineación 1:",
+      "Segmentos de memoria de longitud cero",
+      "Al trabajar con funciones externas, es habitual que reserven una región de memoria y devuelvan un puntero a ella. Modelar esa región con un segmento de memoria es complicado, porque el runtime de Java no sabe su tamaño; solo dispone de la dirección de inicio guardada en el puntero. Por ejemplo, una función C que devuelve char* puede devolver un puntero a una región con un único char o con un array de char, cuyo tamaño puede venir en otro parámetro. El código que llama a la función externa y quiere usar su resultado no conoce a simple vista el tamaño del array. Además de no conocer el tamaño de la región que respalda un puntero devuelto por una función externa, tampoco conoce la vida útil que la función externa pretendía para esa región.",
+      "La API MemorySegment usa segmentos de longitud cero para representar:",
+      "punteros devueltos por una función externa;",
+      "punteros que una función externa pasa a un stub de subida; y",
+      "punteros leídos de un segmento de memoria (más sobre esto abajo).",
+      "La dirección del segmento de longitud cero es la dirección guardada en el puntero. Sus límites espaciales y temporales son estos:",
+      "El tamaño del segmento es cero. Cualquier intento de acceso falla con IndexOutOfBoundsException. Es una medida de seguridad clave: como estos segmentos están asociados a una región de tamaño desconocido, no se puede validar ningún acceso. En la práctica, un segmento de longitud cero envuelve una dirección y no puede usarse sin una intención explícita (ver abajo);",
+      "El segmento está asociado a un ámbito nuevo que siempre está vivo. Así, aunque no pueden accederse directamente, pueden pasarse de forma opaca a otras funciones externas que acepten punteros.",
+      "Para ver cómo trabajar con segmentos de longitud cero, piensa en un cliente que quiere leer un puntero de un segmento. Puede hacerlo con el método de acceso get(AddressLayout, long). Este método recibe un layout de dirección (p. ej. ValueLayout.ADDRESS), el layout del puntero que se lee; por ejemplo, en una plataforma de 64 bits mide 8 bytes. También recibe un desplazamiento en bytes que indica la posición (respecto al inicio del segmento) donde está guardado el puntero. Devuelve un segmento nativo de longitud cero respaldado por una región cuya dirección inicial es el valor de 64 bits leído en ese desplazamiento.",
+      "El cliente no puede acceder directamente al segmento de longitud cero devuelto: como su tamaño es cero, cualquier acceso estaría fuera de límites. En su lugar, debe asignarle, de forma insegura, nuevos límites espaciales. Puede hacerlo con el método reinterpret(long), así:",
+      "En algunos casos, el cliente también puede querer asignar nuevos límites temporales a un segmento de longitud cero. Puede hacerlo con el método reinterpret(long, Arena, Consumer), que devuelve un segmento nativo nuevo con el tamaño deseado y los mismos límites temporales que el arena indicado:",
+      "{@snippet lang = java: MemorySegment ptr = null; try (Arena arena = Arena.ofConfined()) { MemorySegment z = segment.get(ValueLayout.ADDRESS, ...); // size = 0, scope = always alive ptr = z.reinterpret(16, arena, null); // size = 4, scope = arena.scope() int x = ptr.getAtIndex(ValueLayout.JAVA_INT, 3); // ok } int x = ptr.getAtIndex(ValueLayout.JAVA_INT, 3); // throws IllegalStateException }",
+      "Otra opción: si el tamaño de la región que respalda el segmento de longitud cero se conoce estáticamente, el cliente puede superponer un layout destino al layout de dirección usado al leer el puntero. Ese layout destino se usa para ampliar dinámicamente el tamaño del segmento devuelto por la operación de acceso, de modo que coincida con el del layout destino. Es decir, el segmento devuelto ya no es de longitud cero y el puntero que representa puede desreferenciarse directamente:",
+      "Todos los métodos que permiten manipular segmentos de longitud cero (reinterpret(long), reinterpret(Arena, Consumer), reinterpret(long, Arena, Consumer) y AddressLayout.withTargetLayout(MemoryLayout)) son métodos restringidos y deben usarse con cuidado: asignar a un segmento límites espaciales o temporales incorrectos puede hacer que la VM se caiga al intentar acceder a él."
+    ],
+    "caveats": [
+      "Las implementaciones de esta interfaz son inmutables, seguras para hilos y basadas en valor."
+    ]
+  },
+  "web-java-se-java.lang.foreign.MemorySegment.asSlice": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve un trozo de este segmento de memoria en el desplazamiento dado. La dirección del segmento devuelto es la de este segmento más el desplazamiento; su tamaño lo indica el argumento dado."
+        ],
+        "body": ["Equivale a este código:"],
+        "parameters": [
+          {
+            "label": "offset",
+            "detail": "El desplazamiento base del nuevo segmento (respecto a la dirección de este), en bytes."
+          },
+          {
+            "label": "newSize",
+            "detail": "El tamaño del nuevo segmento, en bytes."
+          }
+        ],
+        "returns": ["un trozo de este segmento de memoria."],
+        "exceptions": [
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "si offset < 0, offset > byteSize(), newSize < 0 o newSize > byteSize() - offset"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un trozo de este segmento de memoria en el desplazamiento dado, con la restricción de alineación indicada. La dirección del segmento devuelto es la de este segmento más el desplazamiento; su tamaño lo indica el argumento dado."
+        ],
+        "parameters": [
+          {
+            "label": "offset",
+            "detail": "El desplazamiento base del nuevo segmento (respecto a la dirección de este), en bytes."
+          },
+          {
+            "label": "newSize",
+            "detail": "El tamaño del nuevo segmento, en bytes."
+          },
+          {
+            "label": "byteAlignment",
+            "detail": "La restricción de alineación (en bytes) del trozo devuelto."
+          }
+        ],
+        "returns": ["un trozo de este segmento de memoria."],
+        "exceptions": [
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "si offset < 0, offset > byteSize(), newSize < 0 o newSize > byteSize() - offset"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si este segmento no puede accederse en offset con la restricción de alineación indicada."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si byteAlignment <= 0 o si byteAlignment no es potencia de 2."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un trozo de este segmento de memoria con el layout dado, en el desplazamiento dado. La dirección del segmento devuelto es la de este segmento más el desplazamiento; su tamaño es el del layout indicado."
+        ],
+        "body": ["Equivale a este código:"],
+        "parameters": [
+          {
+            "label": "offset",
+            "detail": "El desplazamiento base del nuevo segmento (respecto a la dirección de este), en bytes."
+          },
+          {
+            "label": "layout",
+            "detail": "El layout del trozo del segmento."
+          }
+        ],
+        "returns": ["un trozo de este segmento de memoria."],
+        "exceptions": [
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "si offset < 0, offset > byteSize() o layout.byteSize() > byteSize() - offset"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si este segmento no puede accederse en offset con la restricción de alineación del layout."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un trozo de este segmento de memoria en el desplazamiento dado. La dirección del segmento devuelto es la de este segmento más el desplazamiento; su tamaño se calcula restando el desplazamiento del tamaño de este segmento."
+        ],
+        "body": ["Equivale a este código:"],
+        "parameters": [
+          {
+            "label": "offset",
+            "detail": "El desplazamiento base del nuevo segmento (respecto a la dirección de este), en bytes."
+          }
+        ],
+        "returns": ["un trozo de este segmento de memoria."],
+        "exceptions": [
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "si offset < 0 u offset > byteSize()."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.lang.foreign.SymbolLookup": {
+    "body": [
+      "Una búsqueda de símbolos se crea para una biblioteca (o varias) concreta. Después, el método SymbolLookup.find(String) recibe el nombre de un símbolo y devuelve su dirección en esa biblioteca.",
+      "La dirección de un símbolo se modela como un segmento de memoria de longitud cero, que puede usarse de varias formas:",
+      "Puede pasarse a un Linker para crear un method handle de bajada, con el que llamar a la función externa en la dirección del segmento.",
+      "Puede pasarse a un method handle de bajada existente (Linker.downcallHandle(FunctionDescriptor, Linker.Option...)) como argumento de la función externa subyacente.",
+      "Puede guardarse dentro de otro segmento de memoria con set(AddressLayout, long, MemorySegment).",
+      "Puede usarse para acceder a la región de memoria de una variable global (para ello antes hay que redimensionar el segmento).",
+      "Obtener una búsqueda de símbolos",
+      "Los métodos de fábrica libraryLookup(String, Arena) y libraryLookup(Path, Arena) crean una búsqueda de símbolos para una biblioteca que conoce el sistema operativo, indicada por su nombre o por una ruta. Si la biblioteca no está cargada, se carga. Esta búsqueda, llamada búsqueda de biblioteca, tiene una vida útil controlada por un arena. Por ejemplo, si el arena es confinado, la biblioteca asociada se descarga al cerrarlo:",
+      "{@snippet lang = java: try (Arena arena = Arena.ofConfined()) { SymbolLookup libGL = SymbolLookup.libraryLookup(\"libGL.so\", arena); // libGL.so loaded here MemorySegment glGetString = libGL.find(\"glGetString\").orElseThrow(); ... } // libGL.so unloaded here }",
+      "Si una biblioteca se cargó antes con JNI, es decir, con System.load(String) o System.loadLibrary(String), también quedó asociada a un cargador de clases concreto. El método de fábrica loaderLookup() crea una búsqueda de símbolos para todas las bibliotecas asociadas al cargador de clases de quien llama:",
+      "Esta búsqueda, llamada búsqueda del cargador, es dinámica respecto a las bibliotecas asociadas al cargador de clases. Si después se cargan otras bibliotecas con JNI asociadas a ese cargador, la búsqueda expone automáticamente sus símbolos.",
+      "Una búsqueda del cargador solo expone símbolos de bibliotecas cargadas antes con JNI, es decir, con System.load(String) o System.loadLibrary(String). No expone símbolos de bibliotecas cargadas al crear una búsqueda de biblioteca:",
+      "Además, una búsqueda de biblioteca para la biblioteca L expone los símbolos de L aunque L se haya cargado antes con JNI (la asociación con un cargador de clases no importa para la búsqueda de biblioteca):",
+      "Por último, cada Linker ofrece una búsqueda de símbolos para las bibliotecas de uso habitual en la combinación de sistema operativo y procesador que admite. Esta búsqueda, llamada búsqueda predeterminada, ayuda a encontrar rápidamente las direcciones de símbolos conocidos. Por ejemplo, un Linker para Linux/x64 podría exponer los símbolos de libc en la búsqueda predeterminada:"
+    ]
+  },
+  "web-java-se-java.lang.foreign.ValueLayout.arrayElementVarHandle": {
+    "body": [
+      "Por ejemplo, esta llamada:",
+      "Equivale a este código:",
+      "El var handle resultante, arrayHandle, tendrá 3 coordenadas de tipo long, cada una interpretada como índice en el layout de secuencia correspondiente. Si llamamos a las coordenadas, de izquierda a derecha, x, y y z, el desplazamiento final al que accede el var handle se calcula con esta fórmula:",
+      "offset = (10 * 20 * 4 * x) + (20 * 4 * y) + (4 * z)",
+      "Además, los valores de x, y y z tienen estas restricciones:",
+      "0 <= x < notionalLayout.elementCount()",
+      "Considera estas expresiones de acceso:",
+      "En el primer caso, el acceso es correcto porque x, y y z respetan los límites indicados. En el segundo, falla con IndexOutOfBoundsException porque z está fuera de sus límites."
+    ],
+    "parameters": [
+      {
+        "label": "shape",
+        "detail": "el tamaño de cada dimensión del array anidado."
+      }
+    ],
+    "returns": [
+      "un var handle con el que acceder a un segmento de memoria como array multidimensional, con shape.length + 1 coordenadas long."
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si shape[i] < 0 para al menos un índice i."
+      },
+      {
+        "label": "UnsupportedOperationException",
+        "detail": "si byteAlignment() > byteSize()."
+      }
+    ]
+  },
+  "web-java-se-java.lang.instrument.Instrumentation.setNativeMethodPrefix": {
+    "body": [
+      "Como los métodos nativos no pueden instrumentarse directamente (no tienen bytecodes), hay que envolverlos con un método no nativo que sí pueda instrumentarse. Por ejemplo, si tuviéramos:",
+      "native boolean foo(int x);",
+      "Podríamos transformar el archivo de clase (con el ClassFileTransformer durante la definición inicial de la clase) para que quede así:",
+      "boolean foo(int x) { ... record entry to foo ... return wrapped_foo(x); }",
+      "native boolean wrapped_foo(int x);",
+      "Donde foo pasa a ser un envoltorio del método nativo real, que tiene el prefijo \"wrapped_\". \"wrapped_\" sería una mala elección de prefijo, porque podría coincidir con el nombre de un método existente; algo como \"$$$MyAgentWrapped$$$_\" sería mejor, pero haría los ejemplos menos legibles.",
+      "El envoltorio permite recoger datos de la llamada al método nativo, pero ahora el problema es enlazar el método envuelto con la implementación nativa. Es decir, wrapped_foo debe resolverse a la implementación nativa de foo, que podría ser:",
+      "Java_somePackage_someClass_foo(JNIEnv* env, jint x)",
+      "Esta función permite indicar el prefijo para que la resolución sea correcta. En concreto, cuando la resolución estándar falla, se reintenta teniendo en cuenta el prefijo. Hay dos formas de resolución: la explícita, con la función JNI RegisterNatives, y la automática normal. Con RegisterNatives, la JVM intentará esta asociación:",
+      "method(foo) -> nativeImplementation(foo)",
+      "Si falla, se reintenta anteponiendo el prefijo indicado al nombre del método, lo que da la resolución correcta:",
+      "method(wrapped_foo) -> nativeImplementation(foo)",
+      "Con la resolución automática, la JVM intentará:",
+      "method(wrapped_foo) -> nativeImplementation(wrapped_foo)",
+      "Si falla, se reintenta quitando el prefijo indicado del nombre de la implementación, lo que da la resolución correcta:",
+      "method(wrapped_foo) -> nativeImplementation(foo)",
+      "Como el prefijo solo se usa cuando falla la resolución estándar, los métodos nativos pueden envolverse de forma selectiva.",
+      "Como cada ClassFileTransformer puede hacer su propia transformación de los bytecodes, pueden aplicarse varias capas de envoltorios, así que cada transformador necesita su propio prefijo. Como las transformaciones se aplican en orden, los prefijos, si se aplican, se aplican en el mismo orden (consulta addTransformer). Así, si tres transformadores aplican envoltorios, foo podría quedar como $trans3_$trans2_$trans1_foo. Pero si, por ejemplo, el segundo no envolviera foo, quedaría solo $trans3_$trans1_foo. Para poder determinar de forma eficiente la secuencia de prefijos, un prefijo intermedio solo se aplica si existe su envoltorio no nativo. Así, en el último ejemplo, aunque $trans1_foo no es nativo, se aplica el prefijo $trans1_ porque $trans1_foo existe."
+    ],
+    "parameters": [
+      {
+        "label": "transformer",
+        "detail": "El ClassFileTransformer que envuelve usando este prefijo."
+      },
+      {
+        "label": "prefix",
+        "detail": "El prefijo que se aplica a los métodos nativos envueltos al reintentar una resolución fallida. Si es null o la cadena vacía, no se reintentan las resoluciones fallidas para este transformador."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "java.lang.NullPointerException",
+        "detail": "si se pasa un transformador null."
+      },
+      {
+        "label": "java.lang.UnsupportedOperationException",
+        "detail": "si la configuración actual de la JVM no permite fijar un prefijo de métodos nativos (isNativeMethodPrefixSupported es false)."
+      },
+      {
+        "label": "java.lang.IllegalArgumentException",
+        "detail": "si el transformador no está registrado (consulta addTransformer)."
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.CallSite": {
+    "body": [
+      "CallSite es una clase abstracta sellada que no permite que los usuarios creen subclases directas. Tiene tres subclases inmediatas, concretas y no selladas, que pueden instanciarse o extenderse.",
+      "Si no hace falta un destino mutable, una instrucción invokedynamic puede enlazarse de forma permanente con un call site constante.",
+      "Si hace falta un destino mutable con semántica de variable volátil, porque los demás hilos deben ver los cambios del destino de inmediato y de forma fiable, puede usarse un call site volátil.",
+      "En otro caso, si hace falta un destino mutable, puede usarse un call site mutable.",
+      "Un call site no constante puede reenlazarse cambiando su destino. El nuevo destino debe tener el mismo tipo que el anterior. Así, aunque un call site puede reenlazarse a una serie de destinos sucesivos, no puede cambiar de tipo.",
+      "Este es un ejemplo de uso de call sites y métodos bootstrap que enlaza cada call site dinámico para que imprima sus argumentos:",
+      "{@code static void test() throws Throwable { // THE FOLLOWING LINE IS PSEUDOCODE FOR A JVM INSTRUCTION InvokeDynamic[#bootstrapDynamic].baz(\"baz arg\", 2, 3.14); } private static void printArgs(Object... args) { System.out.println(java.util.Arrays.deepToString(args)); } private static final MethodHandle printArgs; static { MethodHandles.Lookup lookup = MethodHandles.lookup(); Class thisClass = lookup.lookupClass(); // (who am I?) printArgs = lookup.findStatic(thisClass, \"printArgs\", MethodType.methodType(void.class, Object[].class)); } private static CallSite bootstrapDynamic(MethodHandles.Lookup caller, String name, MethodType type) { // ignore caller and name, but match the type: return new ConstantCallSite(printArgs.asType(type)); } }"
+    ]
+  },
+  "web-java-se-java.lang.invoke.CallSite.dynamicInvoker": {
+    "body": [
+      "Este método equivale a este código:",
+      "MethodHandle getTarget, invoker, result; getTarget = MethodHandles.publicLookup().bind(this, \"getTarget\", MethodType.methodType(MethodHandle.class)); invoker = MethodHandles.exactInvoker(this.type()); result = MethodHandles.foldArguments(invoker, getTarget)"
+    ],
+    "returns": [
+      "un method handle que siempre invoca el destino actual de este call site"
+    ]
+  },
+  "web-java-se-java.lang.invoke.LambdaConversionException": {
+    "intro": ["LambdaConversionException"]
+  },
+  "web-java-se-java.lang.invoke.MethodHandle.asCollector": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un method handle que recoge argumentos en un array: acepta un número dado de argumentos posicionales finales y los reúne en un argumento array. El nuevo method handle adapta, como destino, el method handle actual. El tipo del adaptador es el del destino, salvo que un único parámetro final (normalmente de tipo arrayType) se sustituye por arrayLength parámetros cuyo tipo es el tipo de elemento de arrayType."
+        ],
+        "body": [
+          "Si el tipo del array difiere del tipo del último argumento del destino original, este se adapta para recibir directamente el tipo del array, como si se llamara a asType.",
+          "Al llamarlo, el adaptador sustituye sus arrayLength argumentos finales por un único array nuevo de tipo arrayType, cuyos elementos son (en orden) los argumentos sustituidos. Después se llama al destino, y lo que devuelva el destino lo devuelve el adaptador sin cambios.",
+          "(El array también puede ser una constante compartida cuando arrayLength es cero).",
+          "(Nota: arrayType suele ser idéntico al último tipo de parámetro del destino original. Es un argumento explícito por simetría con asSpreader, y también para que el destino pueda usar un simple Object como último tipo de parámetro).",
+          "Para crear un adaptador colector que no esté limitado a un número concreto de argumentos, usa asVarargsCollector o withVarargs.",
+          "Estos son algunos ejemplos de method handles que recogen en arrays: {@snippet lang=\"java\" : MethodHandle deepToString = publicLookup() .findStatic(Arrays.class, \"deepToString\", methodType(String.class, Object[].class)); assertEquals(\"[won]\", (String) deepToString.invokeExact(new Object[]{\"won\"})); MethodHandle ts1 = deepToString.asCollector(Object[].class, 1); assertEquals(methodType(String.class, Object.class), ts1.type()); //assertEquals(\"[won]\", (String) ts1.invokeExact( new Object[]{\"won\"})); //FAIL assertEquals(\"[[won]]\", (String) ts1.invokeExact((Object) new Object[]{\"won\"})); // arrayType can be a subtype of Object[] MethodHandle ts2 = deepToString.asCollector(String[].class, 2); assertEquals(methodType(String.class, String.class, String.class), ts2.type()); assertEquals(\"[two, too]\", (String) ts2.invokeExact(\"two\", \"too\")); MethodHandle ts0 = deepToString.asCollector(Object[].class, 0); assertEquals(\"[]\", (String) ts0.invokeExact()); // collectors can be nested, Lisp-style MethodHandle ts22 = deepToString.asCollector(Object[].class, 3).asCollector(String[].class, 2); assertEquals(\"[A, B, [C, D]]\", ((String) ts22.invokeExact((Object)'A', (Object)\"B\", \"C\", \"D\"))); // arrayType can be any primitive array type MethodHandle bytesToString = publicLookup() .findStatic(Arrays.class, \"toString\", methodType(String.class, byte[].class)) .asCollector(byte[].class, 3); assertEquals(\"[1, 2, 3]\", (String) bytesToString.invokeExact((byte)1, (byte)2, (byte)3)); MethodHandle longsToString = publicLookup() .findStatic(Arrays.class, \"toString\", methodType(String.class, long[].class)) .asCollector(long[].class, 1); assertEquals(\"[123]\", (String) longsToString.invokeExact((long)123)); }",
+          "Nota: el adaptador resultante nunca es un method handle de aridad variable, aunque el destino original lo fuera."
+        ],
+        "parameters": [
+          {
+            "label": "arrayType",
+            "detail": "normalmente Object[], el tipo del argumento array que recogerá los argumentos"
+          },
+          {
+            "label": "arrayLength",
+            "detail": "el número de argumentos que se recogen en un nuevo argumento array"
+          }
+        ],
+        "returns": [
+          "un method handle nuevo que recoge algunos argumentos finales en un array antes de llamar al method handle original"
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si arrayType es una referencia null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si arrayType no es un tipo array o no es asignable al último tipo de parámetro de este method handle, si arrayLength no es un tamaño de array válido, o si el tipo del method handle resultante tendría demasiados parámetros"
+          },
+          {
+            "label": "WrongMethodTypeException",
+            "detail": "si falla la llamada implícita a asType"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un method handle que recoge argumentos en un array: acepta un número dado de argumentos posicionales a partir de una posición dada y los reúne en un argumento array. El nuevo method handle adapta, como destino, el method handle actual. El tipo del adaptador es el del destino, salvo que el parámetro de la posición collectArgPos (normalmente de tipo arrayType) se sustituye por arrayLength parámetros cuyo tipo es el tipo de elemento de arrayType."
+        ],
+        "body": [
+          "Este método se comporta de forma muy parecida a asCollector(Class, int), pero su argumento collectArgPos indica en qué posición de la lista de parámetros se recogen los argumentos. El índice empieza en cero."
+        ],
+        "parameters": [
+          {
+            "label": "collectArgPos",
+            "detail": "la posición, empezando en cero, de la lista de parámetros en la que empieza la recogida."
+          },
+          {
+            "label": "arrayType",
+            "detail": "normalmente Object[], el tipo del argumento array que recogerá los argumentos"
+          },
+          {
+            "label": "arrayLength",
+            "detail": "el número de argumentos que se recogen en un nuevo argumento array"
+          }
+        ],
+        "returns": [
+          "un method handle nuevo que recoge algunos argumentos en un array antes de llamar al method handle original"
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si arrayType es una referencia null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si arrayType no es un tipo array o no es asignable al tipo del parámetro array de este method handle, si arrayLength no es un tamaño de array válido, si collectArgPos tiene un valor no válido (negativo o mayor que el número de argumentos), o si el tipo del method handle resultante tendría demasiados parámetros"
+          },
+          {
+            "label": "WrongMethodTypeException",
+            "detail": "si falla la llamada implícita a asType"
+          }
+        ],
+        "caveats": [
+          "Ejemplos:",
+          "Nota: el adaptador resultante nunca es un method handle de aridad variable, aunque el destino original lo fuera."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandle.asFixedArity": {
+    "body": [
+      "Si el method handle actual no es de aridad variable, se devuelve tal cual. Esto se cumple aunque el method handle actual no pudiera ser una entrada válida para asVarargsCollector.",
+      "En otro caso, el method handle de aridad fija resultante tiene el mismo tipo y comportamiento que el actual, salvo que isVarargsCollector será false. El method handle de aridad fija puede ser (o no) el argumento que se pasó antes a asVarargsCollector.",
+      "Este es un ejemplo de method handle de aridad variable que crea listas: {@snippet lang=\"java\" : MethodHandle asListVar = publicLookup() .findStatic(Arrays.class, \"asList\", methodType(List.class, Object[].class)) .asVarargsCollector(Object[].class); MethodHandle asListFix = asListVar.asFixedArity(); assertEquals(\"[1]\", asListVar.invoke(1).toString()); Exception caught = null; try { asListFix.invoke((Object)1); } catch (Exception ex) { caught = ex; } assert(caught instanceof ClassCastException); assertEquals(\"[two, too]\", asListVar.invoke(\"two\", \"too\").toString()); try { asListFix.invoke(\"two\", \"too\"); } catch (Exception ex) { caught = ex; } assert(caught instanceof WrongMethodTypeException); Object[] argv = { \"three\", \"thee\", \"tee\" }; assertEquals(\"[three, thee, tee]\", asListVar.invoke(argv).toString()); assertEquals(\"[three, thee, tee]\", asListFix.invoke(argv).toString()); assertEquals(1, ((List) asListVar.invoke((Object)argv)).size()); assertEquals(\"[three, thee, tee]\", asListFix.invoke((Object)argv).toString()); }"
+    ],
+    "returns": [
+      "un method handle nuevo que solo acepta un número fijo de argumentos"
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandle.asSpreader": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un method handle que reparte un array: acepta un argumento array final y reparte sus elementos como argumentos posicionales. El nuevo method handle adapta, como destino, el method handle actual. El tipo del adaptador es el del destino, salvo que los arrayLength últimos parámetros del tipo del destino se sustituyen por un único parámetro array de tipo arrayType."
+        ],
+        "body": [
+          "Si el tipo de elemento del array difiere de alguno de los tipos de argumento correspondientes del destino original, este se adapta para recibir directamente los elementos del array, como si se llamara a asType.",
+          "Al llamarlo, el adaptador sustituye el argumento array final por sus elementos, cada uno como argumento propio del destino (se mantiene el orden). Se convierten uno a uno, con conversión de tipos o desempaquetado, a los tipos de los últimos parámetros del destino. Después se llama al destino, y lo que devuelva lo devuelve el adaptador sin cambios.",
+          "Antes de llamar al destino, el adaptador comprueba que el array tiene exactamente los elementos necesarios para dar al destino el número correcto de argumentos. (El array también puede ser null cuando se necesitan cero elementos).",
+          "Al llamar al adaptador, la longitud del array se consulta como con array.length o el bytecode arraylength. Si el adaptador acepta un array final de longitud cero, el argumento puede ser un array vacío o null; si no, el adaptador lanza NullPointerException si el array es null e IllegalArgumentException si no tiene el número correcto de elementos.",
+          "Estos son algunos ejemplos sencillos de method handles que reparten arrays: {@snippet lang=\"java\" : MethodHandle equals = publicLookup() .findVirtual(String.class, \"equals\", methodType(boolean.class, Object.class)); assert( (boolean) equals.invokeExact(\"me\", (Object)\"me\")); assert(!(boolean) equals.invokeExact(\"me\", (Object)\"thee\")); // spread both arguments from a 2-array: MethodHandle eq2 = equals.asSpreader(Object[].class, 2); assert( (boolean) eq2.invokeExact(new Object[]{ \"me\", \"me\" })); assert(!(boolean) eq2.invokeExact(new Object[]{ \"me\", \"thee\" })); // try to spread from anything but a 2-array: for (int n = 0; n <= 10; n++) { Object[] badArityArgs = (n == 2 ? new Object[0] : new Object[n]); try { assert((boolean) eq2.invokeExact(badArityArgs) && false); } catch (IllegalArgumentException ex) { } // OK } // spread both arguments from a String array: MethodHandle eq2s = equals.asSpreader(String[].class, 2); assert( (boolean) eq2s.invokeExact(new String[]{ \"me\", \"me\" })); assert(!(boolean) eq2s.invokeExact(new String[]{ \"me\", \"thee\" })); // spread second arguments from a 1-array: MethodHandle eq1 = equals.asSpreader(Object[].class, 1); assert( (boolean) eq1.invokeExact(\"me\", new Object[]{ \"me\" })); assert(!(boolean) eq1.invokeExact(\"me\", new Object[]{ \"thee\" })); // spread no arguments from a 0-array or null: MethodHandle eq0 = equals.asSpreader(Object[].class, 0); assert( (boolean) eq0.invokeExact(\"me\", (Object)\"me\", new Object[0])); assert(!(boolean) eq0.invokeExact(\"me\", (Object)\"thee\", (Object[])null)); // asSpreader and asCollector are approximate inverses: for (int n = 0; n <= 2; n++) { for (Class a : new Class[]{Object[].class, String[].class, CharSequence[].class}) { MethodHandle equals2 = equals.asSpreader(a, n).asCollector(a, n); assert( (boolean) equals2.invokeWithArguments(\"me\", \"me\")); assert(!(boolean) equals2.invokeWithArguments(\"me\", \"thee\")); } } MethodHandle caToString = publicLookup() .findStatic(Arrays.class, \"toString\", methodType(String.class, char[].class)); assertEquals(\"[A, B, C]\", (String) caToString.invokeExact(\"ABC\".toCharArray())); MethodHandle caString3 = caToString.asCollector(char[].class, 3); assertEquals(\"[A, B, C]\", (String) caString3.invokeExact('A', 'B', 'C')); MethodHandle caToString2 = caString3.asSpreader(char[].class, 2); assertEquals(\"[A, B, C]\", (String) caToString2.invokeExact('A', \"BC\".toCharArray())); }"
+        ],
+        "parameters": [
+          {
+            "label": "arrayType",
+            "detail": "normalmente Object[], el tipo del argumento array del que se extraen los argumentos repartidos"
+          },
+          {
+            "label": "arrayLength",
+            "detail": "el número de argumentos que se reparten desde el argumento array recibido"
+          }
+        ],
+        "returns": [
+          "un method handle nuevo que reparte su último argumento array antes de llamar al method handle original"
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si arrayType es una referencia null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si arrayType no es un tipo array, si el destino no tiene al menos arrayLength tipos de parámetro, si arrayLength es negativo, o si el tipo del method handle resultante tendría demasiados parámetros"
+          },
+          {
+            "label": "WrongMethodTypeException",
+            "detail": "si falla la llamada implícita a asType"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un method handle que reparte un array: acepta un argumento array en una posición dada y reparte sus elementos como argumentos posicionales en lugar del array. El nuevo method handle adapta, como destino, el method handle actual. El tipo del adaptador es el del destino, salvo que los arrayLength parámetros del tipo del destino, a partir de la posición spreadArgPos (empezando en cero), se sustituyen por un único parámetro array de tipo arrayType."
+        ],
+        "body": [
+          "Este método se comporta de forma muy parecida a asSpreader(Class, int), pero acepta un argumento adicional, spreadArgPos, que indica en qué posición de la lista de parámetros se hace el reparto."
+        ],
+        "parameters": [
+          {
+            "label": "spreadArgPos",
+            "detail": "la posición (índice empezando en cero) de la lista de argumentos en la que empieza el reparto."
+          },
+          {
+            "label": "arrayType",
+            "detail": "normalmente Object[], el tipo del argumento array del que se extraen los argumentos repartidos"
+          },
+          {
+            "label": "arrayLength",
+            "detail": "el número de argumentos que se reparten desde el argumento array recibido"
+          }
+        ],
+        "returns": [
+          "un method handle nuevo que reparte un argumento array en una posición dada antes de llamar al method handle original"
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si arrayType es una referencia null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si arrayType no es un tipo array, si el destino no tiene al menos arrayLength tipos de parámetro, si arrayLength es negativo, si spreadArgPos tiene un valor no válido (negativo o, junto con arrayLength, mayor que el número de argumentos), o si el tipo del method handle resultante tendría demasiados parámetros"
+          },
+          {
+            "label": "WrongMethodTypeException",
+            "detail": "si falla la llamada implícita a asType"
+          }
+        ],
+        "caveats": [
+          "Ejemplo: {@snippet lang=\"java\" : MethodHandle compare = LOOKUP.findStatic(Objects.class, \"compare\", methodType(int.class, Object.class, Object.class, Comparator.class)); MethodHandle compare2FromArray = compare.asSpreader(0, Object[].class, 2); Object[] ints = new Object[]{3, 9, 7, 7}; Comparator cmp = (a, b) -> a - b; assertTrue((int) compare2FromArray.invoke(Arrays.copyOfRange(ints, 0, 2), cmp) < 0); assertTrue((int) compare2FromArray.invoke(Arrays.copyOfRange(ints, 1, 3), cmp) > 0); assertTrue((int) compare2FromArray.invoke(Arrays.copyOfRange(ints, 2, 4), cmp) == 0); }"
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandle.asVarargsCollector": {
+    "body": [
+      "El tipo y el comportamiento del adaptador son los del destino, salvo que ciertas peticiones de invoke y asType pueden hacer que los argumentos posicionales finales se recojan en el último parámetro del destino. Además, el último tipo de parámetro del adaptador será arrayType, aunque el destino tenga otro.",
+      "Esta transformación puede devolver this si el method handle ya es de aridad variable y su último tipo de parámetro es idéntico a arrayType.",
+      "Al llamarlo con invokeExact, el adaptador invoca al destino sin cambiar los argumentos. (Nota: esto es distinto de un colector de aridad fija, porque acepta un array completo de longitud indeterminada en lugar de un número fijo de argumentos).",
+      "Al llamarlo con invoke normal, no exacto, si el tipo de quien llama es el del adaptador, este invoca al destino como con invokeExact. (Es el comportamiento normal de invoke cuando los tipos coinciden).",
+      "En otro caso, si quien llama y el adaptador tienen la misma aridad y el último tipo de parámetro de quien llama es un tipo referencia idéntico o asignable al último tipo de parámetro del adaptador, los argumentos y el valor de retorno se convierten uno a uno, como con asType sobre un method handle de aridad fija.",
+      "En otro caso, las aridades difieren o el último tipo de parámetro del adaptador no es asignable desde el tipo correspondiente de quien llama. Entonces el adaptador sustituye todos los argumentos desde la posición del último argumento original en adelante por un array nuevo de tipo arrayType, cuyos elementos son (en orden) los argumentos sustituidos.",
+      "El tipo de quien llama debe dar al menos los argumentos necesarios, y del tipo correcto, para cubrir los argumentos posicionales que el destino necesita antes del array final. Es decir, quien llama debe dar como mínimo N-1 argumentos, donde N es la aridad del destino. Además, debe haber conversiones de los argumentos recibidos a los del destino. Como en otros usos de invoke normal, si no se cumplen estos requisitos básicos, puede lanzarse WrongMethodTypeException.",
+      "En todos los casos, lo que devuelva el destino lo devuelve el adaptador sin cambios.",
+      "En el último caso, es exactamente como si el method handle destino se adaptara temporalmente con un colector de aridad fija a la aridad que necesita el tipo de quien llama. (Como con asCollector, si la longitud del array es cero, puede usarse una constante compartida en lugar de un array nuevo. Si la llamada implícita a asCollector lanzara IllegalArgumentException o WrongMethodTypeException, la llamada al adaptador de aridad variable debe lanzar WrongMethodTypeException).",
+      "El comportamiento de asType también está especializado para los adaptadores de aridad variable, para mantener la invariante de que invoke normal, no exacto, siempre equivale a una llamada a asType para ajustar el tipo del destino seguida de invokeExact. Por eso, un adaptador de aridad variable responde a una petición asType creando un colector de aridad fija si y solo si el adaptador y el tipo pedido difieren en aridad o en el tipo del último argumento. El tipo del colector resultante se ajusta además (si hace falta) al tipo pedido mediante conversión uno a uno, como con otra aplicación de asType.",
+      "Cuando se obtiene un method handle ejecutando una instrucción ldc de una constante CONSTANT_MethodHandle y el método destino está marcado como de aridad variable (con el bit modificador 0x0080), el method handle acepta varias aridades, como si la constante se hubiera creado con una llamada a asVarargsCollector.",
+      "Para crear un adaptador colector que recoja un número predeterminado de argumentos y cuyo tipo refleje ese número, usa asCollector.",
+      "Ninguna transformación de method handles produce method handles nuevos de aridad variable, salvo que se documente lo contrario. Por eso, aparte de asVarargsCollector y withVarargs, todos los métodos de MethodHandle y MethodHandles devuelven method handles de aridad fija, salvo cuando se especifica que devuelven su operando original (p. ej. asType con el propio tipo del method handle).",
+      "Llamar a asVarargsCollector sobre un method handle que ya es de aridad variable produce un method handle con el mismo tipo y comportamiento. Puede devolver (o no) el method handle de aridad variable original.",
+      "Este es un ejemplo de method handle de aridad variable que crea listas: {@snippet lang=\"java\" : MethodHandle deepToString = publicLookup() .findStatic(Arrays.class, \"deepToString\", methodType(String.class, Object[].class)); MethodHandle ts1 = deepToString.asVarargsCollector(Object[].class); assertEquals(\"[won]\", (String) ts1.invokeExact( new Object[]{\"won\"})); assertEquals(\"[won]\", (String) ts1.invoke( new Object[]{\"won\"})); assertEquals(\"[won]\", (String) ts1.invoke( \"won\" )); assertEquals(\"[[won]]\", (String) ts1.invoke((Object) new Object[]{\"won\"})); // findStatic of Arrays.asList(...) produces a variable arity method handle: MethodHandle asList = publicLookup() .findStatic(Arrays.class, \"asList\", methodType(List.class, Object[].class)); assertEquals(methodType(List.class, Object[].class), asList.type()); assert(asList.isVarargsCollector()); assertEquals(\"[]\", asList.invoke().toString()); assertEquals(\"[1]\", asList.invoke(1).toString()); assertEquals(\"[two, too]\", asList.invoke(\"two\", \"too\").toString()); String[] argv = { \"three\", \"thee\", \"tee\" }; assertEquals(\"[three, thee, tee]\", asList.invoke(argv).toString()); assertEquals(\"[three, thee, tee]\", asList.invoke((Object[])argv).toString()); List ls = (List) asList.invoke((Object)argv); assertEquals(1, ls.size()); assertEquals(\"[three, thee, tee]\", Arrays.toString((Object[])ls.get(0))); }",
+      "Explicación: estas reglas son una variante con tipado dinámico de las reglas de Java para métodos de aridad variable. En ambos casos, quien llama a un método o method handle de aridad variable puede pasar cero o más argumentos posicionales, o bien arrays ya formados de cualquier longitud. Hay que tener en cuenta el papel especial del último argumento y el efecto de que su tipo coincida, que decide si un único argumento final se interpreta como el array completo o como un elemento del array que se va a recoger. El tipo dinámico del último argumento no influye en esta decisión; solo cuenta la comparación entre el descriptor de tipo simbólico del call site y el del method handle."
+    ],
+    "parameters": [
+      {
+        "label": "arrayType",
+        "detail": "normalmente Object[], el tipo del argumento array que recogerá los argumentos"
+      }
+    ],
+    "returns": [
+      "un method handle nuevo que puede recoger cualquier número de argumentos finales en un array antes de llamar al method handle original"
+    ],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si arrayType es una referencia null"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si arrayType no es un tipo array o no es asignable al último tipo de parámetro de este method handle"
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandle.invokeWithArguments": {
+    "overloads": [
+      {
+        "intro": [
+          "Hace una invocación de aridad variable pasando al method handle los argumentos del array dado, como con un invoke no exacto desde un call site que solo menciona el tipo Object y cuyo número real de argumentos es la longitud del array."
+        ],
+        "body": [
+          "En concreto, la ejecución sigue estos pasos, aunque no se garantiza que se llame a los métodos si la JVM puede predecir sus efectos.",
+          "Se determina la longitud del array como N. Para una referencia null, N=0.",
+          "Se reúnen los N elementos del array como lista lógica de argumentos, cada uno con tipo estático Object.",
+          "Se determina como M el número de parámetros del tipo de este method handle.",
+          "Se determina el tipo general TN de N argumentos, o de M si es menor que N, como TN=MethodType.genericMethodType(Math.min(N, M)).",
+          "Si N es mayor que M, se hacen estas comprobaciones y acciones para acortar la lista lógica de argumentos:",
+          "Se comprueba que este method handle tiene aridad variable con un último parámetro de algún tipo array A[]. Si no, falla con WrongMethodTypeException.",
+          "Se reúnen los elementos finales (hay N-M+1) de la lista lógica en un único array de tipo A[], usando conversiones asType para convertir cada argumento final al tipo A.",
+          "Si alguna de estas conversiones es imposible, falla con ClassCastException si algún elemento final no puede convertirse a A, o con NullPointerException si algún elemento final es null y A no es un tipo referencia.",
+          "Se sustituyen los argumentos lógicos reunidos en el array A[] por el propio array, acortando la lista a longitud M. Este último argumento mantiene el tipo estático A[].",
+          "Se ajusta el tipo TN cambiando el tipo del parámetro N de Object a A[].",
+          "Se fuerza el method handle destino original MH0 al tipo necesario, como MH1 = MH0.asType(TN).",
+          "Se reparte la lista de argumentos en N argumentos separados A0, ....",
+          "Se invoca el method handle con el tipo ajustado sobre los argumentos desempaquetados: MH1.invokeExact(A0, ...).",
+          "Se toma el valor de retorno como referencia Object.",
+          "Si el method handle destino tiene aridad variable y la lista de argumentos es más larga que esa aridad, los argumentos sobrantes, desde la posición del último argumento array, se reúnen (si es posible, como con conversiones asType) en un array del tipo adecuado, y la invocación sigue con la lista acortada. Así, listas enormes de argumentos que ocuparían más de 254 ranuras pueden procesarse de forma uniforme.",
+          "A diferencia del modo de invocación genérico, que puede \"reciclar\" un argumento array pasándolo directamente al método destino, este modo siempre crea un parámetro array nuevo, aunque el array original pasado a invokeWithArguments hubiera sido aceptable como argumento directo. Aunque el número M de argumentos reales sea la aridad N y el último argumento sea dinámicamente un array adecuado de tipo A[], se seguirá empaquetando en un array nuevo de un elemento, porque el call site tipa estáticamente el argumento como Object, no como tipo array. No es una regla especial de este método, sino un efecto normal de las reglas de invocación de aridad variable.",
+          "Por el paso de asType, se aplican estas conversiones de argumentos cuando hace falta:",
+          "conversión de referencias",
+          "desempaquetado",
+          "conversiones primitivas de ampliación",
+          "conversión de aridad variable",
+          "El resultado de la llamada se empaqueta si es primitivo, o se fuerza a null si el tipo de retorno es void.",
+          "A diferencia de los métodos polimórficos en firma invokeExact e invoke, invokeWithArguments puede usarse normalmente desde la API Core Reflection y desde JNI. Por eso puede servir de puente entre el código nativo o reflexivo y los method handles."
+        ],
+        "parameters": [
+          {
+            "label": "arguments",
+            "detail": "los argumentos que se pasan al destino"
+          }
+        ],
+        "returns": ["el resultado devuelto por el destino"],
+        "exceptions": [
+          {
+            "label": "ClassCastException",
+            "detail": "si un argumento no puede convertirse mediante conversión de referencias"
+          },
+          {
+            "label": "WrongMethodTypeException",
+            "detail": "si el tipo del destino no puede ajustarse para recibir el número dado de argumentos Object"
+          },
+          {
+            "label": "Throwable",
+            "detail": "cualquier cosa que lance la invocación del método destino"
+          }
+        ],
+        "caveats": [
+          "Esta llamada equivale aproximadamente a este código: {@snippet lang=\"java\" : // for jumbo argument lists, adapt varargs explicitly: int N = (arguments == null? 0: arguments.length); int M = this.type.parameterCount(); int MAX_SAFE = 127; // 127 longs require 254 slots, which is OK if (N > MAX_SAFE && N > M && this.isVarargsCollector()) { Class arrayType = this.type().lastParameterType(); Class elemType = arrayType.getComponentType(); if (elemType != null) { Object args2 = Array.newInstance(elemType, M); MethodHandle arraySetter = MethodHandles.arrayElementSetter(arrayType); for (int i = 0; i < M; i++) { arraySetter.invoke(args2, i, arguments[M-1 + i]); } arguments = Arrays.copyOf(arguments, M); arguments[M-1] = args2; return this.asFixedArity().invokeWithArguments(arguments); } } // done with explicit varargs processing",
+          "// Handle fixed arity and non-jumbo variable arity invocation. MethodHandle invoker = MethodHandles.spreadInvoker(this.type(), 0); Object result = invoker.invokeExact(this, arguments); }"
+        ]
+      },
+      {
+        "intro": [
+          "Hace una invocación de aridad variable pasando al method handle los argumentos de la lista dada, como con un invoke no exacto desde un call site que solo menciona el tipo Object y cuyo número real de argumentos es la longitud de la lista."
+        ],
+        "body": [
+          "Este método también equivale a este código:",
+          "Se aceptan listas enormes si este method handle tiene aridad variable. Consulta invokeWithArguments(Object[]) para más detalles."
+        ],
+        "parameters": [
+          {
+            "label": "arguments",
+            "detail": "los argumentos que se pasan al destino"
+          }
+        ],
+        "returns": ["el resultado devuelto por el destino"],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si arguments es una referencia null"
+          },
+          {
+            "label": "ClassCastException",
+            "detail": "si un argumento no puede convertirse mediante conversión de referencias"
+          },
+          {
+            "label": "WrongMethodTypeException",
+            "detail": "si el tipo del destino no puede ajustarse para recibir el número dado de argumentos Object"
+          },
+          {
+            "label": "Throwable",
+            "detail": "cualquier cosa que lance la invocación del método destino"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.MutableCallSite.dynamicInvoker": {
+    "body": [
+      "Este método equivale a este código:",
+      "MethodHandle getTarget, invoker, result; getTarget = MethodHandles.publicLookup().bind(this, \"getTarget\", MethodType.methodType(MethodHandle.class)); invoker = MethodHandles.exactInvoker(this.type()); result = MethodHandles.foldArguments(invoker, getTarget)"
+    ],
+    "returns": [
+      "un method handle que siempre invoca el destino actual de este call site"
+    ]
+  },
   "web-java-se-java.lang.invoke.SerializedLambda.toString": {
     "returns": ["una representación en cadena del objeto."],
     "caveats": [
@@ -10720,6 +11407,15 @@
     "caveats": [
       "Algunos descriptores de constantes, como MethodTypeDesc, pueden representar un valor que no tiene equivalente en las entidades de tiempo de ejecución. Intentar resolverlos puede provocar errores.",
       "@jvms 5.4.3 Resolution @jvms 5.4.4 Access Control"
+    ]
+  },
+  "web-java-se-java.lang.invoke.VolatileCallSite.dynamicInvoker": {
+    "body": [
+      "Este método equivale a este código:",
+      "MethodHandle getTarget, invoker, result; getTarget = MethodHandles.publicLookup().bind(this, \"getTarget\", MethodType.methodType(MethodHandle.class)); invoker = MethodHandles.exactInvoker(this.type()); result = MethodHandles.foldArguments(invoker, getTarget)"
+    ],
+    "returns": [
+      "un method handle que siempre invoca el destino actual de este call site"
     ]
   },
   "web-java-se-java.math.BigDecimal.%3Cinit%3E": {
