@@ -1,4 +1,250 @@
 {
+  "php-class-__php_incomplete_class": {
+    "description": [
+      "Conserva las propiedades del objeto serializado y guarda el nombre de la clase original en la propiedad __PHP_Incomplete_Class_Name. No se puede llamar a sus métodos porque PHP no conoce la clase real.",
+      "Para obtener el objeto real, carga o declara la clase (por ejemplo, con un autoloader) antes de llamar a unserialize(). Si limitas allowed_classes, las clases que queden fuera seguirán llegando como __PHP_Incomplete_Class.",
+      "Antes de PHP 7.2.0, is_object() devolvía false con esta clase. Desde PHP 7.2.0 devuelve true."
+    ]
+  },
+  "php-class-addressinfo": {
+    "description": [
+      "Obtén instancias con socket_addrinfo_lookup() y consulta sus datos con socket_addrinfo_explain(). Se pueden usar para preparar una conexión o asociar un socket con socket_addrinfo_connect() y socket_addrinfo_bind().",
+      "Existe desde PHP 8.0, cuando estas funciones dejaron de devolver recursos. Es final y no se instancia con new."
+    ]
+  },
+  "php-class-apcuiterator": {
+    "description": [
+      "El constructor acepta un patrón de búsqueda (una expresión regular o un array de claves), el formato de cada elemento mediante las constantes APC_ITER_*, el número de entradas que se leen por bloque y la lista que se recorre (entradas activas o eliminadas).",
+      "Implementa Iterator, así que se usa directamente en foreach. getTotalCount(), getTotalHits() y getTotalSize() devuelven totales de las entradas que coinciden con la búsqueda."
+    ]
+  },
+  "php-class-appenditerator": {
+    "description": [
+      "Añade iteradores con append() y los recorre en el orden en que se añadieron, como si fueran una sola secuencia.",
+      "getIteratorIndex() indica qué iterador interno se está recorriendo y getArrayIterator() devuelve el ArrayIterator que guarda los iteradores añadidos.",
+      "Las claves se conservan tal como las da cada iterador, así que pueden repetirse. Si conviertes el resultado con iterator_to_array(), pasa false como segundo argumento para no perder valores."
+    ]
+  },
+  "php-class-argumentcounterror": {
+    "description": [
+      "Desde PHP 7.1 se lanza al llamar a una función o método de usuario con menos argumentos de los obligatorios. También se produce cuando se pasan demasiados argumentos a una función interna que no es variádica.",
+      "Hereda de TypeError, así que un catch (TypeError $e) también la captura."
+    ]
+  },
+  "php-class-arithmeticerror": {
+    "description": [
+      "Por ejemplo, intdiv(PHP_INT_MIN, -1) la lanza porque el resultado no cabe en un int, y 1 << -1 la lanza por el desplazamiento negativo.",
+      "Es la clase padre de DivisionByZeroError. Captura ArithmeticError si quieres tratar todos los errores aritméticos en el mismo bloque."
+    ]
+  },
+  "php-class-arrayaccess": {
+    "description": [
+      "Al implementar offsetExists(), offsetGet(), offsetSet() y offsetUnset(), el objeto admite $obj['clave'], isset($obj['clave']) y unset($obj['clave']). Con $obj[] = $valor, offsetSet() recibe null como desplazamiento.",
+      "No convierte el objeto en un array: las funciones array_* no lo aceptan y foreach necesita además Iterator o IteratorAggregate."
+    ]
+  },
+  "php-class-arrayobject": {
+    "description": [
+      "Envuelve un array y lo expone con acceso por índice, count(), foreach y métodos de ordenación como asort() o ksort(). Con la constante ArrayObject::ARRAY_AS_PROPS también se puede leer cada elemento como propiedad.",
+      "exchangeArray() sustituye el array interno y getArrayCopy() devuelve una copia. getIterator() devuelve un ArrayIterator, o la clase indicada con setIteratorClass().",
+      "Envolver objetos con esta clase es fundamentalmente defectuoso, y su utilización con objetos es por lo tanto desaconsejada."
+    ]
+  },
+  "php-class-assertionerror": {
+    "description": [
+      "Solo se lanza si las aserciones están activas (zend.assertions = 1). Desde PHP 8.0, assert.exception está activado por defecto, así que un fallo de assert() lanza este error.",
+      "Puedes pasar un mensaje o tu propio Throwable como segundo argumento de assert(). En producción se suele usar zend.assertions = -1 para que las aserciones no se compilen."
+    ]
+  },
+  "php-class-backedenum": {
+    "description": [
+      "Las enumeraciones respaldadas declaran un tipo int o string y cada caso tiene un valor, accesible con la propiedad de solo lectura value.",
+      "from() devuelve el caso que corresponde a un valor y lanza ValueError si no existe. tryFrom() hace lo mismo pero devuelve null cuando no hay coincidencia."
+    ]
+  },
+  "php-class-badfunctioncallexception": {
+    "description": [
+      "Hereda de LogicException, así que indica un error en el código y no una condición que dependa de los datos en tiempo de ejecución.",
+      "Es la clase padre de BadMethodCallException, que se usa para el mismo problema con métodos."
+    ]
+  },
+  "php-class-badmethodcallexception": {
+    "summary": "Excepción lanzada si una llamada de retorno hace referencia a un método no definido o faltan algunos de los argumentos.",
+    "description": [
+      "Se suele lanzar desde __call() o __callStatic() cuando el nombre del método solicitado no está soportado.",
+      "Hereda de BadFunctionCallException, así que también la captura un catch de esa clase o de LogicException."
+    ]
+  },
+  "php-class-cachingiterator": {
+    "description": [
+      "Va un elemento por delante del iterador interno, así que hasNext() permite saber si el elemento actual es el último. Es útil, por ejemplo, para no poner un separador tras el último elemento.",
+      "Con la constante CachingIterator::FULL_CACHE guarda todos los elementos recorridos; getCache() los devuelve y el acceso por índice funciona sobre ellos. Otras constantes controlan qué devuelve __toString()."
+    ]
+  },
+  "php-class-callbackfilteriterator": {
+    "summary": "Iterador que filtra otro iterador con una función de retorno.",
+    "description": [
+      "El constructor recibe el iterador interno y un callable. Para cada elemento se llama con el valor actual, la clave y el iterador; si devuelve true, el elemento se incluye.",
+      "Evita tener que crear una subclase de FilterIterator solo para escribir el método accept()."
+    ]
+  },
+  "php-class-closedgeneratorexception": {
+    "description": [
+      "Ocurre, por ejemplo, cuando un generador terminó lanzando una excepción y después se intenta reanudarlo o leer su valor actual.",
+      "Hereda de Exception. Para comprobar si un generador puede continuar, usa Generator::valid() antes de seguir."
+    ]
+  },
+  "php-class-collectable": {
+    "description": [
+      "La usa un Pool de pthreads para decidir qué tareas ya terminadas se pueden recoger: isGarbage() devuelve true cuando el objeto puede liberarse.",
+      "La extensión pthreads ya no se mantiene y no funciona con las versiones actuales de PHP. Para código concurrente nuevo, usa la extensión parallel."
+    ]
+  },
+  "php-class-com": {
+    "description": [
+      "Solo está disponible en Windows. El constructor recibe el identificador del programa, por ejemplo \"Excel.Application\", y opcionalmente el servidor remoto (DCOM), la página de códigos y una biblioteca de tipos.",
+      "Hereda de variant. Los métodos y propiedades del objeto COM se usan como si fueran del propio objeto PHP."
+    ]
+  },
+  "php-class-com_exception": {
+    "summary": "Excepción que se lanza cuando falla una operación COM.",
+    "description": [
+      "Se produce, por ejemplo, cuando un objeto COM no se puede crear o un método devuelve un error. getCode() devuelve el código HRESULT de COM.",
+      "Hereda de Exception. Solo existe en Windows, con la extensión com_dotnet."
+    ]
+  },
+  "php-class-com_safearray_proxy": {
+    "description": [
+      "Aparece al acceder por índice a un SafeArray de varias dimensiones, como $variant[1][2]. No se instancia directamente y es final."
+    ]
+  },
+  "php-class-commonmark-interfaces-ivisitable": {
+    "summary": "Interfaz de los nodos que un visitante puede recorrer.",
+    "description": [
+      "La implementa CommonMark\\Node. Su método accept() recibe un CommonMark\\Interfaces\\IVisitor y recorre el árbol avisándole al entrar y al salir de cada nodo."
+    ]
+  },
+  "php-class-commonmark-interfaces-ivisitor": {
+    "summary": "Interfaz de los visitantes que recorren un árbol CommonMark.",
+    "description": [
+      "Define los métodos enter() y leave(), que se llaman al entrar y al salir de cada nodo cuando se pasa el visitante a CommonMark\\Node::accept().",
+      "Implementa esta interfaz para analizar o transformar un documento Markdown ya analizado sin escribir el recorrido a mano."
+    ]
+  },
+  "php-class-commonmark-node": {
+    "description": [
+      "Es la base de todos los nodos del árbol que devuelve CommonMark\\Parse(). Ofrece la navegación entre padre, hermanos e hijos y métodos para insertar, sustituir o desvincular nodos.",
+      "Implementa CommonMark\\Interfaces\\IVisitable. El árbol se puede volver a convertir en texto con las funciones CommonMark\\Render, como CommonMark\\Render\\HTML()."
+    ]
+  },
+  "php-class-commonmark-node-blockquote": {
+    "summary": "Nodo concreto BlockQuote de CommonMark\\Node.",
+    "description": [
+      "Representa una cita en bloque de Markdown, las líneas que empiezan por >. Sus hijos son los bloques que contiene la cita."
+    ]
+  },
+  "php-class-commonmark-node-bulletlist": {
+    "summary": "Nodo concreto BulletList de CommonMark\\Node.",
+    "description": [
+      "Representa una lista con viñetas de Markdown, marcada con -, + o *. Cada elemento de la lista es un hijo CommonMark\\Node\\Item."
+    ]
+  },
+  "php-class-commonmark-node-code": {
+    "summary": "Nodo concreto Code de CommonMark\\Node.",
+    "description": [
+      "Representa código en línea, el texto entre comillas invertidas dentro de un párrafo. Para bloques de código, mira CommonMark\\Node\\CodeBlock."
+    ]
+  },
+  "php-class-commonmark-node-codeblock": {
+    "summary": "Nodo concreto CodeBlock de CommonMark\\Node.",
+    "description": [
+      "Representa un bloque de código de Markdown, ya sea sangrado o delimitado con ``` o ~~~. En los bloques delimitados conserva la información que sigue a la valla, como el lenguaje."
+    ]
+  },
+  "php-class-commonmark-node-customblock": {
+    "summary": "Nodo concreto CustomBlock de CommonMark\\Node.",
+    "description": [
+      "Nodo de bloque para contenido personalizado que no corresponde a ninguna construcción estándar de CommonMark. Se crea desde código para insertar bloques propios en el árbol."
+    ]
+  },
+  "php-class-commonmark-node-custominline": {
+    "summary": "Nodo concreto CustomInline de CommonMark\\Node.",
+    "description": [
+      "Equivalente en línea de CommonMark\\Node\\CustomBlock: permite insertar contenido propio dentro de un párrafo."
+    ]
+  },
+  "php-class-commonmark-node-document": {
+    "summary": "Nodo concreto Document de CommonMark\\Node.",
+    "description": [
+      "Es la raíz del árbol: CommonMark\\Parse() devuelve un Document cuyos hijos son los bloques del texto. También se puede crear vacío para construir un documento desde código."
+    ]
+  },
+  "php-class-commonmark-node-heading": {
+    "summary": "Nodo concreto Heading de CommonMark\\Node.",
+    "description": [
+      "Representa un encabezado de Markdown, tanto con # como subrayado con = o -. Guarda el nivel del encabezado, de 1 a 6."
+    ]
+  },
+  "php-class-commonmark-node-htmlblock": {
+    "summary": "Nodo concreto HTMLBlock de CommonMark\\Node.",
+    "description": [
+      "Representa un bloque de HTML sin procesar dentro del Markdown. Al renderizar, su contenido se copia tal cual salvo que las opciones de seguridad lo impidan."
+    ]
+  },
+  "php-class-commonmark-node-htmlinline": {
+    "summary": "Nodo concreto HTMLInline de CommonMark\\Node.",
+    "description": [
+      "Representa HTML sin procesar dentro de una línea de texto, por ejemplo una etiqueta <span>. Para bloques completos, mira CommonMark\\Node\\HTMLBlock."
+    ]
+  },
+  "php-class-commonmark-node-image": {
+    "summary": "Nodo concreto Image de CommonMark\\Node.",
+    "description": [
+      "Representa una imagen de Markdown, ![texto](url \"título\"). Guarda la URL y el título; el texto alternativo son sus nodos hijos."
+    ]
+  },
+  "php-class-commonmark-node-item": {
+    "summary": "Nodo concreto Item de CommonMark\\Node.",
+    "description": [
+      "Representa un elemento de una lista con viñetas o numerada. Sus hijos son los bloques que forman el elemento, normalmente párrafos."
+    ]
+  },
+  "php-class-commonmark-node-linebreak": {
+    "summary": "Nodo concreto LineBreak de CommonMark\\Node.",
+    "description": [
+      "Representa un salto de línea forzado: una línea que termina en dos espacios o en barra invertida. Se renderiza como <br />."
+    ]
+  },
+  "php-class-commonmark-node-link": {
+    "summary": "Nodo concreto Link de CommonMark\\Node.",
+    "description": [
+      "Representa un enlace de Markdown, [texto](url \"título\"). Guarda la URL y el título; el texto del enlace son sus nodos hijos."
+    ]
+  },
+  "php-class-commonmark-node-orderedlist": {
+    "summary": "Nodo concreto OrderedList de CommonMark\\Node.",
+    "description": [
+      "Representa una lista numerada de Markdown, como 1. o 1). Guarda el número inicial y cada elemento es un hijo CommonMark\\Node\\Item."
+    ]
+  },
+  "php-class-commonmark-node-paragraph": {
+    "summary": "Nodo concreto Paragraph de CommonMark\\Node.",
+    "description": [
+      "Representa un párrafo. Sus hijos son nodos en línea como texto, énfasis, enlaces o código."
+    ]
+  },
+  "php-class-commonmark-node-softbreak": {
+    "summary": "Nodo concreto SoftBreak de CommonMark\\Node.",
+    "description": [
+      "Representa un salto de línea normal dentro de un párrafo. Al renderizar a HTML suele convertirse en un salto de línea o un espacio, no en <br />."
+    ]
+  },
+  "php-class-commonmark-node-text": {
+    "summary": "Nodo concreto Text de CommonMark\\Node.",
+    "description": [
+      "Representa texto plano dentro de un bloque. Es el nodo hoja más habitual del árbol."
+    ]
+  },
   "php-function-fann_set_activation_function": {
     "description": [
       "Establece la función de activación para la neurona número neuron en la capa número layer, contando al capa de entrada como capa 0.",
