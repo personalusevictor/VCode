@@ -27901,6 +27901,14 @@
       }
     ]
   },
+  "web-java-se-java.util.random.RandomGenerator%24ArbitrarilyJumpableGenerator": {
+    "body": [
+      "Idealmente, todos los ArbitrarilyJumpableGenerator obtenidos saltando iterativamente desde un único ArbitrarilyJumpableGenerator original son estadísticamente independientes entre sí e individualmente uniformes, siempre que no recorran tramos solapados del ciclo de estados. En la práctica hay que conformarse con una aproximación a la independencia y la uniformidad. En concreto, una implementación puede suponer que cada generador de un flujo producido por jump() se usa para generar como mucho tantos valores como la distancia de salto indicada. Se recomienda a quien implemente usar algoritmos con un periodo de al menos 2127.",
+      "En muchas aplicaciones basta con saltar hacia delante una potencia de dos o un múltiplo pequeño de ella, pero esa potencia puede no caber en un long. Para no usar valores BigInteger como distancias de salto, se usan valores double.",
+      "Hay métodos para hacer un único salto y también para producir un flujo de generadores a partir del original copiando y saltando su estado interno de forma iterativa. Una estrategia típica en una aplicación multihilo es crear un único ArbitrarilyJumpableGenerator, llamar a su jump() exactamente una vez y repartir los generadores del flujo resultante, uno por hilo. Aun así, cada generador producido también es de tipo ArbitrarilyJumpableGenerator; con cuidado, pueden usarse distintas distancias de salto para recorrer todo el ciclo de estados de varias formas.",
+      "Los objetos que implementan ArbitrarilyJumpableGenerator no suelen ser criptográficamente seguros. Para aplicaciones sensibles a la seguridad, considera usar SecureRandom, que da un generador de números pseudoaleatorios criptográficamente seguro."
+    ]
+  },
   "web-java-se-java.util.regex.Matcher.useAnchoringBounds": {
     "body": [
       "Llamar a este método con true hace que este matcher use límites de anclaje. Si el argumento es false, se usarán límites sin anclaje.",
@@ -27972,6 +27980,165 @@
     ],
     "returns": [
       "El array de cadenas obtenido al dividir la entrada por las coincidencias de este patrón, alternando subcadenas y delimitadores coincidentes"
+    ]
+  },
+  "web-java-se-java.util.spi.CalendarNameProvider": {
+    "body": [
+      "Tipos de calendario",
+      "Los tipos de calendario indican los sistemas de calendario para los que los métodos getDisplayName(String, int, int, int, Locale) y getDisplayNames(String, int, int, Locale) dan nombres de valores de campos del calendario. Consulta Calendar.getCalendarType() para más detalles.",
+      "Campos del calendario",
+      "Los campos del calendario se indican con las constantes definidas en Calendar. Estos son los campos comunes y los valores que debe admitir cada sistema de calendario.",
+      "Valores de los campos",
+      "Campo · Valor · Descripción",
+      "Calendar.MONTH · Calendar.JANUARY a Calendar.UNDECIMBER · Los meses se numeran desde 0 (p. ej. 0 - enero, ..., 11 - diciembre). Algunos calendarios tienen 13 meses. Los nombres de mes deben admitirse en la forma de formateo y en la independiente si las configuraciones regionales admitidas lo requieren. Si no hay distinción entre ambas, deben devolverse los mismos nombres en las dos.",
+      "Calendar.DAY_OF_WEEK · Calendar.SUNDAY a Calendar.SATURDAY · Los días de la semana se numeran desde 1 empezando por el domingo (1 - domingo, ..., 7 - sábado).",
+      "Calendar.AM_PM · Calendar.AM a Calendar.PM · 0 - AM, 1 - PM",
+      "Estos son los campos específicos de cada calendario y los valores que deben admitirse.",
+      "Tipo de calendario y valores de los campos",
+      "Tipo de calendario · Campo · Valor · Descripción",
+      "\"gregory\" · Calendar.ERA · 0 · java.util.GregorianCalendar.BC (a. e. c.)",
+      "1 · java.util.GregorianCalendar.AD (e. c.)",
+      "\"buddhist\" · Calendar.ERA · 0 · BC (a. e. c.)",
+      "1 · B.E. (era budista)",
+      "\"japanese\" · Calendar.ERA · 0 · Seireki (antes de Meiji)",
+      "1 · Meiji",
+      "2 · Taisho",
+      "3 · Showa",
+      "4 · Heisei",
+      "5 · Reiwa",
+      "Calendar.YEAR · 1 · el primer año de cada era. Debe devolverse cuando se indica un estilo largo (Calendar.LONG_FORMAT o Calendar.LONG_STANDALONE). Consulta también la representación del año en SimpleDateFormat.",
+      "\"roc\" · Calendar.ERA · 0 · Antes de la R.O.C.",
+      "\"islamic\" · Calendar.ERA · 0 · Antes de la Hégira",
+      "1 · Anno Hijrah (AH)",
+      "Los nombres de valores de campos del calendario \"gregory\" deben ser coherentes con los símbolos de fecha y hora que da java.text.spi.DateFormatSymbolsProvider.",
+      "Los nombres de zonas horarias los da TimeZoneNameProvider."
+    ]
+  },
+  "web-java-se-java.util.spi.CalendarNameProvider.getDisplayName": {
+    "body": [
+      "field es el índice de un campo de Calendar, como Calendar.MONTH. Este método no admite los campos de zona horaria Calendar.ZONE_OFFSET y Calendar.DST_OFFSET; si se indica alguno, debe devolverse null.",
+      "value es la representación numérica del valor del campo. Por ejemplo, si field es Calendar.DAY_OF_WEEK, los valores válidos van de Calendar.SUNDAY a Calendar.SATURDAY (ambos incluidos).",
+      "style indica el estilo de la representación en cadena: Calendar.SHORT_FORMAT (SHORT), Calendar.SHORT_STANDALONE, Calendar.LONG_FORMAT (LONG), Calendar.LONG_STANDALONE, Calendar.NARROW_FORMAT o Calendar.NARROW_STANDALONE.",
+      "Por ejemplo, esta llamada devuelve \"Sunday\".",
+      "getDisplayName(\"gregory\", Calendar.DAY_OF_WEEK, Calendar.SUNDAY, Calendar.LONG_STANDALONE, Locale.ENGLISH);"
+    ],
+    "parameters": [
+      {
+        "label": "calendarType",
+        "detail": "el tipo de calendario. (Se ignora cualquier tipo de calendario dado por la configuración regional)."
+      },
+      {
+        "label": "field",
+        "detail": "el índice del campo de Calendar, como Calendar.DAY_OF_WEEK"
+      },
+      {
+        "label": "value",
+        "detail": "el valor del campo de Calendar, como Calendar.MONDAY"
+      },
+      {
+        "label": "style",
+        "detail": "el estilo de la representación en cadena: Calendar.SHORT_FORMAT (SHORT), Calendar.SHORT_STANDALONE, Calendar.LONG_FORMAT (LONG), Calendar.LONG_STANDALONE, Calendar.NARROW_FORMAT o Calendar.NARROW_STANDALONE"
+      },
+      {
+        "label": "locale",
+        "detail": "la configuración regional deseada"
+      }
+    ],
+    "returns": [
+      "la representación en cadena del valor del campo, o null si no aplica o el tipo de calendario es desconocido"
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si field o style no son válidos"
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "si locale es null"
+      }
+    ]
+  },
+  "web-java-se-java.util.spi.CalendarNameProvider.getDisplayNames": {
+    "body": [
+      "field es el índice de un campo de Calendar, como Calendar.MONTH. Este método no admite los campos de zona horaria Calendar.ZONE_OFFSET y Calendar.DST_OFFSET; si se indica alguno, debe devolverse null.",
+      "style indica el estilo de la representación en cadena. Debe ser Calendar.ALL_STYLES, Calendar.SHORT_FORMAT (SHORT), Calendar.SHORT_STANDALONE, Calendar.LONG_FORMAT (LONG), Calendar.LONG_STANDALONE, Calendar.NARROW_FORMAT o Calendar.NARROW_STANDALONE. Los nombres estrechos pueden no ser únicos al usar un solo carácter, como \"S\" para domingo y sábado en inglés; en ese caso no se incluyen nombres estrechos.",
+      "Por ejemplo, esta llamada devuelve un Map con \"January\" a Calendar.JANUARY, \"Jan\" a Calendar.JANUARY, \"February\" a Calendar.FEBRUARY, \"Feb\" a Calendar.FEBRUARY, y así sucesivamente.",
+      "getDisplayNames(\"gregory\", Calendar.MONTH, Calendar.ALL_STYLES, Locale.ENGLISH);"
+    ],
+    "parameters": [
+      {
+        "label": "calendarType",
+        "detail": "el tipo de calendario. (Se ignora cualquier tipo de calendario dado por la configuración regional)."
+      },
+      {
+        "label": "field",
+        "detail": "el campo del calendario cuyos nombres visibles se devuelven"
+      },
+      {
+        "label": "style",
+        "detail": "el estilo de los nombres visibles: Calendar.ALL_STYLES, Calendar.SHORT_FORMAT (SHORT), Calendar.SHORT_STANDALONE, Calendar.LONG_FORMAT (LONG), Calendar.LONG_STANDALONE, Calendar.NARROW_FORMAT o Calendar.NARROW_STANDALONE"
+      },
+      {
+        "label": "locale",
+        "detail": "la configuración regional deseada"
+      }
+    ],
+    "returns": [
+      "un Map con todos los nombres visibles de field en el estilo y la configuración regional dados y sus valores, o null si no hay nombres definidos para field"
+    ],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si locale es null"
+      }
+    ]
+  },
+  "web-java-se-java.util.spi.LocaleServiceProvider": {
+    "body": [
+      "Las interfaces de proveedor de servicios sensibles a la configuración regional corresponden a clases sensibles a la configuración regional de los paquetes java.text y java.util. Permiten construir objetos sensibles a la configuración regional y obtener nombres localizados para esos paquetes. Los métodos de fábrica y de obtención de nombres de java.text y java.util usan implementaciones de estas interfaces para admitir configuraciones regionales más allá de las que admite el propio entorno de ejecución de Java.",
+      "Empaquetado de implementaciones de servicios sensibles a la configuración regional",
+      "Estas implementaciones pueden ponerse a disposición añadiéndolas al class path de la aplicación. Un proveedor se identifica con un archivo de configuración de proveedor en el directorio de recursos META-INF/services, cuyo nombre es el nombre completo de la interfaz del proveedor. El archivo debe contener una lista de nombres completos de clases concretas de proveedor, uno por línea. Una línea termina con un salto de línea ('\\n'), un retorno de carro ('\\r') o un retorno de carro seguido de un salto de línea. Se ignoran los espacios y tabuladores alrededor de cada nombre y las líneas en blanco. El carácter de comentario es '#'; en cada línea se ignora todo lo que va tras el primer '#'. El archivo debe estar codificado en UTF-8.",
+      "Si una clase de proveedor concreta aparece en más de un archivo de configuración, o más de una vez en el mismo, se ignoran los duplicados. El archivo que nombra a un proveedor no tiene por qué estar en el mismo jar u otra unidad de distribución que el proveedor. El proveedor debe ser accesible desde el mismo cargador de clases al que se preguntó inicialmente para localizar el archivo de configuración, que no tiene por qué ser el que lo cargó.",
+      "Por ejemplo, una implementación de DateFormatProvider debería ser un archivo jar que contenga el archivo:",
+      "META-INF/services/java.text.spi.DateFormatProvider",
+      "Y el archivo java.text.spi.DateFormatProvider debería tener una línea como:",
+      "com.foo.DateFormatProviderImpl",
+      "que es el nombre completo de la clase que implementa DateFormatProvider.",
+      "Invocación de servicios sensibles a la configuración regional",
+      "Los métodos de fábrica y de obtención de nombres de java.text y java.util invocan métodos de los proveedores de servicios cuando hace falta para admitir la configuración regional pedida. Primero comprueban si el propio entorno de ejecución de Java la admite y, si es así, usan ese soporte. Si no, llaman a isSupportedLocale de los proveedores instalados de la interfaz correspondiente para encontrar uno que la admita. Si lo encuentran, llaman a sus otros métodos para obtener el objeto o el nombre pedido. Por defecto, al comprobar si se admite una configuración regional se ignoran sus extensiones. (Si también hay que comprobarlas, debe sobrescribirse isSupportedLocale). Si ni el entorno de ejecución ni ningún proveedor instalado la admiten, los métodos recorren una lista de configuraciones regionales candidatas y repiten la comprobación con cada una hasta encontrar una. El algoritmo para crear la lista de candidatas es por defecto el mismo que usa ResourceBundle (consulta getCandidateLocales). Aunque la configuración regional se resuelva a partir de la lista de candidatas, los métodos que devuelven los objetos o nombres pedidos se invocan con la configuración regional pedida originalmente, incluidas sus extensiones. El entorno de ejecución de Java debe admitir la configuración regional raíz para todos los servicios sensibles a la configuración regional, para garantizar que este proceso termine.",
+      "Los proveedores de nombres (pero no los de otros objetos) pueden devolver null para algunas peticiones de nombres, incluso en configuraciones regionales que dicen admitir al incluirlas en el valor de retorno de getAvailableLocales. Del mismo modo, el propio entorno de ejecución puede no tener todos los nombres de todas las configuraciones regionales que admite. Esto se debe a que los conjuntos de objetos cuyos nombres se piden pueden ser grandes y cambiar con el tiempo, así que no siempre es factible cubrirlos por completo. Si el entorno o un proveedor devuelve null en lugar de un nombre, la búsqueda continúa como se describe arriba, como si la configuración regional no estuviera admitida.",
+      "El orden de búsqueda de los servicios sensibles a la configuración regional puede configurarse con la propiedad del sistema java.locale.providers, que declara el orden preferido por el usuario, separado por comas. Como su valor solo se lee y guarda al inicializar esta clase, los usuarios deben indicarla en la línea de comandos del lanzador de Java. Se desaconseja fijarla en tiempo de ejecución con System.setProperty(String, String), y puede no afectar al orden. La implementación de referencia del JDK ofrece estos cuatro proveedores:",
+      "\"CLDR\": un proveedor basado en el proyecto CLDR del Unicode Consortium.",
+      "\"COMPAT\": representa los servicios compatibles con las versiones anteriores del JDK hasta JDK 8 (igual que \"JRE\" en JDK 8). Este proveedor está obsoleto y se eliminará en una versión futura del JDK.",
+      "\"SPI\": representa los servicios que implementan las subclases de esta clase LocaleServiceProvider.",
+      "\"HOST\": un proveedor que refleja los ajustes personalizados del usuario en el sistema operativo. Puede no estar disponible, según la implementación de referencia del JDK.",
+      "\"JRE\": sinónimo de \"COMPAT\". Este nombre está obsoleto y se eliminará en una versión futura del JDK.",
+      "Por ejemplo, si en la propiedad se indica:",
+      "java.locale.providers=SPI,CLDR,COMPAT",
+      "se buscan primero los servicios de los proveedores SPI. Si el servicio deseado no está disponible, se busca en CLDR y COMPAT, en ese orden.",
+      "El orden predeterminado es \"CLDR,COMPAT\", así que indicar \"CLDR,COMPAT\" es igual que el comportamiento predeterminado. Las aplicaciones que necesiten implementaciones propias de estos servicios deben indicar explícitamente \"SPI\" para que el entorno de ejecución las cargue desde el classpath."
+    ]
+  },
+  "web-java-se-java.util.spi.ResourceBundleProvider": {
+    "body": [
+      "Desarrollar servicios de resource bundles",
+      "El servicio de un resource bundle con un baseName dado debe tener un nombre de clase completo de esta forma:",
+      "<package of baseName> + \".spi.\" + <simple name of baseName> + \"Provider\"",
+      "El tipo de servicio está en un subpaquete spi porque puede empaquetarse en un módulo distinto de los proveedores del resource bundle. Por ejemplo, el servicio de un resource bundle llamado com.example.app.MyResources debe ser com.example.app.spi.MyResourcesProvider:",
+      "{@code package com.example.app.spi; public interface MyResourcesProvider extends ResourceBundleProvider { } }",
+      "Desplegar proveedores de servicios de resource bundles",
+      "Los resource bundles pueden desplegarse en uno o más proveedores de servicios en módulos. Por ejemplo, un proveedor del servicio \"com.example.app.spi.MyResourcesProvider\" tiene esta clase de implementación:",
+      "{@code import com.example.app.spi.MyResourcesProvider; class MyResourcesProviderImpl extends AbstractResourceBundleProvider implements MyResourcesProvider { public MyResourcesProviderImpl() { super(\"java.properties\"); } // this provider maps the resource bundle to per-language package protected String toBundleName(String baseName, Locale locale) { return \"p.\" + locale.getLanguage() + \".\" + baseName; }",
+      "public ResourceBundle getBundle(String baseName, Locale locale) { // this module only provides bundles in French if (locale.equals(Locale.FRENCH)) { return super.getBundle(baseName, locale); } // otherwise return null return null; } }}",
+      "Este ejemplo ofrece el resource bundle \"com.example.app.MyResources\" para la configuración regional francesa. Tradicionalmente, los resource bundles de todas las configuraciones regionales se empaquetan en el mismo paquete que el nombre base. Como al desplegarlos en más de un módulo no se admite que dos módulos contengan un paquete con el mismo nombre (paquete dividido), los resource bundles de cada módulo pueden empaquetarse en paquetes distintos, como en este ejemplo, en el que el proveedor los empaqueta por idioma, es decir, com.example.app.fr para el francés.",
+      "Un proveedor puede ofrecer más de un servicio, cada uno para un resource bundle con un nombre base distinto.",
+      "AbstractResourceBundleProvider ofrece la implementación básica de ResourceBundleProvider, y una subclase puede sobrescribir toBundleName(String, Locale) para devolver una ubicación propia del proveedor para el recurso, por ejemplo un paquete por idioma. Un proveedor puede sobrescribir ResourceBundleProvider.getBundle, por ejemplo para buscar solo en las configuraciones regionales que sabe que admite o para devolver resource bundles en otros formatos como XML.",
+      "La declaración del módulo proveedor indica esta directiva:",
+      "provides com.example.app.spi.MyResourcesProvider with com.example.impl.MyResourcesProviderImpl;",
+      "Obtener resource bundles de proveedores",
+      "La declaración del módulo consumidor que llama a uno de los métodos de fábrica ResourceBundle.getBundle para obtener un resource bundle de proveedores de servicios debe indicar esta directiva:",
+      "uses com.example.app.spi.MyResourcesProvider;",
+      "ResourceBundle.getBundle(\"com.example.app.MyResource\", locale) localiza y carga los proveedores del servicio com.example.app.spi.MyResourcesProvider y luego llama a ResourceBundleProvider.getBundle(\"com.example.app.MyResource\", locale) para encontrar el resource bundle con el nombre base y la configuración regional dados. Si el módulo consumidor es él mismo proveedor de com.example.app.spi.MyResourcesProvider, ResourceBundle.getBundle solo buscará resource bundles en los proveedores de servicios. Si no, puede seguir buscando el resource bundle en otros módulos y en el class path según la especificación del método ResourceBundle.getBundle llamado."
     ]
   },
   "web-java-se-java.util.stream.Collectors.toMap": {
@@ -28442,6 +28609,479 @@
       "Si tenemos un Iterable<Object> y hay que expandir de forma recursiva sus elementos que también son Iterable, podemos usar mapMulti así:",
       "{@code class C { static void expandIterable(Object e, Consumer c) { if (e instanceof Iterable elements) { for (Object ie : elements) { expandIterable(ie, c); } } else if (e != null) { c.accept(e); } }",
       "public static void main(String[] args) { var nestedList = List.of(1, List.of(2, List.of(3, 4)), 5); Stream expandedStream = nestedList.stream().mapMulti(C::expandIterable); } } }"
+    ]
+  },
+  "web-java-se-java.util.zip.Deflater.deflate": {
+    "overloads": [
+      {
+        "intro": [
+          "Comprime los datos de entrada y llena el búfer indicado con los datos comprimidos. Devuelve el número real de bytes de datos comprimidos. Un valor de retorno de 0 indica que debe llamarse a needsInput para saber si hacen falta más datos de entrada."
+        ],
+        "body": [
+          "Este método usa NO_FLUSH como modo de vaciado de la compresión. Una llamada de la forma deflater.deflate(b, off, len) da el mismo resultado que deflater.deflate(b, off, len, Deflater.NO_FLUSH)."
+        ],
+        "parameters": [
+          {
+            "label": "output",
+            "detail": "el búfer para los datos comprimidos"
+          },
+          {
+            "label": "off",
+            "detail": "el desplazamiento inicial de los datos"
+          },
+          {
+            "label": "len",
+            "detail": "el número máximo de bytes de datos comprimidos"
+          }
+        ],
+        "returns": [
+          "el número real de bytes de datos comprimidos escritos en el búfer de salida"
+        ]
+      },
+      {
+        "intro": [
+          "Comprime los datos de entrada y llena el búfer indicado con los datos comprimidos. Devuelve el número real de bytes de datos comprimidos. Un valor de retorno de 0 indica que debe llamarse a needsInput para saber si hacen falta más datos de entrada."
+        ],
+        "body": [
+          "Este método usa NO_FLUSH como modo de vaciado de la compresión. Una llamada de la forma deflater.deflate(b) da el mismo resultado que deflater.deflate(b, 0, b.length, Deflater.NO_FLUSH)."
+        ],
+        "parameters": [
+          {
+            "label": "output",
+            "detail": "el búfer para los datos comprimidos"
+          }
+        ],
+        "returns": [
+          "el número real de bytes de datos comprimidos escritos en el búfer de salida"
+        ]
+      },
+      {
+        "intro": [
+          "Comprime los datos de entrada y llena el búfer indicado con los datos comprimidos. Devuelve el número real de bytes de datos comprimidos."
+        ],
+        "body": [
+          "El modo de vaciado de la compresión es uno de estos tres:",
+          "NO_FLUSH: deja que el compresor decida cuántos datos acumular antes de producir salida para conseguir la mejor compresión (es el que debe usarse normalmente). En este modo, un valor de retorno de 0 indica que debe llamarse a needsInput() para saber si hacen falta más datos de entrada.",
+          "SYNC_FLUSH: se vacía toda la salida pendiente del compresor en el búfer de salida indicado, para que un descompresor que trabaje con los datos comprimidos pueda obtener todos los datos de entrada disponibles hasta ese momento (en concreto, needsInput() devuelve true tras esta llamada si se da espacio de salida suficiente). Vaciar con SYNC_FLUSH puede empeorar la compresión en algunos algoritmos, así que solo debe usarse cuando haga falta.",
+          "FULL_FLUSH: se vacía toda la salida pendiente como con SYNC_FLUSH y se reinicia el estado de compresión, para que el descompresor pueda empezar de nuevo desde este punto si los datos comprimidos anteriores están dañados o si se quiere acceso aleatorio. Usar FULL_FLUSH con demasiada frecuencia puede empeorar mucho la compresión.",
+          "Con FULL_FLUSH o SYNC_FLUSH, si el valor de retorno es len, el espacio disponible en el búfer de salida b, debe volver a llamarse a este método con el mismo parámetro de vaciado y más espacio de salida. Asegúrate de que len sea mayor que 6 para evitar que el marcador de vaciado (5 bytes) se escriba una y otra vez en el búfer de salida en cada llamada.",
+          "Si se llamó a setInput(ByteBuffer) para dar un búfer de entrada, su posición avanza tantos bytes como consuma esta operación."
+        ],
+        "parameters": [
+          {
+            "label": "output",
+            "detail": "el búfer para los datos comprimidos"
+          },
+          {
+            "label": "off",
+            "detail": "el desplazamiento inicial de los datos"
+          },
+          {
+            "label": "len",
+            "detail": "el número máximo de bytes de datos comprimidos"
+          },
+          {
+            "label": "flush",
+            "detail": "el modo de vaciado de la compresión"
+          }
+        ],
+        "returns": [
+          "el número real de bytes de datos comprimidos escritos en el búfer de salida"
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el modo de vaciado no es válido"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Comprime los datos de entrada y llena el búfer indicado con los datos comprimidos. Devuelve el número real de bytes de datos comprimidos. Un valor de retorno de 0 indica que debe llamarse a needsInput para saber si hacen falta más datos de entrada."
+        ],
+        "body": [
+          "Este método usa NO_FLUSH como modo de vaciado de la compresión. Una llamada de la forma deflater.deflate(output) da el mismo resultado que deflater.deflate(output, Deflater.NO_FLUSH)."
+        ],
+        "parameters": [
+          {
+            "label": "output",
+            "detail": "el búfer para los datos comprimidos"
+          }
+        ],
+        "returns": [
+          "el número real de bytes de datos comprimidos escritos en el búfer de salida"
+        ],
+        "exceptions": [
+          {
+            "label": "ReadOnlyBufferException",
+            "detail": "si el búfer de salida dado es de solo lectura"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Comprime los datos de entrada y llena el búfer indicado con los datos comprimidos. Devuelve el número real de bytes de datos comprimidos."
+        ],
+        "body": [
+          "El modo de vaciado de la compresión es uno de estos tres:",
+          "NO_FLUSH: deja que el compresor decida cuántos datos acumular antes de producir salida para conseguir la mejor compresión (es el que debe usarse normalmente). En este modo, un valor de retorno de 0 indica que debe llamarse a needsInput() para saber si hacen falta más datos de entrada.",
+          "SYNC_FLUSH: se vacía toda la salida pendiente del compresor en el búfer de salida indicado, para que un descompresor que trabaje con los datos comprimidos pueda obtener todos los datos de entrada disponibles hasta ese momento (en concreto, needsInput() devuelve true tras esta llamada si se da espacio de salida suficiente). Vaciar con SYNC_FLUSH puede empeorar la compresión en algunos algoritmos, así que solo debe usarse cuando haga falta.",
+          "FULL_FLUSH: se vacía toda la salida pendiente como con SYNC_FLUSH y se reinicia el estado de compresión, para que el descompresor pueda empezar de nuevo desde este punto si los datos comprimidos anteriores están dañados o si se quiere acceso aleatorio. Usar FULL_FLUSH con demasiada frecuencia puede empeorar mucho la compresión.",
+          "Con FULL_FLUSH o SYNC_FLUSH, si el valor de retorno es igual al espacio restante del búfer, debe volver a llamarse a este método con el mismo parámetro de vaciado y más espacio de salida. Asegúrate de que el búfer tenga al menos 6 bytes libres para evitar que el marcador de vaciado (5 bytes) se escriba una y otra vez en el búfer en cada llamada.",
+          "Si tiene éxito, la posición del búfer de salida dado avanza tantos bytes como produzca la operación, que es el número que devuelve este método.",
+          "Si se llamó a setInput(ByteBuffer) para dar un búfer de entrada, su posición avanza tantos bytes como consuma esta operación."
+        ],
+        "parameters": [
+          {
+            "label": "output",
+            "detail": "el búfer para los datos comprimidos"
+          },
+          {
+            "label": "flush",
+            "detail": "el modo de vaciado de la compresión"
+          }
+        ],
+        "returns": [
+          "el número real de bytes de datos comprimidos escritos en el búfer de salida"
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el modo de vaciado no es válido"
+          },
+          {
+            "label": "ReadOnlyBufferException",
+            "detail": "si el búfer de salida dado es de solo lectura"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.util.zip.ZipFile.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": ["Abre un archivo zip para lectura."],
+        "body": [
+          "Primero, si hay un gestor de seguridad, se llama a su método checkRead con el argumento name para comprobar que se permite la lectura.",
+          "Se usa el juego de caracteres UTF-8 para decodificar los nombres y comentarios de las entradas."
+        ],
+        "parameters": [
+          {
+            "label": "name",
+            "detail": "el nombre del archivo zip"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "ZipException",
+            "detail": "si se produce un error de formato ZIP"
+          },
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si hay un gestor de seguridad y su método checkRead no permite leer el archivo."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Abre un ZipFile nuevo para leer del objeto File indicado en el modo indicado. El argumento mode debe ser OPEN_READ u OPEN_READ | OPEN_DELETE."
+        ],
+        "body": [
+          "Primero, si hay un gestor de seguridad, se llama a su método checkRead con el argumento name para comprobar que se permite la lectura.",
+          "Se usa el juego de caracteres UTF-8 para decodificar los nombres y comentarios de las entradas"
+        ],
+        "parameters": [
+          {
+            "label": "file",
+            "detail": "el archivo ZIP que se abre para lectura"
+          },
+          {
+            "label": "mode",
+            "detail": "el modo en que se abre el archivo"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "ZipException",
+            "detail": "si se produce un error de formato ZIP"
+          },
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si hay un gestor de seguridad y su método checkRead no permite leer el archivo, o su método checkDelete no permite borrarlo cuando está activo el indicador OPEN_DELETE."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el argumento mode no es válido"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Abre un archivo ZIP para lectura a partir del objeto File indicado."
+        ],
+        "body": [
+          "Se usa el juego de caracteres UTF-8 para decodificar los nombres y comentarios de las entradas."
+        ],
+        "parameters": [
+          {
+            "label": "file",
+            "detail": "el archivo ZIP que se abre para lectura"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "ZipException",
+            "detail": "si se produce un error de formato ZIP"
+          },
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Abre un ZipFile nuevo para leer del objeto File indicado en el modo indicado. El argumento mode debe ser OPEN_READ u OPEN_READ | OPEN_DELETE."
+        ],
+        "body": [
+          "Primero, si hay un gestor de seguridad, se llama a su método checkRead con el argumento name para comprobar que se permite la lectura."
+        ],
+        "parameters": [
+          {
+            "label": "file",
+            "detail": "el archivo ZIP que se abre para lectura"
+          },
+          {
+            "label": "mode",
+            "detail": "el modo en que se abre el archivo"
+          },
+          {
+            "label": "charset",
+            "detail": "el juego de caracteres con el que se decodifican el nombre y el comentario de las entradas ZIP que no están codificados en UTF-8 (lo indica el indicador de propósito general de la entrada)."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "ZipException",
+            "detail": "si se produce un error de formato ZIP"
+          },
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si hay un gestor de seguridad y su método checkRead no permite leer el archivo, o su método checkDelete no permite borrarlo cuando está activo el indicador OPEN_DELETE"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el argumento mode no es válido"
+          }
+        ]
+      },
+      {
+        "intro": ["Abre un archivo zip para lectura."],
+        "body": [
+          "Primero, si hay un gestor de seguridad, se llama a su método checkRead con el argumento name para comprobar que se permite la lectura."
+        ],
+        "parameters": [
+          {
+            "label": "name",
+            "detail": "el nombre del archivo zip"
+          },
+          {
+            "label": "charset",
+            "detail": "el juego de caracteres con el que se decodifican el nombre y el comentario de las entradas ZIP que no están codificados en UTF-8 (lo indica el indicador de propósito general de la entrada)."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "ZipException",
+            "detail": "si se produce un error de formato ZIP"
+          },
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si hay un gestor de seguridad y su método checkRead no permite leer el archivo"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Abre un archivo ZIP para lectura a partir del objeto File indicado."
+        ],
+        "parameters": [
+          {
+            "label": "file",
+            "detail": "el archivo ZIP que se abre para lectura"
+          },
+          {
+            "label": "charset",
+            "detail": "El juego de caracteres con el que se decodifican el nombre y el comentario de las entradas ZIP (se ignora si está activo el bit de codificación de idioma de los indicadores de propósito general de la entrada)."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "ZipException",
+            "detail": "si se produce un error de formato ZIP"
+          },
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.util.zip.ZipInputStream": {
+    "body": [
+      "Leer entradas de archivos Zip",
+      "El método getNextEntry() lee la siguiente entrada del archivo ZIP (el registro de cabecera Local file (LOC) del formato ZIP) y coloca el flujo al principio de los datos de la entrada. Los datos pueden leerse con alguno de los métodos read de ZipInputStream, como read(byte[], int, int) o readAllBytes(). Por ejemplo: {@snippet : Path jar = Path.of(\"foo.jar\"); try (InputStream is = Files.newInputStream(jar); ZipInputStream zis = new ZipInputStream(is)) { ZipEntry ze; while((ze= zis.getNextEntry()) != null) { var bytes = zis.readAllBytes(); System.out.printf(\"Entry: %s, bytes read: %s%n\", ze.getName(), bytes.length); } } }"
+    ],
+    "caveats": [
+      "La cabecera LOC contiene metadatos de la entrada del archivo Zip. ZipInputStream no lee la cabecera del directorio central (CEN) de la entrada, así que no tiene acceso a metadatos suyos como los atributos externos del archivo. Si se necesita la información de la cabecera CEN, puede usarse ZipFile."
+    ]
+  },
+  "web-java-se-javax.accessibility.AccessibleHyperlink.isValid": {
+    "intro": [
+      "Como el documento al que está asociado un enlace puede haber cambiado, este método indica si este Link sigue siendo válido (respecto al documento al que hace referencia)."
+    ],
+    "returns": [
+      "un indicador de si este enlace sigue siendo válido respecto al AccessibleHypertext al que pertenece"
+    ]
+  },
+  "web-java-se-javax.annotation.processing.AbstractProcessor.process": {
+    "body": [
+      "El conjunto de entrada estará vacío si el procesador admite \"*\" y los elementos raíz no tienen anotaciones. Un Processor debe manejar sin problemas un conjunto de anotaciones vacío."
+    ],
+    "parameters": [
+      {
+        "label": "annotations",
+        "detail": "las interfaces de anotación que se pide procesar"
+      },
+      {
+        "label": "roundEnv",
+        "detail": "el entorno con información de la ronda actual y la anterior"
+      }
+    ],
+    "returns": [
+      "si este procesador reclama el conjunto de interfaces de anotación"
+    ]
+  },
+  "web-java-se-javax.annotation.processing.Filer.createSourceFile": {
+    "body": [
+      "El nombre y la ruta del archivo (relativos a la ubicación raíz de salida de los archivos fuente) se basan en el nombre del elemento que se declara en él y en el módulo indicado para ese elemento (si lo hay).",
+      "Si se declara más de una clase o interfaz en un mismo archivo (es decir, una misma unidad de compilación), el nombre del archivo debe corresponder al de la clase o interfaz principal de nivel superior (la pública, por ejemplo).",
+      "También puede crearse un archivo fuente con información de un paquete, incluidas sus anotaciones. Para un paquete con nombre, el argumento name debe ser el nombre del paquete seguido de \".package-info\"; para un paquete sin nombre, usa \"package-info\".",
+      "El nombre de módulo opcional se antepone al nombre del tipo o del paquete, separado por \"/\". Por ejemplo, para crear un archivo fuente para la clase a.B del módulo foo, usa como name \"foo/a.B\".",
+      "Si no se da un prefijo de módulo explícito y el entorno admite módulos, se infiere uno adecuado. Si no puede inferirse, se lanza FilerException. La implementación puede usar información de la configuración de la herramienta de procesamiento de anotaciones para inferirlo.",
+      "No se admite crear un archivo fuente en o para un paquete sin nombre de un módulo con nombre.",
+      "Si el entorno está configurado para admitir clases sin nombre, el argumento name da el primer componente del nombre del archivo de salida. Por ejemplo, filer.createSourceFile(\"Foo\") crea una clase sin nombre alojada en Foo.java. Todas las clases sin nombre deben estar en un paquete sin nombre."
+    ],
+    "parameters": [
+      {
+        "label": "name",
+        "detail": "nombre canónico (completo) de la clase o interfaz principal que se declara en este archivo, o nombre de paquete seguido de \".package-info\" para un archivo de información de paquete"
+      },
+      {
+        "label": "originatingElements",
+        "detail": "elementos de clase, interfaz, paquete o módulo relacionados causalmente con la creación de este archivo; pueden omitirse o ser null"
+      }
+    ],
+    "returns": ["un JavaFileObject para escribir el nuevo archivo fuente"],
+    "exceptions": [
+      {
+        "label": "FilerException",
+        "detail": "si ya se ha creado la misma ruta o la misma clase o interfaz, si el nombre no es válido para la entidad que se pide crear, si no puede determinarse el módulo destino, si el módulo destino no es escribible, o si se indica un módulo cuando el entorno no admite módulos."
+      },
+      {
+        "label": "IOException",
+        "detail": "si no puede crearse el archivo @jls 7.3 Compilation Units"
+      }
+    ],
+    "caveats": [
+      "Para codificar el contenido del archivo con un juego de caracteres concreto, puede crearse un OutputStreamWriter con ese juego a partir del OutputStream del objeto devuelto. Si se escribe directamente con el Writer del objeto devuelto, su juego de caracteres lo determina la implementación. Una herramienta de procesamiento de anotaciones puede tener un indicador -encoding u opción parecida para indicarlo; si no, normalmente será la codificación predeterminada de la plataforma.",
+      "Para evitar errores posteriores, el contenido del archivo fuente debe ser compatible con la versión de código fuente usada en esta ejecución."
+    ]
+  },
+  "web-java-se-javax.annotation.processing.Generated.date": {
+    "intro": [
+      "Fecha en que se generó el código. El elemento date debe seguir la norma ISO 8601. Por ejemplo, el valor 2017-07-04T12:08:56.235-0700 representa el 2017-07-04 a las 12:08:56, hora local de la zona del Pacífico de EE. UU."
+    ],
+    "returns": ["La fecha en que se generó el código"]
+  },
+  "web-java-se-javax.annotation.processing.ProcessingEnvironment": {
+    "body": [
+      "Puede que terceros quieran ofrecer envoltorios con valor añadido alrededor de los objetos de esta interfaz, por ejemplo una extensión de Filer que permita a varios procesadores coordinarse para escribir un único archivo fuente. Para hacerlo posible, cuando los procesadores se ejecutan en un contexto en que sus efectos secundarios a través de la API pueden ser visibles entre sí, la infraestructura de la herramienta debe ofrecer objetos equivalentes que sean .equals, Filers que sean .equals, etc. Además, la invocación de la herramienta debe poder configurarse para que, desde el punto de vista de los procesadores en ejecución, al menos el subconjunto elegido de clases auxiliares se vea cargado por el mismo cargador de clases. (Como estos objetos gestionan estado compartido, la implementación de un envoltorio debe saber si el mismo objeto base ya se ha envuelto antes)."
+    ]
+  },
+  "web-java-se-javax.annotation.processing.Processor.getCompletions": {
+    "body": [
+      "Como se modelan programas incompletos, algunos parámetros pueden tener solo información parcial o ser null. Al menos uno de element y userText no debe ser null. Si element no es null, annotation y member pueden serlo. Los procesadores no deben lanzar NullPointerException si algún parámetro es null; si un procesador no tiene finalizaciones que ofrecer con la información dada, puede devolver un iterable vacío. También puede devolver una única finalización con valor vacío y un mensaje que explique por qué no hay finalizaciones.",
+      "Las finalizaciones son informativas y pueden reflejar comprobaciones de validez adicionales de los procesadores de anotaciones. Por ejemplo, considera esta anotación sencilla:",
+      "@MersennePrime { int value(); }",
+      "(Un primo de Mersenne es un número primo de la forma 2n - 1). Dado un AnnotationMirror de esta interfaz de anotación, podría devolverse una lista con todos esos primos dentro del rango de int sin examinar ningún otro argumento de getCompletions:",
+      "import static javax.annotation.processing.Completions.*; ... return List.of(of(\"3\"), of(\"7\"), of(\"31\"), of(\"127\"), of(\"8191\"), of(\"131071\"), of(\"524287\"), of(\"2147483647\"));",
+      "Un conjunto de finalizaciones más informativo incluiría el número de cada primo:",
+      "return List.of(of(\"3\", \"M2\"), of(\"7\", \"M3\"), of(\"31\", \"M5\"), of(\"127\", \"M7\"), of(\"8191\", \"M13\"), of(\"131071\", \"M17\"), of(\"524287\", \"M19\"), of(\"2147483647\", \"M31\"));",
+      "Pero si userText está disponible, puede comprobarse para ver si solo es válido un subconjunto de los primos de Mersenne. Por ejemplo, si el usuario ha escrito",
+      "@MersennePrime(1",
+      "userText valdrá \"1\" y solo dos de los primos son finalizaciones posibles:",
+      "return Arrays.asList(of(\"127\", \"M7\"), of(\"131071\", \"M17\"));",
+      "A veces no hay ninguna finalización válida. Por ejemplo, no hay ningún primo de Mersenne en rango que empiece por 9:",
+      "@MersennePrime(9",
+      "En este caso, una respuesta adecuada es devolver una lista de finalizaciones vacía,",
+      "return Collections.emptyList();",
+      "o una única finalización vacía con un mensaje útil",
+      "return Arrays.asList(of(\"\", \"No in-range Mersenne primes start with 9\"));"
+    ],
+    "parameters": [
+      {
+        "label": "element",
+        "detail": "el elemento anotado"
+      },
+      {
+        "label": "annotation",
+        "detail": "la anotación (quizá parcial) que se aplica al elemento"
+      },
+      {
+        "label": "member",
+        "detail": "el miembro de la anotación para el que se devuelven las finalizaciones posibles"
+      },
+      {
+        "label": "userText",
+        "detail": "el texto de código fuente que se completa"
+      }
+    ],
+    "returns": ["las finalizaciones sugeridas para la anotación"]
+  },
+  "web-java-se-javax.annotation.processing.Processor.process": {
+    "body": [
+      "El conjunto de entrada estará vacío si el procesador admite \"*\" y los elementos raíz no tienen anotaciones. Un Processor debe manejar sin problemas un conjunto de anotaciones vacío."
+    ],
+    "parameters": [
+      {
+        "label": "annotations",
+        "detail": "las interfaces de anotación que se pide procesar"
+      },
+      {
+        "label": "roundEnv",
+        "detail": "el entorno con información de la ronda actual y la anterior"
+      }
+    ],
+    "returns": [
+      "si este procesador reclama el conjunto de interfaces de anotación"
     ]
   },
   "web-java-se-javax.management.ImmutableDescriptor.toString": {
