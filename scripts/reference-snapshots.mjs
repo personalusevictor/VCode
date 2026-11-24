@@ -50,10 +50,59 @@ function filesFor(group) {
   ];
 }
 
+const translations = fileURLToPath(
+  new URL("../src/docs/data/translations/", import.meta.url),
+);
+const translatedFields = [
+  "intro",
+  "body",
+  "parameters",
+  "returns",
+  "exceptions",
+  "caveats",
+  "values",
+  "usage",
+];
+
+// Spanish text kept outside the snapshots, so a new import never discards it.
+function readTranslations(group) {
+  const file = resolve(translations, `${group}.json`);
+  return existsSync(file) ? readFileSync(file, "utf8") : "";
+}
+
+export function applyTranslation(entry, translation) {
+  if (!translation) return entry;
+  const result = { ...entry };
+  for (const field of translatedFields)
+    if (translation[field] !== undefined) result[field] = translation[field];
+  result.locale = "es";
+  delete result.introSpanish;
+  return result;
+}
+
+function translate(content, overlay) {
+  if (!overlay) return content;
+  const entries = JSON.parse(content);
+  if (!Array.isArray(entries)) return content;
+  let changed = false;
+  const translated = entries.map((entry) => {
+    const translation = entry && overlay[entry.id];
+    if (!translation) return entry;
+    changed = true;
+    return applyTranslation(entry, translation);
+  });
+  return changed ? JSON.stringify(translated) : content;
+}
+
 export function restoreReferenceSnapshots() {
   for (const group of Object.keys(groups)) {
     const archive = readFileSync(snapshotPath(group));
-    const digest = createHash("sha256").update(archive).digest("hex");
+    const overlayText = readTranslations(group);
+    const overlay = overlayText && JSON.parse(overlayText);
+    const digest = createHash("sha256")
+      .update(archive)
+      .update(overlayText)
+      .digest("hex");
     const stamp = resolve(catalog, `.snapshot-${group}.json`);
     const cached = existsSync(stamp) && JSON.parse(readFileSync(stamp, "utf8"));
     if (
@@ -71,7 +120,10 @@ export function restoreReferenceSnapshots() {
         throw new Error(`Invalid reference snapshot path: ${file}`);
       const destination = resolve(catalog, file);
       mkdirSync(dirname(destination), { recursive: true });
-      writeFileSync(destination, content);
+      writeFileSync(
+        destination,
+        file.startsWith("web/") ? translate(content, overlay) : content,
+      );
     }
     writeFileSync(
       stamp,

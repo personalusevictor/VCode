@@ -1,0 +1,2249 @@
+{
+  "css-descriptors-%40counter-style%20%C2%B7%20speak-as": {
+    "values": [
+      {
+        "label": "auto",
+        "detail": "Si speak-as vale auto, el valor efectivo depende del descriptor system. Por ejemplo, si system es alphabetic, el valor efectivo de speak-as será spell-out."
+      },
+      {
+        "label": "bullets",
+        "detail": "Se lee una frase o una señal sonora que el agente de usuario define para representar un elemento de lista no ordenada."
+      },
+      {
+        "label": "numbers",
+        "detail": "Se lee el valor numérico del contador en el idioma del documento."
+      },
+      {
+        "label": "words",
+        "detail": "El agente de usuario genera el valor del contador de la forma habitual y lo lee como una palabra en el idioma del documento."
+      },
+      {
+        "label": "spell-out",
+        "detail": "El agente de usuario genera la representación del contador de la forma habitual y la lee letra a letra. Si no sabe cómo leer un símbolo concreto, puede leerlo como si speak-as valiera numbers."
+      },
+      {
+        "label": "<counter-style-name>",
+        "detail": "El nombre de otro estilo de contador, indicado como &lt;custom-ident&gt;. El contador se pronuncia con la forma que define ese estilo, de manera parecida al descriptor fallback. Si el estilo indicado no existe, speak-as pasa a auto."
+      }
+    ]
+  },
+  "css-descriptors-%40counter-style%20%C2%B7%20symbols": {
+    "body": [
+      "Un símbolo puede ser una cadena, una imagen o un identificador. Se usa dentro de la regla @counter-style.",
+      "Cuando el descriptor system vale cyclic, numeric, alphabetic, symbolic o fixed, hay que indicar el descriptor symbols. Con el sistema additive se usa en su lugar el descriptor additive-symbols.",
+      "No hace falta separar con espacios los símbolos entre comillas, pero así el CSS se lee mejor. Para usar una comilla como símbolo, escápala o enciérrala entre comillas del otro tipo, como \"'\".",
+      "Si defines los símbolos con identificadores en vez de cadenas, respeta las reglas de sintaxis de los identificadores. Por ejemplo, los caracteres ASCII que no son letras, como *, no son identificadores y hay que ponerlos entre comillas o escaparlos. Tras un escape hexadecimal va un espacio. Ese espacio parece el que separa dos identificadores, pero permite que detrás del carácter escapado vengan dígitos. Por eso, después de un identificador con escape hexadecimal hay que poner dos espacios para separarlo del siguiente. Es mejor usar la cadena \"\\2A 1\" que \\2A 1 con dos espacios, porque algunas herramientas eliminan los espacios dobles. En general es más seguro usar cadenas o poner entre comillas los identificadores que necesitan escape."
+    ],
+    "values": [
+      {
+        "label": "<symbol>",
+        "detail": "El símbolo que usa el sistema de contador. Cada símbolo de la lista puede ser una &lt;string&gt;, una imagen o un &lt;custom-ident&gt;. La imagen, a su vez, puede ser una &lt;url&gt; o un degradado."
+      }
+    ]
+  },
+  "css-descriptors-%40counter-style%20%C2%B7%20system": {
+    "values": [
+      {
+        "label": "cyclic",
+        "detail": "Recorre la lista de símbolos del descriptor symbols. Al llegar al final vuelve al principio. Sirve tanto para viñetas sencillas de un solo símbolo como para estilos con varios. Hay que indicar al menos un símbolo en symbols; si no, el estilo de contador no es válido."
+      },
+      {
+        "label": "numeric",
+        "detail": "Interpreta los símbolos como dígitos de un sistema posicional. Se parece a alphabetic, pero en alphabetic el primer símbolo vale 1, el siguiente 2, etc., mientras que en numeric el primero vale 0, el siguiente 1, luego 2 y así sucesivamente. Hay que indicar al menos dos símbolos en symbols; si no, el estilo no es válido."
+      },
+      {
+        "label": "alphabetic",
+        "detail": "Interpreta los símbolos como dígitos de un sistema de numeración alfabético. Si los símbolos son de la «a» a la «z», las 26 primeras representaciones serán «a», «b»… hasta «z», igual que con symbolic. Pero después de «z» continúa con «aa», «ab», «ac»… El descriptor symbols debe tener al menos dos símbolos; si no, el estilo no es válido. El primer símbolo vale 1, el siguiente 2, etc. Este sistema solo está definido para valores positivos."
+      },
+      {
+        "label": "symbolic",
+        "detail": "Recorre una y otra vez los símbolos de symbols y en cada pasada los duplica, triplica, etc. Por ejemplo, con los símbolos «◽» y «◾», en la segunda pasada serán «◽◽» y «◾◾», luego «◽◽◽» y «◾◾◾», y así sucesivamente. Hay que indicar al menos un símbolo; si no, el estilo no es válido. Solo funciona con valores positivos."
+      },
+      {
+        "label": "additive",
+        "detail": "Representa sistemas de «valor por signo», como los números romanos, que en lugar de reutilizar dígitos según su posición definen dígitos nuevos para valores mayores. El valor de un número se obtiene sumando sus dígitos. Hay que indicar el descriptor additive-symbols con al menos una tupla aditiva; si no, la regla no es válida. Una tupla aditiva tiene dos partes: un símbolo y un peso entero no negativo. Las tuplas deben ir en orden descendente de peso; si no, el sistema no es válido."
+      },
+      {
+        "label": "fixed or fixed <integer>",
+        "detail": "Define un conjunto finito de símbolos y recorre una sola vez la lista de symbols. Cuando se acaban, se usa el estilo de contador de reserva (fallback). Es útil cuando los valores del contador son finitos. Hay que indicar al menos un símbolo; si no, el estilo no es válido. Detrás de fixed puede ir un &lt;integer&gt; opcional que indica qué elemento de la lista recibe el primer símbolo. Si se omite, vale 1: el primer elemento recibe el primer símbolo."
+      },
+      {
+        "label": "extends",
+        "detail": "Amplía el algoritmo de otro estilo de contador, del navegador o del autor, y permite cambiar algunos de sus aspectos. Los descriptores que no se indiquen se heredan del estilo ampliado. Si el estilo nombrado en extends aún no existe, se amplía decimal. No puede contener los descriptores symbols ni additive-symbols; si no, la regla no es válida. Si varios estilos forman un ciclo con sus valores de extends, el navegador los trata a todos como ampliaciones de decimal."
+      }
+    ]
+  },
+  "css-descriptors-%40font-face%20%C2%B7%20font-weight": {
+    "values": [
+      {
+        "label": "normal",
+        "detail": "Grosor normal. Equivale a 400."
+      },
+      {
+        "label": "bold",
+        "detail": "Negrita. Equivale a 700."
+      },
+      {
+        "label": "<number>",
+        "detail": "Un &lt;number&gt; entre 1 y 1000, ambos incluidos. Los números mayores representan grosores iguales o más gruesos que los menores. Algunos valores habituales corresponden a nombres de grosor comunes, como 400 (normal) o 700 (negrita)."
+      }
+    ]
+  },
+  "css-descriptors-%40font-face%20%C2%B7%20font-width": {
+    "values": [
+      {
+        "label": "normal",
+        "detail": "Indica una fuente de anchura normal."
+      },
+      {
+        "label": "semi-condensed, condensed, extra-condensed, ultra-condensed",
+        "detail": "Indica una fuente más estrecha de lo normal; ultra-condensed es la más estrecha."
+      },
+      {
+        "label": "semi-expanded, expanded, extra-expanded, ultra-expanded",
+        "detail": "Indica una fuente más ancha de lo normal; ultra-expanded es la más ancha."
+      },
+      {
+        "label": "<percentage>",
+        "detail": "Un &lt;percentage&gt; entre 50 % y 200 %, ambos incluidos. Este descriptor no admite valores negativos."
+      }
+    ]
+  },
+  "css-functions-conic-gradient()": {
+    "body": [
+      "Como cualquier degradado, un degradado cónico no tiene dimensiones intrínsecas: no tiene tamaño natural ni preferido, ni proporción preferida. Su tamaño concreto coincide con el del elemento al que se aplica, o con el de la <image> si se le da otro tamaño.",
+      "Para crear un degradado cónico que se repita hasta completar los 360 grados, usa repeating-conic-gradient().",
+      "Como los <gradient> pertenecen al tipo <image>, solo se pueden usar donde se admite una <image>. Por eso conic-gradient() no funciona en background-color ni en otras propiedades que usan el tipo &lt;color&gt;.",
+      "¿Por qué se llama «cónico»? Si las paradas de color son mucho más claras en un lado que en el otro, parece un cono visto desde arriba."
+    ],
+    "values": [
+      {
+        "label": "angle",
+        "detail": "Precedido de la palabra from y con un ángulo como valor, define la rotación del degradado en el sentido de las agujas del reloj."
+      },
+      {
+        "label": "<position>",
+        "detail": "Con las mismas longitudes, orden y palabras clave que background-position, define el centro del degradado. Si no se indica, vale center y el degradado queda centrado."
+      },
+      {
+        "label": "<angular-color-stop>",
+        "detail": "El &lt;color&gt; de una parada de color, seguido de una o dos posiciones opcionales (un ángulo a lo largo de la circunferencia del degradado)."
+      },
+      {
+        "label": "<color-hint>",
+        "detail": "Una pista de interpolación que define cómo avanza el degradado entre paradas de color adyacentes. Indica en qué punto entre dos paradas se alcanza la mitad de la transición. Si se omite, la mitad de la transición queda a medio camino entre las dos paradas."
+      }
+    ]
+  },
+  "css-functions-cross-fade()": {},
+  "css-functions-image()": {
+    "values": [
+      {
+        "label": "image-tags",
+        "detail": "La direccionalidad de la imagen: ltr (de izquierda a derecha) o rtl (de derecha a izquierda)."
+      },
+      {
+        "label": "image-src",
+        "detail": "Cero o más &lt;url&gt; o &lt;string&gt; con las fuentes de la imagen, con identificadores de fragmento opcionales."
+      },
+      {
+        "label": "color",
+        "detail": "Un color sólido de fondo que se usa como reserva si no se encuentra, no se admite o no se declara ninguna image-src."
+      }
+    ]
+  },
+  "css-functions-image-set()": {
+    "values": [
+      {
+        "label": "<image>",
+        "detail": "Cualquier tipo de imagen salvo un conjunto de imágenes: image-set() no se puede anidar dentro de otro image-set()."
+      },
+      {
+        "label": "<string>",
+        "detail": "La URL de una imagen."
+      },
+      {
+        "label": "<resolution>",
+        "detail": "Las unidades de resolución son x o dppx (puntos por unidad de píxel), dpi (puntos por pulgada) y dpcm (puntos por centímetro). Cada imagen de un image-set() debe tener una resolución distinta."
+      },
+      {
+        "label": "type(<string>)",
+        "detail": "Una cadena con un tipo MIME válido, por ejemplo \"image/jpeg\"."
+      }
+    ]
+  },
+  "css-functions-perspective()": {
+    "values": [
+      {
+        "label": "d",
+        "detail": "Una &lt;length&gt; que representa la distancia entre el usuario y el plano z=0."
+      }
+    ]
+  },
+  "css-functions-repeating-conic-gradient()": {
+    "body": [
+      "Un ejemplo de degradado cónico repetido es un estallido de rayos. El resultado de repeating-conic-gradient() es un objeto del tipo gradient, que es un tipo especial de imagen.",
+      "Si ni la primera parada tiene un ángulo mayor que 0deg ni la última uno menor que 360 grados, el degradado cónico no se repite.",
+      "Como cualquier degradado, un degradado cónico repetido no tiene dimensiones intrínsecas: no tiene tamaño natural ni preferido, ni proporción preferida. Su tamaño concreto coincide con el del elemento al que se aplica, o con el de la <image> si se le da otro tamaño.",
+      "Como los <gradient> pertenecen al tipo <image>, solo se pueden usar donde se admite una <image>. Por eso repeating-conic-gradient() no funciona en background-color ni en otras propiedades que usan el tipo &lt;color&gt;."
+    ],
+    "values": [
+      {
+        "label": "angle",
+        "detail": "Precedido de la palabra from y con un ángulo como valor, define la rotación del degradado en el sentido de las agujas del reloj."
+      },
+      {
+        "label": "<position>",
+        "detail": "Con las mismas longitudes, orden y palabras clave que background-position, define el centro del degradado. Si se omite, vale center y el degradado queda centrado."
+      },
+      {
+        "label": "<angular-color-stop>",
+        "detail": "El &lt;color&gt; de una parada de color, seguido de una o dos posiciones opcionales (un ángulo a lo largo de la circunferencia del degradado). El ángulo de la última parada menos el de la primera define el tamaño del tramo que se repite."
+      },
+      {
+        "label": "<color-hint>",
+        "detail": "Una pista de interpolación que define cómo avanza el degradado entre paradas de color adyacentes. Indica en qué punto entre dos paradas se alcanza la mitad de la transición. Si se omite, la mitad de la transición queda a medio camino entre las dos paradas."
+      }
+    ]
+  },
+  "css-functions-sign()": {
+    "parameters": [
+      {
+        "label": "x",
+        "detail": "Un cálculo que se resuelve en un número."
+      }
+    ],
+    "returns": [
+      "Un número que representa el signo de x:",
+      "Si x es positivo, devuelve 1.",
+      "Si x es negativo, devuelve -1.",
+      "Si x es cero positivo, devuelve 0; si es cero negativo, devuelve -0."
+    ]
+  },
+  "css-properties-animation-fill-mode": {
+    "values": [
+      {
+        "label": "none",
+        "detail": "La animación no aplica estilos al elemento cuando no se está ejecutando. El elemento se muestra con el resto de reglas CSS que tenga. Es el valor por defecto."
+      },
+      {
+        "label": "forwards",
+        "detail": "El elemento conserva los valores calculados del último fotograma clave alcanzado. Cuál es el último depende de animation-direction y animation-iteration-count: | animation-direction | animation-iteration-count | último fotograma alcanzado | | --------------------- | --------------------------- | ------------------------- | | normal | par o impar | 100% o to | | reverse | par o impar | 0% o from | | alternate | par | 0% o from | | alternate | impar | 100% o to | | alternate-reverse | par | 100% o to | | alternate-reverse | impar | 0% o from | Las propiedades animadas se comportan como si estuvieran en will-change. Si durante la animación se creó un nuevo contexto de apilamiento, el elemento lo conserva al terminar."
+      },
+      {
+        "label": "backwards",
+        "detail": "La animación aplica los valores del primer fotograma clave relevante en cuanto se asigna al elemento y los mantiene durante animation-delay. El primer fotograma relevante depende de animation-direction: | animation-direction | primer fotograma relevante | | -------------------------------- | ----------------------- | | normal o alternate | 0% o from | | reverse o alternate-reverse | 100% o to |"
+      },
+      {
+        "label": "both",
+        "detail": "Sigue a la vez las reglas de forwards y backwards, de modo que extiende las propiedades de la animación en ambos sentidos."
+      }
+    ]
+  },
+  "css-properties-animation-range": {
+    "body": [
+      "La propiedad abreviada animation-range establece animation-range-start y animation-range-end, es decir, en qué punto de la línea de tiempo empieza y termina la animación. Por defecto, los estilos de una animación con fotogramas clave solo se aplican mientras el elemento se está animando, y cuándo ocurre eso depende de su línea de tiempo: solo entre el inicio y el final de su rango. Para aplicar la animación fuera de ese rango, pon animation-fill-mode a backwards, forwards o both. Estos valores aplican, respectivamente, los estilos del primer fotograma hasta el inicio del rango, los del último después de terminar, o ambos.",
+      "El área del puerto de desplazamiento llamada rango de visibilidad del progreso de vista es la zona dentro de la cual el elemento de una animación con línea de tiempo de vista se considera visible. Por defecto ocupa todo el puerto de desplazamiento, pero se puede ajustar con view-timeline-inset.",
+      "Si se indican dos valores, se interpretan en el orden <animation-range-start> y después <animation-range-end>. Cada componente puede ser la palabra clave normal, un length-percentage o un timeline-range-name seguido opcionalmente de un <length-percentage>, separados por espacios. normal equivale a 0% en el inicio y a 100% en el final. No es válido combinar normal con un <length-percentage>."
+    ],
+    "values": [
+      {
+        "label": "<animation-range-start>",
+        "detail": "La palabra clave normal, un <length-percentage>, un timeline-range-name o un par <timeline-range-name> <length-percentage>, que representa animation-range-start. Si se indica un <timeline-range-name> sin <length-percentage>, este vale 0%."
+      },
+      {
+        "label": "<animation-range-end>",
+        "detail": "La palabra clave normal, un <length-percentage>, un <timeline-range-name> o un par <timeline-range-name> <length-percentage>, que representa animation-range-end. Si se indica un <timeline-range-name> sin <length-percentage>, este vale 100%."
+      }
+    ]
+  },
+  "css-properties-font-variant-east-asian": {
+    "values": [
+      {
+        "label": "normal",
+        "detail": "Desactiva el uso de estos glifos alternativos."
+      },
+      {
+        "label": "ruby",
+        "detail": "Fuerza el uso de glifos especiales para caracteres ruby. Como suelen ser más pequeños, los diseñadores tipográficos crean formas específicas, normalmente algo más gruesas para mejorar el contraste. Corresponde al valor OpenType ruby."
+      },
+      {
+        "label": "<east-asian-variant-values>",
+        "detail": "Indican qué conjunto de variantes de glifos logográficos se usa. Valores posibles: | Palabra clave | Estándar que define los glifos | Equivalente OpenType | | ------------- | --------------------------------------------------------------------------- | ------------------- | | jis78 | JIS X 0208:1978 | jp78 | | jis83 | JIS X 0208:1983 | jp83 | | jis90 | JIS X 0208:1990 | jp90 | | jis04 | JIS X 0213:2004 | jp04 | | simplified | Ninguno, usa los glifos de chino simplificado | smpl | | traditional | Ninguno, usa los glifos de chino tradicional | trad |"
+      },
+      {
+        "label": "<east-asian-width-values>",
+        "detail": "Controlan el ancho de las cifras de los caracteres de Asia oriental. Hay dos valores: proportional-width activa el conjunto de caracteres de ancho variable (valor OpenType pwid) y full-width activa el de ancho fijo (valor OpenType fwid)."
+      }
+    ]
+  },
+  "css-properties-font-variant-ligatures": {
+    "values": [
+      {
+        "label": "normal",
+        "detail": "Activa las ligaduras y formas contextuales habituales necesarias para una representación correcta. Cuáles se activan depende de la fuente, del idioma y del sistema de escritura. Es el valor por defecto."
+      },
+      {
+        "label": "none",
+        "detail": "Desactiva todas las ligaduras y formas contextuales, incluso las comunes."
+      },
+      {
+        "label": "<common-lig-values>",
+        "detail": "Controlan las ligaduras más comunes, como fi, ffi o th. Corresponden a los valores OpenType liga y clig. Hay dos valores: common-ligatures las activa y no-common-ligatures las desactiva. La palabra clave normal también las activa."
+      },
+      {
+        "label": "<discretionary-lig-values>",
+        "detail": "Controlan ligaduras específicas de la fuente que define el diseñador tipográfico. Corresponden al valor OpenType dlig. Hay dos valores: discretionary-ligatures las activa y no-discretionary-ligatures las desactiva."
+      },
+      {
+        "label": "<historical-lig-values>",
+        "detail": "Controlan ligaduras históricas de libros antiguos, como el dígrafo alemán tz representado como ꜩ. Corresponden al valor OpenType hlig. Hay dos valores: historical-ligatures las activa y no-historical-ligatures las desactiva."
+      },
+      {
+        "label": "<contextual-alt-values>",
+        "detail": "Controlan si las letras se adaptan a su contexto, es decir, a las letras que las rodean. Corresponden al valor OpenType calt. Hay dos valores: contextual activa las alternativas contextuales y no-contextual las desactiva. La palabra clave normal suele activarlas también."
+      }
+    ]
+  },
+  "css-properties-grid-area": {
+    "values": [
+      {
+        "label": "auto",
+        "detail": "Palabra clave que indica que la propiedad no aporta nada a la colocación del elemento en la cuadrícula: se coloca automáticamente o con una extensión por defecto de 1."
+      },
+      {
+        "label": "<custom-ident>",
+        "detail": "Si existe una línea con el nombre <custom-ident>-start o <custom-ident>-end, aporta la primera de ellas a la colocación. Las áreas con nombre generan automáticamente líneas implícitas con esos nombres, así que grid-area: foo; elige el borde inicial o final del área foo (salvo que antes se haya definido explícitamente otra línea llamada foo-start o foo-end). Si no, se trata como si se hubiera indicado el entero 1 junto con el <custom-ident>."
+      },
+      {
+        "label": "<integer> && <custom-ident>?",
+        "detail": "Aporta la n-ésima línea de la cuadrícula a la colocación. Si el entero es negativo, cuenta al revés desde el borde final de la cuadrícula explícita. Si se da un nombre como &lt;custom-ident&gt;, solo se cuentan las líneas con ese nombre. Si no hay suficientes, se supone que todas las líneas implícitas lo tienen. El valor 0 no es válido."
+      },
+      {
+        "label": "span && [ <integer> || <custom-ident> ]",
+        "detail": "Aporta una extensión: el borde correspondiente del área del elemento queda a n líneas del borde opuesto. Si se da un nombre como &lt;custom-ident&gt;, solo se cuentan las líneas con ese nombre. Si no hay suficientes, se supone que todas las líneas implícitas del lado correspondiente a la dirección de búsqueda lo tienen. Si se omite el &lt;integer&gt;, vale 1. Los enteros negativos y el 0 no son válidos."
+      }
+    ]
+  },
+  "css-properties-grid-column": {
+    "values": [
+      {
+        "label": "auto",
+        "detail": "Palabra clave que indica que la propiedad no aporta nada a la colocación: colocación automática, extensión automática o extensión por defecto de 1."
+      },
+      {
+        "label": "<custom-ident>",
+        "detail": "Si existe una línea llamada <custom-ident>-start o <custom-ident>-end, aporta la primera de ellas a la colocación. Las áreas con nombre generan automáticamente líneas implícitas con esos nombres, así que grid-column: foo; elige el borde inicial o final del área foo (salvo que antes se haya definido explícitamente otra línea llamada foo-start o foo-end). Si no, se trata como si se hubiera indicado el entero 1 junto con el <custom-ident>."
+      },
+      {
+        "label": "<integer> && <custom-ident>?",
+        "detail": "Aporta la n-ésima línea de la cuadrícula a la colocación. Si el entero es negativo, cuenta al revés desde el borde final de la cuadrícula explícita. Si se da un nombre como <custom-ident>, solo se cuentan las líneas con ese nombre. Si no hay suficientes, se supone que todas las líneas implícitas lo tienen. El valor 0 no es válido."
+      },
+      {
+        "label": "span && [ <integer> || <custom-ident> ]",
+        "detail": "Aporta una extensión: el borde correspondiente del área del elemento queda a n líneas del borde opuesto. Si se da un nombre como <custom-ident>, solo se cuentan las líneas con ese nombre. Si no hay suficientes, se supone que todas las líneas implícitas del lado correspondiente a la dirección de búsqueda lo tienen. Si se omite el <integer>, vale 1. Los enteros negativos y el 0 no son válidos."
+      }
+    ]
+  },
+  "css-properties-grid-column-end": {
+    "values": [
+      {
+        "label": "auto",
+        "detail": "No aporta nada a la colocación del elemento: colocación automática, extensión automática o extensión por defecto de 1. Es el valor por defecto."
+      },
+      {
+        "label": "<custom-ident>",
+        "detail": "Si existe una línea llamada <custom-ident>-end, aporta la primera de ellas a la colocación. Las áreas con nombre generan automáticamente líneas implícitas con ese nombre, así que grid-column-end: foo; elige el borde final del área foo (salvo que antes se haya definido explícitamente otra línea llamada foo-end). Si no, se trata como si se hubiera indicado el entero 1 junto con el <custom-ident>."
+      },
+      {
+        "label": "<integer> && <custom-ident>?",
+        "detail": "Aporta la n-ésima línea de la cuadrícula a la colocación. Si el entero es negativo, cuenta al revés desde el borde final de la cuadrícula explícita. Si se da un nombre como <custom-ident>, solo se cuentan las líneas con ese nombre. Si no hay suficientes, se supone que todas las líneas implícitas lo tienen. El valor 0 no es válido."
+      },
+      {
+        "label": "span && [ <integer> || <custom-ident> ]",
+        "detail": "Aporta una extensión: el borde final de columna del área del elemento queda a n líneas del borde inicial. Si se da un nombre como <custom-ident>, solo se cuentan las líneas con ese nombre. Si no hay suficientes, se supone que todas las líneas implícitas del lado correspondiente a la dirección de búsqueda lo tienen. Si se omite el <integer>, vale 1. Los enteros negativos y el 0 no son válidos. El <custom-ident> no puede ser span ni auto."
+      }
+    ]
+  },
+  "css-properties-grid-column-start": {
+    "values": [
+      {
+        "label": "auto",
+        "detail": "Palabra clave que indica que la propiedad no aporta nada a la colocación: colocación automática, extensión automática o extensión por defecto de 1."
+      },
+      {
+        "label": "<custom-ident>",
+        "detail": "Si existe una línea llamada <custom-ident>-start, aporta la primera de ellas a la colocación. Las áreas con nombre generan automáticamente líneas implícitas con ese nombre, así que grid-column-start: foo; elige el borde inicial del área foo (salvo que antes se haya definido explícitamente otra línea llamada foo-start). Si no, se trata como si se hubiera indicado el entero 1 junto con el <custom-ident>."
+      },
+      {
+        "label": "<integer> && <custom-ident>?",
+        "detail": "Aporta la n-ésima línea de la cuadrícula a la colocación. Si el entero es negativo, cuenta al revés desde el borde final de la cuadrícula explícita. Si se da un nombre como <custom-ident>, solo se cuentan las líneas con ese nombre. Si no hay suficientes, se supone que todas las líneas implícitas lo tienen. El valor 0 no es válido."
+      },
+      {
+        "label": "span && [ <integer> || <custom-ident> ]",
+        "detail": "Aporta una extensión: el borde inicial de columna del área del elemento queda a n líneas del borde final. Si se da un nombre como <custom-ident>, solo se cuentan las líneas con ese nombre. Si no hay suficientes, se supone que todas las líneas implícitas del lado correspondiente a la dirección de búsqueda lo tienen. Si se omite el <integer>, vale 1. Los enteros negativos y el 0 no son válidos. El <custom-ident> no puede ser span ni auto."
+      }
+    ]
+  },
+  "css-properties-grid-row": {
+    "values": [
+      {
+        "label": "auto",
+        "detail": "Palabra clave que indica que la propiedad no aporta nada a la colocación: colocación automática, extensión automática o extensión por defecto de 1."
+      },
+      {
+        "label": "<custom-ident>",
+        "detail": "Si existe una línea llamada <custom-ident>-start o <custom-ident>-end, aporta la primera de ellas a la colocación. Las áreas con nombre generan automáticamente líneas implícitas con esos nombres, así que grid-row: foo; elige el borde inicial o final del área foo (salvo que antes se haya definido explícitamente otra línea llamada foo-start o foo-end). Si no, se trata como si se hubiera indicado el entero 1 junto con el <custom-ident>."
+      },
+      {
+        "label": "<integer> && <custom-ident>?",
+        "detail": "Aporta la n-ésima línea de la cuadrícula a la colocación. Si el entero es negativo, cuenta al revés desde el borde final de la cuadrícula explícita. Si se da un nombre como <custom-ident>, solo se cuentan las líneas con ese nombre. Si no hay suficientes, se supone que todas las líneas implícitas lo tienen. El valor 0 no es válido."
+      },
+      {
+        "label": "span && [ <integer> || <custom-ident> ]",
+        "detail": "Aporta una extensión: el borde correspondiente del área del elemento queda a n líneas del borde opuesto. Si se da un nombre como <custom-ident>, solo se cuentan las líneas con ese nombre. Si no hay suficientes, se supone que todas las líneas implícitas del lado correspondiente a la dirección de búsqueda lo tienen. Si se omite el <integer>, vale 1. Los enteros negativos y el 0 no son válidos."
+      }
+    ]
+  },
+  "css-properties-interpolate-size": {
+    "body": [
+      "interpolate-size: allow-keywords permite interpolar entre un valor length-percentage y un tamaño intrínseco. No permite animar entre dos tamaños intrínsecos: uno de los extremos de la animación tiene que ser un <length-percentage>.",
+      "interpolate-size se hereda, así que puedes permitir animaciones hacia o desde tamaños intrínsecos en todo el documento declarándola en la raíz:",
+      "Si quieres limitar el alcance, declárala en el contenedor correspondiente. Lo siguiente permite interpolar tamaños intrínsecos solo en <main> y sus descendientes:",
+      "Los valores que devuelve la función calc-size() también se pueden interpolar. En la práctica, usar calc-size() en un valor aplica automáticamente interpolate-size: allow-keywords a esa declaración. Aun así, como interpolate-size se hereda, suele ser la opción preferida para animar tamaños intrínsecos. Usa calc-size() solo si además necesitas hacer cálculos."
+    ],
+    "values": [
+      {
+        "label": "allow-keywords",
+        "detail": "Permite interpolar entre un valor length-percentage y un tamaño intrínseco, de modo que se puede animar entre ambos."
+      },
+      {
+        "label": "numeric-only",
+        "detail": "Comportamiento por defecto: los tamaños intrínsecos no se pueden interpolar."
+      }
+    ]
+  },
+  "css-properties-letter-spacing": {
+    "values": [
+      {
+        "label": "normal",
+        "detail": "El espaciado normal entre letras de la fuente actual. A diferencia de 0, permite que el agente de usuario modifique el espacio entre caracteres para justificar el texto."
+      },
+      {
+        "label": "&lt;length-percentage&gt;",
+        "detail": "Espacio adicional entre caracteres, además del espacio por defecto. Admite valores negativos, aunque cada implementación puede limitarlos. El agente de usuario no puede aumentar ni reducir más ese espacio para justificar el texto. Los porcentajes se calculan respecto al ancho del carácter de espacio de la fuente. Cuando letter-spacing no es cero, no se aplican las ligaduras opcionales, como las características OpenType liga (ligaduras estándar) y clig (ligaduras contextuales) que normalmente controla font-variant-ligatures. Se pueden volver a activar explícitamente con font-feature-settings."
+      }
+    ]
+  },
+  "css-properties-max-width": {
+    "values": [
+      {
+        "label": "&lt;length&gt;",
+        "detail": "Define max-width como un valor absoluto."
+      },
+      {
+        "label": "&lt;percentage&gt;",
+        "detail": "Define max-width como un porcentaje del ancho del bloque contenedor."
+      },
+      {
+        "label": "none",
+        "detail": "Sin límite de tamaño para la caja."
+      },
+      {
+        "label": "max-content",
+        "detail": "El ancho máximo preferido intrínseco."
+      },
+      {
+        "label": "min-content",
+        "detail": "El ancho máximo mínimo intrínseco."
+      },
+      {
+        "label": "fit-content",
+        "detail": "Usa el espacio disponible, pero no más que max-content; es decir, min(max-content, max(min-content, stretch))."
+      },
+      {
+        "label": "fit-content(<length-percentage>)",
+        "detail": "Usa la fórmula de fit-content sustituyendo el espacio disponible por el argumento indicado; es decir, min(max-content, max(min-content, argumento))."
+      },
+      {
+        "label": "stretch",
+        "detail": "Limita el ancho máximo de la caja de margen del elemento al ancho de su bloque contenedor. Intenta que la caja de margen ocupe el espacio disponible, de forma parecida a 100%, pero aplicando el tamaño resultante a la caja de margen en lugar de a la caja que determina box-sizing. Consulta la compatibilidad de navegadores para ver los alias que usan para stretch y su estado de implementación."
+      }
+    ]
+  },
+  "css-properties-offset-position": {
+    "values": [
+      {
+        "label": "normal",
+        "detail": "El elemento no tiene posición inicial de desplazamiento y se coloca en 50% 50% del bloque contenedor. Es el valor por defecto."
+      },
+      {
+        "label": "auto",
+        "detail": "La posición inicial de desplazamiento es la esquina superior izquierda de la caja del elemento."
+      },
+      {
+        "label": "&lt;position&gt;",
+        "detail": "Indica la posición como una coordenada x/y relativa a los bordes de la caja. Admite de uno a cuatro valores. Con dos valores que no sean palabras clave, el primero es la posición horizontal y el segundo la vertical. Con uno solo, el segundo se supone center. Con tres o cuatro, los valores length-percentage son desplazamientos de la palabra clave que los precede. Consulta background-position para más detalles sobre estos tipos de valor."
+      }
+    ]
+  },
+  "css-properties-perspective-origin": {
+    "values": [
+      {
+        "label": "x-position",
+        "detail": "La abscisa del punto de fuga. Puede ser un &lt;length-percentage&gt;, como longitud absoluta o relativa al ancho del elemento. Admite valores negativos."
+      },
+      {
+        "label": "y-position",
+        "detail": "La ordenada del punto de fuga. Puede ser un &lt;length-percentage&gt;, como longitud absoluta o relativa a la altura del elemento. Admite valores negativos."
+      }
+    ]
+  },
+  "css-properties-r": {
+    "values": [
+      {
+        "label": "length",
+        "detail": "Las longitudes absolutas o relativas pueden usar cualquier unidad del tipo &lt;length&gt; de CSS. Los valores negativos no son válidos."
+      },
+      {
+        "label": "percentage",
+        "detail": "Los porcentajes se refieren a la diagonal normalizada del viewport SVG actual, que se calcula como <math><mfrac><msqrt><mrow><msup><mi>&lt;width&gt;</mi><mn>2</mn></msup><mo>+</mo><msup><mi>&lt;height&gt;</mi><mn>2</mn></msup></mrow></msqrt><msqrt><mn>2</mn></msqrt></mfrac></math>."
+      }
+    ]
+  },
+  "css-properties-ruby-overhang": {
+    "body": [
+      "La propiedad ruby-overhang controla si la caja del texto de anotación ruby (<rt>) puede solaparse con el texto adyacente que queda fuera del contenedor <ruby>.",
+      "Si no se permite que la anotación sobresalga (ruby-overhang: none en el elemento <ruby>), el elemento se comporta como una caja en línea, como si display valiera inline: solo su propio contenido se representa dentro de sus límites y los elementos adyacentes no los cruzan.",
+      "Por defecto, el contenido de <rt> puede sobresalir, así que puede solaparse con el contenedor <ruby> y quedar parcialmente encima o debajo del contenido en línea que lo rodea. Con auto, el valor por defecto, puede sobresalir, pero no lo hará si así se solapara con otros <rt> adyacentes o con elementos cuyo display se resuelva como ruby-base o ruby-text."
+    ],
+    "values": [
+      {
+        "label": "auto",
+        "detail": "Si el contenedor de la anotación ruby es más largo que su contenedor base, la anotación puede solaparse en parte con el texto adyacente. El agente de usuario decide si sobresale y cuánto."
+      },
+      {
+        "label": "none",
+        "detail": "Palabra clave que indica que el ruby nunca puede extenderse más allá de los contenedores adyacentes."
+      }
+    ]
+  },
+  "css-properties-scrollbar-color": {
+    "values": [
+      {
+        "label": "<scrollbar-color>",
+        "detail": "Define el color de la barra de desplazamiento. <table class=\"standard-table\"> <tbody> <tr> <td>auto</td> <td> Representación por defecto de la plataforma para el carril de la barra, si no hay otras propiedades de color de barra relacionadas. </td> </tr> <tr> <td>&#x3C;color> &#x3C;color></td> <td> Aplica el primer color al control deslizante (thumb) y el segundo al carril (track). </td> </tr> </tbody> </table>"
+      }
+    ]
+  },
+  "css-properties-stroke-dasharray": {
+    "values": [
+      {
+        "label": "none",
+        "detail": "El trazo se dibuja sin guiones. Es el valor por defecto."
+      },
+      {
+        "label": "&lt;number&gt;",
+        "detail": "Un número de unidades SVG, cuyo tamaño define el espacio de unidades actual. Los valores negativos no son válidos."
+      },
+      {
+        "label": "&lt;length&gt;",
+        "detail": "Los píxeles se tratan igual que las unidades SVG (consulta <number>) y las longitudes basadas en la fuente, como em, se calculan respecto al tamaño de texto SVG del elemento. El efecto de otras unidades puede depender del navegador. Los valores negativos no son válidos."
+      },
+      {
+        "label": "&lt;percentage&gt;",
+        "detail": "Los porcentajes se refieren a la diagonal normalizada del viewport SVG actual, que se calcula como <math><mfrac><msqrt><mrow><msup><mi>&lt;width&gt;</mi><mn>2</mn></msup><mo>+</mo><msup><mi>&lt;height&gt;</mi><mn>2</mn></msup></mrow></msqrt><msqrt><mn>2</mn></msqrt></mfrac></math>. Los valores negativos no son válidos."
+      }
+    ]
+  },
+  "css-properties-stroke-dashoffset": {
+    "values": [
+      {
+        "label": "&lt;number&gt;",
+        "detail": "Un número de unidades SVG, cuyo tamaño define el espacio de unidades actual. Si no es 0, mueve el punto de partida desde el inicio del patrón de guiones a otro punto dentro de él. Los valores positivos parecen desplazar el patrón de guiones y huecos hacia atrás, y los negativos hacia delante."
+      },
+      {
+        "label": "&lt;length&gt;",
+        "detail": "Los píxeles se tratan igual que las unidades SVG (consulta <number>) y las longitudes basadas en la fuente, como em, se calculan respecto al tamaño de texto SVG del elemento. El efecto de otras unidades puede depender del navegador. El desplazamiento funciona igual que con <number>."
+      },
+      {
+        "label": "&lt;percentage&gt;",
+        "detail": "Los porcentajes se refieren a la diagonal normalizada del viewport SVG actual, calculada como <math><mfrac><msqrt><mrow><msup><mi>&lt;width&gt;</mi><mn>2</mn></msup><mo>+</mo><msup><mi>&lt;height&gt;</mi><mn>2</mn></msup></mrow></msqrt><msqrt><mn>2</mn></msqrt></mfrac></math>, no a la longitud total del trazado. Los valores negativos no son válidos."
+      }
+    ]
+  },
+  "css-properties-stroke-width": {
+    "values": [
+      {
+        "label": "&lt;length&gt;",
+        "detail": "Los píxeles se tratan igual que las unidades SVG (consulta <number>) y las longitudes basadas en la fuente, como em, se calculan respecto al tamaño de texto SVG del elemento. El efecto de otras unidades puede depender del navegador."
+      },
+      {
+        "label": "&lt;percentage&gt;",
+        "detail": "Los porcentajes se refieren a la diagonal normalizada del viewport SVG actual, que se calcula como <math><mfrac><msqrt><mrow><msup><mi>&lt;width&gt;</mi><mn>2</mn></msup><mo>+</mo><msup><mi>&lt;height&gt;</mi><mn>2</mn></msup></mrow></msqrt><msqrt><mn>2</mn></msqrt></mfrac></math>."
+      },
+      {
+        "label": "&lt;number&gt;",
+        "detail": "Un número de unidades SVG, cuyo tamaño define el espacio de unidades actual."
+      }
+    ]
+  },
+  "css-properties-text-combine-upright": {
+    "values": [
+      {
+        "label": "none",
+        "detail": "Sin tratamiento especial."
+      },
+      {
+        "label": "all",
+        "detail": "Intenta componer en horizontal todos los caracteres consecutivos de la caja, de modo que ocupen el espacio de un solo carácter en la línea vertical."
+      }
+    ]
+  },
+  "css-properties-text-emphasis-style": {
+    "values": [
+      {
+        "label": "none",
+        "detail": "Sin marcas de énfasis."
+      },
+      {
+        "label": "filled",
+        "detail": "La forma se rellena de color sólido. Es el valor por defecto si no se indica filled ni open."
+      },
+      {
+        "label": "open",
+        "detail": "La forma es hueca."
+      },
+      {
+        "label": "dot",
+        "detail": "Usa círculos pequeños como marcas. El relleno es '•' (U+2022) y el hueco es '◦' (U+25E6)."
+      },
+      {
+        "label": "circle",
+        "detail": "Usa círculos grandes como marcas. El relleno es '●' (U+25CF) y el hueco es '○' (U+25CB)."
+      },
+      {
+        "label": "double-circle",
+        "detail": "Usa círculos dobles como marcas. El relleno es '◉' (U+25C9) y el hueco es '◎' (U+25CE)."
+      },
+      {
+        "label": "triangle",
+        "detail": "Usa triángulos como marcas. El relleno es '▲' (U+25B2) y el hueco es '△' (U+25B3)."
+      },
+      {
+        "label": "sesame",
+        "detail": "Usa semillas de sésamo como marcas. La rellena es '﹅' (U+FE45) y la hueca es '﹆' (U+FE46)."
+      },
+      {
+        "label": "<string>",
+        "detail": "Usa la cadena indicada como marca. No conviene poner más de un carácter en <string>: el agente de usuario puede recortar o ignorar las cadenas de más de un grupo de grafemas."
+      }
+    ]
+  },
+  "css-properties-text-fit": {
+    "body": [
+      "Un reto habitual del diseño web es que los títulos y otros textos encajen bien en su caja, sea cual sea la maquetación o el tamaño del viewport. El caso más típico es que un título horizontal ocupe exactamente el ancho de su contenedor. Tradicionalmente se recurría a cálculos complejos de font-size o a trucos con JavaScript.",
+      "La propiedad text-fit ofrece una solución solo con CSS: ajusta el tamaño de fuente representado con un factor de escala para que el texto ocupe el espacio disponible, en vez de justificarlo como hace el valor justify de text-align.",
+      "La forma básica de text-fit usa una sola palabra clave:",
+      "Con grow, el tamaño de fuente aumenta hasta que el texto encaja exactamente en su caja, que es justo lo que se necesita en el caso anterior."
+    ],
+    "values": [
+      {
+        "label": "none",
+        "detail": "Valor por defecto. No se escala el texto."
+      },
+      {
+        "label": "grow",
+        "detail": "El tamaño de fuente representado aumenta hasta que el texto encaja exactamente en la dimensión en línea de su caja."
+      },
+      {
+        "label": "shrink",
+        "detail": "El tamaño de fuente representado disminuye hasta que el texto encaja exactamente en la dimensión en línea de su caja."
+      },
+      {
+        "label": "consistent",
+        "detail": "Todas las líneas del texto se escalan con el mismo factor. No tiene efecto si la primera palabra clave es none. Si no se indica una segunda palabra clave, se supone consistent."
+      },
+      {
+        "label": "per-line",
+        "detail": "Cada línea del texto se escala con su propio factor. La última línea y las que terminan en un salto forzado (por ejemplo, por un elemento <br>) no se escalan. No tiene efecto si la primera palabra clave es none."
+      },
+      {
+        "label": "per-line-all",
+        "detail": "Cada línea del texto se escala con su propio factor, incluidas la última y las que terminan en un salto forzado. No tiene efecto si la primera palabra clave es none."
+      },
+      {
+        "label": "&lt;percentage&gt;",
+        "detail": "El factor de escala máximo (con grow) o mínimo (con shrink). Con grow debe ser 100 % o más; con shrink, entre 0 % y 100 % ambos incluidos. Si no, el porcentaje no tiene efecto."
+      }
+    ]
+  },
+  "css-properties-touch-action": {
+    "values": [
+      {
+        "label": "auto",
+        "detail": "El navegador gestiona todos los gestos de desplazamiento y zoom."
+      },
+      {
+        "label": "none",
+        "detail": "El navegador no gestiona ningún gesto de desplazamiento ni de zoom."
+      },
+      {
+        "label": "pan-x",
+        "detail": "Permite desplazarse en horizontal con un dedo. Se puede combinar con pan-y, pan-up, pan-down o pinch-zoom."
+      },
+      {
+        "label": "pan-y",
+        "detail": "Permite desplazarse en vertical con un dedo. Se puede combinar con pan-x, pan-left, pan-right o pinch-zoom."
+      },
+      {
+        "label": "manipulation",
+        "detail": "Permite los gestos de desplazamiento y de zoom con pellizco, pero desactiva otros gestos no estándar, como el doble toque para ampliar. Así el navegador no necesita retrasar los eventos click cuando el usuario toca la pantalla. Es un alias de \"pan-x pan-y pinch-zoom\", que por compatibilidad sigue siendo válido."
+      },
+      {
+        "label": "pan-left, pan-right, pan-up, pan-down",
+        "detail": "Permite los gestos con un dedo que empiezan desplazándose en las direcciones indicadas. Una vez iniciado el desplazamiento, se puede invertir la dirección. Desplazarse «hacia arriba» (pan-up) significa arrastrar el dedo hacia abajo en la pantalla, y pan-left, arrastrarlo hacia la derecha. Se pueden combinar varias direcciones salvo que exista una forma más simple (\"pan-left pan-right\" no es válido porque existe \"pan-x\", pero \"pan-left pan-down\" sí)."
+      },
+      {
+        "label": "pinch-zoom",
+        "detail": "Permite desplazar y ampliar la página con varios dedos. Se puede combinar con cualquiera de los valores pan-."
+      }
+    ]
+  },
+  "css-properties-word-spacing": {
+    "values": [
+      {
+        "label": "normal",
+        "detail": "El espacio normal entre palabras que definen la fuente actual o el navegador."
+      },
+      {
+        "label": "length-percentage",
+        "detail": "Espacio adicional al espacio entre palabras propio de la fuente. Los porcentajes se calculan respecto al font-size del texto."
+      }
+    ]
+  },
+  "web-css-at-rules-@font-face-font-stretch": {
+    "values": [
+      {
+        "label": "normal",
+        "detail": "Indica una fuente de anchura normal."
+      },
+      {
+        "label": "semi-condensed, condensed, extra-condensed, ultra-condensed",
+        "detail": "Indica una fuente más estrecha de lo normal; ultra-condensed es la más estrecha."
+      },
+      {
+        "label": "semi-expanded, expanded, extra-expanded, ultra-expanded",
+        "detail": "Indica una fuente más ancha de lo normal; ultra-expanded es la más ancha."
+      },
+      {
+        "label": "<percentage>",
+        "detail": "Un &lt;percentage&gt; entre 50 % y 200 %, ambos incluidos. Este descriptor no admite valores negativos."
+      }
+    ]
+  },
+  "web-css-selectors-column_combinator": {},
+  "web-css-selectors-namespace_separator": {},
+  "web-css-values-basic-shape-inset": {
+    "values": [
+      {
+        "label": "<length-percentage>{1,4}",
+        "detail": "Con los cuatro argumentos, representan los desplazamientos superior, derecho, inferior e izquierdo hacia dentro desde la caja de referencia, que definen los bordes del rectángulo. Siguen la sintaxis de la abreviatura margin, así que puedes indicarlos con uno, dos o cuatro valores. Si los dos desplazamientos de una dimensión suman más del 100 %, ambos se reducen en proporción hasta sumar 100 %. Por ejemplo, inset(90% 10% 60% 10%) tiene 90 % arriba y 60 % abajo, y se reduce a inset(60% 10% 40% 10%). Las formas como esta, que no encierran área y no tienen shape-margin, no afectan al ajuste del texto."
+      },
+      {
+        "label": "<border-radius>",
+        "detail": "Los argumentos opcionales <border-radius> redondean las esquinas del rectángulo con la sintaxis de la abreviatura border-radius."
+      }
+    ]
+  },
+  "web-css-values-basic-shape-polygon": {
+    "body": [
+      "Con polygon() puedes crear casi cualquier forma indicando las coordenadas x/y de sus vértices como pares de valores length-percentage separados por comas:",
+      "polygon(x<sub>1</sub> y<sub>1</sub>, x<sub>2</sub> y<sub>2</sub>, x<sub>3</sub> y<sub>3</sub>, x<sub>4</sub> y<sub>4</sub>, x<sub>n</sub> y<sub>n</sub>)",
+      "Basta con un punto para que el valor de polygon() sea válido, pero hacen falta al menos 3 para crear una forma (un triángulo). No hay límite de puntos. La forma se dibuja uniendo los puntos en el orden en que aparecen, y al final se traza automáticamente una línea del último al primero para cerrarla.",
+      "Así se definirían las coordenadas de un triángulo:"
+    ],
+    "parameters": [
+      {
+        "label": "<fill-rule>",
+        "detail": "La palabra clave nonzero (por defecto) o evenodd, que indica el algoritmo para rellenar el polígono."
+      },
+      {
+        "label": "round <length>",
+        "detail": "La palabra clave round redondea las esquinas del polígono, y la longitud que la acompaña indica su radio."
+      },
+      {
+        "label": "length-percentage",
+        "detail": "Cada vértice se representa con un par de valores <length-percentage> separados por un espacio, que definen sus coordenadas x/y respecto a la caja de referencia de la forma."
+      }
+    ],
+    "returns": ["Un valor basic-shape."]
+  },
+  "web-css-values-display-box": {},
+  "web-css-values-hue-interpolation-method": {
+    "values": [
+      {
+        "label": "shorter",
+        "detail": "Usa el arco más corto. Si los dos radios coinciden, el arco se reduce a un punto. Si los dos arcos miden lo mismo y θ1 < θ2, usa el arco en sentido horario."
+      },
+      {
+        "label": "longer",
+        "detail": "Usa el arco más largo. Si los dos radios coinciden y θ1 ≤ θ2, el arco es la circunferencia completa en sentido horario."
+      },
+      {
+        "label": "increasing",
+        "detail": "Usa el arco en sentido horario. Si los dos radios coinciden, el arco se reduce a un punto. | θ1 = 45deg, θ2 = 135deg | θ1 = 135deg, θ2 = 45deg | | --------------------------------------------------------------------- | -------------------------------------------------------------------- | | | |"
+      },
+      {
+        "label": "decreasing",
+        "detail": "Usa el arco en sentido antihorario. Si los dos radios coinciden, el arco se reduce a un punto. | θ1 = 45deg, θ2 = 135deg | θ1 = 135deg, θ2 = 45deg | | -------------------------------------------------------------------- | --------------------------------------------------------------------- | | | |"
+      }
+    ]
+  },
+  "web-css-values-named-color": {
+    "body": [
+      "Todos los nombres indican un color en el espacio sRGB. Aunque describen más o menos su color, son esencialmente arbitrarios y no siguen una lógica estricta.",
+      "Todas las palabras clave de color representan colores sólidos, sin transparencia.",
+      "Algunas palabras clave son alias entre sí:",
+      "aqua / cyan"
+    ],
+    "values": [
+      {
+        "detail": "Los colores con nombre incluyen los colores estándar y las palabras clave transparent y currentColor."
+      }
+    ]
+  },
+  "web-css-values-overflow_value": {
+    "values": [
+      {
+        "label": "visible",
+        "detail": "El contenido desbordado no se recorta y puede verse fuera de la caja de relleno del elemento. La caja no es un contenedor de desplazamiento. Es el valor por defecto de todas las propiedades que usan el tipo enumerado <overflow>."
+      },
+      {
+        "label": "hidden",
+        "detail": "El contenido desbordado se recorta en la caja de relleno. No hay barras de desplazamiento y lo recortado no se ve, aunque sigue existiendo. El agente de usuario no añade barras ni deja ver el contenido recortado arrastrando en una pantalla táctil o con la rueda del ratón. Se puede desplazar por programa (por ejemplo, con scrollLeft o scrollTo()) y también con el teclado: las flechas desplazan el contenido y, al tabular hasta un elemento enfocable oculto, este se desplaza a la vista. La caja es un contenedor de desplazamiento."
+      },
+      {
+        "label": "clip",
+        "detail": "El contenido desbordado se recorta en el borde de recorte de desbordamiento, que define overflow-clip-margin. Así, el contenido sobresale de la caja de relleno tanto como indique la &lt;length&gt; de overflow-clip-margin, o 0px si no se indica. Lo que queda fuera no se ve, no se añaden barras y tampoco se admite el desplazamiento por programa. No se crea un nuevo contexto de formato."
+      },
+      {
+        "label": "scroll",
+        "detail": "El contenido desbordado se recorta en la caja de relleno y se puede desplazar a la vista con barras de desplazamiento. Si solo se indica un valor, se muestran barras horizontales y verticales aunque nada desborde. Así se evita que las barras aparezcan y desaparezcan cuando cambia el contenido. Las impresoras pueden imprimir el contenido desbordado. La caja es un contenedor de desplazamiento."
+      },
+      {
+        "label": "auto",
+        "detail": "El contenido desbordado se recorta en la caja de relleno y se puede desplazar a la vista. A diferencia de scroll, las barras solo se muestran si el contenido desborda y por defecto están ocultas. Si el contenido cabe, se ve igual que con visible, pero se crea un nuevo contexto de formato. La caja es un contenedor de desplazamiento."
+      }
+    ]
+  },
+  "web-css-values-transform-function-matrix": {
+    "values": [
+      {
+        "label": "a b c d",
+        "detail": "Valores &lt;number&gt; que describen la transformación lineal."
+      }
+    ]
+  },
+  "web-javascript-global_objects-arraybuffer-arraybuffer": {
+    "parameters": [
+      {
+        "label": "length",
+        "detail": "El tamaño en bytes del búfer que se crea."
+      },
+      {
+        "label": "options",
+        "detail": "Un objeto que puede tener la propiedad maxByteLength: el tamaño máximo en bytes al que se podrá redimensionar el búfer."
+      }
+    ],
+    "returns": [
+      "Un nuevo ArrayBuffer del tamaño indicado, con maxByteLength igual al valor indicado si se pasó. Su contenido se inicializa a 0."
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si length o maxByteLength es negativo o mayor que Number.MAX_SAFE_INTEGER (≥ 2<sup>53</sup>), o si length es mayor que maxByteLength."
+      }
+    ]
+  },
+  "web-javascript-global_objects-arraybuffer-detached": {
+    "body": [
+      "detached es una propiedad de acceso sin función set, así que solo se puede leer. Vale false al crear el ArrayBuffer y pasa a true si el búfer se transfiere, lo que lo separa de su memoria subyacente. Un búfer separado ya no se puede usar."
+    ]
+  },
+  "web-javascript-global_objects-atomics-or": {
+    "body": [
+      "La operación OR bit a bit da 1 si a o b es 1. Su tabla de verdad es:",
+      "Por ejemplo, 5 | 1 da 0101, que es 5 en decimal."
+    ],
+    "parameters": [
+      {
+        "label": "typedArray",
+        "detail": "Un array tipado de enteros: Int8Array, Uint8Array, Int16Array, Uint16Array, Int32Array, Uint32Array, BigInt64Array o BigUint64Array."
+      },
+      {
+        "label": "index",
+        "detail": "La posición de typedArray sobre la que se calcula el OR bit a bit."
+      },
+      {
+        "label": "value",
+        "detail": "El número con el que se calcula el OR bit a bit."
+      }
+    ],
+    "returns": ["El valor anterior en esa posición (typedArray[index])."],
+    "exceptions": [
+      {
+        "label": "TypeError",
+        "detail": "Se lanza si typedArray no es uno de los tipos enteros permitidos."
+      },
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si index queda fuera de los límites de typedArray."
+      }
+    ]
+  },
+  "web-javascript-global_objects-bigint-asintn": {
+    "body": [
+      "BigInt.asIntN recorta un BigInt al número de bits indicado e interpreta el resultado como entero con signo. Por ejemplo, en BigInt.asIntN(3, 25n), 25n se recorta a 1n:",
+      "Si el bit más alto del número resultante es 1, el resultado es negativo. Por ejemplo, BigInt.asIntN(4, 25n) da -7n, porque 1001 es la codificación de -7 en complemento a dos:",
+      "Los BigInt siempre se codifican en binario en complemento a dos.",
+      "A diferencia de otras API similares, como Number.prototype.toExponential(), asIntN es una propiedad estática de BigInt: siempre se usa como BigInt.asIntN() y no como método de un valor BigInt. Exponerla como función de biblioteca estándar facilita la interoperabilidad con asm.js."
+    ],
+    "parameters": [
+      {
+        "label": "bits",
+        "detail": "El número de bits del BigInt devuelto. Debe ser un entero entre 0 y 2<sup>53</sup> - 1, ambos incluidos."
+      },
+      {
+        "label": "bigint",
+        "detail": "El BigInt que se recorta para que quepa en esos bits."
+      }
+    ],
+    "returns": [
+      "Un BigInt con la representación en bits de bigint recortada a bits bits e interpretada como entero con signo."
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si bits es negativo o mayor que 2<sup>53</sup> - 1."
+      }
+    ]
+  },
+  "web-javascript-global_objects-bigint-asuintn": {
+    "body": [
+      "BigInt.asUintN recorta un BigInt al número de bits indicado e interpreta el resultado como entero sin signo. Los enteros sin signo no tienen bit de signo y nunca son negativos. Por ejemplo, en BigInt.asUintN(4, 25n), 25n se recorta a 9n:",
+      "Los BigInt siempre se codifican en binario en complemento a dos.",
+      "A diferencia de otras API similares, como Number.prototype.toExponential(), asUintN es una propiedad estática de BigInt: siempre se usa como BigInt.asUintN() y no como método de un valor BigInt. Exponerla como función de biblioteca estándar facilita la interoperabilidad con asm.js."
+    ],
+    "parameters": [
+      {
+        "label": "bits",
+        "detail": "El número de bits del BigInt devuelto. Debe ser un entero entre 0 y 2<sup>53</sup> - 1, ambos incluidos."
+      },
+      {
+        "label": "bigint",
+        "detail": "El BigInt que se recorta para que quepa en esos bits."
+      }
+    ],
+    "returns": [
+      "Un BigInt con la representación en bits de bigint recortada a bits bits e interpretada como entero sin signo."
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si bits es negativo o mayor que 2<sup>53</sup> - 1."
+      }
+    ]
+  },
+  "web-javascript-global_objects-dataview-getbigint64": {
+    "parameters": [
+      {
+        "label": "byteOffset",
+        "detail": "El desplazamiento en bytes, desde el inicio de la vista, desde el que se leen los datos."
+      },
+      {
+        "label": "littleEndian",
+        "detail": "Indica si los datos están en little-endian o big-endian. Si es false o undefined, se lee un valor big-endian."
+      }
+    ],
+    "returns": [
+      "Un BigInt entre -2<sup>63</sup> y 2<sup>63</sup>-1, ambos incluidos."
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si byteOffset hace que la lectura pase del final de la vista."
+      }
+    ]
+  },
+  "web-javascript-global_objects-dataview-getbiguint64": {
+    "parameters": [
+      {
+        "label": "byteOffset",
+        "detail": "El desplazamiento en bytes, desde el inicio de la vista, desde el que se leen los datos."
+      },
+      {
+        "label": "littleEndian",
+        "detail": "Indica si los datos están en little-endian o big-endian. Si es false o undefined, se lee un valor big-endian."
+      }
+    ],
+    "returns": ["Un BigInt entre 0 y 2<sup>64</sup>-1, ambos incluidos."],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si byteOffset hace que la lectura pase del final de la vista."
+      }
+    ]
+  },
+  "web-javascript-global_objects-date-symbol.toprimitive": {
+    "body": [
+      "[Symbol.toPrimitive]() forma parte del protocolo de conversión de tipos. JavaScript siempre lo llama con prioridad para convertir un objeto en un valor primitivo. Casi nunca hace falta invocarlo a mano: JavaScript lo hace automáticamente cuando encuentra un objeto donde espera un primitivo.",
+      "En Date, [Symbol.toPrimitive]() devuelve un primitivo llamando a this.valueOf() (y devolviendo un número) o a this.toString() (y devolviendo una cadena). Existe para que la conversión por defecto devuelva una cadena en lugar de un número, ya que normalmente se llama a valueOf() antes que a toString(). Gracias a él, new Date(0) + 1 devuelve \"Thu Jan 01 1970 00:00:00 GMT+0000 (Coordinated Universal Time)1\" (una cadena) en lugar de 1 (un número)."
+    ],
+    "parameters": [
+      {
+        "label": "hint",
+        "detail": "Una cadena con el tipo de primitivo que se debe devolver. Valores válidos: \"string\" o \"default\", que devuelven una cadena, y \"number\", que devuelve un número."
+      }
+    ],
+    "returns": [
+      "Si hint es \"string\" o \"default\", devuelve una cadena convirtiendo this (primero con toString() y después con valueOf()).",
+      "Si hint es \"number\", devuelve un número convirtiendo this (primero con valueOf() y después con toString())."
+    ],
+    "exceptions": [
+      {
+        "label": "TypeError",
+        "detail": "Se lanza si hint no es uno de los tres valores válidos."
+      }
+    ]
+  },
+  "web-javascript-global_objects-date-utc": {
+    "body": [
+      "Los años entre 0 y 99 se convierten en un año del siglo XX (1900 + año). Por ejemplo, 95 se convierte en 1995.",
+      "UTC() se diferencia del constructor Date() en tres cosas:",
+      "1. Date.UTC() usa la hora universal en lugar de la local.",
+      "2. Date.UTC() devuelve el valor de tiempo como número en lugar de crear un objeto Date.",
+      "3. Con un solo argumento, Date.UTC() lo interpreta como el año, mientras que Date() lo interpreta como una marca de tiempo."
+    ],
+    "parameters": [
+      {
+        "label": "year",
+        "detail": "Entero que representa el año. Los valores de 0 a 99 equivalen a los años 1900 a 1999; el resto es el año real."
+      },
+      {
+        "label": "monthIndex",
+        "detail": "Entero que representa el mes, de 0 (enero) a 11 (diciembre). Por defecto, 0."
+      },
+      {
+        "label": "day",
+        "detail": "Entero que representa el día del mes. Por defecto, 1."
+      },
+      {
+        "label": "hours",
+        "detail": "Entero entre 0 y 23 que representa la hora del día. Por defecto, 0."
+      },
+      {
+        "label": "minutes",
+        "detail": "Entero que representa los minutos. Por defecto, 0."
+      },
+      {
+        "label": "seconds",
+        "detail": "Entero que representa los segundos. Por defecto, 0."
+      },
+      {
+        "label": "milliseconds",
+        "detail": "Entero que representa los milisegundos. Por defecto, 0."
+      }
+    ],
+    "returns": [
+      "Un número con la marca de tiempo de la fecha indicada. Devuelve NaN si la fecha no es válida."
+    ]
+  },
+  "web-javascript-global_objects-decodeuri": {
+    "body": [
+      "decodeURI() es una propiedad de función del objeto global.",
+      "decodeURI() decodifica el URI tratando cada secuencia de escape %XX como una unidad de código UTF-8 (un byte). En UTF-8, el número de bits 1 iniciales del primer byte, que puede ser 0 (caracteres ASCII de 1 byte), 2, 3 o 4, indica cuántos bytes tiene el carácter. Así, al leer la primera secuencia, decodeURI() sabe cuántas más debe consumir. Si no encuentra las que espera, o si las secuencias no codifican un carácter UTF-8 válido, lanza un URIError.",
+      "decodeURI() decodifica todas las secuencias de escape, pero si una codifica alguno de los siguientes caracteres, la conserva tal cual en el resultado, porque forman parte de la sintaxis del URI:"
+    ],
+    "parameters": [
+      {
+        "label": "encodedURI",
+        "detail": "Un identificador uniforme de recursos (URI) completo y codificado."
+      }
+    ],
+    "returns": [
+      "Una nueva cadena con la versión sin codificar del URI indicado."
+    ],
+    "exceptions": [
+      {
+        "label": "URIError",
+        "detail": "Se lanza si encodedURI contiene un % que no va seguido de dos dígitos hexadecimales, o si la secuencia de escape no codifica un carácter UTF-8 válido."
+      }
+    ]
+  },
+  "web-javascript-global_objects-escape": {
+    "body": [
+      "escape() es una propiedad de función del objeto global.",
+      "escape() sustituye todos los caracteres por secuencias de escape, salvo los caracteres de palabra ASCII (A–Z, a–z, 0–9, _) y @*+-./. Escapa por unidades de código UTF-16. Si el valor de la unidad es menor que 256, se representa con dos dígitos hexadecimales en formato %XX, rellenando con 0 a la izquierda si hace falta. Si no, con cuatro dígitos en formato %uXXXX.",
+      "Esta función se usaba sobre todo para la codificación por porcentajes y se basa en parte en el formato de escape de RFC 1738. Ese formato no es una secuencia de escape de los literales de cadena: puedes sustituir %XX por \\xXX y %uXXXX por \\uXXXX para obtener una cadena con secuencias de escape de literal."
+    ],
+    "parameters": [
+      {
+        "label": "str",
+        "detail": "La cadena que se codifica."
+      }
+    ],
+    "returns": [
+      "Una nueva cadena en la que se han escapado ciertos caracteres."
+    ]
+  },
+  "web-javascript-global_objects-iterator-chunks": {
+    "parameters": [
+      {
+        "label": "chunkSize",
+        "detail": "El número de elementos de cada bloque. Debe ser un entero positivo menor que 2<sup>32</sup> (la longitud máxima de un array)."
+      }
+    ],
+    "returns": [
+      "Un nuevo objeto auxiliar de iterador. Cada vez que se llama a su método next(), el iterador original avanza chunkSize elementos y estos se entregan juntos en un array.",
+      "Si al iterador original le quedan elementos, pero menos que chunkSize, se entregan igualmente en un array (más corto que chunkSize) y el auxiliar termina en la siguiente llamada a next().",
+      "Si al iterador original no le quedan elementos, el auxiliar termina de inmediato sin entregar un array vacío."
+    ],
+    "exceptions": [
+      {
+        "label": "TypeError",
+        "detail": "Se lanza si chunkSize no es un entero."
+      },
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si chunkSize es menor que 1 o mayor que 2<sup>32</sup>－1."
+      }
+    ]
+  },
+  "web-javascript-global_objects-iterator-windows": {
+    "parameters": [
+      {
+        "label": "windowSize",
+        "detail": "El número de elementos de la ventana deslizante. Debe ser un entero positivo menor que 2<sup>32</sup> (la longitud máxima de un array)."
+      },
+      {
+        "label": "underSized",
+        "detail": "Una cadena que indica qué hacer cuando el iterador tiene menos de windowSize elementos, pero más de 0. Puede ser \"only-full\" (por defecto), que ignora la ventana incompleta y termina de inmediato como si la entrada estuviera vacía, o \"allow-partial\", que entrega una única ventana con los elementos disponibles."
+      }
+    ],
+    "returns": [
+      "Un nuevo objeto auxiliar de iterador. La primera vez que se llama a su método next(), el iterador avanza windowSize elementos. Si los hay, se entregan juntos en un array. Si no, depende de underSized: el iterador termina sin entregar nada (con \"only-full\" o con una entrada vacía) o entrega un array más corto que windowSize.",
+      "Después, cada array entregado es el anterior sin su primer elemento y con un elemento nuevo de la entrada al final. Cuando se agota la entrada, el auxiliar también termina."
+    ],
+    "exceptions": [
+      {
+        "label": "TypeError",
+        "detail": "Se lanza si windowSize no es un entero o si underSized no es uno de los valores permitidos."
+      },
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si windowSize es menor que 1 o mayor que 2<sup>32</sup>－1."
+      }
+    ]
+  },
+  "web-javascript-global_objects-json-rawjson": {
+    "body": [
+      "Un objeto JSON en bruto se puede ver como una estructura de datos inmutable y atómica, como cualquier primitivo. No es un objeto normal y solo contiene el texto JSON original. Sirve para «preserializar» datos en formatos que JSON.stringify no puede producir por sí mismo. El caso más típico es la pérdida de precisión de los números de coma flotante. Por ejemplo:",
+      "¡El valor ya no es exactamente el número original! Esto ocurre porque JavaScript representa todos los números en coma flotante y no puede representar exactamente todos los enteros. El propio literal 12345678901234567890 ya se redondea al número representable más cercano al analizarlo.",
+      "Sin JSON.rawJSON no hay forma de que JSON.stringify produzca el literal 12345678901234567890, porque no existe un número de JavaScript equivalente. Con JSON en bruto puedes indicarle directamente a JSON.stringify() cómo debe serializarse un valor:",
+      "Para un ejemplo más completo, consulta la serialización de números sin pérdida."
+    ],
+    "parameters": [
+      {
+        "label": "string",
+        "detail": "El texto JSON. Debe ser JSON válido que represente un valor primitivo."
+      }
+    ],
+    "returns": [
+      "Un objeto que permite crear texto JSON con exactamente el mismo contenido que la cadena indicada, sin comillas alrededor. Tiene prototipo null y está congelado (para que nunca se serialice por error como objeto normal en una conversión a primitivo), y tiene esta propiedad:",
+      "rawJSON: la cadena JSON original.",
+      "Además, tiene un campo privado que lo marca como objeto JSON en bruto, lo que permite que JSON.stringify() y JSON.isRawJSON() lo identifiquen."
+    ],
+    "exceptions": [
+      {
+        "label": "SyntaxError",
+        "detail": "Se lanza si la cadena no es JSON válido o si representa un objeto o un array."
+      }
+    ]
+  },
+  "web-javascript-global_objects-math-atan2": {
+    "body": [
+      "Math.atan2() mide el ángulo θ, en radianes y en sentido antihorario, entre el semieje x positivo y el punto (x, y). Ojo: recibe primero la coordenada y y después la x.",
+      "Math.atan2() recibe x e y por separado, mientras que Math.atan() recibe su cociente. Math.atan2(y, x) se diferencia de Math.atan(y / x) en estos casos:",
+      "Además, para puntos del segundo y tercer cuadrante (x < 0), Math.atan2() devuelve un ángulo menor que <math><semantics><mrow><mo>-</mo><mfrac><mi>π</mi><mn>2</mn></mfrac></mrow><annotation encoding=\"TeX\">-\\frac{\\pi}{2}</annotation></semantics></math> o mayor que <math><semantics><mfrac><mi>π</mi><mn>2</mn></mfrac><annotation encoding=\"TeX\">\\frac{\\pi}{2}</annotation></semantics></math>.",
+      "Como atan2() es un método estático de Math, siempre se usa como Math.atan2() y no como método de un objeto Math creado por ti (Math no es un constructor)."
+    ],
+    "parameters": [
+      {
+        "label": "y",
+        "detail": "La coordenada y del punto."
+      },
+      {
+        "label": "x",
+        "detail": "La coordenada x del punto."
+      }
+    ],
+    "returns": [
+      "El ángulo en radianes (entre -π y π, ambos incluidos) entre el semieje x positivo y el rayo que va de (0, 0) al punto (x, y)."
+    ]
+  },
+  "web-javascript-global_objects-math-clz32": {
+    "body": [
+      "clz32 es la abreviatura de CountLeadingZeros32 (contar ceros iniciales en 32 bits).",
+      "Si x no es un número, primero se convierte en número y después en entero sin signo de 32 bits.",
+      "Si el entero resultante es 0, devuelve 32, porque todos los bits son 0. Si el bit más significativo es 1 (es decir, el número es mayor o igual que 2<sup>31</sup>), devuelve 0.",
+      "Es especialmente útil en sistemas que compilan a JavaScript, como Emscripten."
+    ],
+    "parameters": [
+      {
+        "label": "x",
+        "detail": "Un número."
+      }
+    ],
+    "returns": [
+      "El número de bits a cero iniciales en la representación binaria de 32 bits de x."
+    ]
+  },
+  "web-javascript-global_objects-math-expm1": {
+    "body": [
+      "Con valores de x muy pequeños, sumar 1 puede reducir o eliminar la precisión. Los números de doble precisión de JavaScript tienen unos 15 dígitos de precisión: 1 + 1e-15 = 1.000000000000001, pero 1 + 1e-16 = 1.000000000000000, es decir, exactamente 1.0, porque los dígitos a partir del 15 se redondean.",
+      "Como expm1() es un método estático de Math, siempre se usa como Math.expm1() y no como método de un objeto Math creado por ti (Math no es un constructor)."
+    ],
+    "parameters": [
+      {
+        "label": "x",
+        "detail": "Un número."
+      }
+    ],
+    "returns": [
+      "Un número que representa e<sup>x</sup> - 1, donde e es la base del logaritmo natural."
+    ]
+  },
+  "web-javascript-global_objects-math-log1p": {
+    "body": [
+      "Con valores de x muy pequeños, sumar 1 puede reducir o eliminar la precisión. Los números de doble precisión de JavaScript tienen unos 15 dígitos de precisión: 1 + 1e-15 = 1.000000000000001, pero 1 + 1e-16 = 1.000000000000000, es decir, exactamente 1.0, porque los dígitos a partir del 15 se redondean.",
+      "Si x es menor que -1, el resultado siempre es NaN.",
+      "Como log1p() es un método estático de Math, siempre se usa como Math.log1p() y no como método de un objeto Math creado por ti (Math no es un constructor)."
+    ],
+    "parameters": [
+      {
+        "label": "x",
+        "detail": "Un número mayor o igual que -1."
+      }
+    ],
+    "returns": [
+      "El logaritmo natural (base e) de x + 1. Si x es -1, devuelve -Infinity. Si x < -1, devuelve NaN."
+    ]
+  },
+  "web-javascript-global_objects-number-min_safe_integer": {
+    "body": [
+      "El formato de coma flotante de doble precisión solo tiene 52 bits para la mantisa, así que solo puede representar con seguridad los enteros entre -(2<sup>53</sup> – 1) y 2<sup>53</sup> – 1. «Con seguridad» significa representarlos exactamente y compararlos correctamente. Por ejemplo, Number.MIN_SAFE_INTEGER - 1 === Number.MIN_SAFE_INTEGER - 2 da true, lo que es matemáticamente incorrecto. Consulta Number.isSafeInteger() para más información.",
+      "Como se explica en Number.EPSILON, la precisión de los números depende de su magnitud. Number.MIN_SAFE_INTEGER es el valor más pequeño con el que se pueden hacer operaciones con precisión de entero, pero se puede seguir operando con números más negativos, solo que sin esa precisión. El número más grande representable en JavaScript es en realidad Number.MAX_VALUE, aproximadamente 1,7976931348623157 × 10<sup>308</sup>.",
+      "Como MIN_SAFE_INTEGER es una propiedad estática de Number, siempre se usa como Number.MIN_SAFE_INTEGER y no como propiedad de un valor numérico."
+    ],
+    "values": [
+      {
+        "detail": "-9007199254740991 (unos -9 000 billones)."
+      }
+    ]
+  },
+  "web-javascript-global_objects-number-tostring": {
+    "body": [
+      "Number sobrescribe el método toString de Object; no hereda Object.prototype.toString(). Para valores Number, toString devuelve una cadena con el valor en la base indicada.",
+      "En bases mayores que 10, las letras representan los dígitos mayores que 9. Por ejemplo, en hexadecimal (base 16) se usan de la a a la f.",
+      "Si el número es negativo, se conserva el signo, incluso en base 2: la cadena es la representación binaria del valor positivo precedida de -, no el complemento a dos.",
+      "Tanto 0 como -0 se representan como \"0\". Infinity devuelve \"Infinity\" y NaN devuelve \"NaN\"."
+    ],
+    "parameters": [
+      {
+        "label": "radix",
+        "detail": "Un entero entre 2 y 36 que indica la base en la que se representa el número. Por defecto, 10."
+      }
+    ],
+    "returns": [
+      "Una cadena que representa el número. Se usa notación científica si la base es 10 y la magnitud del número (sin signo) es mayor o igual que 10<sup>21</sup> o menor que 10<sup>-6</sup>."
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si radix es menor que 2 o mayor que 36."
+      },
+      {
+        "label": "TypeError",
+        "detail": "Se lanza si el método se invoca sobre algo que no es un Number."
+      }
+    ]
+  },
+  "web-javascript-global_objects-object-defineproperties": {
+    "parameters": [
+      {
+        "label": "obj",
+        "detail": "El objeto en el que se definen o modifican las propiedades."
+      },
+      {
+        "label": "props",
+        "detail": "Un objeto cuyas claves son los nombres de las propiedades que se definen o modifican y cuyos valores son objetos que las describen. Cada valor debe ser un descriptor de datos o uno de acceso, nunca ambos (consulta Object.defineProperty()). Ambos tipos pueden incluir configurable: true solo si el tipo del descriptor se puede cambiar y la propiedad se puede eliminar del objeto. Por defecto, false. También pueden incluir enumerable; los de datos, value y writable; y los de acceso, get y set."
+      }
+    ],
+    "returns": ["El mismo objeto que se pasó a la función."]
+  },
+  "web-javascript-global_objects-reflect-has": {
+    "body": [
+      "Reflect.has() ofrece la semántica reflexiva de comprobar si una propiedad está en un objeto. Es decir, Reflect.has(target, propertyKey) equivale semánticamente a:",
+      "Reflect.has() invoca el método interno [[HasProperty]] de target."
+    ],
+    "parameters": [
+      {
+        "label": "target",
+        "detail": "El objeto en el que se busca la propiedad."
+      },
+      {
+        "label": "propertyKey",
+        "detail": "El nombre de la propiedad que se comprueba."
+      }
+    ],
+    "returns": ["Un booleano que indica si target tiene la propiedad."],
+    "exceptions": [
+      {
+        "label": "TypeError",
+        "detail": "Se lanza si target no es un objeto."
+      }
+    ]
+  },
+  "web-javascript-global_objects-regexp-unicode": {
+    "body": [
+      "RegExp.prototype.unicode vale true si se usó el indicador u y false en caso contrario. El indicador u activa varias funciones relacionadas con Unicode. Con u:",
+      "Los escapes de punto de código Unicode (\\u{xxxx}, \\p{UnicodePropertyValue}) se interpretan como tales y no como escapes de identidad. Por ejemplo, /\\u{61}/u coincide con \"a\", pero /\\u{61}/ (sin u) coincide con \"u\".repeat(61), porque \\u equivale a una u sola.",
+      "Las aserciones de límite del búfer (\\A, \\z, \\Z) se interpretan como tales y no como escapes de identidad.",
+      "Los pares sustitutos se interpretan como un carácter completo y no como dos caracteres. Por ejemplo, /[😄]/u solo coincide con \"😄\" y no con \"\\ud83d\"."
+    ]
+  },
+  "web-javascript-global_objects-string-fromcharcode": {
+    "body": [
+      "Como fromCharCode() es un método estático de String, siempre se usa como String.fromCharCode() y no como método de un valor String creado por ti.",
+      "Los puntos de código Unicode van de 0 a 1114111 (0x10FFFF). charCodeAt() siempre devuelve un valor menor que 65536, porque los puntos de código superiores se representan con un par de pseudocaracteres sustitutos de 16 bits. Por eso, para producir un carácter completo con valor mayor que 65535 hay que indicar dos unidades de código, como si fuera una cadena de dos caracteres. Para saber más, consulta caracteres UTF-16, puntos de código Unicode y grupos de grafemas.",
+      "Como fromCharCode() solo trabaja con valores de 16 bits (igual que la secuencia de escape \\u), para devolver un carácter suplementario hace falta un par sustituto. Por ejemplo, String.fromCharCode(0xd83c, 0xdf03) y \"\\ud83c\\udf03\" devuelven el punto de código U+1F303 «Noche estrellada». Aunque existe una relación matemática entre el punto de código suplementario (0x1f303) y los dos sustitutos que lo representan (0xd83c y 0xdf03), cada vez hay que calcularlos o buscarlos. Por eso es más cómodo usar String.fromCodePoint(), que devuelve caracteres suplementarios a partir de su punto de código real. Por ejemplo, String.fromCodePoint(0x1f303) devuelve U+1F303 «Noche estrellada»."
+    ],
+    "parameters": [
+      {
+        "label": "num1, …, numN",
+        "detail": "Un número entre 0 y 65535 (0xFFFF) que representa una unidad de código UTF-16. Los números mayores que 0xFFFF se recortan a sus 16 últimos bits. No se comprueba su validez."
+      }
+    ],
+    "returns": [
+      "Una cadena de longitud N formada por las N unidades de código UTF-16 indicadas."
+    ]
+  },
+  "web-javascript-global_objects-temporal-duration-compare": {
+    "body": [
+      "Si relativeTo es una fecha y hora con zona horaria y duration1 o duration2 es una duración de calendario, el resultado se calcula sumando las duraciones al punto de partida y comparando los instantes resultantes. Si no, se convierten ambas a nanosegundos (suponiendo días de 24 horas y usando el calendario de relativeTo si hace falta) y se comparan los resultados."
+    ],
+    "parameters": [
+      {
+        "label": "duration1",
+        "detail": "Una cadena, un objeto o una instancia de Temporal.Duration con la primera duración. Se convierte en Temporal.Duration con el mismo algoritmo que Temporal.Duration.from()."
+      },
+      {
+        "label": "duration2",
+        "detail": "La segunda duración, que se convierte en Temporal.Duration con el mismo algoritmo que duration1."
+      },
+      {
+        "label": "options",
+        "detail": "Un objeto con la propiedad relativeTo: una fecha (y hora), con o sin zona horaria, que aporta la información de hora y calendario para resolver duraciones de calendario. Es obligatoria si duration1 o duration2 es una duración de calendario (salvo que sean iguales componente a componente, en cuyo caso se devuelve 0 sin calcular nada)."
+      }
+    ],
+    "returns": [
+      "Devuelve -1 si duration1 es más corta que duration2, 0 si son iguales y 1 si duration1 es más larga."
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si duration1 o duration2 es una duración de calendario (con años, meses o semanas distintos de cero) y no se indica relativeTo."
+      }
+    ]
+  },
+  "web-javascript-global_objects-temporal-instant-fromepochnanoseconds": {
+    "parameters": [
+      {
+        "label": "epochNanoseconds",
+        "detail": "Un BigInt con el número de nanosegundos transcurridos desde la época Unix."
+      }
+    ],
+    "returns": [
+      "Un nuevo Temporal.Instant que representa el instante indicado por epochNanoseconds."
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si epochNanoseconds queda fuera del rango representable: ±10<sup>8</sup> días, unos ±273 972,6 años, desde la época Unix."
+      }
+    ]
+  },
+  "web-javascript-global_objects-temporal-instant-instant": {
+    "parameters": [
+      {
+        "label": "epochNanoseconds",
+        "detail": "Un BigInt con el número de nanosegundos transcurridos desde la época Unix."
+      }
+    ],
+    "returns": [
+      "Un nuevo Temporal.Instant que representa el instante indicado por epochNanoseconds."
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si epochNanoseconds representa un instante fuera del rango representable: ±10<sup>8</sup> días, unos ±273 972,6 años, desde la época Unix."
+      }
+    ]
+  },
+  "web-javascript-global_objects-temporal-now": {
+    "body": [
+      "A diferencia de la mayoría de objetos globales, Temporal.Now no es un constructor: no se puede usar con new ni invocar como función. Todas sus propiedades y métodos son estáticos, igual que en Math.",
+      "En esencia, el sistema operativo devuelve la hora del sistema como el tiempo transcurrido desde la época Unix. Temporal.Now.instant() la devuelve como Temporal.Instant. Aunque ese objeto puede representar nanosegundos, la resolución de la hora actual depende del reloj del sistema y de la configuración del navegador.",
+      "Un instante se puede interpretar en una zona horaria (por defecto, la del sistema, Temporal.Now.timeZoneId()) igual que con Temporal.Instant.prototype.toZonedDateTimeISO(). Para obtener un Temporal.ZonedDateTime usa Temporal.Now.zonedDateTimeISO(). También puedes obtener partes de la fecha y la hora con Temporal.Now.plainDateISO(), Temporal.Now.plainTimeISO() y Temporal.Now.plainDateTimeISO().",
+      "Por ejemplo, si el ordenador está en la zona \"America/New_York\", Temporal.Now.zonedDateTimeISO() devuelve algo como 2021-08-01T10:40:12.345-04:00[America/New_York]. Temporal.Now.plainTimeISO() devolvería la parte de la hora: 10:40:12.345. En cambio, Temporal.Now.plainTimeISO(\"UTC\") devuelve la hora en UTC: 14:40:12.345. Es especialmente útil para comunicarse con otros sistemas que esperan la hora en otra zona horaria."
+    ]
+  },
+  "web-javascript-global_objects-temporal-plaindate-add": {
+    "body": [
+      "La duración se aplica así:",
+      "Avanza el número de años manteniendo monthCode y el día. Si monthCode no es válido en el año resultante (imposible en el calendario gregoriano e ISO 8601, pero posible en calendarios con meses bisiestos), se ajusta según la opción overflow: con constrain se elige otro mes según las convenciones culturales de ese calendario. Por ejemplo, como el mes bisiesto suele considerarse un duplicado de otro mes, se puede elegir el mes original.",
+      "Avanza el número de meses, ajustando el año si hace falta y manteniendo el día. Si el día no es válido en el mes resultante (por ejemplo, 30 de febrero), se ajusta según overflow: con constrain se elige el día válido más cercano (28 o 29 de febrero).",
+      "Todos los calendarios habituales usan semanas de longitud fija, así que las semanas se convierten directamente en días. Si la regla fuera más compleja, se haría algo parecido a lo que se hace con los meses."
+    ],
+    "parameters": [
+      {
+        "label": "duration",
+        "detail": "Una cadena, un objeto o una instancia de Temporal.Duration con la duración que se suma a esta fecha. Se convierte en Temporal.Duration con el mismo algoritmo que Temporal.Duration.from()."
+      },
+      {
+        "label": "options",
+        "detail": "Un objeto con la propiedad overflow: una cadena que indica qué hacer si un componente de la fecha queda fuera de rango. Puede ser \"constrain\" (por defecto), que lo ajusta al valor válido más cercano, o \"reject\", que lanza un RangeError."
+      }
+    ],
+    "returns": [
+      "Un nuevo Temporal.PlainDate con la fecha original más la duración."
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si el resultado queda fuera del rango representable: ±(10<sup>8</sup> + 1) días, unos ±273 972,6 años, desde la época Unix."
+      }
+    ]
+  },
+  "web-javascript-global_objects-temporal-plaindate-compare": {
+    "parameters": [
+      {
+        "label": "date1",
+        "detail": "Una cadena, un objeto o una instancia de Temporal.PlainDate con la primera fecha. Se convierte en Temporal.PlainDate con el mismo algoritmo que Temporal.PlainDate.from()."
+      },
+      {
+        "label": "date2",
+        "detail": "La segunda fecha, que se convierte en Temporal.PlainDate con el mismo algoritmo que date1."
+      }
+    ],
+    "returns": [
+      "Devuelve -1 si date1 es anterior a date2, 0 si son la misma y 1 si es posterior. Se comparan las fechas subyacentes, sin tener en cuenta el calendario."
+    ]
+  },
+  "web-javascript-global_objects-temporal-plaindate-day": {},
+  "web-javascript-global_objects-temporal-plaindate-subtract": {
+    "body": [
+      "Restar una duración equivale a sumar su negación, así que se aplican las mismas consideraciones."
+    ],
+    "parameters": [
+      {
+        "label": "duration",
+        "detail": "Una cadena, un objeto o una instancia de Temporal.Duration con la duración que se resta de esta fecha. Se convierte en Temporal.Duration con el mismo algoritmo que Temporal.Duration.from()."
+      },
+      {
+        "label": "options",
+        "detail": "Un objeto con la propiedad overflow: una cadena que indica qué hacer si un componente de la fecha queda fuera de rango. Puede ser \"constrain\" (por defecto), que lo ajusta al valor válido más cercano, o \"reject\", que lanza un RangeError."
+      }
+    ],
+    "returns": [
+      "Un nuevo Temporal.PlainDate con la fecha original menos la duración."
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si el resultado queda fuera del rango representable: ±(10<sup>8</sup> + 1) días, unos ±273 972,6 años, desde la época Unix."
+      }
+    ]
+  },
+  "web-javascript-global_objects-temporal-plaindate-yearofweek": {},
+  "web-javascript-global_objects-temporal-plaindatetime-add": {
+    "body": [
+      "Para ver cómo se suman las duraciones de calendario, consulta Temporal.PlainDate.prototype.add().",
+      "Sumar una duración equivale a restar su negación."
+    ],
+    "parameters": [
+      {
+        "label": "duration",
+        "detail": "Una cadena, un objeto o una instancia de Temporal.Duration con la duración que se suma a esta fecha y hora. Se convierte en Temporal.Duration con el mismo algoritmo que Temporal.Duration.from()."
+      },
+      {
+        "label": "options",
+        "detail": "Un objeto con la propiedad overflow: una cadena que indica qué hacer si un componente de la fecha queda fuera de rango. Puede ser \"constrain\" (por defecto), que lo ajusta al valor válido más cercano, o \"reject\", que lanza un RangeError."
+      }
+    ],
+    "returns": [
+      "Un nuevo Temporal.PlainDateTime con la fecha y hora original más la duración."
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si el resultado queda fuera del rango representable: ±(10<sup>8</sup> + 1) días, unos ±273 972,6 años, desde la época Unix."
+      }
+    ]
+  },
+  "web-javascript-global_objects-temporal-plaindatetime-subtract": {
+    "body": [
+      "Restar una duración equivale a sumar su negación, así que se aplican las mismas consideraciones."
+    ],
+    "parameters": [
+      {
+        "label": "duration",
+        "detail": "Una cadena, un objeto o una instancia de Temporal.Duration con la duración que se resta de esta fecha y hora. Se convierte en Temporal.Duration con el mismo algoritmo que Temporal.Duration.from()."
+      },
+      {
+        "label": "options",
+        "detail": "Un objeto con la propiedad overflow: una cadena que indica qué hacer si un componente de la fecha queda fuera de rango. Puede ser \"constrain\" (por defecto), que lo ajusta al valor válido más cercano, o \"reject\", que lanza un RangeError."
+      }
+    ],
+    "returns": [
+      "Un nuevo Temporal.PlainDateTime con la fecha y hora original menos la duración."
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si el resultado queda fuera del rango representable: ±(10<sup>8</sup> + 1) días, unos ±273 972,6 años, desde la época Unix."
+      }
+    ]
+  },
+  "web-javascript-global_objects-temporal-plaintime-add": {
+    "parameters": [
+      {
+        "label": "duration",
+        "detail": "Una cadena, un objeto o una instancia de Temporal.Duration con la duración que se suma a esta hora. Se convierte en Temporal.Duration con el mismo algoritmo que Temporal.Duration.from()."
+      }
+    ],
+    "returns": [
+      "Un nuevo Temporal.PlainTime con la hora original más la duración. Se ignoran las unidades mayores que las horas y, si se pasa de medianoche, vuelve a empezar desde el principio del día.",
+      "Sumar una duración equivale a restar su negación."
+    ]
+  },
+  "web-javascript-global_objects-temporal-plaintime-compare": {
+    "parameters": [
+      {
+        "label": "time1",
+        "detail": "Una cadena, un objeto o una instancia de Temporal.PlainTime con la primera hora. Se convierte en Temporal.PlainTime con el mismo algoritmo que Temporal.PlainTime.from()."
+      },
+      {
+        "label": "time2",
+        "detail": "La segunda hora, que se convierte en Temporal.PlainTime con el mismo algoritmo que time1."
+      }
+    ],
+    "returns": [
+      "Devuelve -1 si time1 es anterior a time2, 0 si son la misma y 1 si es posterior."
+    ]
+  },
+  "web-javascript-global_objects-temporal-plaintime-subtract": {
+    "parameters": [
+      {
+        "label": "duration",
+        "detail": "Una cadena, un objeto o una instancia de Temporal.Duration con la duración que se resta de esta hora. Se convierte en Temporal.Duration con el mismo algoritmo que Temporal.Duration.from()."
+      }
+    ],
+    "returns": [
+      "Un nuevo Temporal.PlainTime con la hora original menos la duración.",
+      "Restar una duración equivale a sumar su negación, así que se aplican las mismas consideraciones."
+    ]
+  },
+  "web-javascript-global_objects-temporal-plainyearmonth-add": {
+    "body": [
+      "La duración se aplica así:",
+      "Avanza el número de años manteniendo monthCode. Si monthCode no es válido en el año resultante (imposible en el calendario gregoriano e ISO 8601, pero posible en calendarios con meses bisiestos), se ajusta según la opción overflow: con constrain se elige otro mes según las convenciones culturales de ese calendario. Por ejemplo, como el mes bisiesto suele considerarse un duplicado de otro mes, se puede elegir el mes original.",
+      "Avanza el número de meses, ajustando el año si hace falta.",
+      "Las unidades menores que el mes (semanas, días, horas, minutos, segundos, milisegundos, microsegundos y nanosegundos) se convierten en días. Todos los calendarios habituales usan semanas de longitud fija, así que las semanas se convierten directamente en días. Después se avanza ese número de días desde el primer día del mes, ajustando mes y año si hace falta. Por eso, las duraciones menores que la longitud del mes actual no tienen efecto."
+    ],
+    "parameters": [
+      {
+        "label": "duration",
+        "detail": "Una cadena, un objeto o una instancia de Temporal.Duration con la duración que se suma a este año-mes. Se convierte en Temporal.Duration con el mismo algoritmo que Temporal.Duration.from()."
+      },
+      {
+        "label": "options",
+        "detail": "Un objeto con la propiedad overflow: una cadena que indica qué hacer si un componente de la fecha queda fuera de rango. Puede ser \"constrain\" (por defecto), que lo ajusta al valor válido más cercano, o \"reject\", que lanza un RangeError."
+      }
+    ],
+    "returns": [
+      "Un nuevo Temporal.PlainYearMonth con el año-mes original más la duración."
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si el resultado queda fuera del rango representable: ±(10<sup>8</sup> + 1) días, unos ±273 972,6 años, desde la época Unix."
+      }
+    ]
+  },
+  "web-javascript-global_objects-temporal-plainyearmonth-plainyearmonth": {
+    "parameters": [
+      {
+        "label": "year",
+        "detail": "Un número, truncado a entero, con el año en el calendario ISO."
+      },
+      {
+        "label": "month",
+        "detail": "Un número, truncado a entero, con el mes en el calendario ISO."
+      },
+      {
+        "label": "calendar",
+        "detail": "Una cadena con el calendario que se usa. Consulta Intl.supportedValuesOf() para ver los calendarios habituales. Por defecto, \"iso8601\". Sea cual sea el calendario, year, month y referenceDay se expresan en el calendario ISO 8601."
+      },
+      {
+        "label": "referenceDay",
+        "detail": "Un número, truncado a entero, con el día del mes en el calendario ISO. Por defecto, 1. Con calendarios no ISO, un mismo año-mes ISO puede corresponder a meses distintos según el día. Por ejemplo, 2021-07-01 y 2021-07-31 pueden caer en meses distintos de un calendario no gregoriano, así que \"2021-07\" no basta para determinar el mes. Por eso casi siempre conviene indicar referenceDay con calendarios no ISO."
+      }
+    ],
+    "returns": [
+      "Un nuevo Temporal.PlainYearMonth con el año-mes de la fecha indicada por year, month y referenceDay (en el calendario ISO), interpretado en el calendario indicado por calendar."
+    ],
+    "exceptions": [
+      {
+        "label": "TypeError",
+        "detail": "Se lanza si calendar no es una cadena ni undefined."
+      },
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si year, month o referenceDay no es un número finito, o si la fecha no es válida en el calendario ISO."
+      }
+    ]
+  },
+  "web-javascript-global_objects-temporal-plainyearmonth-subtract": {
+    "body": [
+      "Restar una duración equivale a sumar su negación, así que se aplican las mismas consideraciones. Restar una duración positiva parte del final del año-mes y retrocede, de modo que se ignora cualquier incremento menor que la longitud del mes."
+    ],
+    "parameters": [
+      {
+        "label": "duration",
+        "detail": "Una cadena, un objeto o una instancia de Temporal.Duration con la duración que se resta de este año-mes. Se convierte en Temporal.Duration con el mismo algoritmo que Temporal.Duration.from()."
+      },
+      {
+        "label": "options",
+        "detail": "Un objeto con la propiedad overflow: una cadena que indica qué hacer si un componente de la fecha queda fuera de rango. Puede ser \"constrain\" (por defecto), que lo ajusta al valor válido más cercano, o \"reject\", que lanza un RangeError."
+      }
+    ],
+    "returns": [
+      "Un nuevo Temporal.PlainYearMonth con el año-mes original menos la duración."
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si el resultado queda fuera del rango representable: ±(10<sup>8</sup> + 1) días, unos ±273 972,6 años, desde la época Unix."
+      }
+    ]
+  },
+  "web-javascript-global_objects-temporal-zoneddatetime-add": {
+    "body": [
+      "Para ver cómo se suman las duraciones de calendario, consulta Temporal.PlainDate.prototype.add().",
+      "La suma y la resta siguen las reglas de RFC 5545 (iCalendar):",
+      "La parte de fecha de la duración se suma o resta con aritmética de calendario: se suma a su PlainDateTime con Temporal.PlainDateTime.prototype.add() y el resultado se interpreta en la misma zona horaria.",
+      "La parte de hora se suma o resta con tiempo real: se suma a su Instant con Temporal.Instant.prototype.add() y el resultado se interpreta en la misma zona horaria. Por ejemplo, 2024-11-03T01:00:00-04:00[America/New_York] más una hora es 2024-11-03T01:00:00-05:00[America/New_York]."
+    ],
+    "parameters": [
+      {
+        "label": "duration",
+        "detail": "Una cadena, un objeto o una instancia de Temporal.Duration con la duración que se suma a esta fecha y hora. Se convierte en Temporal.Duration con el mismo algoritmo que Temporal.Duration.from()."
+      },
+      {
+        "label": "options",
+        "detail": "Un objeto con la propiedad overflow: una cadena que indica qué hacer si un componente de la fecha queda fuera de rango. Puede ser \"constrain\" (por defecto), que lo ajusta al valor válido más cercano, o \"reject\", que lanza un RangeError."
+      }
+    ],
+    "returns": [
+      "Un nuevo Temporal.ZonedDateTime con la fecha y hora original más la duración."
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si el resultado queda fuera del rango representable: ±10<sup>8</sup> días, unos ±273 972,6 años, desde la época Unix."
+      }
+    ]
+  },
+  "web-javascript-global_objects-temporal-zoneddatetime-subtract": {
+    "body": [
+      "Restar una duración equivale a sumar su negación, así que se aplican las mismas consideraciones."
+    ],
+    "parameters": [
+      {
+        "label": "duration",
+        "detail": "Una cadena, un objeto o una instancia de Temporal.Duration con la duración que se resta de esta fecha y hora. Se convierte en Temporal.Duration con el mismo algoritmo que Temporal.Duration.from()."
+      },
+      {
+        "label": "options",
+        "detail": "Un objeto con la propiedad overflow: una cadena que indica qué hacer si un componente de la fecha queda fuera de rango. Puede ser \"constrain\" (por defecto), que lo ajusta al valor válido más cercano, o \"reject\", que lanza un RangeError."
+      }
+    ],
+    "returns": [
+      "Un nuevo Temporal.ZonedDateTime con la fecha y hora original menos la duración."
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si el resultado queda fuera del rango representable: ±10<sup>8</sup> días, unos ±273 972,6 años, desde la época Unix."
+      }
+    ]
+  },
+  "web-javascript-global_objects-temporal-zoneddatetime-zoneddatetime": {
+    "parameters": [
+      {
+        "label": "epochNanoseconds",
+        "detail": "Un BigInt que corresponde a la propiedad epochNanoseconds."
+      },
+      {
+        "label": "timeZone",
+        "detail": "Una cadena que corresponde a la propiedad timeZoneId. A diferencia del resto de API de Temporal, debe ser tal cual un identificador de zona horaria válido (con nombre o de desfase) y no puede ser una instancia de Temporal.ZonedDateTime ni una cadena de fecha y hora."
+      },
+      {
+        "label": "calendar",
+        "detail": "Una cadena que corresponde a la propiedad calendarId. Consulta Intl.supportedValuesOf() para ver los calendarios habituales. Por defecto, \"iso8601\"."
+      }
+    ],
+    "returns": [
+      "Un nuevo Temporal.ZonedDateTime que representa el instante concreto indicado por los parámetros."
+    ],
+    "exceptions": [
+      {
+        "label": "TypeError",
+        "detail": "Se lanza si timeZone o calendar no es una cadena."
+      },
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si epochNanoseconds queda fuera del rango representable (±10<sup>8</sup> días, unos ±273 972,6 años, desde la época Unix) o si timeZone o calendar no es un identificador válido."
+      }
+    ]
+  },
+  "web-javascript-global_objects-typedarray-symbol.species": {
+    "body": [
+      "La propiedad de acceso [Symbol.species] devuelve el constructor por defecto de los arrays tipados. Las subclases pueden sobrescribirla para cambiar el constructor que se usa. La implementación por defecto es básicamente:",
+      "Por esta implementación polimórfica, [Symbol.species] de las subclases derivadas también devuelve por defecto el propio constructor.",
+      "Al llamar a métodos de arrays tipados que no modifican el array, sino que devuelven uno nuevo (por ejemplo, filter() y map()), se accede a constructor[Symbol.species] del array y el constructor devuelto se usa para construir el resultado.",
+      "Sin embargo, a diferencia de Array[Symbol.species], al usar [Symbol.species] para crear arrays tipados el lenguaje comprueba que el nuevo array sea un array tipado válido con el mismo tipo de contenido que el original. Por ejemplo, no puedes crear un BigInt64Array a partir de un Float64Array, ni un array no BigInt a partir de uno BigInt: se lanza un TypeError."
+    ],
+    "returns": [
+      "El valor del constructor (this) sobre el que se llamó a get [Symbol.species]. Se usa para construir los resultados de los métodos que crean nuevos arrays tipados."
+    ]
+  },
+  "web-javascript-operators-bitwise_not": {
+    "body": [
+      "El operador ~ está sobrecargado para dos tipos de operando: number y BigInt. Con números devuelve un entero de 32 bits; con BigInt, un BigInt. Primero convierte el operando en un valor numérico y comprueba su tipo: si es BigInt, hace el NOT de BigInt; si no, lo convierte en entero de 32 bits y hace el NOT bit a bit numérico.",
+      "Trabaja sobre la representación en bits del operando en complemento a dos: se aplica a cada bit y el resultado se construye bit a bit.",
+      "La tabla de verdad de la operación NOT es:",
+      "Aplicar NOT bit a bit a cualquier entero de 32 bits x da -(x + 1). Por ejemplo, ~-5 da 4."
+    ]
+  },
+  "web-javascript-operators-bitwise_or": {
+    "body": [
+      "El operador | está sobrecargado para dos tipos de operando: number y BigInt. Con números devuelve un entero de 32 bits; con BigInt, un BigInt. Primero convierte ambos operandos en valores numéricos y comprueba sus tipos: si los dos son BigInt, hace el OR de BigInt; si no, los convierte en enteros de 32 bits y hace el OR bit a bit numérico. Si uno es BigInt y el otro un número, lanza un TypeError.",
+      "Trabaja sobre la representación en bits de los operandos en complemento a dos. Cada bit del primer operando se empareja con el bit correspondiente del segundo: el primero con el primero, el segundo con el segundo, etc. El operador se aplica a cada par y el resultado se construye bit a bit.",
+      "La tabla de verdad de la operación OR es:",
+      "Los números de más de 32 bits pierden sus bits más significativos. Por ejemplo, el siguiente entero de más de 32 bits se convierte en uno de 32:"
+    ]
+  },
+  "web-javascript-operators-bitwise_or_assignment": {
+    "body": [
+      "x |= y equivale a x = x | y, salvo que la expresión x solo se evalúa una vez."
+    ]
+  },
+  "web-javascript-operators-greater_than_or_equal": {
+    "body": [
+      "Los operandos se comparan con el mismo algoritmo que el operador menor que, negando el resultado. x >= y suele equivaler a !(x < y), salvo en dos casos en los que x >= y y x < y son ambos false:",
+      "Si uno de los operandos se convierte en BigInt y el otro en una cadena que no se puede convertir en BigInt (BigInt() lanzaría un error de sintaxis).",
+      "Si uno de los operandos se convierte en NaN (por ejemplo, cadenas que no se pueden convertir en número, o undefined).",
+      "x >= y suele equivaler a x > y || x == y, salvo en algunos casos:"
+    ]
+  },
+  "web-javascript-operators-left_shift": {
+    "body": [
+      "El operador << está sobrecargado para dos tipos de operando: number y BigInt. Con números devuelve un entero de 32 bits; con BigInt, un BigInt. Primero convierte ambos operandos en valores numéricos y comprueba sus tipos: si los dos son BigInt, hace el desplazamiento de BigInt; si no, los convierte en enteros de 32 bits y hace el desplazamiento numérico. Si uno es BigInt y el otro un número, lanza un TypeError.",
+      "Trabaja sobre la representación en bits del operando izquierdo en complemento a dos. Por ejemplo, 9 << 2 da 36:",
+      "Desplazar un entero de 32 bits x a la izquierda y bits da x × 2<sup>y</sup>. Por ejemplo, 9 << 3 equivale a 9 × 2<sup>3</sup> = 9 × 8 = 72.",
+      "Si el operando izquierdo es un número de más de 32 bits, pierde sus bits más significativos. Por ejemplo, el siguiente entero de más de 32 bits se convierte en uno de 32:"
+    ]
+  },
+  "web-javascript-operators-left_shift_assignment": {
+    "body": [
+      "x <<= y equivale a x = x << y, salvo que la expresión x solo se evalúa una vez."
+    ]
+  },
+  "web-javascript-operators-logical_or_assignment": {
+    "body": [
+      "La asignación OR lógica hace cortocircuito: x ||= y equivale a x || (x = y), salvo que la expresión x solo se evalúa una vez.",
+      "Si el lado izquierdo no es falsy, no se asigna nada, por el cortocircuito del operador OR lógico. Por ejemplo, lo siguiente no lanza un error aunque x sea const:",
+      "Y lo siguiente tampoco activa el setter:",
+      "De hecho, si x no es falsy, y ni siquiera se evalúa."
+    ]
+  },
+  "web-javascript-operators-right_shift": {
+    "body": [
+      "El operador >> está sobrecargado para dos tipos de operando: number y BigInt. Con números devuelve un entero de 32 bits; con BigInt, un BigInt. Primero convierte ambos operandos en valores numéricos y comprueba sus tipos: si los dos son BigInt, hace el desplazamiento de BigInt; si no, los convierte en enteros de 32 bits y hace el desplazamiento numérico. Si uno es BigInt y el otro un número, lanza un TypeError.",
+      "Como el nuevo bit de la izquierda tiene el mismo valor que el anterior, el bit de signo (el de más a la izquierda) no cambia. De ahí el nombre de «propagación de signo».",
+      "Trabaja sobre la representación en bits del operando izquierdo en complemento a dos. Observa la representación binaria de 32 bits de los números decimales 9 y -9:",
+      "La representación en complemento a dos de -9 se obtiene invirtiendo todos los bits de su opuesto, 9 (00000000000000000000000000001001 en binario), y sumando 1."
+    ]
+  },
+  "web-javascript-operators-unsigned_right_shift": {
+    "body": [
+      "A diferencia de los demás operadores aritméticos y bit a bit, el desplazamiento a la derecha sin signo no acepta BigInt. Rellena con ceros los bits de la izquierda, pero conceptualmente los BigInt tienen infinitos bits de signo iniciales, así que no hay un «bit de más a la izquierda» que rellenar.",
+      "Trabaja sobre la representación en bits del operando izquierdo en complemento a dos. Observa la representación binaria de 32 bits de los números decimales 9 y -9:",
+      "La representación en complemento a dos de -9 se obtiene invirtiendo todos los bits de su opuesto, 9 (00000000000000000000000000001001 en binario), y sumando 1.",
+      "En ambos casos, el signo lo da el bit de más a la izquierda: para el 9 positivo es 0 y para el -9 negativo es 1."
+    ]
+  },
+  "web-javascript-operators-unsigned_right_shift_assignment": {
+    "body": [
+      "x >>>= y equivale a x = x >>> y, salvo que la expresión x solo se evalúa una vez."
+    ]
+  },
+  "web-javascript-regular_expressions-buffer_boundary_assertion": {
+    "body": [
+      "\\A afirma que la posición actual es el inicio de toda la cadena. \\z afirma que es el final de toda la cadena. \\Z es como \\z, pero también coincide antes de un terminador de línea o una secuencia \\r\\n (CRLF) al final de la cadena. Todas son aserciones, así que no consumen caracteres.",
+      "Más exactamente, \\A afirma que el carácter de la izquierda queda fuera de la cadena; \\z, que el de la derecha queda fuera; y \\Z equivale a (?=(?:\\r?\\n?|[\\u{2028}\\u{2029}]?)\\z).",
+      "Solo tienen sentido cuando no se esperan caracteres a su izquierda o a su derecha. Por ejemplo, f\\Ao nunca coincide, porque \\A no puede estar al inicio de la cadena y a la vez tener un carácter a su izquierda.",
+      "\\A y \\z solo son útiles con el indicador m. Sin m, se comportan igual que ^ y $. Si tu patrón solo necesita el inicio o el final de toda la cadena o de una línea (nunca ambos), es mejor seguir usando ^ y $ con el indicador m según haga falta, porque tienen más compatibilidad. Si necesitas ambos tipos de límite en el mismo patrón, técnicamente puedes activar y desactivar m con modificadores en distintas partes, pero estas secuencias de escape hacen el código mucho más legible."
+    ]
+  },
+  "web-javascript-regular_expressions-disjunction": {
+    "body": [
+      "El operador | separa dos o más alternativas. El patrón intenta primero la primera alternativa; si falla, la segunda, y así sucesivamente. Por ejemplo, lo siguiente coincide con \"a\" y no con \"ab\", porque la primera alternativa ya coincide:",
+      "| es el operador de menor precedencia en una expresión regular. Si quieres usar una disyunción dentro de un patrón mayor, tienes que agruparla.",
+      "Cuando una disyunción agrupada va seguida de más expresiones, se elige primero la primera alternativa y se intenta casar el resto de la expresión. Si el resto falla, se prueba la siguiente alternativa. Por ejemplo:",
+      "Esto ocurre porque, al elegir a en la primera alternativa, se puede elegir bc en la segunda y lograr la coincidencia. Este proceso se llama vuelta atrás (backtracking), porque el motor sigue más allá de la disyunción y vuelve a ella cuando falla lo que viene después."
+    ],
+    "parameters": [
+      {
+        "label": "alternativeN",
+        "detail": "Un patrón alternativo, formado por una secuencia de átomos y aserciones. Si una alternativa coincide, coincide toda la disyunción."
+      }
+    ]
+  },
+  "web-javascript-web-api-broadcastchannel-postmessage": {
+    "parameters": [
+      {
+        "label": "message",
+        "detail": "Los datos que se envían a la otra ventana. Se serializan con el algoritmo de clonado estructurado, así que puedes pasar con seguridad una gran variedad de objetos sin serializarlos tú. Los contextos de ejecución que se comunican pueden no estar en el mismo clúster de agentes y, por tanto, no pueden compartir memoria. Los SharedArrayBuffer, o las vistas basadas en uno, no se pueden enviar entre clústeres de agentes: al intentarlo, el receptor recibe un evento messageerror con una DOMException DataCloneError."
+      }
+    ],
+    "returns": ["Ninguno."],
+    "exceptions": [
+      {
+        "label": "InvalidStateError DOMException",
+        "detail": "Se lanza si el BroadcastChannel ya se ha cerrado."
+      },
+      {
+        "label": "DataCloneError DOMException",
+        "detail": "Se lanza si alguna parte de los datos no se puede serializar."
+      }
+    ]
+  },
+  "web-javascript-web-api-canvasrenderingcontext2d-arcto": {
+    "body": [
+      "Supón que P<sub>0</sub> es el punto del trazado cuando se llama a arcTo(), P<sub>1</sub> = (x1, y1) y P<sub>2</sub> = (x2, y2) son el primer y el segundo punto de control, y r es el radio indicado:",
+      "Si r es negativo, se lanza una excepción IndexSizeError.",
+      "Si r es 0, arcTo() se comporta como si P<sub>0</sub>, P<sub>1</sub> y P<sub>2</sub> estuvieran alineados.",
+      "Si todos los puntos están alineados, se dibuja una línea de P<sub>0</sub> a P<sub>1</sub>, salvo que P<sub>0</sub> y P<sub>1</sub> coincidan (tengan las mismas coordenadas), en cuyo caso no se dibuja nada."
+    ],
+    "parameters": [
+      {
+        "label": "x1",
+        "detail": "La coordenada x del primer punto de control."
+      },
+      {
+        "label": "y1",
+        "detail": "La coordenada y del primer punto de control."
+      },
+      {
+        "label": "x2",
+        "detail": "La coordenada x del segundo punto de control."
+      },
+      {
+        "label": "y2",
+        "detail": "La coordenada y del segundo punto de control."
+      },
+      {
+        "label": "radius",
+        "detail": "El radio del arco. No puede ser negativo."
+      }
+    ],
+    "returns": ["Ninguno (undefined)."],
+    "exceptions": [
+      {
+        "label": "IndexSizeError DOMException",
+        "detail": "Se lanza si radius es negativo."
+      }
+    ]
+  },
+  "web-javascript-web-api-document-querycommandenabled": {
+    "parameters": [
+      {
+        "label": "command",
+        "detail": "El comando que se consulta."
+      }
+    ],
+    "returns": [
+      "Un booleano: true si el comando está habilitado y false si no."
+    ]
+  },
+  "web-javascript-web-api-document-querycommandsupported": {
+    "parameters": [
+      {
+        "label": "command",
+        "detail": "El comando cuya compatibilidad se consulta."
+      }
+    ],
+    "returns": ["Un booleano: true si el comando se admite y false si no."]
+  },
+  "web-javascript-web-api-element-getanimations": {
+    "parameters": [
+      {
+        "label": "options",
+        "detail": "Un objeto de opciones con la propiedad subtree: un booleano que, si es true, devuelve también las animaciones de los descendientes de Element, incluidas las de los pseudoelementos CSS asociados a Element o a sus descendientes. Por defecto, false. También admite pseudoElement para filtrar por un pseudoelemento concreto."
+      }
+    ],
+    "returns": [
+      "Un Array de objetos Animation, cada uno con una animación que afecta actualmente a Element.",
+      "Con { subtree: true }, incluye también las animaciones de los descendientes, pseudoelementos incluidos. Si se indica options.pseudoElement, solo incluye las animaciones del pseudoelemento seleccionado."
+    ],
+    "exceptions": [
+      {
+        "label": "SyntaxError DOMException",
+        "detail": "Se pasó un pseudoelemento no válido en options.pseudoElement."
+      }
+    ]
+  },
+  "web-javascript-web-api-element-keypress_event": {},
+  "web-javascript-web-api-eventtarget-dispatchevent": {
+    "parameters": [
+      {
+        "label": "event",
+        "detail": "El objeto Event que se despacha. Su propiedad Event.target pasa a ser el EventTarget actual."
+      }
+    ],
+    "returns": [
+      "false si event es cancelable y al menos uno de los manejadores que lo recibieron llamó a Event.preventDefault(). Si no, true."
+    ],
+    "exceptions": [
+      {
+        "label": "InvalidStateError DomException",
+        "detail": "Se lanza si no se indicó el tipo del evento al inicializarlo."
+      }
+    ]
+  },
+  "web-javascript-web-api-focusevent-relatedtarget": {
+    "values": [
+      {
+        "detail": "Una instancia de EventTarget."
+      }
+    ]
+  },
+  "web-javascript-web-api-htmlinputelement-webkitdirectory": {
+    "body": [
+      "Si webkitdirectory es true, el campo permite elegir directorios en lugar de archivos. Cuando el usuario elige uno, cada File de files tiene la propiedad File.webkitRelativePath con la ruta relativa al directorio seleccionado. Por ejemplo, con este sistema de archivos:",
+      "Si el usuario elige el directorio PhotoAlbums, files contendrá un File por cada archivo. El de PIC2343.jpg tendrá webkitRelativePath igual a PhotoAlbums/Birthdays/Don's 40th birthday/PIC2343.jpg. Así se puede reconstruir la jerarquía del directorio aunque FileList sea una lista plana.",
+      "En Chromium < 72, webkitRelativePath se comporta de otra forma."
+    ],
+    "values": [
+      {
+        "detail": "Un booleano: true si el <input> solo debe permitir elegir directorios y false si solo archivos."
+      }
+    ]
+  },
+  "web-javascript-web-api-idbrequest-transaction": {
+    "values": [
+      {
+        "detail": "Un IDBTransaction."
+      }
+    ]
+  },
+  "web-javascript-web-api-messageport-postmessage": {
+    "parameters": [
+      {
+        "label": "message",
+        "detail": "El mensaje que se envía por el canal. Puede ser de cualquier tipo de datos básico; para enviar varios, usa un array. Los contextos de ejecución que se comunican pueden no estar en el mismo clúster de agentes y, por tanto, no pueden compartir memoria. Los SharedArrayBuffer, o las vistas basadas en uno, no se pueden enviar entre clústeres de agentes: al intentarlo, el receptor recibe un evento messageerror con una DOMException DataCloneError."
+      },
+      {
+        "label": "transfer",
+        "detail": "Un array opcional de objetos transferibles cuya propiedad se cede. Pasan a pertenecer al destino y ya no se pueden usar en el origen. No se envían automáticamente: deben estar dentro del mensaje o ser accesibles para el receptor de otra forma, como un MessagePort a través de MessageEvent.ports."
+      },
+      {
+        "label": "options",
+        "detail": "Un objeto opcional con la propiedad transfer, que significa lo mismo que el parámetro transfer."
+      }
+    ],
+    "returns": ["Ninguno (undefined)."]
+  },
+  "web-javascript-web-api-mouseevent-initmouseevent": {
+    "parameters": [
+      {
+        "label": "type",
+        "detail": "La cadena con el tipo del evento. Para eventos de ratón puede ser, entre otros: click, mousedown, mouseup, mouseover, mousemove, mouseout."
+      },
+      {
+        "label": "canBubble",
+        "detail": "Si el evento puede propagarse hacia arriba. Establece Event.bubbles."
+      },
+      {
+        "label": "cancelable",
+        "detail": "Si se puede impedir la acción por defecto del evento. Establece Event.cancelable."
+      },
+      {
+        "label": "view",
+        "detail": "La AbstractView del evento. Aquí debes pasar el objeto window. Establece UIEvent.view."
+      },
+      {
+        "label": "detail",
+        "detail": "El número de clics del evento. Establece UIEvent.detail."
+      },
+      {
+        "label": "screenX",
+        "detail": "La coordenada x del evento en la pantalla. Establece MouseEvent.screenX."
+      },
+      {
+        "label": "screenY",
+        "detail": "La coordenada y del evento en la pantalla. Establece MouseEvent.screenY."
+      },
+      {
+        "label": "clientX",
+        "detail": "La coordenada x del evento en el área de cliente. Establece MouseEvent.clientX."
+      },
+      {
+        "label": "clientY",
+        "detail": "La coordenada y del evento en el área de cliente. Establece MouseEvent.clientY."
+      },
+      {
+        "label": "ctrlKey",
+        "detail": "Si se pulsó la tecla <kbd>control</kbd> durante el evento. Establece MouseEvent.ctrlKey."
+      },
+      {
+        "label": "altKey",
+        "detail": "Si se pulsó la tecla <kbd>alt</kbd> durante el evento. Establece MouseEvent.altKey."
+      },
+      {
+        "label": "shiftKey",
+        "detail": "Si se pulsó la tecla <kbd>shift</kbd> durante el evento. Establece MouseEvent.shiftKey."
+      },
+      {
+        "label": "metaKey",
+        "detail": "Si se pulsó la tecla <kbd>meta</kbd> durante el evento. Establece MouseEvent.metaKey."
+      },
+      {
+        "label": "button",
+        "detail": "El botón del ratón del evento."
+      },
+      {
+        "label": "relatedTarget",
+        "detail": "El EventTarget relacionado con el evento. Solo se usa con algunos tipos (por ejemplo, mouseover y mouseout); en el resto, pasa null."
+      }
+    ],
+    "returns": ["Ninguno (undefined)."]
+  },
+  "web-javascript-web-api-navigator-buildid": {
+    "values": [
+      {
+        "detail": "Una cadena con el identificador de compilación de la aplicación, con el formato AAAAMMDDHHMMSS."
+      }
+    ]
+  },
+  "web-javascript-web-api-navigator-platform": {
+    "body": [
+      "La propiedad platform indica la plataforma o sistema operativo en el que se ejecuta el navegador.",
+      "En teoría sirve para detectar el navegador y servir código que esquive errores o carencias concretas. Sin embargo, no es fiable y no se recomienda, por los motivos que se explican en la reducción del User-Agent y en la detección del navegador mediante el agente de usuario.",
+      "La detección de características es una estrategia mucho más fiable."
+    ],
+    "values": [
+      {
+        "detail": "Una cadena que indica la plataforma, por ejemplo:"
+      },
+      {
+        "detail": "\"MacIntel\""
+      },
+      {
+        "detail": "\"Win32\""
+      }
+    ]
+  },
+  "web-javascript-web-api-performanceresourcetiming-nexthopprotocol": {
+    "values": [
+      {
+        "detail": "La propiedad nextHopProtocol puede tener estos valores:"
+      },
+      {
+        "detail": "Una cadena con el protocolo de red usado para obtener el recurso, según su identificador de protocolo ALPN (RFC 7301). Valores habituales: - \"http/0.9\" - \"http/1.0\" - \"http/1.1\" - \"h2\" - \"h2c\" - \"h3\""
+      },
+      {
+        "detail": "Una cadena vacía si el recurso es una petición de otro origen y no se usa la cabecera de respuesta HTTP Timing-Allow-Origin."
+      }
+    ]
+  },
+  "web-javascript-web-api-pointerevent-altitudeangle": {
+    "values": [
+      {
+        "detail": "Un ángulo en radianes entre 0 y π/2: 0 es paralelo a la superficie del dispositivo (plano X-Y) y π/2 es perpendicular. Por defecto vale π/2 (perpendicular), a diferencia de altitudeAngle en los eventos táctiles, que por defecto vale 0 (paralelo). En hardware y plataformas que no informan de la inclinación o el ángulo, vale π/2."
+      }
+    ]
+  },
+  "web-javascript-web-api-pointerevent-azimuthangle": {
+    "values": [
+      {
+        "detail": "Un ángulo en radianes entre 0 y 2π. 0 representa un puntero cuyo extremo apunta en la dirección en que aumenta X (las «3 en punto» mirando desde arriba) en el plano X-Y, y el valor aumenta en sentido horario (π/2 a las «6», π a las «9» y 3π/2 a las «12»)."
+      },
+      {
+        "detail": "Cuando el puntero está perpendicular a la superficie (altitudeAngle de π/2), vale 0. En hardware y plataformas que no informan de la inclinación o el ángulo, también vale 0."
+      }
+    ]
+  },
+  "web-javascript-web-api-request-credentials": {
+    "values": [
+      {
+        "label": "omit",
+        "detail": "Nunca envía credenciales en la petición ni las incluye en la respuesta."
+      },
+      {
+        "label": "same-origin",
+        "detail": "Solo envía e incluye credenciales en peticiones del mismo origen. Es el valor por defecto."
+      },
+      {
+        "label": "include",
+        "detail": "Siempre incluye credenciales, incluso en peticiones de otro origen."
+      }
+    ]
+  },
+  "web-javascript-web-api-shadowroot-mode": {
+    "values": [
+      {
+        "label": "open",
+        "detail": "Los elementos de la raíz shadow son accesibles desde JavaScript fuera de la raíz."
+      },
+      {
+        "label": "closed",
+        "detail": "Los nodos del árbol shadow cerrado no son accesibles desde JavaScript fuera de la raíz."
+      }
+    ]
+  },
+  "web-javascript-web-api-textdecoder-encoding": {
+    "values": [
+      {
+        "detail": "Una cadena ASCII en minúsculas, que puede ser uno de estos valores:"
+      },
+      {
+        "detail": "La codificación recomendada para la Web: 'utf-8'."
+      },
+      {
+        "detail": "Las codificaciones heredadas de un byte: 'ibm866', 'iso-8859-2', 'iso-8859-3', 'iso-8859-4', 'iso-8859-5', 'iso-8859-6', 'iso-8859-7', 'iso-8859-8', 'iso-8859-8i', 'iso-8859-10', 'iso-8859-13', 'iso-8859-14', 'iso-8859-15', 'iso-8859-16', 'koi8-r', 'koi8-u', 'macintosh', 'windows-874', 'windows-1250', 'windows-1251', 'windows-1252', 'windows-1253', 'windows-1254', 'windows-1255', 'windows-1256', 'windows-1257', 'windows-1258' o 'x-mac-cyrillic'."
+      }
+    ]
+  },
+  "web-javascript-web-api-textdecoder-textdecoder": {
+    "parameters": [
+      {
+        "label": "label",
+        "detail": "Una cadena que identifica la codificación de caracteres del decodificador. Puede ser cualquier etiqueta válida. Por defecto, \"utf-8\"."
+      },
+      {
+        "label": "options",
+        "detail": "Un objeto con la propiedad fatal: un booleano que indica si TextDecoder.decode() debe lanzar un TypeError al decodificar datos no válidos. Por defecto, false: el decodificador sustituye los datos mal formados por un carácter de reemplazo. También admite ignoreBOM para conservar la marca de orden de bytes."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si label es desconocido o es uno de los valores que llevan al algoritmo de decodificación 'replacement' (\"iso-2022-cn\" o \"iso-2022-cn-ext\")."
+      }
+    ]
+  },
+  "web-javascript-web-api-textdecoderstream-textdecoderstream": {
+    "parameters": [
+      {
+        "label": "label",
+        "detail": "Una cadena, por defecto utf-8. Puede ser cualquier etiqueta válida."
+      },
+      {
+        "label": "options",
+        "detail": "Un objeto con la propiedad fatal: un booleano que indica si la decodificación debe lanzar un TypeError con datos no válidos. Por defecto, false: el decodificador sustituye los datos mal formados por un carácter de reemplazo. También admite ignoreBOM para conservar la marca de orden de bytes."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "RangeError",
+        "detail": "Se lanza si label es desconocido o es uno de los valores que llevan al algoritmo de decodificación 'replacement' (\"iso-2022-cn\" o \"iso-2022-cn-ext\")."
+      }
+    ]
+  },
+  "web-javascript-web-api-urlpattern-hasregexpgroups": {
+    "values": [
+      {
+        "detail": "Un booleano."
+      }
+    ]
+  },
+  "web-javascript-web-api-window-open": {
+    "body": [
+      "El método open() de Window recibe una URL y carga el recurso que identifica en un contexto de navegación nuevo o existente. El parámetro target indica en qué ventana, pestaña o marco se carga, y windowFeatures permite controlar las características de la nueva ventana: si es una pestaña o una ventana emergente con una interfaz mínima, su tamaño, su posición, etc.",
+      "Cuando window.open() crea un nuevo contexto de navegación (es decir, si no existe ya una ventana con ese nombre), la ventana contiene al principio about:blank. Si se indicó otra URL, se carga de forma asíncrona y, si es del mismo origen, se reutiliza el objeto global, así que las propiedades asignadas a la ventana antes de la carga pueden conservarse. Si target se refiere a un navegable existente (_self, _parent, _top o un nombre de ventana conocido), no hay fase about:blank: el navegador navega directamente en ese contexto.",
+      "Los navegadores modernos bloquean las ventanas emergentes de forma estricta. Deben abrirse como respuesta directa a una acción del usuario, y cada llamada a Window.open() necesita su propio gesto. Así se evita que los sitios inunden al usuario de ventanas, pero complica las aplicaciones con varias ventanas. Para sortear esta limitación, puedes diseñar la aplicación para:",
+      "No abrir más de una ventana nueva a la vez."
+    ],
+    "parameters": [
+      {
+        "label": "url",
+        "detail": "Una cadena con la URL o la ruta del recurso que se carga. Si es una cadena vacía (\"\") o se omite, se abre una página en blanco en el contexto de destino."
+      },
+      {
+        "label": "target",
+        "detail": "Una cadena sin espacios con el nombre del contexto de navegación en el que se carga el recurso. Si no identifica un contexto existente, se crea uno nuevo con ese nombre. También se pueden usar las palabras clave especiales _self, _blank (por defecto), _parent, _top y _unfencedTop; esta última solo tiene sentido en los fenced frames. El nombre se puede usar como atributo target de <a> o <form>."
+      },
+      {
+        "label": "windowFeatures",
+        "detail": "Una cadena con una lista de características de ventana separadas por comas, con la forma nombre=valor. Los booleanos se activan con nombre, nombre=yes, nombre=true o nombre=n, donde n es cualquier entero distinto de cero. Incluyen opciones como el tamaño y la posición por defecto, o si se abre una ventana emergente mínima (popup, width, height, left, top, noopener, noreferrer…). También se admite attributionsrc, que indica al navegador que envíe la cabecera Attribution-Reporting-Eligible con la llamada a open(). Debe hacerse con activación transitoria (dentro de un manejador de una interacción, como click) en los cinco segundos siguientes. El servidor la usa para responder con la cabecera Attribution-Reporting-Register-Source y completar el registro de una fuente de atribución, y el navegador guarda los datos de esa fuente cuando termina open(). Consulta la Attribution Reporting API para más detalles. Las llamadas a open() no sirven para registrar un activador de atribución."
+      }
+    ],
+    "returns": [
+      "Si el navegador abre el nuevo contexto, devuelve un objeto WindowProxy. Con esa referencia se puede acceder a las propiedades y métodos del nuevo contexto siempre que se cumpla la política del mismo origen.",
+      "Si se usa la cabecera HTTP Cross-Origin-Opener-Policy y el documento se abre en un nuevo grupo de contextos de navegación, se cortan las referencias a la ventana abierta y el objeto devuelto indica que está cerrada (closed es true).",
+      "Devuelve null si el navegador no logra abrir el nuevo contexto, por ejemplo porque lo bloquea el bloqueador de ventanas emergentes."
+    ]
+  },
+  "web-javascript-web-api-workerglobalscope-importscripts": {
+    "body": [
+      "importScripts() importa de forma síncrona uno o varios scripts en el ámbito de un worker clásico.",
+      "A diferencia del script clásico inicial, que debe ser del mismo origen que su documento, este método puede importar scripts de otros orígenes, salvo que lo impida Trusted Types, la Content Security Policy (CSP) u otro mecanismo de seguridad. Como los scripts clásicos se obtienen en modo no-cors, se pueden cargar desde otro origen aunque el servidor no envíe las cabeceras CORS adecuadas."
+    ],
+    "parameters": [
+      {
+        "label": "urlN",
+        "detail": "Una instancia de TrustedScriptURL o una cadena con la URL del script que se importa. Puede ser absoluta o relativa; si es relativa, se resuelve respecto a la URL del script de entrada del worker."
+      }
+    ],
+    "returns": ["Ninguno (undefined)."],
+    "exceptions": [
+      {
+        "label": "NetworkError",
+        "detail": "Los scripts importados se sirvieron sin el tipo MIME text/javascript o sin uno de los tipos MIME heredados de JavaScript permitidos."
+      },
+      {
+        "label": "SyntaxError",
+        "detail": "Se lanza si alguna URL no se puede resolver."
+      },
+      {
+        "label": "TypeError",
+        "detail": "Se lanza si el WorkerGlobalScope actual es un módulo (usa import en su lugar). También puede ocurrir si algún parámetro no es un TrustedScriptURL y el sitio aplica Trusted Types."
+      }
+    ]
+  }
+}
