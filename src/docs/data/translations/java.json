@@ -35445,6 +35445,221 @@
       "Hay más detalles sobre estos mecanismos en la especificación del paquete javax.sql.rowset.spi."
     ]
   },
+  "web-java-se-javax.sql.rowset.spi.SyncProvider": {
+    "body": [
+      "Una implementación de SyncProvider se identifica mediante un ID único, que es su nombre de clase completamente cualificado. Este nombre debe registrarse en la SPI de SyncFactory, lo que pone la implementación a disposición de todas las implementaciones de RowSet. El mecanismo de fábrica de la implementación de referencia usa este nombre para instanciar la implementación, que entonces puede proporcionar a un objeto RowSet su lector (un objeto javax.sql.RowSetReader) y su escritor (un objeto javax.sql.RowSetWriter).",
+      "La especificación de las implementaciones JDBC de RowSet proporciona dos implementaciones de referencia de la clase abstracta SyncProvider: RIOptimisticProvider y RIXMLProvider. RIOptimisticProvider puede asignar a cualquier implementación de RowSet un objeto RowSetReader y un objeto RowSetWriter. Sin embargo, solo la implementación RIXMLProvider puede asignar un objeto XmlReader y un objeto XmlWriter. Un objeto WebRowSet usa el objeto XmlReader para leer datos en formato XML y poblarse con ellos. Usa el objeto XmlWriter para escribirse a sí mismo en un flujo o en un objeto java.io.Writer en formato XML.",
+      "1.0 Convención de nombres para las implementaciones",
+      "Como guía para nombrar implementaciones de SyncProvider, conviene tener en cuenta lo siguiente:",
+      "El nombre de una implementación de SyncProvider es su nombre de clase completamente cualificado.",
+      "Se recomienda que los proveedores suministren la implementación de SyncProvider en un paquete llamado providers.",
+      "Por ejemplo, si un proveedor llamado Fred, Inc. ofreciera una implementación de SyncProvider, podrías tener lo siguiente:",
+      "Nombre del proveedor: Fred, Inc. Nombre de dominio del proveedor: com.fred Nombre del paquete: com.fred.providers Nombre de la clase de implementación de SyncProvider: HighAvailabilityProvider",
+      "Nombre de clase completamente cualificado de la implementación de SyncProvider: com.fred.providers.HighAvailabilityProvider",
+      "La siguiente línea de código usa el nombre completamente cualificado para registrar esta implementación en la instancia estática de SyncFactory.",
+      "SyncFactory.registerProvider( \"com.fred.providers.HighAvailabilityProvider\");",
+      "El objeto SyncProvider predeterminado que se incluye con la implementación de referencia usa el siguiente nombre:",
+      "com.sun.rowset.providers.RIOptimisticProvider",
+      "Los proveedores deberían consultar los proveedores de sincronización de la implementación de referencia para obtener orientación adicional sobre cómo implementar un nuevo SyncProvider.",
+      "2.0 Cómo obtiene un objeto RowSet su proveedor",
+      "Un objeto RowSet desconectado puede acceder a un objeto SyncProvider de una de las dos maneras siguientes:",
+      "Mediante un constructor",
+      "CachedRowSet crs = new CachedRowSet( \"com.fred.providers.HighAvailabilitySyncProvider\");",
+      "Mediante el método setSyncProvider",
+      "CachedRowSet crs = new CachedRowSet(); crs.setSyncProvider(\"com.fred.providers.HighAvailabilitySyncProvider\");",
+      "Por defecto, las implementaciones de referencia de los proveedores de sincronización de RowSet están siempre disponibles en la plataforma Java. Si no se ha registrado correctamente ningún otro proveedor de sincronización enchufable, SyncFactory genera automáticamente una instancia de la implementación de referencia predeterminada de SyncProvider. Así, en el fragmento de código anterior, si no se ha registrado en la instancia de SyncFactory ninguna implementación llamada com.fred.providers.HighAvailabilitySyncProvider, a crs se le asignará el proveedor predeterminado de la implementación de referencia, que es com.sun.rowset.providers.RIOptimisticProvider.",
+      "3.0 Violaciones y problemas de sincronización",
+      "Si una actualización entre un objeto RowSet desconectado y un origen de datos viola la consulta original o las restricciones del origen de datos subyacente, el comportamiento queda indefinido para todas las implementaciones de RowSet desconectado y sus implementaciones de SyncProvider designadas. No definir el comportamiento cuando se producen tales violaciones da más flexibilidad a la implementación de SyncProvider para decidir cuál es su mejor forma de actuar.",
+      "Una implementación de SyncProvider puede optar por implementar un manejador específico para tratar un subconjunto de violaciones de la consulta. Sin embargo, si la implementación de SyncProvider no trata una violación de la consulta original o una violación más general de restricciones del origen de datos, todos los objetos SyncProvider deben lanzar una SyncProviderException.",
+      "4.0 VIEW de SQL actualizables",
+      "Cualquier objeto RowSet, conectado o desconectado, puede poblarse a partir de una consulta SQL formulada originalmente sobre una VIEW de SQL. Aunque en muchos casos es posible realizar una actualización sobre la vista subyacente, dicha actualización requiere metadatos adicionales, que pueden variar. La clase SyncProvider proporciona dos constantes para indicar si una implementación admite actualizar una VIEW de SQL.",
+      "NONUPDATABLE_VIEW_SYNC: indica que una implementación de SyncProvider no admite la sincronización con una VIEW de SQL como origen de datos subyacente del objeto RowSet.",
+      "UPDATABLE_VIEW_SYNC: indica que una implementación de SyncProvider admite la sincronización con una VIEW de SQL como origen de datos subyacente.",
+      "Por defecto, un objeto RowSet no es actualizable si se pobló con datos de una VIEW de SQL.",
+      "5.0 Constantes de SyncProvider",
+      "La clase SyncProvider proporciona tres conjuntos de constantes que se usan como valores de retorno o parámetros de los métodos de SyncProvider. Los objetos SyncProvider pueden implementarse para sincronizar un objeto RowSet con su origen de datos subyacente con distintos grados de cuidado. El primer grupo de constantes indica cómo se gestiona la sincronización. Por ejemplo, GRADE_NONE indica que el objeto SyncProvider no se preocupará de comprobar qué datos son válidos y simplemente escribirá los datos del RowSet en el origen de datos. GRADE_MODIFIED_AT_COMMIT indica que el proveedor solo comprobará la validez de los datos modificados. Otros grados comprueban la validez de todos los datos o establecen bloqueos cuando los datos se modifican o se cargan.",
+      "Constantes que indican el grado de sincronización de un objeto SyncProvider",
+      "SyncProvider.GRADE_NONE",
+      "SyncProvider.GRADE_MODIFIED_AT_COMMIT",
+      "SyncProvider.GRADE_CHECK_ALL_AT_COMMIT",
+      "SyncProvider.GRADE_LOCK_WHEN_MODIFIED",
+      "SyncProvider.GRADE_LOCK_WHEN_LOADED",
+      "Constantes que indican qué bloqueos se establecen en el origen de datos",
+      "SyncProvider.DATASOURCE_NO_LOCK",
+      "SyncProvider.DATASOURCE_ROW_LOCK",
+      "SyncProvider.DATASOURCE_TABLE_LOCK",
+      "SyncProvider.DATASOURCE_DB_LOCK",
+      "Constantes que indican si un objeto SyncProvider puede realizar actualizaciones sobre una VIEW de SQL",
+      "Estas constantes se explican en la sección anterior (4.0).",
+      "SyncProvider.UPDATABLE_VIEW_SYNC",
+      "SyncProvider.NONUPDATABLE_VIEW_SYNC"
+    ]
+  },
+  "web-java-se-javax.sql.rowset.spi.SyncProviderException": {
+    "body": [
+      "Si está implementado para ello, el objeto SyncProvider también puede crear un objeto SyncResolver y, o bien inicializar con él el objeto SyncProviderException en el momento de construirlo, o bien asignárselo más tarde.",
+      "El método acceptChanges lanza esta excepción después de que el escritor haya terminado de buscar conflictos y haya encontrado uno o más. Una aplicación puede capturar un objeto SyncProviderException y llamar a su método getSyncResolver para obtener su objeto SyncResolver. Consulta el fragmento de código del comentario de la interfaz SyncResolver para ver un ejemplo. Este objeto SyncResolver reflejará el objeto RowSet que generó la excepción, salvo que solo contendrá los valores del origen de datos que están en conflicto. Todos los demás valores del objeto SyncResolver serán null.",
+      "El objeto SyncResolver puede usarse para examinar y resolver cada conflicto de una fila y luego pasar a la siguiente fila con conflicto para repetir el procedimiento.",
+      "Un objeto SyncProviderException puede contener o no una descripción de la condición que causó la excepción. Se puede llamar al método heredado getMessage para obtener la descripción, si la hay."
+    ]
+  },
+  "web-java-se-javax.sql.rowset.spi.SyncResolver": {
+    "body": [
+      "Ten en cuenta que un conflicto es una situación en la que los valores originales de una fila del objeto RowSet no coinciden con los valores del origen de datos, lo que indica que la fila del origen de datos se ha modificado desde la última sincronización. Ten en cuenta también que los valores originales de un objeto RowSet son los que tenía justo antes de la última sincronización, que no son necesariamente sus valores iniciales.",
+      "Descripción de un objeto SyncResolver",
+      "Un objeto SyncResolver es un objeto RowSet especializado que implementa la interfaz SyncResolver. Puede funcionar como un objeto RowSet conectado (una implementación de la interfaz JdbcRowSet) o como un objeto RowSet desconectado (una implementación de la interfaz CachedRowSet o de una de sus subinterfaces). Para obtener información sobre las subinterfaces, consulta la descripción del paquete javax.sql.rowset. La implementación de referencia de SyncResolver implementa la interfaz CachedRowSet, pero otras implementaciones pueden optar por implementar la interfaz JdbcRowSet para satisfacer necesidades concretas.",
+      "Después de que una aplicación haya intentado sincronizar un objeto RowSet con el origen de datos (llamando al método acceptChanges de CachedRowSet) y se hayan encontrado uno o más conflictos, el objeto SyncProvider del rowset crea una instancia de SyncResolver. Este nuevo objeto SyncResolver tiene el mismo número de filas y columnas que el objeto RowSet que intentaba la sincronización. El objeto SyncResolver contiene los valores del origen de datos que causaron el conflicto o los conflictos, y null para todos los demás valores. Además, contiene información sobre cada conflicto.",
+      "Obtener y usar un objeto SyncResolver",
+      "Cuando el método acceptChanges encuentra conflictos, el objeto SyncProvider crea un objeto SyncProviderException y le asigna el nuevo objeto SyncResolver. El método acceptChanges lanza esta excepción, que la aplicación puede capturar y usar para obtener el objeto SyncResolver que contiene. El siguiente fragmento de código usa el método getSyncResolver de SyncProviderException para obtener el objeto SyncResolver resolver.",
+      "catch (SyncProviderException spe) { SyncResolver resolver = spe.getSyncResolver(); ... }",
+      "Con resolver a mano, una aplicación puede usarlo para obtener la información que contiene sobre el conflicto o los conflictos. Un objeto SyncResolver como resolver lleva el registro de los conflictos de cada fila en la que hay alguno. También bloquea la tabla o tablas afectadas por el comando del rowset para que no puedan producirse más conflictos mientras se resuelven los actuales.",
+      "De un objeto SyncResolver se puede obtener la siguiente información:",
+      "Qué operación se estaba intentando cuando se produjo un conflicto",
+      "La interfaz SyncProvider define cuatro constantes que describen estados que pueden darse. Tres constantes describen el tipo de operación (actualización, borrado o inserción) que el objeto RowSet intentaba realizar cuando se descubrió un conflicto, y la cuarta indica que no hay conflicto. Estas constantes son los posibles valores de retorno cuando un objeto SyncResolver llama al método getStatus.",
+      "int operation = resolver.getStatus();",
+      "El valor del origen de datos que causó un conflicto",
+      "Existe un conflicto cuando un valor que un objeto RowSet ha cambiado e intenta escribir en el origen de datos también ha cambiado en el origen de datos desde la última sincronización. Una aplicación puede llamar al método getConflictValue de SyncResolver para obtener el valor del origen de datos que causa el conflicto, porque los valores de un objeto SyncResolver son los valores en conflicto del origen de datos.",
+      "java.lang.Object conflictValue = resolver.getConflictValue(2);",
+      "Ten en cuenta que la columna de resolver puede designarse por su número, como en la línea de código anterior, o por su nombre.",
+      "Con la información obtenida de los métodos getStatus y getConflictValue, la aplicación puede decidir qué valor debe persistirse en el origen de datos. Después, la aplicación llama al método setResolvedValue de SyncResolver, que establece el valor que se persistirá en el objeto RowSet y también en el origen de datos.",
+      "resolver.setResolvedValue(\"DEPT\", 8390426);",
+      "En la línea de código anterior, el nombre de columna designa la columna del objeto RowSet que se establecerá con el valor dado. También puede usarse el número de columna para designarla.",
+      "Una aplicación llama al método setResolvedValue después de haber resuelto todos los conflictos de la fila conflictiva actual, y repite este proceso para cada fila con conflictos del objeto SyncResolver.",
+      "Navegar por un objeto SyncResolver",
+      "Como un objeto SyncResolver es un objeto RowSet, una aplicación puede usar todos los métodos de RowSet para mover el cursor y navegar por un objeto SyncResolver. Por ejemplo, una aplicación puede usar el método next de RowSet para llegar a cada fila y luego llamar al método getStatus de SyncResolver para ver si la fila contiene un conflicto. En una fila con uno o más conflictos, la aplicación puede recorrer las columnas para encontrar los valores no nulos, que serán los valores del origen de datos que están en conflicto.",
+      "Para facilitar la navegación por un objeto SyncResolver, sobre todo cuando hay muchas filas sin conflictos, la interfaz SyncResolver define los métodos nextConflict y previousConflict, que solo se mueven a filas que contienen al menos un valor en conflicto. Después, la aplicación puede llamar al método getConflictValue de SyncResolver, pasándole el número de columna, para obtener el propio valor en conflicto. El fragmento de código de la sección siguiente muestra un ejemplo.",
+      "Ejemplo de código",
+      "El siguiente fragmento de código muestra cómo un objeto RowSet desconectado crs podría intentar sincronizarse con el origen de datos subyacente y después resolver los conflictos. En el bloque try, crs llama al método acceptChanges pasándole el objeto Connection con. Si no hay conflictos, los cambios de crs simplemente se escriben en el origen de datos. Sin embargo, si hay un conflicto, el método acceptChanges lanza un objeto SyncProviderException y entra en acción el bloque catch. En este ejemplo, que ilustra una de las muchas formas de usar un objeto SyncResolver, el método nextConflict de SyncResolver se usa en un bucle while. El bucle termina cuando nextConflict devuelve false, lo que ocurre cuando no quedan más filas con conflictos en el objeto SyncResolver resolver. En este fragmento concreto, resolver busca filas con conflictos de actualización (filas con el estado SyncResolver.UPDATE_ROW_CONFLICT), y el resto del fragmento solo se ejecuta para las filas en las que hubo conflictos porque crs intentaba una actualización.",
+      "Después de que el cursor de resolver se haya movido a la siguiente fila con un conflicto de actualización, el método getRow indica el número de la fila actual, y el cursor del objeto CachedRowSet crs se mueve a la fila correspondiente de crs. Recorriendo las columnas de esa fila tanto en resolver como en crs, se pueden obtener y comparar los valores en conflicto para decidir cuál debe persistirse. En este fragmento, el valor de crs es el que se establece como valor resuelto, lo que significa que se usará para sobrescribir el valor en conflicto del origen de datos.",
+      "{@code try {",
+      "crs.acceptChanges(con);",
+      "} catch (SyncProviderException spe) {",
+      "SyncResolver resolver = spe.getSyncResolver();",
+      "Object crsValue; // value in the RowSet object Object resolverValue: // value in the SyncResolver object Object resolvedValue: // value to be persisted",
+      "while(resolver.nextConflict()) { if(resolver.getStatus() == SyncResolver.UPDATE_ROW_CONFLICT) { int row = resolver.getRow(); crs.absolute(row);",
+      "int colCount = crs.getMetaData().getColumnCount(); for(int j = 1; j <= colCount; j++) { if (resolver.getConflictValue(j) != null) { crsValue = crs.getObject(j); resolverValue = resolver.getConflictValue(j); . . . // compare crsValue and resolverValue to determine // which should be the resolved value (the value to persist) resolvedValue = crsValue;",
+      "resolver.setResolvedValue(j, resolvedValue); } } } } } }"
+    ]
+  },
+  "web-java-se-javax.sql.rowset.spi.TransactionalWriter": {
+    "body": [
+      "Si uno o más objetos RowSet desconectados participan en una transacción global, puede interesarles coordinar las confirmaciones de su sincronización para preservar la integridad de los datos y reducir el número de excepciones de sincronización. En ese caso, la aplicación debe poner a false la constante COMMIT_ON_ACCEPT_CHANGES de CachedRowSet y usar los métodos commit y rollback definidos en esta interfaz para gestionar los límites de la transacción."
+    ]
+  },
+  "web-java-se-javax.swing.AbstractListModel.getListeners": {
+    "body": [
+      "Puedes especificar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los listeners de datos de lista de un modelo de lista m con el siguiente código:",
+      "ListDataListener[] ldls = (ListDataListener[])(m.getListeners(ListDataListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de clase EventListener que se solicita"
+      },
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este modelo, o un array vacío si no se ha añadido ningún listener de ese tipo"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.Action": {
+    "body": [
+      "Además del método actionPerformed definido por la interfaz ActionListener, esta interfaz permite a la aplicación definir, en un solo lugar:",
+      "Uno o más textos que describen la función. Estos textos pueden usarse, por ejemplo, para mostrar el texto emergente de un botón o para fijar el texto de un elemento de menú.",
+      "Uno o más iconos que representan la función. Estos iconos pueden usarse como imágenes en un control de menú o para entradas compuestas en una interfaz de usuario más sofisticada.",
+      "El estado habilitado/deshabilitado de la funcionalidad. En lugar de tener que deshabilitar por separado el elemento de menú y el botón de la barra de herramientas, la aplicación puede deshabilitar la función que implementa esta interfaz. Todos los componentes registrados como listeners del cambio de estado sabrán entonces que deben dejar de generar eventos para ese elemento y modificar su visualización en consecuencia.",
+      "Esta interfaz puede añadirse a una clase existente o usarse para crear un adaptador (normalmente heredando de AbstractAction). El objeto Action puede entonces añadirse a varios contenedores que entienden Action y conectarse a componentes compatibles con Action. Los controles de la GUI pueden activarse o desactivarse todos a la vez invocando el método setEnabled del objeto Action.",
+      "Ten en cuenta que las implementaciones de Action suelen ser más costosas en almacenamiento que un ActionListener típico, que no ofrece las ventajas del control centralizado de la funcionalidad ni la difusión de cambios de propiedades. Por eso, conviene usar Actions solo donde se deseen sus ventajas, y ActionListeners simples en el resto de casos.",
+      "Componentes Swing que admiten Action",
+      "Muchos componentes de Swing tienen una propiedad Action. Cuando se asigna una Action a un componente, ocurre lo siguiente:",
+      "La Action se añade como ActionListener del componente.",
+      "El componente configura algunas de sus propiedades para que coincidan con la Action.",
+      "El componente instala un PropertyChangeListener en la Action para poder cambiar sus propiedades y reflejar los cambios en las propiedades de la Action.",
+      "La siguiente tabla describe las propiedades que usan los componentes Swing que admiten Actions. En la tabla, botón se refiere a cualquier subclase de AbstractButton, lo que incluye no solo JButton sino también clases como JMenuItem. Salvo que se indique lo contrario, un valor de propiedad null en una Action (o una Action que sea null) hace que la propiedad correspondiente del botón se establezca a null.",
+      "Propiedades de Action admitidas",
+      "Propiedad del componente · Componentes · Clave de Action · Notas",
+      "enabled · Todos · El método isEnabled",
+      "toolTipText · Todos · SHORT_DESCRIPTION",
+      "actionCommand · Todos · ACTION_COMMAND_KEY",
+      "mnemonic · Todos los botones · MNEMONIC_KEY · Un valor null o una Action null hace que la propiedad mnemonic del botón se establezca a '\\0'.",
+      "text · Todos los botones · NAME · Si no quieres que el texto del botón refleje el de la Action, pon la propiedad hideActionText a true. Si hideActionText es true, asignar la Action cambia el texto del botón a null y se ignora cualquier cambio en NAME. hideActionText es útil para botones de barra de herramientas que normalmente solo muestran un Icon. JToolBar.add(Action) pone la propiedad a true si la Action tiene un valor no nulo para LARGE_ICON_KEY o SMALL_ICON.",
+      "displayedMnemonicIndex · Todos los botones · DISPLAYED_MNEMONIC_INDEX_KEY · Si el valor de DISPLAYED_MNEMONIC_INDEX_KEY queda fuera de los límites del texto, se ignora. Cuando se llama a setAction, si el valor de la Action es null, el índice del mnemónico mostrado no se actualiza. En cualquier cambio posterior de DISPLAYED_MNEMONIC_INDEX_KEY, null se trata como -1.",
+      "icon · Todos los botones excepto JCheckBox, JToggleButton y JRadioButton. · LARGE_ICON_KEY o SMALL_ICON · Las subclases de JMenuItem solo usan SMALL_ICON. Todos los demás botones usan LARGE_ICON_KEY; si el valor es null, usan SMALL_ICON.",
+      "accelerator · Todas las subclases de JMenuItem, excepto JMenu. · ACCELERATOR_KEY",
+      "selected · JToggleButton, JCheckBox, JRadioButton, JCheckBoxMenuItem y JRadioButtonMenuItem · SELECTED_KEY · Los componentes que respetan esta propiedad solo usan el valor si no es nulo. Por ejemplo, si asignas a un JToggleButton una Action con un valor null para SELECTED_KEY, el JToggleButton no actualizará su estado de selección de ninguna forma. Del mismo modo, cada vez que cambie el estado de selección del JToggleButton, solo devolverá el valor a la Action si esta tiene un valor no nulo para SELECTED_KEY.",
+      "Los componentes que respetan esta propiedad mantienen su estado de selección sincronizado con ella. Cuando la misma Action se usa con varios componentes, todos mantienen su estado de selección sincronizado con esta propiedad. Los botones mutuamente excluyentes, como los JToggleButton de un ButtonGroup, obligan a que solo uno de ellos esté seleccionado. Por eso, no uses la misma Action que define un valor para la propiedad SELECTED_KEY con varios botones mutuamente excluyentes.",
+      "JPopupMenu, JToolBar y JMenu proporcionan métodos de conveniencia para crear un componente y asignarle la Action. Consulta cada una de esas clases para obtener más información.",
+      "Action usa PropertyChangeListener para informar a los listeners de que la Action ha cambiado. La especificación de beans indica que un nombre de propiedad null puede usarse para señalar que han cambiado varios valores. Por defecto, los componentes Swing que aceptan una Action no tratan ese tipo de cambio. Para indicar que Swing debe tratar null según la especificación de beans, establece la propiedad del sistema swing.actions.reconfigureOnNull al String true."
+    ]
+  },
+  "web-java-se-javax.swing.CellEditor": {
+    "body": [
+      "Esta interfaz permite que componentes complejos (el cliente del editor), como JTree y JTable, admitan cualquier editor genérico para editar valores en una celda de tabla, de árbol, etc. Sin esta interfaz de editor genérico, JTable tendría que conocer editores concretos, como JTextField, JCheckBox, JComboBox, etc. Además, sin esta interfaz, los clientes de editores como JTable no podrían trabajar con editores desarrollados en el futuro por el usuario o por un ISV externo.",
+      "Para usar esta interfaz, un desarrollador que crea un nuevo editor puede hacer que el nuevo componente implemente la interfaz. O puede optar por un enfoque basado en envoltorios y proporcionar un objeto acompañante que implemente la interfaz CellEditor (consulta DefaultCellEditor como ejemplo). El enfoque del envoltorio es especialmente útil si el usuario quiere usar con JTable un editor de un ISV externo que no implementó la interfaz CellEditor. El usuario puede simplemente crear un objeto que contenga una instancia del editor externo y «traducir» la API de CellEditor a la API de ese editor."
+    ]
+  },
+  "web-java-se-javax.swing.DefaultBoundedRangeModel.getListeners": {
+    "body": [
+      "Puedes especificar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los listeners de cambios de una instancia m de DefaultBoundedRangeModel con el siguiente código:",
+      "ChangeListener[] cls = (ChangeListener[])(m.getListeners(ChangeListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de clase EventListener que se solicita"
+      },
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este modelo, o un array vacío si no se ha añadido ningún listener de ese tipo"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.DefaultButtonModel.getListeners": {
+    "body": [
+      "Puedes especificar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los listeners de acciones de una instancia m de DefaultButtonModel con el siguiente código:",
+      "ActionListener[] als = (ActionListener[])(m.getListeners(ActionListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de listeners solicitados"
+      },
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este modelo, o un array vacío si no se ha añadido ningún listener de ese tipo"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
   "web-java-se-javax.swing.DefaultListModel.add": {
     "parameters": [
       {
@@ -35463,6 +35678,174 @@
       }
     ]
   },
+  "web-java-se-javax.swing.DefaultListModel.get": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "índice del elemento que se devuelve"
+      }
+    ],
+    "returns": ["el elemento en la posición indicada de esta lista"],
+    "exceptions": [
+      {
+        "label": "ArrayIndexOutOfBoundsException",
+        "detail": "si el índice está fuera de rango (index < 0 || index >= size())"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.DefaultListModel.remove": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "índice del elemento que se elimina"
+      }
+    ],
+    "returns": ["el elemento que había antes en esa posición"],
+    "exceptions": [
+      {
+        "label": "ArrayIndexOutOfBoundsException",
+        "detail": "si el índice está fuera de rango (index < 0 || index >= size())"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.DefaultListModel.set": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "índice del elemento que se reemplaza"
+      },
+      {
+        "label": "element",
+        "detail": "el elemento que se guarda en la posición indicada"
+      }
+    ],
+    "returns": ["el elemento que había antes en esa posición"],
+    "exceptions": [
+      {
+        "label": "ArrayIndexOutOfBoundsException",
+        "detail": "si el índice está fuera de rango (index < 0 || index >= size())"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.DefaultListSelectionModel.getListeners": {
+    "body": [
+      "Puedes especificar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los listeners de selección de lista de una instancia m de DefaultListSelectionModel con el siguiente código:",
+      "ListSelectionListener[] lsls = (ListSelectionListener[])(m.getListeners(ListSelectionListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de clase EventListener que se solicita"
+      },
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este modelo, o un array vacío si no se ha añadido ningún listener de ese tipo"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.DefaultListSelectionModel.setValueIsAdjusting": {
+    "intro": [
+      "Establece la propiedad valueIsAdjusting, que indica si los próximos cambios de selección deben considerarse parte de un único cambio. El valor de esta propiedad se usa para inicializar la propiedad valueIsAdjusting de los ListSelectionEvent que se generan."
+    ],
+    "body": [
+      "Por ejemplo, si la selección se está actualizando en respuesta a un arrastre del usuario, esta propiedad puede ponerse a true al empezar el arrastre y a false al terminarlo. Durante el arrastre, los listeners reciben eventos con la propiedad valueIsAdjusting a true. Al final del arrastre, cuando el cambio es definitivo, los listeners reciben un evento con el valor a false. Los listeners pueden usar este patrón si solo quieren actualizarse cuando un cambio sea definitivo.",
+      "Poner esta propiedad a true inicia una serie de cambios que se considerarán parte de un único cambio. Cuando la propiedad vuelve a false, se envía un evento que describe el cambio de selección completo (si lo hubo), con la propiedad valueIsAdjusting del evento a false."
+    ],
+    "parameters": [
+      {
+        "label": "valueIsAdjusting",
+        "detail": "el nuevo valor de la propiedad"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.DefaultRowSorter.setMaxSortKeys": {
+    "intro": [
+      "Establece el número máximo de claves de ordenación. El número de claves de ordenación determina cómo se resuelven los valores iguales al ordenar. Por ejemplo, supón que se crea un ordenador de filas de tabla y se le invoca setMaxSortKeys(2). El usuario hace clic en la cabecera de la columna 1, lo que ordena las filas según los elementos de la columna 1. Después, el usuario hace clic en la cabecera de la columna 2, lo que ordena la tabla según los elementos de la columna 2; si algún elemento de la columna 2 es igual, esas filas se ordenan según los elementos de la columna 1. En este caso, decimos que las filas se ordenan principalmente por la columna 2 y secundariamente por la columna 1. Si el usuario hace clic después en la cabecera de la columna 3, los elementos se ordenan principalmente por la columna 3 y secundariamente por la columna 2. Como el número máximo de claves de ordenación se ha fijado en 2 con setMaxSortKeys, la columna 1 ya no influye en el orden."
+    ],
+    "body": [
+      "toggleSortOrder impone el número máximo de claves de ordenación. Puedes especificar más claves invocando setSortKeys directamente y se respetarán todas. Sin embargo, si después se invoca toggleSortOrder, se impondrá el número máximo de claves de ordenación. El valor predeterminado es 3."
+    ],
+    "parameters": [
+      {
+        "label": "max",
+        "detail": "el número máximo de claves de ordenación"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si max < 1"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.DefaultSingleSelectionModel.getListeners": {
+    "body": [
+      "Puedes especificar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los listeners de cambios de una instancia m de DefaultSingleSelectionModel con el siguiente código:",
+      "ChangeListener[] cls = (ChangeListener[])(m.getListeners(ChangeListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de clase EventListener que se solicita"
+      },
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este modelo, o un array vacío si no se ha añadido ningún listener de ese tipo"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.GroupLayout": {
+    "body": [
+      "Cada grupo puede contener cualquier número de elementos, donde un elemento es un Group, un Component o un hueco. Un hueco puede verse como un componente invisible con un tamaño mínimo, preferido y máximo. Además, GroupLayout admite un hueco preferido, cuyo valor procede de LayoutStyle.",
+      "Los elementos se parecen a un muelle. Cada elemento tiene un rango definido por un mínimo, un preferido y un máximo. Los huecos tienen un rango especificado por el desarrollador o un rango determinado por LayoutStyle. El rango de los Components se determina a partir de sus métodos getMinimumSize, getPreferredSize y getMaximumSize. Además, al añadir Components puedes especificar un rango concreto que se use en lugar del del componente. El rango de un Group depende del tipo de grupo. El rango de un ParallelGroup es el máximo de los rangos de sus elementos. El rango de un SequentialGroup es la suma de los rangos de sus elementos.",
+      "GroupLayout trata cada eje de forma independiente. Es decir, hay un grupo que representa el eje horizontal y otro que representa el eje vertical. El grupo horizontal se encarga de determinar el tamaño mínimo, preferido y máximo a lo largo del eje horizontal, así como de fijar la x y el ancho de los componentes que contiene. El grupo vertical se encarga de determinar el tamaño mínimo, preferido y máximo a lo largo del eje vertical, así como de fijar la y y el alto de los componentes que contiene. Cada Component debe estar tanto en un grupo horizontal como en uno vertical; de lo contrario, se lanza una IllegalStateException durante la disposición o al solicitar el tamaño mínimo, preferido o máximo.",
+      "El siguiente diagrama muestra un grupo secuencial a lo largo del eje horizontal. El grupo secuencial contiene tres componentes. A lo largo del eje vertical se usó un grupo paralelo.",
+      "Para reforzar que cada eje se trata de forma independiente, el diagrama muestra el rango de cada grupo y elemento a lo largo de cada eje. El rango de cada componente se ha proyectado sobre los ejes, y los grupos se dibujan en azul (horizontal) y rojo (vertical). Para mayor legibilidad, hay un hueco entre cada elemento del grupo secuencial.",
+      "El grupo secuencial del eje horizontal se dibuja como una línea azul continua. Observa que el grupo secuencial es la suma de los elementos hijos que contiene.",
+      "A lo largo del eje vertical, el grupo paralelo es el máximo de la altura de cada componente. Como los tres componentes tienen la misma altura, el grupo paralelo tiene esa misma altura.",
+      "El siguiente diagrama muestra los mismos tres componentes, pero con el grupo paralelo en el eje horizontal y el grupo secuencial en el eje vertical.",
+      "Como c1 es el mayor de los tres componentes, el grupo paralelo toma el tamaño de c1. Como c2 y c3 son más pequeños que c1, se alinean según la alineación especificada para el componente (si la hay) o la alineación predeterminada del grupo paralelo. En el diagrama, c2 y c3 se crearon con una alineación LEADING. Si la orientación de los componentes fuera de derecha a izquierda, c2 y c3 se colocarían en el lado opuesto.",
+      "El siguiente diagrama muestra un grupo secuencial tanto en el eje horizontal como en el vertical.",
+      "GroupLayout permite insertar huecos entre Components. El tamaño del hueco lo determina una instancia de LayoutStyle. Esto puede activarse con el método setAutoCreateGaps. Del mismo modo, puedes usar el método setAutoCreateContainerGaps para insertar huecos entre el contenedor padre y los componentes que tocan su borde.",
+      "Lo siguiente construye un panel formado por dos etiquetas en una columna, seguidas de dos campos de texto en la siguiente columna:",
+      "JComponent panel = ...; GroupLayout layout = new GroupLayout(panel); panel.setLayout(layout);",
+      "// Turn on automatically adding gaps between components layout.setAutoCreateGaps(true);",
+      "// Turn on automatically creating gaps between components that touch // the edge of the container and the container. layout.setAutoCreateContainerGaps(true);",
+      "// Create a sequential group for the horizontal axis.",
+      "GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();",
+      "// The sequential group in turn contains two parallel groups. // One parallel group contains the labels, the other the text fields. // Putting the labels in a parallel group along the horizontal axis // positions them at the same x location. // // Variable indentation is used to reinforce the level of grouping. hGroup.addGroup(layout.createParallelGroup(). addComponent(label1).addComponent(label2)); hGroup.addGroup(layout.createParallelGroup(). addComponent(tf1).addComponent(tf2)); layout.setHorizontalGroup(hGroup);",
+      "// Create a sequential group for the vertical axis. GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();",
+      "// The sequential group contains two parallel groups that align // the contents along the baseline. The first parallel group contains // the first label and text field, and the second parallel group contains // the second label and text field. By using a sequential group // the labels and text fields are positioned vertically after one another. vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE). addComponent(label1).addComponent(tf1)); vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE). addComponent(label2).addComponent(tf2)); layout.setVerticalGroup(vGroup);",
+      "Al ejecutarlo se obtiene lo siguiente.",
+      "Esta disposición consta de lo siguiente.",
+      "El eje horizontal consta de un grupo secuencial que contiene dos grupos paralelos. El primer grupo paralelo contiene las etiquetas y el segundo, los campos de texto.",
+      "El eje vertical consta de un grupo secuencial que contiene dos grupos paralelos. Los grupos paralelos están configurados para alinear sus componentes según la línea base. El primer grupo paralelo contiene la primera etiqueta y el primer campo de texto, y el segundo, la segunda etiqueta y el segundo campo de texto.",
+      "Hay un par de cosas que observar en este código:",
+      "No hace falta añadir explícitamente los componentes al contenedor; esto se hace indirectamente al usar uno de los métodos add de Group.",
+      "Los distintos métodos add devuelven el propio objeto. Esto permite encadenar invocaciones fácilmente. Por ejemplo, group.addComponent(label1).addComponent(label2); equivale a group.addComponent(label1); group.addComponent(label2);.",
+      "Los Groups no tienen constructores públicos; usa en su lugar los métodos create de GroupLayout."
+    ]
+  },
   "web-java-se-javax.swing.JSpinner%24NumberEditor.setComponentOrientation": {
     "body": [
       "Al construirlo, la orientación de un componente es ComponentOrientation.UNKNOWN, lo que indica que no se ha fijado explícitamente. La orientación UNKNOWN se comporta igual que ComponentOrientation.LEFT_TO_RIGHT.",
@@ -35473,6 +35856,21 @@
       {
         "label": "o",
         "detail": "la orientación que se va a fijar"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.ListSelectionModel.setValueIsAdjusting": {
+    "intro": [
+      "Establece la propiedad valueIsAdjusting, que indica si los próximos cambios de selección deben considerarse parte de un único cambio. El valor de esta propiedad se usa para inicializar la propiedad valueIsAdjusting de los ListSelectionEvent que se generan."
+    ],
+    "body": [
+      "Por ejemplo, si la selección se está actualizando en respuesta a un arrastre del usuario, esta propiedad puede ponerse a true al empezar el arrastre y a false al terminarlo. Durante el arrastre, los listeners reciben eventos con la propiedad valueIsAdjusting a true. Al final del arrastre, cuando el cambio es definitivo, los listeners reciben un evento con el valor a false. Los listeners pueden usar este patrón si solo quieren actualizarse cuando un cambio sea definitivo.",
+      "Poner esta propiedad a true inicia una serie de cambios que se considerarán parte de un único cambio. Cuando la propiedad vuelve a false, se envía un evento que describe el cambio de selección completo (si lo hubo), con la propiedad valueIsAdjusting del evento a false."
+    ],
+    "parameters": [
+      {
+        "label": "valueIsAdjusting",
+        "detail": "el nuevo valor de la propiedad"
       }
     ]
   },
