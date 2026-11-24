@@ -33965,6 +33965,423 @@
       "Compatibilidad con IPP: SheetCollate no es por ahora un atributo IPP."
     ]
   },
+  "web-java-se-javax.print.event.PrintJobListener": {
+    "intro": [
+      "Las implementaciones de esta interfaz de listener deben añadirse a un DocPrintJob para monitorizar el estado del trabajo de impresión. Estos métodos callback pueden invocarse en el hilo que procesa el trabajo o en un hilo de notificación creado por el servicio. En ambos casos, el cliente no debe hacer procesos largos dentro de ellos."
+    ]
+  },
+  "web-java-se-javax.script.ScriptEngineFactory": {
+    "body": [
+      "Cada clase que implementa ScriptEngine tiene una fábrica correspondiente que expone metadatos que describen la clase del motor.",
+      "ScriptEngineManager usa el mecanismo de carga de proveedores de servicios descrito en java.util.ServiceLoader para obtener instancias de ScriptEngineFactory. Consulta ScriptEngineManager.ScriptEngineManager() y ScriptEngineManager.ScriptEngineManager(java.lang.ClassLoader)."
+    ]
+  },
+  "web-java-se-javax.security.auth.PrivateCredentialPermission.equals": {
+    "intro": [
+      "Comprueba si dos PrivateCredentialPermission son iguales: que obj sea un PrivateCredentialPermission con la misma clase de credencial y los mismos Principal que este objeto. El orden de los Principal en los nombres de destino de cada permiso no importa."
+    ],
+    "parameters": [
+      {
+        "label": "obj",
+        "detail": "el objeto con el que se comprueba la igualdad."
+      }
+    ],
+    "returns": [
+      "true si obj es un PrivateCredentialPermission con la misma clase de credencial y los mismos Principal que este objeto."
+    ]
+  },
+  "web-java-se-javax.security.auth.Subject.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un Subject con un Set de Principal vacío y Sets vacíos de credenciales públicas y privadas."
+        ],
+        "body": [
+          "Los Sets recién creados comprueban si este Subject es de solo lectura antes de permitir modificaciones, y evitan modificaciones ilegales comprobando que quien llama tiene permisos suficientes. Además, no permiten elementos null: intentar añadir, consultar o quitar un null lanza NullPointerException.",
+          "Para modificar el Set de Principal, quien llama necesita AuthPermission(\"modifyPrincipals\"). Para el Set de credenciales públicas, AuthPermission(\"modifyPublicCredentials\"). Para el de credenciales privadas, AuthPermission(\"modifyPrivateCredentials\")."
+        ]
+      },
+      {
+        "intro": ["Crea un Subject con Principal y credenciales."],
+        "body": [
+          "Los Principal y credenciales de los Sets indicados se copian en Sets nuevos. Estos comprueban si el Subject es de solo lectura antes de permitir modificaciones, y evitan modificaciones ilegales comprobando que quien llama tiene permisos suficientes. Además, no permiten elementos null: intentar añadir, consultar o quitar un null lanza NullPointerException.",
+          "Para modificar el Set de Principal, quien llama necesita AuthPermission(\"modifyPrincipals\"). Para el Set de credenciales públicas, AuthPermission(\"modifyPublicCredentials\"). Para el de credenciales privadas, AuthPermission(\"modifyPrivateCredentials\")."
+        ],
+        "parameters": [
+          {
+            "label": "readOnly",
+            "detail": "true si el Subject debe ser de solo lectura; false en caso contrario."
+          },
+          {
+            "label": "principals",
+            "detail": "el Set de Principal que se asocia a este Subject."
+          },
+          {
+            "label": "pubCredentials",
+            "detail": "el Set de credenciales públicas que se asocia a este Subject."
+          },
+          {
+            "label": "privCredentials",
+            "detail": "el Set de credenciales privadas que se asocia a este Subject."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si principals, pubCredentials o privCredentials es null, o si alguno de esos tres Sets contiene null."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.security.auth.callback.CallbackHandler.handle": {
+    "body": [
+      "La implementación de handle comprueba las instancias de Callback recibidas para obtener o mostrar la información pedida. Este ejemplo muestra cómo podría ser una implementación de handle. Es solo orientativo; por simplicidad se omiten muchos detalles, como el manejo adecuado de errores.",
+      "{@code public void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {",
+      "for (int i = 0; i < callbacks.length; i++) { if (callbacks[i] instanceof TextOutputCallback) {",
+      "// display the message according to the specified type TextOutputCallback toc = (TextOutputCallback)callbacks[i]; switch (toc.getMessageType()) { case TextOutputCallback.INFORMATION: System.out.println(toc.getMessage()); break; case TextOutputCallback.ERROR: System.out.println(\"ERROR: \" + toc.getMessage()); break; case TextOutputCallback.WARNING: System.out.println(\"WARNING: \" + toc.getMessage()); break; default: throw new IOException(\"Unsupported message type: \" + toc.getMessageType()); }",
+      "} else if (callbacks[i] instanceof NameCallback) {",
+      "// prompt the user for a username NameCallback nc = (NameCallback)callbacks[i];",
+      "// ignore the provided defaultName System.err.print(nc.getPrompt()); System.err.flush(); nc.setName((new BufferedReader (new InputStreamReader(System.in))).readLine());",
+      "} else if (callbacks[i] instanceof PasswordCallback) {",
+      "// prompt the user for sensitive information PasswordCallback pc = (PasswordCallback)callbacks[i]; System.err.print(pc.getPrompt()); System.err.flush(); pc.setPassword(readPassword(System.in));",
+      "} else { throw new UnsupportedCallbackException (callbacks[i], \"Unrecognized Callback\"); } } }",
+      "// Reads user password from given input stream. private char[] readPassword(InputStream in) throws IOException { // insert code to read a user password from the input stream } }"
+    ],
+    "parameters": [
+      {
+        "label": "callbacks",
+        "detail": "un array de Callback que da un servicio de seguridad subyacente, con la información que se pide obtener o mostrar."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "java.io.IOException",
+        "detail": "si se produce un error de entrada o salida."
+      },
+      {
+        "label": "UnsupportedCallbackException",
+        "detail": "si la implementación de este método no admite uno o más de los Callback del parámetro callbacks."
+      }
+    ]
+  },
+  "web-java-se-javax.security.auth.callback.ChoiceCallback.%3Cinit%3E": {
+    "parameters": [
+      {
+        "label": "prompt",
+        "detail": "el texto que describe la lista de opciones."
+      },
+      {
+        "label": "choices",
+        "detail": "la lista de opciones. El array se clona para protegerlo de modificaciones posteriores."
+      },
+      {
+        "label": "defaultChoice",
+        "detail": "la opción que se usa como predeterminada al mostrar la lista. Se representa como índice del array choices."
+      },
+      {
+        "label": "multipleSelectionsAllowed",
+        "detail": "boolean que indica si pueden seleccionarse varias opciones de la lista."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si prompt es null o tiene longitud 0, si choices es null o tiene longitud 0, si algún elemento de choices es null o tiene longitud 0, o si defaultChoice está fuera de los límites del array choices."
+      }
+    ]
+  },
+  "web-java-se-javax.security.auth.callback.ConfirmationCallback.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un ConfirmationCallback con un tipo de mensaje, un tipo de opción y una opción predeterminada."
+        ],
+        "body": [
+          "Los servicios de seguridad subyacentes usan este constructor si necesitan una confirmación SÍ/NO, SÍ/NO/CANCELAR o ACEPTAR/CANCELAR."
+        ],
+        "parameters": [
+          {
+            "label": "messageType",
+            "detail": "el tipo de mensaje (INFORMATION, WARNING o ERROR)."
+          },
+          {
+            "label": "optionType",
+            "detail": "el tipo de opción (YES_NO_OPTION, YES_NO_CANCEL_OPTION u OK_CANCEL_OPTION)."
+          },
+          {
+            "label": "defaultOption",
+            "detail": "la opción predeterminada del optionType dado (YES, NO, CANCEL u OK)."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si messageType no es INFORMATION, WARNING ni ERROR, si optionType no es YES_NO_OPTION, YES_NO_CANCEL_OPTION ni OK_CANCEL_OPTION, o si defaultOption no corresponde a ninguna opción de optionType."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un ConfirmationCallback con un tipo de mensaje, una lista de opciones y una opción predeterminada."
+        ],
+        "body": [
+          "Los servicios de seguridad subyacentes usan este constructor si necesitan una confirmación distinta de las predefinidas (por ejemplo, CONTINUAR/ABORTAR o PARAR/SEGUIR). Las opciones están en el array options, y la implementación de CallbackHandler las muestra igual que las predefinidas."
+        ],
+        "parameters": [
+          {
+            "label": "messageType",
+            "detail": "el tipo de mensaje (INFORMATION, WARNING o ERROR)."
+          },
+          {
+            "label": "options",
+            "detail": "la lista de opciones de confirmación. El array se clona para protegerlo de modificaciones posteriores."
+          },
+          {
+            "label": "defaultOption",
+            "detail": "la opción predeterminada, representada como índice del array options."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si messageType no es INFORMATION, WARNING ni ERROR, si options es null o tiene longitud 0, si algún elemento de options es null o tiene longitud 0, o si defaultOption está fuera de los límites del array options."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un ConfirmationCallback con un texto, un tipo de mensaje, un tipo de opción y una opción predeterminada."
+        ],
+        "body": [
+          "Los servicios de seguridad subyacentes usan este constructor si necesitan una confirmación SÍ/NO, SÍ/NO/CANCELAR o ACEPTAR/CANCELAR."
+        ],
+        "parameters": [
+          {
+            "label": "prompt",
+            "detail": "el texto que describe la lista de opciones."
+          },
+          {
+            "label": "messageType",
+            "detail": "el tipo de mensaje (INFORMATION, WARNING o ERROR)."
+          },
+          {
+            "label": "optionType",
+            "detail": "el tipo de opción (YES_NO_OPTION, YES_NO_CANCEL_OPTION u OK_CANCEL_OPTION)."
+          },
+          {
+            "label": "defaultOption",
+            "detail": "la opción predeterminada del optionType dado (YES, NO, CANCEL u OK)."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si prompt es null o tiene longitud 0, si messageType no es INFORMATION, WARNING ni ERROR, si optionType no es YES_NO_OPTION, YES_NO_CANCEL_OPTION ni OK_CANCEL_OPTION, o si defaultOption no corresponde a ninguna opción de optionType."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un ConfirmationCallback con un texto, un tipo de mensaje, una lista de opciones y una opción predeterminada."
+        ],
+        "body": [
+          "Los servicios de seguridad subyacentes usan este constructor si necesitan una confirmación distinta de las predefinidas (por ejemplo, CONTINUAR/ABORTAR o PARAR/SEGUIR). Las opciones están en el array options, y la implementación de CallbackHandler las muestra igual que las predefinidas."
+        ],
+        "parameters": [
+          {
+            "label": "prompt",
+            "detail": "el texto que describe la lista de opciones."
+          },
+          {
+            "label": "messageType",
+            "detail": "el tipo de mensaje (INFORMATION, WARNING o ERROR)."
+          },
+          {
+            "label": "options",
+            "detail": "la lista de opciones de confirmación. El array se clona para protegerlo de modificaciones posteriores."
+          },
+          {
+            "label": "defaultOption",
+            "detail": "la opción predeterminada, representada como índice del array options."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si prompt es null o tiene longitud 0, si messageType no es INFORMATION, WARNING ni ERROR, si options es null o tiene longitud 0, si algún elemento de options es null o tiene longitud 0, o si defaultOption está fuera de los límites del array options."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.security.auth.login.Configuration": {
+    "body": [
+      "Una configuración de inicio de sesión contiene la información siguiente. Este ejemplo solo representa la sintaxis predeterminada de Configuration; las subclases pueden implementar otras sintaxis y obtener la Configuration de cualquier fuente, como archivos, bases de datos o servidores.",
+      "Name { ModuleClass Flag ModuleOptions; ModuleClass Flag ModuleOptions; ModuleClass Flag ModuleOptions; }; Name { ModuleClass Flag ModuleOptions; ModuleClass Flag ModuleOptions; }; other { ModuleClass Flag ModuleOptions; ModuleClass Flag ModuleOptions; };",
+      "Cada entrada de la Configuration se indexa por un nombre de aplicación, Name, y contiene la lista de LoginModules configurados para esa aplicación. Cada LoginModule se indica por su nombre completo de clase. La autenticación recorre la lista de módulos exactamente en el orden indicado. Si una aplicación no tiene entrada propia, se usa la entrada \"other\".",
+      "El valor Flag controla el comportamiento general mientras la autenticación recorre la pila. Estos son los valores válidos de Flag y su significado:",
+      "1) Required: el LoginModule debe tener éxito. Tanto si lo tiene como si falla, la autenticación sigue recorriendo la lista de LoginModules.",
+      "2) Requisite: el LoginModule debe tener éxito. Si lo tiene, la autenticación sigue recorriendo la lista. Si falla, el control vuelve de inmediato a la aplicación (la autenticación no sigue recorriendo la lista).",
+      "3) Sufficient: no es obligatorio que el LoginModule tenga éxito. Si lo tiene, el control vuelve de inmediato a la aplicación (la autenticación no sigue recorriendo la lista). Si falla, la autenticación sigue recorriendo la lista.",
+      "4) Optional: no es obligatorio que el LoginModule tenga éxito. Tanto si lo tiene como si falla, la autenticación sigue recorriendo la lista.",
+      "La autenticación global solo tiene éxito si todos los LoginModules Required y Requisite lo tienen. Si hay un LoginModule Sufficient configurado que tiene éxito, solo los Required y Requisite anteriores a él deben haber tenido éxito para que la autenticación global lo tenga. Si una aplicación no tiene LoginModules Required ni Requisite, al menos uno Sufficient u Optional debe tener éxito.",
+      "ModuleOptions es una lista separada por espacios de valores propios del LoginModule, que se pasan directamente a los LoginModules subyacentes. Las opciones las define el propio LoginModule y controlan su comportamiento; por ejemplo, puede definir opciones de depuración o prueba. La forma correcta de indicarlas en la Configuration es con pares clave-valor como debug=\"true\": clave y valor separados por un igual y el valor entre comillas dobles. Si en el valor aparece una cadena de la forma ${system.property}, se sustituye por el valor de esa propiedad del sistema. No hay límite al número de opciones que puede definir un LoginModule.",
+      "Este es un ejemplo de entrada de Configuration con la sintaxis anterior:",
+      "Login { com.sun.security.auth.module.UnixLoginModule required; com.sun.security.auth.module.Krb5LoginModule optional useTicketCache=\"true\" ticketCache=\"${user.home}${/}tickets\"; };",
+      "Esta Configuration indica que una aplicación llamada \"Login\" exige que los usuarios se autentiquen primero con com.sun.security.auth.module.UnixLoginModule, que debe tener éxito. Aunque falle la autenticación de UnixLoginModule, se invoca igualmente com.sun.security.auth.module.Krb5LoginModule, lo que ayuda a ocultar el origen del fallo. Como Krb5LoginModule es Optional, la autenticación global solo tiene éxito si lo tiene UnixLoginModule (Required).",
+      "Además, las opciones propias del LoginModule, useTicketCache=\"true\" y ticketCache=${user.home}${/}tickets\", se pasan a Krb5LoginModule y le indican que use la caché de tickets de la ubicación indicada. Las propiedades del sistema user.home y / (file.separator) se sustituyen por sus valores.",
+      "En cada momento solo hay un objeto Configuration instalado en el entorno de ejecución. Se instala con setConfiguration y se obtiene con getConfiguration.",
+      "Si no hay ninguno instalado, una llamada a getConfiguration instala una instancia de la implementación predeterminada (una subclase predeterminada de esta clase abstracta). La implementación predeterminada puede cambiarse fijando la propiedad de seguridad login.configuration.provider al nombre completo de la subclase de Configuration deseada.",
+      "El código de la aplicación puede extender Configuration directamente para ofrecer una implementación propia. Además, puede crearse una instancia de Configuration con alguno de los métodos de fábrica getInstance y un tipo estándar. El tipo de política predeterminado es \"JavaLoginConfig\". Consulta la sección Configuration de la Java Security Standard Algorithm Names Specification para la lista de tipos estándar."
+    ]
+  },
+  "web-java-se-javax.security.auth.login.LoginContext": {
+    "body": [
+      "Además de la autenticación enchufable, esta clase admite la autenticación apilada: una aplicación puede configurarse con más de un LoginModule. Por ejemplo, podría configurarse un LoginModule de Kerberos y otro de tarjeta inteligente para una aplicación.",
+      "Normalmente, quien llama crea un LoginContext con un nombre y un CallbackHandler. LoginContext usa el nombre como índice en una Configuration para saber qué LoginModules usar y cuáles deben tener éxito para que la autenticación global lo tenga. El CallbackHandler se pasa a los LoginModules subyacentes para que puedan comunicarse con los usuarios (por ejemplo, pidiendo usuario y contraseña con una interfaz gráfica).",
+      "Una vez creado el LoginContext, quien llama invoca su método login para autenticar un Subject. login invoca los módulos configurados para que hagan su tipo de autenticación (usuario/contraseña, verificación del PIN de una tarjeta inteligente, etc.). Los LoginModules no reintentan la autenticación ni introducen retrasos si falla; esas tareas corresponden a quien usa el LoginContext.",
+      "Si login retorna sin lanzar excepción, la autenticación global ha tenido éxito. Quien llama puede obtener el Subject recién autenticado con getSubject, y sus Principal y credenciales con los métodos getPrincipals, getPublicCredentials y getPrivateCredentials del Subject.",
+      "Para cerrar la sesión del Subject, quien llama invoca logout, que, como login, invoca el método logout de los módulos configurados.",
+      "Un LoginContext no debe usarse para autenticar más de un Subject. Hay que usar un LoginContext distinto para cada Subject.",
+      "Esta documentación se aplica a todos los constructores de LoginContext:",
+      "Subject",
+      "Si el constructor tiene un parámetro Subject, el LoginContext usa el Subject que indica quien llama.",
+      "Si quien llama indica un Subject null y se permite null, el LoginContext crea un Subject nuevo.",
+      "Si el constructor no tiene parámetro Subject, el LoginContext crea un Subject nuevo.",
+      "Configuration",
+      "Si el constructor tiene un parámetro Configuration y quien llama indica uno no null, el LoginContext usa esa Configuration.",
+      "Si el constructor no tiene parámetro Configuration, o quien llama indica null, el constructor obtiene la Configuration instalada con esta llamada:",
+      "config = Configuration.getConfiguration();",
+      "En ambos casos, el argumento name del constructor se pasa a Configuration.getAppConfigurationEntry. Si la Configuration no tiene entradas para ese nombre, el LoginContext llama a getAppConfigurationEntry con el nombre \"other\" (el de la entrada predeterminada). Si tampoco hay entrada \"other\", se lanza LoginException.",
+      "Cuando el LoginContext usa la Configuration instalada, quien llama necesita los AuthPermission createLoginContext.name y, posiblemente, createLoginContext.other. Además, el LoginContext invoca los módulos configurados dentro de una llamada a AccessController.doPrivileged, de modo que los módulos que hacen tareas sensibles para la seguridad (como conectarse a máquinas remotas o actualizar el Subject) necesitan los permisos correspondientes, pero quienes llaman al LoginContext no.",
+      "Cuando el LoginContext usa una Configuration indicada por quien llama, este no necesita ningún AuthPermission createLoginContext. El LoginContext guarda el AccessControlContext de quien llama e invoca los módulos dentro de un AccessController.doPrivileged limitado a ese contexto. Esto significa que el contexto de quien llama (guardado al crear el LoginContext) debe tener permisos suficientes para cualquier tarea sensible que hagan los módulos.",
+      "CallbackHandler",
+      "Si el constructor tiene un parámetro CallbackHandler, el LoginContext usa el que indica quien llama.",
+      "Si el constructor no tiene parámetro CallbackHandler, o quien llama indica null (y se permite null), el LoginContext consulta la propiedad de seguridad auth.login.defaultCallbackHandler para obtener el nombre completo de una implementación predeterminada. Si no está fijada, los módulos no tendrán CallbackHandler para comunicarse con los usuarios, así que quien llama da por hecho que tienen otros medios para autenticar al usuario.",
+      "Cuando el LoginContext usa la Configuration instalada (y no una indicada por quien llama, ver arriba), debe envolver el CallbackHandler indicado o predeterminado en uno nuevo cuyo handle invoque el handle del indicado dentro de un java.security.AccessController.doPrivileged limitado al AccessControlContext actual de quien llama."
+    ]
+  },
+  "web-java-se-javax.security.auth.spi.LoginModule": {
+    "body": [
+      "Mientras las aplicaciones programan contra la API LoginContext, los proveedores de tecnologías de autenticación implementan la interfaz LoginModule. Una Configuration indica qué LoginModules usa una aplicación de inicio de sesión concreta, así que pueden enchufarse distintos LoginModules sin modificar la aplicación.",
+      "El LoginContext se encarga de leer la Configuration y crear los LoginModules adecuados. Cada LoginModule se inicializa con un Subject, un CallbackHandler, el estado compartido de los LoginModules y sus opciones propias.",
+      "El Subject es el que se está autenticando y se actualiza con las credenciales correspondientes si la autenticación tiene éxito. Los LoginModules usan el CallbackHandler para comunicarse con los usuarios, por ejemplo para pedir usuario y contraseña. El CallbackHandler puede ser null; los LoginModules que lo necesiten imprescindiblemente pueden lanzar LoginException. Opcionalmente, los LoginModules usan el estado compartido para compartir información entre ellos.",
+      "Las opciones propias del LoginModule son las que un administrador o usuario configura para él en la Configuration. Las define el propio LoginModule y controlan su comportamiento; por ejemplo, puede definir opciones de depuración o prueba. Se indican con una sintaxis clave-valor, como debug=true. El LoginModule las guarda en un Map para obtener los valores por clave. No hay límite al número de opciones que puede definir.",
+      "La aplicación que llama ve la autenticación como una sola operación, pero dentro del LoginModule ocurre en dos fases. En la primera, el login del LoginContext invoca el login del LoginModule, que hace la autenticación real (por ejemplo, pedir y verificar una contraseña) y guarda su estado de autenticación como información privada. Después devuelve true (si ha tenido éxito) o false (si debe ignorarse), o lanza LoginException para indicar un fallo. Si falla, el LoginModule no debe reintentar la autenticación ni introducir retrasos; eso corresponde a la aplicación. Si la aplicación reintenta, se vuelve a llamar al login del LoginModule.",
+      "En la segunda fase, si la autenticación global del LoginContext ha tenido éxito (los LoginModules REQUIRED, REQUISITE, SUFFICIENT y OPTIONAL correspondientes lo han tenido), se invoca el commit del LoginModule. commit comprueba su estado privado para ver si su propia autenticación tuvo éxito. Si la global y la suya han tenido éxito, asocia los Principal (identidades autenticadas) y las credenciales (datos de autenticación como claves criptográficas) correspondientes al Subject del LoginModule.",
+      "Si la autenticación global del LoginContext ha fallado (los LoginModules REQUIRED, REQUISITE, SUFFICIENT y OPTIONAL correspondientes no han tenido éxito), se invoca el abort de cada LoginModule, que quita o destruye el estado de autenticación guardado.",
+      "Cerrar la sesión de un Subject solo tiene una fase: el LoginContext invoca el logout del LoginModule, que hace el procedimiento de cierre, como quitar Principal o credenciales del Subject o registrar información de la sesión.",
+      "Una implementación de LoginModule debe tener un constructor sin argumentos, para que las clases que lo cargan puedan instanciarlo."
+    ]
+  },
+  "web-java-se-javax.security.auth.x500.X500Principal": {
+    "body": [
+      "Esta clase puede crearse con la representación en cadena del nombre distinguido o con su representación en bytes codificada en ASN.1 DER. La especificación actual de la representación en cadena está en RFC 2253: Lightweight Directory Access Protocol (v3): UTF-8 String Representation of Distinguished Names. Aun así, esta clase acepta los formatos de RFC 2253 y de RFC 1779: A String Representation of Distinguished Names, y también reconoce las palabras clave de tipo de atributo cuyos OID (identificadores de objeto) define RFC 5280: Internet X.509 Public Key Infrastructure Certificate and CRL Profile.",
+      "La representación en cadena de este X500Principal se obtiene con los métodos getName.",
+      "Los métodos getSubjectX500Principal y getIssuerX500Principal de X509Certificate devuelven X500Principal que representan los campos de emisor y sujeto del certificado."
+    ]
+  },
+  "web-java-se-javax.security.auth.x500.X500Principal.getName": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve una representación en cadena del nombre distinguido X.500 con el formato de RFC 2253."
+        ],
+        "body": ["Equivale a llamar a getName(X500Principal.RFC2253)."],
+        "returns": ["el nombre distinguido de este X500Principal"]
+      },
+      {
+        "intro": [
+          "Devuelve una representación en cadena del nombre distinguido X.500 con el formato indicado. Los valores válidos son \"RFC1779\", \"RFC2253\" y \"CANONICAL\" (sin distinguir mayúsculas)."
+        ],
+        "body": [
+          "Con \"RFC1779\", este método emite las palabras clave de tipo de atributo de RFC 1779 (CN, L, ST, O, OU, C, STREET). Cualquier otro tipo se emite como OID.",
+          "Con \"RFC2253\", emite las palabras clave de RFC 2253 (CN, L, ST, O, OU, C, STREET, DC, UID). Cualquier otro tipo se emite como OID. En sentido estricto, RFC 2253 solo especifica una representación en cadena UTF-8; el String que devuelve este método es la cadena Unicode que se obtiene al decodificar esa representación.",
+          "Con \"CANONICAL\", devuelve una representación conforme a RFC 2253 con estas canonicalizaciones adicionales:",
+          "Se quitan los ceros iniciales de los tipos de atributo codificados como OID decimales con puntos",
+          "Los valores DirectoryString de tipo PrintableString y UTF8String no se emiten en hexadecimal",
+          "Los valores DirectoryString de otros tipos distintos de PrintableString y UTF8String se emiten en hexadecimal",
+          "Se quitan los espacios iniciales y finales de los valores no hexadecimales (salvo que el valor sea todo espacios)",
+          "Las subcadenas internas de uno o más espacios se convierten en un solo espacio en los valores no hexadecimales",
+          "Los nombres distinguidos relativos con más de una aserción de valor de atributo (AVA) se emiten en este orden: primero las AVA con palabras clave estándar, en orden alfabético, y luego las que tienen palabras clave OID, en orden numérico.",
+          "En los valores solo se escapan los caracteres que la sección 2.4 de RFC 2253 dice que deben escaparse (con una barra invertida delante)",
+          "Todo el nombre se pasa a mayúsculas con String.toUpperCase(Locale.US)",
+          "Todo el nombre se pasa a minúsculas con String.toLowerCase(Locale.US)",
+          "Por último, el nombre se normaliza con la forma de normalización KD, como se describe en el estándar Unicode y en UAX #15",
+          "En el futuro pueden introducirse otros formatos estándar."
+        ],
+        "parameters": [
+          {
+            "label": "format",
+            "detail": "el formato que se usa"
+          }
+        ],
+        "returns": [
+          "una representación en cadena de este X500Principal con el formato indicado"
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el formato indicado no es válido o es null"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve una representación en cadena del nombre distinguido X.500 con el formato indicado. Los valores válidos son \"RFC1779\" y \"RFC2253\" (sin distinguir mayúsculas). \"CANONICAL\" no está permitido y lanza IllegalArgumentException."
+        ],
+        "body": [
+          "Devuelve cadenas en el formato que indica getName(String) y además emite palabras clave de tipo de atributo adicionales para los OID que tienen entrada en el parámetro oidMap. Las entradas de oidMap tienen prioridad sobre los OID predeterminados que reconoce getName(String). Los OID mal indicados se ignoran; pero si un OID del nombre corresponde a una palabra clave mal indicada, se lanza IllegalArgumentException.",
+          "En el futuro pueden introducirse otros formatos estándar.",
+          "Advertencia: otras implementaciones pueden no reconocer las palabras clave adicionales, así que no uses este método si no estás seguro de que lo harán."
+        ],
+        "parameters": [
+          {
+            "label": "format",
+            "detail": "el formato que se usa"
+          },
+          {
+            "label": "oidMap",
+            "detail": "un mapa de OID en el que cada clave es un identificador de objeto en forma de String (una secuencia de enteros no negativos separados por puntos) que corresponde a una palabra clave de tipo de atributo. Puede estar vacío pero nunca ser null."
+          }
+        ],
+        "returns": [
+          "una representación en cadena de este X500Principal con el formato indicado"
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el formato indicado no es válido o es null, o si un OID del nombre corresponde a una palabra clave mal indicada"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si oidMap es null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.security.cert.X509Certificate": {
+    "body": [
+      "El formato básico X.509 lo definieron ISO/IEC y ANSI X9, y se describe abajo en ASN.1:",
+      "Certificate ::= SEQUENCE { tbsCertificate TBSCertificate, signatureAlgorithm AlgorithmIdentifier, signature BIT STRING }",
+      "Estos certificados se usan mucho para la autenticación y otras funciones en sistemas de seguridad de Internet. Entre los usos habituales están Privacy Enhanced Mail (PEM), Transport Layer Security (SSL), la firma de código para distribuir software de confianza y Secure Electronic Transactions (SET).",
+      "Estos certificados los gestionan y avalan las autoridades de certificación (CA), servicios que crean certificados colocando datos en el formato estándar X.509 y firmándolos digitalmente. Las CA actúan como terceros de confianza que presentan entre sí a principales que no se conocen directamente. Los certificados de las CA están firmados por ellas mismas o por otra CA, como una CA \"raíz\".",
+      "La definición ASN.1 de tbsCertificate es:",
+      "TBSCertificate ::= SEQUENCE { version [0] EXPLICIT Version DEFAULT v1, serialNumber CertificateSerialNumber, signature AlgorithmIdentifier, issuer Name, validity Validity, subject Name, subjectPublicKeyInfo SubjectPublicKeyInfo, }",
+      "Este es un ejemplo de código para crear un certificado X.509:",
+      "InputStream inStream = new FileInputStream(\"fileName-of-cert\"); X509Certificate cert = X509Certificate.getInstance(inStream); inStream.close();",
+      "O",
+      "byte[] certData = <certificate read from a file, say> X509Certificate cert = X509Certificate.getInstance(certData);",
+      "En ambos casos, el código que crea el certificado X.509 consulta el valor de la propiedad de seguridad cert.provider.x509v1 para localizar la implementación real, o crea una implementación predeterminada.",
+      "La propiedad cert.provider.x509v1 apunta a una implementación predeterminada de X.509, como:",
+      "cert.provider.x509v1=com.sun.security.cert.internal.x509.X509V1CertImpl",
+      "Hay que cambiar el valor de cert.provider.x509v1 para usar otra implementación. Si no está fijada, se usa una predeterminada. Actualmente, por posibles restricciones de seguridad en el acceso a las propiedades de Security, este valor se busca y guarda al inicializar la clase, y se usa una implementación predeterminada si la propiedad no es accesible.",
+      "Nota: las clases del paquete javax.security.cert existen por compatibilidad con versiones anteriores de Java Secure Sockets Extension (JSSE). Las aplicaciones nuevas deben usar las clases de certificados estándar de Java SE de java.security.cert."
+    ],
+    "caveats": ["Usa las clases de java.security.cert en su lugar."]
+  },
   "web-java-se-javax.security.cert.X509Certificate.getSerialNumber": {
     "intro": [
       "Obtiene el valor serialNumber del certificado. El número de serie es un entero que la autoridad de certificación asigna a cada certificado. Debe ser único para cada certificado emitido por una CA (es decir, el nombre del emisor y el número de serie identifican un único certificado). Su definición ASN.1 es:"
