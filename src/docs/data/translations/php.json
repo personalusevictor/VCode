@@ -2564,6 +2564,220 @@
       "Define lo que comparten todos los controles: show() y hide() los muestran u ocultan, enable() y disable() los activan o desactivan, y getParent() devuelve el control que los contiene."
     ]
   },
+  "php-class-ui-controls-box": {
+    "summary": "Una caja (Box) organiza otros controles en una fila o una columna.",
+    "description": [
+      "El constructor recibe la orientación, UI\\Controls\\Box::Horizontal o Box::Vertical. append() añade un control y su segundo argumento indica si debe estirarse para ocupar el espacio libre; setPadded() añade separación entre controles."
+    ]
+  },
+  "php-class-ui-controls-button": {
+    "description": [
+      "El constructor recibe el texto y setText() lo cambia. Para reaccionar a los clics, crea una subclase y sobrescribe onClick()."
+    ]
+  },
+  "php-class-ui-controls-check": {
+    "description": [
+      "setChecked() e isChecked() fijan y consultan si está marcada. Sobrescribe onToggle() en una subclase para reaccionar cuando el usuario la cambia."
+    ]
+  },
+  "php-class-ui-controls-colorbutton": {
+    "description": [
+      "getColor() devuelve el color elegido como UI\\Draw\\Color y setColor() lo cambia. Sobrescribe onChange() para reaccionar cuando el usuario elige otro."
+    ]
+  },
+  "php-class-ui-controls-combo": {
+    "description": [
+      "append() añade una opción, setSelected() y getSelected() trabajan con el índice de la opción elegida, y onSelected() se puede sobrescribir para reaccionar al cambio."
+    ]
+  },
+  "php-class-ui-controls-editablecombo": {
+    "summary": "Una caja de combinación editable (Editable Combo) es un Combo que permite al usuario escribir opciones propias.",
+    "description": [
+      "append() añade opciones sugeridas, y getText() y setText() trabajan con el texto actual, sea una opción o algo escrito. Sobrescribe onChange() para reaccionar a los cambios."
+    ]
+  },
+  "php-class-ui-controls-entry": {
+    "description": [
+      "El constructor recibe el tipo: UI\\Controls\\Entry::Normal, Password o Search. getText() y setText() trabajan con el contenido, setReadOnly() impide editarlo y onChange() se puede sobrescribir para reaccionar a cada cambio."
+    ]
+  },
+  "php-class-ui-controls-form": {
+    "description": [
+      "append() añade una fila con una etiqueta y un control, alineando las etiquetas en una columna. setPadded() añade separación entre filas."
+    ]
+  },
+  "php-class-ui-controls-grid": {
+    "description": [
+      "append() coloca cada control en una columna y fila, con el número de celdas que ocupa en cada dirección, si se expande y cómo se alinea. setPadded() añade separación entre celdas."
+    ]
+  },
+  "php-class-ui-controls-group": {
+    "description": [
+      "El constructor recibe el título y append() añade el control que contiene, normalmente una UI\\Controls\\Box con varios controles. setMargin() añade margen interior."
+    ]
+  },
+  "php-class-ui-controls-label": {
+    "description": [
+      "El constructor recibe el texto; getText() y setText() lo consultan y cambian."
+    ]
+  },
+  "php-class-ui-controls-multilineentry": {
+    "description": [
+      "El constructor recibe el tipo, UI\\Controls\\MultilineEntry::Wrap o NoWrap, que decide si las líneas largas se ajustan. getText(), setText() y append() trabajan con el contenido."
+    ]
+  },
+  "php-class-ui-controls-picker": {
+    "description": [
+      "El constructor recibe el tipo: UI\\Controls\\Picker::Date, Time o DateTime. El selector usa el control nativo del sistema operativo."
+    ]
+  },
+  "php-class-ui-controls-progress": {
+    "description": ["setValue() fija el porcentaje y getValue() lo consulta."]
+  },
+  "php-class-ui-controls-radio": {
+    "description": [
+      "append() añade cada opción del grupo, setSelected() y getSelected() trabajan con el índice elegido, y onSelected() se puede sobrescribir para reaccionar al cambio."
+    ]
+  },
+  "php-class-ui-controls-separator": {
+    "description": [
+      "El constructor recibe la orientación, UI\\Controls\\Separator::Horizontal o Vertical. Sirve para separar visualmente grupos de controles."
+    ]
+  },
+  "php-class-ui-controls-slider": {
+    "summary": "Un control deslizante (Slider) representa un rango y un valor actual dentro de él. El elemento que se arrastra refleja el valor y permite ajustarlo.",
+    "description": [
+      "El constructor recibe el mínimo y el máximo. getValue() y setValue() trabajan con el valor, y onChange() se puede sobrescribir para reaccionar cuando el usuario lo mueve."
+    ]
+  },
+  "php-class-ui-controls-spin": {
+    "summary": "Una caja numérica (Spin) es un campo de texto con botones arriba y abajo que cambian el valor dentro de un rango.",
+    "description": [
+      "El constructor recibe el mínimo y el máximo. getValue() y setValue() trabajan con el valor, y onChange() se puede sobrescribir para reaccionar a los cambios."
+    ]
+  },
+  "php-class-ui-controls-tab": {
+    "description": [
+      "append() añade una pestaña con su título y el control que contiene, insertAt() la inserta en una posición y delete() la elimina. pages() devuelve el número de pestañas."
+    ]
+  },
+  "php-class-ui-draw-brush": {
+    "description": [
+      "El constructor recibe un UI\\Draw\\Color. Se pasa a UI\\Draw\\Pen::fill() o stroke() para pintar un trazado de ese color."
+    ]
+  },
+  "php-class-ui-draw-brush-gradient": {
+    "description": [
+      "Es la base de UI\\Draw\\Brush\\LinearGradient y RadialGradient. addStop() añade un color en una posición entre 0 y 1, y el degradado interpola entre ellos."
+    ]
+  },
+  "php-class-ui-draw-brush-lineargradient": {
+    "summary": "Pincel con un degradado lineal.",
+    "description": [
+      "El constructor recibe el punto inicial y el final; los colores se añaden con addStop() y cambian a lo largo de la línea que los une."
+    ]
+  },
+  "php-class-ui-draw-brush-radialgradient": {
+    "summary": "Pincel con un degradado radial.",
+    "description": [
+      "El constructor recibe el punto de inicio, el centro exterior y el radio; los colores se añaden con addStop() y cambian desde el centro hacia fuera."
+    ]
+  },
+  "php-class-ui-draw-color": {
+    "description": [
+      "Las propiedades r, g, b y a contienen cada canal como número entre 0 y 1. El constructor puede recibir un entero con el color en formato 0xRRGGBB."
+    ]
+  },
+  "php-class-ui-draw-line-cap": {
+    "summary": "Constantes para el extremo de las líneas.",
+    "description": [
+      "Define Flat, Round y Square, que indican si el extremo de una línea es recto, redondeado o cuadrado. Se usan al crear un UI\\Draw\\Stroke."
+    ]
+  },
+  "php-class-ui-draw-line-join": {
+    "summary": "Constantes para la unión entre segmentos de línea.",
+    "description": [
+      "Define Miter, Round y Bevel, que indican si las esquinas son en punta, redondeadas o biseladas. Se usan al crear un UI\\Draw\\Stroke."
+    ]
+  },
+  "php-class-ui-draw-matrix": {
+    "summary": "Matriz de transformación para el dibujo.",
+    "description": [
+      "translate(), scale(), rotate() y skew() componen transformaciones, y UI\\Draw\\Pen::transform() las aplica a lo que se dibuje después."
+    ]
+  },
+  "php-class-ui-draw-path": {
+    "description": [
+      "newFigure() empieza una figura en un punto, lineTo(), arcTo() y bezierTo() añaden segmentos y closeFigure() la cierra. addRectangle() añade un rectángulo completo.",
+      "end() termina el trazado; después se pasa a UI\\Draw\\Pen para rellenarlo o dibujar su contorno."
+    ]
+  },
+  "php-class-ui-draw-pen": {
+    "description": [
+      "fill() rellena un UI\\Draw\\Path y stroke() dibuja su contorno con un UI\\Draw\\Stroke. write() dibuja un UI\\Draw\\Text\\Layout en un punto.",
+      "save() y restore() guardan y recuperan el estado, como la transformación aplicada con transform() o el recorte de clip()."
+    ]
+  },
+  "php-class-ui-draw-stroke": {
+    "description": [
+      "El constructor recibe el extremo (UI\\Draw\\Line\\Cap), la unión (UI\\Draw\\Line\\Join), el grosor y el límite de inglete."
+    ]
+  },
+  "php-class-ui-draw-text-font": {
+    "description": [
+      "El constructor recibe un UI\\Draw\\Text\\Font\\Descriptor. Se usa al crear un UI\\Draw\\Text\\Layout."
+    ]
+  },
+  "php-class-ui-draw-text-font-descriptor": {
+    "description": [
+      "El constructor recibe la familia, el tamaño y, opcionalmente, el peso, el estilo y el estiramiento, con las constantes de UI\\Draw\\Text\\Font\\Weight, Italic y Stretch."
+    ]
+  },
+  "php-class-ui-draw-text-font-italic": {
+    "summary": "Constantes de estilo cursivo de una fuente.",
+    "description": ["Define Normal, Oblique e Italic."]
+  },
+  "php-class-ui-draw-text-font-stretch": {
+    "summary": "Constantes de anchura de una fuente.",
+    "description": [
+      "Van desde UltraCondensed hasta UltraExpanded, pasando por Normal."
+    ]
+  },
+  "php-class-ui-draw-text-font-weight": {
+    "summary": "Constantes de grosor de una fuente.",
+    "description": [
+      "Van desde Thin hasta UltraHeavy, con valores intermedios como Normal y Bold."
+    ]
+  },
+  "php-class-ui-draw-text-layout": {
+    "description": [
+      "El constructor recibe el texto, un UI\\Draw\\Text\\Font y el ancho disponible, de modo que el texto se ajusta en varias líneas. setColor() cambia el color de todo el texto o de un tramo.",
+      "Se dibuja con UI\\Draw\\Pen::write()."
+    ]
+  },
+  "php-class-ui-exception-invalidargumentexception": {
+    "description": [
+      "Comprueba los valores y tipos que admite la operación que reportó el error.",
+      "Se produce, por ejemplo, al pasar una orientación o un tipo de control que no existe."
+    ]
+  },
+  "php-class-ui-exception-runtimeexception": {
+    "description": [
+      "Usa el mensaje de la excepción y el punto donde se lanzó para identificar la operación que falló.",
+      "Se produce, por ejemplo, al usar un control que ya se ha destruido."
+    ]
+  },
+  "php-class-ui-executor": {
+    "description": [
+      "Crea una subclase que implemente onExecute(); el constructor recibe el intervalo en segundos y microsegundos. setInterval() lo cambia y kill() detiene la ejecución."
+    ]
+  },
+  "php-class-ui-key": {
+    "summary": "Constantes con los identificadores de teclas especiales.",
+    "description": [
+      "Identifican teclas como Escape, Insert, Delete, Home o las teclas de función F1 a F12. Las recibe UI\\Area::onKey() para saber qué tecla se pulsó."
+    ]
+  },
   "php-function-fann_set_activation_function": {
     "description": [
       "Establece la función de activación para la neurona número neuron en la capa número layer, contando al capa de entrada como capa 0.",
