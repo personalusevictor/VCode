@@ -16407,12 +16407,598 @@
       "Esta clase solo es útil junto con el Security Manager, que está obsoleto y se eliminará en una versión futura. Por eso esta clase también está obsoleta y se eliminará. No hay sustituto para el Security Manager ni para esta clase."
     ]
   },
+  "web-java-se-java.security.DomainCombiner.combine": {
+    "intro": [
+      "Modifica o actualiza los ProtectionDomain dados. Pueden añadirse o quitarse ProtectionDomain, reordenarse, o modificarse individualmente (por ejemplo, con un nuevo conjunto de Permissions)."
+    ],
+    "parameters": [
+      {
+        "label": "currentDomains",
+        "detail": "los ProtectionDomain asociados al hilo de ejecución actual, hasta el ProtectionDomain privilegiado más reciente. Están en orden de ejecución, con el que se ejecutó más recientemente al principio del array. Puede ser null si el hilo actual no tiene ProtectionDomain asociados."
+      },
+      {
+        "label": "assignedDomains",
+        "detail": "un array de ProtectionDomain heredados, que pueden venir de un hilo padre o de un AccessControlContext privilegiado. Puede ser null si no hay ProtectionDomain heredados."
+      }
+    ],
+    "returns": ["un array nuevo con los ProtectionDomain actualizados, o null."]
+  },
+  "web-java-se-java.security.DomainLoadStoreParameter": {
+    "body": [
+      "Los datos de configuración admiten esta sintaxis:",
+      "{@code domain [ ...] { keystore [ ...] ; ... }; ... }",
+      "donde domainName y keystoreName son identificadores y property es un par clave/valor. Clave y valor se separan con un signo igual, y el valor va entre comillas dobles. El valor de una propiedad puede ser una cadena imprimible o una cadena binaria de pares de dígitos hexadecimales separados por dos puntos. Las propiedades con varios valores se representan como una lista separada por comas entre corchetes. Consulta Arrays.toString(java.lang.Object[]).",
+      "Para que las entradas del almacén se identifiquen de forma única, el alias de cada una lleva como prefijo su keystoreName seguido del separador de nombres de entrada, y cada keystoreName debe ser único dentro de su dominio. Los prefijos se omiten al guardar un almacén.",
+      "Las propiedades dependen del contexto: las que se aplican a todos los almacenes de un dominio van en la cláusula domain, y las que solo se aplican a un almacén concreto, en la cláusula de ese almacén. Salvo que se indique lo contrario, una propiedad de una cláusula keystore prevalece sobre la del mismo nombre de la cláusula domain. Los nombres de propiedad no distinguen mayúsculas de minúsculas. Se admiten estas propiedades:",
+      "keystoreType=\"<type>\": el tipo de almacén. keystoreURI=\"<url>\": la ubicación del almacén. keystoreProviderName=\"<name>\": el nombre del proveedor JCE del almacén. keystorePasswordEnv=\"<environment-variable>\": la variable de entorno que guarda la contraseña del almacén; también pueden pasarse las contraseñas al constructor en un Map<String, ProtectionParameter>. entryNameSeparator=\"<separator>\": el separador entre el prefijo con el nombre del almacén y el nombre de la entrada; si se indica, se aplica a todas las entradas del dominio. Su valor predeterminado es un espacio.",
+      "Por ejemplo, estos son los datos de configuración de un dominio sencillo con tres almacenes:",
+      "domain app1 { keystore app1-truststore keystoreURI=\"file:///app1/etc/truststore.jks\";",
+      "keystore system-truststore keystoreURI=\"${java.home}/lib/security/cacerts\";",
+      "keystore app1-keystore keystoreType=\"PKCS12\" keystoreURI=\"file:///app1/etc/keystore.p12\"; };"
+    ]
+  },
+  "web-java-se-java.security.DrbgParameters": {
+    "body": [
+      "Según",
+      "NIST Special Publication 800-90A Revision 1, Recommendation for Random Number Generation Using Deterministic Random Bit Generators (800-90Ar1),",
+      "Un DRBG se basa en un mecanismo DRBG según esta Recomendación e incluye una fuente de aleatoriedad. Un mecanismo DRBG usa un algoritmo (un algoritmo DRBG) que produce una secuencia de bits a partir de un valor inicial determinado por una semilla, que a su vez se obtiene de la salida de la fuente de aleatoriedad.\"",
+      "La especificación 800-90Ar1 permite distintas opciones de implementación de DRBG, como:",
+      "una fuente de entropía,",
+      "un mecanismo DRBG (por ejemplo, Hash_DRBG),",
+      "un algoritmo DRBG (por ejemplo, SHA-256 para Hash_DRBG y AES-256 para CTR_DRBG; no es el algoritmo que se usa en SecureRandom.getInstance, que abajo llamaremos algoritmo SecureRandom),",
+      "funcionalidades opcionales, como la resistencia a la predicción y la resiembra,",
+      "la máxima fortaleza de seguridad.",
+      "Estas opciones las fija cada implementación y la API SecureRandom no las gestiona directamente. Consulta la documentación de tu proveedor de DRBG para encontrar una implementación adecuada a tu caso.",
+      "Por otro lado, la especificación 800-90Ar1 sí tiene algunas opciones configurables, como:",
+      "la fortaleza de seguridad requerida,",
+      "si se requiere resistencia a la predicción,",
+      "la cadena de personalización y la entrada adicional.",
+      "Una instancia de DRBG puede crearse con los parámetros de un objeto DrbgParameters.Instantiation y otra información (por ejemplo, el nonce, que esta API no gestiona). Esto corresponde a la Instantiate_function definida en NIST SP 800-90Ar1.",
+      "Una instancia de DRBG puede resembrarse con los parámetros de un objeto DrbgParameters.Reseed. Corresponde a la Reseed_function definida en NIST SP 800-90Ar1. Llamar a SecureRandom.reseed() equivale a llamar a SecureRandom.reseed(SecureRandomParameters) con el indicador de resistencia a la predicción efectivo de la instancia (el que devuelve SecureRandom.getParameters()) y sin entrada adicional.",
+      "Una instancia de DRBG genera datos con los parámetros adicionales de un objeto DrbgParameters.NextBytes. Corresponde a la Generate_function definida en NIST SP 800-90Ar1. Llamar a SecureRandom.nextBytes(byte[]) equivale a llamar a SecureRandom.nextBytes(byte[], SecureRandomParameters) con la fortaleza y el indicador de resistencia a la predicción efectivos de la instancia (los que devuelve SecureRandom.getParameters()) y sin entrada adicional.",
+      "Un DRBG debe implementarse como subclase de SecureRandomSpi. Se recomienda que tenga el constructor de un argumento que recibe un DrbgParameters.Instantiation. Así, cualquier método SecureRandom.getInstance() puede elegir esta implementación. Si la elige un SecureRandom.getInstance() con parámetro SecureRandomParameters, ese parámetro se pasa al constructor. Si la elige uno sin ese parámetro, el constructor se llama con null y la implementación debe elegir sus propios parámetros. Su SecureRandom.getParameters() siempre debe devolver un DrbgParameters.Instantiation efectivo no null que refleje cómo se ha creado realmente el DRBG. Quien llama puede usar esta información para saber si un SecureRandom es un DRBG y qué funcionalidades admite. El valor devuelto no tiene por qué ser igual al DrbgParameters.Instantiation pasado a SecureRandom.getInstance(). Por ejemplo, la capacidad pedida puede ser DrbgParameters.Capability.NONE y la efectiva DrbgParameters.Capability.RESEED_ONLY si la implementación admite resiembra. La implementación debe implementar SecureRandomSpi.engineNextBytes(byte[], SecureRandomParameters), que recibe un parámetro DrbgParameters.NextBytes. Salvo que la capacidad de SecureRandom.getParameters() sea NONE, también debe implementar SecureRandomSpi.engineReseed(SecureRandomParameters), que recibe un parámetro DrbgParameters.Reseed.",
+      "En cambio, si una implementación de DRBG no tiene un constructor con argumento DrbgParameters.Instantiation (no recomendado), solo puede elegirla un SecureRandom.getInstance() sin parámetro SecureRandomParameters, y no se elegirá si se llama a un getInstance con ese parámetro. En ese caso, su SecureRandom.getParameters() debe devolver null y no necesita implementar ni SecureRandomSpi.engineNextBytes(byte[], SecureRandomParameters) ni SecureRandomSpi.engineReseed(SecureRandomParameters).",
+      "Un DRBG puede resembrarse automáticamente si el periodo de semilla supera la vida máxima de semilla que define el mecanismo DRBG.",
+      "Una implementación de DRBG debe admitir serialización y deserialización conservando la configuración y los parámetros efectivos, pero su estado interno no debe serializarse y el objeto deserializado debe volver a crearse.",
+      "Ejemplos:",
+      "SecureRandom drbg; byte[] buffer = new byte[32];",
+      "// Any DRBG is OK drbg = SecureRandom.getInstance(\"DRBG\"); drbg.nextBytes(buffer);",
+      "SecureRandomParameters params = drbg.getParameters(); if (params instanceof DrbgParameters.Instantiation) { DrbgParameters.Instantiation ins = (DrbgParameters.Instantiation) params; if (ins.getCapability().supportsReseeding()) { drbg.reseed(); } }",
+      "// The following call requests a weak DRBG instance. It is only // guaranteed to support 112 bits of security strength. drbg = SecureRandom.getInstance(\"DRBG\", DrbgParameters.instantiation(112, NONE, null));",
+      "// Both the next two calls will likely fail, because drbg could be // instantiated with a smaller strength with no prediction resistance // support. drbg.nextBytes(buffer, DrbgParameters.nextBytes(256, false, \"more\".getBytes())); drbg.nextBytes(buffer, DrbgParameters.nextBytes(112, true, \"more\".getBytes()));",
+      "// The following call requests a strong DRBG instance, with a // personalization string. If it successfully returns an instance, // that instance is guaranteed to support 256 bits of security strength // with prediction resistance available. drbg = SecureRandom.getInstance(\"DRBG\", DrbgParameters.instantiation( 256, PR_AND_RESEED, \"hello\".getBytes()));",
+      "// Prediction resistance is not requested in this single call, // but an additional input is used. drbg.nextBytes(buffer, DrbgParameters.nextBytes(-1, false, \"more\".getBytes()));",
+      "// Same for this call. drbg.reseed(DrbgParameters.reseed(false, \"extra\".getBytes()));"
+    ],
+    "caveats": [
+      "Por convención, un proveedor debe llamar a su implementación principal de DRBG con el nombre estándar de algoritmo SecureRandom \"DRBG\"."
+    ]
+  },
+  "web-java-se-java.security.KeyStore": {
+    "body": [
+      "Un KeyStore gestiona distintos tipos de entradas. Cada tipo implementa la interfaz KeyStore.Entry. Se ofrecen tres implementaciones básicas de KeyStore.Entry:",
+      "KeyStore.PrivateKeyEntry",
+      "Este tipo de entrada guarda una PrivateKey criptográfica, opcionalmente en un formato protegido para evitar accesos no autorizados. Va acompañada de una cadena de certificados de la clave pública correspondiente.",
+      "Una entidad usa las claves privadas y las cadenas de certificados para autenticarse a sí misma. Entre los usos de esta autenticación están las organizaciones de distribución de software que firman archivos JAR al publicar o licenciar software.",
+      "KeyStore.SecretKeyEntry",
+      "Este tipo de entrada guarda una SecretKey criptográfica, opcionalmente en un formato protegido para evitar accesos no autorizados.",
+      "KeyStore.TrustedCertificateEntry",
+      "Este tipo de entrada contiene un único Certificate de clave pública de otra parte. Se llama certificado de confianza porque el propietario del almacén confía en que la clave pública del certificado pertenece realmente a la identidad que indica el sujeto (propietario) del certificado.",
+      "Este tipo de entrada puede usarse para autenticar a otras partes.",
+      "Cada entrada de un almacén se identifica con una cadena \"alias\". En el caso de claves privadas y sus cadenas de certificados, estas cadenas distinguen las distintas formas en que la entidad puede autenticarse; por ejemplo, con distintas autoridades de certificación o con distintos algoritmos de clave pública.",
+      "Que los alias distingan mayúsculas de minúsculas depende de la implementación. Para evitar problemas, se recomienda no usar en un KeyStore alias que solo se diferencien en mayúsculas.",
+      "Aquí no se especifica si los almacenes son persistentes ni qué mecanismos usan si lo son. Esto permite usar distintas técnicas para proteger claves sensibles (privadas o secretas). Las tarjetas inteligentes u otros motores criptográficos integrados (SafeKeyper) son una opción, y también pueden usarse mecanismos más sencillos como archivos (en distintos formatos).",
+      "Las formas habituales de pedir un KeyStore son indicar un archivo de almacén existente, usar el tipo predeterminado o indicar un tipo de almacén concreto.",
+      "Para indicar un archivo de almacén existente:",
+      "// get keystore password char[] password = getPassword();",
+      "// probe the keystore file and load the keystore entries KeyStore ks = KeyStore.getInstance(new File(\"keyStoreName\"), password);",
+      "El sistema examina el archivo indicado para averiguar su tipo de almacén y devuelve una implementación con sus entradas ya cargadas. Con este enfoque no hace falta llamar al método load(InputStream, char[]) del almacén.",
+      "Para usar el tipo predeterminado:",
+      "KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());",
+      "El sistema devuelve una implementación de almacén del tipo predeterminado.",
+      "Para indicar un tipo de almacén concreto:",
+      "KeyStore ks = KeyStore.getInstance(\"JKS\");",
+      "El sistema devuelve la implementación preferida del tipo indicado que haya disponible en el entorno.",
+      "Antes de acceder a un almacén, hay que cargarlo con load(InputStream, char[]) (salvo que ya se cargara al crearlo).",
+      "KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());",
+      "// get user password and file input stream char[] password = getPassword();",
+      "try (FileInputStream fis = new FileInputStream(\"keyStoreName\")) { ks.load(fis, password); }",
+      "Para crear un almacén vacío con este método load, pasa null como argumento InputStream.",
+      "Una vez cargado, se pueden leer las entradas existentes o escribir entradas nuevas:",
+      "KeyStore.PasswordProtection protParam = new KeyStore.PasswordProtection(password); try (FileOutputStream fos = new FileOutputStream(\"newKeyStoreName\")) { // get my private key KeyStore.PrivateKeyEntry pkEntry = (KeyStore.PrivateKeyEntry) ks.getEntry(\"privateKeyAlias\", protParam); PrivateKey myPrivateKey = pkEntry.getPrivateKey();",
+      "// save my secret key javax.crypto.SecretKey mySecretKey; KeyStore.SecretKeyEntry skEntry = new KeyStore.SecretKeyEntry(mySecretKey); ks.setEntry(\"secretKeyAlias\", skEntry, protParam);",
+      "// store away the keystore ks.store(fos, password); } finally { protParam.destroy(); }",
+      "Aunque puede usarse la misma contraseña para cargar el almacén, proteger la entrada de clave privada, proteger la de clave secreta y guardar el almacén (como en el ejemplo anterior), también pueden usarse contraseñas u otros parámetros de protección distintos.",
+      "Toda implementación de la plataforma Java debe admitir este tipo estándar de KeyStore:",
+      "PKCS12",
+      "Este tipo se describe en la sección KeyStore de la Java Security Standard Algorithm Names Specification. Consulta la documentación de tu implementación para ver si admite otros tipos."
+    ]
+  },
+  "web-java-se-java.security.MessageDigest": {
+    "body": [
+      "Un objeto MessageDigest empieza inicializado. Los datos se procesan con los métodos update. En cualquier momento puede llamarse a reset para reiniciar el resumen. Cuando se han pasado todos los datos, debe llamarse a uno de los métodos digest para completar el cálculo del hash.",
+      "El método digest puede llamarse una vez tras un número de actualizaciones. Después de llamar a digest, el MessageDigest vuelve a su estado inicial.",
+      "Las implementaciones pueden implementar la interfaz Cloneable. Las aplicaciones cliente pueden comprobar si se puede clonar intentándolo y capturando CloneNotSupportedException:",
+      "{@code MessageDigest md = MessageDigest.getInstance(\"SHA-256\");",
+      "try { md.update(toChapter1); MessageDigest tc1 = md.clone(); byte[] toChapter1Digest = tc1.digest(); md.update(toChapter2); ...etc. } catch (CloneNotSupportedException cnse) { throw new DigestException(\"couldn't make digest of partial content\"); } }",
+      "Si una implementación no se puede clonar, aún es posible calcular resúmenes intermedios creando varias instancias, si se sabe de antemano cuántos resúmenes hacen falta.",
+      "Esta clase es abstracta y extiende MessageDigestSpi por motivos históricos. Los desarrolladores de aplicaciones solo deben fijarse en los métodos definidos en MessageDigest; los de la superclase están pensados para proveedores de servicios criptográficos que quieran ofrecer sus propias implementaciones de algoritmos de resumen.",
+      "Toda implementación de la plataforma Java debe admitir estos algoritmos estándar de MessageDigest:",
+      "SHA-1",
+      "SHA-256",
+      "Estos algoritmos se describen en la sección MessageDigest de la Java Security Standard Algorithm Names Specification. Consulta la documentación de tu implementación para ver si admite otros algoritmos."
+    ]
+  },
+  "web-java-se-java.security.Provider": {
+    "body": [
+      "Algoritmos (como DSA, RSA o SHA-256).",
+      "Funciones de generación, conversión y gestión de claves (por ejemplo, de claves específicas de un algoritmo).",
+      "Algunas implementaciones de proveedor pueden encontrar errores internos irrecuperables durante su funcionamiento, por ejemplo un fallo al comunicarse con un token de seguridad. Para indicarlos debe usarse ProviderException.",
+      "Un proveedor puede usarse para implementar cualquier servicio de seguridad de Java que use una arquitectura enchufable con varias implementaciones posibles por debajo.",
+      "El tipo de servicio Provider está reservado al framework de seguridad. Las aplicaciones no pueden añadir, quitar ni modificar servicios de este tipo. Estos atributos se colocan automáticamente en cada objeto Provider:",
+      "Atributos colocados automáticamente en un objeto Provider",
+      "Nombre · Valor",
+      "Provider.id name · String.valueOf(provider.getName())",
+      "Provider.id version · String.valueOf(provider.getVersionStr())",
+      "Provider.id info · String.valueOf(provider.getInfo())",
+      "Provider.id className · provider.getClass().getName()",
+      "Cada proveedor tiene un nombre y una cadena de versión. Normalmente se identifica con un archivo llamado java.security.Provider en el directorio de recursos META-INF/services. Los proveedores de seguridad se buscan con el mecanismo ServiceLoader usando el cargador de clases de la aplicación.",
+      "Los proveedores pueden configurarse para instalarse automáticamente y estar disponibles en tiempo de ejecución con Security.getProviders(). El mecanismo para configurarlos e instalarlos depende de la implementación."
+    ]
+  },
+  "web-java-se-java.security.SecureRandomSpi": {
+    "body": [
+      "Todo proveedor de servicios que quiera ofrecer un generador de números pseudoaleatorios criptográficamente fuerte debe implementar todos los métodos abstractos de esta clase."
+    ],
+    "caveats": [
+      "Si una implementación sobrescribe el constructor SecureRandomSpi(SecureRandomParameters), siempre se llamará al crear un SecureRandom. En concreto, si el objeto se crea con un método getInstance de SecureRandom sin parámetro SecureRandomParameters, el constructor se llama con null y la implementación debe crear sus propios SecureRandomParameters para cuando se llame a engineGetParameters(). Si se crea con un getInstance con argumento SecureRandomParameters, el constructor se llama con ese argumento. engineGetParameters() no debe devolver null.",
+      "Si, en cambio, la implementación no sobrescribe SecureRandomSpi(SecureRandomParameters), debe sobrescribir el constructor SecureRandomSpi(), que se llama si el objeto se crea con un getInstance de SecureRandom sin argumento SecureRandomParameters. Llamar a un getInstance con argumento SecureRandomParameters nunca devolverá una instancia de esta implementación. engineGetParameters() debe devolver null.",
+      "Consulta SecureRandom para más detalles sobre la seguridad con hilos. Por defecto, se considera que una implementación de SecureRandomSpi no es segura para usarse desde varios hilos a la vez, y SecureRandom sincroniza el acceso a cada uno de los métodos engine aplicables (consulta SecureRandom para la lista). Pero si una implementación de SecureRandomSpi es segura con hilos, debe fijar el atributo de proveedor de servicios \"ThreadSafe\" a \"true\" al registrarse, así:",
+      "put(\"SecureRandom.AlgName ThreadSafe\", \"true\");",
+      "o",
+      "putService(new Service(this, \"SecureRandom\", \"AlgName\", className, null, Map.of(\"ThreadSafe\", \"true\")));",
+      "SecureRandom llamará a los métodos engine aplicables sin sincronización."
+    ]
+  },
+  "web-java-se-java.security.SecurityPermission": {
+    "body": [
+      "El nombre de destino es el nombre de un parámetro de configuración de seguridad (ver abajo). Actualmente, SecurityPermission se usa para proteger el acceso a los objetos AccessControlContext, Policy, Provider, Security, Signer e Identity.",
+      "La siguiente tabla lista los nombres de destino estándar de SecurityPermission y, para cada uno, qué permite el permiso y los riesgos de concederlo.",
+      "nombre de destino, qué permite el permiso y riesgos asociados",
+      "Nombre de destino · Qué permite · Riesgos de conceder este permiso",
+      "authProvider.{provider name} · Permite que el proveedor indicado sea un AuthProvider para operaciones de inicio y cierre de sesión. · El proveedor indicado puede hacer operaciones de inicio y cierre de sesión. Debe extender AuthProvider, y hay que concederlo solo a un proveedor de confianza, porque esas operaciones manejan información de autenticación sensible como PINs y contraseñas.",
+      "createAccessControlContext · Creación de un AccessControlContext · Permite crear un AccessControlContext con un DomainCombiner. Hay que tener muchísimo cuidado al concederlo: código malicioso podría crear un DomainCombiner que amplíe los permisos concedidos al código e incluso le conceda java.security.AllPermission.",
+      "getDomainCombiner · Obtención del DomainCombiner de un AccessControlContext · Permite obtener el DomainCombiner de un AccessControlContext. Como los DomainCombiner pueden contener información sensible, podría provocar una fuga de privacidad.",
+      "getPolicy · Obtención de la política de seguridad del sistema (en concreto, del objeto Policy instalado) · Permite consultar la política con getPermissions, lo que revela qué permisos se concederían a un CodeSource dado. Revelar la política no compromete la seguridad del sistema, pero da a código malicioso información adicional para dirigir mejor un ataque. Es prudente no divulgar más información de la necesaria.",
+      "setPolicy · Fijación de la política de seguridad del sistema (en concreto, del objeto Policy) · Conceder este permiso es extremadamente peligroso, porque código malicioso puede concederse todos los permisos que necesite para atacar con éxito el sistema.",
+      "createPolicy.{policy type} · Obtención de una instancia de una implementación de Policy de un proveedor · Permite al código obtener un objeto Policy. Código malicioso puede consultarlo para saber qué permisos se han concedido a otro código.",
+      "getProperty.{key} · Obtención de la propiedad de seguridad con la clave indicada · Según la clave concedida, el código puede acceder a la lista de proveedores de seguridad y a la ubicación de las políticas de seguridad del sistema y del usuario. Revelar esta información no compromete la seguridad, pero da a código malicioso información adicional para dirigir mejor un ataque.",
+      "setProperty.{key} · Fijación de la propiedad de seguridad con la clave indicada · Puede incluir fijar un proveedor de seguridad o la ubicación de la política del sistema. Código malicioso con permiso para fijar un proveedor podría poner uno fraudulento que robe información confidencial, como claves privadas. Además, con permiso para fijar la ubicación de la política del sistema, podría apuntarla a una política que conceda al atacante todos los permisos que necesita para atacar con éxito el sistema.",
+      "insertProvider · Adición de un proveedor nuevo · Permitiría introducir un proveedor posiblemente malicioso (por ejemplo, uno que revele las claves privadas que recibe) como el de mayor prioridad. Sería posible porque el objeto Security (que gestiona los proveedores instalados) actualmente no comprueba la integridad ni la autenticidad de un proveedor antes de añadirlo. El permiso \"insertProvider\" engloba al permiso \"insertProvider.{provider name}\" (consulta la sección siguiente).",
+      "removeProvider.{provider name} · Eliminación del proveedor indicado · Puede cambiar el comportamiento de otras partes del programa o impedir su ejecución. Si el programa pide más tarde un proveedor que se ha eliminado, la ejecución puede fallar. Además, si el resto del programa no pide explícitamente el proveedor eliminado pero sería el elegido normalmente al pedir un servicio criptográfico (por su posición en la lista), se elegirá otro o no se encontrará ninguno adecuado, y el programa fallará.",
+      "clearProviderProperties.{provider name} · \"Vaciado\" de un Provider para que deje de contener las propiedades con las que se buscan sus servicios · Desactiva la búsqueda de los servicios que implementa el proveedor. Puede cambiar el comportamiento o impedir la ejecución de otras partes del programa que normalmente usarían ese Provider, como se describe en el permiso \"removeProvider.{provider name}\".",
+      "putProviderProperty.{provider name} · Fijación de propiedades del Provider indicado · Cada propiedad del proveedor indica el nombre y la ubicación de un servicio que implementa. Al conceder este permiso, permites que el código sustituya la especificación de un servicio por otra, es decir, que indique una implementación distinta.",
+      "removeProviderProperty.{provider name} · Eliminación de propiedades del Provider indicado · Desactiva la búsqueda de los servicios que implementa el proveedor, que dejan de ser accesibles al quitar las propiedades con sus nombres y ubicaciones. Puede cambiar el comportamiento o impedir la ejecución de otras partes del programa que normalmente usarían ese Provider, como se describe en el permiso \"removeProvider.{provider name}\".",
+      "Los siguientes permisos han sido sustituidos por otros más nuevos o están asociados a clases obsoletas: Identity, IdentityScope y Signer. Se desaconseja su uso. Consulta las clases correspondientes para más información.",
+      "nombre de destino, qué permite el permiso y riesgos asociados",
+      "Nombre de destino · Qué permite · Riesgos de conceder este permiso",
+      "insertProvider.{provider name} · Adición de un proveedor nuevo con el nombre indicado · Se desaconseja seguir usando este permiso, porque es posible saltarse la restricción de nombre sobrescribiendo java.security.Provider.getName. Además, conceder permiso para insertar un proveedor con un nombre concreto conlleva el mismo riesgo que permitir cualquier nombre. Usa en su lugar el permiso \"insertProvider\".",
+      "Permitiría introducir un proveedor posiblemente malicioso (por ejemplo, uno que revele las claves privadas que recibe) como el de mayor prioridad. Sería posible porque el objeto Security (que gestiona los proveedores instalados) actualmente no comprueba la integridad ni la autenticidad de un proveedor antes de añadirlo.",
+      "setSystemScope · Fijación del ámbito de identidades del sistema · Permitiría a un atacante configurar el ámbito de identidades del sistema con certificados que no deberían ser de confianza, concediendo al código de applets o aplicaciones firmado con ellos privilegios que el ámbito original habría denegado.",
+      "setIdentityPublicKey · Fijación de la clave pública de una Identity · Si la identidad está marcada como de confianza, permite a un atacante introducir otra clave pública (por ejemplo, la suya) en la que el ámbito de identidades del sistema no confía, concediendo al código firmado con ella privilegios que de otro modo se habrían denegado.",
+      "setIdentityInfo · Fijación de la cadena de información general de una Identity · Permite a un atacante fijar la descripción general de una identidad. Puede engañar a las aplicaciones para que usen otra identidad o impedir que encuentren una concreta.",
+      "addIdentityCertificate · Adición de un certificado a una Identity · Permite a un atacante fijar un certificado para la clave pública de una identidad. Es peligroso porque afecta a la relación de confianza en todo el sistema: esa clave pública pasa a ser de confianza para un público más amplio del que debería.",
+      "removeIdentityCertificate · Eliminación de un certificado de una Identity · Permite a un atacante quitar un certificado de la clave pública de una identidad. Es peligroso porque afecta a la relación de confianza en todo el sistema: esa clave pública pasa a considerarse menos fiable de lo que debería.",
+      "printIdentity · Ver el nombre de un principal y, opcionalmente, el ámbito en que se usa y si se considera de confianza en él · El ámbito que se imprime puede ser un nombre de archivo, que puede revelar información del sistema local. Por ejemplo, esta es la salida de una identidad llamada \"carol\", marcada como no fiable en la base de datos de identidades del usuario:",
+      "carol[/home/luehe/identitydb.obj][not trusted]",
+      "getSignerPrivateKey · Obtención de la clave privada de un Signer · Dar acceso a una clave privada es muy peligroso; las claves privadas deben mantenerse en secreto. Si no, el código puede usarla para firmar archivos y hacer creer que la firma es del Signer.",
+      "setSignerKeyPair · Fijación del par de claves (pública y privada) de un Signer · Permitiría a un atacante sustituir el par de claves de otra persona (el \"objetivo\") por uno posiblemente más débil (por ejemplo, de menor tamaño). También le permitiría escuchar la comunicación cifrada entre el objetivo y sus interlocutores: estos podrían envolver una clave de sesión con la \"nueva\" clave pública del objetivo, y el atacante (que tiene la clave privada correspondiente) podría desenvolverla y descifrar la comunicación cifrada con ella."
+    ]
+  },
+  "web-java-se-java.security.Signature": {
+    "body": [
+      "El algoritmo de firma puede ser, entre otros, el DSA estándar del NIST, con DSA y SHA-256. DSA con el algoritmo de resumen SHA-256 se indica como SHA256withDSA. Con RSA, el algoritmo de firma podría indicarse, por ejemplo, como SHA256withRSA. Hay que indicar el nombre del algoritmo, porque no hay valor predeterminado.",
+      "Un objeto Signature puede usarse para generar y verificar firmas digitales.",
+      "Usar un objeto Signature, tanto para firmar datos como para verificar una firma, tiene tres fases:",
+      "Inicialización, con",
+      "una clave pública, que inicializa la firma para verificar (consulta initVerify), o",
+      "una clave privada (y opcionalmente un generador seguro de números aleatorios), que inicializa la firma para firmar (consulta initSign(PrivateKey) e initSign(PrivateKey, SecureRandom)).",
+      "Actualización",
+      "Según el tipo de inicialización, actualiza los bytes que se firman o verifican. Consulta los métodos update.",
+      "Firma o verificación de una firma sobre todos los bytes actualizados. Consulta los métodos sign y el método verify.",
+      "Esta clase es abstracta y extiende SignatureSpi por motivos históricos. Los desarrolladores de aplicaciones solo deben fijarse en los métodos definidos en Signature; los de la superclase están pensados para proveedores de servicios criptográficos que quieran ofrecer sus propias implementaciones de algoritmos de firma digital.",
+      "Toda implementación de la plataforma Java debe admitir estos algoritmos estándar de Signature:",
+      "SHA1withDSA",
+      "SHA256withDSA",
+      "SHA1withRSA",
+      "SHA256withRSA",
+      "Estos algoritmos se describen en la sección Signature de la Java Security Standard Algorithm Names Specification. Consulta la documentación de tu implementación para ver si admite otros algoritmos."
+    ]
+  },
+  "web-java-se-java.security.Timestamp.%3Cinit%3E": {
+    "parameters": [
+      {
+        "label": "timestamp",
+        "detail": "la fecha y hora de la marca de tiempo. No debe ser null."
+      },
+      {
+        "label": "signerCertPath",
+        "detail": "la ruta de certificados de la TSA. No debe ser null."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si timestamp o signerCertPath es null."
+      }
+    ]
+  },
+  "web-java-se-java.security.UnresolvedPermission.equals": {
+    "intro": [
+      "Comprueba si dos UnresolvedPermission son iguales: que obj sea un UnresolvedPermission y tenga el mismo nombre de tipo (clase), nombre de permiso, acciones y certificados que este objeto."
+    ],
+    "body": [
+      "Para comparar certificados, este método solo compara los certificados reales de los firmantes; no tiene en cuenta las cadenas de certificados de apoyo."
+    ],
+    "parameters": [
+      {
+        "label": "obj",
+        "detail": "el objeto con el que se comprueba la igualdad."
+      }
+    ],
+    "returns": [
+      "true si obj es un UnresolvedPermission con el mismo nombre de tipo (clase), nombre de permiso, acciones y certificados que este objeto."
+    ]
+  },
+  "web-java-se-java.security.cert.CertPathBuilder": {
+    "body": [
+      "Esta clase usa una arquitectura basada en proveedores. Para crear un CertPathBuilder, llama a uno de los métodos estáticos getInstance con el nombre del algoritmo deseado y, opcionalmente, el del proveedor.",
+      "Una vez creado el CertPathBuilder, pueden construirse rutas de certificación llamando a build con un conjunto de parámetros específico del algoritmo. Si tiene éxito, el resultado (incluido el CertPath construido) se devuelve en un objeto que implementa CertPathBuilderResult.",
+      "El método getRevocationChecker permite indicar parámetros y opciones adicionales específicos del algoritmo que el CertPathBuilder usa al comprobar el estado de revocación de los certificados. Este ejemplo muestra cómo se usa con el algoritmo PKIX:",
+      "CertPathBuilder cpb = CertPathBuilder.getInstance(\"PKIX\"); PKIXRevocationChecker rc = (PKIXRevocationChecker)cpb.getRevocationChecker(); rc.setOptions(EnumSet.of(Option.PREFER_CRLS)); params.addCertPathChecker(rc); CertPathBuilderResult cpbr = cpb.build(params);",
+      "Toda implementación de la plataforma Java debe admitir este algoritmo estándar de CertPathBuilder:",
+      "PKIX",
+      "Este algoritmo se describe en la sección CertPathBuilder de la Java Security Standard Algorithm Names Specification. Consulta la documentación de tu implementación para ver si admite otros algoritmos.",
+      "Acceso concurrente",
+      "Los métodos estáticos de esta clase son seguros con hilos: varios hilos pueden llamarlos a la vez sin problemas.",
+      "En cambio, esto no vale para los métodos no estáticos. Salvo que un proveedor concreto documente lo contrario, los hilos que necesiten acceder a la vez a una misma instancia de CertPathBuilder deben sincronizarse entre sí. Varios hilos que manejen instancias distintas no necesitan sincronizarse."
+    ]
+  },
+  "web-java-se-java.security.cert.CertPathValidator": {
+    "body": [
+      "Esta clase usa una arquitectura basada en proveedores. Para crear un CertPathValidator, llama a uno de los métodos estáticos getInstance con el nombre del algoritmo deseado y, opcionalmente, el del proveedor.",
+      "Una vez creado el CertPathValidator, puede validar rutas de certificación llamando a validate con el CertPath que se valida y un conjunto de parámetros específico del algoritmo. Si tiene éxito, el resultado se devuelve en un objeto que implementa CertPathValidatorResult.",
+      "El método getRevocationChecker permite indicar parámetros y opciones adicionales específicos del algoritmo que el CertPathValidator usa al comprobar el estado de revocación de los certificados. Este ejemplo muestra cómo se usa con el algoritmo PKIX:",
+      "CertPathValidator cpv = CertPathValidator.getInstance(\"PKIX\"); PKIXRevocationChecker rc = (PKIXRevocationChecker)cpv.getRevocationChecker(); rc.setOptions(EnumSet.of(Option.SOFT_FAIL)); params.addCertPathChecker(rc); CertPathValidatorResult cpvr = cpv.validate(path, params);",
+      "Toda implementación de la plataforma Java debe admitir este algoritmo estándar de CertPathValidator:",
+      "PKIX",
+      "Este algoritmo se describe en la sección CertPathValidator de la Java Security Standard Algorithm Names Specification. Consulta la documentación de tu implementación para ver si admite otros algoritmos.",
+      "Acceso concurrente",
+      "Los métodos estáticos de esta clase son seguros con hilos: varios hilos pueden llamarlos a la vez sin problemas.",
+      "En cambio, esto no vale para los métodos no estáticos. Salvo que un proveedor concreto documente lo contrario, los hilos que necesiten acceder a la vez a una misma instancia de CertPathValidator deben sincronizarse entre sí. Varios hilos que manejen instancias distintas no necesitan sincronizarse."
+    ]
+  },
+  "web-java-se-java.security.cert.CertPathValidatorException.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": ["Crea una CertPathValidatorException sin mensaje de detalle."]
+      },
+      {
+        "intro": [
+          "Crea una CertPathValidatorException con el mensaje de detalle dado. Un mensaje de detalle es un String que describe esta excepción concreta."
+        ],
+        "parameters": [
+          {
+            "label": "msg",
+            "detail": "el mensaje de detalle"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una CertPathValidatorException que envuelve el throwable indicado. Permite convertir cualquier excepción en una CertPathValidatorException conservando la información de la excepción envuelta, lo que puede ser útil para depurar. El mensaje de detalle es (cause==null ? null : cause.toString()) (que normalmente contiene la clase y el mensaje de detalle de cause)."
+        ],
+        "parameters": [
+          {
+            "label": "cause",
+            "detail": "la causa (que se guarda para obtenerla después con getCause()). (Se permite null, que indica que la causa no existe o es desconocida)."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una CertPathValidatorException con el mensaje de detalle y la causa indicados."
+        ],
+        "parameters": [
+          {
+            "label": "msg",
+            "detail": "el mensaje de detalle"
+          },
+          {
+            "label": "cause",
+            "detail": "la causa (que se guarda para obtenerla después con getCause()). (Se permite null, que indica que la causa no existe o es desconocida)."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una CertPathValidatorException con el mensaje de detalle, la causa, la ruta de certificación y el índice indicados."
+        ],
+        "parameters": [
+          {
+            "label": "msg",
+            "detail": "el mensaje de detalle (o null si no hay)"
+          },
+          {
+            "label": "cause",
+            "detail": "la causa (o null si no hay)"
+          },
+          {
+            "label": "certPath",
+            "detail": "la ruta de certificación que se estaba validando cuando se produjo el error"
+          },
+          {
+            "label": "index",
+            "detail": "el índice del certificado de la ruta que causó el error (o -1 si no aplica). La lista de certificados de un CertPath empieza en cero."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "si el índice está fuera de rango (index < -1 || (certPath != null && index >= certPath.getCertificates().size())"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si certPath es null e index no es -1"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una CertPathValidatorException con el mensaje de detalle, la causa, la ruta de certificación, el índice y el motivo indicados."
+        ],
+        "parameters": [
+          {
+            "label": "msg",
+            "detail": "el mensaje de detalle (o null si no hay)"
+          },
+          {
+            "label": "cause",
+            "detail": "la causa (o null si no hay)"
+          },
+          {
+            "label": "certPath",
+            "detail": "la ruta de certificación que se estaba validando cuando se produjo el error"
+          },
+          {
+            "label": "index",
+            "detail": "el índice del certificado de la ruta que causó el error (o -1 si no aplica). La lista de certificados de un CertPath empieza en cero."
+          },
+          {
+            "label": "reason",
+            "detail": "el motivo por el que falló la validación"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "si el índice está fuera de rango (index < -1 || (certPath != null && index >= certPath.getCertificates().size())"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si certPath es null e index no es -1"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si reason es null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.security.cert.CertificateFactory": {
+    "body": [
+      "Para codificaciones con varios certificados, usa generateCertificates si quieres analizar una colección de certificados que pueden no estar relacionados. Si no, usa generateCertPath si quieres generar un CertPath (una cadena de certificados) y validarlo después con un CertPathValidator.",
+      "Una fábrica de certificados X.509 debe devolver certificados que sean instancias de java.security.cert.X509Certificate y CRL que sean instancias de java.security.cert.X509CRL.",
+      "Este ejemplo lee un archivo con certificados codificados en Base64, cada uno delimitado al principio por -----BEGIN CERTIFICATE----- y al final por -----END CERTIFICATE-----. Convertimos el FileInputStream (que no admite mark y reset) en un BufferedInputStream (que sí), para que cada llamada a generateCertificate consuma solo un certificado y la posición de lectura quede en el siguiente certificado del archivo:",
+      "{@code FileInputStream fis = new FileInputStream(filename); BufferedInputStream bis = new BufferedInputStream(fis);",
+      "CertificateFactory cf = CertificateFactory.getInstance(\"X.509\");",
+      "while (bis.available() > 0) { Certificate cert = cf.generateCertificate(bis); System.out.println(cert.toString()); } }",
+      "Este ejemplo analiza una respuesta de certificados en formato PKCS#7 guardada en un archivo y extrae todos sus certificados:",
+      "FileInputStream fis = new FileInputStream(filename); CertificateFactory cf = CertificateFactory.getInstance(\"X.509\"); Collection c = cf.generateCertificates(fis); Iterator i = c.iterator(); while (i.hasNext()) { Certificate cert = (Certificate)i.next(); System.out.println(cert); }",
+      "Toda implementación de la plataforma Java debe admitir este tipo estándar de CertificateFactory:",
+      "y estas codificaciones estándar de CertPath:",
+      "PKCS7",
+      "PkiPath",
+      "El tipo y las codificaciones se describen en las secciones CertificateFactory y CertPath Encodings de la Java Security Standard Algorithm Names Specification. Consulta la documentación de tu implementación para ver si admite otros tipos o codificaciones."
+    ]
+  },
+  "web-java-se-java.security.cert.PKIXParameters.getInitialPolicies": {
+    "returns": [
+      "un Set inmutable con los OID de política iniciales en formato String, o un Set vacío (que significa que se acepta cualquier política). Nunca devuelve null."
+    ]
+  },
+  "web-java-se-java.security.cert.X509Certificate": {
+    "body": [
+      "En junio de 1996, ISO/IEC y ANSI X9 completaron el formato básico X.509 v3, que se describe abajo en ASN.1:",
+      "Certificate ::= SEQUENCE { tbsCertificate TBSCertificate, signatureAlgorithm AlgorithmIdentifier, signature BIT STRING }",
+      "Estos certificados se usan mucho para la autenticación y otras funciones en sistemas de seguridad de Internet. Entre los usos habituales están Privacy Enhanced Mail (PEM), Transport Layer Security (SSL), la firma de código para distribuir software de confianza y Secure Electronic Transactions (SET).",
+      "Estos certificados los gestionan y avalan las autoridades de certificación (CA), servicios que crean certificados colocando datos en el formato estándar X.509 y firmándolos digitalmente. Las CA actúan como terceros de confianza que presentan entre sí a principales que no se conocen directamente. Los certificados de las CA están firmados por ellas mismas o por otra CA, como una CA \"raíz\".",
+      "Hay más información en RFC 5280: Internet X.509 Public Key Infrastructure Certificate and CRL Profile.",
+      "La definición ASN.1 de tbsCertificate es:",
+      "TBSCertificate ::= SEQUENCE { version [0] EXPLICIT Version DEFAULT v1, serialNumber CertificateSerialNumber, signature AlgorithmIdentifier, issuer Name, validity Validity, subject Name, subjectPublicKeyInfo SubjectPublicKeyInfo, issuerUniqueID [1] IMPLICIT UniqueIdentifier OPTIONAL, -- If present, version must be v2 or v3 subjectUniqueID [2] IMPLICIT UniqueIdentifier OPTIONAL, -- If present, version must be v2 or v3 extensions [3] EXPLICIT Extensions OPTIONAL -- If present, version must be v3 }",
+      "Los certificados se crean con una fábrica de certificados. Este es un ejemplo de cómo crear un certificado X.509:",
+      "try (InputStream inStream = new FileInputStream(\"fileName-of-cert\")) { CertificateFactory cf = CertificateFactory.getInstance(\"X.509\"); X509Certificate cert = (X509Certificate)cf.generateCertificate(inStream); }"
+    ]
+  },
+  "web-java-se-java.security.cert.X509Certificate.getExtendedKeyUsage": {
+    "body": [
+      "ExtKeyUsageSyntax ::= SEQUENCE SIZE (1..MAX) OF KeyPurposeId",
+      "KeyPurposeId ::= OBJECT IDENTIFIER",
+      "Cualquier organización que lo necesite puede definir propósitos de clave. Los identificadores de objeto de los propósitos de clave se asignan según la IANA o ITU-T Rec. X.660 | ISO/IEC/ITU 9834-1.",
+      "Este método se añadió en la versión 1.4 de Java 2 Platform Standard Edition. Para mantener la compatibilidad con los proveedores de servicios existentes, no es abstracto y ofrece una implementación predeterminada. Las subclases deberían sobrescribirlo con una implementación correcta."
+    ],
+    "returns": [
+      "la extensión ExtendedKeyUsage de este certificado, como lista no modificable de identificadores de objeto en forma de String. Devuelve null si el certificado no contiene una extensión ExtendedKeyUsage."
+    ],
+    "exceptions": [
+      {
+        "label": "CertificateParsingException",
+        "detail": "si no se puede decodificar la extensión"
+      }
+    ]
+  },
+  "web-java-se-java.security.cert.X509Certificate.getIssuerUniqueID": {
+    "intro": [
+      "Obtiene el valor issuerUniqueID del certificado. El identificador único del emisor está en el certificado para contemplar la posible reutilización de nombres de emisor con el tiempo. RFC 5280 recomienda no reutilizar nombres y que los certificados conformes no usen identificadores únicos. Las aplicaciones conformes a ese perfil deben poder analizar identificadores únicos y compararlos."
+    ],
+    "body": [
+      "Su definición ASN.1 es:",
+      "issuerUniqueID [1] IMPLICIT UniqueIdentifier OPTIONAL",
+      "UniqueIdentifier ::= BIT STRING"
+    ],
+    "returns": [
+      "el identificador único del emisor, o null si no está en el certificado."
+    ]
+  },
+  "web-java-se-java.security.cert.X509Certificate.getSerialNumber": {
+    "intro": [
+      "Obtiene el valor serialNumber del certificado. El número de serie es un entero que la autoridad de certificación asigna a cada certificado. Debe ser único para cada certificado emitido por una CA (es decir, el nombre del emisor y el número de serie identifican un único certificado). Su definición ASN.1 es:"
+    ],
+    "body": [
+      "serialNumber CertificateSerialNumber",
+      "CertificateSerialNumber ::= INTEGER"
+    ],
+    "returns": ["el número de serie."]
+  },
+  "web-java-se-java.security.cert.X509Certificate.getSubjectAlternativeNames": {
+    "body": [
+      "La definición ASN.1 de la extensión SubjectAltName es:",
+      "SubjectAltName ::= GeneralNames",
+      "GeneralNames :: = SEQUENCE SIZE (1..MAX) OF GeneralName",
+      "GeneralName ::= CHOICE { otherName [0] OtherName, rfc822Name [1] IA5String, dNSName [2] IA5String, x400Address [3] ORAddress, directoryName [4] Name, ediPartyName [5] EDIPartyName, uniformResourceIdentifier [6] IA5String, iPAddress [7] OCTET STRING, registeredID [8] OBJECT IDENTIFIER}",
+      "OtherName ::= SEQUENCE { type-id OBJECT IDENTIFIER, value [0] EXPLICIT ANY DEFINED BY type-id }",
+      "Si el certificado no contiene una extensión SubjectAltName, se devuelve null. Si no, se devuelve una Collection con una entrada por cada GeneralName de la extensión. Cada entrada es una List cuyo primer elemento es un Integer (el tipo de nombre, 0-8) y el segundo un String o un array de bytes (el nombre, en forma de cadena o codificado en ASN.1 DER, respectivamente). Puede haber más elementos según el tipo de nombre.",
+      "Los nombres RFC 822, DNS y URI se devuelven como String, con los formatos de cadena habituales de esos tipos (con las restricciones de RFC 5280). Las direcciones IPv4 se devuelven en notación de cuatro números separados por puntos. Las IPv6, en la forma \"a1:a2:...:a8\", donde a1-a8 son valores hexadecimales con los ocho trozos de 16 bits de la dirección. Los nombres OID se devuelven como String formados por enteros no negativos separados por puntos. Los nombres de directorio (nombres distinguidos) se devuelven en formato de cadena RFC 2253. No hay formato de cadena estándar para nombres X.400 ni de partes EDI; se devuelven como arrays de bytes con la forma codificada ASN.1 DER del nombre. Los otherName también se devuelven como arrays de bytes con su forma ASN.1 DER. La lista puede tener una tercera entrada con el type-id del otherName en forma de cadena, y una cuarta con su valor como cadena (si es una cadena de caracteres válida y admitida) o como array de bytes con la forma ASN.1 DER del valor sin la etiqueta construida específica de contexto número 0.",
+      "La Collection devuelta puede contener más de un nombre del mismo tipo. Además, es inmutable, y las entradas con arrays de bytes se clonan para protegerlas de modificaciones posteriores.",
+      "Este método se añadió en la versión 1.4 de Java 2 Platform Standard Edition. Para mantener la compatibilidad con los proveedores de servicios existentes, no es abstracto y ofrece una implementación predeterminada. Las subclases deberían sobrescribirlo con una implementación correcta."
+    ],
+    "returns": [
+      "una Collection inmutable de nombres alternativos del sujeto (o null)"
+    ],
+    "exceptions": [
+      {
+        "label": "CertificateParsingException",
+        "detail": "si no se puede decodificar la extensión"
+      }
+    ]
+  },
+  "web-java-se-java.security.cert.X509Certificate.getSubjectDN": {
+    "body": [
+      "Su definición ASN.1 es:",
+      "subject Name",
+      "Consulta getIssuerDN para la definición de Name y otras relacionadas."
+    ],
+    "returns": ["un Principal cuyo nombre es el nombre del sujeto."],
+    "caveats": [
+      "Usa getSubjectX500Principal en su lugar. Este método devuelve el sujeto como un objeto Principal específico de la implementación, en el que no debe confiar el código portable."
+    ]
+  },
+  "web-java-se-java.security.cert.X509Extension.getCriticalExtensionOIDs": {
+    "body": [
+      "Este es un ejemplo de código que obtiene el Set de extensiones críticas de un X509Certificate e imprime sus OID:",
+      "{@code X509Certificate cert = null; try (InputStream inStrm = new FileInputStream(\"DER-encoded-Cert\")) { CertificateFactory cf = CertificateFactory.getInstance(\"X.509\"); cert = (X509Certificate)cf.generateCertificate(inStrm); }",
+      "Set critSet = cert.getCriticalExtensionOIDs(); if (critSet != null && !critSet.isEmpty()) { System.out.println(\"Set of critical extensions:\"); for (String oid : critSet) { System.out.println(oid); } } }"
+    ],
+    "returns": [
+      "un Set (o un Set vacío si ninguna está marcada como crítica) con las cadenas OID de las extensiones marcadas como críticas. Si no hay ninguna extensión, este método devuelve null."
+    ]
+  },
+  "web-java-se-java.security.cert.X509Extension.getNonCriticalExtensionOIDs": {
+    "body": [
+      "Este es un ejemplo de código que obtiene el Set de extensiones no críticas de una entrada de certificado revocado de un X509CRL e imprime sus OID:",
+      "{@code CertificateFactory cf = null; X509CRL crl = null; try (InputStream inStrm = new FileInputStream(\"DER-encoded-CRL\")) { cf = CertificateFactory.getInstance(\"X.509\"); crl = (X509CRL)cf.generateCRL(inStrm); }",
+      "byte[] certData = ByteArrayInputStream bais = new ByteArrayInputStream(certData); X509Certificate cert = (X509Certificate)cf.generateCertificate(bais); X509CRLEntry badCert = crl.getRevokedCertificate(cert.getSerialNumber());",
+      "if (badCert != null) { Set nonCritSet = badCert.getNonCriticalExtensionOIDs(); if (nonCritSet != null) for (String oid : nonCritSet) { System.out.println(oid); } } }"
+    ],
+    "returns": [
+      "un Set (o un Set vacío si ninguna está marcada como no crítica) con las cadenas OID de las extensiones marcadas como no críticas. Si no hay ninguna extensión, este método devuelve null."
+    ]
+  },
+  "web-java-se-java.security.interfaces.EdECPrivateKey": {
+    "intro": [
+      "Interfaz para una clave privada de curva elíptica según RFC 8032: Edwards-Curve Digital Signature Algorithm (EdDSA). Estas claves son distintas de las que representa ECPrivateKey y están pensadas para algoritmos basados en RFC 8032, como el algoritmo de firma EdDSA."
+    ],
+    "body": [
+      "Una clave privada de curva de Edwards es una cadena de bits. Esta interfaz solo admite longitudes múltiplo de 8, y la clave se representa con un array de bytes."
+    ]
+  },
+  "web-java-se-java.security.interfaces.EdECPublicKey": {
+    "intro": [
+      "Interfaz para una clave pública de curva elíptica según RFC 8032: Edwards-Curve Digital Signature Algorithm (EdDSA). Estas claves son distintas de las que representa ECPublicKey y están pensadas para algoritmos basados en RFC 8032, como el algoritmo de firma EdDSA."
+    ],
+    "body": [
+      "Una clave pública de curva de Edwards es un punto de la curva, que se representa con un EdECPoint."
+    ]
+  },
+  "web-java-se-java.security.interfaces.XECKey": {
+    "intro": [
+      "Interfaz para una clave pública/privada de curva elíptica según RFC 7748. Estas claves son distintas de las que representa ECKey y están pensadas para algoritmos basados en RFC 7748, como el algoritmo de acuerdo de claves XDH. Esta interfaz da acceso a los parámetros del algoritmo asociados a la clave."
+    ]
+  },
+  "web-java-se-java.security.interfaces.XECPrivateKey": {
+    "intro": [
+      "Interfaz para una clave privada de curva elíptica según RFC 7748. Estas claves son distintas de las que representa ECPrivateKey y están pensadas para algoritmos basados en RFC 7748, como el algoritmo de acuerdo de claves XDH."
+    ],
+    "body": [
+      "Una clave privada XEC es un valor escalar codificado según RFC 7748. El procedimiento de decodificación de esa RFC incluye una operación que fuerza ciertos bits de la clave a 1 o a 0, llamada \"poda\" (pruning o clamping) de la clave privada. Los arrays que devuelve esta interfaz no están podados, y las implementaciones deben podarlos antes de usarlos en operaciones numéricas."
+    ]
+  },
+  "web-java-se-java.security.interfaces.XECPublicKey": {
+    "intro": [
+      "Interfaz para una clave pública de curva elíptica según RFC 7748. Estas claves son distintas de las que representa ECPublicKey y están pensadas para algoritmos basados en RFC 7748, como el algoritmo de acuerdo de claves XDH."
+    ],
+    "body": [
+      "Una clave pública XEC es un punto concreto de la curva, que se representa solo con su coordenada u según RFC 7748. La coordenada u es un elemento del cuerpo de enteros módulo un valor determinado por los parámetros del algoritmo. Este elemento se representa con un BigInteger que puede tener cualquier valor; es decir, no está limitado al rango de elementos canónicos del cuerpo."
+    ]
+  },
+  "web-java-se-java.security.spec.ECFieldF2m": {
+    "intro": [
+      "Esta clase inmutable define un cuerpo finito de característica 2 para curvas elípticas (EC)."
+    ]
+  },
+  "web-java-se-java.security.spec.EdECPoint": {
+    "intro": [
+      "Un punto de curva elíptica usado para indicar claves según RFC 8032: Edwards-Curve Digital Signature Algorithm (EdDSA). Estos puntos son distintos de los que representa ECPoint y están pensados para algoritmos basados en RFC 8032, como el algoritmo de firma EdDSA."
+    ],
+    "body": [
+      "Un punto EdEC se indica con el valor de su coordenada y y un boolean que indica si la coordenada x es impar. La coordenada y es un elemento del cuerpo de enteros módulo un valor p determinado por los parámetros del algoritmo. Se representa con un BigInteger, y las implementaciones que consumen objetos de esta clase pueden rechazar valores fuera del rango [0, p)."
+    ]
+  },
+  "web-java-se-java.security.spec.MGF1ParameterSpec": {
+    "body": [
+      "Su definición ASN.1 en el estándar PKCS#1 es la siguiente:",
+      "PKCS1MGFAlgorithms ALGORITHM-IDENTIFIER ::= { { OID id-mgf1 PARAMETERS HashAlgorithm }, ... -- Allows for future expansion -- }",
+      "donde",
+      "HashAlgorithm ::= AlgorithmIdentifier { {OAEP-PSSDigestAlgorithms} }",
+      "OAEP-PSSDigestAlgorithms ALGORITHM-IDENTIFIER ::= { { OID id-sha1 PARAMETERS NULL }| { OID id-sha224 PARAMETERS NULL }| { OID id-sha256 PARAMETERS NULL }| { OID id-sha384 PARAMETERS NULL }| { OID id-sha512 PARAMETERS NULL }| { OID id-sha512-224 PARAMETERS NULL }| { OID id-sha512-256 PARAMETERS NULL }, ... -- Allows for future expansion -- }"
+    ]
+  },
   "web-java-se-java.security.spec.MGF1ParameterSpec.toString": {
     "returns": ["una representación en cadena del objeto."],
     "caveats": [
       "En general, toString devuelve una cadena que «representa textualmente» el objeto. Debería ser una representación concisa pero informativa y fácil de leer. Se recomienda que todas las subclases sobrescriban este método. La cadena no tiene por qué ser estable en el tiempo ni entre ejecuciones de la JVM.",
       "El toString de Object devuelve una cadena con el nombre de la clase de la que el objeto es instancia, el carácter arroba '@' y la representación hexadecimal sin signo del código hash del objeto. Es decir, devuelve una cadena igual al valor de:",
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
+    ]
+  },
+  "web-java-se-java.security.spec.PSSParameterSpec": {
+    "body": [
+      "Su definición ASN.1 en el estándar PKCS #1 es la siguiente:",
+      "RSASSA-PSS-params ::= SEQUENCE { hashAlgorithm [0] HashAlgorithm DEFAULT sha1, maskGenAlgorithm [1] MaskGenAlgorithm DEFAULT mgf1SHA1, saltLength [2] INTEGER DEFAULT 20, trailerField [3] TrailerField DEFAULT trailerFieldBC(1) }",
+      "donde",
+      "HashAlgorithm ::= AlgorithmIdentifier { {OAEP-PSSDigestAlgorithms} } MaskGenAlgorithm ::= AlgorithmIdentifier { {PKCS1MGFAlgorithms} } TrailerField ::= INTEGER { trailerFieldBC(1) }",
+      "OAEP-PSSDigestAlgorithms ALGORITHM-IDENTIFIER ::= { { OID id-sha1 PARAMETERS NULL }| { OID id-sha224 PARAMETERS NULL }| { OID id-sha256 PARAMETERS NULL }| { OID id-sha384 PARAMETERS NULL }| { OID id-sha512 PARAMETERS NULL }| { OID id-sha512-224 PARAMETERS NULL }| { OID id-sha512-256 PARAMETERS NULL }, ... -- Allows for future expansion -- } PKCS1MGFAlgorithms ALGORITHM-IDENTIFIER ::= { { OID id-mgf1 PARAMETERS HashAlgorithm }, ... -- Allows for future expansion -- }"
     ]
   },
   "web-java-se-java.security.spec.PSSParameterSpec.toString": {
@@ -17882,6 +18468,111 @@
         "label": "DateTimeException",
         "detail": "si el resultado supera el rango de fechas admitido"
       }
+    ]
+  },
+  "web-java-se-java.time.chrono.ChronoLocalDate.compareTo": {
+    "overloads": [
+      {
+        "intro": ["Compara esta fecha con otra, incluida la cronología."],
+        "body": [
+          "La comparación se basa primero en la fecha en la línea temporal y después en la cronología. Es \"coherente con equals\", tal como lo define Comparable.",
+          "Por ejemplo, este es el orden del comparador:",
+          "2012-12-03 (ISO)",
+          "2012-12-04 (ISO)",
+          "2555-12-04 (ThaiBuddhist)",
+          "2012-12-05 (ISO)",
+          "Los valores 2 y 3 representan la misma fecha en la línea temporal. Cuando dos valores representan la misma fecha, se compara el ID de cronología para distinguirlos. Este paso es necesario para que el orden sea \"coherente con equals\".",
+          "Si todas las fechas comparadas son de la misma cronología, no hace falta la etapa adicional de cronología y solo se usa la fecha local. Para comparar las fechas de dos TemporalAccessor, incluidas fechas de cronologías distintas, usa ChronoField.EPOCH_DAY como comparador.",
+          "Esta implementación predeterminada hace la comparación definida arriba."
+        ],
+        "parameters": [
+          {
+            "label": "other",
+            "detail": "la otra fecha con la que se compara, no null"
+          }
+        ],
+        "returns": [
+          "el valor de comparación: compara primero esta fecha local con la otra y después esta cronología con la otra, y devuelve el primer resultado distinto de cero, o cero en caso contrario"
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.time.chrono.ChronoLocalDate.isAfter": {
+    "body": [
+      "Este método se diferencia de compareTo en que solo compara la fecha subyacente, no la cronología. Así pueden compararse fechas de distintos sistemas de calendario por su posición en la línea temporal. Equivale a date1.toEpochDay() > date2.toEpochDay().",
+      "Esta implementación predeterminada compara según el día de época."
+    ],
+    "parameters": [
+      {
+        "label": "other",
+        "detail": "la otra fecha con la que se compara, no null"
+      }
+    ],
+    "returns": ["true si esta fecha es posterior a la indicada"]
+  },
+  "web-java-se-java.time.chrono.ChronoLocalDate.isBefore": {
+    "body": [
+      "Este método se diferencia de compareTo en que solo compara la fecha subyacente, no la cronología. Así pueden compararse fechas de distintos sistemas de calendario por su posición en la línea temporal. Equivale a date1.toEpochDay() < date2.toEpochDay().",
+      "Esta implementación predeterminada compara según el día de época."
+    ],
+    "parameters": [
+      {
+        "label": "other",
+        "detail": "la otra fecha con la que se compara, no null"
+      }
+    ],
+    "returns": ["true si esta fecha es anterior a la indicada"]
+  },
+  "web-java-se-java.time.chrono.ChronoLocalDate.isEqual": {
+    "body": [
+      "Este método se diferencia de compareTo en que solo compara la fecha subyacente, no la cronología. Así pueden compararse fechas de distintos sistemas de calendario por su posición en la línea temporal. Equivale a date1.toEpochDay() == date2.toEpochDay().",
+      "Esta implementación predeterminada compara según el día de época."
+    ],
+    "parameters": [
+      {
+        "label": "other",
+        "detail": "la otra fecha con la que se compara, no null"
+      }
+    ],
+    "returns": ["true si la fecha subyacente es igual a la indicada"]
+  },
+  "web-java-se-java.time.chrono.ChronoLocalDateTime.toEpochSecond": {
+    "body": [
+      "Combina esta fecha-hora local y el desfase indicado para calcular el segundo de época, es decir, el número de segundos transcurridos desde 1970-01-01T00:00:00Z. Los instantes posteriores a la época son positivos y los anteriores, negativos.",
+      "Esta implementación predeterminada lo calcula a partir del día de época de la fecha y el segundo del día de la hora."
+    ],
+    "parameters": [
+      {
+        "label": "offset",
+        "detail": "el desfase usado en la conversión; no null"
+      }
+    ],
+    "returns": ["el número de segundos desde la época 1970-01-01T00:00:00Z"]
+  },
+  "web-java-se-java.time.chrono.Chronology": {
+    "body": [
+      "La API principal de fecha y hora se basa en el sistema de calendario ISO. La cronología trabaja entre bastidores para representar el concepto general de sistema de calendario, como el japonés, el Minguo, el budista tailandés y otros.",
+      "La mayoría de los demás sistemas de calendario también se basan en los conceptos compartidos de año, mes y día, ligados a los ciclos de la Tierra alrededor del Sol y de la Luna alrededor de la Tierra. Estos conceptos los define ChronoField y puede usarlos cualquier implementación de Chronology:",
+      "LocalDate isoDate = ... ThaiBuddhistDate thaiDate = ... int isoYear = isoDate.get(ChronoField.YEAR); int thaiYear = thaiDate.get(ChronoField.YEAR);",
+      "Como se ve, aunque las fechas son de sistemas de calendario distintos, representados por instancias distintas de Chronology, ambas pueden consultarse con la misma constante de ChronoField. Para un análisis completo de sus implicaciones, consulta ChronoLocalDate. En general, se recomienda usar el conocido LocalDate basado en ISO en lugar de ChronoLocalDate.",
+      "Aunque un Chronology suele usar ChronoField y basarse en un modelo de fecha de era, año de la era, mes del año y día del mes, no es obligatorio. Una instancia de Chronology puede representar un sistema de calendario totalmente distinto, como el maya.",
+      "En la práctica, la instancia de Chronology también actúa como fábrica. El método of(String) permite buscar una instancia por identificador, y ofLocale(Locale), por configuración regional.",
+      "La instancia de Chronology ofrece métodos para crear instancias de ChronoLocalDate. Las clases de fecha se usan para manipular fechas concretas.",
+      "dateNow()",
+      "dateNow(clock)",
+      "dateNow(zone)",
+      "date(yearProleptic, month, day)",
+      "date(era, yearOfEra, month, day)",
+      "dateYearDay(yearProleptic, dayOfYear)",
+      "dateYearDay(era, yearOfEra, dayOfYear)",
+      "date(TemporalAccessor)",
+      "Añadir calendarios nuevos",
+      "Las aplicaciones pueden ampliar el conjunto de cronologías disponibles. Añadir un sistema de calendario nuevo requiere escribir implementaciones de Chronology, ChronoLocalDate y Era. La mayor parte de la lógica propia del calendario estará en la implementación de ChronoLocalDate; la de Chronology actúa como fábrica.",
+      "Para descubrir cronologías adicionales se usa ServiceLoader. Hay que añadir al directorio META-INF/services un archivo llamado 'java.time.chrono.Chronology' con la lista de clases de implementación. Consulta ServiceLoader para más detalles sobre la carga de servicios. Al buscar por id o calendarType, primero se encuentran los calendarios del sistema y después los de la aplicación.",
+      "Cada cronología debe definir un ID único en el sistema. Si representa un sistema de calendario definido por la especificación CLDR, el tipo de calendario es la concatenación del tipo CLDR y, si corresponde, la variante CLDR."
+    ],
+    "caveats": [
+      "Esta interfaz debe implementarse con cuidado para que las demás clases funcionen bien. Todas las implementaciones instanciables deben ser final, inmutables y seguras con hilos. Las subclases deberían ser Serializable siempre que sea posible."
     ]
   },
   "web-java-se-java.time.chrono.JapaneseEra.toString": {
@@ -26257,6 +26948,23 @@
       "El toString de Object devuelve una cadena con el nombre de la clase de la que el objeto es instancia, el carácter arroba '@' y la representación hexadecimal sin signo del código hash del objeto. Es decir, devuelve una cadena igual al valor de:",
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
     ]
+  },
+  "web-java-se-javax.security.cert.X509Certificate.getSerialNumber": {
+    "intro": [
+      "Obtiene el valor serialNumber del certificado. El número de serie es un entero que la autoridad de certificación asigna a cada certificado. Debe ser único para cada certificado emitido por una CA (es decir, el nombre del emisor y el número de serie identifican un único certificado). Su definición ASN.1 es:"
+    ],
+    "body": [
+      "serialNumber CertificateSerialNumber",
+      "CertificateSerialNumber ::= INTEGER"
+    ],
+    "returns": ["el número de serie."]
+  },
+  "web-java-se-javax.security.cert.X509Certificate.getSubjectDN": {
+    "body": [
+      "subject Name",
+      "Consulta getIssuerDN para la definición de Name y otras relacionadas."
+    ],
+    "returns": ["un Principal cuyo nombre es el nombre del sujeto."]
   },
   "web-java-se-javax.swing.DefaultListModel.add": {
     "parameters": [
