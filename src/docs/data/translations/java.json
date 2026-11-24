@@ -41682,5 +41682,188 @@
       "Consulta también la",
       "especificación Document Object Model (DOM) Level 3 Load and Save."
     ]
+  },
+  "web-java-se-org.w3c.dom.ls.LSSerializer.getNewLine": {
+    "intro": [
+      "La secuencia de caracteres de fin de línea que se usará en el XML que se escribe. Se admite cualquier cadena, pero XML solo trata como fin de línea un conjunto concreto de secuencias de caracteres (consulta la sección 2.11, \"End-of-Line Handling\", de [XML 1.0] si el contenido serializado es XML 1.0, o la sección 2.11, \"End-of-Line Handling\", de [XML 1.1] si es XML 1.1). Usar secuencias distintas de las recomendadas puede dar un documento que no sea serializable o no esté bien formado."
+    ],
+    "body": [
+      "Al consultarlo, el valor predeterminado de este atributo es la secuencia de fin de línea predeterminada de la implementación. Las implementaciones DOM deben elegir el valor predeterminado según la convención habitual para archivos de texto en el entorno en uso. Las implementaciones deben elegir una secuencia predeterminada que coincida con una de las permitidas por XML 1.0 o XML 1.1, según el contenido serializado. Poner este atributo a null restablece su valor predeterminado."
+    ]
+  },
+  "web-java-se-org.w3c.dom.ls.LSSerializer.setNewLine": {
+    "intro": [
+      "La secuencia de caracteres de fin de línea que se usará en el XML que se escribe. Se admite cualquier cadena, pero XML solo trata como fin de línea un conjunto concreto de secuencias de caracteres (consulta la sección 2.11, \"End-of-Line Handling\", de [XML 1.0] si el contenido serializado es XML 1.0, o la sección 2.11, \"End-of-Line Handling\", de [XML 1.1] si es XML 1.1). Usar secuencias distintas de las recomendadas puede dar un documento que no sea serializable o no esté bien formado."
+    ],
+    "body": [
+      "Al consultarlo, el valor predeterminado de este atributo es la secuencia de fin de línea predeterminada de la implementación. Las implementaciones DOM deben elegir el valor predeterminado según la convención habitual para archivos de texto en el entorno en uso. Las implementaciones deben elegir una secuencia predeterminada que coincida con una de las permitidas por XML 1.0 o XML 1.1, según el contenido serializado. Poner este atributo a null restablece su valor predeterminado."
+    ]
+  },
+  "web-java-se-org.w3c.dom.ranges.DocumentRange": {
+    "intro": [
+      "Consulta también la especificación Document Object Model (DOM) Level 2 Traversal and Range."
+    ]
+  },
+  "web-java-se-org.w3c.dom.ranges.Range": {
+    "intro": [
+      "Consulta también la especificación Document Object Model (DOM) Level 2 Traversal and Range."
+    ]
+  },
+  "web-java-se-org.w3c.dom.ranges.RangeException": {
+    "body": [
+      "Consulta también la especificación Document Object Model (DOM) Level 2 Traversal and Range."
+    ]
+  },
+  "web-java-se-org.w3c.dom.traversal.DocumentTraversal": {
+    "body": [
+      "Consulta también la especificación Document Object Model (DOM) Level 2 Traversal and Range."
+    ]
+  },
+  "web-java-se-org.w3c.dom.traversal.NodeFilter": {
+    "body": [
+      "El DOM no proporciona ningún filtro. NodeFilter es solo una interfaz que los usuarios pueden implementar para proporcionar sus propios filtros.",
+      "Los NodeFilter no necesitan saber cómo pasar de un nodo a otro ni saber nada de la estructura de datos que se recorre. Esto hace muy fácil escribir filtros, ya que lo único que tienen que saber hacer es evaluar un único nodo. Un mismo filtro puede usarse con varios tipos de recorrido distintos, lo que fomenta la reutilización de código.",
+      "Consulta también la especificación Document Object Model (DOM) Level 2 Traversal and Range."
+    ]
+  },
+  "web-java-se-org.w3c.dom.traversal.NodeIterator": {
+    "body": [
+      "Consulta también la especificación Document Object Model (DOM) Level 2 Traversal and Range."
+    ]
+  },
+  "web-java-se-org.w3c.dom.traversal.TreeWalker": {
+    "body": [
+      "Omitir nodos de la vista lógica de un subárbol puede dar una estructura muy distinta de la del mismo subárbol en el documento completo sin filtrar. Nodos que son hermanos en la vista del TreeWalker pueden ser hijos de nodos distintos y muy separados en la vista original. Por ejemplo, considera un NodeFilter que salta todos los nodos excepto los nodos Text y el nodo raíz de un documento. En la vista lógica resultante, todos los nodos de texto serán hermanos y aparecerán como hijos directos del nodo raíz, por muy anidada que esté la estructura del documento original.",
+      "Consulta también la especificación Document Object Model (DOM) Level 2 Traversal and Range."
+    ]
+  },
+  "web-java-se-org.xml.sax.ContentHandler.processingInstruction": {
+    "body": [
+      "El parser invocará este método una vez por cada instrucción de procesamiento encontrada; ten en cuenta que las instrucciones de procesamiento pueden aparecer antes o después del elemento principal del documento.",
+      "Un parser SAX nunca debe notificar una declaración XML (XML 1.0, sección 2.8) ni una declaración de texto (XML 1.0, sección 4.3.1) mediante este método.",
+      "Igual que en characters(), los datos de la instrucción de procesamiento pueden tener caracteres que necesiten más de un valor char."
+    ],
+    "parameters": [
+      {
+        "label": "target",
+        "detail": "el destino de la instrucción de procesamiento"
+      },
+      {
+        "label": "data",
+        "detail": "los datos de la instrucción de procesamiento, o null si no se proporcionó ninguno. Los datos no incluyen los espacios en blanco que los separan del destino"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "org.xml.sax.SAXException",
+        "detail": "cualquier excepción SAX, que puede envolver otra excepción"
+      }
+    ]
+  },
+  "web-java-se-org.xml.sax.DocumentHandler.processingInstruction": {
+    "body": [
+      "El parser invocará este método una vez por cada instrucción de procesamiento encontrada; ten en cuenta que las instrucciones de procesamiento pueden aparecer antes o después del elemento principal del documento.",
+      "Un parser SAX nunca debería notificar una declaración XML (XML 1.0, sección 2.8) ni una declaración de texto (XML 1.0, sección 4.3.1) mediante este método."
+    ],
+    "parameters": [
+      {
+        "label": "target",
+        "detail": "El destino de la instrucción de procesamiento."
+      },
+      {
+        "label": "data",
+        "detail": "Los datos de la instrucción de procesamiento, o null si no se proporcionó ninguno."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "org.xml.sax.SAXException",
+        "detail": "Cualquier excepción SAX, que puede envolver otra excepción."
+      }
+    ]
+  },
+  "web-java-se-org.xml.sax.EntityResolver": {
+    "body": [
+      "Si una aplicación SAX necesita implementar un tratamiento personalizado de las entidades externas, debe implementar esta interfaz y registrar una instancia en el driver SAX con el método setEntityResolver.",
+      "Así, el lector XML permitirá a la aplicación interceptar cualquier entidad externa (incluidos el subconjunto DTD externo y las entidades de parámetro externas, si las hay) antes de incluirla.",
+      "Muchas aplicaciones SAX no necesitarán implementar esta interfaz, pero será especialmente útil para aplicaciones que construyen documentos XML a partir de bases de datos u otras fuentes de entrada especializadas, o para aplicaciones que usan tipos de URI distintos de las URL.",
+      "El siguiente resolvedor proporcionaría a la aplicación un flujo de caracteres especial para la entidad con el identificador de sistema \"http://www.myhost.com/today\":",
+      "import org.xml.sax.EntityResolver; import org.xml.sax.InputSource;",
+      "public class MyResolver implements EntityResolver { public InputSource resolveEntity (String publicId, String systemId) { if (systemId.equals(\"http://www.myhost.com/today\")) { // return a special input source MyReader reader = new MyReader(); return new InputSource(reader); } else { // use the default behaviour return null; } } }",
+      "La aplicación también puede usar esta interfaz para redirigir identificadores de sistema a URI locales o para buscar reemplazos en un catálogo (posiblemente usando el identificador público)."
+    ]
+  },
+  "web-java-se-org.xml.sax.ext.DeclHandler.attributeDecl": {
+    "body": [
+      "Solo se notifica la declaración efectiva (la primera) de un atributo. El tipo será una de las cadenas \"CDATA\", \"ID\", \"IDREF\", \"IDREFS\", \"NMTOKEN\", \"NMTOKENS\", \"ENTITY\", \"ENTITIES\", un grupo de tokens entre paréntesis con el separador \"|\" y sin espacios en blanco, o la palabra \"NOTATION\" seguida de un espacio y de un grupo de tokens entre paréntesis sin espacios en blanco.",
+      "El valor será el que se notifica a las aplicaciones, normalizado adecuadamente y con las referencias a entidades y caracteres expandidas."
+    ],
+    "parameters": [
+      {
+        "label": "eName",
+        "detail": "El nombre del elemento asociado."
+      },
+      {
+        "label": "aName",
+        "detail": "El nombre del atributo."
+      },
+      {
+        "label": "type",
+        "detail": "Una cadena que representa el tipo del atributo."
+      },
+      {
+        "label": "mode",
+        "detail": "Una cadena que representa el modo de valor predeterminado del atributo (\"#IMPLIED\", \"#REQUIRED\" o \"#FIXED\"), o null si no se aplica ninguno."
+      },
+      {
+        "label": "value",
+        "detail": "Una cadena que representa el valor predeterminado del atributo, o null si no lo hay."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "SAXException",
+        "detail": "La aplicación puede lanzar una excepción."
+      }
+    ]
+  },
+  "web-java-se-org.xml.sax.ext.DefaultHandler2": {
+    "body": [
+      "Nota: esta clase aún podría tener en cuenta que a la llamada ContentHandler.setDocumentLocator() se le puede pasar un objeto Locator2, y que a la llamada ContentHandler.startElement() se le puede pasar un objeto Attributes2."
+    ]
+  },
+  "web-java-se-org.xml.sax.ext.DefaultHandler2.attributeDecl": {
+    "body": [
+      "Solo se notifica la declaración efectiva (la primera) de un atributo. El tipo será una de las cadenas \"CDATA\", \"ID\", \"IDREF\", \"IDREFS\", \"NMTOKEN\", \"NMTOKENS\", \"ENTITY\", \"ENTITIES\", un grupo de tokens entre paréntesis con el separador \"|\" y sin espacios en blanco, o la palabra \"NOTATION\" seguida de un espacio y de un grupo de tokens entre paréntesis sin espacios en blanco.",
+      "El valor será el que se notifica a las aplicaciones, normalizado adecuadamente y con las referencias a entidades y caracteres expandidas."
+    ],
+    "parameters": [
+      {
+        "label": "eName",
+        "detail": "El nombre del elemento asociado."
+      },
+      {
+        "label": "aName",
+        "detail": "El nombre del atributo."
+      },
+      {
+        "label": "type",
+        "detail": "Una cadena que representa el tipo del atributo."
+      },
+      {
+        "label": "mode",
+        "detail": "Una cadena que representa el modo de valor predeterminado del atributo (\"#IMPLIED\", \"#REQUIRED\" o \"#FIXED\"), o null si no se aplica ninguno."
+      },
+      {
+        "label": "value",
+        "detail": "Una cadena que representa el valor predeterminado del atributo, o null si no lo hay."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "SAXException",
+        "detail": "La aplicación puede lanzar una excepción."
+      }
+    ]
   }
 }
