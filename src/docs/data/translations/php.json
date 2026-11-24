@@ -725,6 +725,218 @@
       "No se instancia; sus métodos son estáticos. getLastSocketError() y getLastSocketErrno() dan el último error de socket, getSocketName() la dirección local y setSocketOption() configura opciones del socket."
     ]
   },
+  "php-class-evfork": {
+    "description": [
+      "Sirve para reiniciar en el proceso hijo los recursos que no sobreviven a fork(), como conexiones o descriptores compartidos. Como el resto de watchers, se crea con una función de retrollamada y empieza activo salvo que uses createStopped()."
+    ]
+  },
+  "php-class-evprepare": {
+    "summary": "Watcher que se ejecuta en cada iteración del bucle, justo antes de que espere eventos.",
+    "description": [
+      "Se suele combinar con EvCheck, que se ejecuta justo después de la espera. Juntos permiten integrar otra biblioteca de eventos en el bucle de libev.",
+      "createStopped() crea el watcher sin activarlo; actívalo después con start()."
+    ]
+  },
+  "php-class-evwatcher": {
+    "description": [
+      "start() y stop() activan y desactivan el watcher, setCallback() cambia la función que se llama e invoke() la ejecuta a mano. feed() simula que se ha producido el evento.",
+      "keepalive() decide si el watcher mantiene vivo el bucle: un watcher sin keepalive no impide que Ev::run() termine. Las propiedades priority y data permiten fijar la prioridad y guardar datos propios."
+    ]
+  },
+  "php-class-exception": {
+    "description": [
+      "Es la clase de la que heredan tus propias excepciones. El constructor recibe un mensaje, un código y, opcionalmente, la excepción anterior, que se recupera con getPrevious() para encadenar errores.",
+      "getFile(), getLine() y getTrace() indican dónde se creó la excepción. Los errores internos del motor no heredan de Exception sino de Error; ambos implementan Throwable."
+    ]
+  },
+  "php-class-fannconnection": {
+    "description": [
+      "Cada objeto describe una conexión entre dos neuronas: getFromNeuron() y getToNeuron() dan sus números y getWeight() y setWeight() el peso.",
+      "Para cambiar varios pesos, modifica los objetos que devuelve fann_get_connection_array() y pásalos a fann_set_weight_array()."
+    ]
+  },
+  "php-class-fiber": {
+    "description": [
+      "Se crea con new Fiber($callable) y se arranca con start(). Dentro, Fiber::suspend() detiene la fibra y devuelve un valor a quien la arrancó o reanudó; resume() la continúa y puede enviarle otro valor.",
+      "Existe desde PHP 8.1. Es la base de bibliotecas asíncronas: el código de la fibra no necesita saber que se suspende, a diferencia de los generadores.",
+      "getReturn() da el valor devuelto cuando termina e isSuspended(), isRunning() o isTerminated() indican su estado."
+    ]
+  },
+  "php-class-fibererror": {
+    "description": [
+      "Ocurre, por ejemplo, al arrancar dos veces la misma fibra, al reanudar una que no está suspendida o al llamar a Fiber::suspend() fuera de una fibra.",
+      "Hereda de Error, así que indica un fallo de programación."
+    ]
+  },
+  "php-class-filesystemiterator": {
+    "summary": "Iterador de directorios configurable con constantes.",
+    "description": [
+      "A diferencia de DirectoryIterator, omite . y .. por defecto (FilesystemIterator::SKIP_DOTS) y cada elemento es un SplFileInfo nuevo, así que se puede guardar sin clonarlo.",
+      "Las constantes del constructor eligen la clave (ruta o nombre) y el valor (SplFileInfo, ruta o el propio iterador). Para recorrer subdirectorios, usa RecursiveDirectoryIterator con RecursiveIteratorIterator."
+    ]
+  },
+  "php-class-filteriterator": {
+    "description": [
+      "En accept(), consulta el elemento con $this->current() o $this->key() y devuelve true para conservarlo.",
+      "Si solo necesitas una condición sencilla, CallbackFilterIterator evita crear la subclase."
+    ]
+  },
+  "php-class-finfo": {
+    "description": [
+      "Se crea con una constante como FILEINFO_MIME_TYPE. file() analiza un archivo y buffer() una cadena en memoria, y ambos devuelven la descripción o el tipo MIME detectado.",
+      "Detecta el tipo por el contenido, no por la extensión, así que es útil para validar archivos subidos."
+    ]
+  },
+  "php-class-gearmanclient": {
+    "description": [
+      "Conecta con addServer() y envía trabajos: doNormal() espera el resultado y doBackground() solo encola el trabajo y devuelve su identificador.",
+      "Para lanzar varios trabajos en paralelo, añádelos con addTask() y ejecútalos con runTasks(); las funciones setCompleteCallback() y similares reciben cada resultado.",
+      "Pertenece a la extensión PECL gearman."
+    ]
+  },
+  "php-class-gearmanexception": {
+    "summary": "Excepción que lanza la extensión gearman cuando falla una operación.",
+    "description": [
+      "Hereda de Exception. Se produce, por ejemplo, cuando no se puede conectar con el servidor de trabajos."
+    ]
+  },
+  "php-class-gearmanjob": {
+    "summary": "Representa el trabajo que está procesando un GearmanWorker.",
+    "description": [
+      "La función registrada con GearmanWorker::addFunction() lo recibe como argumento. workload() devuelve los datos enviados por el cliente y functionName() el nombre de la función.",
+      "sendStatus() informa del progreso y sendData(), sendWarning() o sendFail() envían información al cliente; lo que devuelve la función es el resultado del trabajo."
+    ]
+  },
+  "php-class-gearmantask": {
+    "summary": "Representa una tarea enviada por un GearmanClient.",
+    "description": [
+      "La devuelve GearmanClient::addTask() y la reciben las funciones de retrollamada del cliente. data() da los datos de respuesta, jobHandle() el identificador del trabajo y unique() su identificador único.",
+      "taskNumerator() y taskDenominator() dan el progreso que haya informado el worker."
+    ]
+  },
+  "php-class-gearmanworker": {
+    "summary": "Proceso que recibe y ejecuta trabajos de un servidor Gearman.",
+    "description": [
+      "Conecta con addServer(), registra cada función con addFunction() y procesa trabajos en un bucle: while ($worker->work());.",
+      "Cada función recibe un GearmanJob. setTimeout() limita lo que work() espera por un trabajo nuevo."
+    ]
+  },
+  "php-class-gender-gender": {
+    "summary": "Determina el género probable de un nombre de pila.",
+    "description": [
+      "Consulta una base de datos de nombres por país. get() devuelve una de las constantes de la clase, isNick() comprueba si un nombre es diminutivo de otro y similarNames() busca nombres parecidos.",
+      "Pertenece a la extensión PECL gender."
+    ]
+  },
+  "php-class-generator": {
+    "description": [
+      "Los objetos Generator no pueden ser instanciados mediante new.",
+      "Se obtienen al llamar a una función que contiene yield, y se recorren con foreach. send() envía un valor que pasa a ser el resultado de la expresión yield y reanuda el generador, y throw() lanza una excepción en ese punto.",
+      "getReturn() da el valor del return final. No se puede rebobinar un generador que ya ha avanzado: hay que llamar otra vez a la función."
+    ]
+  },
+  "php-class-globiterator": {
+    "description": [
+      "El constructor recibe un patrón como '/ruta/*.txt' y cada elemento es un archivo que coincide. count() devuelve el número de coincidencias sin recorrerlas.",
+      "Hereda de FilesystemIterator, así que admite sus mismas constantes de configuración."
+    ]
+  },
+  "php-class-gmagick": {
+    "summary": "Representa una o varias imágenes que se procesan con GraphicsMagick.",
+    "description": [
+      "Lee una imagen con readimage() o el constructor, la transforma con métodos como resizeimage(), cropimage() o rotateimage() y la guarda con writeimage().",
+      "Su API es parecida a la de Imagick, pero usa la biblioteca GraphicsMagick. Pertenece a la extensión PECL gmagick."
+    ]
+  },
+  "php-class-gmagickdraw": {
+    "summary": "Acumula instrucciones de dibujo para aplicarlas a una imagen Gmagick.",
+    "description": [
+      "Configura el relleno, el trazo y la fuente, y añade formas como rectangle(), ellipse() o line(), o texto con annotate(). Aplica todo con Gmagick::drawimage()."
+    ]
+  },
+  "php-class-gmagickexception": {
+    "summary": "Excepción que lanzan los métodos de Gmagick cuando falla una operación.",
+    "description": [
+      "Hereda de Exception. Se produce, por ejemplo, al leer un archivo que no existe o un formato no soportado."
+    ]
+  },
+  "php-class-gmagickpixel": {
+    "summary": "Representa un color para usar con Gmagick y GmagickDraw.",
+    "description": [
+      "Se crea con una cadena de color como '#ff0000' o 'red'. getcolor() lo devuelve como cadena o array y getcolorvalue() da el valor de un canal."
+    ]
+  },
+  "php-class-gmagickpixelexception": {
+    "summary": "Excepción que lanzan los métodos de GmagickPixel cuando falla una operación.",
+    "description": [
+      "Hereda de Exception. Se produce, por ejemplo, con una cadena de color no válida."
+    ]
+  },
+  "php-class-gmp": {
+    "description": [
+      "No se proporciona ninguna interfaz orientada a objetos para manipular objetos GMP. Use la API de GMP procedimental.",
+      "Se crean con gmp_init() o directamente al operar con ellos: gmp_init('123456789012345678901234567890') * 2 devuelve otro GMP. gmp_strval() lo convierte en cadena.",
+      "Se pueden serializar y comparar con los operadores habituales."
+    ]
+  },
+  "php-class-hashcontext": {
+    "summary": "Estado de un cálculo de hash incremental.",
+    "description": [
+      "Lo devuelve hash_init(). Añade datos por partes con hash_update() y obtén el resultado con hash_final(); después, el contexto ya no se puede usar.",
+      "hash_copy() duplica el contexto para calcular varios resultados a partir de un prefijo común. Es final y no se crea con new."
+    ]
+  },
+  "php-class-hrtime-performancecounter": {
+    "summary": "Acceso al contador de alta resolución del sistema.",
+    "description": [
+      "getTicks() devuelve el valor actual del contador, getTicksSince() los ticks transcurridos desde un valor anterior y getFrequency() cuántos ticks hay por segundo.",
+      "Pertenece a la extensión PECL hrtime. Para medir tiempos sin extensiones, hrtime() da nanosegundos."
+    ]
+  },
+  "php-class-hrtime-stopwatch": {
+    "summary": "Cronómetro de alta resolución.",
+    "description": [
+      "start() y stop() delimitan cada intervalo. getLastElapsedTime() da el último intervalo y getElapsedTime() la suma de todos, en la unidad indicada con una constante de HRTime\\Unit."
+    ]
+  },
+  "php-class-hrtime-unit": {
+    "summary": "Constantes de unidades de tiempo para la extensión hrtime.",
+    "description": [
+      "Define las unidades que aceptan los métodos de HRTime\\StopWatch: segundos, milisegundos, microsegundos y nanosegundos."
+    ]
+  },
+  "php-class-imagickdrawexception": {
+    "summary": "Excepción que lanzan los métodos de ImagickDraw cuando falla una operación.",
+    "description": ["Hereda de Exception."]
+  },
+  "php-class-imagickexception": {
+    "summary": "Excepción que lanzan los métodos de Imagick cuando falla una operación.",
+    "description": [
+      "Hereda de Exception. Se produce, por ejemplo, al leer un archivo inexistente o un formato que ImageMagick no soporta. getMessage() incluye el error de la biblioteca."
+    ]
+  },
+  "php-class-imagickkernelexception": {
+    "summary": "Excepción que lanzan los métodos de ImagickKernel cuando falla una operación.",
+    "description": [
+      "Hereda de Exception. Se produce, por ejemplo, con una matriz no válida en ImagickKernel::fromMatrix()."
+    ]
+  },
+  "php-class-imagickpixelexception": {
+    "summary": "Excepción que lanzan los métodos de ImagickPixel cuando falla una operación.",
+    "description": [
+      "Hereda de Exception. Se produce, por ejemplo, con una cadena de color no válida."
+    ]
+  },
+  "php-class-imagickpixeliteratorexception": {
+    "summary": "Excepción que lanzan los métodos de ImagickPixelIterator cuando falla una operación.",
+    "description": ["Hereda de Exception."]
+  },
+  "php-class-imap-connection": {
+    "description": [
+      "La devuelve imap_open() y la reciben el resto de funciones imap_*. Es final y no se crea con new.",
+      "Desde PHP 8.4, la extensión imap ya no viene con PHP y se instala desde PECL."
+    ]
+  },
   "php-function-fann_set_activation_function": {
     "description": [
       "Establece la función de activación para la neurona número neuron en la capa número layer, contando al capa de entrada como capa 0.",
