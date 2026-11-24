@@ -38776,6 +38776,17 @@
       "Advertencia: los objetos serializados de esta clase no serán compatibles con futuras versiones de Swing. El soporte de serialización actual es adecuado para almacenamiento a corto plazo o RMI entre aplicaciones que ejecutan la misma versión de Swing. Desde la 1.4, el paquete java.beans incluye soporte para el almacenamiento a largo plazo de todos los JavaBeans. Consulta java.beans.XMLEncoder."
     ]
   },
+  "web-java-se-javax.swing.text.MaskFormatter.setValueContainsLiteralCharacters": {
+    "body": [
+      "Por ejemplo, si la máscara es '(###) ###-####', el valor actual es '(415) 555-1212' y valueContainsLiteralCharacters es true, stringToValue devolverá '(415) 555-1212'. En cambio, si valueContainsLiteralCharacters es false, stringToValue devolverá '4155551212'."
+    ],
+    "parameters": [
+      {
+        "label": "containsLiteralChars",
+        "detail": "Indica si stringToValue debe devolver los caracteres literales de la máscara"
+      }
+    ]
+  },
   "web-java-se-javax.swing.text.TabStop.toString": {
     "returns": ["una representación en cadena del objeto."],
     "caveats": [
@@ -38784,12 +38795,687 @@
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
     ]
   },
+  "web-java-se-javax.swing.text.View": {
+    "body": [
+      "Por defecto, una vista es muy ligera. Contiene una referencia a la vista padre, de la que puede obtener muchas cosas sin guardar estado, y una referencia a una parte del modelo (Element). Una vista no tiene por qué representar exactamente un elemento del modelo; eso es simplemente una correspondencia típica y, por tanto, cómoda. Como alternativa, una vista puede mantener un par de objetos Position para conservar su posición en el modelo (es decir, representar un fragmento de un elemento). Esto suele ser el resultado del formateo, cuando las vistas se han dividido en trozos. La comodidad de una relación sustancial con el elemento facilita construir fábricas que produzcan las vistas y seguir la pista de los trozos de vista cuando el modelo cambia y la vista debe cambiar para reflejarlo. Así, las vistas simples representan directamente un Element y las complejas no.",
+      "Una vista tiene las siguientes responsabilidades:",
+      "Participar en la disposición.",
+      "La vista tiene un método setSize que equivale a doLayout y setSize de Component combinados. La vista tiene un método preferenceChanged que es como invalidate de Component, salvo que se puede invalidar un solo eje y se identifica el hijo que solicita el cambio.",
+      "Una View expresa el tamaño que le gustaría tener mediante tres valores: una extensión mínima, una preferida y una máxima. La disposición de una vista puede hacerse de forma independiente en cada eje. En una implementación de View que funcione correctamente, la extensión mínima será <= la preferida, que a su vez será <= la máxima.",
+      "El conjunto mínimo de métodos para la disposición es:",
+      "getMinimumSpan",
+      "getPreferredSpan",
+      "getMaximumSpan",
+      "getAlignment",
+      "preferenceChanged(View, boolean, boolean)",
+      "setSize(float, float)",
+      "El método setSize debe estar preparado para llamarse varias veces (es decir, puede llamarse aunque el tamaño no haya cambiado). setSize se llama generalmente para asegurarse de que la disposición de la View está completa antes de intentar una operación que requiera una disposición actualizada. El tamaño de una vista debe establecerse siempre a un valor dentro de las extensiones mínima y máxima que especifica esa vista. Además, la vista siempre debe llamar al método preferenceChanged del padre si ha cambiado los valores de disposición que desea y espera que el padre respete. La View padre no está obligada a reconocer un cambio hasta que se haya enviado preferenceChanged. Esto permite a las implementaciones de View padre almacenar en caché los requisitos de los hijos si lo desean. La secuencia de llamadas es más o menos la siguiente:",
+      "La secuencia exacta de llamadas depende de la funcionalidad de disposición de la vista padre (si la vista tiene hijos). La vista puede recopilar las preferencias de los hijos antes de decidir qué dará a cada uno, o puede actualizar los hijos de uno en uno de forma iterativa.",
+      "Renderizar una parte del modelo.",
+      "Esto se hace en el método paint, que es muy parecido al método paint de un componente. Se espera que las vistas puedan formar un árbol bastante grande. Una View tiene la siguiente semántica de renderizado:",
+      "La vista recibe su asignación del padre en el momento de pintar, así que debe estar preparada para rehacer la disposición si el área asignada es distinta de la que espera manejar.",
+      "El sistema de coordenadas es el mismo que el del Component anfitrión (es decir, el Component que devuelve el método getContainer). Esto significa que una vista hija vive en el mismo sistema de coordenadas que la vista padre, salvo que el padre lo haya cambiado explícitamente. Para programar su propio repintado, una vista puede llamar a repaint en el Component anfitrión.",
+      "Por defecto no se recorta a los hijos. Es más eficiente permitir que una vista recorte solo si de verdad cree que lo necesita.",
+      "El objeto Graphics recibido no está inicializado de ninguna forma. La vista debe establecer los ajustes que necesite.",
+      "Una View es intrínsecamente transparente. Aunque una vista puede renderizar en toda su asignación, normalmente no lo hace. El renderizado se realiza recorriendo hacia abajo el árbol de implementaciones de View. Cada View se encarga de renderizar sus hijos. La seguridad entre hilos se apoya en este comportamiento. Aunque las implementaciones de vistas no tienen por qué diseñarse pensando en la seguridad entre hilos, otras implementaciones que sí usan concurrencia pueden apoyarse en un recorrido del árbol para garantizarla.",
+      "El orden de las vistas respecto al modelo depende de la implementación. Aunque las vistas hijas suelen disponerse en el mismo orden en que aparecen en el modelo, pueden disponerse visualmente en un orden totalmente distinto. Las implementaciones de View pueden tener un orden Z asociado si los hijos se solapan.",
+      "Los métodos de renderizado son:",
+      "paint(java.awt.Graphics, java.awt.Shape)",
+      "Traducir entre los sistemas de coordenadas del modelo y de la vista.",
+      "Como los objetos vista se producen en una fábrica y, por tanto, no puede asumirse que sigan un patrón concreto, hay que poder traducir coordenadas para localizar correctamente la representación espacial del modelo. Los métodos para hacerlo son:",
+      "modelToView(int, javax.swing.text.Position.Bias, int, javax.swing.text.Position.Bias, java.awt.Shape)",
+      "viewToModel(float, float, java.awt.Shape, javax.swing.text.Position.Bias[])",
+      "getDocument",
+      "getElement",
+      "getStartOffset",
+      "getEndOffset",
+      "La disposición debe ser válida antes de intentar la traducción. La traducción no es válida, y no debe intentarse, mientras el modelo esté difundiendo cambios mediante un DocumentEvent.",
+      "Responder a los cambios del modelo.",
+      "Si la vista global está representada por muchas piezas (la mejor situación si se quiere poder cambiar la vista escribiendo la menor cantidad de código nuevo), sería poco práctico tener un número enorme de DocumentListeners. Si cada vista escuchara al modelo, solo unas pocas estarían realmente interesadas en los cambios difundidos en cada momento. Como el modelo no sabe nada de las vistas, no tiene forma de filtrar la difusión de la información de cambios. En su lugar, es la propia jerarquía de vistas la que se encarga de propagar la información de cambios. En cualquier nivel de la jerarquía, la vista sabe lo suficiente sobre sus hijos para distribuir mejor esa información. Por tanto, los cambios se difunden empezando por la raíz de la jerarquía de vistas. Los métodos para hacerlo son:",
+      "insertUpdate",
+      "removeUpdate",
+      "changedUpdate"
+    ]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.A": {
+    "intro": ["Etiqueta <a>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.ADDRESS": {
+    "intro": ["Etiqueta <address>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.APPLET": {
+    "intro": ["Etiqueta <applet>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.AREA": {
+    "intro": ["Etiqueta <area>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.B": {
+    "intro": ["Etiqueta <b>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.BASE": {
+    "intro": ["Etiqueta <base>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.BASEFONT": {
+    "intro": ["Etiqueta <basefont>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.BIG": {
+    "intro": ["Etiqueta <big>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.BLOCKQUOTE": {
+    "intro": ["Etiqueta <blockquote>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.BODY": {
+    "intro": ["Etiqueta <body>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.BR": {
+    "intro": ["Etiqueta <br>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.CAPTION": {
+    "intro": ["Etiqueta <caption>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.CENTER": {
+    "intro": ["Etiqueta <center>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.CITE": {
+    "intro": ["Etiqueta <cite>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.CODE": {
+    "intro": ["Etiqueta <code>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.DD": {
+    "intro": ["Etiqueta <dd>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.DFN": {
+    "intro": ["Etiqueta <dfn>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.DIR": {
+    "intro": ["Etiqueta <dir>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.DIV": {
+    "intro": ["Etiqueta <div>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.DL": {
+    "intro": ["Etiqueta <dl>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.DT": {
+    "intro": ["Etiqueta <dt>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.EM": {
+    "intro": ["Etiqueta <em>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.FONT": {
+    "intro": ["Etiqueta <font>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.FORM": {
+    "intro": ["Etiqueta <form>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.FRAME": {
+    "intro": ["Etiqueta <frame>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.FRAMESET": {
+    "intro": ["Etiqueta <frameset>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.H1": {
+    "intro": ["Etiqueta <h1>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.H2": {
+    "intro": ["Etiqueta <h2>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.H3": {
+    "intro": ["Etiqueta <h3>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.H4": {
+    "intro": ["Etiqueta <h4>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.H5": {
+    "intro": ["Etiqueta <h5>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.H6": {
+    "intro": ["Etiqueta <h6>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.HEAD": {
+    "intro": ["Etiqueta <head>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.HR": {
+    "intro": ["Etiqueta <hr>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.HTML": {
+    "intro": ["Etiqueta <html>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.I": {
+    "intro": ["Etiqueta <i>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.IMG": {
+    "intro": ["Etiqueta <img>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.INPUT": {
+    "intro": ["Etiqueta <input>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.ISINDEX": {
+    "intro": ["Etiqueta <isindex>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.KBD": {
+    "intro": ["Etiqueta <kbd>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.LI": {
+    "intro": ["Etiqueta <li>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.LINK": {
+    "intro": ["Etiqueta <link>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.MAP": {
+    "intro": ["Etiqueta <map>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.MENU": {
+    "intro": ["Etiqueta <menu>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.META": {
+    "intro": ["Etiqueta <meta>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.NOFRAMES": {
+    "intro": ["Etiqueta <noframes>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.OBJECT": {
+    "intro": ["Etiqueta <object>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.OL": {
+    "intro": ["Etiqueta <ol>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.OPTION": {
+    "intro": ["Etiqueta <option>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.P": {
+    "intro": ["Etiqueta <p>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.PARAM": {
+    "intro": ["Etiqueta <param>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.PRE": {
+    "intro": ["Etiqueta <pre>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.S": {
+    "intro": ["Etiqueta <s>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.SAMP": {
+    "intro": ["Etiqueta <samp>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.SCRIPT": {
+    "intro": ["Etiqueta <script>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.SELECT": {
+    "intro": ["Etiqueta <select>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.SMALL": {
+    "intro": ["Etiqueta <small>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.SPAN": {
+    "intro": ["Etiqueta <span>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.STRIKE": {
+    "intro": ["Etiqueta <strike>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.STRONG": {
+    "intro": ["Etiqueta <strong>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.STYLE": {
+    "intro": ["Etiqueta <style>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.SUB": {
+    "intro": ["Etiqueta <sub>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.SUP": {
+    "intro": ["Etiqueta <sup>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.TABLE": {
+    "intro": ["Etiqueta <table>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.TD": {
+    "intro": ["Etiqueta <td>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.TEXTAREA": {
+    "intro": ["Etiqueta <textarea>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.TH": {
+    "intro": ["Etiqueta <th>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.TITLE": {
+    "intro": ["Etiqueta <title>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.TR": {
+    "intro": ["Etiqueta <tr>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.TT": {
+    "intro": ["Etiqueta <tt>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.U": {
+    "intro": ["Etiqueta <u>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.UL": {
+    "intro": ["Etiqueta <ul>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML%24Tag.VAR": {
+    "intro": ["Etiqueta <var>"]
+  },
+  "web-java-se-javax.swing.text.html.HTML.getAttributeKey": {
+    "intro": [
+      "Obtiene una constante de atributo para un nombre de atributo conocido (es decir, uno de los atributos del conjunto {FACE, COMMENT, SIZE, COLOR, CLEAR, BACKGROUND, BGCOLOR, TEXT, LINK, VLINK, ALINK, WIDTH, HEIGHT, ALIGN, NAME, HREF, REL, REV, TITLE, TARGET, SHAPE, COORDS, ISMAP, NOHREF, ALT, ID, SRC, HSPACE, VSPACE, USEMAP, LOWSRC, CODEBASE, CODE, ARCHIVE, VALUE, VALUETYPE, TYPE, CLASS, STYLE, LANG, DIR, DECLARE, CLASSID, DATA, CODETYPE, STANDBY, BORDER, SHAPES, NOSHADE, COMPACT, START, ACTION, METHOD, ENCTYPE, CHECKED, MAXLENGTH, MULTIPLE, SELECTED, ROWS, COLS, DUMMY, CELLSPACING, CELLPADDING, VALIGN, HALIGN, NOWRAP, ROWSPAN, COLSPAN, PROMPT, HTTPEQUIV, CONTENT, LANGUAGE, VERSION, N, FRAMEBORDER, MARGINWIDTH, MARGINHEIGHT, SCROLLING, NORESIZE, MEDIA, ENDTAG}). Si el nombre dado no representa uno de los atributos conocidos, se devuelve null."
+    ],
+    "parameters": [
+      {
+        "label": "attName",
+        "detail": "el String solicitado"
+      }
+    ],
+    "returns": ["el Attribute correspondiente a attName"]
+  },
+  "web-java-se-javax.swing.text.html.HTML.getTag": {
+    "intro": [
+      "Obtiene una constante de etiqueta para un nombre de etiqueta conocido (es decir, una de las etiquetas del conjunto {A, ADDRESS, APPLET, AREA, B, BASE, BASEFONT, BIG, BLOCKQUOTE, BODY, BR, CAPTION, CENTER, CITE, CODE, DD, DFN, DIR, DIV, DL, DT, EM, FONT, FORM, FRAME, FRAMESET, H1, H2, H3, H4, H5, H6, HEAD, HR, HTML, I, IMG, INPUT, ISINDEX, KBD, LI, LINK, MAP, MENU, META, NOBR, NOFRAMES, OBJECT, OL, OPTION, P, PARAM, PRE, SAMP, SCRIPT, SELECT, SMALL, SPAN, STRIKE, S, STRONG, STYLE, SUB, SUP, TABLE, TD, TEXTAREA, TH, TITLE, TR, TT, U, UL, VAR}). Si el nombre dado no representa una de las etiquetas conocidas, se devuelve null."
+    ],
+    "parameters": [
+      {
+        "label": "tagName",
+        "detail": "el nombre String solicitado"
+      }
+    ],
+    "returns": [
+      "una constante de etiqueta correspondiente a tagName, o null si no se encuentra"
+    ]
+  },
+  "web-java-se-javax.swing.text.html.HTMLDocument": {
+    "body": [
+      "El documento modela solo HTML y no intenta guardar en él atributos de vista. Los elementos se identifican con el atributo StyleContext.NameAttribute, que siempre debe tener un valor de tipo HTML.Tag que identifica el tipo de elemento. Algunos elementos (como los comentarios) son sintetizados. HTMLFactory usa este atributo para determinar qué tipo de vista construir.",
+      "Este documento admite carga incremental. La propiedad TokenThreshold controla cuánto del análisis se almacena en búfer antes de intentar actualizar la estructura de elementos del documento. El EditorKit establece esta propiedad para que las subclases puedan desactivarla.",
+      "La propiedad Base determina la URL contra la que se resuelven las URL relativas. Por defecto, será Document.StreamDescriptionProperty si el valor de esa propiedad es una URL. Si se encuentra una etiqueta <BASE>, la base pasa a ser la URL que especifica esa etiqueta. Como la URL base es una propiedad, por supuesto puede establecerse directamente.",
+      "El mecanismo de almacenamiento de contenido predeterminado de este documento es un búfer con hueco (GapContent). Pueden proporcionarse alternativas usando el constructor que recibe una implementación de Content.",
+      "Modificar un HTMLDocument",
+      "Además de los métodos que ofrecen Document y StyledDocument para modificar un HTMLDocument, HTMLDocument ofrece varios métodos de conveniencia. Los siguientes métodos pueden usarse para insertar contenido HTML en un documento existente.",
+      "setInnerHTML(Element, String), setOuterHTML(Element, String), insertBeforeStart(Element, String), insertAfterStart(Element, String), insertBeforeEnd(Element, String), insertAfterEnd(Element, String)",
+      "setInnerHTML(Element, String), setOuterHTML(Element, String), insertBeforeStart(Element, String), insertAfterStart(Element, String), insertBeforeEnd(Element, String), insertAfterEnd(Element, String)",
+      "setInnerHTML(Element, String), setOuterHTML(Element, String), insertBeforeStart(Element, String), insertAfterStart(Element, String), insertBeforeEnd(Element, String), insertAfterEnd(Element, String)",
+      "setInnerHTML(Element, String), setOuterHTML(Element, String), insertBeforeStart(Element, String), insertAfterStart(Element, String), insertBeforeEnd(Element, String), insertAfterEnd(Element, String)",
+      "setInnerHTML(Element, String), setOuterHTML(Element, String), insertBeforeStart(Element, String), insertAfterStart(Element, String), insertBeforeEnd(Element, String), insertAfterEnd(Element, String)",
+      "setInnerHTML(Element, String), setOuterHTML(Element, String), insertBeforeStart(Element, String), insertAfterStart(Element, String), insertBeforeEnd(Element, String), insertAfterEnd(Element, String)",
+      "Los siguientes ejemplos ilustran el uso de estos métodos. Cada ejemplo supone que el documento HTML se inicializa de la siguiente forma:",
+      "JEditorPane p = new JEditorPane(); p.setContentType(\"text/html\"); p.setText(\"...\"); // Document text is provided below. HTMLDocument d = (HTMLDocument) p.getDocument();",
+      "Con el siguiente contenido HTML:",
+      "<html> <head> <title>An example HTMLDocument</title> <style type=\"text/css\"> div { background-color: silver; } ul { color: blue; } </style> </head> <body> <div id=\"BOX\"> <p>Paragraph 1</p> <p>Paragraph 2</p> </div> </body> </html>",
+      "Todos los métodos para modificar un documento HTML requieren un Element. Los Elements pueden obtenerse de un documento HTML con el método getElement(Element e, Object attribute, Object value). Devuelve el primer elemento descendiente que contiene el atributo indicado con el valor dado, en orden de profundidad. Por ejemplo, d.getElement(d.getDefaultRootElement(), StyleConstants.NameAttribute, HTML.Tag.P) devuelve el primer elemento de párrafo.",
+      "Un atajo cómodo para localizar elementos es el método getElement(String), que devuelve un elemento cuyo atributo ID coincide con el valor indicado. Por ejemplo, d.getElement(\"BOX\") devuelve el elemento DIV.",
+      "El método getIterator(HTML.Tag t) también puede usarse para encontrar todas las apariciones de la etiqueta HTML indicada en el documento.",
+      "Insertar elementos",
+      "Se pueden insertar elementos antes o después de los hijos existentes de cualquier elemento no hoja con los métodos insertAfterStart e insertBeforeEnd. Por ejemplo, si e es el elemento DIV, d.insertAfterStart(e, \"<ul><li>List Item</li></ul>\") inserta la lista antes del primer párrafo, y d.insertBeforeEnd(e, \"<ul><li>List Item</li></ul>\") la inserta después del último párrafo. El bloque DIV pasa a ser el padre de los elementos recién insertados.",
+      "Se pueden insertar elementos hermanos antes o después de cualquier elemento con los métodos insertBeforeStart e insertAfterEnd. Por ejemplo, si e es el elemento DIV, d.insertBeforeStart(e, \"<ul><li>List Item</li></ul>\") inserta la lista antes del elemento DIV, y d.insertAfterEnd(e, \"<ul><li>List Item</li></ul>\") la inserta después. Los elementos recién insertados pasan a ser hermanos del elemento DIV.",
+      "Reemplazar elementos",
+      "Los elementos y todos sus descendientes pueden reemplazarse con los métodos setInnerHTML y setOuterHTML. Por ejemplo, si e es el elemento DIV, d.setInnerHTML(e, \"<ul><li>List Item</li></ul>\") reemplaza todos los párrafos hijos por la lista, y d.setOuterHTML(e, \"<ul><li>List Item</li></ul>\") reemplaza el propio elemento DIV. En este último caso, el padre de la lista es el elemento BODY.",
+      "Resumen",
+      "La siguiente tabla muestra el documento de ejemplo y el resultado de los distintos métodos descritos arriba.",
+      "Contenido HTML del ejemplo anterior",
+      "Ejemplo · insertAfterStart · insertBeforeEnd · insertBeforeStart · insertAfterEnd · setInnerHTML · setOuterHTML",
+      "Paragraph 1",
+      "Paragraph 2",
+      "List Item",
+      "Paragraph 1",
+      "Paragraph 2",
+      "Paragraph 1",
+      "Paragraph 2",
+      "List Item",
+      "List Item",
+      "Paragraph 1",
+      "Paragraph 2",
+      "Paragraph 1",
+      "Paragraph 2",
+      "List Item",
+      "List Item",
+      "List Item",
+      "Advertencia: los objetos serializados de esta clase no serán compatibles con futuras versiones de Swing. El soporte de serialización actual es adecuado para almacenamiento a corto plazo o RMI entre aplicaciones que ejecutan la misma versión de Swing. Desde la 1.4, el paquete java.beans incluye soporte para el almacenamiento a largo plazo de todos los JavaBeans. Consulta java.beans.XMLEncoder."
+    ]
+  },
+  "web-java-se-javax.swing.text.html.HTMLDocument.setOuterHTML": {
+    "body": [
+      "Esto se verá como al menos dos eventos: n inserciones seguidas de una eliminación.",
+      "Al reemplazar una hoja, intentará asegurarse de que haya un salto de línea si hace falta. Esto puede hacer que se inserte un elemento adicional. Por ejemplo, si reemplazaras un elemento de carácter que contiene un salto de línea por <img>, se crearían dos elementos: uno para la imagen y otro para el salto de línea.",
+      "Si intentas reemplazar el elemento en length, lo más probable es que acabes con dos elementos; por ejemplo, setOuterHTML(getCharacterElement (getLength()), \"blah\") dará dos elementos hoja al final, uno que representa 'blah' y otro que representa el elemento final.",
+      "Considera la siguiente estructura (el parámetro elem está en negrita).",
+      "<body> | <div> / \\ <p> <p>",
+      "Invocar setOuterHTML(elem, \"<ul><li>\") da la siguiente estructura (los elementos nuevos están en azul).",
+      "<body> | <ul> \\ <li>",
+      "Si el parámetro elem o htmlText es null, no se hace ningún cambio en el documento.",
+      "Para que esto funcione correctamente, el documento debe tener establecido un HTMLEditorKit.Parser. Así será si el documento se creó a partir de un HTMLEditorKit con el método createDefaultDocument."
+    ],
+    "parameters": [
+      {
+        "label": "elem",
+        "detail": "el elemento que se reemplaza"
+      },
+      {
+        "label": "htmlText",
+        "detail": "la cadena que se analizará e insertará en lugar de elem"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalStateException",
+        "detail": "si no se ha establecido un HTMLEditorKit.Parser"
+      },
+      {
+        "label": "BadLocationException",
+        "detail": "si el reemplazo es imposible por un problema estructural"
+      },
+      {
+        "label": "IOException",
+        "detail": "si se produce una excepción de E/S"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.text.html.HTMLEditorKit%24HTMLFactory": {
+    "body": [
+      "Describe la etiqueta y la vista que crea esta fábrica por defecto",
+      "Etiqueta · Vista creada",
+      "HTML.Tag.CONTENT · InlineView",
+      "HTML.Tag.IMPLIED · javax.swing.text.html.ParagraphView",
+      "HTML.Tag.P · javax.swing.text.html.ParagraphView",
+      "HTML.Tag.H1 · javax.swing.text.html.ParagraphView",
+      "HTML.Tag.H2 · javax.swing.text.html.ParagraphView",
+      "HTML.Tag.H3 · javax.swing.text.html.ParagraphView",
+      "HTML.Tag.H4 · javax.swing.text.html.ParagraphView",
+      "HTML.Tag.H5 · javax.swing.text.html.ParagraphView",
+      "HTML.Tag.H6 · javax.swing.text.html.ParagraphView",
+      "HTML.Tag.DT · javax.swing.text.html.ParagraphView",
+      "HTML.Tag.MENU · ListView",
+      "HTML.Tag.DIR · ListView",
+      "HTML.Tag.UL · ListView",
+      "HTML.Tag.OL · ListView",
+      "HTML.Tag.LI · BlockView",
+      "HTML.Tag.DL · BlockView",
+      "HTML.Tag.DD · BlockView",
+      "HTML.Tag.BODY · BlockView",
+      "HTML.Tag.HTML · BlockView",
+      "HTML.Tag.CENTER · BlockView",
+      "HTML.Tag.DIV · BlockView",
+      "HTML.Tag.BLOCKQUOTE · BlockView",
+      "HTML.Tag.PRE · BlockView",
+      "HTML.Tag.BLOCKQUOTE · BlockView",
+      "HTML.Tag.PRE · BlockView",
+      "HTML.Tag.IMG · ImageView",
+      "HTML.Tag.HR · HRuleView",
+      "HTML.Tag.BR · BRView",
+      "HTML.Tag.TABLE · javax.swing.text.html.TableView",
+      "HTML.Tag.INPUT · FormView",
+      "HTML.Tag.SELECT · FormView",
+      "HTML.Tag.TEXTAREA · FormView",
+      "HTML.Tag.OBJECT · ObjectView",
+      "HTML.Tag.FRAMESET · FrameSetView",
+      "HTML.Tag.FRAME · FrameView"
+    ]
+  },
+  "web-java-se-javax.swing.text.html.HTMLEditorKit%24ParserCallback.IMPLIED": {
+    "intro": [
+      "Se pasa como atributo en el AttributeSet para indicar que el elemento es implícito; por ejemplo, la cadena '<>foo<\\t>' contiene un elemento html implícito y un elemento body implícito."
+    ]
+  },
+  "web-java-se-javax.swing.text.html.StyleSheet.setBase": {
+    "parameters": [
+      {
+        "label": "base",
+        "detail": "una base."
+      }
+    ]
+  },
+  "web-java-se-javax.swing.text.html.parser.ContentModel.next": {
+    "intro": [
+      "El siguiente modelo de contenido (en una expresión ',', '|' o '&')."
+    ]
+  },
+  "web-java-se-javax.swing.text.html.parser.ContentModel.type": {
+    "intro": ["Tipo. Puede ser '*', '?', '+', ',', '|' o '&'."]
+  },
+  "web-java-se-javax.swing.tree.DefaultMutableTreeNode": {
+    "body": [
+      "Un nodo de árbol puede tener como mucho un padre y 0 o más hijos. DefaultMutableTreeNode ofrece operaciones para examinar y modificar el padre y los hijos de un nodo, y también para examinar el árbol del que forma parte. El árbol de un nodo es el conjunto de todos los nodos alcanzables empezando en ese nodo y siguiendo todos los enlaces posibles a padres e hijos. Un nodo sin padre es la raíz de su árbol; un nodo sin hijos es una hoja. Un árbol puede constar de muchos subárboles, y cada nodo actúa como raíz de su propio subárbol.",
+      "Esta clase ofrece enumeraciones para recorrer eficientemente un árbol o subárbol en varios órdenes o para seguir la ruta entre dos nodos. Un DefaultMutableTreeNode también puede guardar una referencia a un objeto de usuario, cuyo uso queda a criterio del usuario. Pedir a un DefaultMutableTreeNode su representación en cadena con toString() devuelve la representación en cadena de su objeto de usuario.",
+      "Esta clase no es segura entre hilos. Si pretendes usar un DefaultMutableTreeNode (o un árbol de TreeNodes) en más de un hilo, tendrás que sincronizar por tu cuenta. Una buena convención es sincronizar sobre el nodo raíz del árbol.",
+      "Aunque DefaultMutableTreeNode implementa la interfaz MutableTreeNode y permite añadir cualquier implementación de MutableTreeNode, no todos los métodos de DefaultMutableTreeNode serán aplicables a todas las implementaciones de MutableTreeNode. Sobre todo con algunas de las enumeraciones que se ofrecen, usar ciertos métodos presupone que el DefaultMutableTreeNode contiene solo instancias de DefaultMutableNode. Todos los métodos de TreeNode/MutableTreeNode se comportarán según lo definido, sean cuales sean las implementaciones añadidas.",
+      "Advertencia: los objetos serializados de esta clase no serán compatibles con futuras versiones de Swing. El soporte de serialización actual es adecuado para almacenamiento a corto plazo o RMI entre aplicaciones que ejecutan la misma versión de Swing. Desde la 1.4, el paquete java.beans incluye soporte para el almacenamiento a largo plazo de todos los JavaBeans. Consulta java.beans.XMLEncoder."
+    ]
+  },
+  "web-java-se-javax.swing.tree.DefaultMutableTreeNode.setAllowsChildren": {
+    "intro": [
+      "Determina si este nodo puede tener hijos. Si allows es false, se eliminan todos los hijos de este nodo."
+    ],
+    "body": ["Nota: por defecto, un nodo admite hijos."],
+    "parameters": [
+      {
+        "label": "allows",
+        "detail": "true si este nodo puede tener hijos"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.tree.DefaultTreeModel.getListeners": {
+    "body": [
+      "Puedes especificar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los listeners de modelo de árbol de un DefaultTreeModel m con el siguiente código:",
+      "TreeModelListener[] tmls = (TreeModelListener[])(m.getListeners(TreeModelListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de listener"
+      },
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners solicitados"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este componente, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.tree.DefaultTreeModel.setAsksAllowsChildren": {
+    "parameters": [
+      {
+        "label": "newValue",
+        "detail": "si es true, se consulta getAllowsChildren(); en caso contrario, se consulta isLeaf()"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.tree.DefaultTreeSelectionModel.getListeners": {
+    "body": [
+      "Puedes especificar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los listeners de selección de árbol de un DefaultTreeSelectionModel m con el siguiente código:",
+      "TreeSelectionListener[] tsls = (TreeSelectionListener[])(m.getListeners(TreeSelectionListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de listener"
+      },
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners solicitados"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este componente, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.undo.CompoundEdit.addEdit": {
+    "body": [
+      "Se da a la última edición añadida a este CompoundEdit la oportunidad de addEdit(anEdit). Si la rechaza (devuelve false), se da a anEdit la oportunidad de replaceEdit la última edición. Si anEdit devuelve false aquí, se añade a edits."
+    ],
+    "parameters": [
+      {
+        "label": "anEdit",
+        "detail": "la edición que se añade"
+      }
+    ],
+    "returns": [
+      "true si la edición está en curso (inProgress); en caso contrario, devuelve false"
+    ]
+  },
+  "web-java-se-javax.tools.ForwardingJavaFileManager.contains": {
+    "intro": [
+      "Determina si un objeto de archivo dado está \"contenido en\" una ubicación indicada."
+    ],
+    "body": [
+      "En una ubicación orientada a paquetes, un objeto de archivo está contenido en la ubicación si existen valores de packageName y relativeName tales que cualquiera de las siguientes llamadas devolvería el mismo objeto de archivo:",
+      "En una ubicación orientada a módulos, un objeto de archivo está contenido en la ubicación si existe un módulo que puede obtenerse con la llamada:",
+      "tal que el objeto de archivo esté contenido en la ubicación (orientada a paquetes) de ese módulo."
+    ],
+    "parameters": [
+      {
+        "label": "location",
+        "detail": "la ubicación"
+      },
+      {
+        "label": "fo",
+        "detail": "el objeto de archivo"
+      }
+    ],
+    "returns": ["si el archivo está contenido o no en la ubicación"],
+    "exceptions": [
+      {
+        "label": "IOException",
+        "detail": "si hay un problema al determinar el resultado"
+      },
+      {
+        "label": "UnsupportedOperationException",
+        "detail": "si el método no se admite"
+      }
+    ],
+    "caveats": ["Esta implementación lanza UnsupportedOperationException."]
+  },
+  "web-java-se-javax.tools.JavaCompiler": {
+    "body": [
+      "El compilador puede generar diagnósticos durante la compilación (por ejemplo, mensajes de error). Si se proporciona un listener de diagnósticos, los diagnósticos se le entregan. Si no, los diagnósticos se formatean en un formato no especificado y se escriben en la salida predeterminada, que es System.err salvo que se indique otra cosa. Incluso si se proporciona un listener de diagnósticos, algunos diagnósticos pueden no encajar en un Diagnostic y se escribirán en la salida predeterminada.",
+      "Una herramienta compiladora tiene asociado un gestor de archivos estándar, que es el gestor de archivos nativo de la herramienta (o integrado). El gestor de archivos estándar puede obtenerse llamando a getStandardFileManager.",
+      "Una herramienta compiladora debe funcionar con cualquier gestor de archivos siempre que se cumplan los requisitos adicionales detallados en los métodos siguientes. Si no se proporciona un gestor de archivos, la herramienta compiladora usará un gestor estándar como el que devuelve getStandardFileManager.",
+      "Una instancia que implemente esta interfaz debe ajustarse a The Java Language Specification y generar archivos de clase conformes a The Java Virtual Machine Specification. Las versiones de estas especificaciones se definen en la interfaz Tool.",
+      "Además, una instancia de esta interfaz que admita SourceVersion.RELEASE_6 o superior también debe admitir el procesamiento de anotaciones.",
+      "El compilador se apoya en dos servicios: el listener de diagnósticos y el gestor de archivos. Aunque la mayoría de las clases e interfaces de este paquete definen una API para compiladores (y herramientas en general), las interfaces DiagnosticListener, JavaFileManager, FileObject y JavaFileObject no están pensadas para usarse en aplicaciones. Están pensadas para implementarse y usarse para proporcionar servicios personalizados a un compilador, y por tanto definen una SPI para compiladores.",
+      "Hay varias clases e interfaces en este paquete diseñadas para facilitar la implementación de la SPI y personalizar el comportamiento de un compilador:",
+      "StandardJavaFileManager",
+      "Todo compilador que implementa esta interfaz proporciona un gestor de archivos estándar para operar con archivos normales. La interfaz StandardJavaFileManager define métodos adicionales para crear objetos de archivo a partir de archivos normales.",
+      "El gestor de archivos estándar tiene dos propósitos:",
+      "pieza básica para personalizar cómo lee y escribe archivos un compilador",
+      "compartirse entre varias tareas de compilación",
+      "Reutilizar un gestor de archivos puede reducir el coste de recorrer el sistema de archivos y leer archivos jar. Aunque puede que no haya reducción de coste, un gestor de archivos estándar debe funcionar con varias compilaciones secuenciales, lo que convierte el siguiente ejemplo en un patrón de código recomendado:",
+      "DiagnosticCollector",
+      "Se usa para recopilar diagnósticos en una lista, por ejemplo: {@snippet id=\"use-diag-collector\" lang=java : Iterable compilationUnits = null; // @replace substring=null replacement=\"...\" JavaCompiler compiler = ToolProvider.getSystemJavaCompiler(); DiagnosticCollector diagnostics = new DiagnosticCollector(); StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null); compiler.getTask(null, fileManager, diagnostics, null, null, compilationUnits).call();",
+      "for (Diagnostic diagnostic : diagnostics.getDiagnostics()) { System.out.format(\"Error on line %d in %s%n\", diagnostic.getLineNumber(), diagnostic.getSource().toUri()); }",
+      "fileManager.close(); }",
+      "ForwardingJavaFileManager, ForwardingFileObject y ForwardingJavaFileObject",
+      "No se puede heredar para sobrescribir el comportamiento de un gestor de archivos estándar, ya que se crea llamando a un método del compilador y no invocando un constructor. En su lugar debe usarse el reenvío (o delegación). Estas clases facilitan reenviar la mayoría de las llamadas a un gestor de archivos u objeto de archivo dado permitiendo personalizar el comportamiento. Por ejemplo, considera cómo registrar todas las llamadas a JavaFileManager.flush:",
+      "{@snippet id=\"forward-fm\" lang=java : final Logger logger = null; // @replace substring=null replacement=\"...\" Iterable compilationUnits = null; // @replace substring=null replacement=\"...\" JavaCompiler compiler = ToolProvider.getSystemJavaCompiler(); StandardJavaFileManager stdFileManager = compiler.getStandardFileManager(null, null, null); JavaFileManager fileManager = new ForwardingJavaFileManager(stdFileManager) { @Override public void flush() throws IOException { logger.entering(StandardJavaFileManager.class.getName(), \"flush\"); super.flush(); logger.exiting(StandardJavaFileManager.class.getName(), \"flush\"); } }; compiler.getTask(null, fileManager, null, null, null, compilationUnits).call(); }",
+      "SimpleJavaFileObject",
+      "Esta clase proporciona una implementación básica de objeto de archivo que puede usarse como pieza para crear objetos de archivo. Por ejemplo, así se define un objeto de archivo que representa código fuente almacenado en una cadena:"
+    ]
+  },
+  "web-java-se-javax.tools.JavaFileManager.contains": {
+    "intro": [
+      "Determina si un objeto de archivo dado está \"contenido en\" una ubicación indicada."
+    ],
+    "body": [
+      "En una ubicación orientada a paquetes, un objeto de archivo está contenido en la ubicación si existen valores de packageName y relativeName tales que cualquiera de las siguientes llamadas devolvería el mismo objeto de archivo:",
+      "En una ubicación orientada a módulos, un objeto de archivo está contenido en la ubicación si existe un módulo que puede obtenerse con la llamada:",
+      "tal que el objeto de archivo esté contenido en la ubicación (orientada a paquetes) de ese módulo."
+    ],
+    "parameters": [
+      {
+        "label": "location",
+        "detail": "la ubicación"
+      },
+      {
+        "label": "fo",
+        "detail": "el objeto de archivo"
+      }
+    ],
+    "returns": ["si el archivo está contenido o no en la ubicación"],
+    "exceptions": [
+      {
+        "label": "IOException",
+        "detail": "si hay un problema al determinar el resultado"
+      },
+      {
+        "label": "UnsupportedOperationException",
+        "detail": "si el método no se admite"
+      }
+    ],
+    "caveats": ["Esta implementación lanza UnsupportedOperationException."]
+  },
+  "web-java-se-javax.tools.SimpleJavaFileObject.getKind": {
+    "intro": [],
+    "returns": ["this.kind"]
+  },
   "web-java-se-javax.tools.SimpleJavaFileObject.toString": {
     "returns": ["una representación en cadena del objeto."],
     "caveats": [
       "En general, toString devuelve una cadena que «representa textualmente» el objeto. Debería ser una representación concisa pero informativa y fácil de leer. Se recomienda que todas las subclases sobrescriban este método. La cadena no tiene por qué ser estable en el tiempo ni entre ejecuciones de la JVM.",
       "El toString de Object devuelve una cadena con el nombre de la clase de la que el objeto es instancia, el carácter arroba '@' y la representación hexadecimal sin signo del código hash del objeto. Es decir, devuelve una cadena igual al valor de:",
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
+    ]
+  },
+  "web-java-se-javax.tools.StandardJavaFileManager": {
+    "body": [
+      "Una forma habitual de obtener una instancia de esta clase es usar getStandardFileManager, por ejemplo:",
+      "JavaCompiler compiler = ToolProvider.getSystemJavaCompiler(); DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>(); StandardJavaFileManager fm = compiler.getStandardFileManager(diagnostics, null, null);",
+      "Este gestor de archivos crea objetos de archivo que representan archivos normales, entradas de archivos zip o entradas de contenedores similares basados en sistemas de archivos. Cualquier objeto de archivo devuelto por un gestor que implemente esta interfaz debe cumplir el siguiente comportamiento:",
+      "Los nombres de archivo no tienen por qué ser canónicos.",
+      "Para los objetos de archivo que representan archivos normales",
+      "el método FileObject.delete() equivale a File.delete(),",
+      "el método FileObject.getLastModified() equivale a File.lastModified(),",
+      "los métodos FileObject.getCharContent(boolean), FileObject.openInputStream() y FileObject.openReader(boolean) deben tener éxito si lo siguiente tuviera éxito (ignorando problemas de codificación):",
+      "y los métodos FileObject.openOutputStream() y FileObject.openWriter() deben tener éxito si lo siguiente tuviera éxito (ignorando problemas de codificación):",
+      "La URI que devuelve FileObject.toUri()",
+      "debe ser absoluta (tener esquema), y",
+      "debe tener un componente de ruta normalizado que pueda resolverse sin ningún contexto específico del proceso, como el directorio actual (los nombres de archivo deben ser absolutos).",
+      "Según estas reglas, se permiten, por ejemplo, las siguientes URI:",
+      "file:///C:/Documents%20and%20Settings/UncleBob/BobsApp/Test.java",
+      "jar:///C:/Documents%20and%20Settings/UncleBob/lib/vendorA.jar!/com/vendora/LibraryClass.class",
+      "Mientras que estas no (motivo entre paréntesis):",
+      "file:BobsApp/Test.java (el nombre de archivo es relativo y depende del directorio actual)",
+      "jar:lib/vendorA.jar!/com/vendora/LibraryClass.class (la primera mitad de la ruta depende del directorio actual, aunque el componente tras ! es válido)",
+      "Test.java (esta URI depende del directorio actual y no tiene esquema)",
+      "jar:///C:/Documents%20and%20Settings/UncleBob/BobsApp/../lib/vendorA.jar!com/vendora/LibraryClass.class (la ruta no está normalizada)",
+      "Todas las implementaciones de esta interfaz deben admitir objetos Path que representen archivos del sistema de archivos predeterminado. Se recomienda que las implementaciones admitan objetos Path de cualquier sistema de archivos."
+    ],
+    "caveats": [
+      "Algunos métodos de esta interfaz reciben un Collection<? extends Path> en lugar de un Iterable<? extends Path>. Así se evita la posibilidad de llamar al método por accidente con un único Path como argumento, porque, aunque Path implementa Iterable<Path>, casi nunca sería correcto llamar a estos métodos con un único Path y que se tratara como un Iterable de sus componentes."
+    ]
+  },
+  "web-java-se-javax.xml.XMLConstants": {
+    "body": [
+      "Propiedades de acceso externo",
+      "El valor de las propiedades de acceso externo, incluidas ACCESS_EXTERNAL_DTD, ACCESS_EXTERNAL_SCHEMA y ACCESS_EXTERNAL_STYLESHEET, se define así.",
+      "Valor:",
+      "Una lista de protocolos separados por comas. Un protocolo es la parte de esquema de una java.net.URI o, en el caso del protocolo JAR, \"jar\" más la parte de esquema separada por dos puntos. Un esquema se define como:",
+      "scheme = alpha *( alpha | digit | \"+\" | \"-\" | \".\" )",
+      "donde alpha = a-z y A-Z.",
+      "Y el protocolo JAR:",
+      "jar[:scheme]",
+      "Los protocolos que incluyen la palabra clave \"jar\" no distinguen mayúsculas de minúsculas. Se ignora cualquier espacio en blanco del valor según la definición de java.lang.Character.isSpaceChar. Ejemplos de protocolos son file, http y jar:file.",
+      "Valor predeterminado:",
+      "El valor predeterminado depende de la implementación y, por tanto, no está especificado. Se proponen las siguientes opciones para su consideración:",
+      "una cadena vacía para denegar todo acceso a referencias externas;",
+      "un protocolo concreto, como file, para dar permiso solo a ese protocolo;",
+      "la palabra clave \"all\" para conceder permiso a todos los protocolos.",
+      "Cuando FEATURE_SECURE_PROCESSING está habilitada, se recomienda que las implementaciones restrinjan por defecto las conexiones externas, aunque esto puede causar problemas a las aplicaciones que procesan XML/XSD/XSL con referencias externas.",
+      "Conceder todo el acceso:",
+      "La palabra clave \"all\" concede permiso a todos los protocolos.",
+      "Precedencia de propiedades",
+      "Las propiedades, incluidas las propiedades de acceso externo y USE_CATALOG, pueden especificarse mediante varias fuentes de configuración. Siguen el proceso de configuración definido en la sección Configuration del resumen del módulo."
     ]
   }
 }
