@@ -787,6 +787,18 @@
       "Detecta el tipo por el contenido, no por la extensión, así que es útil para validar archivos subidos."
     ]
   },
+  "php-class-gdfont": {
+    "description": [
+      "Se obtiene al cargar una fuente con imageloadfont(). Las funciones de dibujo de texto de GD también aceptan identificadores de fuentes incorporadas.",
+      "Existe desde PHP 8.1; antes, imageloadfont() devolvía un entero. Las fuentes incorporadas se indican con los números del 1 al 5. Para fuentes TrueType, usa imagettftext()."
+    ]
+  },
+  "php-class-gdimage": {
+    "description": [
+      "Desde PHP 8 las funciones de GD devuelven este objeto en lugar del recurso anterior. Obtén una instancia con imagecreatetruecolor() o con la función que lee el formato del archivo.",
+      "Es final y no se crea con new. La imagen se libera al dejar de usarse; desde PHP 8.0, imagedestroy() no tiene efecto."
+    ]
+  },
   "php-class-gearmanclient": {
     "description": [
       "Conecta con addServer() y envía trabajos: doNormal() espera el resultado y doBackground() solo encola el trabajo y devuelve su identificador.",
@@ -905,6 +917,12 @@
       "Define las unidades que aceptan los métodos de HRTime\\StopWatch: segundos, milisegundos, microsegundos y nanosegundos."
     ]
   },
+  "php-class-imagickdraw": {
+    "description": [
+      "Configura el relleno, el trazo o la fuente y añade las formas que quieras dibujar. Aplica la lista de instrucciones con Imagick::drawImage().",
+      "Por ejemplo, setFillColor() fija el color de relleno, rectangle() o circle() añaden formas y annotation() añade texto en una posición."
+    ]
+  },
   "php-class-imagickdrawexception": {
     "summary": "Excepción que lanzan los métodos de ImagickDraw cuando falla una operación.",
     "description": ["Hereda de Exception."]
@@ -915,16 +933,34 @@
       "Hereda de Exception. Se produce, por ejemplo, al leer un archivo inexistente o un formato que ImageMagick no soporta. getMessage() incluye el error de la biblioteca."
     ]
   },
+  "php-class-imagickkernel": {
+    "description": [
+      "El núcleo describe cómo influyen los píxeles vecinos. Se puede usar al aplicar operaciones morfológicas y otras transformaciones que aceptan un núcleo.",
+      "fromMatrix() lo crea a partir de una matriz de valores y fromBuiltIn() a partir de uno predefinido, como un desenfoque gaussiano. Se usa con métodos como Imagick::morphology() o Imagick::filter()."
+    ]
+  },
   "php-class-imagickkernelexception": {
     "summary": "Excepción que lanzan los métodos de ImagickKernel cuando falla una operación.",
     "description": [
       "Hereda de Exception. Se produce, por ejemplo, con una matriz no válida en ImagickKernel::fromMatrix()."
     ]
   },
+  "php-class-imagickpixel": {
+    "description": [
+      "Puede crearse a partir de una cadena de color o recuperarse de una imagen. Consulta los valores de sus canales cuando necesites trabajar con el color numéricamente.",
+      "El constructor acepta nombres como 'red', notación hexadecimal como '#ff0000' o funciones como 'rgba(255, 0, 0, 0.5)'. getColor() devuelve los canales como array."
+    ]
+  },
   "php-class-imagickpixelexception": {
     "summary": "Excepción que lanzan los métodos de ImagickPixel cuando falla una operación.",
     "description": [
       "Hereda de Exception. Se produce, por ejemplo, con una cadena de color no válida."
+    ]
+  },
+  "php-class-imagickpixeliterator": {
+    "description": [
+      "Obtén los píxeles de la fila actual, modifica los que necesites y sincroniza la fila con syncIterator() antes de seguir avanzando si quieres guardar los cambios.",
+      "Se obtiene con Imagick::getPixelIterator() y se puede recorrer con foreach; cada elemento es un array de objetos ImagickPixel."
     ]
   },
   "php-class-imagickpixeliteratorexception": {
@@ -964,6 +1000,12 @@
     "description": [
       "Los métodos y las constantes respetan estrictamente los nombres y el comportamiento utilizados por la biblioteca ICU subyacente.",
       "Todos sus métodos son estáticos y aceptan un punto de código entero o un carácter UTF-8. Por ejemplo, IntlChar::isalpha('ñ') devuelve true, IntlChar::charName('€') devuelve 'EURO SIGN' e IntlChar::ord() da el punto de código."
+    ]
+  },
+  "php-class-intlcodepointbreakiterator": {
+    "description": [
+      "Sirve para localizar límites de puntos de código. Si quieres recorrer lo que la persona percibe como un carácter, usa un iterador de límites de caracteres o las funciones grapheme.",
+      "Se obtiene con IntlBreakIterator::createCodePointInstance(). getLastCodePoint() devuelve el punto de código que se acaba de recorrer."
     ]
   },
   "php-class-intldateformatter": {
@@ -2021,6 +2063,12 @@
   "php-class-soapvar": {
     "description": [
       "El constructor recibe el valor, la codificación (una constante como XSD_STRING o SOAP_ENC_OBJECT) y, opcionalmente, el nombre y el espacio de nombres del tipo. Sirve para controlar exactamente cómo se serializa un valor."
+    ]
+  },
+  "php-class-socket": {
+    "description": [
+      "Créalo con socket_create() u otra operación de la extensión. Pásalo a las funciones de conexión, lectura o escritura. En PHP 8 sustituye al recurso que usaban las versiones anteriores.",
+      "Es final y no se crea con new. socket_close() cierra el socket."
     ]
   },
   "php-class-sodiumexception": {
