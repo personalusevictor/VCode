@@ -12796,6 +12796,22 @@
       "@jvms 5.4.3 Resolution @jvms 5.4.4 Access Control"
     ]
   },
+  "web-java-se-java.lang.invoke.VarHandle.toMethodHandle": {
+    "parameters": [
+      {
+        "label": "accessMode",
+        "detail": "el modo de acceso, correspondiente al método polimórfico en firma del mismo nombre"
+      }
+    ],
+    "returns": [
+      "un method handle enlazado a este VarHandle y al modo de acceso dado"
+    ],
+    "caveats": [
+      "Para un VarHandle vh y un modo de acceso {@code {access-mode}}, este método devuelve un method handle equivalente al method handle bmh del siguiente código (aunque puede ser más eficiente):",
+      "{@code MethodHandle mh = MethodHandles.varHandleExactInvoker( vh.accessModeType(VarHandle.AccessMode.{access-mode}));",
+      "MethodHandle bmh = mh.bindTo(vh); }"
+    ]
+  },
   "web-java-se-java.lang.invoke.VolatileCallSite.dynamicInvoker": {
     "body": [
       "Este método equivale a este código:",
@@ -12803,6 +12819,803 @@
     ],
     "returns": [
       "un method handle que siempre invoca el destino actual de este call site"
+    ]
+  },
+  "web-java-se-java.lang.management.BufferPoolMXBean": {
+    "body": [
+      "Una clase que implementa esta interfaz es un javax.management.MXBean. Una máquina virtual Java tiene una o más implementaciones de esta interfaz. El método getPlatformMXBeans permite obtener la lista de objetos BufferPoolMXBean que representan las interfaces de gestión de los pools de búferes así:",
+      "List<BufferPoolMXBean> pools = ManagementFactory.getPlatformMXBeans(BufferPoolMXBean.class);",
+      "Las interfaces de gestión también se registran en el MBeanServer de la plataforma. El ObjectName que identifica de forma única la interfaz de gestión dentro del MBeanServer tiene esta forma:",
+      "java.nio:type=BufferPool,name=pool name",
+      "donde pool name es el nombre del pool de búferes."
+    ]
+  },
+  "web-java-se-java.lang.management.GarbageCollectorMXBean": {
+    "body": [
+      "Una máquina virtual Java puede tener una o más instancias de la clase que implementa esta interfaz. Una instancia que la implementa es un MXBean que puede obtenerse llamando a ManagementFactory.getGarbageCollectorMXBeans o desde el MBeanServer de la plataforma.",
+      "El ObjectName que identifica de forma única el MXBean de un recolector de basura dentro de un MBeanServer es:",
+      "java.lang:type=GarbageCollector,name=collector's name",
+      "Puede obtenerse llamando al método PlatformManagedObject.getObjectName.",
+      "Una plataforma suele incluir información adicional dependiente de la plataforma, específica de un algoritmo de recolección de basura, para la monitorización."
+    ]
+  },
+  "web-java-se-java.lang.management.LockInfo.toString": {
+    "intro": [
+      "Devuelve una representación en cadena de un lock. Está formada por el nombre de la clase del objeto lock, el carácter arroba `@' y la representación hexadecimal sin signo del hash de identidad del objeto. Este método devuelve una cadena igual al valor de:"
+    ],
+    "body": [
+      "lock.getClass().getName() + '@' + Integer.toHexString(System.identityHashCode(lock))",
+      "donde lock es el objeto lock."
+    ],
+    "returns": ["la representación en cadena de un lock."]
+  },
+  "web-java-se-java.lang.management.ManagementFactory": {
+    "body": [
+      "MXBeans de la plataforma",
+      "Un MXBean de la plataforma es un bean gestionado que cumple la JMX Instrumentation Specification y solo usa un conjunto de tipos de datos básicos. Una aplicación de gestión JMX y el MBeanServer de la plataforma pueden interoperar sin necesitar clases para tipos de datos específicos del MXBean. Los tipos de datos que se transmiten entre el servidor y el cliente del conector JMX son tipos abiertos, lo que permite interoperar entre versiones. Consulta la especificación de MXBeans para más detalles.",
+      "Cada MXBean de la plataforma es un PlatformManagedObject y tiene un ObjectName único para registrarse en el MBeanServer de la plataforma, que devuelve el método getObjectName.",
+      "Una aplicación puede acceder a un MXBean de la plataforma de estas formas:",
+      "1. Acceso directo a una interfaz MXBean",
+      "Obtener una instancia de MXBean con getPlatformMXBean o getPlatformMXBeans y acceder al MXBean localmente en la máquina virtual en ejecución.",
+      "Crear una instancia proxy del MXBean que reenvíe las llamadas a un MBeanServer dado, con ManagementFactory.getPlatformMXBean(MBeanServerConnection, Class) o getPlatformMXBeans(MBeanServerConnection, Class). También puede usarse newPlatformMXBeanProxy para crear un proxy de MXBean de un ObjectName dado. Normalmente se crea un proxy para acceder de forma remota a un MXBean de otra máquina virtual en ejecución.",
+      "2. Acceso indirecto a una interfaz MXBean a través de MBeanServer",
+      "Pasar por el MBeanServer de la plataforma para acceder a los MXBeans localmente, o por un MBeanServerConnection concreto para acceder de forma remota. Los atributos y operaciones de un MXBean solo usan tipos abiertos de JMX, que incluyen los tipos de datos básicos, CompositeData y TabularData definidos en OpenType. La correspondencia se detalla en la especificación de MXBean.",
+      "El método getPlatformManagementInterfaces devuelve todas las interfaces de gestión que admite la máquina virtual Java, incluidas las interfaces estándar de las tablas siguientes y las añadidas por la implementación del JDK.",
+      "Una máquina virtual Java tiene una única instancia de estas interfaces de gestión:",
+      "Interfaces de gestión con una única instancia",
+      "Interfaz de gestión · ObjectName",
+      "ClassLoadingMXBean · java.lang:type=ClassLoading",
+      "MemoryMXBean · java.lang:type=Memory",
+      "ThreadMXBean · java.lang:type=Threading",
+      "RuntimeMXBean · java.lang:type=Runtime",
+      "OperatingSystemMXBean · java.lang:type=OperatingSystem",
+      "PlatformLoggingMXBean · java.util.logging:type=Logging",
+      "Una máquina virtual Java tiene cero o una instancia de estas interfaces de gestión.",
+      "Interfaces de gestión con una única instancia",
+      "Interfaz de gestión · ObjectName",
+      "CompilationMXBean · java.lang:type=Compilation",
+      "Una máquina virtual Java puede tener una o más instancias de estas interfaces de gestión.",
+      "Interfaces de gestión con una única instancia",
+      "Interfaz de gestión · ObjectName",
+      "GarbageCollectorMXBean · java.lang:type=GarbageCollector,name=collector's name",
+      "MemoryManagerMXBean · java.lang:type=MemoryManager,name=manager's name",
+      "MemoryPoolMXBean · java.lang:type=MemoryPool,name=pool's name",
+      "BufferPoolMXBean · java.nio:type=BufferPool,name=pool name"
+    ]
+  },
+  "web-java-se-java.lang.management.MemoryMXBean": {
+    "body": [
+      "Una máquina virtual Java tiene una única instancia de la clase que implementa esta interfaz. Esa instancia es un MXBean que puede obtenerse llamando a ManagementFactory.getMemoryMXBean o desde el MBeanServer de la plataforma.",
+      "El ObjectName que identifica de forma única el MXBean del sistema de memoria dentro de un MBeanServer es:",
+      "java.lang:type=Memory",
+      "Puede obtenerse llamando al método PlatformManagedObject.getObjectName.",
+      "Memoria",
+      "El sistema de memoria de la máquina virtual Java gestiona estos tipos de memoria:",
+      "1. Heap",
+      "La máquina virtual Java tiene un heap, el área de datos de ejecución de la que se reserva la memoria de todas las instancias de clase y arrays. Se crea al arrancar la máquina virtual. La memoria del heap ocupada por objetos la recupera un sistema de gestión automática de memoria llamado recolector de basura.",
+      "El heap puede tener tamaño fijo o ampliarse y reducirse. Su memoria no tiene por qué ser contigua.",
+      "2. Memoria fuera del heap",
+      "La máquina virtual Java gestiona memoria distinta del heap (llamada memoria fuera del heap).",
+      "La máquina virtual Java tiene un área de métodos compartida entre todos los hilos, que pertenece a la memoria fuera del heap. Guarda estructuras por clase, como el pool de constantes de ejecución, datos de campos y métodos, y el código de métodos y constructores. Se crea al arrancar la máquina virtual.",
+      "El área de métodos es lógicamente parte del heap, pero una implementación de la máquina virtual puede decidir no recolectarla ni compactarla. Igual que el heap, puede tener tamaño fijo o ampliarse y reducirse, y su memoria no tiene por qué ser contigua.",
+      "Además del área de métodos, una implementación de la máquina virtual Java puede necesitar memoria para procesamiento u optimización internos, que también pertenece a la memoria fuera del heap. Por ejemplo, el compilador JIT necesita memoria para guardar el código máquina nativo traducido desde el código de la máquina virtual para conseguir alto rendimiento.",
+      "Pools de memoria y gestores de memoria",
+      "Los pools de memoria y los gestores de memoria son las entidades abstractas que monitorizan y gestionan el sistema de memoria de la máquina virtual Java.",
+      "Un pool de memoria representa un área de memoria que gestiona la máquina virtual. La máquina virtual tiene al menos un pool y puede crear o eliminar pools durante la ejecución. Un pool puede pertenecer al heap o a la memoria fuera del heap.",
+      "Un gestor de memoria se encarga de gestionar uno o más pools de memoria. El recolector de basura es un tipo de gestor que recupera la memoria ocupada por objetos inalcanzables. Una máquina virtual puede tener uno o más gestores de memoria, y puede añadirlos o quitarlos durante la ejecución. Un pool puede estar gestionado por más de un gestor.",
+      "Monitorización del uso de memoria",
+      "El uso de memoria es un atributo de monitorización muy importante del sistema de memoria. Puede indicar, por ejemplo:",
+      "el uso de memoria de una aplicación,",
+      "la carga que soporta el sistema de gestión automática de memoria,",
+      "posibles fugas de memoria.",
+      "El uso de memoria puede monitorizarse de tres formas:",
+      "Sondeo",
+      "Notificación de umbral de uso",
+      "Notificación de umbral de uso tras la recolección",
+      "Los detalles se especifican en la interfaz MemoryPoolMXBean.",
+      "El mecanismo de monitorización del uso de memoria está pensado para equilibrar la carga o repartir el trabajo. Por ejemplo, una aplicación dejaría de aceptar trabajo nuevo cuando su uso de memoria superara cierto umbral. No está pensado para que una aplicación detecte situaciones de poca memoria y se recupere de ellas.",
+      "Notificaciones",
+      "Este MemoryMXBean es un NotificationEmitter que emite dos tipos de notificaciones de memoria si alguno de los pools admite un umbral de uso o un umbral de uso tras la recolección, lo que puede comprobarse con MemoryPoolMXBean.isUsageThresholdSupported y MemoryPoolMXBean.isCollectionUsageThresholdSupported.",
+      "notificación de umbral de uso superado: avisa de que el uso de memoria de un pool ha aumentado y ha alcanzado o superado su umbral de uso.",
+      "notificación de umbral de uso tras la recolección superado: avisa de que el uso de memoria de un pool es mayor o igual que su",
+      "umbral de uso tras la recolección después de que la máquina virtual Java haya intentado reciclar los objetos no usados de ese pool.",
+      "La notificación emitida es una instancia de javax.management.Notification cuyos datos de usuario son un CompositeData que representa un MemoryNotificationInfo con información del pool en el momento de crear la notificación. El CompositeData contiene los atributos descritos en MemoryNotificationInfo.",
+      "NotificationEmitter",
+      "El MemoryMXBean que devuelve ManagementFactory.getMemoryMXBean implementa la interfaz NotificationEmitter, que permite registrar un listener de notificaciones en el MemoryMXBean.",
+      "Este es un ejemplo de código que registra un MyListener para manejar las notificaciones que emite el MemoryMXBean.",
+      "class MyListener implements javax.management.NotificationListener { public void handleNotification(Notification notif, Object handback) { // handle notification .... } }",
+      "MemoryMXBean mbean = ManagementFactory.getMemoryMXBean(); NotificationEmitter emitter = (NotificationEmitter) mbean; MyListener listener = new MyListener(); emitter.addNotificationListener(listener, null, null);"
+    ]
+  },
+  "web-java-se-java.lang.management.MemoryNotificationInfo": {
+    "body": [
+      "El MemoryMXBean emite una notificación de memoria cuando la máquina virtual Java detecta que el uso de memoria de un pool supera un umbral. La notificación contiene información sobre la situación detectada:",
+      "El nombre del pool de memoria.",
+      "El uso de memoria del pool cuando se creó la notificación.",
+      "El número de veces que el uso de memoria ha cruzado un umbral cuando se creó la notificación. En las notificaciones de umbral de uso, es el contador del umbral de uso; en las de umbral tras la recolección, el contador del umbral de uso tras la recolección.",
+      "Un CompositeData que representa el MemoryNotificationInfo se guarda en los datos de usuario de la notificación. El método from convierte un CompositeData en un objeto MemoryNotificationInfo. Por ejemplo:",
+      "Notification notif;",
+      "// receive the notification emitted by MemoryMXBean and set to notif ...",
+      "String notifType = notif.getType(); if (notifType.equals(MemoryNotificationInfo.MEMORY_THRESHOLD_EXCEEDED) || notifType.equals(MemoryNotificationInfo.MEMORY_COLLECTION_THRESHOLD_EXCEEDED)) { // retrieve the memory notification information CompositeData cd = (CompositeData) notif.getUserData(); MemoryNotificationInfo info = MemoryNotificationInfo.from(cd); .... }",
+      "Los tipos de notificaciones que emite MemoryMXBean son:",
+      "Notificación de umbral de uso superado.",
+      "Se emite cuando el uso de memoria de un pool aumenta y alcanza o supera su umbral de uso. Los cruces posteriores del umbral no generan más notificaciones hasta que el uso vuelve a quedar por debajo del umbral.",
+      "Notificación de umbral de uso tras la recolección superado.",
+      "Se emite cuando el uso de memoria de un pool es mayor o igual que su",
+      "umbral de uso tras la recolección después de que la máquina virtual Java haya intentado reciclar los objetos no usados de ese pool."
+    ]
+  },
+  "web-java-se-java.lang.management.MemoryPoolMXBean": {
+    "body": [
+      "Una máquina virtual Java tiene una o más instancias de la clase que implementa esta interfaz. Una instancia que la implementa es un MXBean que puede obtenerse llamando a ManagementFactory.getMemoryPoolMXBeans o desde el MBeanServer de la plataforma.",
+      "El ObjectName que identifica de forma única el MXBean de un pool de memoria dentro de un MBeanServer es:",
+      "java.lang:type=MemoryPool,name=pool's name",
+      "Puede obtenerse llamando al método PlatformManagedObject.getObjectName.",
+      "Tipo de memoria",
+      "La máquina virtual Java tiene un heap para reservar objetos y además mantiene memoria fuera del heap para el área de métodos y la ejecución de la máquina virtual. Puede tener uno o más pools de memoria, y cada uno representa un área de uno de estos tipos:",
+      "heap",
+      "fuera del heap",
+      "Monitorización del uso de memoria",
+      "Un pool de memoria tiene estos atributos:",
+      "Uso de memoria",
+      "Uso máximo de memoria",
+      "Umbral de uso",
+      "Umbral de uso tras la recolección (solo lo admiten algunos pools con recolección de basura)",
+      "1. Uso de memoria",
+      "El método getUsage da una estimación del uso actual de un pool. En un pool con recolección de basura, la memoria usada incluye la ocupada por todos los objetos del pool, tanto alcanzables como inalcanzables.",
+      "En general, este método es una operación ligera para obtener un uso aproximado. En algunos pools, por ejemplo cuando los objetos no están empaquetados de forma contigua, puede ser una operación costosa que requiere cálculos para determinar el uso actual. La implementación debería documentar estos casos.",
+      "2. Uso máximo de memoria",
+      "La máquina virtual Java mantiene el uso máximo de memoria de un pool desde que arrancó o desde que se restableció el máximo. Lo devuelve getPeakUsage y se restablece con resetPeakUsage.",
+      "3. Umbral de uso",
+      "Cada pool tiene un atributo gestionable llamado umbral de uso, con un valor predeterminado que da la máquina virtual y que depende de la plataforma. Puede fijarse con setUsageThreshold. Si se fija a un valor positivo, se activa la comprobación de cruce del umbral en este pool; si se fija a cero, se desactiva. MemoryPoolMXBean.isUsageThresholdSupported permite saber si esta funcionalidad está admitida.",
+      "La máquina virtual Java comprueba el cruce del umbral de uso pool a pool en el momento que considere más adecuado, normalmente durante la recolección de basura. Cada pool mantiene un contador del umbral de uso que se incrementa cada vez que la máquina virtual detecta que el uso cruza el umbral.",
+      "Este atributo gestionable está pensado para monitorizar con poca sobrecarga la tendencia creciente del uso de memoria. El umbral de uso puede no ser adecuado para algunos pools. Por ejemplo, un recolector generacional, un algoritmo habitual en muchas implementaciones de la máquina virtual Java, gestiona dos o más generaciones separando los objetos por edad. La mayoría de los objetos se reservan en la generación más joven (por ejemplo, un pool \"nursery\"). Este pool está pensado para llenarse, y recolectarlo libera casi todo su espacio, porque se espera que contenga sobre todo objetos de vida corta que en su mayoría son inalcanzables al recolectar. En este caso, lo más adecuado es que el pool nursery no admita umbral de uso. Además, si reservar un objeto en un pool es muy barato (por ejemplo, un simple intercambio atómico de punteros), la máquina virtual probablemente no admitirá umbral de uso en ese pool, porque comparar el uso con el umbral costaría más que la propia reserva.",
+      "El uso de memoria del sistema puede monitorizarse con sondeo o con notificaciones de umbral.",
+      "Sondeo",
+      "Una aplicación puede monitorizar continuamente su uso de memoria llamando a getUsage en todos los pools o a isUsageThresholdExceeded en los que admiten umbral de uso. Este es un ejemplo de código con un hilo dedicado a repartir y procesar tareas. En cada intervalo decide, según su uso de memoria, si debe recibir y procesar tareas nuevas. Si el uso supera su umbral, redistribuye todas las tareas pendientes a otras VMs y deja de recibir tareas nuevas hasta que el uso vuelve a estar por debajo del umbral.",
+      "// Assume the usage threshold is supported for this pool. // Set the threshold to myThreshold above which no new tasks // should be taken. pool.setUsageThreshold(myThreshold); ....",
+      "boolean lowMemory = false; while (true) { if (pool.isUsageThresholdExceeded()) { // potential low memory, so redistribute tasks to other VMs lowMemory = true; redistributeTasks(); // stop receiving new tasks stopReceivingTasks(); } else { if (lowMemory) { // resume receiving tasks lowMemory = false; resumeReceivingTasks(); } // processing outstanding task ... } // sleep for sometime try { Thread.sleep(sometime); } catch (InterruptedException e) { ... } }",
+      "El ejemplo anterior no distingue el caso en que el uso ha bajado temporalmente del umbral del caso en que sigue por encima entre dos iteraciones. El contador que devuelve getUsageThresholdCount permite saber si el uso ha vuelto por debajo del umbral entre dos sondeos.",
+      "Este otro ejemplo hace algo si un pool está con poca memoria e ignora los cambios de uso mientras procesa esa acción.",
+      "// Assume the usage threshold is supported for this pool. // Set the threshold to myThreshold which determines if // the application will take some action under low memory condition. pool.setUsageThreshold(myThreshold);",
+      "int prevCrossingCount = 0; while (true) { // A busy loop to detect when the memory usage // has exceeded the threshold. while (!pool.isUsageThresholdExceeded() || pool.getUsageThresholdCount() == prevCrossingCount) { try { Thread.sleep(sometime) } catch (InterruptException e) { .... } }",
+      "// Do some processing such as check for memory usage // and issue a warning ....",
+      "// Gets the current threshold count. The busy loop will then // ignore any crossing of threshold happens during the processing. prevCrossingCount = pool.getUsageThresholdCount(); }",
+      "Notificaciones de umbral de uso",
+      "MemoryMXBean emite las notificaciones de umbral de uso. Cuando la máquina virtual Java detecta que el uso de memoria de un pool ha alcanzado o superado el umbral, hace que el MemoryMXBean emita una notificación de umbral de uso superado. No se genera otra hasta que el uso baja del umbral y vuelve a superarlo.",
+      "Este ejemplo implementa la misma lógica que el primero, pero detecta la falta de memoria con el mecanismo de notificación de umbral en lugar de con sondeo. Al recibir la notificación, el listener avisa a otro hilo para que haga la acción real, como redistribuir las tareas pendientes, dejar de recibir tareas o volver a recibirlas. El método handleNotification debe hacer lo mínimo posible y retornar enseguida para no retrasar la entrega de las notificaciones siguientes. Las acciones que llevan tiempo deben hacerse en otro hilo. Como el listener puede invocarse desde varios hilos a la vez, las tareas que hace deben estar bien sincronizadas.",
+      "class MyListener implements javax.management.NotificationListener { public void handleNotification(Notification notification, Object handback) { String notifType = notification.getType(); if (notifType.equals(MemoryNotificationInfo.MEMORY_THRESHOLD_EXCEEDED)) { // potential low memory, notify another thread // to redistribute outstanding tasks to other VMs // and stop receiving new tasks. lowMemory = true; notifyAnotherThread(lowMemory); } } }",
+      "// Register MyListener with MemoryMXBean MemoryMXBean mbean = ManagementFactory.getMemoryMXBean(); NotificationEmitter emitter = (NotificationEmitter) mbean; MyListener listener = new MyListener(); emitter.addNotificationListener(listener, null, null);",
+      "// Assume this pool supports a usage threshold. // Set the threshold to myThreshold above which no new tasks // should be taken. pool.setUsageThreshold(myThreshold);",
+      "// Usage threshold detection is enabled and notification will be // handled by MyListener. Continue for other processing. ....",
+      "No hay garantía de cuándo emitirá el MemoryMXBean una notificación de umbral ni de cuándo se entregará. Cuando se invoca un listener, el uso de memoria del pool puede haber cruzado el umbral más de una vez. MemoryNotificationInfo.getCount devuelve cuántas veces había cruzado el umbral en el momento de crear la notificación, y puede compararse con el contador actual que devuelve getUsageThresholdCount para saber si ha pasado esto.",
+      "4. Umbral de uso tras la recolección",
+      "El umbral de uso tras la recolección es un atributo gestionable que solo se aplica a algunos pools con recolección de basura. Después de que la máquina virtual Java haya intentado recuperar espacio reciclando los objetos no usados de un pool durante la recolección, cierta cantidad de bytes del pool seguirá en uso. Este umbral permite fijar un valor para esa cantidad, de modo que si se supera, el MemoryMXBean emite una notificación de umbral de uso tras la recolección superado y se incrementa su contador.",
+      "MemoryPoolMXBean.isCollectionUsageThresholdSupported permite saber si esta funcionalidad está admitida.",
+      "La máquina virtual Java comprueba el umbral de uso tras la recolección pool a pool. La comprobación se activa si el umbral se fija a un valor positivo y se desactiva en ese pool si se fija a cero, que es el valor predeterminado. La comprobación se hace durante la recolección de basura.",
+      "Algunos pools con recolección pueden no admitir este umbral. Por ejemplo, un pool gestionado solo por un recolector concurrente continuo: algunos hilos pueden reservar objetos en él mientras el recolector concurrente recupera a la vez los no usados. Salvo que haya un momento de recolección bien definido que sea el más adecuado para comprobar el uso, no debería admitirse el umbral de uso tras la recolección.",
+      "El umbral de uso tras la recolección está pensado para monitorizar el uso de memoria después de que la máquina virtual haya intentado recuperar espacio. También puede monitorizarse con los mecanismos de sondeo y notificación descritos arriba para el umbral de uso, de forma parecida."
+    ]
+  },
+  "web-java-se-java.lang.management.MemoryUsage": {
+    "body": [
+      "Un objeto MemoryUsage contiene cuatro valores:",
+      "Describe el contenido del objeto MemoryUsage",
+      "Valor · Descripción",
+      "init · la cantidad inicial de memoria (en bytes) que la máquina virtual Java pide al sistema operativo para la gestión de memoria al arrancar. La máquina virtual puede pedir más memoria al sistema y también devolverle memoria con el tiempo. El valor de init puede estar indefinido.",
+      "used · la cantidad de memoria usada actualmente (en bytes).",
+      "committed · la cantidad de memoria (en bytes) que se garantiza disponible para la máquina virtual Java. Puede cambiar con el tiempo (aumentar o disminuir). La máquina virtual puede devolver memoria al sistema, y committed puede ser menor que init. committed siempre es mayor o igual que used.",
+      "max · la cantidad máxima de memoria (en bytes) que puede usarse para la gestión de memoria. Puede estar indefinida. Si está definida, puede cambiar con el tiempo. Si max está definido, used y committed siempre son menores o iguales que max. Una reserva de memoria puede fallar si intenta aumentar used de modo que used > committed, aunque used <= max siga cumpliéndose (por ejemplo, cuando el sistema tiene poca memoria virtual).",
+      "Esta imagen muestra un ejemplo de pool de memoria:",
+      "|--------| init |---------------| used |---------------------------| committed |----------------------------------------------| max",
+      "Correspondencia MXBean",
+      "MemoryUsage se corresponde con un CompositeData con los atributos que indica el método from."
+    ]
+  },
+  "web-java-se-java.lang.management.MemoryUsage.from": {
+    "body": [
+      "Los atributos y tipos que contiene el CompositeData dado",
+      "Nombre del atributo · Tipo",
+      "init · java.lang.Long",
+      "used · java.lang.Long",
+      "committed · java.lang.Long",
+      "max · java.lang.Long"
+    ],
+    "parameters": [
+      {
+        "label": "cd",
+        "detail": "CompositeData que representa un MemoryUsage"
+      }
+    ],
+    "returns": [
+      "un objeto MemoryUsage representado por cd si cd no es null; null en caso contrario."
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si cd no representa un MemoryUsage con los atributos descritos arriba."
+      }
+    ]
+  },
+  "web-java-se-java.lang.management.PlatformLoggingMXBean": {
+    "body": [
+      "Hay una única instancia global de PlatformLoggingMXBean. Puede obtenerse con ManagementFactory.getPlatformMXBean así:",
+      "PlatformLoggingMXBean logging = ManagementFactory.getPlatformMXBean(PlatformLoggingMXBean.class);",
+      "El PlatformLoggingMXBean también se registra en el MBeanServer de la plataforma. El ObjectName que lo identifica de forma única dentro de un MBeanServer es:",
+      "java.util.logging:type=Logging"
+    ]
+  },
+  "web-java-se-java.lang.management.ThreadMXBean": {
+    "body": [
+      "ThreadMXBean permite monitorizar y gestionar los hilos de plataforma de la máquina virtual Java. Los hilos de plataforma suelen corresponder a hilos del kernel planificados por el sistema operativo. ThreadMXBean no permite monitorizar ni gestionar hilos virtuales.",
+      "Una máquina virtual Java tiene una única instancia de la clase que implementa esta interfaz. Esa instancia es un MXBean que puede obtenerse llamando a ManagementFactory.getThreadMXBean o desde el MBeanServer de la plataforma.",
+      "El ObjectName que identifica de forma única el MXBean del sistema de hilos dentro de un MBeanServer es:",
+      "java.lang:type=Threading",
+      "Puede obtenerse llamando al método PlatformManagedObject.getObjectName.",
+      "ID de hilo",
+      "El ID de hilo es un long positivo que devuelve el método threadId() del hilo. Es único durante la vida del hilo; cuando el hilo termina, su ID puede reutilizarse.",
+      "Algunos métodos de esta interfaz reciben como parámetro un ID de hilo o un array de IDs y devuelven información por hilo.",
+      "Tiempo de CPU de los hilos",
+      "Una implementación de la máquina virtual Java puede permitir medir el tiempo de CPU del hilo de plataforma actual, de cualquier hilo de plataforma o de ninguno.",
+      "isThreadCpuTimeSupported permite saber si la máquina virtual admite medir el tiempo de CPU de cualquier hilo de plataforma. isCurrentThreadCpuTimeSupported() permite saber si admite medirlo con getCurrentThreadCpuTime() y getCurrentThreadUserTime() desde un hilo de plataforma.",
+      "El tiempo de CPU que da esta interfaz tiene precisión de nanosegundos, pero no necesariamente exactitud de nanosegundos.",
+      "Una máquina virtual Java puede tener desactivada por defecto la medición del tiempo de CPU. isThreadCpuTimeEnabled y setThreadCpuTimeEnabled permiten comprobar si está activada y activarla o desactivarla, respectivamente. Activarla puede ser costoso en algunas implementaciones.",
+      "Monitorización de la contención de hilos",
+      "Algunas máquinas virtuales Java pueden admitir la monitorización de la contención de hilos. Si está activada, se recoge el tiempo acumulado que el hilo ha estado bloqueado por sincronización o esperando una notificación, y se devuelve en el objeto ThreadInfo.",
+      "isThreadContentionMonitoringSupported permite saber si la máquina virtual admite la monitorización de la contención de hilos. Está desactivada por defecto y puede activarse con setThreadContentionMonitoringEnabled.",
+      "Información de sincronización y detección de interbloqueos",
+      "Algunas máquinas virtuales Java pueden admitir la monitorización del uso de monitores de objetos y de sincronizadores poseíbles. getThreadInfo(long[], boolean, boolean) y dumpAllThreads permiten obtener la traza de pila del hilo e información de sincronización, como qué lock intenta adquirir o espera un hilo y qué locks posee actualmente.",
+      "La interfaz ThreadMXBean ofrece los métodos findMonitorDeadlockedThreads y findDeadlockedThreads para encontrar interbloqueos en la aplicación en ejecución."
+    ]
+  },
+  "web-java-se-java.lang.management.ThreadMXBean.dumpAllThreads": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve la información de todos los hilos de plataforma vivos, con su traza de pila e información de sincronización. No se incluyen los IDs de los hilos virtuales. Este método equivale a llamar a:"
+        ],
+        "body": [
+          "dumpAllThreads(lockedMonitors, lockedSynchronizers, Integer.MAX_VALUE)"
+        ],
+        "parameters": [
+          {
+            "label": "lockedMonitors",
+            "detail": "si es true, vuelca todos los monitores bloqueados."
+          },
+          {
+            "label": "lockedSynchronizers",
+            "detail": "si es true, vuelca todos los sincronizadores poseíbles bloqueados."
+          }
+        ],
+        "returns": [
+          "un array de ThreadInfo con todos los hilos de plataforma vivos."
+        ],
+        "exceptions": [
+          {
+            "label": "SecurityException",
+            "detail": "si hay un gestor de seguridad y quien llama no tiene ManagementPermission(\"monitor\")."
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si lockedMonitors es true pero la máquina virtual Java no admite la monitorización del uso de monitores de objetos, o si lockedSynchronizers es true pero no admite la monitorización del uso de sincronizadores poseíbles."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve la información de todos los hilos de plataforma vivos, con una traza de pila de como máximo el número de elementos indicado e información de sincronización. Si maxDepth == 0, no se vuelca la traza de pila del hilo. No se incluyen los IDs de los hilos virtuales. Algunos hilos del array devuelto pueden haber terminado cuando este método retorna."
+        ],
+        "body": [
+          "Este método devuelve un array de objetos ThreadInfo como se indica en el método getThreadInfo(long[], boolean, boolean, int)."
+        ],
+        "parameters": [
+          {
+            "label": "lockedMonitors",
+            "detail": "si es true, vuelca todos los monitores bloqueados."
+          },
+          {
+            "label": "lockedSynchronizers",
+            "detail": "si es true, vuelca todos los sincronizadores poseíbles bloqueados."
+          },
+          {
+            "label": "maxDepth",
+            "detail": "el número máximo de StackTraceElement que se obtienen de la traza de pila."
+          }
+        ],
+        "returns": [
+          "un array de ThreadInfo con todos los hilos de plataforma vivos."
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si maxDepth es negativo."
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si hay un gestor de seguridad y quien llama no tiene ManagementPermission(\"monitor\")."
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si lockedMonitors es true pero la máquina virtual Java no admite la monitorización del uso de monitores de objetos, o si lockedSynchronizers es true pero no admite la monitorización del uso de sincronizadores poseíbles."
+          }
+        ],
+        "caveats": [
+          "La implementación predeterminada lanza UnsupportedOperationException."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.lang.management.ThreadMXBean.getPeakThreadCount": {
+    "intro": [
+      "Devuelve el máximo de hilos de plataforma vivos desde que arrancó la máquina virtual Java o desde que se restableció el máximo. No incluye los hilos virtuales."
+    ],
+    "returns": ["el máximo de hilos de plataforma vivos."]
+  },
+  "web-java-se-java.lang.management.ThreadMXBean.getThreadInfo": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve la información del hilo con el ID indicado, sin traza de pila. Este método equivale a llamar a:"
+        ],
+        "body": [
+          "getThreadInfo(id, 0);",
+          "Este método devuelve un ThreadInfo con la información del hilo del ID indicado. La traza de pila, los monitores bloqueados y los sincronizadores bloqueados del ThreadInfo devuelto estarán vacíos.",
+          "Si el hilo del ID dado es virtual, no está vivo o no existe, este método devuelve null. Un hilo está vivo si se ha iniciado y aún no ha terminado.",
+          "Acceso desde MBeanServer:",
+          "El tipo correspondiente de ThreadInfo es CompositeData con los atributos que indica el método ThreadInfo.from."
+        ],
+        "parameters": [
+          {
+            "label": "id",
+            "detail": "el ID del hilo. Debe ser positivo."
+          }
+        ],
+        "returns": [
+          "un ThreadInfo del hilo del ID dado sin traza de pila ni información de monitores o sincronizadores bloqueados; null si el hilo del ID dado es virtual, no está vivo o no existe."
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si id <= 0."
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si hay un gestor de seguridad y quien llama no tiene ManagementPermission(\"monitor\")."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve la información de cada hilo cuyo ID está en el array ids, sin traza de pila. Este método equivale a llamar a:"
+        ],
+        "body": [
+          "getThreadInfo(ids, 0);",
+          "Este método devuelve un array de objetos ThreadInfo. La traza de pila, los monitores bloqueados y los sincronizadores bloqueados de cada ThreadInfo estarán vacíos.",
+          "Si el hilo de un ID dado es virtual, no está vivo o no existe, el elemento correspondiente del array devuelto será null. Un hilo está vivo si se ha iniciado y aún no ha terminado.",
+          "Acceso desde MBeanServer:",
+          "El tipo correspondiente de ThreadInfo es CompositeData con los atributos que indica el método ThreadInfo.from."
+        ],
+        "parameters": [
+          {
+            "label": "ids",
+            "detail": "un array de IDs de hilo."
+          }
+        ],
+        "returns": [
+          "un array de objetos ThreadInfo, cada uno con la información del hilo cuyo ID está en el elemento correspondiente del array de entrada, sin traza de pila ni información de monitores o sincronizadores bloqueados."
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si algún elemento del array ids es <= 0."
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si hay un gestor de seguridad y quien llama no tiene ManagementPermission(\"monitor\")."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve la información del hilo con el ID indicado, con una traza de pila del número de elementos indicado. El parámetro maxDepth indica el número máximo de StackTraceElement que se obtienen de la traza. Si maxDepth == Integer.MAX_VALUE, se vuelca la traza completa del hilo. Si maxDepth == 0, no se vuelca la traza. Este método no obtiene los monitores ni sincronizadores bloqueados del hilo."
+        ],
+        "body": [
+          "Si la máquina virtual Java no tiene información de la traza de pila de un hilo o maxDepth == 0, la traza del ThreadInfo será un array vacío de StackTraceElement.",
+          "Si el hilo del ID dado es virtual, no está vivo o no existe, este método devuelve null. Un hilo está vivo si se ha iniciado y aún no ha terminado.",
+          "Acceso desde MBeanServer:",
+          "El tipo correspondiente de ThreadInfo es CompositeData con los atributos que indica el método ThreadInfo.from."
+        ],
+        "parameters": [
+          {
+            "label": "id",
+            "detail": "el ID del hilo. Debe ser positivo."
+          },
+          {
+            "label": "maxDepth",
+            "detail": "el número máximo de entradas de la traza de pila que se vuelcan. Puede usarse Integer.MAX_VALUE para pedir la pila completa."
+          }
+        ],
+        "returns": [
+          "un ThreadInfo del hilo del ID dado sin información de monitores ni sincronizadores bloqueados; null si el hilo del ID dado es virtual, no está vivo o no existe."
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si id <= 0."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si maxDepth es negativo."
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si hay un gestor de seguridad y quien llama no tiene ManagementPermission(\"monitor\")."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve la información de cada hilo cuyo ID está en el array ids, con una traza de pila del número de elementos indicado. El parámetro maxDepth indica el número máximo de StackTraceElement que se obtienen de la traza. Si maxDepth == Integer.MAX_VALUE, se vuelca la traza completa del hilo. Si maxDepth == 0, no se vuelca la traza. Este método no obtiene los monitores ni sincronizadores bloqueados de los hilos."
+        ],
+        "body": [
+          "Si la máquina virtual Java no tiene información de la traza de pila de un hilo o maxDepth == 0, la traza del ThreadInfo será un array vacío de StackTraceElement.",
+          "Este método devuelve un array de objetos ThreadInfo, cada uno con la información del hilo del mismo índice en el array ids. Si el hilo de un ID dado es virtual, no está vivo o no existe, el elemento correspondiente del array devuelto será null. Un hilo está vivo si se ha iniciado y aún no ha terminado.",
+          "Acceso desde MBeanServer:",
+          "El tipo correspondiente de ThreadInfo es CompositeData con los atributos que indica el método ThreadInfo.from."
+        ],
+        "parameters": [
+          {
+            "label": "ids",
+            "detail": "un array de IDs de hilo"
+          },
+          {
+            "label": "maxDepth",
+            "detail": "el número máximo de entradas de la traza de pila que se vuelcan. Puede usarse Integer.MAX_VALUE para pedir la pila completa."
+          }
+        ],
+        "returns": [
+          "un array de objetos ThreadInfo, cada uno con la información del hilo cuyo ID está en el elemento correspondiente del array de entrada, sin información de monitores ni sincronizadores bloqueados."
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si maxDepth es negativo."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si algún elemento del array ids es <= 0."
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si hay un gestor de seguridad y quien llama no tiene ManagementPermission(\"monitor\")."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve la información de cada hilo cuyo ID está en el array ids, con traza de pila e información de sincronización. Equivale a llamar a:"
+        ],
+        "body": [
+          "getThreadInfo(ids, lockedMonitors, lockedSynchronizers, Integer.MAX_VALUE)"
+        ],
+        "parameters": [
+          {
+            "label": "ids",
+            "detail": "un array de IDs de hilo."
+          },
+          {
+            "label": "lockedMonitors",
+            "detail": "si es true, obtiene todos los monitores bloqueados."
+          },
+          {
+            "label": "lockedSynchronizers",
+            "detail": "si es true, obtiene todos los sincronizadores poseíbles bloqueados."
+          }
+        ],
+        "returns": [
+          "un array de objetos ThreadInfo, cada uno con la información del hilo cuyo ID está en el elemento correspondiente del array de entrada."
+        ],
+        "exceptions": [
+          {
+            "label": "SecurityException",
+            "detail": "si hay un gestor de seguridad y quien llama no tiene ManagementPermission(\"monitor\")."
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si lockedMonitors es true pero la máquina virtual Java no admite la monitorización del uso de monitores de objetos, o si lockedSynchronizers es true pero no admite la monitorización del uso de sincronizadores poseíbles."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve la información de cada hilo cuyo ID está en el array ids, con una traza de pila de como máximo el número de elementos indicado e información de sincronización. Si maxDepth == 0, no se vuelca la traza del hilo."
+        ],
+        "body": [
+          "Este método obtiene una instantánea de la información de cada hilo, que incluye:",
+          "la traza de pila con como máximo el número de elementos indicado,",
+          "los monitores de objetos que el hilo tiene bloqueados, si lockedMonitors es true, y",
+          "los sincronizadores poseíbles que el hilo tiene bloqueados, si lockedSynchronizers es true.",
+          "Este método devuelve un array de objetos ThreadInfo, cada uno con la información del hilo del mismo índice en el array ids. Si el hilo de un ID dado es virtual, no está vivo o no existe, el elemento correspondiente del array devuelto será null. Un hilo está vivo si se ha iniciado y aún no ha terminado.",
+          "Si un hilo no bloquea ningún monitor o lockedMonitors es false, el ThreadInfo devuelto tendrá un array MonitorInfo vacío. Del mismo modo, si no bloquea ningún sincronizador o lockedSynchronizers es false, tendrá un array LockInfo vacío.",
+          "Cuando lockedMonitors y lockedSynchronizers son ambos false, equivale a llamar a:",
+          "getThreadInfo(ids, maxDepth)",
+          "Este método está pensado para diagnosticar problemas, no para controlar la sincronización. Puede ser una operación costosa.",
+          "Acceso desde MBeanServer:",
+          "El tipo correspondiente de ThreadInfo es CompositeData con los atributos que indica el método ThreadInfo.from."
+        ],
+        "parameters": [
+          {
+            "label": "ids",
+            "detail": "un array de IDs de hilo."
+          },
+          {
+            "label": "lockedMonitors",
+            "detail": "si es true, obtiene todos los monitores bloqueados."
+          },
+          {
+            "label": "lockedSynchronizers",
+            "detail": "si es true, obtiene todos los sincronizadores poseíbles bloqueados."
+          },
+          {
+            "label": "maxDepth",
+            "detail": "el número máximo de StackTraceElement que se obtienen de la traza de pila."
+          }
+        ],
+        "returns": [
+          "un array de objetos ThreadInfo, cada uno con la información del hilo cuyo ID está en el elemento correspondiente del array de entrada."
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si maxDepth es negativo."
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si hay un gestor de seguridad y quien llama no tiene ManagementPermission(\"monitor\")."
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si lockedMonitors es true pero la máquina virtual Java no admite la monitorización del uso de monitores de objetos, o si lockedSynchronizers es true pero no admite la monitorización del uso de sincronizadores poseíbles."
+          }
+        ],
+        "caveats": [
+          "La implementación predeterminada lanza UnsupportedOperationException."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.lang.module.ModuleDescriptor%24Builder.provides": {
+    "overloads": [
+      {
+        "intro": [
+          "Indica que el módulo ofrece un servicio con una o más implementaciones. El paquete de cada proveedor (o fábrica de proveedores) se añade al módulo si aún no está."
+        ],
+        "parameters": [
+          {
+            "label": "p",
+            "detail": "El provides"
+          }
+        ],
+        "returns": ["Este builder"],
+        "exceptions": [
+          {
+            "label": "IllegalStateException",
+            "detail": "Si ya se han declarado los proveedores para el tipo de servicio"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Indica que el módulo ofrece implementaciones de un servicio. El paquete de cada proveedor (o fábrica de proveedores) se añade al módulo si aún no está."
+        ],
+        "parameters": [
+          {
+            "label": "service",
+            "detail": "El tipo de servicio"
+          },
+          {
+            "label": "providers",
+            "detail": "La lista de nombres de clase de los proveedores o fábricas de proveedores"
+          }
+        ],
+        "returns": ["Este builder"],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "Si el tipo de servicio o algún nombre de clase de proveedor es null o no es el nombre cualificado de una clase de un paquete con nombre, o si la lista de nombres de clase de proveedores está vacía"
+          },
+          {
+            "label": "IllegalStateException",
+            "detail": "Si ya se han declarado los proveedores para el tipo de servicio"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.lang.ref.Cleaner": {
+    "body": [
+      "Las acciones de limpieza se registran con register(Object, Runnable) para ejecutarse cuando el cleaner recibe el aviso de que el objeto se ha vuelto alcanzable solo de forma fantasma. El cleaner usa PhantomReference y ReferenceQueue para enterarse de los cambios de alcanzabilidad.",
+      "Cada cleaner funciona de forma independiente: gestiona las acciones de limpieza pendientes y se encarga de los hilos y de terminar cuando ya no se usa. Registrar una referencia a un objeto y su acción de limpieza devuelve un Cleanable. Lo más eficiente es llamar explícitamente a su método clean cuando el objeto se cierra o deja de necesitarse. La acción de limpieza es un Runnable que se invoca como mucho una vez cuando el objeto se vuelve alcanzable solo de forma fantasma, salvo que ya se haya limpiado explícitamente. La acción de limpieza no debe hacer referencia al objeto registrado; si lo hace, el objeto nunca será alcanzable solo de forma fantasma y la acción no se invocará automáticamente.",
+      "La acción de limpieza la ejecuta un hilo asociado al cleaner. Se ignoran todas las excepciones que lance. El cleaner y las demás acciones de limpieza no se ven afectados por las excepciones de una acción. El hilo funciona hasta que terminan todas las acciones registradas y el recolector de basura recoge el propio cleaner.",
+      "El comportamiento de los cleaners durante System.exit depende de la implementación. No hay garantías de que se invoquen o no las acciones de limpieza.",
+      "Salvo que se indique lo contrario, pasar null a un constructor o método de esta clase provoca NullPointerException."
+    ],
+    "caveats": [
+      "La acción de limpieza solo se invoca cuando el objeto asociado se vuelve alcanzable solo de forma fantasma, así que es importante que el objeto que implementa la acción no tenga referencias a él. En este ejemplo, una clase estática encapsula el estado y la acción de limpieza. No debe usarse una clase \"interna\", anónima o no, porque contiene implícitamente una referencia a la instancia exterior, lo que impide que se vuelva alcanzable solo de forma fantasma. Crear un cleaner nuevo o compartir uno existente depende del caso de uso.",
+      "Si CleaningExample se usa en un bloque try-finally, el método close llama a la acción de limpieza. Si no se llama a close, el Cleaner llama a la acción cuando la instancia de CleaningExample se vuelve alcanzable solo de forma fantasma.",
+      "{@code public class CleaningExample implements AutoCloseable { // A cleaner (preferably one shared within a library, // but for the sake of example, a new one is created here) private static final Cleaner cleaner = Cleaner.create();",
+      "// State class captures information necessary for cleanup. // It must hold no reference to the instance being cleaned // and therefore it is a static inner class in this example. static class State implements Runnable {",
+      "State(...) { // initialize State needed for cleaning action }",
+      "public void run() { // cleanup action accessing State, executed at most once } }",
+      "private final State state; private final Cleaner.Cleanable cleanable;",
+      "public CleaningExample() { this.state = new State(...); this.cleanable = cleaner.register(this, state); }",
+      "public void close() { cleanable.clean(); } } }",
+      "La acción de limpieza podría ser una lambda, pero es muy fácil que capture la referencia al objeto al usar sus campos, lo que impediría que se volviera alcanzable solo de forma fantasma. Usar una clase anidada estática, como arriba, evita retener la referencia por accidente.",
+      "Las acciones de limpieza deben estar preparadas para ejecutarse a la vez que otras. Normalmente deben ser muy rápidas y no bloquearse. Si una se bloquea, puede retrasar otras acciones registradas en el mismo cleaner. Todas las acciones registradas en un cleaner deben ser compatibles entre sí."
+    ]
+  },
+  "web-java-se-java.lang.reflect.Executable.getParameterAnnotations": {
+    "body": [
+      "Un compilador puede añadir a la lista de parámetros de un método parámetros declarados implícitamente en el código fuente (\"obligatorios\") y parámetros que no están declarados ni implícita ni explícitamente (\"sintéticos\"). Consulta java.lang.reflect.Parameter para más información.",
+      "Las anotaciones que devuelve este método son anotaciones de declaración."
+    ],
+    "returns": [
+      "un array de arrays con las anotaciones de los parámetros formales e implícitos, en orden de declaración, del ejecutable que representa este objeto"
+    ]
+  },
+  "web-java-se-java.lang.reflect.InvocationHandler.invokeDefault": {
+    "body": [
+      "Invocar este método se comporta como si se ejecutara una instrucción invokespecial desde la clase proxy, apuntando al método por defecto de una interfaz del proxy. Equivale a la invocación X.super.m(A* a), donde X es una interfaz del proxy y la llamada a X.super::m(A*) se resuelve al método dado.",
+      "Ejemplos: las interfaces A y B declaran una implementación por defecto del método m. La interfaz C extiende A y hereda de ella el método por defecto m.",
+      "{@code interface A { default T m(A a) { return t1; } } interface B { default T m(A a) { return t2; } } interface C extends A {} }",
+      "Esto crea una instancia proxy que implementa A e invoca el método por defecto A::m.",
+      "{@code Object proxy = Proxy.newProxyInstance(loader, new Class[] { A.class }, (o, m, params) -> { if (m.isDefault()) { // if it's a default method, invoke it return InvocationHandler.invokeDefault(o, m, params); } }); }",
+      "Si una instancia proxy implementa A y B, que ofrecen ambas una implementación por defecto de m, el manejador de invocaciones puede despachar la llamada a A::m o a B::m con invokeDefault. Por ejemplo, este código delega la llamada en B::m.",
+      "{@code Object proxy = Proxy.newProxyInstance(loader, new Class[] { A.class, B.class }, (o, m, params) -> { if (m.getName().equals(\"m\")) { // invoke B::m instead of A::m Method bMethod = B.class.getMethod(m.getName(), m.getParameterTypes()); return InvocationHandler.invokeDefault(o, bMethod, params); } }); }",
+      "Si una instancia proxy implementa C, que hereda de su superinterfaz A el método por defecto m, la invocación del método de interfaz \"m\" se despacha al método invoke(Object, Method, Object[]) del manejador, con el argumento Method que representa el método por defecto A::m.",
+      "{@code Object proxy = Proxy.newProxyInstance(loader, new Class[] { C.class }, (o, m, params) -> { if (m.isDefault()) { // behaves as if calling C.super.m(params) return InvocationHandler.invokeDefault(o, m, params); } }); }",
+      "Invocar \"m\" sobre este proxy se comporta como si se llamara a C.super::m, que se resuelve a A::m.",
+      "Añadir un método por defecto, o cambiar un método de abstracto a por defecto, puede provocar una excepción si código existente llama a invokeDefault para invocar un método por defecto.",
+      "Por ejemplo, si C se modifica para implementar un método por defecto m:",
+      "{@code interface C extends A { default T m(A a) { return t3; } } }",
+      "El código anterior que crea la instancia proxy con la C modificada se ejecutará sin excepciones y llamará a C::m en lugar de a A::m.",
+      "Este es otro ejemplo que crea una instancia proxy de C cuyo manejador llama a invokeDefault para invocar A::m:",
+      "{@code C c = (C) Proxy.newProxyInstance(loader, new Class[] { C.class }, (o, m, params) -> { if (m.getName().equals(\"m\")) { // IllegalArgumentException thrown as A::m is not a method // inherited from its proxy interface C Method aMethod = A.class.getMethod(m.getName(), m.getParameterTypes()); return InvocationHandler.invokeDefault(o, aMethod params); } }); c.m(...); }",
+      "Este código funciona con la versión antigua de C e invoca A::m. Con la nueva versión de C, falla con IllegalArgumentException, porque C sobrescribe la implementación del mismo método y A::m no es accesible para una instancia proxy."
+    ],
+    "parameters": [
+      {
+        "label": "proxy",
+        "detail": "la instancia Proxy sobre la que se invoca el método por defecto"
+      },
+      {
+        "label": "method",
+        "detail": "la instancia Method de un método por defecto declarado en una interfaz de la clase proxy o heredado, directa o indirectamente, de una de sus superinterfaces"
+      },
+      {
+        "label": "args",
+        "detail": "los parámetros de la invocación; puede ser null si el método no tiene parámetros formales."
+      }
+    ],
+    "returns": ["el valor devuelto por la invocación del método"],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si se cumple alguna de estas condiciones: proxy no es una instancia proxy; el método dado no es un método por defecto declarado en una interfaz de la clase proxy ni heredado de ninguna de sus superinterfaces; el método dado está sobrescrito directa o indirectamente por las interfaces del proxy y la referencia al método nombrado nunca se resuelve al método dado; la longitud del array args no coincide con el número de parámetros del método; algún elemento de args no supera el desempaquetado cuando el parámetro correspondiente es primitivo; o, tras el posible desempaquetado, algún elemento de args no puede asignarse al tipo del parámetro correspondiente."
+      },
+      {
+        "label": "IllegalAccessException",
+        "detail": "si la clase declarante del método por defecto indicado no es accesible para la clase llamante"
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "si proxy o method es null"
+      },
+      {
+        "label": "Throwable",
+        "detail": "cualquier cosa que lance el método por defecto"
+      }
+    ],
+    "caveats": [
+      "El parámetro proxy es de tipo Object en lugar de Proxy para que una implementación de InvocationHandler::invoke(Object, Method, Object[]) pueda llamarlo directamente sin conversión de tipo."
+    ]
+  },
+  "web-java-se-java.lang.reflect.Method.getParameterAnnotations": {
+    "body": [
+      "Un compilador puede añadir a la lista de parámetros de un método parámetros declarados implícitamente en el código fuente (\"obligatorios\") y parámetros que no están declarados ni implícita ni explícitamente (\"sintéticos\"). Consulta java.lang.reflect.Parameter para más información.",
+      "Las anotaciones que devuelve este método son anotaciones de declaración."
+    ],
+    "returns": [
+      "un array de arrays con las anotaciones de los parámetros formales e implícitos, en orden de declaración, del ejecutable que representa este objeto"
+    ]
+  },
+  "web-java-se-java.lang.reflect.Proxy": {
+    "body": [
+      "{@code InvocationHandler handler = new MyInvocationHandler(...); Foo f = (Foo) Proxy.newProxyInstance(Foo.class.getClassLoader(), new Class[] { Foo.class }, handler); }",
+      "Una clase proxy es una clase creada en tiempo de ejecución que implementa una lista indicada de interfaces, llamadas interfaces del proxy. Una instancia proxy es una instancia de una clase proxy.",
+      "Cada instancia proxy tiene un manejador de invocaciones asociado, que implementa la interfaz InvocationHandler. Una invocación de método sobre una instancia proxy a través de una de sus interfaces se despacha al método invoke del manejador, pasándole la instancia proxy, un objeto java.lang.reflect.Method que identifica el método invocado y un array Object con los argumentos. El manejador procesa la invocación como corresponda, y lo que devuelva es el resultado de la invocación sobre la instancia proxy.",
+      "Una clase proxy tiene estas propiedades:",
+      "El nombre no cualificado de una clase proxy no está especificado. Aun así, los nombres de clase que empiezan por \"$Proxy\" deberían reservarse para clases proxy.",
+      "El paquete y el módulo en que se define una clase proxy se especifican más abajo.",
+      "Una clase proxy es final y no abstracta.",
+      "Una clase proxy extiende java.lang.reflect.Proxy.",
+      "Una clase proxy implementa exactamente las interfaces indicadas al crearla, en el mismo orden. getInterfaces sobre su objeto Class devuelve un array con esa misma lista de interfaces (en el orden indicado al crearla), getMethods devuelve un array de Method con todos los métodos de esas interfaces, y getMethod encuentra los métodos de las interfaces del proxy como cabría esperar.",
+      "El java.security.ProtectionDomain de una clase proxy es el mismo que el de las clases del sistema cargadas por el cargador bootstrap, como java.lang.Object, porque el código de la clase proxy lo genera código de sistema de confianza. Normalmente a este dominio de protección se le concede java.security.AllPermission.",
+      "El método Proxy.isProxyClass permite saber si una clase dada es una clase proxy.",
+      "Una instancia proxy tiene estas propiedades:",
+      "Dada una instancia proxy proxy y una de las interfaces que implementa su clase, Foo, esta expresión devuelve true:",
+      "proxy instanceof Foo",
+      "y esta conversión funciona (en lugar de lanzar ClassCastException):",
+      "(Foo) proxy",
+      "Cada instancia proxy tiene un manejador de invocaciones asociado, el que se pasó a su constructor. El método estático Proxy.getInvocationHandler devuelve el manejador asociado a la instancia proxy que recibe como argumento.",
+      "Una invocación de un método de interfaz sobre una instancia proxy se codifica y se despacha al método invoke del manejador como se describe en la documentación de ese método.",
+      "Una interfaz del proxy puede definir un método por defecto o heredarlo, directa o indirectamente, de una superinterfaz. Un manejador puede invocar un método por defecto de una interfaz del proxy llamando a InvocationHandler::invokeDefault(Object, Method, Object...).",
+      "Una invocación de los métodos hashCode, equals o toString declarados en java.lang.Object sobre una instancia proxy se codifica y despacha al método invoke del manejador igual que las invocaciones de métodos de interfaz, como se describe arriba. La clase declarante del Method pasado a invoke será java.lang.Object. Los demás métodos públicos que una instancia proxy hereda de java.lang.Object no los sobrescribe la clase proxy, así que se comportan como en cualquier instancia de java.lang.Object.",
+      "Paquete y módulo de la clase proxy",
+      "El paquete y el módulo a los que pertenece una clase proxy se eligen para que su accesibilidad esté en línea con la de las interfaces del proxy. En concreto, el paquete y el módulo de una clase proxy definida con getProxyClass(ClassLoader, Class[]) o newProxyInstance(ClassLoader, Class[], InvocationHandler) se especifican así:",
+      "Si todas las interfaces del proxy están en paquetes exportados o abiertos:",
+      "si todas son públicas, la clase proxy es pública y está en un paquete exportado incondicionalmente pero no abierto. Los nombres del paquete y del módulo no están especificados.",
+      "si al menos una no es pública, la clase proxy no es pública y está en el paquete y módulo de las interfaces no públicas. Todas las interfaces no públicas deben estar en el mismo paquete y módulo; si no, no es posible crear el proxy.",
+      "Si al menos una interfaz del proxy está en un paquete no exportado y no abierto:",
+      "si todas son públicas, la clase proxy es pública y está en un paquete no exportado y no abierto de un módulo dinámico. Los nombres del paquete y del módulo no están especificados.",
+      "si al menos una no es pública, la clase proxy no es pública y está en el paquete y módulo de las interfaces no públicas. Todas las interfaces no públicas deben estar en el mismo paquete y módulo; si no, no es posible crear el proxy.",
+      "Si una misma instancia hace de proxy de interfaces con accesibilidades mezcladas (por ejemplo, una interfaz pública exportada y otra no pública no exportada), la accesibilidad de la clase proxy la determina la interfaz menos accesible.",
+      "Cualquier código puede obtener acceso a una clase proxy de un paquete abierto con setAccessible, mientras que una clase proxy de un paquete no abierto nunca es accesible para código de fuera de su módulo.",
+      "En toda esta especificación, \"paquete no exportado\" se refiere a un paquete que no se exporta a todos los módulos, y \"paquete no abierto\", a uno que no está abierto a todos los módulos. En concreto, se refieren a un paquete que su módulo no exporta/abre o que exporta/abre de forma cualificada.",
+      "Módulos dinámicos",
+      "Un módulo dinámico es un módulo con nombre generado en tiempo de ejecución. Una clase proxy definida en un módulo dinámico está encapsulada y no es accesible para ningún módulo. Llamar a Constructor.newInstance(Object...) sobre una clase proxy de un módulo dinámico lanza IllegalAccessException; en su lugar debe usarse Proxy.newProxyInstance.",
+      "Un módulo dinámico puede leer los módulos de todas las superinterfaces de una clase proxy y los de las clases e interfaces referenciadas en todas sus firmas de métodos públicos. Si una superinterfaz o una clase o interfaz referenciada, por ejemplo T, está en un paquete no exportado, se actualiza el módulo de T para exportar el paquete de T al módulo dinámico.",
+      "Métodos duplicados en varias interfaces del proxy",
+      "Cuando dos o más interfaces del proxy contienen un método con el mismo nombre y firma de parámetros, el orden de las interfaces de la clase proxy importa. Al invocar un método duplicado sobre una instancia proxy, el Method que recibe el manejador no tiene por qué ser aquel cuya clase declarante es asignable desde el tipo de la interfaz a través de la que se invocó. Esta limitación existe porque la implementación del método en la clase proxy generada no puede saber a través de qué interfaz se invocó. Por eso, al invocar un método duplicado, se pasa al método invoke del manejador el Method de la primera interfaz de la lista de la clase proxy que contiene el método (directamente o heredado de una superinterfaz), sea cual sea el tipo de referencia a través del que se invocó.",
+      "Si una interfaz del proxy contiene un método con el mismo nombre y firma que hashCode, equals o toString de java.lang.Object, al invocarlo sobre una instancia proxy el Method que recibe el manejador tendrá java.lang.Object como clase declarante. Es decir, los métodos públicos no finales de java.lang.Object preceden lógicamente a todas las interfaces del proxy a la hora de decidir qué Method pasar al manejador.",
+      "Además, cuando se despacha un método duplicado a un manejador, el método invoke solo puede lanzar excepciones comprobadas asignables a alguno de los tipos de la cláusula throws del método en todas las interfaces del proxy a través de las que puede invocarse. Si invoke lanza una excepción comprobada que no es asignable a ninguno de los tipos declarados por el método en alguna de esas interfaces, la invocación sobre la instancia proxy lanza una UndeclaredThrowableException no comprobada. Esta restricción significa que no todos los tipos de excepción que devuelve getExceptionTypes sobre el Method pasado a invoke pueden lanzarse con éxito desde invoke."
+    ]
+  },
+  "web-java-se-java.lang.reflect.Proxy.newProxyInstance": {
+    "body": [
+      "Se lanza IllegalArgumentException si se incumple alguna de estas restricciones:",
+      "Todos los objetos Class del array interfaces deben representar interfaces no ocultas y no selladas, no clases ni tipos primitivos.",
+      "No puede haber dos elementos del array interfaces que se refieran a objetos Class idénticos.",
+      "Todos los tipos de interfaz deben ser visibles por nombre a través del cargador de clases indicado. Es decir, para el cargador cl y cada interfaz i, debe cumplirse esta expresión:",
+      "Class.forName(i.getName(), false, cl) == i",
+      "Todos los tipos referenciados en las firmas de métodos públicos de las interfaces indicadas, y en las heredadas de sus superinterfaces, deben ser visibles por nombre a través del cargador indicado.",
+      "Todas las interfaces no públicas deben estar en el mismo paquete y módulo, definidos por el cargador indicado, y el módulo de las interfaces no públicas debe poder acceder a todos los tipos de interfaz; si no, la clase proxy no podría implementar todas las interfaces, esté definida en el paquete que esté.",
+      "Para cualquier conjunto de métodos miembro de las interfaces indicadas con la misma firma:",
+      "Si el tipo de retorno de alguno es primitivo o void, todos deben tener ese mismo tipo de retorno.",
+      "Si no, uno de los métodos debe tener un tipo de retorno asignable a los tipos de retorno de todos los demás.",
+      "La clase proxy resultante no debe superar ningún límite que la máquina virtual imponga a las clases. Por ejemplo, la VM puede limitar a 65535 el número de interfaces que puede implementar una clase; en ese caso el array interfaces no debe tener más de 65535 elementos.",
+      "El orden de las interfaces indicadas importa: dos peticiones de clase proxy con la misma combinación de interfaces en distinto orden darán dos clases proxy distintas."
+    ],
+    "parameters": [
+      {
+        "label": "loader",
+        "detail": "el cargador de clases que define la clase proxy"
+      },
+      {
+        "label": "interfaces",
+        "detail": "la lista de interfaces que implementa la clase proxy"
+      },
+      {
+        "label": "h",
+        "detail": "el manejador al que se despachan las invocaciones de métodos"
+      }
+    ],
+    "returns": [
+      "una instancia proxy, con el manejador de invocaciones indicado, de una clase proxy definida por el cargador indicado y que implementa las interfaces indicadas"
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si se incumple alguna de las restricciones de los parámetros"
+      },
+      {
+        "label": "SecurityException",
+        "detail": "si hay un gestor de seguridad s y se cumple alguna de estas condiciones: el cargador dado es null, el cargador de quien llama no es null y s.checkPermission con el permiso RuntimePermission(\"getClassLoader\") deniega el acceso; para alguna interfaz del proxy intf, el cargador de quien llama no es el de intf ni un ancestro suyo y s.checkPackageAccess() deniega el acceso a intf; o alguna interfaz del proxy no es pública, la clase llamante no está en el mismo paquete de ejecución que esa interfaz y s.checkPermission con el permiso {@code ReflectPermission(\"newProxyInPackage.{package name}\")} deniega el acceso."
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "si el array interfaces o alguno de sus elementos es null, o si el manejador de invocaciones h es null"
+      }
     ]
   },
   "web-java-se-java.math.BigDecimal.%3Cinit%3E": {
