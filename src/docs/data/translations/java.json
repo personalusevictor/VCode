@@ -6024,6 +6024,438 @@
       "el método doIt está sobrecargado. EventHandler invocará el que corresponda según el origen. Si el origen es null, cualquiera de los dos vale y no está definido cuál se invoca. Por eso recomendamos no apuntar a métodos sobrecargados."
     ]
   },
+  "web-java-se-java.beans.EventHandler.create": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea una implementación de listenerInterface en la que todos los métodos de la interfaz aplican la acción del manejador al destino. Se implementa llamando a la versión más general de create con eventPropertyName y listenerMethodName a null. Consulta la versión general create(Class, Object, String, String, String) para una descripción completa del parámetro action."
+        ],
+        "body": [
+          "Para crear un ActionListener que muestre un JDialog con dialog.show(), puedes escribir:",
+          "EventHandler.create(ActionListener.class, dialog, \"show\")"
+        ],
+        "parameters": [
+          {
+            "label": "<T>",
+            "detail": "el tipo que se crea"
+          },
+          {
+            "label": "listenerInterface",
+            "detail": "la interfaz de listener para la que se crea un proxy"
+          },
+          {
+            "label": "target",
+            "detail": "el objeto que ejecutará la acción"
+          },
+          {
+            "label": "action",
+            "detail": "el nombre de una propiedad o método (posiblemente cualificado) del destino"
+          }
+        ],
+        "returns": ["un objeto que implementa listenerInterface"],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si listenerInterface es null"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si target es null"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si action es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si falla la creación de un Proxy para listenerInterface por alguna de las restricciones de Proxy.newProxyInstance"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una implementación de listenerInterface en la que todos los métodos pasan el valor de la expresión del evento, eventPropertyName, al método final de la sentencia, action, que se aplica al destino. Se implementa llamando a la versión más general de create con listenerMethodName a null. Consulta la versión general create(Class, Object, String, String, String) para una descripción completa de los parámetros action y eventPropertyName."
+        ],
+        "body": [
+          "Para crear un ActionListener que ponga el texto de un JLabel igual al texto del JTextField origen del evento, puedes usar este código:",
+          "EventHandler.create(ActionListener.class, label, \"text\", \"source.text\");",
+          "Equivale a este código:",
+          "//Equivalent code using an inner class instead of EventHandler. new ActionListener() { public void actionPerformed(ActionEvent event) { label.setText(((JTextField)(event.getSource())).getText()); } };"
+        ],
+        "parameters": [
+          {
+            "label": "<T>",
+            "detail": "el tipo que se crea"
+          },
+          {
+            "label": "listenerInterface",
+            "detail": "la interfaz de listener para la que se crea un proxy"
+          },
+          {
+            "label": "target",
+            "detail": "el objeto que ejecutará la acción"
+          },
+          {
+            "label": "action",
+            "detail": "el nombre de una propiedad o método (posiblemente cualificado) del destino"
+          },
+          {
+            "label": "eventPropertyName",
+            "detail": "el nombre (posiblemente cualificado) de una propiedad legible del evento recibido"
+          }
+        ],
+        "returns": ["un objeto que implementa listenerInterface"],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si listenerInterface es null"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si target es null"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si action es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si falla la creación de un Proxy para listenerInterface por alguna de las restricciones de Proxy.newProxyInstance"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una implementación de listenerInterface en la que el método llamado listenerMethodName pasa el valor de la expresión del evento, eventPropertyName, al método final de la sentencia, action, que se aplica al destino. Los demás métodos del listener no hacen nada."
+        ],
+        "body": [
+          "La cadena eventPropertyName sirve para extraer del evento recibido el valor que se pasa al método destino. Lo habitual es que el método destino no reciba argumentos; en ese caso eventPropertyName debe ser null. Si quieres pasar el evento directamente al método destino, usa la cadena vacía. El formato de eventPropertyName es una secuencia de métodos o propiedades, cada uno aplicado al valor devuelto por el anterior, empezando por el evento recibido. La sintaxis es {@code propertyName{.propertyName}*}, donde propertyName corresponde a un método o propiedad. Por ejemplo, para extraer la propiedad point de un MouseEvent puedes usar \"point\" o \"getPoint\". Para extraer la propiedad \"text\" de un MouseEvent cuyo origen es un JLabel, puedes usar \"source.text\", \"getSource.text\", \"getSource.getText\" o \"source.getText\". Si no se encuentra un método, o se produce una excepción al invocarlo, se lanza RuntimeException en el momento del despacho. Por ejemplo, si el evento recibido es null y eventPropertyName no es null ni vacío, se lanza RuntimeException.",
+          "El argumento action tiene el mismo formato que eventPropertyName, y el último nombre de propiedad identifica un método o una propiedad escribible.",
+          "Si listenerMethodName es null, todos los métodos de la interfaz disparan la acción sobre el destino.",
+          "Por ejemplo, para crear un MouseListener que, cada vez que se pulse un botón del ratón, ponga la propiedad origin del destino en la posición del MouseEvent (es decir, el valor de mouseEvent.getPoint()), escribirías:",
+          "EventHandler.create(MouseListener.class, target, \"origin\", \"point\", \"mousePressed\");",
+          "Es comparable a escribir un MouseListener en el que todos los métodos salvo mousePressed no hacen nada:",
+          "//Equivalent code using an inner class instead of EventHandler. new MouseAdapter() { public void mousePressed(MouseEvent e) { target.setOrigin(e.getPoint()); } };"
+        ],
+        "parameters": [
+          {
+            "label": "<T>",
+            "detail": "el tipo que se crea"
+          },
+          {
+            "label": "listenerInterface",
+            "detail": "la interfaz de listener para la que se crea un proxy"
+          },
+          {
+            "label": "target",
+            "detail": "el objeto que ejecutará la acción"
+          },
+          {
+            "label": "action",
+            "detail": "el nombre de una propiedad o método (posiblemente cualificado) del destino"
+          },
+          {
+            "label": "eventPropertyName",
+            "detail": "el nombre (posiblemente cualificado) de una propiedad legible del evento recibido"
+          },
+          {
+            "label": "listenerMethodName",
+            "detail": "el nombre del método de la interfaz de listener que dispara la acción"
+          }
+        ],
+        "returns": ["un objeto que implementa listenerInterface"],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si listenerInterface es null"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si target es null"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si action es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si falla la creación de un Proxy para listenerInterface por alguna de las restricciones de Proxy.newProxyInstance"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.beans.Introspector.getBeanInfo": {
+    "overloads": [
+      {
+        "intro": [
+          "Inspecciona un Java Bean y obtiene todas sus propiedades, métodos expuestos y eventos."
+        ],
+        "body": [
+          "Si la clase BeanInfo de un Java Bean ya se inspeccionó antes, se obtiene de la caché de BeanInfo."
+        ],
+        "parameters": [
+          {
+            "label": "beanClass",
+            "detail": "La clase del bean que se analiza."
+          }
+        ],
+        "returns": ["Un objeto BeanInfo que describe el bean destino."],
+        "exceptions": [
+          {
+            "label": "IntrospectionException",
+            "detail": "si se produce una excepción durante la inspección."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Inspecciona un Java Bean y obtiene todas sus propiedades, métodos expuestos y eventos, según unos indicadores de control."
+        ],
+        "body": [
+          "Si la clase BeanInfo de un Java Bean ya se inspeccionó antes con los mismos argumentos, se obtiene de la caché de BeanInfo."
+        ],
+        "parameters": [
+          {
+            "label": "beanClass",
+            "detail": "La clase del bean que se analiza."
+          },
+          {
+            "label": "flags",
+            "detail": "Indicadores que controlan la inspección. Si flags == USE_ALL_BEANINFO, se usan todas las clases BeanInfo que se puedan encontrar. Si flags == IGNORE_IMMEDIATE_BEANINFO, se ignora cualquier BeanInfo asociado a beanClass. Si flags == IGNORE_ALL_BEANINFO, se ignoran todos los BeanInfo asociados a beanClass o a cualquiera de sus clases padre."
+          }
+        ],
+        "returns": ["Un objeto BeanInfo que describe el bean destino."],
+        "exceptions": [
+          {
+            "label": "IntrospectionException",
+            "detail": "si se produce una excepción durante la inspección."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Inspecciona un Java Bean y obtiene todas sus propiedades y métodos expuestos por debajo de un punto de \"parada\" dado."
+        ],
+        "body": [
+          "Si la clase BeanInfo de un Java Bean ya se inspeccionó antes con los mismos argumentos, se obtiene de la caché de BeanInfo."
+        ],
+        "parameters": [
+          {
+            "label": "beanClass",
+            "detail": "La clase del bean que se analiza."
+          },
+          {
+            "label": "stopClass",
+            "detail": "La clase base en la que se detiene el análisis. Se ignoran los métodos, propiedades y eventos de stopClass y de sus clases base."
+          }
+        ],
+        "returns": ["el BeanInfo del bean"],
+        "exceptions": [
+          {
+            "label": "IntrospectionException",
+            "detail": "si se produce una excepción durante la inspección."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Inspecciona un Java Bean y obtiene todas sus propiedades, métodos expuestos y eventos por debajo de stopClass, según unos indicadores de control."
+        ],
+        "body": [
+          "USE_ALL_BEANINFO: se usa cualquier BeanInfo que se pueda encontrar. IGNORE_IMMEDIATE_BEANINFO: se ignora cualquier BeanInfo asociado a beanClass. IGNORE_ALL_BEANINFO: se ignora cualquier BeanInfo asociado a beanClass o a cualquiera de sus clases padre.",
+          "Se ignoran los métodos, propiedades y eventos de stopClass y de sus clases padre.",
+          "Si la clase BeanInfo de un Java Bean ya se inspeccionó antes con los mismos argumentos, se obtiene de la caché de BeanInfo."
+        ],
+        "parameters": [
+          {
+            "label": "beanClass",
+            "detail": "la clase del bean que se analiza"
+          },
+          {
+            "label": "stopClass",
+            "detail": "la clase padre en la que se detiene el análisis"
+          },
+          {
+            "label": "flags",
+            "detail": "indicadores que controlan la inspección"
+          }
+        ],
+        "returns": ["un objeto BeanInfo que describe el bean destino"],
+        "exceptions": [
+          {
+            "label": "IntrospectionException",
+            "detail": "si se produce una excepción durante la inspección"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.beans.PropertyChangeSupport.getPropertyChangeListeners": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve un array con todos los listeners añadidos al objeto PropertyChangeSupport con addPropertyChangeListener()."
+        ],
+        "body": [
+          "Si se han añadido listeners para una propiedad concreta, el array devuelto mezclará PropertyChangeListener y PropertyChangeListenerProxy. Si quien llama quiere distinguirlos, debe comprobar si cada elemento es un PropertyChangeListenerProxy, hacer la conversión y examinar el parámetro.",
+          "{@code PropertyChangeListener[] listeners = bean.getPropertyChangeListeners(); for (int i = 0; i < listeners.length; i++) { if (listeners[i] instanceof PropertyChangeListenerProxy) { PropertyChangeListenerProxy proxy = (PropertyChangeListenerProxy)listeners[i]; if (proxy.getPropertyName().equals(\"foo\")) { // proxy is a PropertyChangeListener which was associated // with the property named \"foo\" } } } }"
+        ],
+        "returns": [
+          "todos los PropertyChangeListener añadidos, o un array vacío si no se ha añadido ninguno"
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un array con todos los listeners asociados a la propiedad indicada."
+        ],
+        "parameters": [
+          {
+            "label": "propertyName",
+            "detail": "El nombre de la propiedad escuchada"
+          }
+        ],
+        "returns": [
+          "todos los PropertyChangeListener asociados a la propiedad indicada. Si no se ha añadido ninguno, o si propertyName es null, se devuelve un array vacío."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.beans.VetoableChangeSupport.getVetoableChangeListeners": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve un array con todos los listeners añadidos al objeto VetoableChangeSupport con addVetoableChangeListener()."
+        ],
+        "body": [
+          "Si se han añadido listeners para una propiedad concreta, el array devuelto mezclará VetoableChangeListener y VetoableChangeListenerProxy. Si quien llama quiere distinguirlos, debe comprobar si cada elemento es un VetoableChangeListenerProxy, hacer la conversión y examinar el parámetro.",
+          "{@code VetoableChangeListener[] listeners = bean.getVetoableChangeListeners(); for (int i = 0; i < listeners.length; i++) { if (listeners[i] instanceof VetoableChangeListenerProxy) { VetoableChangeListenerProxy proxy = (VetoableChangeListenerProxy)listeners[i]; if (proxy.getPropertyName().equals(\"foo\")) { // proxy is a VetoableChangeListener which was associated // with the property named \"foo\" } } } }"
+        ],
+        "returns": [
+          "todos los VetoableChangeListener añadidos, o un array vacío si no se ha añadido ninguno"
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un array con todos los listeners asociados a la propiedad indicada."
+        ],
+        "parameters": [
+          {
+            "label": "propertyName",
+            "detail": "El nombre de la propiedad escuchada"
+          }
+        ],
+        "returns": [
+          "todos los VetoableChangeListener asociados a la propiedad indicada. Si no se ha añadido ninguno, o si propertyName es null, se devuelve un array vacío."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.beans.XMLEncoder": {
+    "body": [
+      "XMLEncoder e = new XMLEncoder( new BufferedOutputStream( new FileOutputStream(\"Test.xml\"))); e.writeObject(new JButton(\"Hello, world\")); e.close();",
+      "Aunque sus API se parecen, la clase XMLEncoder está pensada exclusivamente para archivar grafos de JavaBeans como representaciones textuales de sus propiedades públicas. Igual que los archivos fuente de Java, los documentos escritos así son inmunes por naturaleza a cambios en la implementación de las clases implicadas. ObjectOutputStream sigue siendo lo recomendado para la comunicación entre procesos y la serialización de propósito general.",
+      "La clase XMLEncoder ofrece una representación predeterminada de los JavaBeans como documentos XML conformes a la versión 1.0 de la especificación XML y con la codificación UTF-8 del juego de caracteres Unicode/ISO 10646. Los documentos XML que produce XMLEncoder son:",
+      "Portables y resistentes a versiones: no dependen de la implementación privada de ninguna clase, así que, como los archivos fuente de Java, pueden intercambiarse entre entornos con distintas versiones de algunas clases y entre VMs de distintos fabricantes.",
+      "Estructuralmente compactos: XMLEncoder usa internamente un algoritmo de eliminación de redundancias para no escribir los valores predeterminados de las propiedades de un Bean.",
+      "Tolerantes a fallos: los errores no estructurales del archivo, causados por daños o por cambios en la API de las clases archivadas, quedan localizados, de modo que el lector puede informar del error y seguir cargando las partes no afectadas.",
+      "Este es un ejemplo de archivo XML con algunos componentes de interfaz de Swing:",
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <java version=\"1.0\" class=\"java.beans.XMLDecoder\"> <object class=\"javax.swing.JFrame\"> <void property=\"name\"> <string>frame1</string> </void> <void property=\"bounds\"> <object class=\"java.awt.Rectangle\"> <int>0</int> <int>0</int> <int>200</int> <int>200</int> </object> </void> <void property=\"contentPane\"> <void method=\"add\"> <object class=\"javax.swing.JButton\"> <void property=\"label\"> <string>Hello</string> </void> </object> </void> </void> <void property=\"visible\"> <boolean>true</boolean> </void> </object> </java>",
+      "La sintaxis XML sigue estas convenciones:",
+      "Cada elemento representa una llamada a un método.",
+      "La etiqueta \"object\" indica una expresión cuyo valor se usa como argumento del elemento que la contiene.",
+      "La etiqueta \"void\" indica una sentencia que se ejecuta, pero cuyo resultado no se usa como argumento del método que la contiene.",
+      "Los elementos que contienen otros elementos los usan como argumentos, salvo que tengan la etiqueta \"void\".",
+      "El nombre del método lo indica el atributo \"method\".",
+      "Los atributos estándar de XML \"id\" e \"idref\" sirven para hacer referencia a expresiones anteriores, y así manejar ciclos en el grafo de objetos.",
+      "El atributo \"class\" indica explícitamente el destino de un método estático o constructor; su valor es el nombre completo de la clase.",
+      "Los elementos con la etiqueta \"void\" se ejecutan usando como destino el contexto exterior si no hay un atributo \"class\" que defina otro.",
+      "La clase String de Java se trata de forma especial y se escribe <string>Hello, world</string>, convirtiendo los caracteres a bytes con la codificación UTF-8.",
+      "Aunque cualquier grafo de objetos puede escribirse solo con estas tres etiquetas, se incluyen las siguientes definiciones para expresar las estructuras de datos habituales de forma más concisa:",
+      "El nombre de método predeterminado es \"new\".",
+      "Una referencia a una clase Java se escribe así: <class>javax.swing.JButton</class>.",
+      "Las instancias de las clases envoltorio de los tipos primitivos se escriben con el nombre del tipo primitivo como etiqueta. Por ejemplo, una instancia de Integer puede escribirse <int>123</int>. XMLEncoder usa el paquete de reflexión de Java, que gestiona internamente la conversión entre los tipos primitivos y sus \"clases envoltorio\". La API de XMLEncoder solo trabaja con Objects.",
+      "En un elemento que representa un método sin argumentos cuyo nombre empieza por \"get\", el atributo \"method\" se sustituye por un atributo \"property\" cuyo valor es el nombre sin el prefijo \"get\" y con la primera letra en minúscula.",
+      "En un elemento que representa un método de un argumento cuyo nombre empieza por \"set\", el atributo \"method\" se sustituye por un atributo \"property\" cuyo valor es el nombre sin el prefijo \"set\" y con la primera letra en minúscula.",
+      "En un elemento que representa un método llamado \"get\" con un argumento entero, el atributo \"method\" se sustituye por un atributo \"index\" cuyo valor es el del primer argumento.",
+      "En un elemento que representa un método llamado \"set\" con dos argumentos, el primero entero, el atributo \"method\" se sustituye por un atributo \"index\" cuyo valor es el del primer argumento.",
+      "Una referencia a un array se escribe con la etiqueta \"array\". Los atributos \"class\" y \"length\" indican el subtipo del array y su longitud, respectivamente.",
+      "Para más información, puedes consultar también",
+      "Using XMLEncoder, un artículo de The Swing Connection."
+    ]
+  },
+  "web-java-se-java.beans.beancontext.BeanContextProxy": {
+    "body": [
+      "Un objeto no puede implementar esta interfaz y la interfaz BeanContextChild (o cualquiera de sus subinterfaces) a la vez: son mutuamente excluyentes.",
+      "Quien use esta interfaz debe examinar el tipo devuelto para obtener una subinterfaz concreta de BeanContextChild, así:",
+      "{@code BeanContextChild bcc = o.getBeanContextProxy();",
+      "if (bcc instanceof BeanContext) { // ... } }",
+      "o",
+      "{@code BeanContextChild bcc = o.getBeanContextProxy(); BeanContext bc = null;",
+      "try { bc = (BeanContext)bcc; } catch (ClassCastException cce) { // cast failed, bcc is not an instanceof BeanContext } }",
+      "El valor devuelto es constante durante toda la vida de la instancia que lo implementa"
+    ]
+  },
+  "web-java-se-java.beans.beancontext.BeanContextServiceRevokedEvent.isServiceClass": {
+    "intro": [
+      "Comprueba si el servicio que se revoca en este evento es de una clase concreta."
+    ],
+    "parameters": [
+      {
+        "label": "service",
+        "detail": "el servicio de interés (no debería ser null)"
+      }
+    ],
+    "returns": [
+      "true si el servicio que se revoca es de la misma clase que el servicio indicado"
+    ]
+  },
+  "web-java-se-java.beans.beancontext.BeanContextServices.addService": {
+    "intro": [
+      "Añade un servicio a este BeanContext. Los BeanContextServiceProvider llaman a este método para registrar un servicio en este contexto. Si el servicio no se había añadido antes, BeanContextServices lo asocia al BeanContextServiceProvider y lanza un BeanContextServiceAvailableEvent a todos los BeanContextServicesListener registrados. Después devuelve true, indicando que el servicio se añadió correctamente. Si el servicio ya estaba añadido, simplemente devuelve false."
+    ],
+    "parameters": [
+      {
+        "label": "serviceClass",
+        "detail": "el servicio que se añade"
+      },
+      {
+        "label": "serviceProvider",
+        "detail": "el BeanContextServiceProvider asociado al servicio"
+      }
+    ],
+    "returns": [
+      "true si el servicio se añadió correctamente; false en caso contrario"
+    ]
+  },
+  "web-java-se-java.beans.beancontext.BeanContextSupport.contains": {
+    "intro": [
+      "Indica si el objeto indicado es actualmente hijo de este BeanContext."
+    ],
+    "parameters": [
+      {
+        "label": "o",
+        "detail": "el Object en cuestión"
+      }
+    ],
+    "returns": ["si este objeto es un hijo"]
+  },
+  "web-java-se-java.beans.beancontext.BeanContextSupport.containsKey": {
+    "intro": [
+      "Indica si el objeto indicado es actualmente hijo de este BeanContext."
+    ],
+    "parameters": [
+      {
+        "label": "o",
+        "detail": "el Object en cuestión"
+      }
+    ],
+    "returns": ["si este objeto es un hijo"]
+  },
+  "web-java-se-java.beans.beancontext.BeanContextSupport.isDesignTime": {
+    "intro": ["Indica si este objeto está actualmente en modo de diseño."],
+    "returns": ["true si está en modo de diseño; false si no"]
+  },
   "web-java-se-java.io.DataInput": {
     "body": [
       "En general, en todas las rutinas de lectura de esta interfaz, si se llega al final del archivo antes de leer los bytes deseados, se lanza EOFException (un tipo de IOException). Si algún byte no se puede leer por cualquier otro motivo, se lanza una IOException distinta de EOFException. En particular, puede lanzarse IOException si el flujo de entrada se ha cerrado.",
@@ -10025,6 +10457,63 @@
       "@jvms 5.4.3 Resolution @jvms 5.4.4 Access Control"
     ]
   },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_CallSite": {
+    "intro": ["ClassDesc que representa CallSite"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_ClassDesc": {
+    "intro": ["ClassDesc que representa ClassDesc"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_ConstantBootstraps": {
+    "intro": ["ClassDesc que representa ConstantBootstraps"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_ConstantDesc": {
+    "intro": ["ClassDesc que representa ConstantDesc"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_DirectMethodHandleDesc": {
+    "intro": ["ClassDesc que representa DirectMethodHandleDesc"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_DynamicCallSiteDesc": {
+    "intro": ["ClassDesc que representa DynamicCallSiteDesc"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_DynamicConstantDesc": {
+    "intro": ["ClassDesc que representa DynamicConstantDesc"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_EnumDesc": {
+    "intro": ["ClassDesc que representa EnumDesc"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_Exception": {
+    "intro": ["ClassDesc que representa Exception"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_MethodHandle": {
+    "intro": ["ClassDesc que representa MethodHandle"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_MethodHandleDesc": {
+    "intro": ["ClassDesc que representa MethodHandleDesc"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_MethodHandleDesc_Kind": {
+    "intro": ["ClassDesc que representa DirectMethodHandleDesc.Kind"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_MethodHandles": {
+    "intro": ["ClassDesc que representa MethodHandles"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_MethodHandles_Lookup": {
+    "intro": ["ClassDesc que representa MethodHandles.Lookup"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_MethodType": {
+    "intro": ["ClassDesc que representa MethodType"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_MethodTypeDesc": {
+    "intro": ["ClassDesc que representa MethodTypeDesc"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_String": {
+    "intro": ["ClassDesc que representa String"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_VarHandle": {
+    "intro": ["ClassDesc que representa VarHandle"]
+  },
+  "web-java-se-java.lang.constant.ConstantDescs.CD_VarHandleDesc": {
+    "intro": ["ClassDesc que representa VarHandleDesc"]
+  },
   "web-java-se-java.lang.constant.DynamicConstantDesc.resolveConstantDesc": {
     "parameters": [
       {
@@ -10069,6 +10558,137 @@
     "caveats": [
       "Algunos descriptores de constantes, como MethodTypeDesc, pueden representar un valor que no tiene equivalente en las entidades de tiempo de ejecución. Intentar resolverlos puede provocar errores.",
       "@jvms 5.4.3 Resolution @jvms 5.4.4 Access Control"
+    ]
+  },
+  "web-java-se-java.lang.foreign.FunctionDescriptor.insertArgumentLayouts": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice en el que se insertan los argumentos"
+      },
+      {
+        "label": "addedLayouts",
+        "detail": "los layouts de argumento que se insertan en el índice dado."
+      }
+    ],
+    "returns": [
+      "un descriptor de función nuevo con los layouts de argumento adicionales."
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si alguno de los layouts de addedLayouts es un layout de relleno."
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si index < 0 || index > argumentLayouts().size()."
+      }
+    ]
+  },
+  "web-java-se-java.lang.foreign.Linker": {
+    "body": [
+      "Las funciones externas suelen estar en bibliotecas que se cargan bajo demanda. Cada biblioteca sigue una ABI (Application Binary Interface) concreta: un conjunto de convenciones de llamada y tipos de datos asociados al compilador, el sistema operativo y el procesador con los que se compiló. Por ejemplo, un compilador de C en Linux/x64 suele generar bibliotecas conformes a la ABI SystemV.",
+      "Un linker conoce en detalle las convenciones de llamada y los tipos de datos de una ABI concreta. Para cualquier biblioteca conforme a esa ABI, puede hacer de intermediario entre el código Java de la JVM y las funciones externas de la biblioteca. En concreto:",
+      "Un linker permite que el código Java enlace con funciones externas mediante method handles de bajada (downcallHandle(MemorySegment, FunctionDescriptor, Linker.Option...)); y",
+      "Un linker permite que las funciones externas llamen a method handles de Java generando stubs de subida (upcallStub(MethodHandle, FunctionDescriptor, Arena, Linker.Option...)).",
+      "Además, un linker permite buscar funciones externas en bibliotecas conformes a la ABI. Cada linker elige un conjunto de bibliotecas de uso habitual en la combinación de sistema operativo y procesador de la ABI. Por ejemplo, un linker para Linux/x64 podría elegir dos bibliotecas: libc y libm. Sus funciones se exponen mediante una búsqueda de símbolos.",
+      "Llamar a funciones nativas",
+      "El linker nativo puede usarse para enlazar con funciones definidas en bibliotecas C (funciones nativas). Supongamos que queremos llamar desde Java a la función strlen de la biblioteca estándar de C:",
+      "Un method handle de bajada que expone strlen se obtiene con el linker nativo así:",
+      "El linker nativo también da acceso, mediante su búsqueda predeterminada, a las funciones nativas de las bibliotecas C cargadas con el runtime de Java. Arriba se usa la búsqueda predeterminada para encontrar la dirección de la función nativa strlen. Esa dirección se pasa, junto con una descripción dependiente de la plataforma de la firma de la función expresada como FunctionDescriptor (más sobre esto abajo), al método downcallHandle(MemorySegment, FunctionDescriptor, Linker.Option...) del linker nativo. El method handle obtenido se invoca así:",
+      "{@snippet lang = java: try (Arena arena = Arena.ofConfined()) { MemorySegment str = arena.allocateUtf8String(\"Hello\"); long len = (long) strlen.invokeExact(str); // 5 } }",
+      "Describir firmas de C",
+      "Al trabajar con el linker nativo, el cliente debe dar una descripción dependiente de la plataforma de la firma de la función C con la que quiere enlazar. Esta descripción, un descriptor de función, define los layouts de los tipos de los parámetros y del tipo de retorno (si lo hay) de la función C.",
+      "Los tipos escalares de C, como bool o int, se modelan como layouts de valor con un tipo portador adecuado. La correspondencia entre un tipo escalar y su layout depende de la ABI que implementa el linker nativo. Por ejemplo, el tipo long de C corresponde a la constante ValueLayout.JAVA_LONG en Linux/x64, pero a ValueLayout.JAVA_INT en Windows/x64. Del mismo modo, size_t corresponde a ValueLayout.JAVA_LONG en plataformas de 64 bits y a ValueLayout.JAVA_INT en las de 32 bits.",
+      "Los tipos compuestos se modelan como layouts de grupo. En concreto, un struct de C corresponde a un layout de struct y una union de C a un layout de unión. Al definir un layout de struct o unión, hay que tener en cuenta el tamaño y la restricción de alineación del tipo compuesto en C. Por ejemplo, el relleno entre dos campos de un struct debe modelarse explícitamente añadiendo un layout de relleno del tamaño adecuado.",
+      "Por último, los tipos puntero como int** e int(*)(size_t*, size_t*) se modelan como layouts de dirección. Si los límites espaciales del puntero se conocen estáticamente, el layout de dirección puede asociarse a un layout destino. Por ejemplo, un puntero que se sabe que apunta a un array int[2] de C puede modelarse como un layout de dirección cuyo destino es un layout de secuencia de 2 elementos de tipo ValueLayout.JAVA_INT.",
+      "La siguiente tabla muestra algunos ejemplos de cómo se modelan los tipos de C en Linux/x64:",
+      "Correspondencia de tipos de C",
+      "Tipo C · Layout · Tipo Java",
+      "bool · ValueLayout.JAVA_BOOLEAN · boolean",
+      "char · ValueLayout.JAVA_BYTE · byte",
+      "short · ValueLayout.JAVA_SHORT · short",
+      "int · ValueLayout.JAVA_INT · int",
+      "long · ValueLayout.JAVA_LONG · long",
+      "long long · ValueLayout.JAVA_LONG · long",
+      "float · ValueLayout.JAVA_FLOAT · float",
+      "double · ValueLayout.JAVA_DOUBLE · double",
+      "size_t · ValueLayout.JAVA_LONG · long",
+      "char*, int**, struct Point* · ValueLayout.ADDRESS · MemorySegment",
+      "int (*ptr)[10]",
+      "ValueLayout.ADDRESS.withTargetLayout( MemoryLayout.sequenceLayout(10, ValueLayout.JAVA_INT) );",
+      "MemorySegment",
+      "struct Point { int x; long y; };",
+      "MemoryLayout.structLayout( ValueLayout.JAVA_INT.withName(\"x\"), MemoryLayout.paddingLayout(32), ValueLayout.JAVA_LONG.withName(\"y\") );",
+      "MemorySegment",
+      "union Choice { float a; int b; }",
+      "MemoryLayout.unionLayout( ValueLayout.JAVA_FLOAT.withName(\"a\"), ValueLayout.JAVA_INT.withName(\"b\") );",
+      "MemorySegment",
+      "Todas las implementaciones del linker nativo trabajan con un subconjunto de los layouts de memoria. Formalmente, un layout L está admitido por un linker nativo NL si:",
+      "L es un layout de valor V y V.withoutName() es igual a una de estas constantes:",
+      "ValueLayout.JAVA_BOOLEAN",
+      "ValueLayout.JAVA_BYTE",
+      "ValueLayout.JAVA_CHAR",
+      "ValueLayout.JAVA_SHORT",
+      "ValueLayout.JAVA_INT",
+      "ValueLayout.JAVA_LONG",
+      "ValueLayout.JAVA_FLOAT",
+      "ValueLayout.JAVA_DOUBLE",
+      "L es un layout de dirección A y A.withoutTargetLayout().withoutName() es igual a ValueLayout.ADDRESS",
+      "L es un layout de secuencia S y se cumplen todas estas condiciones:",
+      "la restricción de alineación de S es su alineación natural, y",
+      "S.elementLayout() es un layout admitido por NL.",
+      "L es un layout de grupo G y se cumplen todas estas condiciones:",
+      "la restricción de alineación de G es su alineación natural;",
+      "el tamaño de G es múltiplo de su restricción de alineación;",
+      "cada layout miembro de G.memberLayouts() es un layout de relleno o un layout admitido por NL, y",
+      "G no contiene más relleno que el estrictamente necesario para alinear sus elementos que no son de relleno, o para cumplir (2).",
+      "Un linker nativo solo admite descriptores de función cuyos layouts de argumento y de retorno estén admitidos por él y no sean layouts de secuencia.",
+      "Punteros a función",
+      "A veces es útil pasar código Java como puntero a función a una función nativa; para ello se usa un stub de subida (upcallStub(MethodHandle, FunctionDescriptor, Arena, Linker.Option...)). Para verlo, consideremos esta función de la biblioteca estándar de C:",
+      "La función qsort ordena el contenido de un array usando una función comparadora que se le pasa como puntero a función (el parámetro compar). Para poder llamar a qsort desde Java, primero hay que crear un method handle de bajada, así:",
+      "Como antes, usamos ValueLayout.JAVA_LONG para el tipo size_t de C y ValueLayout.ADDRESS tanto para el primer parámetro puntero (el array) como para el último (el puntero a función).",
+      "Para invocar el method handle de qsort obtenido arriba, necesitamos un puntero a función como último parámetro, es decir, crear un puntero a función a partir de un method handle existente. Primero, escribamos un método Java que compare dos int pasados como punteros (es decir, como segmentos de memoria):",
+      "{@snippet lang = java: class Qsort { static int qsortCompare(MemorySegment elem1, MemorySegment elem2) { return Integer.compare(elem1.get(JAVA_INT, 0), elem2.get(JAVA_INT, 0)); } } }",
+      "Ahora creamos un method handle para el comparador definido arriba:",
+      "Primero creamos un descriptor de función para el tipo del puntero a función. Como sabemos que los parámetros del comparador serán punteros a elementos de un array int[] de C, podemos indicar ValueLayout.JAVA_INT como layout destino de los layouts de dirección de ambos parámetros. Así el comparador puede acceder al contenido de los elementos que compara. Después convertimos ese descriptor en un tipo de método adecuado y lo usamos para buscar el method handle del comparador. Ya podemos crear un stub de subida que apunte a ese método y pasarlo, como puntero a función, al method handle de qsort, así:",
+      "{@snippet lang = java: try (Arena arena = Arena.ofConfined()) { MemorySegment comparFunc = linker.upcallStub(comparHandle, comparDesc, arena); MemorySegment array = arena.allocateArray(JAVA_INT, 0, 9, 3, 4, 6, 5, 1, 8, 2, 7); qsort.invokeExact(array, 10L, 4L, comparFunc); int[] sorted = array.toArray(JAVA_INT); // [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ] } }",
+      "Este código crea un array fuera del heap, copia en él el contenido de un array Java y lo pasa al method handle de qsort junto con la función comparadora obtenida del linker nativo. Tras la llamada, el contenido del array fuera del heap queda ordenado según nuestro comparador escrito en Java. Después extraemos del segmento un array Java nuevo con los elementos ordenados.",
+      "Funciones que devuelven punteros",
+      "Es habitual que las funciones nativas reserven una región de memoria y devuelvan un puntero a ella. Consideremos esta función de la biblioteca estándar de C:",
+      "La función malloc reserva una región de memoria del tamaño dado y devuelve un puntero a ella, que más tarde se libera con otra función de la biblioteca estándar de C:",
+      "La función free recibe un puntero a una región de memoria y la libera. En esta sección veremos cómo trabajar con estas funciones nativas para ofrecer una API de reserva de memoria segura (el enfoque, claro, puede generalizarse a otras funciones de reserva distintas de malloc y free).",
+      "Primero creamos los method handles de bajada de malloc y free, así:",
+      "Cuando se invoca con un method handle de bajada una función nativa que devuelve un puntero (como malloc), el runtime de Java no sabe nada del tamaño ni de la vida útil del puntero devuelto. Considera este código:",
+      "El segmento que devuelve el method handle de malloc tiene tamaño cero. Además, su ámbito es uno nuevo que siempre está vivo. Para acceder al segmento de forma segura, hay que redimensionarlo, de forma insegura, al tamaño deseado (100, en este caso). También puede interesar asociarlo a un arena existente, para que la vida útil de la región de memoria se gestione automáticamente, como la de cualquier segmento nativo creado desde Java. Ambas cosas se consiguen con el método restringido MemorySegment.reinterpret(long, Arena, Consumer), así:",
+      "{@snippet lang = java: MemorySegment allocateMemory(long byteSize, Arena arena) throws Throwable { MemorySegment segment = (MemorySegment) malloc.invokeExact(byteSize); // size = 0, scope = always alive return segment.reinterpret(byteSize, arena, s -> { try { free.invokeExact(s); } catch (Throwable e) { throw new RuntimeException(e); } }); // size = byteSize, scope = arena.scope() } }",
+      "El método allocateMemory definido arriba recibe dos parámetros: un tamaño y un arena. Llama al method handle de malloc y reinterpreta de forma insegura el segmento devuelto, dándole un tamaño nuevo (el pasado a allocateMemory) y un ámbito nuevo (el del arena indicado). También indica una acción de limpieza que se ejecuta al cerrar el arena; como era de esperar, pasa el segmento al method handle de free para liberar la memoria. Podemos usar allocateMemory así:",
+      "{@snippet lang = java: try (Arena arena = Arena.ofConfined()) { MemorySegment segment = allocateMemory(100, arena); } // 'free' called here }",
+      "El segmento obtenido de allocateMemory se comporta como cualquier otro segmento gestionado por el arena confinado: tiene el tamaño deseado, solo puede usarlo un hilo (el que creó el arena) y su vida útil está ligada al bloque try-with-resources que lo rodea.",
+      "Funciones variádicas",
+      "Las funciones variádicas son funciones C que aceptan un número y tipo variables de argumentos. Se declaran:",
+      "Con puntos suspensivos (...) al final de la lista de parámetros formales, como en void foo(int x, ...);",
+      "Con una lista de parámetros vacía, lo que se llama función sin prototipo, como en void foo();",
+      "Los argumentos que se pasan en lugar de los puntos suspensivos, o a una función sin prototipo, se llaman argumentos variádicos. Las funciones variádicas son, en esencia, plantillas que pueden especializarse en varias funciones no variádicas sustituyendo el ... o la lista vacía por una lista de parámetros de número y tipo fijos.",
+      "Los valores pasados como argumentos variádicos sufren en C la promoción de argumentos predeterminada. Por ejemplo, se aplican estas promociones:",
+      "_Bool -> unsigned int",
+      "[signed] char -> [signed] int",
+      "[signed] short -> [signed] int",
+      "float -> double",
+      "donde el signo del tipo de origen se mantiene en el tipo promovido. El proceso completo se describe en la especificación de C. En la práctica, estas promociones limitan la forma especializada de una función variádica, porque sus parámetros variádicos siempre tendrán un tipo promovido.",
+      "El linker nativo solo admite enlazar la forma especializada de una función variádica, con un descriptor de función que la describa. Además, hay que indicar la opción Linker.Option.firstVariadicArg(int) para señalar el primer parámetro variádico de la lista. El layout de argumento correspondiente (si lo hay) y todos los siguientes del descriptor especializado se llaman layouts de argumento variádicos. En una función sin prototipo, el índice pasado a Linker.Option.firstVariadicArg(int) siempre debe ser 0.",
+      "El linker nativo rechazará enlazar un descriptor especializado con layouts variádicos que correspondan a tipos de C sujetos a la promoción de argumentos predeterminada (descrita arriba). Qué layouts se rechazan exactamente depende de la plataforma; por ejemplo, en Linux/x64 se rechazan ValueLayout.JAVA_BOOLEAN, ValueLayout.JAVA_BYTE, ValueLayout.JAVA_CHAR, ValueLayout.JAVA_SHORT y ValueLayout.JAVA_FLOAT.",
+      "Una función variádica muy conocida es printf, de la biblioteca estándar de C:",
+      "Esta función recibe una cadena de formato y varios argumentos adicionales (cuántos lo marca la cadena de formato). Considera esta llamada variádica:",
+      "Para hacer una llamada equivalente con un method handle de bajada, hay que crear un descriptor de función que describa la firma especializada de la función C que queremos llamar. Debe incluir un layout adicional por cada argumento variádico que vayamos a pasar. En este caso, la firma especializada es (char*, int, int, int), porque la cadena de formato acepta tres enteros. Después hay que usar una opción del linker para indicar la posición del primer layout variádico en el descriptor (empezando en 0). Como el primer parámetro es la cadena de formato (no variádico), el primer índice variádico debe ser 1, así:",
+      "Después podemos llamar al method handle especializado como siempre:",
+      "{@snippet lang = java: try (Arena arena = Arena.ofConfined()) { int res = (int)printf.invokeExact(arena.allocateUtf8String(\"%d plus %d equals %d\"), 2, 2, 4); //prints \"2 plus 2 equals 4\" } }",
+      "Consideraciones de seguridad",
+      "Crear un method handle de bajada es intrínsecamente inseguro. En general, un símbolo de una biblioteca externa no contiene suficiente información de firma (p. ej. el número y los tipos de los parámetros de la función externa). Por eso el runtime del linker no puede validar las peticiones de enlace. Si un cliente usa un method handle obtenido con una petición de enlace no válida (p. ej. indicando un descriptor con demasiados layouts de argumento), el resultado no está especificado y puede provocar caídas de la JVM.",
+      "Al pasar un stub de subida a una función externa, la JVM puede caerse si el código externo convierte el puntero a función del stub a un tipo incompatible con el del stub y luego intenta invocar la función a través de ese puntero. Además, si el method handle asociado a un stub de subida devuelve un segmento de memoria, el cliente debe asegurarse de que esa dirección no deje de ser válida al terminar la llamada de subida. Si no, puede haber comportamiento no especificado e incluso caídas de la JVM, porque una llamada de subida suele ejecutarse en el contexto de la invocación de un method handle de bajada."
+    ],
+    "caveats": [
+      "Las implementaciones de esta interfaz son inmutables, seguras para hilos y basadas en valor."
     ]
   },
   "web-java-se-java.lang.invoke.SerializedLambda.toString": {
