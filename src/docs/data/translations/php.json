@@ -1165,6 +1165,244 @@
       "Con MultipleIterator::MIT_NEED_ALL termina cuando se acaba cualquiera de ellos; con MIT_NEED_ANY sigue mientras quede alguno, y rellena con null los que ya terminaron. attachIterator() puede asociar una etiqueta a cada iterador para usarla como clave."
     ]
   },
+  "php-class-mysql_xdevapi-baseresult": {
+    "description": [
+      "Las clases concretas añaden operaciones según el tipo de resultado. Por ejemplo, una consulta de filas y una operación de escritura no exponen exactamente los mismos datos.",
+      "Todas comparten getWarnings() y getWarningsCount(), que dan los avisos generados por el servidor."
+    ]
+  },
+  "php-class-mysql_xdevapi-client": {
+    "description": [
+      "Se obtiene con mysql_xdevapi\\getClient(), que recibe la URI de conexión y opciones del grupo de conexiones. getSession() toma una sesión del grupo en lugar de abrir una nueva cada vez.",
+      "close() cierra todas las conexiones del grupo."
+    ]
+  },
+  "php-class-mysql_xdevapi-collection": {
+    "summary": "Representa una colección de documentos JSON de MySQL.",
+    "description": [
+      "Se obtiene con Schema::getCollection() o Schema::createCollection(). add(), find(), modify() y remove() preparan operaciones que se envían con execute().",
+      "Forma parte del almacén de documentos de MySQL 8, al que se accede con el protocolo X."
+    ]
+  },
+  "php-class-mysql_xdevapi-collectionadd": {
+    "description": [
+      "Se obtiene al llamar a Collection::add(). Usa execute() para enviar la operación y consultar su resultado.",
+      "El resultado es un mysql_xdevapi\\Result; getGeneratedIds() da los _id que MySQL asignó a los documentos nuevos."
+    ]
+  },
+  "php-class-mysql_xdevapi-collectionfind": {
+    "description": [
+      "Puedes vincular valores, elegir campos, ordenar y limitar documentos antes de llamar a execute(). El resultado permite recuperar los documentos encontrados.",
+      "La condición se pasa a Collection::find() como expresión, por ejemplo 'edad > :min', y los marcadores se rellenan con bind(). execute() devuelve un mysql_xdevapi\\DocResult."
+    ]
+  },
+  "php-class-mysql_xdevapi-collectionmodify": {
+    "description": [
+      "Encadena operaciones como set(), unset() o patch() según el cambio que quieras aplicar. execute() realiza la modificación.",
+      "Se obtiene con Collection::modify(), que recibe la condición que deben cumplir los documentos."
+    ]
+  },
+  "php-class-mysql_xdevapi-collectionremove": {
+    "description": [
+      "Vincula los valores del filtro antes de ejecutar. Puedes ordenar o limitar la operación cuando quieras borrar solo una parte de las coincidencias.",
+      "Se obtiene con Collection::remove() y se envía con execute()."
+    ]
+  },
+  "php-class-mysql_xdevapi-columnresult": {
+    "description": [
+      "Permite consultar datos como el nombre, tipo y origen de la columna. Se usa al inspeccionar el esquema de una consulta.",
+      "Los objetos se obtienen con RowResult::getColumns() o SqlStatementResult::getColumns()."
+    ]
+  },
+  "php-class-mysql_xdevapi-crudoperationbindable": {
+    "description": [
+      "bind() asigna datos a los marcadores de la operación antes de ejecutar.",
+      "Recibe un array asociativo cuyos nombres coinciden con los marcadores de la condición, como ['min' => 18] para ':min'."
+    ]
+  },
+  "php-class-mysql_xdevapi-crudoperationlimitable": {
+    "description": [
+      "El límite forma parte de la operación que se envía al servidor.",
+      "limit() recibe el número máximo de elementos. La implementan las operaciones de búsqueda, modificación y borrado."
+    ]
+  },
+  "php-class-mysql_xdevapi-crudoperationskippable": {
+    "description": [
+      "Se utiliza en consultas que admiten un desplazamiento, por ejemplo al paginar.",
+      "skip() recibe el número de elementos que se saltan y se combina con limit()."
+    ]
+  },
+  "php-class-mysql_xdevapi-crudoperationsortable": {
+    "description": [
+      "El orden es especialmente útil cuando se combina con un límite.",
+      "sort() recibe expresiones como 'nombre ASC' o 'edad DESC'."
+    ]
+  },
+  "php-class-mysql_xdevapi-databaseobject": {
+    "description": [
+      "Las implementaciones concretas representan objetos que se identifican dentro de una sesión.",
+      "Define existsInDatabase(), getName() y getSession(). La implementan Schema, Collection y Table."
+    ]
+  },
+  "php-class-mysql_xdevapi-docresult": {
+    "description": [
+      "Usa fetchOne() para leer un documento o fetchAll() para obtener todos los pendientes.",
+      "Cada documento llega como array asociativo. getWarnings() da los avisos del servidor."
+    ]
+  },
+  "php-class-mysql_xdevapi-driver": {
+    "summary": "Información sobre el controlador MySQL X DevAPI.",
+    "description": [
+      "Su constante version da la versión de la extensión. No hace falta instanciarla para conectar: la conexión se abre con mysql_xdevapi\\getSession()."
+    ]
+  },
+  "php-class-mysql_xdevapi-exception": {
+    "description": [
+      "Consulta el código y el mensaje para decidir cómo manejar el error. Mantén el detalle de conexión fuera de los mensajes que muestras al usuario.",
+      "Hereda de RuntimeException."
+    ]
+  },
+  "php-class-mysql_xdevapi-executable": {
+    "summary": "Interfaz de las operaciones que se pueden ejecutar.",
+    "description": [
+      "Define execute(), que envía la operación preparada al servidor y devuelve su resultado. La implementan las operaciones de colección y de tabla."
+    ]
+  },
+  "php-class-mysql_xdevapi-executionstatus": {
+    "description": [
+      "Consulta la clase de resultado de la operación concreta para obtener datos como filas afectadas o avisos.",
+      "Sus propiedades públicas incluyen las filas afectadas, el último ID insertado y el número de avisos."
+    ]
+  },
+  "php-class-mysql_xdevapi-expression": {
+    "summary": "Expresión SQL que se envía sin tratarla como valor literal.",
+    "description": [
+      "Se crea con mysql_xdevapi\\expression(). Úsala cuando quieras que el servidor evalúe algo, como una función, en lugar de guardarlo como cadena; por ejemplo, en Table::update() o CollectionModify::set()."
+    ]
+  },
+  "php-class-mysql_xdevapi-fieldmetadata": {
+    "description": [
+      "Si necesitas inspeccionar columnas devueltas por una consulta, consulta los métodos de metadatos del resultado compatible con tu versión.",
+      "En la práctica, mysql_xdevapi\\ColumnResult ofrece esos datos con métodos como getColumnName() o getType()."
+    ]
+  },
+  "php-class-mysql_xdevapi-result": {
+    "summary": "Resultado de una operación de escritura.",
+    "description": [
+      "Lo devuelven, por ejemplo, CollectionAdd::execute() y TableInsert::execute(). getAffectedItemsCount() da los elementos afectados, getAutoIncrementValue() el último valor autoincremental y getGeneratedIds() los _id generados.",
+      "getWarnings() da los avisos del servidor."
+    ]
+  },
+  "php-class-mysql_xdevapi-rowresult": {
+    "description": [
+      "Permite recuperar filas y examinar los nombres y tipos de las columnas.",
+      "Lo devuelve TableSelect::execute(). fetchOne() lee una fila, fetchAll() todas, y getColumnNames() y getColumns() describen las columnas."
+    ]
+  },
+  "php-class-mysql_xdevapi-schema": {
+    "summary": "Representa un esquema (una base de datos) de MySQL.",
+    "description": [
+      "Se obtiene con Session::getSchema(). getCollection() y createCollection() dan acceso a colecciones de documentos, y getTable() a tablas relacionales.",
+      "getCollections() y getTables() enumeran los objetos que contiene."
+    ]
+  },
+  "php-class-mysql_xdevapi-schemaobject": {
+    "description": [
+      "Distingue los objetos de un esquema de otros objetos de la sesión global de base de datos.",
+      "Define getSchema(), que devuelve el mysql_xdevapi\\Schema al que pertenece el objeto."
+    ]
+  },
+  "php-class-mysql_xdevapi-session": {
+    "summary": "Sesión conectada a un servidor MySQL mediante el protocolo X.",
+    "description": [
+      "Se obtiene con mysql_xdevapi\\getSession('mysqlx://usuario:clave@host:33060'). getSchema() da acceso a un esquema y sql() prepara una sentencia SQL.",
+      "startTransaction(), commit() y rollback() controlan las transacciones, y close() cierra la sesión."
+    ]
+  },
+  "php-class-mysql_xdevapi-sqlstatement": {
+    "description": [
+      "Usa bind() con sus parámetros y execute() para obtener el resultado. Algunas sentencias pueden proporcionar más de un conjunto de resultados.",
+      "Se obtiene con Session::sql(). Los marcadores ? se rellenan en orden con cada llamada a bind()."
+    ]
+  },
+  "php-class-mysql_xdevapi-sqlstatementresult": {
+    "description": [
+      "Puede contener filas y metadatos, o información de escritura como el número de filas afectadas. Usa hasData() antes de asumir que existe un conjunto de filas.",
+      "fetchOne() y fetchAll() leen las filas, y nextResult() avanza al siguiente conjunto si la sentencia devolvió varios."
+    ]
+  },
+  "php-class-mysql_xdevapi-statement": {
+    "summary": "Base de las sentencias que pueden devolver varios conjuntos de resultados.",
+    "description": [
+      "Ofrece getResult() para el resultado actual, y hasMoreResults() y getNextResult() para avanzar entre conjuntos."
+    ]
+  },
+  "php-class-mysql_xdevapi-table": {
+    "description": [
+      "Se obtiene con Schema::getTable(). insert(), select(), update() y delete() preparan operaciones que se envían con execute().",
+      "count() devuelve el número de filas y isView() indica si es una vista."
+    ]
+  },
+  "php-class-mysql_xdevapi-tabledelete": {
+    "description": [
+      "Se obtiene con Table::delete(). where() fija la condición, bind() rellena sus marcadores, y orderby() y limit() acotan las filas. execute() realiza el borrado."
+    ]
+  },
+  "php-class-mysql_xdevapi-tableinsert": {
+    "description": [
+      "Se obtiene con Table::insert(), que recibe los nombres de columna. values() añade cada fila y execute() inserta todas."
+    ]
+  },
+  "php-class-mysql_xdevapi-tableselect": {
+    "description": [
+      "Se obtiene con Table::select(), que recibe las columnas. where(), orderby(), limit() y offset() configuran la consulta, y execute() devuelve un mysql_xdevapi\\RowResult."
+    ]
+  },
+  "php-class-mysql_xdevapi-tableupdate": {
+    "description": [
+      "Se obtiene con Table::update(). set() asigna el nuevo valor de cada columna, where() fija la condición y execute() aplica los cambios."
+    ]
+  },
+  "php-class-mysql_xdevapi-warning": {
+    "summary": "Aviso generado por el servidor durante una operación.",
+    "description": [
+      "Sus propiedades message, level y code describen el aviso. Se obtienen con getWarnings() desde cualquier resultado."
+    ]
+  },
+  "php-class-mysqli": {
+    "description": [
+      "Se crea con new mysqli($host, $usuario, $clave, $baseDeDatos). query() ejecuta una consulta directa y prepare() crea una consulta preparada, que es la forma segura de incluir datos del usuario.",
+      "Desde PHP 8.1, los errores lanzan mysqli_sql_exception por defecto. begin_transaction(), commit() y rollback() controlan las transacciones, y set_charset('utf8mb4') fija la codificación de la conexión."
+    ]
+  },
+  "php-class-mysqli_driver": {
+    "description": [
+      "Su propiedad report_mode controla cómo se informan los errores; es lo que cambia la función mysqli_report(). La propiedad client_info da la versión de la biblioteca cliente."
+    ]
+  },
+  "php-class-mysqli_result": {
+    "description": [
+      "Lo devuelven mysqli::query() y mysqli_stmt::get_result(). fetch_assoc() lee una fila como array asociativo, fetch_all(MYSQLI_ASSOC) todas a la vez y fetch_object() una fila como objeto.",
+      "Desde PHP 8.0 se puede recorrer con foreach. La propiedad num_rows da el número de filas."
+    ]
+  },
+  "php-class-mysqli_sql_exception": {
+    "description": [
+      "La lanzan las funciones de mysqli cuando el modo de informe incluye MYSQLI_REPORT_STRICT, que es el valor por defecto desde PHP 8.1. getCode() da el número de error de MySQL y getSqlState() el código SQLSTATE.",
+      "Hereda de RuntimeException."
+    ]
+  },
+  "php-class-mysqli_stmt": {
+    "description": [
+      "Se obtiene con mysqli::prepare(). bind_param() vincula las variables a los marcadores ? indicando sus tipos, como 'si' para una cadena y un entero, y execute() ejecuta la consulta.",
+      "Desde PHP 8.1, execute() también acepta un array con los valores. get_result() devuelve un mysqli_result; como alternativa, bind_result() y fetch() leen fila a fila en variables."
+    ]
+  },
+  "php-class-mysqli_warning": {
+    "description": [
+      "Se obtiene con mysqli::get_warnings() o mysqli_stmt::get_warnings(). Sus propiedades message, sqlstate y errno describen el aviso, y next() avanza al siguiente."
+    ]
+  },
   "php-function-fann_set_activation_function": {
     "description": [
       "Establece la función de activación para la neurona número neuron en la capa número layer, contando al capa de entrada como capa 0.",
