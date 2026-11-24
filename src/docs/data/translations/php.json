@@ -3005,6 +3005,261 @@
       "El constructor recibe el array con la configuración y, opcionalmente, si debe ser de solo lectura. Se recorre con foreach y se accede como array o como propiedades anidadas."
     ]
   },
+  "php-class-yaf_exception_dispatchfailed": {
+    "description": [
+      "Hereda de Yaf_Exception. Con application.dispatcher.catchException activado, Yaf envía estas excepciones a la acción error del controlador Error en lugar de mostrarlas."
+    ]
+  },
+  "php-class-yaf_exception_loadfailed": {
+    "description": [
+      "Hereda de Yaf_Exception. Suele indicar que el nombre del controlador o la acción no coincide con el archivo esperado en el directorio de la aplicación."
+    ]
+  },
+  "php-class-yaf_exception_loadfailed_action": {
+    "description": [
+      "Hereda de Yaf_Exception_LoadFailed. Comprueba que el controlador tenga un método con el sufijo Action o una clase de acción con ese nombre."
+    ]
+  },
+  "php-class-yaf_exception_loadfailed_controller": {
+    "description": [
+      "Hereda de Yaf_Exception_LoadFailed. Comprueba que exista el archivo del controlador en el directorio controllers y que la clase tenga el sufijo Controller."
+    ]
+  },
+  "php-class-yaf_exception_loadfailed_module": {
+    "description": [
+      "Hereda de Yaf_Exception_LoadFailed. Los módulos disponibles se declaran en la opción application.modules de la configuración."
+    ]
+  },
+  "php-class-yaf_exception_loadfailed_view": {
+    "description": [
+      "Hereda de Yaf_Exception_LoadFailed. Comprueba la ruta de las plantillas y la extensión configurada en application.view.ext."
+    ]
+  },
+  "php-class-yaf_exception_routerfailed": {
+    "description": ["Hereda de Yaf_Exception."]
+  },
+  "php-class-yaf_exception_startuperror": {
+    "description": [
+      "Hereda de Yaf_Exception. Suele deberse a una configuración incompleta, como no indicar application.directory."
+    ]
+  },
+  "php-class-yaf_exception_typeerror": {
+    "description": ["Hereda de Yaf_Exception."]
+  },
+  "php-class-yaf_request_abstract": {
+    "description": [
+      "Se proporcionan dos implementaciones concretas: Yaf_Request_Http, inicializada desde una petición web real, y Yaf_Request_Simple, una petición sintética usada en pruebas y scripts CLI.",
+      "getParam() lee los parámetros extraídos por el enrutamiento, mientras que getQuery() y getPost() leen los datos de la petición. Métodos como isGet() o isPost() comprueban el método HTTP."
+    ]
+  },
+  "php-class-yaf_request_simple": {
+    "description": [
+      "El constructor recibe el método, el módulo, el controlador, la acción y los parámetros. Se pasa a Yaf_Dispatcher::dispatch() para ejecutar una acción desde la línea de órdenes o desde una prueba."
+    ]
+  },
+  "php-class-yaf_response_abstract": {
+    "description": [
+      "Las subclases concretas son Yaf_Response_Http (usada en SAPIs web, que envía realmente las cabeceras HTTP) y Yaf_Response_Cli (usada en línea de comandos).",
+      "setBody(), appendBody() y prependBody() trabajan con el contenido, setHeader() añade cabeceras y setRedirect() prepara una redirección. response() envía todo al cliente."
+    ]
+  },
+  "php-class-yaf_response_cli": {
+    "description": [
+      "Hereda de Yaf_Response_Abstract, así que el contenido se gestiona con los mismos métodos, como setBody() o appendBody()."
+    ]
+  },
+  "php-class-yaf_response_http": {
+    "description": [
+      "Hereda de Yaf_Response_Abstract. setHeader() y setRedirect() preparan cabeceras y redirecciones que se envían junto con el cuerpo."
+    ]
+  },
+  "php-class-yaf_route_rewrite": {
+    "description": [
+      "Para su uso, véase la sección de ejemplos de Yaf_Route_Rewrite::__construct.",
+      "Se añade al enrutador con Yaf_Router::addRoute() o desde la configuración. assemble() hace lo contrario que route(): construye la URL a partir de los parámetros."
+    ]
+  },
+  "php-class-yaf_route_static": {
+    "description": [
+      "No es necesario instanciar un Yaf_Route_Static, ni añadirlo a la pila de rutas de Yaf_Router: siempre hay uno presente en la pila y siempre se intenta el último.",
+      "Si la URL tiene segmentos de más tras la acción, se interpretan como pares de parámetros clave/valor."
+    ]
+  },
+  "php-class-yaf_route_supervar": {
+    "description": [
+      "El constructor recibe el nombre de la variable. Es útil cuando el servidor web no permite reescribir URL."
+    ]
+  },
+  "php-class-yaf_router": {
+    "summary": "Enrutador que decide qué módulo, controlador y acción atienden cada petición.",
+    "description": [
+      "addRoute() añade una ruta con un nombre y addConfig() carga varias desde la configuración. Las rutas se prueban en orden inverso al que se añadieron, y Yaf_Route_Static siempre se prueba la última.",
+      "getCurrentRoute() devuelve el nombre de la ruta que coincidió. Se obtiene con Yaf_Dispatcher::getRouter()."
+    ]
+  },
+  "php-class-yaf_view_interface": {
+    "description": [
+      "Un motor propio debe implementar assign(), render(), display(), setScriptPath() y getScriptPath(). Así se puede usar, por ejemplo, un motor de plantillas externo con Yaf."
+    ]
+  },
+  "php-class-yaf_view_simple": {
+    "description": [
+      "assign() pasa variables a la plantilla, render() devuelve el resultado como cadena y display() lo envía directamente. En la plantilla, cada variable asignada está disponible con su nombre.",
+      "Las plantillas son archivos PHP normales, con extensión .phtml por defecto."
+    ]
+  },
+  "php-class-yar_client": {
+    "description": [
+      "El constructor recibe la URL del servicio y las llamadas se escriben como métodos normales: $cliente->sumar(1, 2). setOpt() configura opciones como el tiempo de espera o el empaquetador (PHP, JSON o msgpack).",
+      "Para hacer varias llamadas en paralelo, usa Yar_Concurrent_Client. Pertenece a la extensión PECL yar."
+    ]
+  },
+  "php-class-yar_client_exception": {
+    "description": [
+      "getType() devuelve el tipo de error. Captúrala para tratar cualquier fallo del cliente; sus subclases distinguen errores de transporte y de empaquetado."
+    ]
+  },
+  "php-class-yar_client_packager_exception": {
+    "description": [
+      "Suele indicar que cliente y servidor usan empaquetadores distintos o que el servidor devolvió una salida inesperada, como un error de PHP."
+    ]
+  },
+  "php-class-yar_client_transport_exception": {
+    "description": [
+      "Revisa la URL del servicio y el tiempo de espera configurado con Yar_Client::setOpt()."
+    ]
+  },
+  "php-class-yar_server": {
+    "description": [
+      "La extensión de PHP solo proporciona un servidor HTTP. Un servidor TCP y de sockets Unix que emplea el mismo protocolo Yar lo proporciona el framework Yar en C.",
+      "Si se accede al servicio con una petición GET normal, handle() muestra una página con los métodos disponibles."
+    ]
+  },
+  "php-class-yar_server_exception": {
+    "description": [
+      "Captúrala en el cliente para tratar los errores producidos en el servidor; sus subclases indican fallos concretos del protocolo, el empaquetado o la petición."
+    ]
+  },
+  "php-class-yar_server_output_exception": {
+    "description": ["Hereda de Yar_Server_Exception."]
+  },
+  "php-class-yar_server_packager_exception": {
+    "description": [
+      "Hereda de Yar_Server_Exception. Suele indicar que el cliente usa un empaquetador que el servidor no tiene disponible."
+    ]
+  },
+  "php-class-yar_server_protocol_exception": {
+    "description": ["Hereda de Yar_Server_Exception."]
+  },
+  "php-class-yar_server_request_exception": {
+    "description": [
+      "Hereda de Yar_Server_Exception. Comprueba el nombre del método y que sea público en el objeto que se pasó a Yar_Server."
+    ]
+  },
+  "php-class-ziparchive": {
+    "summary": "Un archivo comprimido con Zip.",
+    "description": [
+      "open() abre un archivo; con ZipArchive::CREATE lo crea si no existe. addFile() y addFromString() añaden contenido, getFromName() lee un archivo interno y extractTo() extrae todo o parte a un directorio.",
+      "Los cambios se escriben al llamar a close(). setPassword() y setEncryptionName() permiten trabajar con archivos cifrados."
+    ]
+  },
+  "php-class-zmq": {
+    "summary": "Constantes de la extensión zmq (ZeroMQ).",
+    "description": [
+      "Define los tipos de socket, como ZMQ::SOCKET_REQ, SOCKET_REP, SOCKET_PUB o SOCKET_SUB, las opciones de socket y los modos de envío y recepción. Pertenece a la extensión PECL zmq."
+    ]
+  },
+  "php-class-zmqcontext": {
+    "summary": "Contexto de ZeroMQ del que se crean los sockets.",
+    "description": [
+      "El constructor recibe el número de hilos de E/S y si el contexto es persistente entre peticiones. getSocket() crea un ZMQSocket del tipo indicado."
+    ]
+  },
+  "php-class-zmqcontextexception": {
+    "summary": "Excepción que lanza ZMQContext cuando falla una operación.",
+    "description": ["Hereda de ZMQException."]
+  },
+  "php-class-zmqdevice": {
+    "summary": "Reenvía mensajes entre dos sockets de ZeroMQ.",
+    "description": [
+      "El constructor recibe el socket de entrada y el de salida, y run() reenvía los mensajes en ambos sentidos. Sirve para montar intermediarios, como un reparto de tareas entre varios trabajadores.",
+      "setIdleCallback() y setTimerCallback() ejecutan funciones cuando no hay actividad o cada cierto tiempo."
+    ]
+  },
+  "php-class-zmqdeviceexception": {
+    "summary": "Excepción que lanza ZMQDevice cuando falla una operación.",
+    "description": ["Hereda de ZMQException."]
+  },
+  "php-class-zmqexception": {
+    "summary": "Excepción base de la extensión zmq.",
+    "description": [
+      "Hereda de Exception. ZMQContextException, ZMQSocketException, ZMQPollException y ZMQDeviceException heredan de ella."
+    ]
+  },
+  "php-class-zmqpoll": {
+    "summary": "Espera actividad en varios sockets de ZeroMQ a la vez.",
+    "description": [
+      "add() registra un socket o flujo con los eventos que interesan, como ZMQ::POLL_IN, y poll() espera hasta que alguno está listo, rellenando los arrays de sockets legibles y escribibles."
+    ]
+  },
+  "php-class-zmqpollexception": {
+    "summary": "Excepción que lanza ZMQPoll cuando falla una operación.",
+    "description": ["Hereda de ZMQException."]
+  },
+  "php-class-zmqsocket": {
+    "summary": "Socket de ZeroMQ.",
+    "description": [
+      "Se obtiene con ZMQContext::getSocket(). bind() escucha en una dirección y connect() se conecta a otra; send() y recv() envían y reciben mensajes, y sendmulti() y recvMulti() mensajes de varias partes.",
+      "El comportamiento depende del tipo de socket: petición/respuesta, publicación/suscripción, empuje/extracción, etc."
+    ]
+  },
+  "php-class-zmqsocketexception": {
+    "summary": "Excepción que lanza ZMQSocket cuando falla una operación.",
+    "description": ["Hereda de ZMQException."]
+  },
+  "php-class-zookeeper": {
+    "description": [
+      "El constructor recibe la lista de servidores, como 'localhost:2181'. create(), get(), set(), delete() y getChildren() trabajan con los nodos (znodes) del árbol, y exists() comprueba si un nodo existe.",
+      "Algunos métodos aceptan una función de vigilancia que se llama cuando el nodo cambia. Pertenece a la extensión PECL zookeeper."
+    ]
+  },
+  "php-class-zookeeperauthenticationexception": {
+    "description": [
+      "Hereda de ZookeeperException. Se produce, por ejemplo, cuando las credenciales añadidas con Zookeeper::addAuth() no son válidas."
+    ]
+  },
+  "php-class-zookeeperconfig": {
+    "description": [
+      "Se obtiene con Zookeeper::getConfig(). get() lee la configuración del conjunto de servidores, y set(), add() y remove() la cambian, por ejemplo para añadir o quitar servidores en caliente."
+    ]
+  },
+  "php-class-zookeeperconnectionexception": {
+    "description": [
+      "Hereda de ZookeeperException. Se produce, por ejemplo, cuando no se puede conectar con ningún servidor."
+    ]
+  },
+  "php-class-zookeeperexception": {
+    "description": [
+      "Hereda de Exception. Es la clase padre del resto de excepciones de la extensión zookeeper."
+    ]
+  },
+  "php-class-zookeepermarshallingexception": {
+    "description": ["Hereda de ZookeeperException."]
+  },
+  "php-class-zookeepernonodeexception": {
+    "description": [
+      "Hereda de ZookeeperException. Comprueba la ruta, o usa Zookeeper::exists() antes de leer o borrar el nodo."
+    ]
+  },
+  "php-class-zookeeperoperationtimeoutexception": {
+    "summary": "Excepción que se lanza cuando una operación de ZooKeeper supera el tiempo de espera.",
+    "description": ["Hereda de ZookeeperException."]
+  },
+  "php-class-zookeepersessionexception": {
+    "description": [
+      "Hereda de ZookeeperException. Se produce, por ejemplo, cuando la sesión con el servidor ha caducado y hay que volver a conectar."
+    ]
+  },
   "php-function-fann_set_activation_function": {
     "description": [
       "Establece la función de activación para la neurona número neuron en la capa número layer, contando al capa de entrada como capa 0.",
