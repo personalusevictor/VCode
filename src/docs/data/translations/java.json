@@ -35018,6 +35018,433 @@
       "Un gestor de pool de conexiones suele ser también un gestor de pool de sentencias, que mantiene un pool de PreparedStatement. Cuando una aplicación cierra una sentencia preparada, llama al método close de PreparedStatement. Si se usa un pool de sentencias, se avisa al gestor, que se ha registrado como StatementEventListener con el método addStatementEventListener de ConnectionPool. Así, cuando una aplicación cierra su PreparedStatement, la sentencia preparada subyacente se recicla en lugar de cerrarse."
     ]
   },
+  "web-java-se-javax.sql.PooledConnection.addStatementEventListener": {
+    "intro": [
+      "Registra un StatementEventListener en este PooledConnection. Los componentes que quieran recibir aviso cuando los PreparedStatement creados por la conexión se cierren o se detecten como no válidos pueden usar este método para registrarse."
+    ],
+    "parameters": [
+      {
+        "label": "listener",
+        "detail": "un componente que implementa la interfaz StatementEventListener y se registra en este PooledConnection"
+      }
+    ]
+  },
+  "web-java-se-javax.sql.PooledConnectionBuilder": {
+    "body": [
+      "Este ejemplo muestra cómo usar PooledConnectionBuilder para crear un XAConnection:",
+      "ConnectionPoolDataSource ds = new MyConnectionPoolDataSource(); ShardingKey superShardingKey = ds.createShardingKeyBuilder() .subkey(\"EASTERN_REGION\", JDBCType.VARCHAR) .build(); ShardingKey shardingKey = ds.createShardingKeyBuilder() .subkey(\"PITTSBURGH_BRANCH\", JDBCType.VARCHAR) .build(); PooledConnection con = ds.createPooledConnectionBuilder() .user(\"rafa\") .password(\"tennis\") .shardingKey(shardingKey) .superShardingKey(superShardingKey) .build();"
+    ]
+  },
+  "web-java-se-javax.sql.RowSetMetaData": {
+    "intro": [
+      "Un objeto con información de las columnas de un RowSet. Esta interfaz amplía ResultSetMetaData con métodos para fijar los valores de un RowSetMetaData. Cuando un RowSetReader lee datos en un RowSet, crea un RowSetMetaData, lo inicializa con los métodos de esta interfaz y se lo pasa al rowset."
+    ],
+    "body": [
+      "Los métodos de esta interfaz se invocan internamente cuando una aplicación llama a RowSet.execute; un programador de aplicaciones no los usa directamente."
+    ]
+  },
+  "web-java-se-javax.sql.rowset.BaseRowSet": {
+    "body": [
+      "1.0 Visión general",
+      "La clase BaseRowSet ofrece la funcionalidad básica de todas las implementaciones de RowSet, y todas las implementaciones estándar pueden usarla junto con una o más interfaces RowSet para ofrecer una implementación estándar propia del fabricante. Es decir, toda implementación debe implementar al menos una de las interfaces RowSet (JdbcRowSet, CachedRowSet, JoinRowSet, FilteredRowSet o WebRowSet). Así, cualquier implementación que extienda BaseRowSet también debe implementar una de ellas.",
+      "La clase BaseRowSet ofrece:",
+      "Propiedades",
+      "Campos para guardar las propiedades actuales",
+      "Métodos para obtener y fijar propiedades",
+      "Notificación de eventos",
+      "Un conjunto completo de setters para fijar los parámetros del comando de un RowSet",
+      "Flujos",
+      "Campos para guardar instancias de flujos",
+      "Constantes que indican el tipo de un flujo",
+      "2.0 Fijar propiedades",
+      "Todos los rowsets mantienen un conjunto de propiedades, que normalmente se fijan con una herramienta. El número y tipo de propiedades varían según lo que hace la implementación de RowSet y cómo obtiene sus datos. Por ejemplo, los rowsets que obtienen datos de un ResultSet deben fijar las propiedades necesarias para conectarse a la base de datos. Si un RowSet usa DriverManager para conectarse, debe fijar la URL JDBC que identifica el driver adecuado, y el usuario y la contraseña. En cambio, si usa un DataSource, que es lo preferible, no necesita la URL JDBC, sino el nombre lógico de la fuente de datos, junto con el usuario y la contraseña.",
+      "NOTA: para conectarse con un DataSource, este debe estar registrado en un servicio de nombres que use la API Java Naming and Directory Interface (JNDI). Normalmente lo hace alguien que actúa como administrador del sistema.",
+      "3.0 Fijar el comando y sus parámetros",
+      "Cuando un rowset obtiene datos de una base de datos relacional, ejecuta un comando (una consulta) que produce un ResultSet. Esa consulta es la que se fija en la propiedad command del RowSet. El rowset se llena leyendo los datos del ResultSet. Si la consulta tiene marcadores para valores, se fijan con los setters de BaseRowSet. Todos los setters permiten fijar estos valores a null si hace falta.",
+      "Este fragmento muestra cómo podría fijarse la propiedad command del CachedRowSet crs. Si se usa una herramienta para fijar propiedades, este sería el código que usaría.",
+      "crs.setCommand(\"SELECT FIRST_NAME, LAST_NAME, ADDRESS FROM CUSTOMERS\" + \"WHERE CREDIT_LIMIT > ? AND REGION = ?\");",
+      "En este ejemplo, los valores de CREDIT_LIMIT y REGION son parámetros marcadores, indicados con una interrogación (?). La primera es el parámetro marcador 1, la segunda el 2, y así sucesivamente. Todos los parámetros marcadores deben tener valor antes de ejecutar la consulta. Para fijarlos, BaseRowSet ofrece setters para cada tipo de datos, parecidos a los de PreparedStatement. Un RowSet guarda internamente los valores de los parámetros, y su método execute los usa para fijar los marcadores antes de enviar el comando al SGBD.",
+      "Este fragmento fija los dos parámetros de la consulta del ejemplo anterior.",
+      "crs.setInt(1, 5000); crs.setString(2, \"West\");",
+      "Si en este punto se llama a execute, la consulta que se envía al SGBD será:",
+      "\"SELECT FIRST_NAME, LAST_NAME, ADDRESS FROM CUSTOMERS\" + \"WHERE CREDIT_LIMIT > 5000 AND REGION = 'West'\"",
+      "NOTA: al fijar objetos Array, Clob, Blob y Ref como parámetro del comando, se guardan como SerialArray, SerialClob, SerialBlob y SerialRef, respectivamente.",
+      "4.0 Manejo interno de los parámetros",
+      "NOTA: BaseRowSet ofrece dos tipos de setters: los que fijan propiedades y los que fijan parámetros marcadores. En esta sección se tratan los segundos.",
+      "Los parámetros marcadores fijados con los setters de BaseRowSet se guardan como objetos en un Hashtable interno. Los primitivos se guardan como su tipo Object; por ejemplo, byte como Byte e int como Integer. Al llamar a execute, los valores del Hashtable sustituyen a los marcadores correspondientes del comando.",
+      "getParams devuelve los valores del Hashtable como un array de Object. Un elemento puede ser un Object simple o un array (que también es un Object); depende del setter usado.",
+      "La mayoría de los métodos que fijan parámetros marcadores reciben dos parámetros: el primero indica qué marcador se fija y el segundo, el valor. Métodos como setInt, setString, setBoolean y setLong son de este tipo. Tras llamarlos, getParams devuelve un array con los valores fijados, cada uno como Object. El orden lo determina el int (primer parámetro) pasado al setter, y los valores son los del segundo parámetro. Es decir, el primer elemento del array es el valor del primer marcador del comando, el segundo el del segundo marcador, etc.",
+      "Algunos setters envían al driver y al SGBD información adicional al valor. Si se llama a getParams tras usar uno de ellos, los elementos del array son a su vez arrays con esa información. En esta categoría, setNull es un caso especial porque una versión solo recibe dos parámetros (setNull(int parameterIndex, int SqlType)). Aun así, necesita un array con la información que se pasa al driver y al SGBD: el primer elemento es el valor, null, y el segundo el int sqlType, que indica el tipo SQL del valor que se pone a null. Algunos SGBD necesitan esta información, así que se exige para que las aplicaciones sean portables. La otra versión se usa cuando el valor que se pone a null es de un tipo definido por el usuario. Recibe tres parámetros (setNull(int parameterIndex, int sqlType, String typeName)) y también necesita un array: los dos primeros elementos son como en la primera versión, y el tercero, typeName, es el nombre SQL del tipo definido por el usuario. Como en los demás setters, el número del marcador lo indica la posición del elemento en el array que devuelve getParams. Por ejemplo, si el parámetro de setNull es 2, el segundo elemento del array será un array de dos o tres elementos.",
+      "Algunos métodos, como setObject y setDate, tienen versiones con más de dos parámetros que dan información al driver o al SGBD. Por ejemplo, setDate, setTime y setTimestamp pueden recibir un Calendar como tercer parámetro. Si el SGBD no guarda información de zona horaria, el driver usa el Calendar para construir el Date, Time o Timestamp que se fija. Como en otros métodos con información adicional, el elemento del array que devuelve getParams es un array en lugar de un Object simple.",
+      "Los métodos setAsciiStream, setBinaryStream, setCharacterStream y setUnicodeStream (obsoleto; las aplicaciones deben usar getCharacterStream) reciben tres parámetros, así que su elemento en el array de getParams también es un array. Lo que los diferencia es que, además de la información de los parámetros, el array contiene una de las constantes de BaseRowSet que indica el tipo de flujo.",
+      "NOTA: getParams lo llaman internamente las implementaciones de RowSet que extienden esta clase; normalmente un programador de aplicaciones no lo llama directamente.",
+      "5.0 Notificación de eventos",
+      "La clase BaseRowSet ofrece el mecanismo de notificación de eventos de los rowsets: el campo listeners, métodos para añadir y quitar listeners y métodos para avisarles de los cambios.",
+      "Un listener es un objeto que implementa la interfaz RowSetListener. Si está en la lista de listeners de un RowSet, recibe aviso cuando ocurre un evento en él. Su implementación de los métodos de RowSetListener define qué hace al recibir el aviso.",
+      "Hay tres eventos posibles en un RowSet:",
+      "el cursor se mueve",
+      "cambia una fila (se actualiza, elimina o inserta)",
+      "cambia el contenido de todo el RowSet",
+      "El método de BaseRowSet usado para avisar indica el tipo de evento. Por ejemplo, notifyRowChanged indica que se ha actualizado, eliminado o insertado una fila. Cada método de notificación crea un RowSetEvent que se pasa al listener para identificar el RowSet en el que ocurrió el evento. Lo que haga el listener con esa información, que puede ser nada, depende de su implementación.",
+      "6.0 Comportamiento predeterminado",
+      "Un BaseRowSet predeterminado se inicializa con muchos valores iniciales.",
+      "Un RowSet predeterminado que extiende BaseRowSet cumple lo siguiente:",
+      "Tiene un cursor desplazable y no muestra los cambios hechos por otros.",
+      "Es actualizable.",
+      "No muestra las filas eliminadas.",
+      "No tiene límite de tiempo para que el driver ejecute el comando del RowSet.",
+      "No tiene límite de filas.",
+      "No tiene límite de bytes por columna. NOTA: este límite solo se aplica a columnas de los tipos BINARY, VARBINARY, LONGVARBINARY, CHAR, VARCHAR y LONGVARCHAR.",
+      "No ve datos sin confirmar (no hace lecturas \"sucias\").",
+      "Tiene activado el procesamiento de escapes.",
+      "El mapa de tipos de su conexión es null.",
+      "Tiene un Vector vacío para guardar los valores de los parámetros marcadores del comando.",
+      "Si se quieren otros valores, la aplicación debe fijar las propiedades explícitamente. Por ejemplo, esta línea fija a 500 el número máximo de filas del CachedRowSet crs.",
+      "crs.setMaxRows(500);",
+      "Los métodos implementados en las extensiones de BaseRowSet deben lanzar SQLException ante cualquier incumplimiento de las aserciones definidas. Además, si la clase que extiende sobrescribe y reimplementa algún método de BaseRowSet y encuentra problemas de conectividad o de la fuente de datos subyacente, también puede lanzar SQLException por ese motivo."
+    ]
+  },
+  "web-java-se-javax.sql.rowset.CachedRowSet": {
+    "body": [
+      "La implementación de referencia de CachedRowSet que ofrece Oracle Corporation es una implementación estándar. Los desarrolladores pueden usarla tal cual, extenderla o escribir sus propias implementaciones de esta interfaz.",
+      "Un CachedRowSet es un contenedor de filas de datos que las guarda en memoria, lo que permite trabajar sin estar siempre conectado a la fuente de datos. Además, es un componente JavaBeans desplazable, actualizable y serializable. Normalmente contiene filas de un result set, pero también puede contener filas de cualquier archivo con formato tabular, como una hoja de cálculo. La implementación de referencia solo admite obtener datos de un ResultSet, pero los desarrolladores pueden extender las implementaciones de SyncProvider para acceder a otras fuentes de datos tabulares.",
+      "Una aplicación puede modificar los datos de un CachedRowSet y luego propagar esos cambios a la fuente de datos.",
+      "Un CachedRowSet es un rowset desconectado: solo usa brevemente una conexión con su fuente de datos. Se conecta mientras lee datos para llenarse y de nuevo mientras propaga los cambios a la fuente. El resto del tiempo, incluido mientras se modifican sus datos, está desconectado. Esto hace que un RowSet sea mucho más ligero y fácil de pasar a otro componente. Por ejemplo, un RowSet desconectado puede serializarse y enviarse por la red a un cliente ligero como una PDA.",
+      "1.0 Crear un CachedRowSet",
+      "Esta línea usa el constructor predeterminado de CachedRowSet de la implementación de referencia (RI) para crear un CachedRowSet predeterminado.",
+      "CachedRowSetImpl crs = new CachedRowSetImpl();",
+      "Este nuevo CachedRowSet tiene las propiedades predeterminadas de un BaseRowSet y, además, un RIOptimisticProvider como proveedor de sincronización. RIOptimisticProvider, una de las dos implementaciones de SyncProvider de la RI, es el proveedor predeterminado que da el singleton SyncFactory cuando no se indica ninguno.",
+      "Un SyncProvider da al CachedRowSet un lector (un RowSetReader) para leer datos de una fuente y llenarse. Un lector puede implementarse para leer de un ResultSet o de un archivo con formato tabular. El SyncProvider también da un escritor (un RowSetWriter) para sincronizar con la fuente de datos subyacente los cambios hechos en el CachedRowSet mientras estaba desconectado.",
+      "Un escritor puede implementarse con distintos grados de cuidado al comprobar y evitar conflictos. (Hay un conflicto cuando un valor de la fuente de datos ha cambiado después de que el rowset se llenara con él). La implementación RIOptimisticProvider supone que habrá pocos o ningún conflicto y por eso no pone bloqueos: actualiza la fuente de datos con los valores del CachedRowSet solo si no hay conflictos. Otros escritores pueden implementarse para escribir siempre los datos modificados, ya sea sin comprobar conflictos o, en el otro extremo, poniendo bloqueos suficientes para que los datos de la fuente no puedan cambiar. Otras implementaciones pueden estar en un punto intermedio.",
+      "Un CachedRowSet puede usar cualquier implementación de SyncProvider registrada en el singleton SyncFactory. Una aplicación puede saber cuáles están registradas con esta línea:",
+      "java.util.Enumeration providers = SyncFactory.getRegisteredProviders();",
+      "Un CachedRowSet puede indicar qué SyncProvider usa de dos formas:",
+      "Pasando el nombre de la implementación al constructor",
+      "Esta línea crea el CachedRowSet crs2 con valores predeterminados salvo el SyncProvider, que es el indicado.",
+      "CachedRowSetImpl crs2 = new CachedRowSetImpl( \"com.fred.providers.HighAvailabilityProvider\");",
+      "Fijando el SyncProvider con el método setSyncProvider de CachedRowSet",
+      "Esta línea cambia el SyncProvider de crs, el CachedRowSet creado con el constructor predeterminado.",
+      "crs.setSyncProvider(\"com.fred.providers.HighAvailabilityProvider\");",
+      "Consulta los comentarios de SyncFactory y SyncProvider para más detalles.",
+      "2.0 Obtener datos de un CachedRowSet",
+      "Los datos de un CachedRowSet se obtienen con los getters heredados de ResultSet. Estos ejemplos, en los que crs es un CachedRowSet, muestran cómo recorrer las filas obteniendo los valores de cada columna. El primero usa la versión de los getters que recibe un número de columna; el segundo, la que recibe un nombre. Los números de columna se suelen usar cuando el comando es de la forma SELECT * FROM TABLENAME, y los nombres, cuando el comando indica las columnas por nombre.",
+      "while (crs.next()) { String name = crs.getString(1); int id = crs.getInt(2); Clob comment = crs.getClob(3); short dept = crs.getShort(4); System.out.println(name + \" \" + id + \" \" + comment + \" \" + dept); }",
+      "while (crs.next()) { String name = crs.getString(\"NAME\"); int id = crs.getInt(\"ID\"); Clob comment = crs.getClob(\"COM\"); short dept = crs.getShort(\"DEPT\"); System.out.println(name + \" \" + id + \" \" + comment + \" \" + dept); }",
+      "2.1 Obtener RowSetMetaData",
+      "Una aplicación puede obtener información de las columnas de un CachedRowSet llamando a métodos de ResultSetMetaData y RowSetMetaData sobre un RowSetMetaData. Este fragmento, en el que crs es un CachedRowSet, lo muestra. La primera línea crea un RowSetMetaData con información de las columnas de crs: getMetaData, heredado de ResultSet, devuelve un ResultSetMetaData que se convierte a RowSetMetaData antes de asignarlo a rsmd. La segunda línea obtiene cuántas columnas tiene jrs, y la tercera, el tipo JDBC de los valores de su segunda columna.",
+      "RowSetMetaData rsmd = (RowSetMetaData)crs.getMetaData(); int count = rsmd.getColumnCount(); int type = rsmd.getColumnType(2);",
+      "La interfaz RowSetMetaData se diferencia de ResultSetMetaData en dos cosas.",
+      "Incluye setters: un RowSet los usa internamente al llenarse con datos de otro ResultSet.",
+      "Tiene menos getters: algunos métodos de ResultSetMetaData no se aplican a un RowSet. Por ejemplo, los que indican si el valor de una columna es escribible o de solo lectura no se aplican, porque todas las columnas de un RowSet serán escribibles o de solo lectura según el rowset sea actualizable o no.",
+      "NOTA: para devolver un RowSetMetaData, las implementaciones deben sobrescribir getMetaData() de java.sql.ResultSet y devolver un RowSetMetaData.",
+      "3.0 Actualizar un CachedRowSet",
+      "Actualizar un CachedRowSet es parecido a actualizar un ResultSet, pero como el rowset no está conectado a su fuente mientras se actualiza, necesita un paso adicional para aplicar los cambios en la fuente. Tras llamar a updateRow o insertRow, debe llamar también a acceptChanges para escribir las actualizaciones en la fuente. Este ejemplo, con el cursor en una fila del CachedRowSet crs, muestra el código para actualizar dos columnas de la fila actual y también la fuente de datos subyacente.",
+      "crs.updateShort(3, 58); crs.updateInt(4, 150000); crs.updateRow(); crs.acceptChanges();",
+      "El siguiente ejemplo muestra cómo ir a la fila de inserción, construir una fila nueva en ella, insertarla en el rowset y luego llamar a acceptChanges para añadirla a la fuente de datos. Como con los getters, los métodos de actualización pueden recibir un índice o un nombre de columna.",
+      "crs.moveToInsertRow(); crs.updateString(\"Name\", \"Shakespeare\"); crs.updateInt(\"ID\", 10098347); crs.updateShort(\"Age\", 58); crs.updateInt(\"Sal\", 150000); crs.insertRow(); crs.moveToCurrentRow(); crs.acceptChanges();",
+      "NOTA: dónde inserta insertRow() el contenido de la fila de inserción depende de la implementación. La implementación de referencia inserta la fila nueva justo después de la actual, pero podría insertarse en cualquier otro sitio.",
+      "Otra cosa a destacar de estos ejemplos es el uso de acceptChanges. Es el método que propaga los cambios del CachedRowSet a la fuente de datos, llamando internamente al escritor del RowSet. Para ello, el escritor debe asumir el coste de establecer una conexión con la fuente. Los dos fragmentos anteriores llaman a acceptChanges justo después de updateRow o insertRow. Pero si se cambian varias filas, es más eficiente llamar a acceptChanges después de todas las llamadas a updateRow e insertRow: si se llama solo una vez, solo hace falta una conexión.",
+      "4.0 Actualizar la fuente de datos subyacente",
+      "Al ejecutar acceptChanges, se llama internamente al escritor del CachedRowSet, un RowSetWriterImpl, para escribir en la fuente de datos los cambios del rowset. El escritor está implementado para conectarse a la fuente y escribir las actualizaciones.",
+      "El escritor lo da una implementación de SyncProvider, como se explica en la sección 1, \"Crear un CachedRowSet\". El proveedor predeterminado de la implementación de referencia, RIOptimisticProvider, tiene un escritor con un mecanismo de control de concurrencia optimista: no mantiene bloqueos en la base de datos mientras el rowset está desconectado y simplemente comprueba si hay conflictos antes de escribir. Si los hay, no escribe nada.",
+      "El mecanismo lector/escritor de SyncProvider es enchufable, lo que permite personalizar la obtención y actualización de datos. Si se quiere otro mecanismo de control de concurrencia, puede enchufarse otra implementación de SyncProvider con setSyncProvider.",
+      "Para el control de concurrencia optimista, RIOptimisticProvider mantiene el valor actual y el original (el que tenía justo antes del actual). Si no se ha cambiado ningún dato del RowSet, los valores actuales y originales son iguales: los valores con que se llenó inicialmente. Pero una vez cambiado algún valor, actuales y originales serán distintos, aunque en ese momento los originales siguen siendo los iniciales. Con cambios posteriores, seguirán siendo distintos, pero los originales serán los que antes eran actuales.",
+      "Guardar los valores originales permite al escritor comparar el valor original del RowSet con el de la base de datos. Si los de la base de datos difieren de los originales del RowSet, es que han cambiado, y hay un conflicto. Si el escritor comprueba conflictos, cuánto los comprueba y cómo los maneja depende de su implementación.",
+      "5.0 Registrar y avisar a listeners",
+      "Como componentes JavaBeans, todos los rowsets participan en el modelo de eventos de JavaBeans y heredan de BaseRowSet los métodos para registrar listeners y avisarles de los cambios. Un listener de un CachedRowSet es un componente que quiere recibir aviso cada vez que cambia el rowset. Por ejemplo, si un CachedRowSet contiene el resultado de una consulta que se muestra en una tabla y un gráfico de barras, ambos podrían registrarse como listeners para actualizarse con los cambios. Para ello, sus clases deben implementar RowSetListener. Después pueden añadirse a la lista de listeners del CachedRowSet, como en estas líneas.",
+      "crs.addRowSetListener(table); crs.addRowSetListener(barGraph);",
+      "Cada método de CachedRowSet que mueve el cursor o cambia datos también avisa a los listeners registrados, así que table y barGraph recibirán aviso cuando cambie crs.",
+      "6.0 Pasar datos a clientes ligeros",
+      "Uno de los motivos principales para usar un CachedRowSet es pasar datos entre distintos componentes de una aplicación. Como es serializable, puede usarse, por ejemplo, para enviar por la red el resultado de una consulta ejecutada por un componente Enterprise JavaBeans en un servidor a un cliente en un navegador web.",
+      "Mientras está desconectado, un CachedRowSet puede ser mucho más ligero que un ResultSet con los mismos datos. Por eso es especialmente adecuado para enviar datos a un cliente ligero como una PDA, donde no sería apropiado usar un driver JDBC por limitaciones de recursos o de seguridad. Así, un CachedRowSet permite \"recibir filas\" sin implementar toda la API JDBC.",
+      "7.0 Desplazamiento y actualización",
+      "Otro uso importante de los CachedRowSet es dar desplazamiento y actualización a ResultSet que no los tienen. Es decir, un CachedRowSet puede ampliar las capacidades de un driver con tecnología JDBC (en adelante, \"driver JDBC\") cuando el SGBD no admite del todo el desplazamiento y la actualización. Para que un ResultSet no desplazable y de solo lectura pase a ser desplazable y actualizable, basta con crear un CachedRowSet lleno con sus datos, como en este fragmento, donde stmt es un Statement.",
+      "ResultSet rs = stmt.executeQuery(\"SELECT * FROM EMPLOYEES\"); CachedRowSetImpl crs = new CachedRowSetImpl(); crs.populate(rs);",
+      "Ahora crs contiene los datos de la tabla EMPLOYEES, igual que rs. La diferencia es que el cursor de crs puede moverse hacia delante, hacia atrás o a una fila concreta aunque el de rs solo pueda avanzar. Además, crs es actualizable aunque rs no lo sea, porque por defecto un CachedRowSet es desplazable y actualizable.",
+      "En resumen, un CachedRowSet puede verse simplemente como un conjunto desconectado de filas guardadas fuera de una fuente de datos. Al ser ligero y serializable, puede enviarse fácilmente por la red y es muy adecuado para clientes ligeros. Pero tiene una limitación: su tamaño lo limita la cantidad de datos que puede guardar en memoria a la vez.",
+      "8.0 Acceso universal a datos",
+      "Otra ventaja de CachedRowSet es que permite obtener y guardar datos de fuentes distintas de una base de datos relacional. El lector de un rowset puede implementarse para leer de cualquier fuente de datos tabular, incluida una hoja de cálculo o un archivo plano. Como tanto el CachedRowSet como sus metadatos pueden crearse desde cero, un componente que actúe como fábrica de rowsets puede usar esta capacidad para crear rowsets con datos de fuentes no SQL. Aun así, se espera que la mayoría de las veces contengan datos obtenidos de una base de datos SQL con la API JDBC.",
+      "9.0 Fijar propiedades",
+      "Todos los rowsets mantienen un conjunto de propiedades, que normalmente se fijan con una herramienta. El número y tipo de propiedades varían según lo que hace el rowset y cómo obtiene sus datos. Por ejemplo, los rowsets que obtienen datos de un ResultSet deben fijar las propiedades necesarias para conectarse a la base de datos. Si usan DriverManager, deben fijar la URL JDBC que identifica el driver adecuado, y el usuario y la contraseña. En cambio, si usan un DataSource, que es lo preferible, no necesitan la URL JDBC, sino el nombre lógico de la fuente de datos, el usuario y la contraseña.",
+      "NOTA: para conectarse con un DataSource, este debe estar registrado en un servicio de nombres que use la API Java Naming and Directory Interface (JNDI). Normalmente lo hace alguien que actúa como administrador del sistema.",
+      "Para poder llenarse con datos de una base de datos, un rowset debe fijar la propiedad command. Es una consulta en forma de PreparedStatement, lo que permite que tenga marcadores de parámetros que se fijan en tiempo de ejecución y no de diseño. Para fijarlos, el rowset ofrece setters para cada tipo de datos, parecidos a los de PreparedStatement.",
+      "Este fragmento muestra cómo podría fijarse la propiedad command del CachedRowSet crs. Si se usa una herramienta para fijar propiedades, este sería el código que usaría.",
+      "crs.setCommand(\"SELECT FIRST_NAME, LAST_NAME, ADDRESS FROM CUSTOMERS \" + \"WHERE CREDIT_LIMIT > ? AND REGION = ?\");",
+      "Los valores de los marcadores del comando están en el campo params del RowSet, un Vector. CachedRowSet ofrece setters para fijar sus elementos. Este fragmento fija los dos parámetros de la consulta del ejemplo anterior.",
+      "crs.setInt(1, 5000); crs.setString(2, \"West\");",
+      "Ahora params contiene dos elementos, cada uno un array de dos elementos: el número de parámetro y el valor. En este caso, el primer elemento de params es 1, 5000, y el segundo, 2, \"West\". Cuando la aplicación llama a execute, este llama al lector del RowSet, que a su vez invoca su método readData. Como parte de su implementación, readData obtiene los valores de params y los usa para fijar los marcadores del comando. Este fragmento da una idea de cómo lo hace el lector tras obtener el Connection con.",
+      "{@code PreparedStatement pstmt = con.prepareStatement(crs.getCommand()); reader.decodeParams(); // decodeParams figures out which setter methods to use and does something // like the following: // for (i = 0; i < params.length; i++) { // pstmt.setObject(i + 1, params[i]); // } }",
+      "En este punto, el comando de crs es la consulta \"SELECT FIRST_NAME, LAST_NAME, ADDRESS FROM CUSTOMERS WHERE CREDIT_LIMIT > 5000 AND REGION = \"West\". Cuando readData ejecuta este comando con la línea siguiente, tendrá los datos de rs con los que llenar crs.",
+      "ResultSet rs = pstmt.executeQuery();",
+      "Los fragmentos anteriores dan una idea de lo que ocurre internamente; no aparecerían en una aplicación, que no invocaría métodos como readData y decodeParams. En cambio, este fragmento muestra lo que podría hacer una aplicación: fija el comando del rowset, sus parámetros y lo ejecuta. Con solo llamar a execute, crs se llena con los datos pedidos de la tabla CUSTOMERS.",
+      "crs.setCommand(\"SELECT FIRST_NAME, LAST_NAME, ADDRESS FROM CUSTOMERS\" + \"WHERE CREDIT_LIMIT > ? AND REGION = ?\"); crs.setInt(1, 5000); crs.setString(2, \"West\"); crs.execute();",
+      "10.0 Paginación de datos",
+      "Como un CachedRowSet guarda los datos en memoria, la cantidad que puede contener la determina la memoria disponible. Para evitar esta limitación, puede obtener datos de un ResultSet por trozos, llamados páginas. Para aprovecharlo, la aplicación fija el número de filas por página con setPageSize. Por ejemplo, con un tamaño de página de cinco, se obtienen cinco filas de la fuente cada vez. La aplicación también puede fijar opcionalmente el número máximo de filas que pueden obtenerse a la vez; si es cero o no se fija, no hay límite.",
+      "Una vez fijadas las propiedades, el CachedRowSet debe llenarse con datos usando populate o execute. Estas líneas usan populate. Esta versión del método recibe dos parámetros: un ResultSet y la fila a partir de la que se empiezan a obtener filas.",
+      "CachedRowSet crs = new CachedRowSetImpl(); crs.setMaxRows(20); crs.setPageSize(4); crs.populate(rsHandle, 10);",
+      "Al ejecutar este código, crs se llena con cuatro filas de rsHandle a partir de la décima.",
+      "El siguiente fragmento llena un CachedRowSet con execute, que puede recibir o no un Connection como parámetro. Este código le pasa el Connection conHandle.",
+      "Hay dos diferencias entre este fragmento y el anterior. Primera: no se llama a setMaxRows, así que no hay límite de filas para crs. (Recuerda que crs siempre tiene el límite de cuántos datos puede guardar en memoria). Segunda: a execute no se le puede pasar el número de fila del ResultSet a partir del que empezar; siempre empieza por la primera.",
+      "CachedRowSet crs = new CachedRowSetImpl(); crs.setPageSize(5); crs.execute(conHandle);",
+      "Tras ejecutar este código, crs contendrá cinco filas del ResultSet que produce su comando. El escritor de crs usará conHandle para conectarse a la fuente de datos y ejecutar el comando. Después, la aplicación puede trabajar con los datos de crs igual que con los de cualquier otro CachedRowSet.",
+      "Para acceder a la página siguiente, la aplicación llama a nextPage, que crea un CachedRowSet nuevo y lo llena con la siguiente página. Por ejemplo, supón que el comando del CachedRowSet devuelve un ResultSet rs con 1000 filas. Con un tamaño de página de 100, la primera llamada a nextPage crea un CachedRowSet con las primeras 100 filas de rs. Tras trabajar con ellas, la aplicación puede volver a llamar a nextPage para crear otro CachedRowSet con las 100 siguientes. Los datos del primer CachedRowSet dejan de estar en memoria, porque los sustituyen los del segundo. Tras la décima llamada, el décimo CachedRowSet contendrá las últimas 100 filas de rs, guardadas en memoria. En cada momento solo hay en memoria los datos de un CachedRowSet.",
+      "nextPage devuelve true mientras la página actual no sea la última y false cuando no quedan más páginas. Así que puede usarse en un bucle while para obtener todas las páginas, como en estas líneas.",
+      "CachedRowSet crs = CachedRowSetImpl(); crs.setPageSize(100); crs.execute(conHandle);",
+      "while(crs.nextPage()) { while(crs.next()) { . . . // operate on chunks (of 100 rows each) in crs, // row by row } }",
+      "Tras ejecutar este fragmento, la aplicación habrá recorrido las 1000 filas, pero nunca habrá tenido más de 100 en memoria a la vez.",
+      "La interfaz CachedRowSet también define previousPage. Igual que nextPage es análogo a next de ResultSet, previousPage es análogo a previous. Como nextPage, previousPage crea un CachedRowSet con tantas filas como el tamaño de página. Por ejemplo, podría usarse en un bucle while al final del fragmento anterior para recorrer las páginas desde la última hasta la primera. También puede usarse en un bucle while, salvo que devuelve true mientras haya una página anterior y false cuando no quedan más.",
+      "Al colocar el cursor tras la última fila de cada página, como en el fragmento siguiente, previous recorre cada página de la última fila a la primera. El código también podría haber dejado el cursor antes de la primera fila de cada página y usar next en un bucle while para recorrerla de la primera a la última.",
+      "Este fragmento continúa el anterior, así que el cursor del décimo CachedRowSet está en la última fila. El código mueve el cursor tras la última fila para que la primera llamada a previous lo deje en la última. Tras recorrer todas las filas de la última página (el CachedRowSet crs), entra en el bucle while para ir a la novena página, recorrer sus filas hacia atrás, ir a la octava, y así hasta la primera fila de la primera página.",
+      "crs.afterLast(); while(crs.previous()) { . . . // navigate through the rows, last to first { while(crs.previousPage()) { crs.afterLast(); while(crs.previous()) { . . . // go from the last row to the first row of each page } }"
+    ]
+  },
+  "web-java-se-javax.sql.rowset.CachedRowSet.createCopy": {
+    "returns": [
+      "un RowSet nuevo que es copia profunda de este CachedRowSet y totalmente independiente de él"
+    ],
+    "exceptions": [
+      {
+        "label": "SQLException",
+        "detail": "si se produce un error al generar la copia de este CachedRowSet"
+      }
+    ]
+  },
+  "web-java-se-javax.sql.rowset.CachedRowSet.createCopyNoConstraints": {
+    "intro": [
+      "Crea un CachedRowSet que es copia profunda de los datos de este CachedRowSet pero independiente de él. A diferencia del RowSet que genera createShared, las actualizaciones hechas en una copia no deben ser visibles en este CachedRowSet. Además, los listeners registrados en este CachedRowSet no deben tener alcance sobre el nuevo RowSet, y las restricciones establecidas para este CachedRowSet no deben mantenerse en la copia."
+    ],
+    "returns": [
+      "un CachedRowSet nuevo que es copia profunda de este CachedRowSet y totalmente independiente de él"
+    ],
+    "exceptions": [
+      {
+        "label": "SQLException",
+        "detail": "si se produce un error al generar la copia de este CachedRowSet"
+      }
+    ]
+  },
+  "web-java-se-javax.sql.rowset.JdbcRowSet": {
+    "body": [
+      "1.0 Visión general",
+      "Un envoltorio de un ResultSet que permite usar el result set como componente JavaBeans. Así, un JdbcRowSet puede ser uno de los Beans que una herramienta ofrece para componer una aplicación. Como JdbcRowSet es un rowset conectado, es decir, mantiene continuamente su conexión con una base de datos mediante un driver JDBC, también convierte en la práctica al driver en un componente JavaBeans.",
+      "Como siempre está conectado a su base de datos, un JdbcRowSet puede simplemente recibir las llamadas y reenviarlas a su ResultSet. Así, un result set puede ser, por ejemplo, un componente de una aplicación Swing.",
+      "Otra ventaja de JdbcRowSet es que permite que un ResultSet sea desplazable y actualizable. Todos los RowSet son desplazables y actualizables por defecto. Si el driver y la base de datos no admiten desplazamiento y/o actualización de result sets, una aplicación puede llenar un JdbcRowSet con los datos de un ResultSet y trabajar con él como si fuera el ResultSet.",
+      "2.0 Crear un JdbcRowSet",
+      "La implementación de referencia de JdbcRowSet, JdbcRowSetImpl, implementa el constructor predeterminado. Una instancia nueva se inicializa con valores predeterminados, que pueden cambiarse según haga falta. No es realmente funcional hasta que se llama a su método execute, que en general hace lo siguiente:",
+      "establece una conexión con una base de datos",
+      "crea un PreparedStatement y fija sus parámetros marcadores",
+      "ejecuta la sentencia para crear un ResultSet",
+      "Si execute tiene éxito, fija los campos privados correspondientes de JdbcRowSet con:",
+      "un Connection: la conexión entre el rowset y la base de datos",
+      "un PreparedStatement: la consulta que produce el result set",
+      "un ResultSet: el result set que produce el comando del rowset y que, en la práctica, se convierte en componente JavaBeans",
+      "Si estos campos no se han fijado, es decir, si execute no se ha ejecutado con éxito, solo pueden llamarse execute y close sobre el rowset. Todos los demás métodos públicos lanzan una excepción.",
+      "Pero antes de llamar a execute hay que fijar el comando y las propiedades necesarias para conectarse. Este fragmento crea un JdbcRowSetImpl, fija el comando y las propiedades de conexión, fija el parámetro marcador y llama a execute.",
+      "JdbcRowSetImpl jrs = new JdbcRowSetImpl(); jrs.setCommand(\"SELECT * FROM TITLES WHERE TYPE = ?\"); jrs.setURL(\"jdbc:myDriver:myAttribute\"); jrs.setUsername(\"cervantes\"); jrs.setPassword(\"sancho\"); jrs.setString(1, \"BIOGRAPHY\"); jrs.execute();",
+      "Ahora jrs representa un JdbcRowSetImpl que es un envoltorio ligero del ResultSet con todas las filas de la tabla TITLES cuyo tipo de libro es biografía. Las operaciones sobre jrs afectan a las filas del result set, que en la práctica es un componente JavaBeans.",
+      "La implementación de execute en la implementación de referencia de JdbcRowSet difiere de la de CachedRowSet para tener en cuenta los distintos requisitos de los RowSet conectados y desconectados."
+    ]
+  },
+  "web-java-se-javax.sql.rowset.JdbcRowSet.getRowSetWarnings": {
+    "intro": [
+      "Obtiene el primer aviso de las llamadas sobre este JdbcRowSet. Si hubo un segundo aviso, se encadena al primero y puede obtenerse con RowSetWarning.getNextWarning sobre él. Los avisos posteriores se encadenan a los RowSetWarning que devuelve RowSetWarning.getNextWarning."
+    ],
+    "body": [
+      "La cadena de avisos se borra automáticamente cada vez que se lee una fila nueva. Este método no puede llamarse sobre un RowSet cerrado; si se hace, se lanza SQLException.",
+      "Como siempre está conectado a su fuente de datos, un JdbcRowSet puede contar con instancias activas de Statement, Connection y ResultSet. Así, las aplicaciones pueden obtener avisos SQLWarning adicionales con sus métodos getNextWarning. Los RowSet desconectados, como CachedRowSet, no tienen acceso a esos métodos."
+    ],
+    "returns": [
+      "el primer RowSetWarning de este JdbcRowSet, o null si no hay ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "SQLException",
+        "detail": "si se llama sobre un JdbcRowSet cerrado"
+      }
+    ]
+  },
+  "web-java-se-javax.sql.rowset.JoinRowSet": {
+    "body": [
+      "La interfaz Joinable ofrece métodos para fijar, obtener y quitar una columna de coincidencia, la base para establecer una relación SQL JOIN. La columna de coincidencia también puede fijarse pasándola a la versión adecuada del método addRowSet de JoinRowSet.",
+      "1.0 Visión general",
+      "Los RowSet desconectados (CachedRowSet y las implementaciones que extienden CachedRowSet) no tienen una forma estándar de establecer un SQL JOIN entre RowSets sin la costosa operación de reconectarse a la fuente de datos. La interfaz JoinRowSet está pensada específicamente para eso.",
+      "Cualquier RowSet puede añadirse a un JoinRowSet para formar parte de una relación SQL JOIN, así que tanto los conectados como los desconectados pueden participar. Se anima a los RowSet que trabajan en entorno conectado (JdbcRowSet) a usar directamente la base de datos a la que ya están conectados para establecer relaciones JOIN entre tablas. Aun así, puede añadirse un JdbcRowSet a un JoinRowSet si hace falta.",
+      "Puede añadirse cualquier número de RowSet a un JoinRowSet siempre que puedan relacionarse en un SQL JOIN. Por definición, la sentencia SQL JOIN combina los datos de dos o más tablas relacionales según un atributo común. La interfaz Joinable ofrece los métodos para establecer ese atributo común fijando una columna de coincidencia. Suele coincidir con la clave primaria, pero no es obligatorio. Al establecer y hacer cumplir las coincidencias de columnas, un JoinRowSet establece relaciones JOIN entre RowSets sin ayuda de una base de datos relacional.",
+      "El tipo de JOIN se determina fijando una de las constantes de JoinRowSet con setJoinType. Pueden fijarse estos tipos de SQL JOIN:",
+      "CROSS_JOIN",
+      "FULL_JOIN",
+      "INNER_JOIN: el predeterminado si no se fija ningún tipo",
+      "LEFT_OUTER_JOIN",
+      "RIGHT_OUTER_JOIN",
+      "Si no se fija ningún tipo, el JOIN es automáticamente un inner join. Los comentarios de los campos de JoinRowSet explican estos tipos, que son los estándar de SQL JOIN.",
+      "2.0 Usar un JoinRowSet para crear un JOIN",
+      "Un JoinRowSet recién creado está vacío. El primer RowSet que se añade es la base de la relación JOIN. Las aplicaciones deben decidir qué columna de cada RowSet que se añade será la columna de coincidencia. Todos los RowSet deben tener una, y sus valores deben poder compararse con los de las demás. Las columnas no tienen por qué llamarse igual, aunque suelen hacerlo, ni guardar exactamente el mismo tipo de datos, siempre que puedan compararse.",
+      "La columna de coincidencia puede fijarse de dos formas:",
+      "Llamando al método setMatchColumn de Joinable",
+      "Es el único método que puede fijar la columna de coincidencia antes de añadir un RowSet a un JoinRowSet. Para usarlo, el RowSet debe implementar Joinable. Una vez fijada, puede usarse este método para cambiarla en cualquier momento.",
+      "Llamando a una de las versiones del método addRowSet de JoinRowSet que reciben un nombre o número de columna (o un array de ellos)",
+      "Cuatro de los cinco métodos addRowSet reciben una columna de coincidencia como parámetro y la fijan o cambian al añadir el RowSet al JoinRowSet.",
+      "3.0 Ejemplo de uso",
+      "Este fragmento añade dos CachedRowSet a un JoinRowSet. En este ejemplo no se fija ningún tipo de SQL JOIN, así que se usa el predeterminado, INNER_JOIN.",
+      "En este fragmento se añade al JoinRowSet jrs la tabla EMPLOYEES, con la primera columna (EMP_ID) como columna de coincidencia. Después se añade la tabla ESSP_BONUS_PLAN, también con EMP_ID como columna de coincidencia. Al añadir esta segunda tabla, solo se añaden las filas de ESSP_BONUS_PLAN cuyo EMP_ID coincide con un EMP_ID de EMPLOYEES. En este caso todos los del plan de bonificaciones son empleados, así que se añaden todas sus filas. En este ejemplo, ambos CachedRowSet implementan Joinable y pueden llamar a setMatchColumn.",
+      "JoinRowSet jrs = new JoinRowSetImpl();",
+      "ResultSet rs1 = stmt.executeQuery(\"SELECT * FROM EMPLOYEES\"); CachedRowSet empl = new CachedRowSetImpl(); empl.populate(rs1); empl.setMatchColumn(1); jrs.addRowSet(empl);",
+      "ResultSet rs2 = stmt.executeQuery(\"SELECT * FROM ESSP_BONUS_PLAN\"); CachedRowSet bonus = new CachedRowSetImpl(); bonus.populate(rs2); bonus.setMatchColumn(1); // EMP_ID is the first column jrs.addRowSet(bonus);",
+      "Ahora jrs es un inner JOIN de los dos RowSet según sus columnas EMP_ID. La aplicación puede recorrer los datos combinados como si fueran un único RowSet. Como jrs es a su vez un RowSet, puede navegarlo o modificarlo con los métodos de RowSet.",
+      "jrs.first(); int employeeID = jrs.getInt(1); String employeeName = jrs.getString(2);",
+      "Como el SQL JOIN debe aplicarse al añadir un segundo RowSet o los siguientes, puede haber una pérdida inicial de rendimiento mientras se hace el JOIN.",
+      "Este fragmento añade otro CachedRowSet. En este caso, la columna de coincidencia (EMP_ID) se fija al añadirlo al JoinRowSet.",
+      "ResultSet rs3 = stmt.executeQuery(\"SELECT * FROM 401K_CONTRIB\"); CachedRowSet fourO1k = new CachedRowSetImpl(); four01k.populate(rs3); jrs.addRowSet(four01k, 1);",
+      "Ahora el JoinRowSet jrs contiene valores de las tres tablas. Se han añadido a jrs los datos de cada fila de four01k cuyo EMP_ID coincide con un EMP_ID de jrs.",
+      "4.0 Métodos de JoinRowSet",
+      "La interfaz JoinRowSet ofrece varios métodos para añadir RowSets y obtener información del JoinRowSet.",
+      "Métodos para añadir uno o más RowSets",
+      "Permiten añadir un RowSet cada vez o varios a la vez. En ambos casos pueden indicar la columna de coincidencia de cada RowSet que se añade.",
+      "Métodos para obtener información",
+      "Un método obtiene los RowSets del JoinRowSet y otro sus nombres. Un tercero obtiene la cláusula SQL WHERE que se usa internamente para formar el JOIN, o una descripción en texto de lo que hace.",
+      "Métodos relacionados con el tipo de JOIN",
+      "Un método fija el tipo de JOIN y cinco métodos indican si el JoinRowSet admite un tipo dado.",
+      "Un método para hacer una copia separada del JoinRowSet",
+      "Crea una copia que puede persistirse en la fuente de datos."
+    ]
+  },
+  "web-java-se-javax.sql.rowset.RowSetWarning": {
+    "body": [
+      "Los avisos de rowset pueden obtenerse de las implementaciones de JdbcRowSet, CachedRowSet, WebRowSet, FilteredRowSet o JoinRowSet. Para obtener el primer aviso de cualquier implementación, usa getRowSetWarnings de JdbcRowSet o CachedRowSet. Para obtener un aviso encadenado al primero, usa getNextWarning de RowSetWarning, y para los siguientes, llama a getNextWarning sobre cada RowSetWarning devuelto.",
+      "Los métodos heredados getMessage, getSQLState y getErrorCode obtienen la información de un RowSetWarning."
+    ]
+  },
+  "web-java-se-javax.sql.rowset.WebRowSet": {
+    "body": [
+      "1.0 Visión general",
+      "WebRowSetImpl es la implementación de referencia estándar, que puede extenderse si hace falta.",
+      "La definición estándar del XML Schema de WebRowSet está disponible en esta URI:",
+      "http://xmlns.jcp.org/xml/ns//jdbc/webrowset.xsd",
+      "Describe el formato estándar de documento XML para describir un RowSet en XML, y todas las implementaciones estándar de WebRowSet deben usarlo para garantizar la interoperabilidad. Además, el schema de WebRowSet usa anotaciones SQL/XML Schema concretas, lo que mejora la interoperabilidad entre plataformas. Es un trabajo en curso en la ISO. La definición SQL/XML está en esta URI:",
+      "http://standards.iso.org/iso/9075/2002/12/sqlxml.xsd",
+      "La definición del schema describe los datos internos de un RowSet en tres áreas:",
+      "properties: describen las propiedades estándar del proveedor de sincronización además de las propiedades generales de RowSet.",
+      "metadata: describe los metadatos de la estructura tabular que gestiona un WebRowSet. Están muy alineados con los metadatos accesibles en la interfaz java.sql.ResultSet subyacente.",
+      "data: describe los datos originales (el estado desde el último llenado o sincronización del WebRowSet) y los actuales. Al seguir la diferencia entre ambos, un WebRowSet puede sincronizar sus cambios con la fuente de datos original.",
+      "2.0 Estados de WebRowSet",
+      "Las secciones siguientes muestran cómo una implementación de WebRowSet debe usar el XML Schema para describir las operaciones de actualización, inserción y eliminación, y el estado de un WebRowSet en XML.",
+      "2.1 Estado 1: exportar un WebRowSet a XML",
+      "En este ejemplo se crea un WebRowSet y se llena con una tabla sencilla de 2 columnas y 5 filas de una fuente de datos. Tener las 5 filas en un WebRowSet permite describirlas en XML. Los metadatos de las propiedades JavaBeans estándar definidas en RowSet, más las propiedades estándar de CachedRowSet, dan los detalles clave de las propiedades de WebRowSet. Al exportar el WebRowSet a XML con los métodos writeXml estándar, las propiedades internas se describen así:",
+      "<properties> <command>select co1, col2 from test_table</command> <concurrency>1</concurrency> <datasource/> <escape-processing>true</escape-processing> <fetch-direction>0</fetch-direction> <fetch-size>0</fetch-size> <isolation-level>1</isolation-level> <key-columns/> <map/> <max-field-size>0</max-field-size> <max-rows>0</max-rows> <query-timeout>0</query-timeout> <read-only>false</read-only> <rowset-type>TRANSACTION_READ_UNCOMMITTED</rowset-type> <show-deleted>false</show-deleted> <table-name/> <url>jdbc:thin:oracle</url> <sync-provider> <sync-provider-name>.com.rowset.provider.RIOptimisticProvider</sync-provider-name> <sync-provider-vendor>Oracle Corporation</sync-provider-vendor> <sync-provider-version>1.0</sync-provider-name> <sync-provider-grade>LOW</sync-provider-grade> <data-source-lock>NONE</data-source-lock> </sync-provider> </properties>",
+      "Los metadatos que describen la estructura del WebRowSet se describen en XML así. Ambas columnas se describen entre las etiquetas column-definition.",
+      "<metadata> <column-count>2</column-count> <column-definition> <column-index>1</column-index> <auto-increment>false</auto-increment> <case-sensitive>true</case-sensitive> <currency>false</currency> <nullable>1</nullable> <signed>false</signed> <searchable>true</searchable> <column-display-size>10</column-display-size> <column-label>COL1</column-label> <column-name>COL1</column-name> <schema-name/> <column-precision>10</column-precision> <column-scale>0</column-scale> <table-name/> <catalog-name/> <column-type>1</column-type> <column-type-name>CHAR</column-type-name> </column-definition> <column-definition> <column-index>2</column-index> <auto-increment>false</auto-increment> <case-sensitive>false</case-sensitive> <currency>false</currency> <nullable>1</nullable> <signed>true</signed> <searchable>true</searchable> <column-display-size>39</column-display-size> <column-label>COL2</column-label> <column-name>COL2</column-name> <schema-name/> <column-precision>38</column-precision> <column-scale>0</column-scale> <table-name/> <catalog-name/> <column-type>3</column-type> <column-type-name>NUMBER</column-type-name> </column-definition> </metadata>",
+      "Visto cómo se describen las propiedades y los metadatos, esto muestra cómo se describe en XML el contenido de un WebRowSet que no se ha modificado desde que se creó. Cada fila de la estructura tabular corresponde a una etiqueta currentRow. Una etiqueta columnValue puede contener stringData o binaryData, según el tipo SQL al que corresponda el valor XML. binaryData contiene datos en Base64 y suele usarse para datos BLOB y CLOB.",
+      "<data> <currentRow> <columnValue> firstrow </columnValue> <columnValue> 1 </columnValue> </currentRow> <currentRow> <columnValue> secondrow </columnValue> <columnValue> 2 </columnValue> </currentRow> <currentRow> <columnValue> thirdrow </columnValue> <columnValue> 3 </columnValue> </currentRow> <currentRow> <columnValue> fourthrow </columnValue> <columnValue> 4 </columnValue> </currentRow> </data>",
+      "2.2 Estado 2: eliminar una fila",
+      "Eliminar una fila de un WebRowSet consiste simplemente en ir a la fila y llamar a deleteRow, como en cualquier otro RowSet. Estas dos líneas, en las que wrs es un WebRowSet, eliminan la tercera fila.",
+      "wrs.absolute(3); wrs.deleteRow();",
+      "La descripción XML marca la tercera fila como deleteRow, lo que la elimina del WebRowSet.",
+      "<data> <currentRow> <columnValue> firstrow </columnValue> <columnValue> 1 </columnValue> </currentRow> <currentRow> <columnValue> secondrow </columnValue> <columnValue> 2 </columnValue> </currentRow> <deleteRow> <columnValue> thirdrow </columnValue> <columnValue> 3 </columnValue> </deleteRow> <currentRow> <columnValue> fourthrow </columnValue> <columnValue> 4 </columnValue> </currentRow> </data>",
+      "2.3 Estado 3: insertar una fila",
+      "Un WebRowSet puede insertar una fila nueva yendo a la fila de inserción, llamando a los métodos de actualización de cada columna y luego a insertRow.",
+      "wrs.moveToInsertRow(); wrs.updateString(1, \"fifththrow\"); wrs.updateString(2, \"5\"); wrs.insertRow();",
+      "Este fragmento cambia el valor de la segunda columna de la fila recién insertada. Se aplica cuando las filas nuevas se insertan justo después de la actual, por eso next mueve el cursor a la fila correcta. Llamar a acceptChanges escribe el cambio en la fuente de datos.",
+      "wrs.moveToCurrentRow(); wrs.next(); wrs.updateString(2, \"V\"); wrs.acceptChanges();",
+      "Al describirlo en XML se ve dónde inserta el código Java una fila nueva y luego actualiza un campo de esa fila.",
+      "<data> <currentRow> <columnValue> firstrow </columnValue> <columnValue> 1 </columnValue> </currentRow> <currentRow> <columnValue> secondrow </columnValue> <columnValue> 2 </columnValue> </currentRow> <currentRow> <columnValue> newthirdrow </columnValue> <columnValue> III </columnValue> </currentRow> <insertRow> <columnValue> fifthrow </columnValue> <columnValue> 5 </columnValue> <updateValue> V </updateValue> </insertRow> <currentRow> <columnValue> fourthrow </columnValue> <columnValue> 4 </columnValue> </currentRow> </date>",
+      "2.4 Estado 4: modificar una fila",
+      "Modificar una fila produce un XML concreto que registra el valor nuevo y el sustituido. El sustituido pasa a ser el valor original y el nuevo, el actual. Este código mueve el cursor a una fila concreta, hace algunas modificaciones y actualiza la fila al terminar.",
+      "wrs.absolute(5); wrs.updateString(1, \"new4thRow\"); wrs.updateString(2, \"IV\"); wrs.updateRow();",
+      "En XML se describe con la etiqueta modifyRow, que contiene los valores originales y los nuevos para seguir la fila original.",
+      "<data> <currentRow> <columnValue> firstrow </columnValue> <columnValue> 1 </columnValue> </currentRow> <currentRow> <columnValue> secondrow </columnValue> <columnValue> 2 </columnValue> </currentRow> <currentRow> <columnValue> newthirdrow </columnValue> <columnValue> III </columnValue> </currentRow> <currentRow> <columnValue> fifthrow </columnValue> <columnValue> 5 </columnValue> </currentRow> <modifyRow> <columnValue> fourthrow </columnValue> <updateValue> new4thRow </updateValue> <columnValue> 4 </columnValue> <updateValue> IV </updateValue> </modifyRow> </data>"
+    ]
+  },
+  "web-java-se-javax.sql.rowset.serial.SerialArray.equals": {
+    "intro": [
+      "Compara este SerialArray con el objeto indicado. El resultado es true si y solo si el argumento no es null y es un SerialArray con elementos idénticos a los de este objeto"
+    ],
+    "parameters": [
+      {
+        "label": "obj",
+        "detail": "El objeto con el que se compara este SerialArray"
+      }
+    ],
+    "returns": [
+      "true si el objeto dado representa un SerialArray equivalente a este; false en caso contrario"
+    ]
+  },
+  "web-java-se-javax.sql.rowset.serial.SerialDatalink": {
+    "body": [
+      "Las implementaciones de RowSet pueden usar RowSet.getURL para obtener un java.net.URL con el que manipular los datos externos.",
+      "java.net.URL url = rowset.getURL(1);",
+      "Seguridad con hilos",
+      "Un SerialDatalink no es seguro para usarlo desde varios hilos a la vez. Si lo va a usar más de un hilo, el acceso debe controlarse con la sincronización adecuada."
+    ]
+  },
+  "web-java-se-javax.sql.rowset.serial.SerialDatalink.equals": {
+    "intro": [
+      "Compara este SerialDatalink con el objeto indicado. El resultado es true si y solo si el argumento no es null y es un SerialDatalink con una URL idéntica a la de este objeto"
+    ],
+    "parameters": [
+      {
+        "label": "obj",
+        "detail": "El objeto con el que se compara este SerialDatalink"
+      }
+    ],
+    "returns": [
+      "true si el objeto dado representa un SerialDatalink equivalente a este; false en caso contrario"
+    ]
+  },
+  "web-java-se-javax.sql.rowset.serial.SerialStruct.equals": {
+    "intro": [
+      "Compara este SerialStruct con el objeto indicado. El resultado es true si y solo si el argumento no es null y es un SerialStruct con atributos idénticos a los de este objeto"
+    ],
+    "parameters": [
+      {
+        "label": "obj",
+        "detail": "El objeto con el que se compara este SerialStruct"
+      }
+    ],
+    "returns": [
+      "true si el objeto dado representa un SerialStruct equivalente a este; false en caso contrario"
+    ]
+  },
+  "web-java-se-javax.sql.rowset.spi.SyncFactory": {
+    "body": [
+      "Como todos los métodos de SyncFactory son estáticos, en cada momento solo hay un objeto SyncFactory por máquina virtual Java. Así hay una única fuente de la que una implementación de RowSet obtiene su SyncProvider.",
+      "1.0 Visión general",
+      "La clase SyncFactory ofrece un registro interno de las implementaciones de proveedores de sincronización disponibles (objetos SyncProvider), que puede consultarse para saber cuáles hay. Esta línea obtiene una enumeración de los proveedores registrados.",
+      "java.util.Enumeration e = SyncFactory.getRegisteredProviders();",
+      "Todas las implementaciones estándar de RowSet deben ofrecer al menos dos proveedores:",
+      "un proveedor optimista para usar con una implementación de CachedRowSet o derivada",
+      "un proveedor XML, que se usa para leer y escribir XML, como con los WebRowSet",
+      "Las JDBC RowSet Implementations incluyen las implementaciones de SyncProvider RIOptimisticProvider y RIXmlProvider, que cumplen este requisito.",
+      "SyncFactory ofrece métodos de acceso para que las aplicaciones sepan qué proveedores de sincronización hay registrados.",
+      "Otros métodos permiten registrar o dar de baja proveedores de persistencia de RowSet en el mecanismo de fábrica, de modo que pueden ponerse a disposición de los RowSet otras implementaciones de proveedores en tiempo de ejecución.",
+      "Las aplicaciones pueden filtrar para determinar el nivel de sincronización que ofrece una implementación de SyncProvider. Estos criterios deciden si un proveedor se pone a disposición de un RowSet:",
+      "Si un RowSet indica un proveedor concreto y SyncFactory no tiene referencia a él, se lanza SyncFactoryException indicando que no se ha encontrado el proveedor de sincronización.",
+      "Si se crea una implementación de RowSet con un proveedor indicado y este está registrado correctamente, se da el proveedor pedido. Si no, se lanza SyncFactoryException.",
+      "Si un RowSet no indica ningún SyncProvider y no hay implementaciones adicionales disponibles, se dan los proveedores de la implementación de referencia.",
+      "2.0 Registrar implementaciones de SyncProvider",
+      "Tanto fabricantes como desarrolladores pueden registrar implementaciones de SyncProvider con uno de estos mecanismos.",
+      "Con la línea de comandos",
+      "El nombre del proveedor se da en la línea de comandos, lo que lo añade a las propiedades del sistema. Por ejemplo:",
+      "-Drowset.provider.classname=com.fred.providers.HighAvailabilityProvider",
+      "Con el archivo de propiedades estándar",
+      "La implementación de referencia está pensada para distribuirse con J2SE 1.5, que incluirá un archivo de recursos adicional editable a mano. Este es un ejemplo del archivo de propiedades de la implementación de referencia:",
+      "#Default JDBC RowSet sync providers listing #",
+      "# Optimistic synchronization provider rowset.provider.classname.0=com.sun.rowset.providers.RIOptimisticProvider rowset.provider.vendor.0=Oracle Corporation rowset.provider.version.0=1.0",
+      "# XML Provider using standard XML schema rowset.provider.classname.1=com.sun.rowset.providers.RIXMLProvider rowset.provider.vendor.1=Oracle Corporation rowset.provider.version.1=1.0",
+      "SyncFactory revisa este archivo y registra las implementaciones de SyncProvider que contiene. Un desarrollador o fabricante puede añadir otras. Por ejemplo, esta sería una posible adición:",
+      "rowset.provider.classname.2=com.fred.providers.HighAvailabilityProvider rowset.provider.vendor.2=Fred, Inc. rowset.provider.version.2=1.0",
+      "Con un contexto JNDI",
+      "Los proveedores disponibles pueden registrarse en un contexto JNDI, y SyncFactory intentará cargar desde él implementaciones de SyncProvider. Por ejemplo, este fragmento registra una implementación de proveedor en un contexto JNDI, algo que normalmente haría quien despliega. En este ejemplo, MyProvider se registra en un espacio de nombres CosNaming, el que usan los recursos J2EE.",
+      "import javax.naming.*;",
+      "Hashtable svrEnv = new Hashtable(); srvEnv.put(Context.INITIAL_CONTEXT_FACTORY, \"CosNaming\");",
+      "Context ctx = new InitialContext(svrEnv); com.fred.providers.MyProvider = new MyProvider(); ctx.rebind(\"providers/MyProvider\", syncProvider);",
+      "Después, una aplicación registra el contexto JNDI en la instancia de SyncFactory, que así puede buscar en él implementaciones de SyncProvider.",
+      "Hashtable appEnv = new Hashtable(); appEnv.put(Context.INITIAL_CONTEXT_FACTORY, \"CosNaming\"); appEnv.put(Context.PROVIDER_URL, \"iiop://hostname/providers\"); Context ctx = new InitialContext(appEnv);",
+      "SyncFactory.registerJNDIContext(ctx);",
+      "Si un RowSet intenta obtener un MyProvider, SyncFactory intentará localizarlo: primero en las propiedades del sistema, luego en los archivos de recursos y por último en el contexto JNDI fijado. SyncFactory comprueba que el proveedor pedido es una extensión válida de la clase abstracta SyncProvider y se lo da al RowSet. En este fragmento se crea un CachedRowSet inicializado con env, que contiene el enlace a MyProvider.",
+      "Hashtable env = new Hashtable(); env.put(SyncFactory.ROWSET_SYNC_PROVIDER, \"com.fred.providers.MyProvider\"); CachedRowSet crs = new com.sun.rowset.CachedRowSetImpl(env);",
+      "Hay más detalles sobre estos mecanismos en la especificación del paquete javax.sql.rowset.spi."
+    ]
+  },
   "web-java-se-javax.swing.DefaultListModel.add": {
     "parameters": [
       {
