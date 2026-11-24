@@ -1403,6 +1403,243 @@
       "Se obtiene con mysqli::get_warnings() o mysqli_stmt::get_warnings(). Sus propiedades message, sqlstate y errno describen el aviso, y next() avanza al siguiente."
     ]
   },
+  "php-class-norewinditerator": {
+    "description": [
+      "Como rewind() no hace nada, un segundo foreach continúa donde terminó el primero. Es útil, por ejemplo, para leer una cabecera en un bucle y el resto de elementos en otro.",
+      "Envuelve el iterador al construirlo y recórrelo siempre a través del NoRewindIterator."
+    ]
+  },
+  "php-class-oauth": {
+    "description": [
+      "Implementa el flujo de OAuth 1.0: el constructor recibe la clave y el secreto del consumidor, getRequestToken() y getAccessToken() obtienen los tokens y setToken() los fija para las peticiones siguientes.",
+      "fetch() hace una petición firmada a un recurso protegido; getLastResponse() devuelve el cuerpo de la respuesta. Pertenece a la extensión PECL oauth."
+    ]
+  },
+  "php-class-oauthexception": {
+    "description": [
+      "Hereda de Exception. La propiedad lastResponse guarda la respuesta del servidor y debugInfo los detalles de la petición si la depuración está activa."
+    ]
+  },
+  "php-class-ocicollection": {
+    "description": [
+      "La clase OCI-Collection fue renombrada a OCICollection en PHP 8 OCI8 3.0.0 para alinearse con los estándares de nomenclatura de PHP.",
+      "Representa una colección de Oracle (VARRAY o tabla anidada). Se crea con oci_new_collection(); append() añade elementos, getElem() los lee y size() da el número de elementos."
+    ]
+  },
+  "php-class-ocilob": {
+    "description": [
+      "La clase OCI-Lob fue renombrada a OCILob en PHP 8 y PECL OCI8 3.0.0 para alinearse con los estándares de nomenclatura de PHP.",
+      "Se obtiene al leer una columna LOB o con oci_new_descriptor(). load() lee todo el contenido, read() lo lee por partes y save() o write() lo escriben; writeTemporary() crea un LOB temporal para pasarlo a una sentencia."
+    ]
+  },
+  "php-class-opensslasymmetrickey": {
+    "description": [
+      "Representa una clave pública o privada. La devuelven openssl_pkey_new(), openssl_pkey_get_private() y openssl_pkey_get_public(), y la reciben funciones como openssl_sign() u openssl_public_encrypt().",
+      "Es final y no se crea con new."
+    ]
+  },
+  "php-class-opensslcertificate": {
+    "description": [
+      "Representa un certificado X.509. La devuelve openssl_x509_read() y la reciben funciones como openssl_x509_parse() u openssl_x509_verify(). Es final y no se crea con new."
+    ]
+  },
+  "php-class-opensslcertificatesigningrequest": {
+    "description": [
+      "Representa una solicitud de firma de certificado (CSR). La devuelve openssl_csr_new(); openssl_csr_sign() la firma para obtener un certificado y openssl_csr_export() la guarda en formato PEM."
+    ]
+  },
+  "php-class-outeriterator": {
+    "description": [
+      "getInnerIterator() devuelve el iterador envuelto. La implementan IteratorIterator y los iteradores que se construyen sobre otro, como FilterIterator o LimitIterator."
+    ]
+  },
+  "php-class-outofboundsexception": {
+    "description": [
+      "Se usa cuando la clave depende de datos que solo se conocen al ejecutar, por ejemplo un identificador recibido en una petición que no existe en la colección.",
+      "Hereda de RuntimeException. Si el índice no válido es un error del propio código, OutOfRangeException es más adecuada."
+    ]
+  },
+  "php-class-outofrangeexception": {
+    "description": [
+      "Indica que el código ha pedido un índice que nunca podría ser válido, como una posición negativa. Hereda de LogicException.",
+      "Para claves que no existen en datos obtenidos en tiempo de ejecución, usa OutOfBoundsException."
+    ]
+  },
+  "php-class-overflowexception": {
+    "description": [
+      "Por ejemplo, al añadir un elemento a una cola de tamaño fijo que ya está completa. Hereda de RuntimeException; su opuesto es UnderflowException."
+    ]
+  },
+  "php-class-parallel-channel": {
+    "summary": "Canal para enviar valores entre tareas paralelas.",
+    "description": [
+      "Channel::make() crea un canal con nombre y Channel::open() abre uno existente. send() envía un valor y recv() espera hasta recibirlo; close() lo cierra.",
+      "Sin capacidad es síncrono: send() espera a que otra tarea llame a recv(). Con una capacidad o Channel::Infinite guarda los valores en un búfer."
+    ]
+  },
+  "php-class-parallel-events": {
+    "summary": "Bucle de eventos sobre canales y futuros de parallel.",
+    "description": [
+      "addChannel() y addFuture() registran los objetos que se vigilan, y poll() devuelve el siguiente parallel\\Events\\Event. También se puede recorrer con foreach.",
+      "setBlocking() y setTimeout() controlan si poll() espera y cuánto. setInput() asocia valores que se envían a los canales cuando se pueden escribir."
+    ]
+  },
+  "php-class-parallel-events-event": {
+    "summary": "Evento devuelto por parallel\\Events.",
+    "description": [
+      "Sus propiedades type, source, object y value indican qué ha pasado (una constante de parallel\\Events\\Event\\Type), el nombre del origen, el canal o futuro afectado y el valor recibido, si lo hay."
+    ]
+  },
+  "php-class-parallel-events-event-type": {
+    "summary": "Constantes con los tipos de parallel\\Events\\Event.",
+    "description": [
+      "Define Read, Write, Close, Cancel, Kill y Error, que indican si se leyó o escribió un valor, si se cerró un canal o si una tarea se canceló, se mató o falló."
+    ]
+  },
+  "php-class-parallel-events-input": {
+    "summary": "Valores pendientes de escribir en canales desde parallel\\Events.",
+    "description": [
+      "add() asocia un valor al nombre de un canal; cuando el canal se puede escribir, el bucle de eventos lo envía. remove() y clear() quitan valores pendientes."
+    ]
+  },
+  "php-class-parallel-future": {
+    "summary": "Resultado futuro de una tarea lanzada con parallel\\Runtime::run().",
+    "description": [
+      "value() espera a que la tarea termine y devuelve su resultado, o relanza la excepción que se produjo. done() indica si ya ha terminado sin bloquear.",
+      "cancel() intenta cancelar la tarea y cancelled() indica si se canceló."
+    ]
+  },
+  "php-class-parallel-runtime": {
+    "summary": "Hilo de PHP en el que se ejecutan tareas en paralelo.",
+    "description": [
+      "Cada Runtime arranca un intérprete separado; el constructor puede recibir un archivo de arranque con el código que necesitan las tareas, como un autoloader.",
+      "run() ejecuta un Closure con los argumentos indicados y devuelve un parallel\\Future si la tarea devuelve algo. close() espera a que terminen las tareas y kill() las detiene.",
+      "La extensión parallel requiere una compilación de PHP con seguridad entre hilos (ZTS)."
+    ]
+  },
+  "php-class-parallel-sync": {
+    "summary": "Primitiva de sincronización de bajo nivel entre tareas de parallel.",
+    "description": [
+      "Guarda un valor escalar que se lee con get() y se cambia con set(). wait() bloquea hasta que otra tarea llama a notify().",
+      "Invocar el objeto con un callable ejecuta ese código en exclusión mutua. Para pasar datos entre tareas, parallel\\Channel suele ser más sencillo."
+    ]
+  },
+  "php-class-parentiterator": {
+    "description": [
+      "Con un RecursiveDirectoryIterator, por ejemplo, permite listar solo los directorios de un árbol, porque son los únicos elementos con hijos.",
+      "Se envuelve en un RecursiveIteratorIterator para recorrer todos los niveles."
+    ]
+  },
+  "php-class-parle-errorinfo": {
+    "description": [
+      "Sus propiedades id, position y token indican el tipo de error, la posición en la entrada y el token que lo provocó."
+    ]
+  },
+  "php-class-parle-lexer": {
+    "description": [
+      "push() añade una regla con una expresión regular y un identificador, build() prepara el analizador y consume() recibe el texto. advance() avanza y getToken() devuelve el Parle\\Token actual.",
+      "Pertenece a la extensión PECL parle."
+    ]
+  },
+  "php-class-parle-lexerexception": {
+    "summary": "Excepción que lanza Parle\\Lexer o Parle\\RLexer cuando falla una operación.",
+    "description": [
+      "Hereda de Exception. Se produce, por ejemplo, con una expresión regular no válida en una regla."
+    ]
+  },
+  "php-class-parle-parser": {
+    "description": [
+      "Declara los tokens con token() y la precedencia con left(), right() o nonassoc(). push() añade cada regla de la gramática y devuelve su identificador, y build() genera el analizador LALR(1).",
+      "validate() comprueba si una entrada cumple la gramática. Para procesarla, consume() la recibe junto al lexer y advance() avanza; action, reduce() y sigil() permiten construir el resultado al reducir cada regla."
+    ]
+  },
+  "php-class-parle-parserexception": {
+    "summary": "Excepción que lanza Parle\\Parser o Parle\\RParser cuando falla una operación.",
+    "description": [
+      "Hereda de Exception. Se produce, por ejemplo, con una gramática que no se puede construir."
+    ]
+  },
+  "php-class-parle-rlexer": {
+    "description": [
+      "Los estados permiten que las mismas entradas se interpreten de forma distinta según el contexto, por ejemplo dentro y fuera de una cadena o un comentario. Cada regla indica en qué estado se aplica y a cuál pasa."
+    ]
+  },
+  "php-class-parle-rparser": {
+    "description": [
+      "Su API es la misma que la de Parle\\Parser; la diferencia es que trabaja con Parle\\RLexer, el analizador léxico con varios estados."
+    ]
+  },
+  "php-class-parle-stack": {
+    "description": [
+      "push() apila un valor, pop() saca el de arriba y la propiedad top da el valor superior sin sacarlo. Es útil para guardar resultados intermedios al reducir reglas de un Parle\\Parser."
+    ]
+  },
+  "php-class-parle-token": {
+    "description": [
+      "Sus propiedades id y value dan el identificador del token y el texto reconocido. La constante Parle\\Token::EOI marca el final de la entrada."
+    ]
+  },
+  "php-class-parseerror": {
+    "description": [
+      "ParseError extiende CompileError a partir de PHP 7.3.0. Anteriormente, extendía Error.",
+      "Desde PHP 7.0 se puede capturar alrededor de eval() o de un include, en lugar de detener el script con un error fatal."
+    ]
+  },
+  "php-class-pdo": {
+    "description": [
+      "Se crea con un DSN que indica el controlador y la base de datos, como 'mysql:host=localhost;dbname=app;charset=utf8mb4', más el usuario y la contraseña. La misma API sirve para MySQL, PostgreSQL, SQLite y otros.",
+      "prepare() crea una consulta preparada con marcadores, la forma segura de incluir datos del usuario. exec() ejecuta sentencias sin resultados y beginTransaction(), commit() y rollBack() controlan las transacciones.",
+      "Desde PHP 8.0, el modo de error por defecto es PDO::ERRMODE_EXCEPTION, así que los fallos lanzan PDOException."
+    ]
+  },
+  "php-class-pdoexception": {
+    "description": [
+      "La propiedad errorInfo es un array con el código SQLSTATE, el código de error del controlador y el mensaje.",
+      "getCode() devuelve el código SQLSTATE, que puede ser una cadena como '23000', no un entero. Hereda de RuntimeException."
+    ]
+  },
+  "php-class-pdostatement": {
+    "description": [
+      "Se obtiene con PDO::prepare() o PDO::query(). execute() ejecuta la consulta, opcionalmente con un array de valores para los marcadores; bindValue() y bindParam() los vinculan uno a uno.",
+      "fetch() lee una fila y fetchAll() todas, en el formato indicado por una constante como PDO::FETCH_ASSOC. Desde PHP 8.0 implementa IteratorAggregate y se puede recorrer con foreach.",
+      "rowCount() da las filas afectadas por un INSERT, UPDATE o DELETE; con SELECT no todos los controladores lo admiten."
+    ]
+  },
+  "php-class-phar": {
+    "description": [
+      "Un archivo phar empaqueta una aplicación PHP en un solo archivo que se ejecuta con php app.phar. buildFromDirectory() añade un directorio completo y setStub() o createDefaultStub() fijan el código de arranque.",
+      "Crear o modificar archivos phar requiere phar.readonly = 0 en php.ini. Leerlos no lo requiere: se puede incluir un archivo interno con include 'phar://app.phar/archivo.php'."
+    ]
+  },
+  "php-class-phardata": {
+    "description": [
+      "addFile() y addFromString() añaden archivos, extractTo() extrae el contenido y compress() crea una copia comprimida con gzip o bzip2.",
+      "Cada archivo interno se obtiene como PharFileInfo con $archivo['ruta/interna']."
+    ]
+  },
+  "php-class-pharexception": {
+    "description": [
+      "Hereda de Exception. Se produce, por ejemplo, al abrir un archivo corrupto o al intentar escribir un phar con phar.readonly activado."
+    ]
+  },
+  "php-class-pharfileinfo": {
+    "description": [
+      "Se obtiene accediendo por índice a un Phar o PharData, como $phar['config.php']. getContent() devuelve el contenido y getCompressedSize() el tamaño comprimido.",
+      "compress() y decompress() cambian la compresión de ese archivo, y setMetadata() le asocia datos propios."
+    ]
+  },
+  "php-class-php_user_filter": {
+    "description": [
+      "Se implementa filter(), que recibe los buckets de entrada y salida. Dentro se recorren con stream_bucket_make_writeable(), se modifican y se pasan a la salida con stream_bucket_append(); el método devuelve PSFS_PASS_ON si produjo datos.",
+      "Las propiedades filtername, params y stream dan el nombre con que se registró, los parámetros y el flujo. Para aplicar el filtro, usa stream_filter_append()."
+    ]
+  },
+  "php-class-phptoken": {
+    "description": [
+      "Existe desde PHP 8.0. Cada objeto tiene las propiedades id, text, line y pos. is() comprueba si el token es de un tipo o tiene un texto concreto, e isIgnorable() si es espacio en blanco o un comentario.",
+      "Se puede extender: PhpToken::tokenize() llamado sobre una subclase devuelve objetos de esa subclase."
+    ]
+  },
   "php-function-fann_set_activation_function": {
     "description": [
       "Establece la función de activación para la neurona número neuron en la capa número layer, contando al capa de entrada como capa 0.",
