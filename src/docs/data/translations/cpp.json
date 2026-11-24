@@ -1,0 +1,268 @@
+{
+  "cpp-api-std%3A%3Aarray": {
+    "body": [
+      "Es un agregado que envuelve un array de C de N elementos: se inicializa con llaves, como std::array<int, 3> a{1, 2, 3};, y no reserva memoria dinámica.",
+      "A diferencia de un array de C, se puede copiar, asignar y devolver por valor, conoce su tamaño con size() y funciona con los algoritmos de la biblioteca estándar."
+    ],
+    "caveats": [
+      "operator[] no comprueba límites; at() sí, y lanza std::out_of_range."
+    ]
+  },
+  "cpp-api-std%3A%3Afilesystem%3A%3Apath": {
+    "body": [
+      "El operador / une componentes con el separador del sistema: std::filesystem::path p = \"datos\" / \"informe.txt\";. filename(), extension(), stem() y parent_path() extraen partes de la ruta.",
+      "Las operaciones de path son solo léxicas: no comprueban si el archivo existe. Para eso están las funciones libres de <filesystem>, como exists() o is_directory()."
+    ]
+  },
+  "cpp-api-std%3A%3Alock_guard": {
+    "body": [
+      "El constructor bloquea el mutex y el destructor lo desbloquea, así que el bloqueo se libera también si se lanza una excepción: std::lock_guard<std::mutex> guarda(m);.",
+      "No se puede copiar ni desbloquear antes de tiempo. Si necesitas desbloquear a mano o usar variables de condición, usa std::unique_lock; para varios mutex a la vez, std::scoped_lock."
+    ]
+  },
+  "cpp-api-std%3A%3Amap": {
+    "body": [
+      "Suele implementarse como un árbol rojo-negro: buscar, insertar y borrar cuestan O(log n), y al recorrerlo las claves salen ordenadas.",
+      "operator[] inserta un valor construido por defecto si la clave no existe; para consultar sin insertar, usa find(), contains() (C++20) o at(). insert_or_assign() y try_emplace() dan más control al insertar."
+    ],
+    "caveats": [
+      "Insertar o borrar no invalida los iteradores de los demás elementos."
+    ]
+  },
+  "cpp-api-std%3A%3Aoptional": {
+    "body": [
+      "Es útil para funciones que pueden no tener resultado: devuelven el valor o std::nullopt. has_value() o la conversión a bool indican si hay valor, y value_or() da uno por defecto si no lo hay.",
+      "El valor se guarda dentro del propio objeto, sin memoria dinámica."
+    ],
+    "caveats": [
+      "operator* no comprueba si hay valor; value() sí, y lanza std::bad_optional_access si está vacío."
+    ]
+  },
+  "cpp-api-std%3A%3Ashared_ptr": {
+    "body": [
+      "Cada copia incrementa un contador de referencias, y el objeto se destruye cuando se destruye o reinicia la última copia. Créalo con std::make_shared<T>(args...), que reserva el objeto y el contador en una sola asignación.",
+      "use_count() da el número de propietarios. Para observar el objeto sin mantenerlo vivo, usa std::weak_ptr."
+    ],
+    "caveats": [
+      "Dos objetos que se apuntan mutuamente con shared_ptr nunca se liberan; rompe el ciclo con weak_ptr."
+    ]
+  },
+  "cpp-api-std%3A%3Aspan": {
+    "body": [
+      "Se construye a partir de un array, un std::vector, un std::array o un puntero y un tamaño, y permite escribir funciones que aceptan cualquiera de ellos: void procesar(std::span<const int> datos);.",
+      "first(), last() y subspan() devuelven partes de la secuencia sin copiar. Con un tamaño fijo como plantilla, span<int, 4>, el tamaño se conoce al compilar."
+    ],
+    "caveats": [
+      "No es propietario: si el contenedor original se destruye o reasigna su memoria, el span queda colgando."
+    ]
+  },
+  "cpp-api-std%3A%3Aunique_ptr": {
+    "body": [
+      "Se crea con std::make_unique<T>(args...) y destruye el objeto al salir de ámbito. No se puede copiar; std::move() transfiere la propiedad a otro unique_ptr.",
+      "get() da el puntero sin ceder la propiedad, release() la cede y reset() destruye el objeto actual. El borrador personalizado permite gestionar recursos que no se liberan con delete, como un FILE*."
+    ]
+  },
+  "cpp-api-std%3A%3Aunordered_map": {
+    "body": [
+      "Buscar, insertar y borrar cuestan O(1) de media y O(n) en el peor caso. La clave necesita una especialización de std::hash y operator==, o un hash y un comparador propios.",
+      "Igual que std::map, operator[] inserta si la clave no existe; usa find() o contains() (C++20) para consultar. reserve() evita rehashes si conoces el número de elementos."
+    ],
+    "caveats": [
+      "Un rehash invalida los iteradores, pero no las referencias ni los punteros a los elementos."
+    ]
+  },
+  "cpp-api-std%3A%3Avariant": {
+    "body": [
+      "Es una unión con tipo seguro: siempre contiene exactamente una de las alternativas. index() dice cuál, std::holds_alternative<T>() lo comprueba y std::get<T>() o std::get_if<T>() acceden al valor.",
+      "std::visit() aplica una función a la alternativa activa, lo que permite tratar todos los casos de forma exhaustiva."
+    ],
+    "caveats": [
+      "std::get con la alternativa equivocada lanza std::bad_variant_access."
+    ]
+  },
+  "cpp-api-std%3A%3Avector": {
+    "body": [
+      "push_back() y emplace_back() añaden al final en tiempo amortizado constante. El acceso por índice es O(1) y data() da un puntero compatible con funciones de C.",
+      "Cuando size() alcanza capacity(), reserva un bloque mayor y mueve los elementos. reserve() evita esas reasignaciones si conoces el tamaño final."
+    ],
+    "caveats": [
+      "Insertar o borrar en medio cuesta O(n) porque desplaza los elementos siguientes."
+    ]
+  },
+  "web-cpp20-std%3A%3Aallocator": {
+    "body": [
+      "Es el asignador por defecto de todos los contenedores estándar. allocate(n) reserva memoria sin construir objetos y deallocate(p, n) la libera; desde C++20 ambas son constexpr.",
+      "No tiene estado, así que todas sus instancias son intercambiables. Normalmente no se usa directamente, sino a través de std::allocator_traits."
+    ]
+  },
+  "web-cpp20-std%3A%3Aallocator%3A%3Aallocator": {
+    "body": [
+      "La conversión desde allocator<U> permite que un contenedor obtenga un asignador de otro tipo a partir del suyo, por ejemplo para sus nodos internos."
+    ]
+  },
+  "web-cpp20-std%3A%3Aallocator%3A%3Adeallocate": {
+    "intro": [
+      "Libera la memoria a la que apunta p, que debe haberse obtenido con allocate(n) usando el mismo n."
+    ],
+    "body": [
+      "No llama a ningún destructor: los objetos deben destruirse antes. En la evaluación de una expresión constante, la memoria debe haberse reservado dentro de esa misma evaluación."
+    ]
+  },
+  "web-cpp20-std%3A%3Aallocator%3A%3Aoperator%3D": {
+    "body": [
+      "Como no hay estado que copiar, la asignación no tiene efecto visible."
+    ]
+  },
+  "web-cpp20-std%3A%3Aallocator%3A%3A~allocator": {
+    "body": [
+      "std::allocator no guarda estado, así que destruirlo no libera nada: la memoria reservada con allocate() se libera con deallocate()."
+    ]
+  },
+  "web-cpp20-std%3A%3Aallocator_traits": {
+    "body": [
+      "Para cada operación usa la del asignador si existe y, si no, una implementación por defecto. Así, un asignador propio solo necesita definir value_type, allocate() y deallocate().",
+      "Los contenedores construyen y destruyen elementos con allocator_traits::construct() y destroy(), y usan rebind_alloc para obtener asignadores de otros tipos, como los nodos de una lista."
+    ]
+  },
+  "web-cpp20-std%3A%3Aallocator_traits%3A%3Adestroy": {
+    "body": [
+      "Llama al destructor del objeto, pero la memoria sigue reservada; para liberarla hay que llamar después a deallocate()."
+    ]
+  },
+  "web-cpp20-std%3A%3Aany": {
+    "body": [
+      "Puede guardar un valor de cualquier tipo copiable: std::any a = 42; a = std::string(\"hola\");. std::any_cast<T>(a) recupera el valor si el tipo coincide.",
+      "type() devuelve el std::type_info del contenido. Las implementaciones guardan los valores pequeños dentro del objeto y los grandes en memoria dinámica."
+    ],
+    "caveats": [
+      "std::any_cast con un tipo equivocado lanza std::bad_any_cast; con un puntero, devuelve nullptr."
+    ]
+  },
+  "web-cpp20-std%3A%3Aany%3A%3Ahas_value": {
+    "body": [
+      "Un std::any construido por defecto, o después de reset(), no contiene valor."
+    ]
+  },
+  "web-cpp20-std%3A%3Aany%3A%3Areset": {
+    "body": [
+      "Después de la llamada, has_value() devuelve false y type() devuelve typeid(void)."
+    ]
+  },
+  "web-cpp20-std%3A%3Aany%3A%3Aswap": {
+    "body": [
+      "Intercambia los valores aunque sean de tipos distintos, sin lanzar excepciones."
+    ]
+  },
+  "web-cpp20-std%3A%3Aany%3A%3Atype": {
+    "body": [
+      "Se compara con typeid(T) para comprobar el tipo antes de usar std::any_cast: if (a.type() == typeid(int)) { ... }."
+    ]
+  },
+  "web-cpp20-std%3A%3Aany%3A%3A~any": {
+    "body": [
+      "Después de la destrucción no queda memoria reservada por el valor contenido."
+    ]
+  },
+  "web-cpp20-std%3A%3Aarray%3A%3Aempty": {
+    "intro": [
+      "Comprueba si el contenedor no tiene elementos, es decir, si begin() == end()."
+    ],
+    "body": [
+      "Como el tamaño es fijo, solo devuelve true para std::array<T, 0>. El resultado se conoce al compilar."
+    ]
+  },
+  "web-cpp20-std%3A%3Aarray%3A%3Afill": {
+    "body": [
+      "Equivale a std::fill_n(begin(), size(), u). Es constexpr desde C++20, así que también sirve en expresiones constantes."
+    ]
+  },
+  "web-cpp20-std%3A%3Aarray%3A%3Asize": {
+    "intro": [
+      "Devuelve el número de elementos del contenedor, es decir, std::distance(begin(), end())."
+    ],
+    "body": [
+      "Siempre devuelve N, el tamaño indicado en la plantilla, y se puede usar en expresiones constantes."
+    ]
+  },
+  "web-cpp20-std%3A%3Aatomic": {
+    "body": [
+      "Las lecturas y escrituras sobre un std::atomic no producen carreras de datos aunque varios hilos accedan a la vez. load() y store() leen y escriben, exchange() cambia el valor y devuelve el anterior, y compare_exchange_weak() o compare_exchange_strong() lo cambian solo si tiene el valor esperado.",
+      "Las especializaciones para enteros y punteros añaden fetch_add(), fetch_sub() y los operadores ++ y +=. Desde C++20, wait() y notify_one() o notify_all() permiten esperar a que cambie el valor."
+    ],
+    "caveats": [
+      "Por defecto todas las operaciones usan memory_order_seq_cst, el orden más estricto; los órdenes más débiles requieren entender bien el modelo de memoria."
+    ]
+  },
+  "web-cpp20-std%3A%3Aatomic_flag": {
+    "body": [
+      "Es el único tipo atómico que la norma garantiza sin bloqueos en todas las plataformas. test_and_set() lo pone a true y devuelve el valor anterior, y clear() lo pone a false; con ellos se puede escribir un spinlock sencillo.",
+      "Desde C++20 se inicializa a false por defecto y tiene test(), que lee el valor sin modificarlo, además de wait() y notify_one() o notify_all()."
+    ]
+  },
+  "web-cpp20-std%3A%3Aatomic_flag%3A%3Aoperator%3D": {
+    "intro": [
+      "std::atomic_flag no se puede asignar: los operadores de asignación están eliminados."
+    ],
+    "body": ["Para cambiar su valor, usa test_and_set() o clear()."]
+  },
+  "web-cpp20-std%3A%3Aatomic_flag%3A%3Atest_and_set": {
+    "intro": [
+      "Pone atómicamente el std::atomic_flag a true y devuelve el valor que tenía antes."
+    ],
+    "body": [
+      "Si devuelve false, este hilo es el que ha cambiado la bandera. Por eso un bucle while (flag.test_and_set()) {} implementa la adquisición de un spinlock."
+    ],
+    "returns": ["El valor de la bandera antes de la llamada."]
+  },
+  "web-cpp20-std%3A%3Aback_insert_iterator": {
+    "body": [
+      "Se crea normalmente con std::back_inserter(contenedor). Permite que algoritmos que escriben en un iterador de salida añadan elementos en lugar de sobrescribirlos: std::copy(origen.begin(), origen.end(), std::back_inserter(destino));.",
+      "El contenedor necesita push_back(), como std::vector, std::deque o std::list."
+    ]
+  },
+  "web-cpp20-std%3A%3Aback_insert_iterator%3A%3Aback_insert_iterator": {
+    "intro": [
+      "Inicializa el puntero interno al contenedor con std::addressof(x)."
+    ],
+    "body": [
+      "El constructor por defecto, añadido en C++20, deja el iterador sin contenedor asociado; solo sirve para asignarle otro después."
+    ]
+  },
+  "web-cpp20-std%3A%3Abarrier": {
+    "body": [
+      "Cada hilo llama a arrive_and_wait() al terminar su parte; cuando han llegado todos los esperados, se ejecuta la función de finalización y se libera a todos para la siguiente fase.",
+      "A diferencia de std::latch, se puede reutilizar en varias fases. arrive_and_drop() permite que un hilo salga y reduce el número esperado para las fases siguientes. Existe desde C++20."
+    ]
+  },
+  "web-cpp20-std%3A%3Abarrier%3A%3Abarrier": {
+    "body": [
+      "La función de finalización se ejecuta una vez por fase, en uno de los hilos participantes, antes de desbloquear al resto. No debe lanzar excepciones."
+    ]
+  },
+  "web-cpp20-std%3A%3Abarrier%3A%3Amax": {
+    "body": ["El valor expected que se pasa al constructor no debe superarlo."]
+  },
+  "web-cpp20-std%3A%3Abarrier%3A%3Aoperator%3D": {
+    "body": [
+      "Una barrera no se puede copiar ni asignar, porque los hilos que la usan dependen de su estado interno."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_ifstream": {
+    "body": [
+      "Se abre con el constructor o con open(), indicando la ruta, y se lee con los operadores y funciones de std::istream: std::ifstream archivo(\"datos.txt\"); std::getline(archivo, linea);.",
+      "is_open() o la conversión a bool indican si se abrió correctamente. El archivo se cierra en el destructor. std::ifstream es basic_ifstream<char>."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_ifstream%3A%3Abasic_ifstream": {
+    "intro": ["Construye un nuevo flujo de lectura de archivo."],
+    "body": [
+      "El constructor por defecto no abre ningún archivo. Las demás versiones lo abren con el modo indicado, que siempre incluye ios_base::in; si falla, se activa failbit."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_ifstream%3A%3Aopen": {
+    "intro": ["Abre el archivo indicado y lo asocia al flujo."],
+    "body": [
+      "Si la apertura falla, se activa failbit. Si tiene éxito, se limpian los indicadores de estado. Comprueba is_open() o el propio flujo después de llamarla."
+    ]
+  }
+}
