@@ -70,11 +70,23 @@ function readTranslations(group) {
   return existsSync(file) ? readFileSync(file, "utf8") : "";
 }
 
+function applyOverload(overload, translation) {
+  if (!translation) return overload;
+  const result = { ...overload };
+  for (const field of translatedFields)
+    if (translation[field] !== undefined) result[field] = translation[field];
+  return result;
+}
+
 export function applyTranslation(entry, translation) {
   if (!translation) return entry;
   const result = { ...entry };
   for (const field of translatedFields)
     if (translation[field] !== undefined) result[field] = translation[field];
+  if (Array.isArray(translation.overloads) && Array.isArray(entry.overloads))
+    result.overloads = entry.overloads.map((overload, index) =>
+      applyOverload(overload, translation.overloads[index]),
+    );
   result.locale = "es";
   delete result.introSpanish;
   return result;
