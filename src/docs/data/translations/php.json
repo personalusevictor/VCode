@@ -937,6 +937,234 @@
       "Desde PHP 8.4, la extensión imap ya no viene con PHP y se instala desde PECL."
     ]
   },
+  "php-class-infiniteiterator": {
+    "description": [
+      "Cuando el iterador interno llega al final, next() lo rebobina y vuelve a empezar. Es útil para repartir elementos de forma cíclica, como colores alternos.",
+      "Como nunca termina, combínalo con LimitIterator o sal del foreach con break."
+    ]
+  },
+  "php-class-inflatecontext": {
+    "description": [
+      "Se obtiene con inflate_init() y se pasa a inflate_add() para descomprimir datos por partes. Es final y no se crea con new."
+    ]
+  },
+  "php-class-internaliterator": {
+    "description": [
+      "Existe desde PHP 8.0. Las clases internas que implementan IteratorAggregate devuelven un InternalIterator desde getIterator(), de modo que también se pueden usar donde se espera un Iterator.",
+      "No se puede instanciar desde código PHP."
+    ]
+  },
+  "php-class-intlcalendar": {
+    "description": [
+      "Consulta o cambia campos como año, mes y día de forma individual. Puedes convertir el calendario a un objeto DateTime cuando necesites trabajar con las API de fechas de PHP.",
+      "Se crea con IntlCalendar::createInstance(), que elige el calendario de la configuración regional (gregoriano, japonés, budista...). get() y set() trabajan con las constantes IntlCalendar::FIELD_*, y add() suma cantidades a un campo."
+    ]
+  },
+  "php-class-intlchar": {
+    "description": [
+      "Los métodos y las constantes respetan estrictamente los nombres y el comportamiento utilizados por la biblioteca ICU subyacente.",
+      "Todos sus métodos son estáticos y aceptan un punto de código entero o un carácter UTF-8. Por ejemplo, IntlChar::isalpha('ñ') devuelve true, IntlChar::charName('€') devuelve 'EURO SIGN' e IntlChar::ord() da el punto de código."
+    ]
+  },
+  "php-class-intldateformatter": {
+    "description": [
+      "Esta clase representa las funcionalidades de formato de fechas ICU. Permite a los usuarios mostrar fechas en un formato localizado, o analizar cadenas PHP para extraer fechas.",
+      "Se crea con la configuración regional y los estilos de fecha y hora, como IntlDateFormatter::LONG, o con un patrón ICU propio. formatObject() es un atajo estático que formatea un DateTime en una sola llamada."
+    ]
+  },
+  "php-class-intldatepatterngenerator": {
+    "description": [
+      "getBestPattern() recibe un esqueleto con los campos que quieres, como 'MMMd', y devuelve el patrón adecuado para la configuración regional, por ejemplo 'd MMM' en español.",
+      "Existe desde PHP 8.1. Pasa el resultado a IntlDateFormatter para formatear."
+    ]
+  },
+  "php-class-intlexception": {
+    "description": [
+      "Por defecto, las funciones intl indican los errores con valores de retorno y getErrorCode() o intl_get_error_code(). Con intl.use_exceptions = 1 lanzan esta excepción en su lugar.",
+      "Hereda de Exception."
+    ]
+  },
+  "php-class-intlgregoriancalendar": {
+    "summary": "Calendario gregoriano de ICU.",
+    "description": [
+      "Hereda de IntlCalendar y añade isLeapYear() para saber si un año es bisiesto, y getGregorianChange() y setGregorianChange() para la fecha en que se pasó del calendario juliano al gregoriano.",
+      "Se puede crear con su constructor o con createFromDate() y createFromDateTime()."
+    ]
+  },
+  "php-class-intliterator": {
+    "description": [
+      "Las subclases pueden proporcionar una funcionalidad más rica.",
+      "Lo devuelven, por ejemplo, IntlTimeZone::createEnumeration() y los métodos de IntlBreakIterator. Se recorre con foreach o con los métodos de Iterator."
+    ]
+  },
+  "php-class-intllistformatter": {
+    "description": [
+      "Por ejemplo, con la configuración 'es' convierte ['manzanas', 'peras', 'uvas'] en 'manzanas, peras y uvas'. El constructor recibe la configuración regional y, opcionalmente, el tipo de lista (conjunción, disyunción o unidades) y su anchura."
+    ]
+  },
+  "php-class-intlpartsiterator": {
+    "description": [
+      "Las claves pueden representar el desplazamiento del límite izquierdo, del límite derecho, o pueden ser simplemente la secuencia de enteros no negativos. Ver IntlBreakIterator::getPartsIterator().",
+      "Por ejemplo, con un iterador de palabras devuelve cada palabra y cada separador como fragmentos. getBreakIterator() da el iterador de límites original."
+    ]
+  },
+  "php-class-intlrulebasedbreakiterator": {
+    "description": [
+      "Estas reglas se describen en el Guía del usuario de análisis de límites ICU.",
+      "Los métodos IntlBreakIterator::createWordInstance() y similares devuelven objetos de esta clase. Tras avanzar, getRuleStatus() indica qué regla produjo el límite, lo que permite distinguir, por ejemplo, palabras de números o signos."
+    ]
+  },
+  "php-class-intltimezone": {
+    "description": [
+      "Crea la zona con un identificador de la base de zonas horarias. Usa getOffset() cuando quieras conocer el desplazamiento para una fecha concreta.",
+      "getDisplayName() da su nombre localizado, por ejemplo 'hora de Europa central'. fromDateTimeZone() y toDateTimeZone() convierten desde y hacia DateTimeZone."
+    ]
+  },
+  "php-class-invalidargumentexception": {
+    "description": [
+      "Se usa sobre todo cuando un argumento tiene el tipo correcto pero un valor no válido, como un número negativo donde se espera una cantidad. Los tipos incorrectos en parámetros tipados ya los detecta PHP con TypeError.",
+      "Hereda de LogicException."
+    ]
+  },
+  "php-class-iterator": {
+    "description": [
+      "foreach llama primero a rewind() y, en cada vuelta, a valid(), current() y key(); al final de la vuelta llama a next().",
+      "Si tu clase solo necesita exponer una colección, implementar IteratorAggregate suele ser más sencillo."
+    ]
+  },
+  "php-class-iteratoraggregate": {
+    "description": [
+      "getIterator() debe devolver un Traversable. Lo más sencillo es devolver new ArrayIterator($this->elementos) o escribir getIterator() como generador con yield.",
+      "Con ella, el objeto se puede recorrer con foreach sin implementar los cinco métodos de Iterator."
+    ]
+  },
+  "php-class-iteratoriterator": {
+    "description": [
+      "Es útil para combinar con otros iteradores SPL objetos que solo son Traversable, como un PDOStatement.",
+      "También sirve de base para iteradores que modifican el recorrido de otro, como FilterIterator o LimitIterator. getInnerIterator() devuelve el iterador envuelto."
+    ]
+  },
+  "php-class-jsonexception": {
+    "description": [
+      "Existe desde PHP 7.3. Sin JSON_THROW_ON_ERROR, los errores solo se ven con json_last_error(); con la opción, try/catch hace el código más claro.",
+      "getCode() devuelve una constante JSON_ERROR_*, como JSON_ERROR_SYNTAX."
+    ]
+  },
+  "php-class-jsonserializable": {
+    "description": [
+      "json_encode() llama a jsonSerialize() y codifica lo que devuelve, que puede ser un array, un escalar u otro objeto.",
+      "Es la forma de ocultar propiedades privadas, cambiar nombres o dar formato a fechas en el JSON sin modificar la clase."
+    ]
+  },
+  "php-class-lengthexception": {
+    "description": [
+      "Por ejemplo, cuando una cadena supera la longitud máxima permitida o un array no tiene el número de elementos esperado.",
+      "Hereda de LogicException."
+    ]
+  },
+  "php-class-libxmlerror": {
+    "description": [
+      "Sus propiedades level, code, message, file, line y column describen cada error.",
+      "Llama a libxml_use_internal_errors(true) antes de cargar el documento para que los errores no se muestren como advertencias, y recógelos después con libxml_get_errors()."
+    ]
+  },
+  "php-class-limititerator": {
+    "description": [
+      "El constructor recibe el iterador, la posición inicial y el número máximo de elementos (-1 para no limitar). Es útil para paginar o para cortar un iterador infinito.",
+      "getPosition() da la posición actual dentro del iterador interno."
+    ]
+  },
+  "php-class-logicexception": {
+    "description": [
+      "Es la clase padre de BadFunctionCallException, DomainException, InvalidArgumentException, LengthException y OutOfRangeException.",
+      "Para errores que dependen de los datos o del entorno y que solo se detectan en tiempo de ejecución, usa RuntimeException y sus subclases."
+    ]
+  },
+  "php-class-lua": {
+    "summary": "Intérprete Lua embebido en PHP.",
+    "description": [
+      "eval() ejecuta código Lua e include() un archivo. assign() pasa variables de PHP a Lua, call() llama a funciones Lua y registerCallback() expone funciones PHP al código Lua.",
+      "Pertenece a la extensión PECL lua."
+    ]
+  },
+  "php-class-luaclosure": {
+    "description": [
+      "Como implementa __invoke(), se puede llamar como cualquier callable de PHP: $funcion($argumento)."
+    ]
+  },
+  "php-class-luaexception": {
+    "summary": "Excepción que lanza la extensión lua cuando falla una operación.",
+    "description": [
+      "Hereda de Exception. Se produce, por ejemplo, con errores de sintaxis o de ejecución en el código Lua."
+    ]
+  },
+  "php-class-luasandbox": {
+    "description": [
+      "loadString() compila código Lua y devuelve una función que se ejecuta con call(). setMemoryLimit() y setCPULimit() acotan los recursos que puede consumir.",
+      "registerLibrary() expone funciones PHP dentro de Lua. Está pensada para ejecutar código no confiable; la usa, por ejemplo, MediaWiki para sus módulos Lua."
+    ]
+  },
+  "php-class-luasandboxerror": {
+    "description": [
+      "Hereda de Exception. Captúrala para tratar cualquier error de LuaSandbox; LuaSandboxRuntimeError y LuaSandboxFatalError heredan de ella."
+    ]
+  },
+  "php-class-luasandboxerrorerror": {
+    "description": [
+      "Hereda de LuaSandboxFatalError, así que el código Lua no puede capturarla."
+    ]
+  },
+  "php-class-luasandboxfatalerror": {
+    "description": [
+      "Estas excepciones no pueden ser atrapadas en Lua utilizando pcall() o xpcall().",
+      "Incluye los errores de sintaxis, memoria agotada, tiempo agotado y errores dentro de gestores de errores."
+    ]
+  },
+  "php-class-luasandboxmemoryerror": {
+    "description": [
+      "Ocurre al superar el límite fijado con LuaSandbox::setMemoryLimit(). Hereda de LuaSandboxFatalError."
+    ]
+  },
+  "php-class-luasandboxruntimeerror": {
+    "description": [
+      "Estas excepciones pueden ser capturadas en Lua utilizando pcall() o xpcall().",
+      "Corresponden a errores normales de Lua, como llamar a error() o indexar un valor nil."
+    ]
+  },
+  "php-class-luasandboxsyntaxerror": {
+    "description": [
+      "La lanza LuaSandbox::loadString() cuando el código tiene errores de sintaxis. Hereda de LuaSandboxFatalError."
+    ]
+  },
+  "php-class-luasandboxtimeouterror": {
+    "description": [
+      "El límite se fija con LuaSandbox::setCPULimit(). Hereda de LuaSandboxFatalError."
+    ]
+  },
+  "php-class-memcache": {
+    "description": [
+      "Añade servidores con addServer() o connect(), guarda valores con set() o add() y los lee con get(). increment() y decrement() modifican contadores de forma atómica.",
+      "Pertenece a la extensión PECL memcache. La extensión memcached, basada en libmemcached, ofrece más funciones con la clase Memcached."
+    ]
+  },
+  "php-class-memcached": {
+    "description": [
+      "Añade servidores con addServer() o addServers(), guarda con set() y lee con get() o getMulti(). cas() permite actualizar un valor solo si nadie lo ha cambiado desde que se leyó.",
+      "La mayoría de métodos devuelven false si fallan; getResultCode() y getResultMessage() dan el motivo. Si pasas un identificador persistente al constructor, la conexión se reutiliza entre peticiones."
+    ]
+  },
+  "php-class-memcachedexception": {
+    "summary": "Excepción que lanza la extensión memcached en algunos errores.",
+    "description": [
+      "Hereda de RuntimeException. La mayoría de métodos de Memcached no lanzan excepciones: devuelven false y el detalle se consulta con getResultCode()."
+    ]
+  },
+  "php-class-multipleiterator": {
+    "description": [
+      "Avanza todos los iteradores adjuntos a la vez: en cada paso, current() devuelve un array con el valor actual de cada uno. Es útil para recorrer en paralelo listas relacionadas.",
+      "Con MultipleIterator::MIT_NEED_ALL termina cuando se acaba cualquiera de ellos; con MIT_NEED_ANY sigue mientras quede alguno, y rellena con null los que ya terminaron. attachIterator() puede asociar una etiqueta a cada iterador para usarla como clave."
+    ]
+  },
   "php-function-fann_set_activation_function": {
     "description": [
       "Establece la función de activación para la neurona número neuron en la capa número layer, contando al capa de entrada como capa 0.",
