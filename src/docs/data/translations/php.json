@@ -2095,6 +2095,230 @@
     "summary": "Excepción que se lanza cuando falta un parámetro obligatorio.",
     "description": ["Hereda de SolrException."]
   },
+  "php-class-solrmodifiableparams": {
+    "description": [
+      "Hereda de SolrParams y es la clase padre de SolrQuery. Permite añadir y cambiar parámetros con set() y add()."
+    ]
+  },
+  "php-class-solrobject": {
+    "description": [
+      "Las respuestas de Solr se devuelven como SolrObject anidados: por ejemplo, $respuesta->getResponse()->response->docs da los documentos encontrados.",
+      "getPropertyNames() enumera las propiedades disponibles. Intentar modificarlas lanza un error."
+    ]
+  },
+  "php-class-solrparams": {
+    "description": [
+      "Es la clase base abstracta de los parámetros de una petición. set() fija un parámetro, add() añade un valor más a uno multivalor y get() lo lee.",
+      "toString() devuelve la cadena de consulta tal como se enviará al servidor."
+    ]
+  },
+  "php-class-solrpingresponse": {
+    "description": [
+      "La devuelve SolrClient::ping(). Permite comprobar si el servidor está disponible antes de enviarle peticiones."
+    ]
+  },
+  "php-class-solrquery": {
+    "summary": "Consulta que se envía al servidor Solr.",
+    "description": [
+      "setQuery() fija la búsqueda, setStart() y setRows() la paginación, addFilterQuery() añade filtros y addSortField() ordena. También ofrece métodos para facetas, resaltado, agrupación y más resultados similares.",
+      "Se ejecuta con SolrClient::query(). Hereda de SolrModifiableParams."
+    ]
+  },
+  "php-class-solrqueryresponse": {
+    "description": [
+      "La devuelve SolrClient::query(). getResponse() da un SolrObject con los documentos en response->docs y el total en response->numFound. Hereda de SolrResponse."
+    ]
+  },
+  "php-class-solrresponse": {
+    "description": [
+      "Es la clase base de las respuestas. getResponse() devuelve los datos analizados, success() indica si la petición fue bien y getHttpStatus() da el código HTTP.",
+      "getRawRequest() y getRawResponse() devuelven lo enviado y recibido sin procesar, útil para depurar."
+    ]
+  },
+  "php-class-solrserverexception": {
+    "description": [
+      "Hereda de SolrException; getInternalInfo() da la ubicación del error dentro de la extensión."
+    ]
+  },
+  "php-class-solrupdateresponse": {
+    "description": [
+      "La devuelven las operaciones de escritura de SolrClient, como addDocument(), deleteById() o commit(). Hereda de SolrResponse."
+    ]
+  },
+  "php-class-solrutils": {
+    "description": [
+      "También contiene métodos para escapar cadenas de consultas y analizar respuestas XML.",
+      "escapeQueryChars() escapa los caracteres especiales de la sintaxis de Solr y queryPhrase() prepara una frase exacta entre comillas, útil al construir consultas con texto del usuario."
+    ]
+  },
+  "php-class-spldoublylinkedlist": {
+    "description": [
+      "push() y pop() trabajan por el final, unshift() y shift() por el principio, y top() y bottom() consultan los extremos sin quitarlos. Todas son operaciones en tiempo constante.",
+      "setIteratorMode() decide si foreach recorre en orden FIFO o LIFO y si elimina los elementos al recorrerlos. SplQueue y SplStack heredan de ella."
+    ]
+  },
+  "php-class-splfileinfo": {
+    "description": [
+      "Se crea con una ruta, que no tiene por qué existir. getFilename(), getExtension(), getSize() o getMTime() dan sus datos, e isFile(), isDir() o isReadable() comprueban su estado.",
+      "openFile() devuelve un SplFileObject para leer o escribir el archivo. DirectoryIterator y FilesystemIterator heredan de ella."
+    ]
+  },
+  "php-class-splfileobject": {
+    "description": [
+      "Se recorre con foreach línea a línea. Las constantes SplFileObject::READ_CSV, SKIP_EMPTY y DROP_NEW_LINE convierten cada línea en un array CSV, saltan las vacías y quitan el salto de línea final.",
+      "fgets(), fwrite() o fgetcsv() funcionan como sus equivalentes procedurales, y seek() salta a una línea concreta."
+    ]
+  },
+  "php-class-splfixedarray": {
+    "description": [
+      "El tamaño se fija en el constructor y se cambia con setSize(). Acceder a un índice fuera del rango lanza una excepción en lugar de crear el elemento.",
+      "fromArray() lo crea a partir de un array con claves enteras y toArray() lo convierte de vuelta."
+    ]
+  },
+  "php-class-splheap": {
+    "description": [
+      "Es abstracta: una subclase implementa compare($a, $b), que debe devolver un número positivo si $a debe quedar por encima de $b. insert() añade elementos, top() consulta el de arriba y extract() lo saca.",
+      "Recorrerlo con foreach lo vacía, porque cada iteración extrae un elemento. SplMinHeap y SplMaxHeap cubren los casos habituales."
+    ]
+  },
+  "php-class-splmaxheap": {
+    "description": [
+      "extract() devuelve siempre el mayor elemento. Para ordenar por otro criterio, extiende la clase y sobrescribe compare()."
+    ]
+  },
+  "php-class-splminheap": {
+    "description": [
+      "extract() devuelve siempre el menor elemento, así que es útil para procesar tareas por orden, como en el algoritmo de Dijkstra."
+    ]
+  },
+  "php-class-splobjectstorage": {
+    "description": [
+      "attach() añade un objeto con datos opcionales, contains() comprueba si está y detach() lo quita. También admite la sintaxis $almacen[$objeto] = $datos.",
+      "Mantiene referencias fuertes a los objetos. Si solo quieres asociar datos a objetos sin impedir que se liberen, usa WeakMap (PHP 8.0)."
+    ]
+  },
+  "php-class-splobserver": {
+    "description": [
+      "update() recibe el SplSubject que ha cambiado. El sujeto la llama en cada observador registrado desde su método notify()."
+    ]
+  },
+  "php-class-splpriorityqueue": {
+    "description": [
+      "El orden de los elementos con idéntica prioridad es indefinido. Puede diferir del orden en que se han insertado.",
+      "insert() recibe el valor y su prioridad, y extract() devuelve el de mayor prioridad. setExtractFlags() decide si se devuelve el valor, la prioridad o ambos."
+    ]
+  },
+  "php-class-splqueue": {
+    "description": [
+      "enqueue() añade al final y dequeue() saca el primero. Como hereda de SplDoublyLinkedList, también tiene push(), shift() y el resto de sus métodos."
+    ]
+  },
+  "php-class-splstack": {
+    "description": [
+      "push() apila, pop() saca el último elemento añadido y top() lo consulta sin sacarlo. foreach recorre la pila desde la cima."
+    ]
+  },
+  "php-class-splsubject": {
+    "description": [
+      "attach() y detach() registran y quitan observadores (SplObserver), y notify() llama a update() en cada uno. SplObjectStorage es una forma cómoda de guardar los observadores."
+    ]
+  },
+  "php-class-spltempfileobject": {
+    "description": [
+      "Guarda los datos en memoria hasta el límite indicado en el constructor (2 MB por defecto) y después en un archivo temporal, que se elimina al terminar. Con 0 escribe siempre en disco y con un valor negativo siempre en memoria.",
+      "Hereda de SplFileObject, así que se lee y escribe con los mismos métodos."
+    ]
+  },
+  "php-class-sqlite3": {
+    "description": [
+      "Se crea con la ruta del archivo de base de datos, o ':memory:' para una base de datos en memoria. exec() ejecuta sentencias sin resultado, query() devuelve un SQLite3Result y prepare() crea una consulta preparada.",
+      "Llama a enableExceptions(true) para que los errores lancen SQLite3Exception. lastInsertRowID() da el último identificador insertado."
+    ]
+  },
+  "php-class-sqlite3exception": {
+    "description": [
+      "Existe desde PHP 8.3; antes se lanzaba una Exception genérica. Solo se lanza si las excepciones están activadas con SQLite3::enableExceptions(true)."
+    ]
+  },
+  "php-class-sqlite3result": {
+    "description": [
+      "fetchArray() devuelve la siguiente fila, con claves numéricas, por nombre o ambas según la constante SQLITE3_NUM, SQLITE3_ASSOC o SQLITE3_BOTH, y false al terminar.",
+      "No tiene un método para contar filas: recórrelas o haz una consulta COUNT(*). numColumns() y columnName() describen las columnas."
+    ]
+  },
+  "php-class-sqlite3stmt": {
+    "description": [
+      "bindValue() vincula un valor a un marcador como :id o ?, opcionalmente con su tipo, y bindParam() vincula una variable por referencia. reset() permite volver a ejecutar la consulta con otros valores."
+    ]
+  },
+  "php-class-stomp": {
+    "description": [
+      "El constructor recibe la URL del broker, como 'tcp://localhost:61613'. send() publica un mensaje en un destino, subscribe() se suscribe a una cola o tema y readFrame() devuelve el siguiente mensaje recibido.",
+      "ack() confirma un mensaje, y begin(), commit() y abort() agrupan operaciones en una transacción. Funciona con brokers como ActiveMQ o RabbitMQ con su plugin STOMP."
+    ]
+  },
+  "php-class-stompexception": {
+    "description": [
+      "Hereda de Exception. getDetails() devuelve los detalles del error enviados por el broker."
+    ]
+  },
+  "php-class-stompframe": {
+    "description": [
+      "Sus propiedades command, headers y body dan el comando STOMP, las cabeceras y el contenido del mensaje. Stomp::readFrame() devuelve objetos de esta clase."
+    ]
+  },
+  "php-class-streambucket": {
+    "description": [
+      "Lo devuelve stream_bucket_make_writeable() dentro de php_user_filter::filter(). Su propiedad data contiene los datos y datalen su longitud; tras modificarlos se pasa a la salida con stream_bucket_append()."
+    ]
+  },
+  "php-class-streamerror": {
+    "description": [
+      "Es una clase final y de solo lectura: PHP la crea y sus datos no se pueden modificar."
+    ]
+  },
+  "php-class-svm": {
+    "summary": "Entrena modelos de máquinas de vectores de soporte con libsvm.",
+    "description": [
+      "train() recibe los datos de entrenamiento y devuelve un SVMModel. crossvalidate() estima la precisión con validación cruzada y setOptions() ajusta parámetros como el tipo de kernel.",
+      "Pertenece a la extensión PECL svm."
+    ]
+  },
+  "php-class-svmexception": {
+    "description": [
+      "Hereda de Exception. Se produce, por ejemplo, con datos de entrenamiento mal formados."
+    ]
+  },
+  "php-class-svmmodel": {
+    "description": [
+      "predict() devuelve la clase predicha para un vector de datos y predict_probability() también las probabilidades, si el modelo se entrenó para ello. save() y load() guardan y cargan el modelo en un archivo."
+    ]
+  },
+  "php-class-swoole-async": {
+    "summary": "Operaciones asíncronas de archivos y DNS de Swoole.",
+    "description": [
+      "Corresponde a versiones antiguas de Swoole; en las actuales estas operaciones se hacen dentro de corrutinas. Comprueba la documentación de la versión que uses."
+    ]
+  },
+  "php-class-swoole-atomic": {
+    "summary": "Contador entero atómico compartido entre procesos.",
+    "description": [
+      "add() y sub() suman y restan de forma atómica, get() y set() leen y escriben el valor, y cmpset() lo cambia solo si tiene el valor esperado.",
+      "Se crea antes de arrancar el servidor para que todos los procesos trabajadores compartan el mismo contador."
+    ]
+  },
+  "php-class-swoole-buffer": {
+    "summary": "Búfer de memoria de Swoole.",
+    "description": [
+      "Corresponde a versiones antiguas de Swoole y ya no existe en las actuales. Comprueba la documentación de la versión que uses."
+    ]
+  },
+  "php-class-swoole-channel": {
+    "summary": "Canal de memoria compartida para pasar datos entre procesos.",
+    "description": [
+      "push() añade un dato y pop() lo saca. En las versiones actuales de Swoole se usa Swoole\\Coroutine\\Channel para comunicar corrutinas; comprueba la documentación de la versión que uses."
+    ]
+  },
   "php-function-fann_set_activation_function": {
     "description": [
       "Establece la función de activación para la neurona número neuron en la capa número layer, contando al capa de entrada como capa 0.",
