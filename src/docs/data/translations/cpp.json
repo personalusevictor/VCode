@@ -2070,5 +2070,201 @@
   },
   "web-cpp20-std%3A%3Aranges%3A%3Aempty_view%3A%3Adata": {
     "body": ["Permite que empty_view cumpla el concepto contiguous_range."]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aempty_view%3A%3Aempty": {
+    "body": [
+      "Es estática y constexpr, así que el resultado se conoce al compilar."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aempty_view%3A%3Aend": {
+    "body": [
+      "Como begin() y end() coinciden, un for de rango sobre la vista no ejecuta ninguna iteración."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aempty_view%3A%3Asize": {
+    "body": [
+      "Es estática y constexpr, así que el resultado se conoce al compilar."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Afilter_view": {
+    "body": [
+      "Se obtiene normalmente con std::views::filter(pred): for (int x : v | std::views::filter([](int n) { return n % 2 == 0; })) recorre solo los pares. No copia ni modifica el rango original.",
+      "begin() busca el primer elemento válido la primera vez y guarda el resultado, así que llamarlo de nuevo es barato."
+    ],
+    "caveats": [
+      "No modifiques los elementos de forma que dejen de cumplir el predicado mientras recorres la vista: el comportamiento es indefinido."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Afilter_view%3A%3Abase": {
+    "body": [
+      "La sobrecarga para valores temporales mueve la vista en lugar de copiarla."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Afilter_view%3A%3Abegin": {
+    "body": [
+      "Como guarda el resultado de la búsqueda, no es const: una filter_view constante no se puede recorrer."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Afilter_view%3A%3Aend": {
+    "body": [
+      "Si la vista base es común, devuelve un iterador; si no, un centinela que se compara con el final de la base."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Afilter_view%3A%3Afilter_view": {
+    "body": [
+      "Lo habitual es no llamar al constructor directamente y usar std::views::filter, que acepta cualquier rango visible."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Afilter_view%3A%3Apred": {
+    "body": [
+      "El predicado se guarda dentro de la vista, así que una lambda con capturas mantiene sus valores mientras la vista exista."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Afind_if": {
+    "body": [
+      "Por ejemplo, std::ranges::find_if(usuarios, [](const Usuario& u) { return u.activo; }) devuelve un iterador al primer usuario activo, o el final del rango si no hay ninguno.",
+      "También acepta un par de iterador y centinela, y una proyección opcional: std::ranges::find_if(usuarios, es_par, &Usuario::edad). Es lineal en el tamaño del rango."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aiota_view": {
+    "body": [
+      "Se obtiene normalmente con std::views::iota: std::views::iota(0, 5) genera 0, 1, 2, 3 y 4, sin incluir el límite. Con un solo argumento la secuencia no tiene fin.",
+      "Es útil para bucles con índice al estilo de los rangos: for (int i : std::views::iota(0, n)). Los valores se calculan al recorrerla, no se almacenan."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aiota_view%3A%3Abegin": {
+    "returns": ["Un iterador al valor inicial."]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aiota_view%3A%3Aend": {
+    "body": [
+      "Si el valor y el límite son del mismo tipo, devuelve un iterador, de modo que la vista es común."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Ais_sorted": {
+    "intro": [
+      "Comprueba si el rango está ordenado en orden no descendente según el comparador."
+    ],
+    "body": [
+      "Por ejemplo, std::ranges::is_sorted(std::vector{1, 2, 2, 3}) devuelve true. Con std::ranges::greater{} comprueba el orden descendente.",
+      "Acepta una proyección opcional, como std::ranges::is_sorted(personas, {}, &Persona::edad). Para saber dónde se rompe el orden, usa std::ranges::is_sorted_until."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Ajoin_view": {
+    "body": [
+      "Se obtiene normalmente con std::views::join: un std::vector<std::vector<int>> se recorre como una sola secuencia de int. Con un rango de cadenas, concatena sus caracteres.",
+      "No inserta separadores entre los rangos internos."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Ajoin_view%3A%3Abase": {
+    "body": [
+      "La sobrecarga para valores temporales mueve la vista en lugar de copiarla."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Ajoin_view%3A%3Aend": {
+    "body": [
+      "Devuelve un iterador cuando tanto la vista externa como los rangos internos son comunes y de avance; en otro caso, un centinela."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Ajoin_view%3A%3Ajoin_view": {
+    "intro": ["Construye un join_view."]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aref_view": {
+    "body": [
+      "std::views::all la crea automáticamente cuando se aplica un adaptador a un contenedor que es un lvalue: en v | std::views::filter(...), v se envuelve en un ref_view.",
+      "Copiarla es barato porque solo guarda un puntero al rango."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aref_view%3A%3Abase": {
+    "body": ["Permite acceder al contenedor original desde la vista."]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aref_view%3A%3Abegin": {
+    "body": ["Equivale a std::ranges::begin(base())."]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aref_view%3A%3Adata": {
+    "body": [
+      "Equivale a std::ranges::data(base()); solo existe si el rango es contiguo, como std::vector o std::array."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aref_view%3A%3Aempty": {
+    "body": [
+      "Equivale a std::ranges::empty(base()); solo existe si esa expresión es válida para el rango."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aref_view%3A%3Aend": {
+    "body": ["Equivale a std::ranges::end(base())."]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aref_view%3A%3Aref_view": {
+    "body": [
+      "Solo acepta lvalues: no se puede construir a partir de un temporal, para no dejar la vista colgando. Para temporales, C++20 tal como se publicó no tenía alternativa; owning_view llegó después como corrección."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aref_view%3A%3Asize": {
+    "body": ["Equivale a std::ranges::size(base())."]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Areverse_view": {
+    "body": [
+      "Se obtiene normalmente con std::views::reverse: for (int x : v | std::views::reverse) recorre v desde el final. No modifica el orden del contenedor.",
+      "Aplicar views::reverse dos veces devuelve la vista original, sin envolverla dos veces."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Areverse_view%3A%3Abase": {
+    "body": [
+      "La sobrecarga para valores temporales mueve la vista en lugar de copiarla."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Areverse_view%3A%3Abegin": {
+    "body": [
+      "Si la vista base no es común, la primera llamada recorre hasta el final para encontrarlo y guarda el resultado."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Areverse_view%3A%3Aend": {
+    "body": [
+      "Es un std::reverse_iterator construido a partir del inicio de la vista base."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Areverse_view%3A%3Areverse_view": {
+    "body": [
+      "Lo habitual es usar std::views::reverse en lugar del constructor."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Areverse_view%3A%3Asize": {
+    "body": ["Invertir el orden no cambia el número de elementos."]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Asingle_view": {
+    "body": [
+      "Se obtiene con std::views::single(valor). Guarda una copia del valor, así que no depende de la vida del original.",
+      "Es útil para pasar un único valor a una función que espera un rango, o para combinarlo con otras vistas."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Asingle_view%3A%3Abegin": {
+    "body": ["Equivale a data()."]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Asingle_view%3A%3Adata": {
+    "body": ["Permite que single_view cumpla el concepto contiguous_range."]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Asingle_view%3A%3Aend": {
+    "body": ["Equivale a data() + 1."]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Asingle_view%3A%3Asingle_view": {
+    "body": [
+      "La forma con std::in_place construye el elemento directamente a partir de los argumentos, sin crear un temporal."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Asingle_view%3A%3Asize": {
+    "body": [
+      "Es estática y constexpr: una single_view siempre tiene exactamente un elemento."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Asplit_view": {
+    "body": [
+      "Se obtiene con std::views::split(delimitador), que puede ser un único elemento o un rango: \"a,b,c\"sv | std::views::split(',') produce \"a\", \"b\" y \"c\". Los delimitadores no se incluyen.",
+      "La versión publicada de C++20 se renombró después a lazy_split_view, y split_view pasó a dar subrangos con los iteradores originales (P2210R2). Las implementaciones actuales aplican ese cambio también en modo C++20."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Asplit_view%3A%3Abase": {
+    "intro": ["Devuelve una copia de la vista subyacente."],
+    "body": [
+      "La sobrecarga para valores temporales mueve la vista en lugar de copiarla."
+    ]
   }
 }
