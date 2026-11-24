@@ -737,5 +737,220 @@
       "Para restar una duración de otro tipo y obtener un nuevo instante, usa el operador - binario."
     ],
     "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Atime_point%3A%3Atime_since_epoch": {
+    "intro": [
+      "Devuelve una duración con el tiempo transcurrido entre el origen del reloj y *this."
+    ],
+    "body": [
+      "Con system_clock, desde C++20, el origen es la época de Unix; combinado con duration_cast<seconds>, da la marca de tiempo Unix."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear": {
+    "body": [
+      "Admite valores de -32767 a 32767; ok() indica si el valor está en ese rango. is_leap() aplica las reglas del calendario gregoriano.",
+      "Se escribe con el literal y, como 2024y, y se combina con month y day mediante el operador /. Existe desde C++20."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear%3A%3Amax": {
+    "intro": [
+      "Devuelve el mayor año posible, es decir, std::chrono::year(32767)."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear%3A%3Amin": {
+    "intro": [
+      "Devuelve el menor año posible, es decir, std::chrono::year(-32767)."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear%3A%3Aoperator%20int": {
+    "body": [
+      "La conversión es explícita: escribe static_cast<int>(y) o int{y}."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear%3A%3Aoperator%2B": {
+    "intro": ["Devuelve una copia del año sin cambios."],
+    "body": [
+      "Es el operador + unario y existe por simetría con el operador - unario."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear%3A%3Aoperator%2B%2B": {
+    "intro": ["Suma 1 al valor del año."],
+    "body": [
+      "La versión prefija devuelve una referencia al objeto modificado y la posfija una copia del valor anterior."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear%3A%3Aoperator-": {
+    "intro": ["Devuelve el año con el signo cambiado."],
+    "body": ["Es el operador unario: -year(5) da year(-5)."]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear%3A%3Aoperator--": {
+    "intro": ["Resta 1 al valor del año."],
+    "body": [
+      "La versión prefija devuelve una referencia al objeto modificado y la posfija una copia del valor anterior."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear%3A%3Ayear": {
+    "body": [
+      "El constructor por defecto deja el valor sin inicializar. El explícito guarda y; si está fuera de [-32768, 32767], el valor es no especificado."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear_month_day": {
+    "body": [
+      "Se construye con el operador /: auto fecha = 2024y / std::chrono::February / 29d;. year(), month() y day() devuelven cada componente.",
+      "Se convierte a sys_days para hacer aritmética de días y volver: std::chrono::sys_days{fecha} + std::chrono::days{30}. Sumar meses o años con += no corrige días inexistentes: compruébalo con ok()."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear_month_day%3A%3Aday": {
+    "intro": ["Devuelve el día almacenado en este objeto year_month_day."],
+    "body": [
+      "Devuelve el valor tal cual, aunque la fecha completa no exista; compruébalo con ok()."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear_month_day%3A%3Amonth": {
+    "intro": ["Devuelve el mes almacenado en este objeto year_month_day."]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear_month_day%3A%3Ayear": {
+    "intro": ["Devuelve el año almacenado en este objeto year_month_day."]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear_month_day_last": {
+    "body": [
+      "Se escribe con std::chrono::last: 2024y / std::chrono::February / std::chrono::last representa el 29 de febrero de 2024.",
+      "day() calcula qué número de día es el último del mes, teniendo en cuenta los años bisiestos. Se convierte a year_month_day o a sys_days para usarlo como fecha."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear_month_day_last%3A%3Aday": {
+    "intro": ["Devuelve el último día del mes y año almacenados."],
+    "body": [
+      "Calcula el valor según el mes y si el año es bisiesto: por ejemplo, 28 o 29 para febrero."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear_month_day_last%3A%3Amonth": {
+    "intro": ["Devuelve el mes almacenado en este objeto year_month_day_last."]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear_month_day_last%3A%3Amonth_day_last": {
+    "intro": ["Devuelve el mes almacenado como un objeto month_day_last."],
+    "body": [
+      "Es la parte de la fecha que no depende del año: el último día de ese mes."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Ayear_month_day_last%3A%3Ayear": {
+    "intro": ["Devuelve el año almacenado en este objeto year_month_day_last."]
+  },
+  "web-cpp20-std%3A%3Acommon_iterator": {
+    "body": [
+      "Los rangos de C++20 pueden terminar en un centinela de un tipo distinto al del iterador. common_iterator guarda uno u otro, así que el principio y el final tienen el mismo tipo.",
+      "Así se pueden pasar esos rangos a algoritmos y constructores anteriores a C++20, que exigen iteradores del mismo tipo. views::common lo aplica automáticamente."
+    ]
+  },
+  "web-cpp20-std%3A%3Acommon_iterator%3A%3Aiter_swap": {
+    "body": [
+      "Ambos objetos deben guardar iteradores, no centinelas. Lo encuentra la búsqueda dependiente de argumentos y lo usa std::ranges::iter_swap."
+    ]
+  },
+  "web-cpp20-std%3A%3Acommon_iterator%3A%3Aoperator%3D%3D": {
+    "body": [
+      "Si uno guarda un iterador y el otro un centinela, se compara el iterador con el centinela. La segunda sobrecarga compara además dos iteradores entre sí."
+    ]
+  },
+  "web-cpp20-std%3A%3Acommon_iterator%3A%3Aoperator*": {
+    "body": [
+      "El objeto debe guardar un iterador, no un centinela; desreferenciar el final es comportamiento indefinido."
+    ]
+  },
+  "web-cpp20-std%3A%3Acommon_iterator%3A%3Aoperator-": {
+    "body": ["Si ambos guardan centinelas, el resultado es 0."]
+  },
+  "web-cpp20-std%3A%3Acommon_iterator%3A%3Aoperator-%3E": {
+    "body": ["El objeto debe guardar un iterador, no un centinela."]
+  },
+  "web-cpp20-std%3A%3Acomplex": {
+    "body": [
+      "Solo está especificado para float, double y long double. real() e imag() dan las partes, y las funciones libres std::abs(), std::arg(), std::conj(), std::polar(), std::exp() o std::sqrt() trabajan con números complejos.",
+      "Desde C++14 hay literales como 2.0i para la unidad imaginaria, en std::complex_literals."
+    ]
+  },
+  "web-cpp20-std%3A%3Acomplex%3A%3Aoperator%2B%3D": {
+    "intro": [
+      "Suma al número complejo el valor indicado, real o complejo según la sobrecarga."
+    ],
+    "body": ["Con un valor real solo cambia la parte real."],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Acomplex%3A%3Aoperator%2F%3D": {
+    "intro": [
+      "Divide el número complejo por el valor indicado, real o complejo según la sobrecarga."
+    ],
+    "body": ["Con un valor real se dividen ambas partes."],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Acomplex%3A%3Aoperator*%3D": {
+    "intro": [
+      "Multiplica el número complejo por el valor indicado, real o complejo según la sobrecarga."
+    ],
+    "body": [
+      "Con un valor real se multiplican ambas partes; con otro complejo se aplica (a+bi)(c+di) = (ac-bd) + (ad+bc)i."
+    ],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Acomplex%3A%3Aoperator-%3D": {
+    "intro": [
+      "Resta al número complejo el valor indicado, real o complejo según la sobrecarga."
+    ],
+    "body": ["Con un valor real solo cambia la parte real."],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Acondition_variable": {
+    "body": [
+      "El hilo que espera bloquea un std::unique_lock<std::mutex> y llama a wait(bloqueo, predicado); wait libera el mutex mientras espera y lo vuelve a bloquear al despertar.",
+      "El hilo que avisa modifica el estado compartido bajo el mismo mutex y llama a notify_one() o notify_all(). Usa siempre un predicado: puede haber despertares espurios."
+    ]
+  },
+  "web-cpp20-std%3A%3Acondition_variable%3A%3Acondition_variable": {
+    "body": [
+      "No se puede copiar ni mover. Si el sistema no puede crearla, lanza std::system_error."
+    ]
+  },
+  "web-cpp20-std%3A%3Acondition_variable%3A%3Aoperator%3D": {
+    "body": [
+      "Las variables de condición no se pueden asignar porque los hilos en espera dependen de su identidad."
+    ]
+  },
+  "web-cpp20-std%3A%3Acounted_iterator": {
+    "body": [
+      "Recorre como mucho n elementos a partir de un iterador. Se compara con std::default_sentinel para saber cuándo la cuenta llega a cero.",
+      "Lo usan std::views::counted y std::views::take. count() devuelve los elementos que quedan."
+    ]
+  },
+  "web-cpp20-std%3A%3Acounted_iterator%3A%3Abase": {
+    "intro": ["Devuelve el iterador subyacente."],
+    "body": [
+      "La sobrecarga para valores temporales mueve el iterador en lugar de copiarlo, lo que permite usarla con iteradores que solo se pueden mover."
+    ]
+  },
+  "web-cpp20-std%3A%3Acounted_iterator%3A%3Acount": {
+    "intro": [
+      "Devuelve cuántos elementos quedan hasta el final del recorrido."
+    ],
+    "body": ["Cuando vale 0, el iterador es igual a std::default_sentinel."],
+    "returns": ["El número de elementos restantes."]
+  },
+  "web-cpp20-std%3A%3Acounted_iterator%3A%3Aiter_swap": {
+    "body": [
+      "Lo encuentra la búsqueda dependiente de argumentos y lo usa std::ranges::iter_swap."
+    ]
+  },
+  "web-cpp20-std%3A%3Acounted_iterator%3A%3Aoperator-": {
+    "body": [
+      "La distancia entre dos counted_iterator se calcula con sus cuentas: y.count() - x.count(). Ambos deben referirse a la misma secuencia."
+    ]
+  },
+  "web-cpp20-std%3A%3Acounted_iterator%3A%3Aoperator-%3D": {
+    "body": ["La cuenta restante aumenta en n."],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Acounted_iterator%3A%3Aoperator--": {
+    "body": [
+      "La versión prefija devuelve una referencia al iterador modificado y la posfija una copia del valor anterior."
+    ]
   }
 }
