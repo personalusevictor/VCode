@@ -1852,5 +1852,223 @@
       "Funciona como synchronized_pool_resource, pero sin sincronización interna, así que es más rápido cuando un solo hilo lo usa.",
       "options(), que se configura en el constructor, fija el número máximo de bloques por grupo y el mayor tamaño que se gestiona con grupos."
     ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Aunsynchronized_pool_resource%3A%3Aoperator%3D": {
+    "body": [
+      "Un recurso no se puede asignar porque los objetos que lo usan dependen de su memoria."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Aunsynchronized_pool_resource%3A%3Aupstream_resource": {
+    "body": [
+      "Si no se indicó ninguno, es std::pmr::get_default_resource() en el momento de la construcción."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Aunsynchronized_pool_resource%3A%3A~unsynchronized_pool_resource": {
+    "intro": ["Destruye un unsynchronized_pool_resource."],
+    "body": [
+      "Llama a release(), que devuelve al recurso de origen toda la memoria de los grupos."
+    ]
+  },
+  "web-cpp20-std%3A%3Apriority_queue": {
+    "body": [
+      "push() añade un elemento, top() consulta el de mayor prioridad y pop() lo quita; push() y pop() cuestan O(log n). Internamente mantiene un montículo sobre un std::vector.",
+      "Por defecto top() es el mayor elemento. Para obtener primero el menor, usa std::greater<T> como comparador: std::priority_queue<int, std::vector<int>, std::greater<int>>."
+    ],
+    "caveats": [
+      "No se puede recorrer ni modificar la prioridad de un elemento ya insertado."
+    ]
+  },
+  "web-cpp20-std%3A%3Apriority_queue%3A%3Aempty": {
+    "intro": [
+      "Comprueba si el contenedor interno no tiene elementos. Equivale a return c.empty();."
+    ],
+    "body": [
+      "Compruébalo antes de llamar a top() o pop(), que tienen comportamiento indefinido con la cola vacía."
+    ]
+  },
+  "web-cpp20-std%3A%3Apriority_queue%3A%3Apop": {
+    "intro": [
+      "Elimina el elemento de mayor prioridad. Equivale a std::pop_heap(c.begin(), c.end(), comp); c.pop_back();."
+    ],
+    "body": [
+      "No devuelve el elemento: léelo antes con top(). La cola no debe estar vacía."
+    ]
+  },
+  "web-cpp20-std%3A%3Apriority_queue%3A%3Apush": {
+    "intro": ["Añade el elemento indicado a la cola de prioridad."],
+    "body": [
+      "Equivale a c.push_back(x); std::push_heap(c.begin(), c.end(), comp);. Para construir el elemento directamente en la cola, usa emplace()."
+    ]
+  },
+  "web-cpp20-std%3A%3Apriority_queue%3A%3Asize": {
+    "intro": [
+      "Devuelve el número de elementos del adaptador. Equivale a return c.size();."
+    ]
+  },
+  "web-cpp20-std%3A%3Apriority_queue%3A%3Aswap": {
+    "body": [
+      "Equivale a usar swap sobre los contenedores y sobre los comparadores."
+    ]
+  },
+  "web-cpp20-std%3A%3Apromise": {
+    "body": [
+      "get_future() da el std::future asociado. Un hilo llama a set_value() para entregar el resultado, o a set_exception() para entregar un error, y el hilo que espera lo recibe con future::get().",
+      "Cada promise solo puede entregar un valor: llamar dos veces a set_value() lanza std::future_error. Solo se puede mover."
+    ]
+  },
+  "web-cpp20-std%3A%3Apromise%3A%3Aswap": {
+    "body": ["Intercambia los estados compartidos sin lanzar excepciones."]
+  },
+  "web-cpp20-std%3A%3Apromise%3A%3A~promise": {
+    "intro": ["Abandona el estado compartido."],
+    "body": [
+      "Si todavía no se había entregado un valor ni una excepción, guarda en el estado compartido un std::future_error con el código broken_promise, que recibirá quien llame a future::get().",
+      "Después libera su referencia al estado compartido."
+    ]
+  },
+  "web-cpp20-std%3A%3Aqueue": {
+    "body": [
+      "push() añade al final, front() consulta el primero y pop() lo quita. Por defecto usa std::deque como contenedor interno; también sirve std::list.",
+      "No se puede recorrer: solo expone los extremos. Si necesitas recorrer o acceder por índice, usa directamente std::deque."
+    ]
+  },
+  "web-cpp20-std%3A%3Aqueue%3A%3Aback": {
+    "intro": [
+      "Devuelve una referencia al último elemento de la cola, el añadido más recientemente. Equivale a c.back()."
+    ],
+    "body": ["La cola no debe estar vacía."]
+  },
+  "web-cpp20-std%3A%3Aqueue%3A%3Aempty": {
+    "intro": [
+      "Comprueba si el contenedor interno no tiene elementos. Equivale a return c.empty();."
+    ],
+    "body": ["Compruébalo antes de llamar a front(), back() o pop()."]
+  },
+  "web-cpp20-std%3A%3Aqueue%3A%3Apop": {
+    "intro": [
+      "Elimina el primer elemento de la cola. Equivale a c.pop_front()."
+    ],
+    "body": [
+      "No devuelve el elemento: léelo antes con front(). La cola no debe estar vacía."
+    ]
+  },
+  "web-cpp20-std%3A%3Aqueue%3A%3Apush": {
+    "intro": ["Añade el elemento indicado al final de la cola."],
+    "body": [
+      "Equivale a c.push_back(x). Para construir el elemento directamente en la cola, usa emplace()."
+    ]
+  },
+  "web-cpp20-std%3A%3Aqueue%3A%3Asize": {
+    "intro": [
+      "Devuelve el número de elementos del adaptador. Equivale a return c.size();."
+    ]
+  },
+  "web-cpp20-std%3A%3Aqueue%3A%3Aswap": {
+    "body": [
+      "Es útil para vaciar una cola en tiempo constante: std::queue<T>{}.swap(cola);."
+    ]
+  },
+  "web-cpp20-std%3A%3Arandom_device": {
+    "body": [
+      "Se usa sobre todo para sembrar un motor como std::mt19937: std::mt19937 motor{std::random_device{}()};. En la mayoría de plataformas obtiene datos de la fuente de entropía del sistema operativo.",
+      "La norma permite que, si no hay fuente no determinista, sea un generador seudoaleatorio; entropy() devuelve una estimación, aunque algunas implementaciones devuelven 0 siempre."
+    ]
+  },
+  "web-cpp20-std%3A%3Arandom_device%3A%3Amax": {
+    "intro": ["Devuelve el mayor valor que puede generar."]
+  },
+  "web-cpp20-std%3A%3Arandom_device%3A%3Amin": {
+    "intro": ["Devuelve el menor valor que puede generar."],
+    "returns": ["std::numeric_limits<unsigned int>::min(), es decir, 0."]
+  },
+  "web-cpp20-std%3A%3Arandom_device%3A%3Aoperator%28%29": {
+    "body": [
+      "Si no puede obtener un valor, lanza una excepción derivada de std::exception. Puede ser lento, así que se usa para semillas y no para generar muchos números."
+    ]
+  },
+  "web-cpp20-std%3A%3Arandom_device%3A%3Arandom_device": {
+    "body": [
+      "Si no se puede inicializar la fuente, lanza una excepción derivada de std::exception. No se puede copiar."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Abasic_istream_view": {
+    "body": [
+      "Se crea normalmente con std::views::istream<T>(flujo): for (int n : std::views::istream<int>(std::cin)) { ... } lee enteros hasta el final o un error.",
+      "Como cada avance consume datos del flujo, solo se puede recorrer una vez."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Abasic_istream_view%3A%3Abasic_istream_view": {
+    "body": [
+      "La vista guarda un puntero al flujo: el flujo debe seguir vivo mientras se use."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Abasic_istream_view%3A%3Abegin": {
+    "body": ["Como lee al llamarse, solo debe llamarse una vez por vista."]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Abasic_istream_view%3A%3Aend": {
+    "body": [
+      "Un iterador es igual al centinela cuando el flujo ha fallado, ya sea por el final de los datos o por un valor con formato incorrecto."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Acommon_view": {
+    "body": [
+      "Se obtiene normalmente con std::views::common. Si el rango ya tiene begin y end del mismo tipo, views::common lo devuelve sin envolverlo.",
+      "Sirve para pasar rangos de C++20 a funciones antiguas que reciben dos iteradores del mismo tipo, como el constructor de std::vector."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Acommon_view%3A%3Abase": {
+    "body": [
+      "La sobrecarga para valores temporales mueve la vista en lugar de copiarla."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Acommon_view%3A%3Abegin": {
+    "body": [
+      "Si el rango es de acceso aleatorio y tiene tamaño, devuelve el iterador original; si no, lo envuelve en std::common_iterator."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Acommon_view%3A%3Acommon_view": {
+    "intro": ["Construye un common_view."]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Acommon_view%3A%3Aend": {
+    "body": [
+      "Si hay que adaptarlo, el centinela original se envuelve en std::common_iterator, el mismo tipo que devuelve begin()."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Adrop_view": {
+    "body": [
+      "Se obtiene normalmente con std::views::drop(n): for (int x : v | std::views::drop(2)) recorre v desde el tercer elemento. Si el rango tiene menos de n elementos, la vista queda vacía.",
+      "En rangos de acceso aleatorio el salto es inmediato; en otros, begin() avanza n posiciones la primera vez y guarda el resultado."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Adrop_view%3A%3Abase": {
+    "body": [
+      "La sobrecarga para valores temporales mueve la vista en lugar de copiarla."
+    ],
+    "returns": ["Una copia de la vista subyacente."]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Adrop_while_view": {
+    "body": [
+      "Se obtiene normalmente con std::views::drop_while(pred). Por ejemplo, texto | std::views::drop_while([](char c) { return c == ' '; }) omite los espacios iniciales.",
+      "Solo descarta el prefijo: los elementos que cumplan el predicado después del primero que no lo cumple se mantienen. begin() calcula el inicio la primera vez y lo guarda."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Adrop_while_view%3A%3Abase": {
+    "body": [
+      "La sobrecarga para valores temporales mueve la vista en lugar de copiarla."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aempty_view": {
+    "body": [
+      "Se obtiene con std::views::empty<T>. size() siempre es 0 y empty() siempre es true; todos sus miembros son estáticos y constexpr.",
+      "Es útil como valor neutro, por ejemplo cuando una función debe devolver un rango pero no hay elementos."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aempty_view%3A%3Abegin": {
+    "body": [
+      "Como end() también devuelve nullptr, begin() == end() siempre es true."
+    ]
+  },
+  "web-cpp20-std%3A%3Aranges%3A%3Aempty_view%3A%3Adata": {
+    "body": ["Permite que empty_view cumpla el concepto contiguous_range."]
   }
 }
