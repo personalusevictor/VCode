@@ -1875,6 +1875,226 @@
       "Reflector::export() se eliminó en PHP 8.0. Desde entonces la interfaz solo exige que el objeto se pueda convertir en cadena, a través de Stringable."
     ]
   },
+  "php-class-regexiterator": {
+    "description": [
+      "El modo, fijado con setMode(), decide qué devuelve: RegexIterator::MATCH conserva los elementos que coinciden, y GET_MATCH, ALL_MATCHES, SPLIT o REPLACE devuelven el resultado de la función preg_* equivalente.",
+      "Con la constante RegexIterator::USE_KEY el patrón se aplica a las claves en lugar de a los valores."
+    ]
+  },
+  "php-class-requestparsebodyexception": {
+    "description": [
+      "Existe desde PHP 8.4, igual que request_parse_body(), que analiza cuerpos multipart/form-data o application/x-www-form-urlencoded en peticiones distintas de POST, como PUT o PATCH.",
+      "Hereda de Exception."
+    ]
+  },
+  "php-class-rnpffi": {
+    "summary": "Instancia de la biblioteca RNP de OpenPGP.",
+    "description": [
+      "Se crea con rnp_ffi_create(), que recibe los formatos de los anillos de claves públicas y secretas, y se pasa al resto de funciones rnp_* para cargar claves, cifrar, descifrar o firmar.",
+      "Pertenece a la extensión PECL rnp."
+    ]
+  },
+  "php-class-rrdcreator": {
+    "description": [
+      "El constructor recibe la ruta del archivo, el instante inicial y el intervalo entre muestras. addDataSource() define cada fuente de datos y addArchive() cada archivo de consolidación, con la misma sintaxis que rrdtool create.",
+      "save() crea el archivo. Pertenece a la extensión PECL rrd, basada en RRDtool."
+    ]
+  },
+  "php-class-rrdgraph": {
+    "description": [
+      "El constructor recibe la ruta de la imagen. setOptions() recibe las mismas opciones que rrdtool graph, como las definiciones DEF y LINE, y save() genera la imagen.",
+      "saveVerbose() devuelve además información sobre el gráfico generado."
+    ]
+  },
+  "php-class-rrdupdater": {
+    "description": [
+      "El constructor recibe la ruta del archivo RRD. update() recibe un array con el valor de cada fuente de datos y, opcionalmente, el instante de la muestra."
+    ]
+  },
+  "php-class-runtimeexception": {
+    "description": [
+      "Es la clase padre de OutOfBoundsException, OverflowException, RangeException, UnderflowException y UnexpectedValueException. También heredan de ella excepciones de extensiones como PDOException o mysqli_sql_exception.",
+      "Para errores que se deberían corregir en el código, usa LogicException."
+    ]
+  },
+  "php-class-seaslog": {
+    "summary": "Registro de logs de alto rendimiento implementado en C.",
+    "description": [
+      "Sus métodos estáticos escriben mensajes con el nivel correspondiente, como SeasLog::info() o SeasLog::error(). setBasePath() fija el directorio de los logs y setLogger() el módulo, que se usa como subdirectorio.",
+      "analyzerCount() y analyzerDetail() permiten contar y consultar los mensajes guardados. Pertenece a la extensión PECL seaslog."
+    ]
+  },
+  "php-class-seekableiterator": {
+    "summary": "Iterador que permite saltar a una posición concreta.",
+    "description": [
+      "seek() mueve el iterador a la posición indicada y debe lanzar OutOfBoundsException si no existe. La implementan ArrayIterator, DirectoryIterator y SplFileObject, entre otras."
+    ]
+  },
+  "php-class-sensitiveparametervalue": {
+    "description": [
+      "Los valores de los parámetros con el atributo SensitiveParameter serán automáticamente envueltos en un objeto SensitiveParameterValue en las trazas de pila.",
+      "getValue() devuelve el valor original, pero var_dump() y print_r() no lo muestran. Existe desde PHP 8.2."
+    ]
+  },
+  "php-class-sessionhandlerinterface": {
+    "description": [
+      "Observe que los métodos de llamada de retorno de esta clase están diseñados para ser llamados internamente por PHP y no para ser llamados desde código de espacio de usuario.",
+      "read() debe devolver los datos de la sesión como cadena, o una cadena vacía si no existen; write() los guarda, destroy() elimina una sesión y gc() borra las caducadas. Registra el gestor con session_set_save_handler($gestor, true) antes de session_start()."
+    ]
+  },
+  "php-class-sessionidinterface": {
+    "description": [
+      "Se debe tener en cuenta que estos métodos están destinados a ser llamados de manera interna por PHP, y no desde el espacio de usuario.",
+      "create_sid() debe devolver un identificador de sesión nuevo. Impleméntalo si quieres controlar el formato de los identificadores."
+    ]
+  },
+  "php-class-sessionupdatetimestamphandlerinterface": {
+    "description": [
+      "Se debe tener en cuenta que estos métodos están destinados a ser llamados de manera interna por PHP, y no desde el espacio de usuario.",
+      "validateId() comprueba si existe una sesión con ese identificador, y updateTimestamp() renueva su caducidad cuando los datos no han cambiado y session.lazy_write evita reescribirlos. Con session.use_strict_mode, validateId() impide aceptar identificadores inventados."
+    ]
+  },
+  "php-class-shmop": {
+    "description": [
+      "Representa un bloque de memoria compartida. Lo devuelve shmop_open() y lo reciben shmop_read(), shmop_write(), shmop_size() y shmop_delete(). Es final y no se crea con new."
+    ]
+  },
+  "php-class-simdjsonexception": {
+    "description": [
+      "Hereda de RuntimeException. Se produce, por ejemplo, cuando el JSON no es válido. Pertenece a la extensión PECL simdjson, que decodifica JSON muy rápido usando instrucciones SIMD."
+    ]
+  },
+  "php-class-simdjsonvalueerror": {
+    "description": ["Hereda de ValueError."]
+  },
+  "php-class-simplexmlelement": {
+    "description": [
+      "Se obtiene con simplexml_load_string() o simplexml_load_file(). Los hijos se leen como propiedades ($xml->libro), los atributos como índices ($libro['id']) y el texto convirtiendo el elemento en cadena.",
+      "xpath() busca nodos con una expresión XPath, addChild() y addAttribute() modifican el documento y asXML() lo serializa. Para operaciones más complejas, dom_import_simplexml() lo convierte en DOM."
+    ]
+  },
+  "php-class-simplexmliterator": {
+    "description": [
+      "Se envuelve en un RecursiveIteratorIterator para recorrer todos los elementos del documento, a cualquier profundidad, con un solo foreach.",
+      "Para obtenerlo directamente, pasa 'SimpleXMLIterator' como nombre de clase a simplexml_load_string()."
+    ]
+  },
+  "php-class-snmp": {
+    "description": [
+      "El constructor recibe la versión del protocolo, el host y la comunidad. get() lee uno o varios OID, walk() recorre un subárbol y set() modifica valores; setSecurity() configura la autenticación de SNMPv3.",
+      "La propiedad exceptions_enabled decide qué errores se lanzan como SNMPException en lugar de devolver false."
+    ]
+  },
+  "php-class-snmpexception": {
+    "description": [
+      "Solo se lanza para los tipos de error activados en la propiedad exceptions_enabled de SNMP. getCode() indica el tipo de error. Hereda de RuntimeException."
+    ]
+  },
+  "php-class-soapclient": {
+    "description": [
+      "En modo WSDL, el constructor recibe la URL del WSDL y las operaciones del servicio se llaman como métodos del objeto. Sin WSDL hay que indicar location y uri en las opciones.",
+      "Con la opción 'trace' => true, __getLastRequest() y __getLastResponse() devuelven el XML enviado y recibido, lo que ayuda a depurar. Los errores del servidor llegan como SoapFault."
+    ]
+  },
+  "php-class-soapfault": {
+    "description": [
+      "Las propiedades faultcode, faultstring y detail describen el error SOAP. SoapClient la lanza cuando el servidor devuelve un fallo y, en un servidor, lanzarla envía ese fallo al cliente.",
+      "Hereda de Exception."
+    ]
+  },
+  "php-class-soapheader": {
+    "description": [
+      "El constructor recibe el espacio de nombres, el nombre y los datos de la cabecera, y si el servidor debe entenderla obligatoriamente. Se envía con SoapClient::__setSoapHeaders() o como argumento de __soapCall()."
+    ]
+  },
+  "php-class-soapparam": {
+    "description": [
+      "El constructor recibe el valor y el nombre del parámetro. Se usa sobre todo sin WSDL, cuando hay que indicar el nombre con el que se envía cada argumento."
+    ]
+  },
+  "php-class-soapserver": {
+    "description": [
+      "setClass() o setObject() exponen los métodos de una clase u objeto como operaciones, y addFunction() expone funciones sueltas. handle() procesa la petición SOAP recibida y envía la respuesta.",
+      "Con un WSDL, los tipos de los mensajes se validan y convierten según su definición."
+    ]
+  },
+  "php-class-soapvar": {
+    "description": [
+      "El constructor recibe el valor, la codificación (una constante como XSD_STRING o SOAP_ENC_OBJECT) y, opcionalmente, el nombre y el espacio de nombres del tipo. Sirve para controlar exactamente cómo se serializa un valor."
+    ]
+  },
+  "php-class-sodiumexception": {
+    "description": [
+      "Se produce sobre todo con argumentos no válidos, como una clave o un nonce de longitud incorrecta. Los fallos de verificación, como un mensaje manipulado, se indican devolviendo false.",
+      "Hereda de Exception."
+    ]
+  },
+  "php-class-solrclient": {
+    "description": [
+      "El constructor recibe un array con opciones como hostname, port y path. addDocument() envía un SolrInputDocument, commit() confirma los cambios y query() ejecuta un SolrQuery y devuelve un SolrQueryResponse.",
+      "deleteById() y deleteByQuery() eliminan documentos. Pertenece a la extensión PECL solr."
+    ]
+  },
+  "php-class-solrclientexception": {
+    "description": [
+      "Se produce, por ejemplo, si no se puede conectar con el servidor. Hereda de SolrException; getInternalInfo() da la ubicación del error dentro de la extensión."
+    ]
+  },
+  "php-class-solrcollapsefunction": {
+    "summary": "Configura el plegado de resultados de Solr por un campo.",
+    "description": [
+      "Agrupa los documentos que comparten el valor de un campo y conserva uno por grupo. setField() elige el campo, setMin() o setMax() el criterio para elegir el representante y setNullPolicy() qué hacer con los documentos sin valor.",
+      "Se añade a una consulta con SolrQuery::collapse()."
+    ]
+  },
+  "php-class-solrdismaxquery": {
+    "summary": "Consulta de Solr que usa el analizador DisMax o eDisMax.",
+    "description": [
+      "Hereda de SolrQuery. addQueryField() indica en qué campos buscar y con qué peso, addPhraseField() da más relevancia a las frases y setMinimumMatch() fija cuántos términos deben coincidir.",
+      "useDisMaxQueryParser() y useEDisMaxQueryParser() eligen el analizador."
+    ]
+  },
+  "php-class-solrdocument": {
+    "description": [
+      "Sus campos se leen como propiedades o con corchetes, y se recorre con foreach. getFieldNames() enumera los campos y getChildDocuments() los documentos anidados.",
+      "getInputDocument() lo convierte en SolrInputDocument para modificarlo y volver a indexarlo."
+    ]
+  },
+  "php-class-solrdocumentfield": {
+    "description": [
+      "Sus propiedades name, boost y values dan el nombre, el peso y los valores del campo."
+    ]
+  },
+  "php-class-solrexception": {
+    "description": [
+      "Hereda de Exception. Captúrala para tratar cualquier error de la extensión; getInternalInfo() da el archivo y la línea de la extensión donde se produjo."
+    ]
+  },
+  "php-class-solrgenericresponse": {
+    "description": [
+      "Hereda de SolrResponse. getResponse() devuelve los datos de la respuesta y getHttpStatus() el código HTTP."
+    ]
+  },
+  "php-class-solrillegalargumentexception": {
+    "description": [
+      "Hereda de SolrException; getInternalInfo() da la ubicación del error dentro de la extensión."
+    ]
+  },
+  "php-class-solrillegaloperationexception": {
+    "description": [
+      "Hereda de SolrException; getInternalInfo() da la ubicación del error dentro de la extensión."
+    ]
+  },
+  "php-class-solrinputdocument": {
+    "description": [
+      "addField() añade valores a un campo (puede llamarse varias veces para campos multivalor) y setBoost() o setFieldBoost() ajustan la relevancia. addChildDocument() permite indexar documentos anidados.",
+      "Se envía con SolrClient::addDocument() y no aparece en las búsquedas hasta llamar a commit()."
+    ]
+  },
+  "php-class-solrmissingmandatoryparameterexception": {
+    "summary": "Excepción que se lanza cuando falta un parámetro obligatorio.",
+    "description": ["Hereda de SolrException."]
+  },
   "php-function-fann_set_activation_function": {
     "description": [
       "Establece la función de activación para la neurona número neuron en la capa número layer, contando al capa de entrada como capa 0.",
