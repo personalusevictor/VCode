@@ -1625,5 +1625,232 @@
     "body": [
       "Si hay varias entradas con esa clave, puede devolver cualquiera de ellas. Para obtenerlas todas, usa equal_range()."
     ]
+  },
+  "web-cpp20-std%3A%3Amultimap%3A%3Aget_allocator": {
+    "intro": ["Devuelve el asignador asociado al contenedor."],
+    "body": [
+      "Es útil con asignadores con estado o polimórficos, como los de std::pmr."
+    ]
+  },
+  "web-cpp20-std%3A%3Amultimap%3A%3Asize": {
+    "intro": [
+      "Devuelve el número de elementos del contenedor, es decir, std::distance(begin(), end())."
+    ],
+    "body": [
+      "Cuenta todas las entradas, también las que repiten clave. Para contar las de una clave, usa count(clave)."
+    ]
+  },
+  "web-cpp20-std%3A%3Amultiset": {
+    "body": [
+      "Mantiene los valores ordenados según el comparador y admite repetidos. insert() siempre añade, y erase(valor) elimina todos los iguales; para quitar solo uno, borra por iterador.",
+      "count() dice cuántas veces aparece un valor y equal_range() devuelve el rango de todos ellos. Buscar, insertar y borrar cuestan O(log n)."
+    ]
+  },
+  "web-cpp20-std%3A%3Amultiset%3A%3Aempty": {
+    "intro": [
+      "Comprueba si el contenedor no tiene elementos, es decir, si begin() == end()."
+    ],
+    "body": ["Para vaciar el contenedor se usa clear(), no empty()."]
+  },
+  "web-cpp20-std%3A%3Amultiset%3A%3Afind": {
+    "body": [
+      "Si hay varios valores equivalentes, puede devolver cualquiera de ellos. Para obtenerlos todos, usa equal_range()."
+    ]
+  },
+  "web-cpp20-std%3A%3Amultiset%3A%3Aget_allocator": {
+    "intro": ["Devuelve el asignador asociado al contenedor."],
+    "body": [
+      "Es útil con asignadores con estado o polimórficos, como los de std::pmr."
+    ]
+  },
+  "web-cpp20-std%3A%3Amultiset%3A%3Asize": {
+    "intro": [
+      "Devuelve el número de elementos del contenedor, es decir, std::distance(begin(), end())."
+    ],
+    "body": ["Cuenta también los valores repetidos."]
+  },
+  "web-cpp20-std%3A%3Amultiset%3A%3Avalue_comp": {
+    "body": [
+      "En los conjuntos el valor es la propia clave, así que value_comp() y key_comp() devuelven el mismo comparador."
+    ]
+  },
+  "web-cpp20-std%3A%3Amutex": {
+    "body": [
+      "lock() bloquea esperando si otro hilo lo tiene, try_lock() lo intenta sin esperar y unlock() lo libera. En la práctica se usa con std::lock_guard, std::unique_lock o std::scoped_lock, que lo desbloquean automáticamente.",
+      "No es recursivo: si el mismo hilo vuelve a bloquearlo sin liberarlo, el comportamiento es indefinido. Para eso existe std::recursive_mutex."
+    ]
+  },
+  "web-cpp20-std%3A%3Amutex%3A%3Amutex": {
+    "body": [
+      "El constructor es constexpr, así que un mutex global se inicializa antes de que empiece el programa. No se puede copiar ni mover."
+    ]
+  },
+  "web-cpp20-std%3A%3Amutex%3A%3Aoperator%3D": {
+    "body": [
+      "Un mutex no se puede asignar porque los hilos que lo usan dependen de su identidad."
+    ]
+  },
+  "web-cpp20-std%3A%3Anumeric_limits": {
+    "body": [
+      "Se especializa para cada tipo aritmético: std::numeric_limits<int>::max() da el mayor int y std::numeric_limits<double>::epsilon() la diferencia entre 1.0 y el siguiente double.",
+      "Todos sus miembros son constexpr, así que se pueden usar en expresiones constantes. is_specialized indica si el tipo tiene una especialización con información útil."
+    ]
+  },
+  "web-cpp20-std%3A%3Anumeric_limits%3A%3Amax": {
+    "intro": [
+      "Devuelve el mayor valor finito representable por el tipo numérico T."
+    ],
+    "body": [
+      "Para los tipos de coma flotante no es el infinito: ese valor lo da infinity()."
+    ]
+  },
+  "web-cpp20-std%3A%3Anumeric_limits%3A%3Amin": {
+    "body": [
+      "Para los enteros es el valor más negativo, pero para los tipos de coma flotante es el menor valor positivo normalizado, como 2.2e-308 para double.",
+      "Para obtener el valor más negativo de un tipo de coma flotante, usa lowest()."
+    ]
+  },
+  "web-cpp20-std%3A%3Aoptional%3A%3Ahas_value": {
+    "body": [
+      "Equivale a la conversión explícita a bool. Compruébalo antes de usar operator* u operator->, que no hacen ninguna comprobación."
+    ]
+  },
+  "web-cpp20-std%3A%3Aoptional%3A%3Aoperator%20bool": {
+    "intro": ["Comprueba si *this contiene un valor."],
+    "body": [
+      "Es explícita, así que funciona en if (opcional) pero no convierte el optional a bool en otros contextos. En optional<bool>, comprueba si hay valor, no si el valor es true."
+    ]
+  },
+  "web-cpp20-std%3A%3Aostream_iterator": {
+    "body": [
+      "Cada asignación escribe el valor con operator<< y, si se indicó, el delimitador detrás: std::copy(v.begin(), v.end(), std::ostream_iterator<int>(std::cout, \", \"));.",
+      "El delimitador se escribe también tras el último elemento. Para escribir caracteres sin formato, usa std::ostreambuf_iterator."
+    ]
+  },
+  "web-cpp20-std%3A%3Aostream_iterator%3A%3A~ostream_iterator": {
+    "intro": ["Destruye el iterador. No afecta al flujo de salida asociado."]
+  },
+  "web-cpp20-std%3A%3Apackaged_task": {
+    "body": [
+      "Envuelve una función: get_future() da el std::future del resultado y llamar a la tarea ejecuta la función y guarda el resultado o la excepción. Se puede pasar a un std::thread para ejecutarla en otro hilo.",
+      "A diferencia de std::async, decides tú cuándo y dónde se ejecuta. Solo se puede mover."
+    ]
+  },
+  "web-cpp20-std%3A%3Apackaged_task%3A%3Aoperator%28%29": {
+    "body": [
+      "Solo se puede llamar una vez por estado compartido; llamarla de nuevo lanza std::future_error. reset() prepara un estado nuevo para volver a ejecutarla."
+    ]
+  },
+  "web-cpp20-std%3A%3Apackaged_task%3A%3Aoperator%3D": {
+    "body": [
+      "La asignación por copia está eliminada: una tarea y su future se pueden mover, pero no duplicar."
+    ]
+  },
+  "web-cpp20-std%3A%3Apackaged_task%3A%3Aswap": {
+    "intro": [
+      "Intercambia los estados compartidos y las tareas almacenadas de *this y other."
+    ]
+  },
+  "web-cpp20-std%3A%3Apackaged_task%3A%3Avalid": {
+    "body": [
+      "Una tarea construida por defecto o de la que se ha movido el contenido no tiene estado compartido; llamarla o pedir su future lanza std::future_error."
+    ]
+  },
+  "web-cpp20-std%3A%3Apair": {
+    "body": [
+      "Los valores se acceden con los miembros first y second. std::make_pair() o la deducción de C++17 (std::pair p{1, \"uno\"};) lo crean sin escribir los tipos.",
+      "Los elementos de std::map son pair<const Key, T>. Con los enlaces estructurados de C++17 se puede escribir auto [clave, valor] = par;. Se compara de forma lexicográfica: primero first y luego second."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Amemory_resource": {
+    "body": [
+      "allocate() y deallocate() llaman a las funciones virtuales privadas do_allocate() y do_deallocate(), que implementan las clases derivadas. is_equal() decide si dos recursos pueden liberar la memoria del otro.",
+      "Los contenedores de std::pmr, como std::pmr::vector, reciben un puntero a un memory_resource y lo usan para toda su memoria."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Amemory_resource%3A%3Amemory_resource": {
+    "body": [
+      "memory_resource es abstracta: no se instancia directamente, sino a través de recursos como monotonic_buffer_resource o una clase propia."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Amemory_resource%3A%3Aoperator%3D": {
+    "body": [
+      "La base no tiene estado, así que la asignación no tiene efecto visible."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Amemory_resource%3A%3A~memory_resource": {
+    "body": [
+      "Es virtual para que un recurso concreto se pueda destruir a través de un puntero a memory_resource."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Amonotonic_buffer_resource": {
+    "body": [
+      "Reserva avanzando un puntero dentro de un búfer, así que es muy rápido; deallocate() no hace nada y la memoria solo se recupera de golpe. Cuando se agota el búfer, pide más al recurso de origen.",
+      "Es ideal para estructuras temporales que se crean y destruyen juntas: char buffer[1024]; std::pmr::monotonic_buffer_resource pool{buffer, sizeof buffer}; std::pmr::vector<int> v{&pool};."
+    ],
+    "caveats": ["No es seguro entre hilos."]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Amonotonic_buffer_resource%3A%3Aoperator%3D": {
+    "body": [
+      "Un recurso no se puede asignar porque los objetos que lo usan dependen de su memoria."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Amonotonic_buffer_resource%3A%3Aupstream_resource": {
+    "body": [
+      "Si no se indicó ninguno, es std::pmr::get_default_resource() en el momento de la construcción."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Amonotonic_buffer_resource%3A%3A~monotonic_buffer_resource": {
+    "intro": ["Destruye un monotonic_buffer_resource."],
+    "body": [
+      "Llama a release(), que devuelve al recurso de origen toda la memoria que se le había pedido."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Apolymorphic_allocator": {
+    "body": [
+      "Todos los polymorphic_allocator tienen el mismo tipo aunque usen recursos distintos, así que std::pmr::vector<int> sirve con cualquier estrategia de memoria elegida en ejecución.",
+      "Si no se indica recurso, usa std::pmr::get_default_resource(). allocate_object() y new_object() simplifican reservar y construir objetos."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Apolymorphic_allocator%3A%3Aoperator%3D": {
+    "body": [
+      "No se puede asignar: el recurso se fija al construir y no cambia durante la vida del asignador."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Apolymorphic_allocator%3A%3Aresource": {
+    "intro": [
+      "Devuelve el puntero al recurso de memoria que usa este polymorphic_allocator."
+    ],
+    "returns": [
+      "El puntero al recurso de memoria que usa este polymorphic_allocator."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Asynchronized_pool_resource": {
+    "body": [
+      "Mantiene grupos de bloques de distintos tamaños y reutiliza los liberados, lo que reduce la fragmentación. Las peticiones muy grandes se pasan directamente al recurso de origen.",
+      "Es seguro entre hilos. Si solo lo usa un hilo, unsynchronized_pool_resource es más rápido."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Asynchronized_pool_resource%3A%3Aoperator%3D": {
+    "body": [
+      "Un recurso no se puede asignar porque los objetos que lo usan dependen de su memoria."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Asynchronized_pool_resource%3A%3Aupstream_resource": {
+    "body": [
+      "Si no se indicó ninguno, es std::pmr::get_default_resource() en el momento de la construcción."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Asynchronized_pool_resource%3A%3A~synchronized_pool_resource": {
+    "intro": ["Destruye un synchronized_pool_resource."],
+    "body": [
+      "Llama a release(), que devuelve al recurso de origen toda la memoria de los grupos."
+    ]
+  },
+  "web-cpp20-std%3A%3Apmr%3A%3Aunsynchronized_pool_resource": {
+    "body": [
+      "Funciona como synchronized_pool_resource, pero sin sincronización interna, así que es más rápido cuando un solo hilo lo usa.",
+      "options(), que se configura en el constructor, fija el número máximo de bloques por grupo y el mayor tamaño que se gestiona con grupos."
+    ]
   }
 }
