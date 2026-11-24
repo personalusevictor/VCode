@@ -29857,12 +29857,445 @@
       "La implementación predeterminada llama a getAllModuleElements y guarda el resultado. Si el conjunto de módulos está vacío, llama a getPackageElement(name) con el argumento name. Si getPackageElement(name) es null, devuelve un conjunto vacío; si no, un conjunto de un elemento con el paquete encontrado. Si el conjunto de módulos no está vacío, los recorre y acumula en un conjunto los resultados no null de getPackageElement(module, name). Después devuelve ese conjunto."
     ]
   },
+  "web-java-se-javax.lang.model.util.Elements.getAllTypeElements": {
+    "body": [
+      "Puede haber más de un elemento de tipo con el mismo nombre canónico si están en módulos distintos."
+    ],
+    "parameters": [
+      {
+        "label": "name",
+        "detail": "el nombre canónico"
+      }
+    ],
+    "returns": [
+      "los elementos de tipo, o un conjunto vacío si no se encuentra ningún tipo con ese nombre"
+    ],
+    "caveats": [
+      "La implementación predeterminada llama a getAllModuleElements y guarda el resultado. Si el conjunto de módulos está vacío, llama a getTypeElement(name) con el argumento name. Si getTypeElement(name) es null, devuelve un conjunto vacío; si no, un conjunto de un elemento con el tipo encontrado. Si el conjunto de módulos no está vacío, los recorre y acumula en un conjunto los resultados no null de getTypeElement(module, name). Después devuelve ese conjunto."
+    ]
+  },
+  "web-java-se-javax.management.AttributeList.add": {
+    "overloads": [
+      {
+        "intro": [
+          "Añade el Attribute indicado como último elemento de la lista."
+        ],
+        "parameters": [
+          {
+            "label": "object",
+            "detail": "El atributo que se añade."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Inserta el atributo indicado como elemento en la posición indicada. Los elementos con índice mayor o igual que la posición actual se desplazan una posición. Si el índice está fuera de rango (index < 0 || index > size()), debe lanzarse una RuntimeOperationsException que envuelva la java.lang.IndexOutOfBoundsException lanzada."
+        ],
+        "parameters": [
+          {
+            "label": "object",
+            "detail": "El objeto Attribute que se inserta."
+          },
+          {
+            "label": "index",
+            "detail": "La posición de la lista en la que se inserta el nuevo Attribute."
+          }
+        ]
+      },
+      {
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si esta AttributeList es segura en tipos y element no es un Attribute."
+          }
+        ]
+      },
+      {
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si esta AttributeList es segura en tipos y element no es un Attribute."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.management.AttributeList.addAll": {
+    "overloads": [
+      {
+        "intro": [
+          "Añade al final de la lista todos los elementos de la AttributeList indicada, en el orden en que los devuelve su Iterator."
+        ],
+        "parameters": [
+          {
+            "label": "list",
+            "detail": "Los elementos que se insertan en la lista."
+          }
+        ],
+        "returns": [
+          "true si la lista ha cambiado como resultado de la llamada."
+        ]
+      },
+      {
+        "intro": [
+          "Inserta en esta lista todos los elementos de la AttributeList indicada, a partir de la posición indicada, en el orden en que los devuelve su Iterator. Si el índice está fuera de rango (index < 0 || index > size()), debe lanzarse una RuntimeOperationsException que envuelva la java.lang.IndexOutOfBoundsException lanzada."
+        ],
+        "parameters": [
+          {
+            "label": "list",
+            "detail": "Los elementos que se insertan en la lista."
+          },
+          {
+            "label": "index",
+            "detail": "La posición en la que se inserta el primer elemento de la AttributeList indicada."
+          }
+        ],
+        "returns": [
+          "true si la lista ha cambiado como resultado de la llamada."
+        ]
+      },
+      {
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si esta AttributeList es segura en tipos y c contiene un elemento que no es un Attribute."
+          }
+        ]
+      },
+      {
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si esta AttributeList es segura en tipos y c contiene un elemento que no es un Attribute."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.management.AttributeList.set": {
+    "intro": [],
+    "overloads": [
+      {
+        "intro": [
+          "Sustituye el elemento de la posición indicada por el atributo indicado. Se descarta el elemento anterior. Si el índice está fuera de rango (index < 0 || index > size()), debe lanzarse una RuntimeOperationsException que envuelva la java.lang.IndexOutOfBoundsException lanzada."
+        ],
+        "parameters": [
+          {
+            "label": "object",
+            "detail": "El valor al que se fija el elemento atributo."
+          },
+          {
+            "label": "index",
+            "detail": "La posición indicada."
+          }
+        ]
+      },
+      {
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si esta AttributeList es segura en tipos y element no es un Attribute."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.management.ConstructorParameters": {
+    "body": [
+      "public class MemoryUsage { // standard JavaBean conventions with getters @ConstructorParameters({\"init\", \"used\", \"committed\", \"max\"}) public MemoryUsage(long init, long used, long committed, long max) {...} public long getInit() {...} public long getUsed() {...} public long getCommitted() {...} public long getMax() {...} }",
+      "La anotación indica que el primer parámetro del constructor puede obtenerse con getInit(), el segundo con getUsed(), y así sucesivamente. Como en general los nombres de los parámetros no están disponibles en tiempo de ejecución, sin la anotación no habría forma de saber qué parámetro corresponde a qué propiedad.",
+      "Si un constructor está anotado con @java.beans.ConstructorProperties y con @javax.management.ConstructorParameters, la introspección de JMX da prioridad absoluta a la segunda."
+    ]
+  },
+  "web-java-se-javax.management.Descriptor": {
+    "body": [
+      "Los nombres de campo no distinguen mayúsculas de minúsculas: descriptorType, descriptortype y DESCRIPTORTYPE son equivalentes. Aun así, getFields y getFieldNames conservan las mayúsculas con las que se fijó el campo por primera vez.",
+      "No todos los nombres y valores de campo están predefinidos. Cualquier programa puede definir y añadir campos nuevos.",
+      "Un descriptor puede ser mutable o inmutable. Uno inmutable no cambia nunca una vez creado; los métodos de Descriptor que podrían modificar su contenido lanzan una excepción. Los descriptores inmutables suelen ser instancias de ImmutableDescriptor o de una subclase, y los mutables, de javax.management.modelmbean.DescriptorSupport o de una subclase.",
+      "La implementación de JMX usa ciertos campos: su presencia puede cambiar el comportamiento de la API JMX o pueden aparecer en los descriptores que devuelve. En la tabla siguiente aparecen en cursiva, y cada uno tiene una constante correspondiente en la clase JMX. Por ejemplo, el campo defaultValue se representa con la constante JMX.DEFAULT_VALUE_FIELD.",
+      "Otros campos tienen significados convencionales descritos en la tabla, pero la implementación de JMX no tiene por qué entenderlos ni fijarlos.",
+      "Los nombres de campo definidos por la especificación JMX, en esta y en futuras versiones, nunca contendrán un punto (.). Los usuarios pueden crear sus propios campos con un punto en el nombre sin riesgo de que choquen con futuras versiones de la API JMX. Se recomienda seguir la convención de nombres de paquetes Java para evitar choques entre campos de distintos orígenes. Por ejemplo, un campo creado por example.com podría llamarse com.example.interestLevel.",
+      "Los valores de los campos defaultValue, legalValues, maxValue y minValue deben ser coherentes con el tipo que devuelve getType() del MBeanAttributeInfo o MBeanParameterInfo asociado. En los MXBeans, deben ser del tipo Java correspondiente, llamado opendata(J) en las reglas de correspondencia de tipos de MXBean.",
+      "Campos de Descriptor",
+      "Nombre · Tipo · Se usa en · Significado",
+      "defaultValue · Object · MBeanAttributeInfo",
+      "MBeanParameterInfo",
+      "Valor predeterminado de un atributo o parámetro. Consulta javax.management.openmbean.",
+      "deprecated · String · Cualquiera",
+      "Indica que ya no se recomienda usar este elemento del modelo de información. El conjunto de MBeans que define una aplicación se llama modelo de información. Por convención, el valor es una cadena con la versión del modelo en que el elemento quedó obsoleto, un espacio y una explicación; por ejemplo, \"1.3 Replaced by the Capacity attribute\".",
+      "descriptionResource",
+      "BundleBaseName · String · Cualquiera",
+      "El nombre base del ResourceBundle en el que está la clave del campo descriptionResourceKey; por ejemplo, \"com.example.myapp.MBeanResources\". Esta especificación define el significado del campo, pero la propia API JMX no lo fija ni lo usa.",
+      "descriptionResourceKey · String · Cualquiera",
+      "Una clave de recurso para la descripción de este elemento. Junto con descriptionResourceBundleBaseName, permite encontrar una versión localizada de la descripción. Esta especificación define el significado del campo, pero la propia API JMX no lo fija ni lo usa.",
+      "enabled · String · MBeanAttributeInfo",
+      "MBeanNotificationInfo",
+      "MBeanOperationInfo",
+      "La cadena \"true\" o \"false\" según esté activado el elemento. Un atributo u operación desactivado existe pero no puede usarse en ese momento; una interfaz de usuario podría mostrarlo en gris. Por ejemplo, un atributo podría tener sentido solo después de llamar al método start() de un MBean y estar desactivado mientras tanto. Del mismo modo, una notificación podría desactivarse si no puede emitirse en ese momento pero sí en otras circunstancias.",
+      "exceptions · String[] · MBeanAttributeInfo, MBeanConstructorInfo, MBeanOperationInfo",
+      "Los nombres de clase de las excepciones que pueden lanzarse al invocar un constructor u operación, o al obtener un atributo. Esta especificación define el significado del campo, pero la propia API JMX no lo fija ni lo usa. Las excepciones al fijar un atributo se indican en el campo setExceptions.",
+      "immutableInfo · String · MBeanInfo",
+      "La cadena \"true\" o \"false\" según el MBeanInfo de este MBean sea inmutable. Si es true, se garantiza que el MBeanInfo no cambia durante la vida del MBean, así que un cliente puede leerlo una vez y guardarlo. Si es false o falta, no hay esa garantía, aunque eso no significa que el MBeanInfo vaya a cambiar. Consulta también la notificación \"jmx.mbean.info.changed\".",
+      "infoTimeout · String",
+      "Long · MBeanInfo",
+      "El tiempo en milisegundos durante el que puede esperarse razonablemente que el MBeanInfo no cambie. El valor puede ser un Long o una cadena decimal. Es una pista de un DynamicMBean, o de cualquier MBean que no defina immutableInfo como true, de que es poco probable que el MBeanInfo cambie en ese periodo y puede guardarse. Si falta o vale cero, no se recomienda guardar el MBeanInfo salvo que tenga immutableInfo a true o \"jmx.mbean.info.changed\" en su array MBeanNotificationInfo.",
+      "interfaceClassName · String · MBeanInfo",
+      "El nombre de la interfaz Java de un Standard MBean o MXBean, tal como lo devuelve Class.getName(). Un Standard MBean o MXBean registrado directamente en el MBean Server o creado con la clase StandardMBean tiene este campo en el Descriptor de su MBeanInfo.",
+      "legalValues · Set<?> · MBeanAttributeInfo",
+      "MBeanParameterInfo",
+      "Valores válidos de un atributo o parámetro. Consulta javax.management.openmbean.",
+      "locale · String · Cualquiera",
+      "La configuración regional de la descripción de este MBeanInfo, MBeanAttributeInfo, etc., tal como la devuelve Locale.toString().",
+      "maxValue · Object · MBeanAttributeInfo",
+      "MBeanParameterInfo",
+      "Valor máximo válido de un atributo o parámetro. Consulta javax.management.openmbean.",
+      "metricType · String · MBeanAttributeInfo",
+      "MBeanOperationInfo",
+      "El tipo de una métrica: \"counter\" o \"gauge\". Una métrica es una medida que exporta un MBean, normalmente un atributo pero a veces el resultado de una operación. Una métrica contador tiene un valor que nunca disminuye salvo al reiniciarse a un valor inicial; casi siempre son enteros no negativos, como el número de peticiones recibidas. Una métrica indicador tiene un valor numérico que puede subir o bajar, como el número de conexiones abiertas, la tasa de aciertos de una caché o una lectura de temperatura.",
+      "minValue · Object · MBeanAttributeInfo",
+      "MBeanParameterInfo",
+      "Valor mínimo válido de un atributo o parámetro. Consulta javax.management.openmbean.",
+      "mxbean · String · MBeanInfo",
+      "La cadena \"true\" o \"false\" según este MBean sea un MXBean. Un Standard MBean o MXBean registrado directamente en el MBean Server o creado con la clase StandardMBean tiene este campo en el Descriptor de su MBeanInfo.",
+      "openType · OpenType · MBeanAttributeInfo",
+      "MBeanOperationInfo",
+      "MBeanParameterInfo",
+      "El tipo abierto (Open Type) de este elemento. En MBeanAttributeInfo y MBeanParameterInfo, es el del atributo o parámetro; en MBeanOperationInfo, el del valor de retorno. Este campo se fija en el Descriptor de todas las instancias de OpenMBeanAttributeInfoSupport, OpenMBeanOperationInfoSupport y OpenMBeanParameterInfoSupport, y también en los atributos, operaciones y parámetros de los MXBeans.",
+      "Este campo puede fijarse en un MBeanNotificationInfo; en ese caso indica el tipo abierto de los datos de usuario.",
+      "originalType · String · MBeanAttributeInfo",
+      "MBeanOperationInfo",
+      "MBeanParameterInfo",
+      "El tipo Java original de este elemento tal como aparecía en el método de la interfaz MXBean que produjo este MBeanAttributeInfo (etc.). Por ejemplo, un método",
+      "public MemoryUsage getHeapMemoryUsage();",
+      "en una interfaz MXBean define un atributo HeapMemoryUsage de tipo CompositeData. El campo originalType del Descriptor de este atributo tendrá el valor \"java.lang.management.MemoryUsage\".",
+      "El formato de esta cadena se describe en la sección Type Names de la especificación de MXBean.",
+      "setExceptions · String[] · MBeanAttributeInfo",
+      "Los nombres de clase de las excepciones que pueden lanzarse al fijar un atributo. Esta especificación define el significado del campo, pero la propia API JMX no lo fija ni lo usa. Las excepciones al obtener un atributo se indican en el campo exceptions.",
+      "severity · String",
+      "Integer · MBeanNotificationInfo",
+      "La gravedad de esta notificación. Puede ser 0 (gravedad desconocida) o un valor de 1 a 6 con niveles de gravedad decrecientes. Puede representarse como cadena decimal o como Integer.",
+      "since · String · Cualquiera",
+      "La versión del modelo de información en que se introdujo este elemento. El conjunto de MBeans que define una aplicación se llama modelo de información. La aplicación puede definir versiones del modelo y usar el campo \"since\" para registrar en qué versión apareció cada elemento.",
+      "units · String · MBeanAttributeInfo",
+      "MBeanParameterInfo",
+      "MBeanOperationInfo",
+      "Las unidades en que se mide un atributo, parámetro o valor de retorno de una operación; por ejemplo, \"bytes\" o \"seconds\".",
+      "Los Model MBeans definen algunos campos adicionales. Consulta ModelMBeanInfo, ModelMBeanAttributeInfo, ModelMBeanConstructorInfo, ModelMBeanNotificationInfo y ModelMBeanOperationInfo, y el capítulo \"Model MBeans\" de la especificación JMX. La tabla siguiente los resume. Cuando el tipo de la tabla es Number, también puede usarse un String con la representación decimal de un Long.",
+      "Nada impide usar estos campos en MBeans que no sean Model MBeans; por ejemplo, displayName, severity y visibility son útiles fuera de ellos. Pero solo los Model MBeans tienen un comportamiento predefinido para estos campos.",
+      "Campos de ModelMBean",
+      "Nombre · Tipo · Se usa en · Significado",
+      "class · String · ModelMBeanOperationInfo · Clase en la que se define el método (nombre completo).",
+      "currencyTimeLimit · Number · ModelMBeanInfo",
+      "ModelMBeanAttributeInfo",
+      "ModelMBeanOperationInfo · Cuánto tiempo es válido el valor guardado: <0 nunca, =0 siempre, >0 segundos.",
+      "default · Object · ModelMBeanAttributeInfo · Valor predeterminado del atributo.",
+      "descriptorType · String · Cualquiera · Tipo de descriptor: \"mbean\", \"attribute\", \"constructor\", \"operation\" o \"notification\".",
+      "displayName · String · Cualquiera · Nombre legible del elemento.",
+      "export · String · ModelMBeanInfo · Nombre con el que se exporta o expone este MBean para que otros agentes JMX puedan encontrarlo.",
+      "getMethod · String · ModelMBeanAttributeInfo · Nombre del descriptor de operación del método get.",
+      "lastUpdatedTimeStamp · Number · ModelMBeanAttributeInfo",
+      "ModelMBeanOperationInfo · Cuándo se fijó el valor.",
+      "log · String · ModelMBeanInfo",
+      "ModelMBeanNotificationInfo · t o T: registrar todas las notificaciones; f o F: no registrar ninguna.",
+      "logFile · String · ModelMBeanInfo",
+      "ModelMBeanNotificationInfo · Nombre completo del archivo en el que se registran los eventos.",
+      "messageID · String · ModelMBeanNotificationInfo · Clave única del texto del mensaje (para traducción y análisis).",
+      "messageText · String · ModelMBeanNotificationInfo · Texto de la notificación.",
+      "name · String · Cualquiera · Nombre del elemento.",
+      "persistFile · String · ModelMBeanInfo · Nombre del archivo en el que se persiste el MBean.",
+      "persistLocation · String · ModelMBeanInfo · Nombre completo del directorio en el que se persiste el MBean (si corresponde).",
+      "persistPeriod · Number · ModelMBeanInfo",
+      "ModelMBeanAttributeInfo · Frecuencia del ciclo de persistencia en segundos. Se usa cuando persistPolicy es \"OnTimer\" o \"NoMoreOftenThan\".",
+      "persistPolicy · String · ModelMBeanInfo",
+      "ModelMBeanAttributeInfo · Uno de: OnUpdate|OnTimer|NoMoreOftenThan|OnUnregister|Always|Never. Consulta la sección \"MBean Descriptor Fields\" de la especificación JMX.",
+      "presentationString · String · Cualquiera · Cadena en formato XML para presentar los datos.",
+      "protocolMap · Descriptor · ModelMBeanAttributeInfo · Consulta la sección \"Protocol Map Support\" de la especificación JMX. Las correspondencias deben ser adecuadas para el atributo y las entradas pueden actualizarse o ampliarse en tiempo de ejecución.",
+      "role · String · ModelMBeanConstructorInfo",
+      "ModelMBeanOperationInfo · Uno de \"constructor\", \"operation\", \"getter\" o \"setter\".",
+      "setMethod · String · ModelMBeanAttributeInfo · Nombre del descriptor de operación del método set.",
+      "severity · Number · ModelMBeanNotificationInfo · 0-6, donde 0: desconocida; 1: irrecuperable; 2: crítica, fallo; 3: grave, severa; 4: menor, marginal, error; 5: aviso; 6: normal, resuelta, informativa",
+      "targetObject · Object · ModelMBeanOperationInfo · Objeto sobre el que se ejecuta este método.",
+      "targetType · String · ModelMBeanOperationInfo · Tipo de referencia de targetObject. Puede ser: ObjectReference | Handle | EJBHandle | IOR | RMIReference.",
+      "value · Object · ModelMBeanAttributeInfo",
+      "ModelMBeanOperationInfo · Valor actual (guardado) del atributo u operación.",
+      "visibility · Number · Cualquiera · 1-4, donde 1: siempre visible; 4: rara vez visible."
+    ]
+  },
   "web-java-se-javax.management.ImmutableDescriptor.toString": {
     "returns": ["una representación en cadena del objeto."],
     "caveats": [
       "En general, toString devuelve una cadena que «representa textualmente» el objeto. Debería ser una representación concisa pero informativa y fácil de leer. Se recomienda que todas las subclases sobrescriban este método. La cadena no tiene por qué ser estable en el tiempo ni entre ejecuciones de la JVM.",
       "El toString de Object devuelve una cadena con el nombre de la clase de la que el objeto es instancia, el carácter arroba '@' y la representación hexadecimal sin signo del código hash del objeto. Es decir, devuelve una cadena igual al valor de:",
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
+    ]
+  },
+  "web-java-se-javax.management.JMX.newMBeanProxy": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un proxy para un Standard MBean de un MBean Server local o remoto."
+        ],
+        "body": [
+          "Si tienes un MBean Server mbs con un MBean de ObjectName name, y su interfaz de gestión la describe la interfaz Java MyMBean, puedes crear un proxy para el MBean así:",
+          "MyMBean proxy = JMX.newMBeanProxy(mbs, name, MyMBean.class);",
+          "Supón, por ejemplo, que MyMBean es así:",
+          "public interface MyMBean { public String getSomeAttribute(); public void setSomeAttribute(String value); public void someOperation(String param1, int param2); }",
+          "Entonces puedes ejecutar:",
+          "proxy.getSomeAttribute(), que resulta en una llamada a mbs.getAttribute(name, \"SomeAttribute\").",
+          "proxy.setSomeAttribute(\"whatever\"), que resulta en una llamada a mbs.setAttribute(name, new Attribute(\"SomeAttribute\", \"whatever\")).",
+          "proxy.someOperation(\"param1\", 2), que se traduce en una llamada a mbs.invoke(name, \"someOperation\", <etc>).",
+          "El objeto que devuelve este método es un Proxy cuyo InvocationHandler es un MBeanServerInvocationHandler.",
+          "Este método equivale a newMBeanProxy(connection, objectName, interfaceClass, false)."
+        ],
+        "parameters": [
+          {
+            "label": "connection",
+            "detail": "el MBean server al que se reenvía."
+          },
+          {
+            "label": "objectName",
+            "detail": "el nombre del MBean dentro de connection al que se reenvía."
+          },
+          {
+            "label": "interfaceClass",
+            "detail": "la interfaz de gestión que exporta el MBean, que también implementará el proxy devuelto."
+          },
+          {
+            "label": "<T>",
+            "detail": "permite al compilador saber que, si interfaceClass es por ejemplo MyMBean.class, el tipo de retorno es MyMBean."
+          }
+        ],
+        "returns": ["la nueva instancia proxy."],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si interfaceClass no es una interfaz MBean conforme"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un proxy para un Standard MBean de un MBean Server local o remoto que también puede admitir los métodos de NotificationEmitter."
+        ],
+        "body": [
+          "Se comporta igual que newMBeanProxy(MBeanServerConnection, ObjectName, Class), pero además, si notificationEmitter es true, se supone que el MBean es un NotificationBroadcaster o NotificationEmitter y el proxy devuelto implementará NotificationEmitter además de interfaceClass. Una llamada a NotificationBroadcaster.addNotificationListener sobre el proxy resulta en una llamada a MBeanServerConnection.addNotificationListener(ObjectName, NotificationListener, NotificationFilter, Object), y lo mismo con los demás métodos de NotificationBroadcaster y NotificationEmitter."
+        ],
+        "parameters": [
+          {
+            "label": "connection",
+            "detail": "el MBean server al que se reenvía."
+          },
+          {
+            "label": "objectName",
+            "detail": "el nombre del MBean dentro de connection al que se reenvía."
+          },
+          {
+            "label": "interfaceClass",
+            "detail": "la interfaz de gestión que exporta el MBean, que también implementará el proxy devuelto."
+          },
+          {
+            "label": "notificationEmitter",
+            "detail": "hace que el proxy devuelto implemente NotificationEmitter reenviando sus métodos a través de connection."
+          },
+          {
+            "label": "<T>",
+            "detail": "permite al compilador saber que, si interfaceClass es por ejemplo MyMBean.class, el tipo de retorno es MyMBean."
+          }
+        ],
+        "returns": ["la nueva instancia proxy."],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si interfaceClass no es una interfaz MBean conforme"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.management.JMX.newMXBeanProxy": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un proxy para un MXBean de un MBean Server local o remoto."
+        ],
+        "body": [
+          "Si tienes un MBean Server mbs con un MXBean de ObjectName name, y su interfaz de gestión la describe la interfaz Java MyMXBean, puedes crear un proxy para el MXBean así:",
+          "MyMXBean proxy = JMX.newMXBeanProxy(mbs, name, MyMXBean.class);",
+          "Supón, por ejemplo, que MyMXBean es así:",
+          "public interface MyMXBean { public String getSimpleAttribute(); public void setSimpleAttribute(String value); public java.lang.management.MemoryUsage getMappedAttribute(); public void setMappedAttribute(MemoryUsage memoryUsage); public MemoryUsage someOperation(String param1, MemoryUsage param2); }",
+          "Entonces:",
+          "proxy.getSimpleAttribute() resulta en una llamada a mbs.getAttribute(name, \"SimpleAttribute\").",
+          "proxy.setSimpleAttribute(\"whatever\") resulta en una llamada a mbs.setAttribute(name, new Attribute(\"SimpleAttribute\", \"whatever\")).",
+          "Como String es un tipo simple, en el sentido de javax.management.openmbean.SimpleType, no cambia en el contexto de un MXBean. Para el atributo SimpleAttribute, el proxy MXBean se comporta igual que un proxy de Standard MBean (consulta newMBeanProxy(MBeanServerConnection, ObjectName, Class)).",
+          "proxy.getMappedAttribute() resulta en una llamada a mbs.getAttribute(\"MappedAttribute\"). Por las reglas de correspondencia de MXBean, el tipo real del atributo MappedAttribute será CompositeData, y eso es lo que devuelve mbs.getAttribute. Después el proxy convierte el CompositeData de vuelta al tipo esperado MemoryUsage con las reglas de correspondencia de MXBean.",
+          "Del mismo modo, proxy.setMappedAttribute(memoryUsage) convierte el argumento MemoryUsage en un CompositeData antes de llamar a mbs.setAttribute.",
+          "proxy.someOperation(\"whatever\", memoryUsage) convierte el argumento MemoryUsage en un CompositeData y llama a mbs.invoke. El valor que devuelve mbs.invoke también es un CompositeData, y el proxy lo convierte al tipo esperado MemoryUsage con las reglas de correspondencia de MXBean.",
+          "El objeto que devuelve este método es un Proxy cuyo InvocationHandler es un MBeanServerInvocationHandler.",
+          "Este método equivale a newMXBeanProxy(connection, objectName, interfaceClass, false)."
+        ],
+        "parameters": [
+          {
+            "label": "connection",
+            "detail": "el MBean server al que se reenvía."
+          },
+          {
+            "label": "objectName",
+            "detail": "el nombre del MBean dentro de connection al que se reenvía."
+          },
+          {
+            "label": "interfaceClass",
+            "detail": "la interfaz MXBean, que también implementará el proxy devuelto."
+          },
+          {
+            "label": "<T>",
+            "detail": "permite al compilador saber que, si interfaceClass es por ejemplo MyMXBean.class, el tipo de retorno es MyMXBean."
+          }
+        ],
+        "returns": ["la nueva instancia proxy."],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si interfaceClass no es una interfaz MXBean conforme"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un proxy para un MXBean de un MBean Server local o remoto que también puede admitir los métodos de NotificationEmitter."
+        ],
+        "body": [
+          "Se comporta igual que newMXBeanProxy(MBeanServerConnection, ObjectName, Class), pero además, si notificationEmitter es true, se supone que el MXBean es un NotificationBroadcaster o NotificationEmitter y el proxy devuelto implementará NotificationEmitter además de interfaceClass. Una llamada a NotificationBroadcaster.addNotificationListener sobre el proxy resulta en una llamada a MBeanServerConnection.addNotificationListener(ObjectName, NotificationListener, NotificationFilter, Object), y lo mismo con los demás métodos de NotificationBroadcaster y NotificationEmitter."
+        ],
+        "parameters": [
+          {
+            "label": "connection",
+            "detail": "el MBean server al que se reenvía."
+          },
+          {
+            "label": "objectName",
+            "detail": "el nombre del MBean dentro de connection al que se reenvía."
+          },
+          {
+            "label": "interfaceClass",
+            "detail": "la interfaz MXBean, que también implementará el proxy devuelto."
+          },
+          {
+            "label": "notificationEmitter",
+            "detail": "hace que el proxy devuelto implemente NotificationEmitter reenviando sus métodos a través de connection."
+          },
+          {
+            "label": "<T>",
+            "detail": "permite al compilador saber que, si interfaceClass es por ejemplo MyMXBean.class, el tipo de retorno es MyMXBean."
+          }
+        ],
+        "returns": ["la nueva instancia proxy."],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si interfaceClass no es una interfaz MXBean conforme"
+          }
+        ]
+      }
     ]
   },
   "web-java-se-javax.management.MBeanAttributeInfo.toString": {
@@ -29911,6 +30344,628 @@
       "En general, toString devuelve una cadena que «representa textualmente» el objeto. Debería ser una representación concisa pero informativa y fácil de leer. Se recomienda que todas las subclases sobrescriban este método. La cadena no tiene por qué ser estable en el tiempo ni entre ejecuciones de la JVM.",
       "El toString de Object devuelve una cadena con el nombre de la clase de la que el objeto es instancia, el carácter arroba '@' y la representación hexadecimal sin signo del código hash del objeto. Es decir, devuelve una cadena igual al valor de:",
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
+    ]
+  },
+  "web-java-se-javax.management.MBeanRegistration.postRegister": {
+    "body": [
+      "Si la implementación de este método lanza una RuntimeException o un Error, el MBean Server los vuelve a lanzar dentro de una RuntimeMBeanException o RuntimeErrorException, respectivamente. Pero lanzar una excepción en postRegister no cambia el estado del MBean: si ya estaba registrado (registrationDone es true), sigue registrado.",
+      "Esto puede confundir al código que llama a createMBean() o registerMBean(), que podría suponer que el registro ha fallado al recibir la excepción. Por eso se recomienda que las implementaciones de postRegister no lancen excepciones de tiempo de ejecución ni Errors si puede evitarse."
+    ],
+    "parameters": [
+      {
+        "label": "registrationDone",
+        "detail": "Indica si el MBean se ha registrado correctamente en el MBean server. false significa que la fase de registro ha fallado."
+      }
+    ]
+  },
+  "web-java-se-javax.management.MBeanServer.registerMBean": {
+    "body": [
+      "Si este método registra correctamente un MBean, se envía una notificación como se describe arriba."
+    ],
+    "parameters": [
+      {
+        "label": "object",
+        "detail": "El objeto que se registra como MBean."
+      },
+      {
+        "label": "name",
+        "detail": "El nombre de objeto del MBean. Puede ser null."
+      }
+    ],
+    "returns": [
+      "Un ObjectInstance con el ObjectName y el nombre de clase Java del MBean recién registrado. Si el ObjectName es n, el nombre de clase es getMBeanInfo(n).getClassName()."
+    ],
+    "exceptions": [
+      {
+        "label": "InstanceAlreadyExistsException",
+        "detail": "El MBean ya está bajo el control del MBean server."
+      },
+      {
+        "label": "MBeanRegistrationException",
+        "detail": "El método preRegister (de la interfaz MBeanRegistration) del MBean ha lanzado una excepción. El MBean no se registrará."
+      },
+      {
+        "label": "RuntimeMBeanException",
+        "detail": "Si el método postRegister (de la interfaz MBeanRegistration) del MBean lanza una RuntimeException, registerMBean lanza una RuntimeMBeanException aunque el registro haya tenido éxito. En ese caso el MBean queda registrado aunque registerMBean haya lanzado una excepción. RuntimeMBeanException también puede lanzarla preRegister, y entonces el MBean no se registra."
+      },
+      {
+        "label": "RuntimeErrorException",
+        "detail": "Si el método postRegister (de la interfaz MBeanRegistration) del MBean lanza un Error, registerMBean lanza una RuntimeErrorException aunque el registro haya tenido éxito. En ese caso el MBean queda registrado aunque registerMBean haya lanzado una excepción. RuntimeErrorException también puede lanzarla preRegister, y entonces el MBean no se registra."
+      },
+      {
+        "label": "NotCompliantMBeanException",
+        "detail": "Este objeto no es un MBean conforme a JMX"
+      },
+      {
+        "label": "RuntimeOperationsException",
+        "detail": "Envuelve una java.lang.IllegalArgumentException: el objeto pasado es null o no se indica nombre de objeto."
+      }
+    ]
+  },
+  "web-java-se-javax.management.MBeanServerConnection.createMBean": {
+    "overloads": [
+      {
+        "intro": [
+          "Instancia y registra un MBean en el MBean server, que usa su Default Loader Repository para cargar la clase del MBean. Se asocia un nombre de objeto al MBean. Si el nombre dado es null, el MBean debe dar su propio nombre implementando la interfaz MBeanRegistration y devolviéndolo desde preRegister."
+        ],
+        "body": [
+          "Este método equivale a createMBean(className, name, (Object[]) null, (String[]) null)."
+        ],
+        "parameters": [
+          {
+            "label": "className",
+            "detail": "El nombre de clase del MBean que se instancia."
+          },
+          {
+            "label": "name",
+            "detail": "El nombre de objeto del MBean. Puede ser null."
+          }
+        ],
+        "returns": [
+          "Un ObjectInstance con el ObjectName y el nombre de clase Java del MBean recién instanciado. Si el ObjectName es n, el nombre de clase es getMBeanInfo(n).getClassName()."
+        ],
+        "exceptions": [
+          {
+            "label": "ReflectionException",
+            "detail": "Envuelve una java.lang.ClassNotFoundException o una java.lang.Exception producida al intentar invocar el constructor del MBean."
+          },
+          {
+            "label": "InstanceAlreadyExistsException",
+            "detail": "El MBean ya está bajo el control del MBean server."
+          },
+          {
+            "label": "MBeanRegistrationException",
+            "detail": "El método preRegister (de la interfaz MBeanRegistration) del MBean ha lanzado una excepción. El MBean no se registrará."
+          },
+          {
+            "label": "RuntimeMBeanException",
+            "detail": "Si el constructor del MBean o sus métodos preRegister o postRegister lanzan una RuntimeException. Si postRegister (de la interfaz MBeanRegistration) lanza una RuntimeException, createMBean lanza una RuntimeMBeanException aunque la creación y el registro hayan tenido éxito. En ese caso el MBean queda registrado aunque createMBean haya lanzado una excepción. RuntimeMBeanException también puede lanzarla preRegister, y entonces el MBean no se registra."
+          },
+          {
+            "label": "RuntimeErrorException",
+            "detail": "Si el método postRegister (de la interfaz MBeanRegistration) del MBean lanza un Error, createMBean lanza una RuntimeErrorException aunque la creación y el registro hayan tenido éxito. En ese caso el MBean queda registrado aunque createMBean haya lanzado una excepción. RuntimeErrorException también puede lanzarla preRegister, y entonces el MBean no se registra."
+          },
+          {
+            "label": "MBeanException",
+            "detail": "El constructor del MBean ha lanzado una excepción"
+          },
+          {
+            "label": "NotCompliantMBeanException",
+            "detail": "Esta clase no es un MBean conforme a JMX"
+          },
+          {
+            "label": "RuntimeOperationsException",
+            "detail": "Envuelve una java.lang.IllegalArgumentException: el className pasado es null, el ObjectName pasado contiene un patrón o no se indica ObjectName para el MBean."
+          },
+          {
+            "label": "IOException",
+            "detail": "Se ha producido un problema de comunicación con el MBean server."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Instancia y registra un MBean en el MBean server. El cargador de clases que se usa se identifica por su nombre de objeto. Se asocia un nombre de objeto al MBean. Si el nombre del cargador es null, se usa el ClassLoader que cargó el MBean server. Si el nombre dado del MBean es null, el MBean debe dar su propio nombre implementando la interfaz MBeanRegistration y devolviéndolo desde preRegister."
+        ],
+        "body": [
+          "Este método equivale a createMBean(className, name, loaderName, (Object[]) null, (String[]) null)."
+        ],
+        "parameters": [
+          {
+            "label": "className",
+            "detail": "El nombre de clase del MBean que se instancia."
+          },
+          {
+            "label": "name",
+            "detail": "El nombre de objeto del MBean. Puede ser null."
+          },
+          {
+            "label": "loaderName",
+            "detail": "El nombre de objeto del cargador de clases que se usa."
+          }
+        ],
+        "returns": [
+          "Un ObjectInstance con el ObjectName y el nombre de clase Java del MBean recién instanciado. Si el ObjectName es n, el nombre de clase es getMBeanInfo(n).getClassName()."
+        ],
+        "exceptions": [
+          {
+            "label": "ReflectionException",
+            "detail": "Envuelve una java.lang.ClassNotFoundException o una java.lang.Exception producida al intentar invocar el constructor del MBean."
+          },
+          {
+            "label": "InstanceAlreadyExistsException",
+            "detail": "El MBean ya está bajo el control del MBean server."
+          },
+          {
+            "label": "MBeanRegistrationException",
+            "detail": "El método preRegister (de la interfaz MBeanRegistration) del MBean ha lanzado una excepción. El MBean no se registrará."
+          },
+          {
+            "label": "RuntimeMBeanException",
+            "detail": "Si el constructor del MBean o sus métodos preRegister o postRegister lanzan una RuntimeException. Si postRegister (de la interfaz MBeanRegistration) lanza una RuntimeException, createMBean lanza una RuntimeMBeanException aunque la creación y el registro hayan tenido éxito. En ese caso el MBean queda registrado aunque createMBean haya lanzado una excepción. RuntimeMBeanException también puede lanzarla preRegister, y entonces el MBean no se registra."
+          },
+          {
+            "label": "RuntimeErrorException",
+            "detail": "Si el método postRegister (de la interfaz MBeanRegistration) del MBean lanza un Error, createMBean lanza una RuntimeErrorException aunque la creación y el registro hayan tenido éxito. En ese caso el MBean queda registrado aunque createMBean haya lanzado una excepción. RuntimeErrorException también puede lanzarla preRegister, y entonces el MBean no se registra."
+          },
+          {
+            "label": "MBeanException",
+            "detail": "El constructor del MBean ha lanzado una excepción"
+          },
+          {
+            "label": "NotCompliantMBeanException",
+            "detail": "Esta clase no es un MBean conforme a JMX"
+          },
+          {
+            "label": "InstanceNotFoundException",
+            "detail": "El cargador de clases indicado no está registrado en el MBean server."
+          },
+          {
+            "label": "RuntimeOperationsException",
+            "detail": "Envuelve una java.lang.IllegalArgumentException: el className pasado es null, el ObjectName pasado contiene un patrón o no se indica ObjectName para el MBean."
+          },
+          {
+            "label": "IOException",
+            "detail": "Se ha producido un problema de comunicación con el MBean server."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Instancia y registra un MBean en el MBean server, que usa su Default Loader Repository para cargar la clase del MBean. Se asocia un nombre de objeto al MBean. Si el nombre dado es null, el MBean debe dar su propio nombre implementando la interfaz MBeanRegistration y devolviéndolo desde preRegister."
+        ],
+        "parameters": [
+          {
+            "label": "className",
+            "detail": "El nombre de clase del MBean que se instancia."
+          },
+          {
+            "label": "name",
+            "detail": "El nombre de objeto del MBean. Puede ser null."
+          },
+          {
+            "label": "params",
+            "detail": "Un array con los parámetros del constructor que se invoca."
+          },
+          {
+            "label": "signature",
+            "detail": "Un array con la firma del constructor que se invoca."
+          }
+        ],
+        "returns": [
+          "Un ObjectInstance con el ObjectName y el nombre de clase Java del MBean recién instanciado. Si el ObjectName es n, el nombre de clase es getMBeanInfo(n).getClassName()."
+        ],
+        "exceptions": [
+          {
+            "label": "ReflectionException",
+            "detail": "Envuelve una java.lang.ClassNotFoundException o una java.lang.Exception producida al intentar invocar el constructor del MBean."
+          },
+          {
+            "label": "InstanceAlreadyExistsException",
+            "detail": "El MBean ya está bajo el control del MBean server."
+          },
+          {
+            "label": "MBeanRegistrationException",
+            "detail": "El método preRegister (de la interfaz MBeanRegistration) del MBean ha lanzado una excepción. El MBean no se registrará."
+          },
+          {
+            "label": "RuntimeMBeanException",
+            "detail": "Si el constructor del MBean o sus métodos preRegister o postRegister lanzan una RuntimeException. Si postRegister (de la interfaz MBeanRegistration) lanza una RuntimeException, createMBean lanza una RuntimeMBeanException aunque la creación y el registro hayan tenido éxito. En ese caso el MBean queda registrado aunque createMBean haya lanzado una excepción. RuntimeMBeanException también puede lanzarla preRegister, y entonces el MBean no se registra."
+          },
+          {
+            "label": "RuntimeErrorException",
+            "detail": "Si el método postRegister (de la interfaz MBeanRegistration) del MBean lanza un Error, createMBean lanza una RuntimeErrorException aunque la creación y el registro hayan tenido éxito. En ese caso el MBean queda registrado aunque createMBean haya lanzado una excepción. RuntimeErrorException también puede lanzarla preRegister, y entonces el MBean no se registra."
+          },
+          {
+            "label": "MBeanException",
+            "detail": "El constructor del MBean ha lanzado una excepción"
+          },
+          {
+            "label": "NotCompliantMBeanException",
+            "detail": "Esta clase no es un MBean conforme a JMX"
+          },
+          {
+            "label": "RuntimeOperationsException",
+            "detail": "Envuelve una java.lang.IllegalArgumentException: el className pasado es null, el ObjectName pasado contiene un patrón o no se indica ObjectName para el MBean."
+          },
+          {
+            "label": "IOException",
+            "detail": "Se ha producido un problema de comunicación con el MBean server."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Instancia y registra un MBean en el MBean server. El cargador de clases que se usa se identifica por su nombre de objeto. Se asocia un nombre de objeto al MBean. Si no se indica el nombre del cargador, se usa el ClassLoader que cargó el MBean server. Si el nombre dado del MBean es null, el MBean debe dar su propio nombre implementando la interfaz MBeanRegistration y devolviéndolo desde preRegister."
+        ],
+        "parameters": [
+          {
+            "label": "className",
+            "detail": "El nombre de clase del MBean que se instancia."
+          },
+          {
+            "label": "name",
+            "detail": "El nombre de objeto del MBean. Puede ser null."
+          },
+          {
+            "label": "params",
+            "detail": "Un array con los parámetros del constructor que se invoca."
+          },
+          {
+            "label": "signature",
+            "detail": "Un array con la firma del constructor que se invoca."
+          },
+          {
+            "label": "loaderName",
+            "detail": "El nombre de objeto del cargador de clases que se usa."
+          }
+        ],
+        "returns": [
+          "Un ObjectInstance con el ObjectName y el nombre de clase Java del MBean recién instanciado. Si el ObjectName es n, el nombre de clase es getMBeanInfo(n).getClassName()."
+        ],
+        "exceptions": [
+          {
+            "label": "ReflectionException",
+            "detail": "Envuelve una java.lang.ClassNotFoundException o una java.lang.Exception producida al intentar invocar el constructor del MBean."
+          },
+          {
+            "label": "InstanceAlreadyExistsException",
+            "detail": "El MBean ya está bajo el control del MBean server."
+          },
+          {
+            "label": "MBeanRegistrationException",
+            "detail": "El método preRegister (de la interfaz MBeanRegistration) del MBean ha lanzado una excepción. El MBean no se registrará."
+          },
+          {
+            "label": "RuntimeMBeanException",
+            "detail": "El constructor del MBean o sus métodos preRegister o postRegister han lanzado una RuntimeException. Si postRegister (de la interfaz MBeanRegistration) lanza una RuntimeException, createMBean lanza una RuntimeMBeanException aunque la creación y el registro hayan tenido éxito. En ese caso el MBean queda registrado aunque createMBean haya lanzado una excepción. RuntimeMBeanException también puede lanzarla preRegister, y entonces el MBean no se registra."
+          },
+          {
+            "label": "RuntimeErrorException",
+            "detail": "Si el método postRegister (de la interfaz MBeanRegistration) del MBean lanza un Error, createMBean lanza una RuntimeErrorException aunque la creación y el registro hayan tenido éxito. En ese caso el MBean queda registrado aunque createMBean haya lanzado una excepción. RuntimeErrorException también puede lanzarla preRegister, y entonces el MBean no se registra."
+          },
+          {
+            "label": "MBeanException",
+            "detail": "El constructor del MBean ha lanzado una excepción"
+          },
+          {
+            "label": "NotCompliantMBeanException",
+            "detail": "Esta clase no es un MBean conforme a JMX"
+          },
+          {
+            "label": "InstanceNotFoundException",
+            "detail": "El cargador de clases indicado no está registrado en el MBean server."
+          },
+          {
+            "label": "RuntimeOperationsException",
+            "detail": "Envuelve una java.lang.IllegalArgumentException: el className pasado es null, el ObjectName pasado contiene un patrón o no se indica ObjectName para el MBean."
+          },
+          {
+            "label": "IOException",
+            "detail": "Se ha producido un problema de comunicación con el MBean server."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.management.MBeanServerConnection.unregisterMBean": {
+    "parameters": [
+      {
+        "label": "name",
+        "detail": "El nombre de objeto del MBean que se da de baja."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "InstanceNotFoundException",
+        "detail": "El MBean indicado no está registrado en el MBean server."
+      },
+      {
+        "label": "MBeanRegistrationException",
+        "detail": "El método preDeregister (de la interfaz MBeanRegistration) del MBean ha lanzado una excepción."
+      },
+      {
+        "label": "RuntimeMBeanException",
+        "detail": "Si el método postDeregister (de la interfaz MBeanRegistration) del MBean lanza una RuntimeException, unregisterMBean lanza una RuntimeMBeanException aunque la baja haya tenido éxito. En ese caso el MBean queda dado de baja aunque unregisterMBean haya lanzado una excepción. RuntimeMBeanException también puede lanzarla preDeregister, y entonces el MBean sigue registrado."
+      },
+      {
+        "label": "RuntimeErrorException",
+        "detail": "Si el método postDeregister (de la interfaz MBeanRegistration) del MBean lanza un Error, unregisterMBean lanza una RuntimeErrorException aunque la baja haya tenido éxito. En ese caso el MBean queda dado de baja aunque unregisterMBean haya lanzado una excepción. RuntimeMBeanException también puede lanzarla preDeregister, y entonces el MBean sigue registrado."
+      },
+      {
+        "label": "RuntimeOperationsException",
+        "detail": "Envuelve una java.lang.IllegalArgumentException: el nombre de objeto pasado es null o el MBean que intentas dar de baja es el MBean MBeanServerDelegate."
+      },
+      {
+        "label": "IOException",
+        "detail": "Se ha producido un problema de comunicación con el MBean server."
+      }
+    ]
+  },
+  "web-java-se-javax.management.MXBean": {
+    "body": [
+      "public interface WhatsitMXBean {}",
+      "@MXBean public interface Whatsit1Interface {}",
+      "@MXBean(true) public interface Whatsit2Interface {}",
+      "Estas interfaces no son interfaces MXBean:",
+      "interface NonPublicInterfaceNotMXBean{}",
+      "public interface Whatsit3Interface{}",
+      "@MXBean(false) public interface MisleadingMXBean {}",
+      "Especificación de MXBean",
+      "El concepto de MXBean ofrece una forma sencilla de programar un MBean que solo hace referencia a un conjunto predefinido de tipos, los de javax.management.openmbean. Así puedes estar seguro de que cualquier cliente, incluidos los remotos, podrá usar tu MBean sin necesidad de tener acceso a clases propias del modelo que representen los tipos de tus MBeans.",
+      "Los conceptos se entienden mejor comparándolos con el de Standard MBean. Así se representaría un objeto gestionado como Standard MBean y como MXBean:",
+      "Standard MBean",
+      "public interface MemoryPoolMBean { String getName(); MemoryUsage getUsage(); // ... }",
+      "MXBean",
+      "public interface MemoryPoolMXBean { String getName(); MemoryUsage getUsage(); // ... }",
+      "Como ves, las definiciones son muy parecidas. La única diferencia es la convención de nombre de la interfaz: AlgoMXBean para los MXBeans y AlgoMBean para los Standard MBeans.",
+      "En este objeto gestionado hay un atributo Usage de tipo MemoryUsage. La gracia de un atributo así es que da una instantánea coherente de un conjunto de datos: por ejemplo, la memoria usada actualmente en el pool y su máximo actual. Si fueran elementos separados, obtenidos con llamadas getAttribute distintas, podríamos obtener valores de momentos distintos que no fueran coherentes, como un valor used mayor que max.",
+      "Así que podríamos definir MemoryUsage así:",
+      "Standard MBean",
+      "public class MemoryUsage implements Serializable { // standard JavaBean conventions with getters",
+      "public MemoryUsage(long init, long used, long committed, long max) {...} long getInit() {...} long getUsed() {...} long getCommitted() {...} long getMax() {...} }",
+      "MXBean",
+      "public class MemoryUsage { // standard JavaBean conventions with getters @ConstructorParameters({\"init\", \"used\", \"committed\", \"max\"}) public MemoryUsage(long init, long used, long committed, long max) {...} long getInit() {...} long getUsed() {...} long getCommitted() {...} long getMax() {...} }",
+      "Las definiciones son iguales en ambos casos, salvo que con el MXBean MemoryUsage ya no necesita marcarse como Serializable (aunque puede). En cambio, hemos añadido una anotación @ConstructorParameters para enlazar los parámetros del constructor con los getters correspondientes. Más abajo veremos más sobre esto.",
+      "MemoryUsage es una clase propia del modelo. Con Standard MBeans, un cliente del MBean Server no puede acceder al atributo Usage si no conoce la clase MemoryUsage. Supón que el cliente es una consola genérica basada en JMX: habría que configurarla con las clases propias del modelo de cada aplicación a la que pueda conectarse. El problema es aún peor con clientes que no están escritos en Java, a los que puede no haber forma de explicarles cómo es un MemoryUsage.",
+      "Aquí es donde los MXBeans se diferencian de los Standard MBeans. Aunque la interfaz de gestión se define casi igual, el framework de MXBean convierte las clases propias del modelo en clases estándar de la plataforma Java. Con arrays y las clases CompositeData y TabularData del paquete estándar javax.management.openmbean, pueden construirse estructuras de datos de cualquier complejidad usando solo clases estándar.",
+      "Se ve más claro comparando cómo serían los clientes de ambos modelos:",
+      "Standard MBean",
+      "String name = (String) mbeanServer.getAttribute(objectName, \"Name\"); MemoryUsage usage = (MemoryUsage) mbeanServer.getAttribute(objectName, \"Usage\"); long used = usage.getUsed();",
+      "MXBean",
+      "String name = (String) mbeanServer.getAttribute(objectName, \"Name\"); CompositeData usage = (CompositeData) mbeanServer.getAttribute(objectName, \"Usage\"); long used = (Long) usage.get(\"used\");",
+      "Para atributos de tipos simples como String, el código es igual. Pero para atributos de tipos complejos, el código del Standard MBean obliga al cliente a conocer la clase propia del modelo MemoryUsage, mientras que el del MXBean no necesita clases no estándar.",
+      "El código del cliente MXBean es algo más complicado. Pero si el cliente conoce el modelo, aquí la interfaz MemoryPoolMXBean y la clase MemoryUsage, puede crear un proxy. Es la forma recomendada de trabajar con objetos gestionados cuando conoces el modelo de antemano, uses Standard MBeans o MXBeans:",
+      "Standard MBean",
+      "MemoryPoolMBean proxy = JMX.newMBeanProxy( mbeanServer, objectName, MemoryPoolMBean.class); String name = proxy.getName(); MemoryUsage usage = proxy.getUsage(); long used = usage.getUsed();",
+      "MXBean",
+      "MemoryPoolMXBean proxy = JMX.newMXBeanProxy( mbeanServer, objectName, MemoryPoolMXBean.class); String name = proxy.getName(); MemoryUsage usage = proxy.getUsage(); long used = usage.getUsed();",
+      "Implementar el objeto MemoryPool funciona igual con Standard MBeans y con MXBeans.",
+      "Standard MBean",
+      "public class MemoryPool implements MemoryPoolMBean { public String getName() {...} public MemoryUsage getUsage() {...} // ... }",
+      "MXBean",
+      "public class MemoryPool implements MemoryPoolMXBean { public String getName() {...} public MemoryUsage getUsage() {...} // ... }",
+      "Registrar el MBean en el MBean Server funciona igual en ambos casos:",
+      "Standard MBean",
+      "{ MemoryPoolMBean pool = new MemoryPool(); mbeanServer.registerMBean(pool, objectName); }",
+      "MXBean",
+      "{ MemoryPoolMXBean pool = new MemoryPool(); mbeanServer.registerMBean(pool, objectName); }",
+      "Definición de MXBean",
+      "Un MXBean es un tipo de MBean. Un objeto MXBean puede registrarse directamente en el MBean Server o usarse como argumento de StandardMBean y registrar en el MBean Server el MBean resultante.",
+      "Cuando se registra un objeto en el MBean Server con los métodos registerMBean o createMBean de la interfaz MBeanServer, se examina la clase del objeto para saber qué tipo de MBean es:",
+      "Si la clase implementa la interfaz DynamicMBean, el MBean es un Dynamic MBean. La clase StandardMBean implementa esta interfaz, así que este caso se aplica a un Standard MBean o MXBean creado con StandardMBean.",
+      "Si no, si la clase cumple las convenciones de nombre de los Standard MBean, es un Standard MBean.",
+      "Si no, puede ser un MXBean. Se examinan las interfaces que implementa el objeto buscando las que:",
+      "tengan un nombre de clase SMXBean, donde S es cualquier cadena no vacía, y no tengan la anotación @MXBean(false); y/o",
+      "tengan la anotación @MXBean(true) o simplemente @MXBean.",
+      "Si hay exactamente una interfaz así, o hay una que es subinterfaz de todas las demás, el objeto es un MXBean y esa interfaz es la interfaz MXBean. En el ejemplo anterior, la interfaz MXBean es MemoryPoolMXBean.",
+      "Si no se cumple ninguna de estas condiciones, el MBean no es válido e intentar registrarlo genera NotCompliantMBeanException.",
+      "Todo tipo Java que aparezca como parámetro o tipo de retorno de un método de una interfaz MXBean debe poder convertirse con las reglas de abajo. Además, los parámetros deben poder reconstruirse según se define abajo.",
+      "Intentar crear un MXBean que no cumpla estas reglas produce una excepción.",
+      "Convenciones de nombre",
+      "Los métodos de un MXBean siguen las mismas convenciones de nombre que los de un Standard MBean:",
+      "Un método T getN(), donde T es un tipo Java (no void) y N una cadena no vacía, indica que hay un atributo legible N. El tipo Java y el tipo abierto del atributo los determinan las reglas de correspondencia de abajo. Al buscar getters se ignora el método final Class getClass() heredado de Object.",
+      "Un método boolean isN() indica que hay un atributo legible N con tipo Java boolean y tipo abierto SimpleType.Boolean.",
+      "Un método void setN(T x) indica que hay un atributo escribible N. El tipo Java y el tipo abierto del atributo los determinan las reglas de correspondencia de abajo. (El nombre x del parámetro, claro, no importa).",
+      "Cualquier otro método indica que hay una operación con el mismo nombre. El tipo Java y el tipo abierto del valor de retorno y de cada parámetro los determinan las reglas de correspondencia de abajo.",
+      "Las reglas de getN e isN definen juntas el concepto de getter, y la de setN, el de setter.",
+      "Es un error que haya dos getters o dos setters con el mismo nombre. Si hay un getter y un setter con el mismo nombre, el tipo T debe ser el mismo en ambos, y el atributo es de lectura/escritura. Si solo hay getter o solo setter, el atributo es de solo lectura o solo escritura, respectivamente.",
+      "Reglas de correspondencia de tipos",
+      "Un MXBean es un tipo de Open MBean, tal como lo define el paquete javax.management.openmbean. Esto significa que los tipos de los atributos, de los parámetros y de los valores de retorno de las operaciones deben poder describirse con tipos abiertos, es decir, las cuatro subclases estándar de javax.management.openmbean.OpenType. Los MXBeans lo consiguen haciendo corresponder tipos Java con tipos abiertos.",
+      "Para cada tipo Java J, la correspondencia MXBean se describe con esta información:",
+      "El tipo abierto correspondiente, opentype(J), una instancia de una subclase de javax.management.openmbean.OpenType.",
+      "El tipo Java correspondiente, opendata(J), que siempre es el mismo para un opentype(J) dado. Es una clase Java.",
+      "Cómo se convierte un valor de tipo J a tipo opendata(J).",
+      "Cómo se convierte un valor de tipo opendata(J) a tipo J, si es posible.",
+      "Por ejemplo, para el tipo Java List<String>:",
+      "El tipo abierto, opentype(List<String>), es ArrayType(1, SimpleType.STRING), un array unidimensional de String.",
+      "El tipo Java correspondiente, opendata(List<String>), es String[].",
+      "Una List<String> puede convertirse en String[] con List.toArray(new String[0]).",
+      "Un String[] puede convertirse en List<String> con Arrays.asList.",
+      "Si no hay reglas de correspondencia para obtener opentype(J) a partir de J, J no puede ser tipo de parámetro ni de retorno en una interfaz MXBean.",
+      "Si hay forma de convertir opendata(J) de vuelta a J, decimos que J es reconstruible. Todos los parámetros de los métodos de una interfaz MXBean deben ser reconstruibles, porque al invocar un método el framework de MXBean tendrá que convertirlos de opendata(J) a J. En un proxy generado con JMX.newMXBeanProxy, son los valores de retorno de los métodos de la interfaz MXBean los que deben ser reconstruibles.",
+      "Se permiten valores null en todos los tipos Java y tipos abiertos, salvo en los tipos primitivos de Java, donde no son posibles. Al convertir de J a opendata(J) o al revés, null se convierte en null.",
+      "La siguiente tabla resume las reglas de correspondencia de tipos.",
+      "Reglas de correspondencia de tipos",
+      "Tipo Java J · opentype(J) · opendata(J)",
+      "int, boolean, etc.",
+      "(los 8 tipos primitivos de Java) · SimpleType.INTEGER,",
+      "SimpleType.BOOLEAN, etc. · Integer, Boolean, etc.",
+      "(los tipos envoltorio correspondientes)",
+      "Integer, ObjectName, etc.",
+      "(los tipos que cubre SimpleType) · el SimpleType correspondiente · J, el mismo tipo",
+      "int[] etc.",
+      "(un array unidimensional con tipo de elemento primitivo) · ArrayType.getPrimitiveArrayType(int[].class) etc. · J, el mismo tipo",
+      "(un array con tipo de elemento no primitivo E; incluye int[][], donde E es int[]) · ArrayType.getArrayType(opentype(E)) · opendata(E)[]",
+      "List<E>",
+      "Set<E>",
+      "SortedSet<E> (ver abajo) · igual que para E[] · igual que para E[]",
+      "Una enumeración E",
+      "(declarada en Java como enumE {@code {...}}) · SimpleType.STRING · String",
+      "Map<K,V>",
+      "SortedMap<K,V> · TabularType",
+      "(ver abajo) · TabularData",
+      "(ver abajo)",
+      "Clases record · CompositeType, si es posible",
+      "(ver abajo) · CompositeData",
+      "(ver abajo)",
+      "Una interfaz MXBean · SimpleType.OBJECTNAME",
+      "(ver abajo) · ObjectName",
+      "(ver abajo)",
+      "Cualquier otro tipo · CompositeType, si es posible",
+      "(ver abajo) · CompositeData",
+      "(ver abajo)",
+      "Las secciones siguientes detallan estas reglas.",
+      "Correspondencias de los tipos primitivos",
+      "Los 8 tipos primitivos de Java (boolean, byte, short, int, long, float, double, char) se corresponden con sus tipos envoltorio de java.lang: Boolean, Byte, etc. El tipo abierto es el SimpleType correspondiente. Así, opentype(long) es SimpleType.LONG y opendata(long) es java.lang.Long.",
+      "Un array de tipo primitivo como long[] puede representarse directamente como tipo abierto. Así, openType(long[]) es ArrayType.getPrimitiveArrayType(long[].class) y opendata(long[]) es long[].",
+      "En la práctica, la diferencia entre int e Integer, etc., no se nota porque las operaciones de la API JMX siempre trabajan con objetos Java, no con primitivos. Pero sí se nota con los arrays.",
+      "Correspondencias de las colecciones (List<E> etc.)",
+      "Una List<E> o un Set<E>, como List<String> o Set<ObjectName>, se corresponde igual que un array del mismo tipo de elemento, como String[] u ObjectName[].",
+      "Un SortedSet<E> también se corresponde igual que un E[], pero solo es convertible si E es una clase o interfaz que implementa java.lang.Comparable. Así, un SortedSet<String> o SortedSet<Integer> es convertible, pero un SortedSet<int[]> o SortedSet<List<String>> no. La conversión de un SortedSet falla con IllegalArgumentException si tiene un comparator() no null.",
+      "Una List<E> se reconstruye como java.util.ArrayList<E>; un Set<E>, como java.util.HashSet<E>; un SortedSet<E>, como java.util.TreeSet<E>.",
+      "Correspondencias de los mapas (Map<K,V> etc.)",
+      "Un Map<K,V> o SortedMap<K,V>, por ejemplo Map<String,ObjectName>, tiene tipo abierto TabularType y se corresponde con un TabularData. El TabularType tiene dos elementos, key y value. El tipo abierto de key es opentype(K) y el de value, opentype(V). El índice del TabularType es el único elemento key.",
+      "Por ejemplo, el TabularType de un Map<String,ObjectName> podría crearse con un código así:",
+      "String typeName = \"java.util.Map<java.lang.String, javax.management.ObjectName>\"; String[] keyValue = new String[] {\"key\", \"value\"}; OpenType[] openTypes = new OpenType[] {SimpleType.STRING, SimpleType.OBJECTNAME}; CompositeType rowType = new CompositeType(typeName, typeName, keyValue, keyValue, openTypes); TabularType tabularType = new TabularType(typeName, typeName, rowType, new String[] {\"key\"});",
+      "El typeName lo determinan las reglas de nombres de tipo que se detallan abajo.",
+      "Un SortedMap<K,V> se corresponde igual, pero solo es convertible si K es una clase o interfaz que implementa java.lang.Comparable. Así, un SortedMap<String,int[]> es convertible, pero un SortedMap<int[],String> no. La conversión de un SortedMap falla con IllegalArgumentException si tiene un comparator() no null.",
+      "Un Map<K,V> se reconstruye como java.util.HashMap<K,V>; un SortedMap<K,V>, como java.util.TreeMap<K,V>.",
+      "TabularData es una interfaz. La clase concreta que representa un Map<K,V> como Open Data es TabularDataSupport, u otra clase que implemente TabularData y se serialice como TabularDataSupport.",
+      "Correspondencias de los records",
+      "Una clase record J puede convertirse en un CompositeType si y solo si todos sus componentes son convertibles a tipos abiertos. Si no, no es convertible. Un record sin componentes no es convertible.",
+      "Correspondencia de una clase record con CompositeType",
+      "Un record cuyos componentes son todos convertibles a tipos abiertos es convertible a CompositeType de esta forma:",
+      "El nombre de tipo del CompositeType es el nombre de la clase record.",
+      "Los getters del record son los accesores de sus componentes.",
+      "Para cada componente de tipo T, el elemento del CompositeType tiene el mismo nombre que el componente y tipo opentype(T), según las reglas de correspondencia de arriba.",
+      "Correspondencia de una instancia de record con CompositeData",
+      "La correspondencia de una instancia de clase record con un CompositeData del CompositeType es la misma que para otros tipos.",
+      "Reconstruir una instancia de record a partir de un CompositeData",
+      "Un record se reconstruye con su constructor canónico, que no necesita las anotaciones @javax.management.ConstructorParameters ni @java.beans.ConstructorProperties. Si las tiene, se ignoran.",
+      "Cómo se reconstruye una instancia de una clase record J a partir de un CompositeData se detalla abajo en Reconstruir una instancia de un tipo Java o clase record J a partir de un CompositeData.",
+      "Correspondencias de las interfaces MXBean",
+      "Una interfaz MXBean, o un tipo referenciado dentro de ella, puede hacer referencia a otra interfaz MXBean J. Entonces opentype(J) es SimpleType.OBJECTNAME y opendata(J) es ObjectName.",
+      "Por ejemplo, supón que tienes dos interfaces MXBean así:",
+      "public interface ProductMXBean { public ModuleMXBean[] getModules(); }",
+      "public interface ModuleMXBean { public ProductMXBean getProduct(); }",
+      "El objeto que implementa ModuleMXBean devuelve desde getProduct un objeto que implementa ProductMXBean. Tanto el ModuleMXBean como los ProductMXBean devueltos deben estar registrados como MXBeans en el mismo MBean Server.",
+      "El método ModuleMXBean.getProduct() define un atributo Product. Su tipo abierto es SimpleType.OBJECTNAME, y el valor ObjectName correspondiente es el nombre con el que está registrado el ProductMXBean referenciado en el MBean Server.",
+      "Si creas un proxy MXBean para un ModuleMXBean y llamas a su getProduct(), el proxy convierte el ObjectName de vuelta en un ProductMXBean creando otro proxy MXBean. Formalmente, cuando un proxy creado con JMX.newMXBeanProxy(mbeanServerConnection, objectNameX, interfaceX) necesita convertir objectNameY de vuelta en interfaceY, otra interfaz MXBean, lo hace con JMX.newMXBeanProxy(mbeanServerConnection, objectNameY, interfaceY). La implementación puede devolver un proxy creado antes con los mismos parámetros o crear uno nuevo.",
+      "La correspondencia inversa se ve con este cambio en la interfaz ModuleMXBean:",
+      "public interface ModuleMXBean { public ProductMXBean getProduct(); public void setProduct(ProductMXBean c); }",
+      "Al haber un método setProduct, el atributo Product pasa a ser de lectura/escritura. Como antes, su valor es un ObjectName. Al fijarlo, el ObjectName debe convertirse en el objeto ProductMXBean que espera setProduct, que será un proxy MXBean del ObjectName dado en el mismo MBean Server.",
+      "Si creas un proxy MXBean para un ModuleMXBean y llamas a su setProduct, el proxy convierte el argumento ProductMXBean de vuelta en un ObjectName. Solo funciona si el argumento es otro proxy de un ProductMXBean del mismo MBeanServerConnection. Ese proxy puede venir de otro proxy (como ModuleMXBean.getProduct(), que devuelve un proxy de ProductMXBean), haberse creado con JMX.newMXBeanProxy o haberse creado con Proxy y un manejador de invocaciones que sea MBeanServerInvocationHandler o una subclase.",
+      "Si el mismo MXBean se registrara con dos ObjectName distintos, una referencia a él desde otro MXBean sería ambigua. Por eso, si un objeto MXBean ya está registrado en un MBean Server e intenta registrarse en el mismo con otro nombre, se lanza InstanceAlreadyExistsException. En general se desaconseja registrar el mismo objeto MBean con más de un nombre, sobre todo porque no funciona bien con los MBeans que son NotificationBroadcaster.",
+      "Correspondencias de otros tipos",
+      "Dada una clase o interfaz Java J que no encaje en las demás reglas de la tabla, el framework de MXBean intenta hacerla corresponder con un CompositeType así. El nombre de tipo del CompositeType lo determinan las reglas de nombres de tipo de abajo.",
+      "Correspondencia de un tipo Java J con CompositeType",
+      "Se buscan getters en la clase con las convenciones anteriores. (Los getters deben ser métodos de instancia públicos). Si no hay getters, o alguno tiene un tipo no convertible, J no es convertible.",
+      "Si hay al menos un getter y todos tienen tipos convertibles, opentype(J) es un CompositeType con un elemento por cada getter. Si el getter es",
+      "T getName()",
+      "el elemento del CompositeType se llama name y tiene tipo opentype(T). Por ejemplo, si el elemento es",
+      "String getOwner()",
+      "se llama owner y tiene tipo abierto SimpleType.STRING. Si el getter es",
+      "boolean isName()",
+      "el elemento del CompositeType se llama name y tiene tipo SimpleType.BOOLEAN.",
+      "El primer carácter (o punto de código) se pasa a minúscula. Esto sigue la convención de Java Beans, que por motivos históricos es distinta de la de Standard MBean. En una interfaz Standard MBean o MXBean, un método getOwner define un atributo Owner, mientras que en un Java Bean o un CompositeType correspondiente define una propiedad o elemento owner.",
+      "Si dos métodos producen el mismo nombre de elemento (por ejemplo, getOwner e isOwner, o getOwner y getowner), el tipo no es convertible.",
+      "Correspondencia de una instancia de un tipo Java o clase record J con CompositeData",
+      "Cuando el tipo abierto es CompositeType, el tipo Java correspondiente (opendata(J)) es CompositeData. La correspondencia de una instancia de J con un CompositeData del CompositeType descrito se hace así. Primero, si J implementa la interfaz CompositeDataView, se llama a su método toCompositeData para la conversión. Si no, el CompositeData se construye llamando al getter de cada elemento y convirtiéndolo al tipo Open Data correspondiente. Así, un getter como",
+      "List<String> getNames() (o List<String> names() en un record)",
+      "se habrá hecho corresponder con un elemento \"names\" de tipo abierto ArrayType(1, SimpleType.STRING). La conversión a CompositeData llamará a getNames() y convertirá la List<String> resultante en un String[] para el elemento \"names\".",
+      "CompositeData es una interfaz. La clase concreta que representa un tipo como Open Data es CompositeDataSupport, u otra clase que implemente CompositeData y se serialice como CompositeDataSupport.",
+      "Reconstruir una instancia de un tipo Java o clase record J a partir de un CompositeData",
+      "Si opendata(J) es CompositeData para un tipo Java J, o bien puede reconstruirse una instancia de J a partir de un CompositeData, o J no es reconstruible. Si algún elemento del CompositeData no es reconstruible, J tampoco lo es.",
+      "Para cada J, se consultan estas reglas para decidir cómo reconstruir instancias de J a partir de CompositeData. Se usa la primera regla aplicable de la lista.",
+      "Si J tiene un método",
+      "public staticJ from(CompositeData cd)",
+      "se llama a ese método para reconstruir una instancia de J.",
+      "Si no, si J es una clase record y su constructor canónico es aplicable, se reconstruye llamando a ese constructor con los elementos reconstruidos adecuados del CompositeData. El constructor canónico es aplicable si todas las propiedades nombradas por los componentes del record están en el CompositeData.",
+      "Si no, si J tiene al menos un constructor público con la anotación @javax.management.ConstructorParameters o @java.beans.ConstructorProperties, se llama a uno de esos constructores (no necesariamente siempre el mismo) para reconstruir una instancia de J. Si un constructor tiene ambas anotaciones, se usa @javax.management.ConstructorParameters y se ignora @java.beans.ConstructorProperties. Cada anotación debe listar tantas cadenas como parámetros tenga el constructor; cada cadena debe nombrar una propiedad correspondiente a un getter de J, y el tipo de ese getter debe ser igual al del parámetro correspondiente. No es un error que haya getters no mencionados en las anotaciones @ConstructorParameters o @ConstructorProperties (pueden corresponder a información que no hace falta para reconstruir el objeto).",
+      "Una instancia de J se reconstruye llamando a un constructor con los elementos reconstruidos adecuados del CompositeData. El constructor se elige en tiempo de ejecución según los elementos presentes realmente en el CompositeData, ya que este puede venir de una versión anterior de J en la que no estaban todos. Un constructor es aplicable si todas las propiedades de su anotación @ConstructorParameters o @ConstructorProperties están como elementos en el CompositeData. Si ninguno es aplicable, falla la reconstrucción de J.",
+      "Para cualquier combinación posible de propiedades, debe cumplirse que (a) no hay constructores aplicables, (b) hay exactamente uno, o (c) uno de los aplicables nombra un superconjunto propio de las propiedades de cada uno de los demás. (Es decir, nunca debe haber ambigüedad sobre qué constructor elegir). Si no se cumple, J no es reconstruible.",
+      "Si no, si J tiene un constructor público sin argumentos y, para cada getter de J con tipo T y nombre N, hay un setter con el mismo nombre y tipo, se crea una instancia de J con el constructor sin argumentos y se llama a los setters con los elementos reconstruidos del CompositeData para restaurar los valores. Por ejemplo, si hay un método",
+      "public List<String> getNames()",
+      "también debe haber un método",
+      "public void setNames(List<String> names)",
+      "para que se aplique esta regla.",
+      "Si el CompositeData viene de una versión anterior de J, pueden faltar algunos elementos. En ese caso no se llama a los setters correspondientes.",
+      "Si no, si J es una interfaz sin más métodos que getters, se crea una instancia de J con un java.lang.reflect.Proxy y un CompositeDataInvocationHandler respaldado por el CompositeData que se convierte.",
+      "Si no, J no es reconstruible.",
+      "La regla 2 no se aplica si java.beans.ConstructorProperties no es visible (p. ej. cuando el módulo java.desktop no es legible o la imagen de ejecución no lo contiene). Si se apunta a un entorno de ejecución sin el paquete java.beans y hay una discrepancia entre el entorno de compilación y el de ejecución, de modo que J se compila con un constructor público y la anotación ConstructorProperties, J no es reconstruible salvo que se aplique otra regla.",
+      "Estos ejemplos muestran distintas formas de programar un tipo NamedNumber formado por un int y un String. En todos los casos, el CompositeType es así:",
+      "CompositeType( \"NamedNumber\", // typeName \"NamedNumber\", // description new String[] {\"number\", \"name\"}, // itemNames new String[] {\"number\", \"name\"}, // itemDescriptions new OpenType[] {SimpleType.INTEGER, SimpleType.STRING} // itemTypes );",
+      "Método estático from:",
+      "public class NamedNumber { public int getNumber() {return number;} public String getName() {return name;} private NamedNumber(int number, String name) { this.number = number; this.name = name; } public static NamedNumber from(CompositeData cd) { return new NamedNumber((Integer) cd.get(\"number\"), (String) cd.get(\"name\")); } private final int number; private final String name; }",
+      "Record:",
+      "public record NamedNumber(int number, String name) {}",
+      "Constructor público con la anotación @ConstructorParameters:",
+      "public class NamedNumber { public int getNumber() {return number;} public String getName() {return name;} @ConstructorParameters({\"number\", \"name\"}) public NamedNumber(int number, String name) { this.number = number; this.name = name; } private final int number; private final String name; }",
+      "Un setter por cada getter:",
+      "public class NamedNumber { public int getNumber() {return number;} public void setNumber(int number) {this.number = number;} public String getName() {return name;} public void setName(String name) {this.name = name;} public NamedNumber() {} private int number; private String name; }",
+      "Interfaz solo con getters:",
+      "public interface NamedNumber { public int getNumber(); public String getName(); }",
+      "Normalmente es mejor que las clases que solo representan un conjunto de datos sean inmutables: una instancia no puede cambiar una vez creada. El propio CompositeData es inmutable. La inmutabilidad tiene muchas ventajas, sobre todo en seguridad con hilos y seguridad en general. Así que, en general, conviene evitar el enfoque con setters si es posible.",
+      "Tipos recursivos",
+      "Los tipos recursivos (que se refieren a sí mismos) no pueden usarse en interfaces MXBean, como consecuencia de la inmutabilidad de CompositeType. Por ejemplo, este tipo no podría ser el tipo de un atributo, porque se refiere a sí mismo:",
+      "public interface Node { public String getName(); public int getPriority(); public Node getNext(); }",
+      "Siempre es posible reescribir tipos recursivos como este para que dejen de serlo, aunque puede hacer falta introducir tipos nuevos. Por ejemplo:",
+      "public interface NodeList { public List<Node> getNodes(); }",
+      "public interface Node { public String getName(); public int getPriority(); }",
+      "Contenido del MBeanInfo de un MXBean",
+      "Un MXBean es un tipo de Open MBean. Aun así, por compatibilidad, su MBeanInfo no es un OpenMBeanInfo. En concreto, cuando el tipo de un atributo, parámetro o valor de retorno es primitivo, como int, o void (en un tipo de retorno), se representa con un MBeanAttributeInfo, MBeanParameterInfo o MBeanOperationInfo cuyo getType() o getReturnType() devuelve el nombre primitivo (\"int\", etc.). Es así aunque las reglas de correspondencia de arriba indiquen que el opendata es el tipo envoltorio (Integer, etc.).",
+      "El array de constructores públicos que devuelve MBeanInfo.getConstructors() para un MXBean registrado directamente en el MBean Server contiene todos los constructores públicos de ese MXBean. Si la clase del MXBean no es pública, sus constructores tampoco se consideran públicos. La lista de un MXBean creado con la clase StandardMBean se obtiene igual que para los Standard MBeans. Se haya creado como se haya creado, los parámetros de los constructores de un MXBean no están sujetos a las reglas de correspondencia de MXBean ni tienen OpenType correspondiente.",
+      "El array de tipos de notificación que devuelve MBeanInfo.getNotifications() para un MXBean registrado directamente en el MBean Server está vacío si el MXBean no implementa NotificationBroadcaster. Si la implementa, es el resultado de llamar a NotificationBroadcaster.getNotificationInfo() en el momento de registrar el MXBean. Aunque ese resultado cambie después, el de MBeanInfo.getNotifications() no cambia. La lista de un MXBean creado con StandardMBean o StandardEmitterMBean se obtiene igual que para los Standard MBeans.",
+      "El Descriptor de todos los MBeanAttributeInfo, MBeanParameterInfo y MBeanOperationInfo del MBeanInfo tiene un campo openType cuyo valor es el OpenType que indican las reglas de correspondencia. Así, aunque getType() sea \"int\", getDescriptor().getField(\"openType\") será SimpleType.INTEGER.",
+      "El Descriptor de cada uno de estos objetos también tiene un campo originalType, una cadena que representa el tipo Java que aparecía en la interfaz MXBean. Su formato se describe abajo en la sección Nombres de tipo.",
+      "El Descriptor del MBeanInfo tiene un campo mxbean con el valor \"true\".",
+      "Nombres de tipo",
+      "A veces hay que representar como cadena el tipo T sin convertir de un parámetro o valor de retorno de un método de un MXBean. Si T no es genérico, la cadena es el valor que devuelve Class.getName(). Si no, es el valor de genericstring(T), definido así:",
+      "Si T es un tipo no genérico y no array, genericstring(T) es el valor que devuelve Class.getName(), por ejemplo \"int\" o \"java.lang.String\".",
+      "Si T es un array E[], genericstring(T) es genericstring(E) seguido de \"[]\". Por ejemplo, genericstring(int[]) es \"int[]\" y genericstring(List<String>[][]) es \"java.util.List<java.lang.String>[][]\".",
+      "Si no, T es un tipo parametrizado como List<String> y genericstring(T) está formado por: el nombre completo del tipo parametrizado tal como lo devuelve Class.getName(); un ángulo izquierdo (\"<\"); genericstring(A), donde A es el primer parámetro de tipo; si hay un segundo parámetro B, \", \" (una coma y un espacio) seguido de genericstring(B); y un ángulo derecho (\">\").",
+      "Si un método devuelve int[], se representa con la cadena \"[I\" que devuelve Class.getName(), pero si devuelve List<int[]>, se representa con la cadena \"java.util.List<int[]>\".",
+      "Excepciones",
+      "Un problema al hacer corresponder tipos Java con tipos abiertos se indica con una OpenDataException. Puede ocurrir al analizar una interfaz MXBean, por ejemplo si hace referencia a un tipo como java.util.Random que no tiene getters, o al convertir una instancia (un valor de retorno de un método de un MXBean o un parámetro de un método de un proxy MXBean), por ejemplo al convertir de SortedSet<String> a String[] si el SortedSet tiene un Comparator no null.",
+      "Un problema al hacer corresponder tipos abiertos con tipos Java se indica con una InvalidObjectException. Puede ocurrir al analizar una interfaz MXBean, por ejemplo si hace referencia a un tipo no reconstruible según las reglas de arriba en un contexto que exige uno reconstruible, o al convertir una instancia (un parámetro de un método de un MXBean o un valor de retorno de un método de un proxy MXBean), por ejemplo de un String a un Enum si no hay ninguna constante con ese nombre.",
+      "Según el contexto, la OpenDataException o la InvalidObjectException puede ir envuelta en otra excepción, como RuntimeMBeanException o UndeclaredThrowableException. Para toda excepción lanzada se cumplirá la condición C: \"e es una OpenDataException o InvalidObjectException (según corresponda), o C se cumple para e.getCause()\"."
+    ]
+  },
+  "web-java-se-javax.management.relation.RelationService.postRegister": {
+    "body": [
+      "Si la implementación de este método lanza una RuntimeException o un Error, el MBean Server los vuelve a lanzar dentro de una RuntimeMBeanException o RuntimeErrorException, respectivamente. Pero lanzar una excepción en postRegister no cambia el estado del MBean: si ya estaba registrado (registrationDone es true), sigue registrado.",
+      "Esto puede confundir al código que llama a createMBean() o registerMBean(), que podría suponer que el registro ha fallado al recibir la excepción. Por eso se recomienda que las implementaciones de postRegister no lancen excepciones de tiempo de ejecución ni Errors si puede evitarse."
+    ],
+    "parameters": [
+      {
+        "label": "registrationDone",
+        "detail": "Indica si el MBean se ha registrado correctamente en el MBean server. false significa que la fase de registro ha fallado."
+      }
+    ]
+  },
+  "web-java-se-javax.management.relation.RelationSupport.postRegister": {
+    "body": [
+      "Si la implementación de este método lanza una RuntimeException o un Error, el MBean Server los vuelve a lanzar dentro de una RuntimeMBeanException o RuntimeErrorException, respectivamente. Pero lanzar una excepción en postRegister no cambia el estado del MBean: si ya estaba registrado (registrationDone es true), sigue registrado.",
+      "Esto puede confundir al código que llama a createMBean() o registerMBean(), que podría suponer que el registro ha fallado al recibir la excepción. Por eso se recomienda que las implementaciones de postRegister no lancen excepciones de tiempo de ejecución ni Errors si puede evitarse."
+    ],
+    "parameters": [
+      {
+        "label": "registrationDone",
+        "detail": "Indica si el MBean se ha registrado correctamente en el MBean server. false significa que la fase de registro ha fallado."
+      }
+    ]
+  },
+  "web-java-se-javax.management.remote.JMXConnectorServer.postRegister": {
+    "body": [
+      "Si la implementación de este método lanza una RuntimeException o un Error, el MBean Server los vuelve a lanzar dentro de una RuntimeMBeanException o RuntimeErrorException, respectivamente. Pero lanzar una excepción en postRegister no cambia el estado del MBean: si ya estaba registrado (registrationDone es true), sigue registrado.",
+      "Esto puede confundir al código que llama a createMBean() o registerMBean(), que podría suponer que el registro ha fallado al recibir la excepción. Por eso se recomienda que las implementaciones de postRegister no lancen excepciones de tiempo de ejecución ni Errors si puede evitarse."
+    ],
+    "parameters": [
+      {
+        "label": "registrationDone",
+        "detail": "Indica si el MBean se ha registrado correctamente en el MBean server. false significa que la fase de registro ha fallado."
+      }
     ]
   },
   "web-java-se-javax.security.cert.X509Certificate.getSerialNumber": {
