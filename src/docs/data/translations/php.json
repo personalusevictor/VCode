@@ -484,6 +484,247 @@
       "appendXML() añade nodos a partir de una cadena XML. Se crea con DOMDocument::createDocumentFragment()."
     ]
   },
+  "php-class-domdocumenttype": {
+    "description": [
+      "Representa la declaración <!DOCTYPE> del documento. Sus propiedades name, publicId y systemId dan el nombre y los identificadores de la DTD, y entities y notations las declaraciones que contiene.",
+      "Para crear un documento con un tipo concreto, usa DOMImplementation::createDocumentType() y pásalo a DOMImplementation::createDocument()."
+    ]
+  },
+  "php-class-domelement": {
+    "summary": "Representa un elemento del árbol DOM, como <p> o <item>.",
+    "description": [
+      "Es la clase con la que más se trabaja: lee y modifica atributos con getAttribute(), setAttribute() o removeAttribute(), y busca descendientes con getElementsByTagName().",
+      "La propiedad tagName da el nombre del elemento y textContent su texto. Implementa DOMParentNode y DOMChildNode, así que también tiene append(), prepend(), before(), after() y remove()."
+    ]
+  },
+  "php-class-domentity": {
+    "description": [
+      "Corresponde a una declaración <!ENTITY> de la DTD y se obtiene desde la propiedad entities de DOMDocumentType. Es de solo lectura: no representa los usos de la entidad en el texto, que son nodos DOMEntityReference."
+    ]
+  },
+  "php-class-domentityreference": {
+    "summary": "Representa una referencia a una entidad dentro del documento, como &nombre;.",
+    "description": [
+      "Se crea con DOMDocument::createEntityReference() o con su constructor. Solo aparece en el árbol si el documento se cargó sin sustituir las entidades, es decir, con substituteEntities a false."
+    ]
+  },
+  "php-class-domimplementation": {
+    "description": [
+      "createDocument() crea un DOMDocument vacío con un elemento raíz y, opcionalmente, un tipo de documento. createDocumentType() crea ese DOMDocumentType a partir del nombre y los identificadores público y de sistema.",
+      "Es útil cuando necesitas un documento con un DOCTYPE concreto desde el principio."
+    ]
+  },
+  "php-class-domnamednodemap": {
+    "summary": "Colección de nodos a los que se accede por nombre o por posición.",
+    "description": [
+      "La devuelve, por ejemplo, la propiedad attributes de un DOMElement. getNamedItem() busca un nodo por nombre e item() por posición.",
+      "Implementa IteratorAggregate y Countable, así que se puede recorrer con foreach y contar con count()."
+    ]
+  },
+  "php-class-domnamespacenode": {
+    "summary": "Representa una declaración de espacio de nombres en los resultados de una consulta XPath.",
+    "description": [
+      "Aparece, por ejemplo, al consultar el eje namespace:: con DOMXPath. Sus propiedades prefix y namespaceURI dan el prefijo y la URI declarados.",
+      "No forma parte del árbol como los demás nodos y no hereda de DOMNode."
+    ]
+  },
+  "php-class-domnode": {
+    "summary": "Clase base de todos los nodos del árbol DOM.",
+    "description": [
+      "Define la navegación por el árbol con propiedades como parentNode, childNodes, firstChild o nextSibling, y datos comunes como nodeName, nodeType, nodeValue y textContent.",
+      "appendChild(), insertBefore(), replaceChild() y removeChild() modifican los hijos, y cloneNode() copia el nodo. DOMElement, DOMText, DOMAttr y DOMDocument heredan de ella."
+    ]
+  },
+  "php-class-domnodelist": {
+    "description": [
+      "La devuelven childNodes, getElementsByTagName() y DOMXPath::query(). Se accede por posición con item() o con corchetes, se cuenta con count() y se recorre con foreach.",
+      "Las listas de childNodes y getElementsByTagName() reflejan los cambios del árbol. Si eliminas nodos mientras recorres una de ellas hacia delante, te saltarás elementos: recórrela al revés o cópiala antes con iterator_to_array()."
+    ]
+  },
+  "php-class-domnotation": {
+    "summary": "Representa una declaración <!NOTATION> de la DTD.",
+    "description": [
+      "Se obtiene desde la propiedad notations de DOMDocumentType. Sus propiedades publicId y systemId dan los identificadores de la notación. Es de solo lectura."
+    ]
+  },
+  "php-class-domparentnode": {
+    "summary": "Interfaz de los nodos que pueden tener hijos.",
+    "description": [
+      "Añade append() y prepend(), que insertan nodos o cadenas al final o al principio, y replaceChildren(), que sustituye todos los hijos de una vez.",
+      "Existe desde PHP 8.0. La implementan DOMDocument, DOMDocumentFragment y DOMElement."
+    ]
+  },
+  "php-class-domprocessinginstruction": {
+    "description": [
+      "En XML se escriben como <?destino datos?>. Las propiedades target y data dan el destino y el contenido.",
+      "Se crea con DOMDocument::createProcessingInstruction(). La declaración <?xml ...?> del principio no es una instrucción de procesamiento."
+    ]
+  },
+  "php-class-domtext": {
+    "description": [
+      "Se crea con DOMDocument::createTextNode(). Su contenido se escapa al serializar, así que no hace falta convertir < o & a mano.",
+      "splitText() divide el nodo en dos por una posición e isWhitespaceInElementContent() indica si solo contiene espacios en blanco."
+    ]
+  },
+  "php-class-domxpath": {
+    "description": [
+      "Se construye sobre un DOMDocument. query() devuelve un DOMNodeList con los nodos encontrados y evaluate() devuelve además números, cadenas o booleanos cuando la expresión los produce.",
+      "Para consultar documentos con espacios de nombres, registra cada prefijo con registerNamespace(). registerPhpFunctions() permite llamar a funciones PHP desde la expresión."
+    ]
+  },
+  "php-class-ds-collection": {
+    "description": [
+      "Define también clear(), copy(), isEmpty() y toArray(). La implementan todas las estructuras de la extensión, como Ds\\Vector, Ds\\Map o Ds\\Set.",
+      "La extensión ds se instala desde PECL; también existe un polyfill en PHP puro con la misma API."
+    ]
+  },
+  "php-class-ds-map": {
+    "description": [
+      "put() añade o reemplaza un valor, get() lo lee, hasKey() comprueba si existe una clave y remove() la elimina. A diferencia de un array, una clave puede ser un objeto sin convertirse a cadena.",
+      "Si los objetos que usas como clave implementan Ds\\Hashable, la igualdad se decide con sus métodos hash() y equals(). Al recorrerlo con foreach se obtiene cada clave con su valor."
+    ]
+  },
+  "php-class-ds-pair": {
+    "description": [
+      "Tiene las propiedades públicas key y value. Ds\\Map::pairs() y otros métodos lo devuelven, y también se puede crear con new Ds\\Pair($clave, $valor)."
+    ]
+  },
+  "php-class-ds-queue": {
+    "description": [
+      "push() añade al final, pop() saca el primer elemento y peek() lo consulta sin sacarlo.",
+      "Recorrerla con foreach la vacía, porque cada iteración saca un elemento. Si necesitas conservarla, recorre una copia obtenida con copy()."
+    ]
+  },
+  "php-class-ds-sequence": {
+    "description": [
+      "Casos de uso: En cualquier lugar donde se utilizaría un array como lista (sin preocuparse por las claves). Una alternativa más eficiente a SplDoublyLinkedList y SplFixedArray.",
+      "La implementan Ds\\Vector y Ds\\Deque. Acceder a un índice fuera de rango lanza OutOfRangeException en lugar de devolver null."
+    ]
+  },
+  "php-class-ds-set": {
+    "description": [
+      "add() añade valores, contains() comprueba si están y remove() los elimina; los repetidos se ignoran. Mantiene el orden de inserción.",
+      "Ofrece operaciones de conjuntos como union(), intersect(), diff() y xor()."
+    ]
+  },
+  "php-class-ds-stack": {
+    "description": [
+      "Utiliza un Ds\\Vector internamente.",
+      "push() apila, pop() saca el último elemento añadido y peek() lo consulta sin sacarlo. Recorrerla con foreach la vacía, igual que Ds\\Queue."
+    ]
+  },
+  "php-class-ds-vector": {
+    "description": [
+      "push() añade al final, pop() saca el último, y get() y set() acceden por índice en tiempo constante. Añadir o quitar al principio con unshift() o shift() es lineal; para eso conviene Ds\\Deque.",
+      "Usa menos memoria que un array equivalente porque solo guarda valores, sin claves."
+    ]
+  },
+  "php-class-emptyiterator": {
+    "description": [
+      "Sirve cuando un método debe devolver un Iterator pero no hay nada que recorrer: valid() siempre devuelve false.",
+      "Llamar a current() o key() lanza BadMethodCallException, porque no hay ningún elemento."
+    ]
+  },
+  "php-class-enchantbroker": {
+    "description": [
+      "Se obtiene con enchant_broker_init() y sirve para pedir diccionarios con enchant_broker_request_dict() o consultar los disponibles con enchant_broker_list_dicts(). Es final y no se crea con new."
+    ]
+  },
+  "php-class-enchantdictionary": {
+    "description": [
+      "Se obtiene con enchant_broker_request_dict() o enchant_broker_request_pwl_dict(). Se pasa a enchant_dict_check() para comprobar palabras y a enchant_dict_suggest() para obtener sugerencias."
+    ]
+  },
+  "php-class-error": {
+    "description": [
+      "El motor lanza subclases como TypeError, ValueError o ArithmeticError. No hereda de Exception, así que un catch (Exception $e) no la captura; usa catch (Error $e) o catch (Throwable $e).",
+      "Tiene los mismos métodos que Exception: getMessage(), getCode(), getFile(), getLine(), getTrace() y getPrevious()."
+    ]
+  },
+  "php-class-errorexception": {
+    "summary": "Excepción que representa un error clásico de PHP, como una advertencia o un aviso.",
+    "description": [
+      "Su uso habitual es convertir errores en excepciones dentro de set_error_handler(): throw new ErrorException($mensaje, 0, $gravedad, $archivo, $linea).",
+      "getSeverity() devuelve la gravedad del error original, una de las constantes E_*."
+    ]
+  },
+  "php-class-ev": {
+    "description": [
+      "Ev::run() arranca el bucle por defecto y Ev::stop() lo detiene. Los watchers, como EvTimer, EvIo o EvSignal, se registran en ese bucle al crearlos.",
+      "Ev::now() devuelve la hora del bucle, que se actualiza en cada iteración. Para bucles adicionales, usa la clase EvLoop. Pertenece a la extensión PECL ev, basada en libev."
+    ]
+  },
+  "php-class-evchild": {
+    "description": [
+      "Solo está permitido registrar watchers EvChild en el bucle por defecto.",
+      "El constructor recibe el PID que se vigila (0 para cualquier hijo), si también interesan las paradas y reanudaciones, y la función de retrollamada. Las propiedades rpid y rstatus dan el PID y el estado del hijo que cambió."
+    ]
+  },
+  "php-class-evembed": {
+    "description": [
+      "Vigila otro EvLoop y lo procesa dentro del bucle en el que está registrado. Es útil para combinar backends distintos, por ejemplo un bucle con kqueue dentro del bucle por defecto.",
+      "sweep() procesa los eventos pendientes del bucle embebido sin esperar."
+    ]
+  },
+  "php-class-eventbuffer": {
+    "description": [
+      "Los buffers de eventos son generalmente útiles para realizar la parte buffer de una red I/O bufferizada.",
+      "add() añade datos al final, read() y readLine() los extraen y drain() descarta bytes del principio. search() busca una cadena sin copiar el contenido.",
+      "Normalmente se obtiene de un EventBufferEvent, que tiene un buffer de entrada y otro de salida."
+    ]
+  },
+  "php-class-eventconfig": {
+    "description": [
+      "Se pasa al constructor de EventBase. avoidMethod() descarta un backend concreto, como select, y requireFeatures() exige capacidades como operaciones en O(1).",
+      "Pertenece a la extensión PECL event, basada en libevent."
+    ]
+  },
+  "php-class-eventdnsbase": {
+    "description": [
+      "Se crea sobre un EventBase. Con true como segundo argumento lee la configuración del sistema; si no, añade servidores con addNameserverIp().",
+      "Se usa con EventBufferEvent::connectHost() para conectar por nombre de host sin bloquear el bucle."
+    ]
+  },
+  "php-class-eventexception": {
+    "description": [
+      "Hereda de RuntimeException. Captúrala alrededor de las llamadas a la extensión event que dependan de datos externos, como direcciones o configuraciones."
+    ]
+  },
+  "php-class-eventhttp": {
+    "description": [
+      "Se crea sobre un EventBase. bind() escucha en una dirección y un puerto, setCallback() asocia una función a una ruta y setDefaultCallback() atiende el resto.",
+      "Cada función recibe un EventHttpRequest, que permite leer la petición y enviar la respuesta. El servidor funciona dentro del bucle del EventBase."
+    ]
+  },
+  "php-class-eventhttpconnection": {
+    "description": [
+      "Representa la conexión con un servidor HTTP remoto. makeRequest() envía un EventHttpRequest con el método y la ruta indicados.",
+      "setTimeout() y setRetries() controlan el tiempo de espera y los reintentos, y setCloseCallback() avisa cuando se cierra la conexión."
+    ]
+  },
+  "php-class-eventhttprequest": {
+    "description": [
+      "En un servidor EventHttp, permite leer la ruta con getUri(), las cabeceras con getInputHeaders() y el cuerpo con getInputBuffer(), y responder con sendReply() o sendError().",
+      "En un cliente, se crea con una función de retrollamada que recibe la respuesta y se envía con EventHttpConnection::makeRequest(). sendReplyStart(), sendReplyChunk() y sendReplyEnd() permiten respuestas por partes."
+    ]
+  },
+  "php-class-eventlistener": {
+    "description": [
+      "Escucha en un socket y llama a la función indicada cada vez que llega una conexión, pasándole el descriptor del nuevo socket.",
+      "Se crea sobre un EventBase con una dirección o un socket ya abierto. disable() y enable() paran y reanudan la aceptación de conexiones."
+    ]
+  },
+  "php-class-eventsslcontext": {
+    "description": [
+      "El constructor recibe el método SSL o TLS y un array de opciones, como las rutas del certificado y la clave privada.",
+      "Se pasa a EventBufferEvent::sslSocket() o EventBufferEvent::sslFilter() para cifrar una conexión."
+    ]
+  },
+  "php-class-eventutil": {
+    "description": [
+      "No se instancia; sus métodos son estáticos. getLastSocketError() y getLastSocketErrno() dan el último error de socket, getSocketName() la dirección local y setSocketOption() configura opciones del socket."
+    ]
+  },
   "php-function-fann_set_activation_function": {
     "description": [
       "Establece la función de activación para la neurona número neuron en la capa número layer, contando al capa de entrada como capa 0.",
