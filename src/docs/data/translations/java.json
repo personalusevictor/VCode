@@ -41195,6 +41195,65 @@
       }
     ]
   },
+  "web-java-se-org.w3c.dom.DOMConfiguration": {
+    "body": [
+      "Los nombres de parámetros que usa el objeto DOMConfiguration se definen a lo largo de las especificaciones DOM Level 3. Los nombres no distinguen mayúsculas de minúsculas. Para evitar posibles conflictos, por convención, los nombres que se refieren a parámetros definidos fuera de la especificación DOM deben ser únicos. Como los parámetros se exponen como propiedades en los enlaces de lenguaje, se recomienda que los nombres sigan la sección 5.16 Identifiers de [Unicode], con el añadido del carácter '-' (HYPHEN-MINUS), aunque la implementación DOM no lo impone. Las implementaciones de DOM Level 3 Core deben reconocer todos los parámetros definidos en esta especificación. También puede exigirse que la implementación admita algunos valores de parámetros. Consulta la definición de cada parámetro para saber si un valor debe admitirse o no.",
+      "Nota: los parámetros son similares a las características y propiedades usadas en SAX2 [SAX].",
+      "La siguiente es la lista de parámetros definidos en el DOM:",
+      "\"canonical-form\"",
+      "true [opcional] Canonicaliza el documento según las reglas especificadas en [Canonical XML], por ejemplo eliminando del árbol el nodo DocumentType (si lo hay) o eliminando las declaraciones de espacio de nombres superfluas de cada elemento. Ten en cuenta que esto se limita a lo que puede representarse en el DOM; en particular, no hay forma de especificar el orden de los atributos en el DOM. Además, poner este parámetro a true también establece el estado de los parámetros enumerados a continuación. Los cambios posteriores en el estado de uno de esos parámetros devolverán \"canonical-form\" a false. Parámetros puestos a false: \"entities\", \" normalize-characters\", \"cdata-sections\". Parámetros puestos a true: \"namespaces\", \"namespace-declarations\", \"well-formed\", \"element-content-whitespace\". Los demás parámetros no cambian salvo que se indique explícitamente en su descripción.",
+      "false [obligatorio] (predeterminado) No canonicaliza el documento.",
+      "\"cdata-sections\"",
+      "true [obligatorio] (predeterminado) Conserva los nodos CDATASection en el documento. false [obligatorio] Transforma los nodos CDATASection del documento en nodos Text. El nuevo nodo Text se combina después con cualquier nodo Text adyacente.",
+      "\"check-character-normalization\"",
+      "true [opcional] Comprueba si los caracteres del documento están completamente normalizados, según se define en el apéndice B de [XML 1.1]. Cuando se encuentra una secuencia de caracteres que no supera la comprobación de normalización, se emite un error con DOMError.type igual a \"check-character-normalization-failure\". false [obligatorio] (predeterminado) No comprueba si los caracteres están normalizados.",
+      "\"comments\"",
+      "true [obligatorio] (predeterminado) Conserva los nodos Comment en el documento. false [obligatorio] Descarta los nodos Comment del documento.",
+      "\"datatype-normalization\"",
+      "true [opcional] Expone en el árbol los valores normalizados por el esquema, como los valores normalizados de XML Schema en el caso de XML Schema. Como este parámetro requiere información de esquema, el parámetro \"validate\" también se pondrá a true. Tener este parámetro activado cuando \"validate\" es false no tiene efecto y no se producirá ninguna normalización de esquema.",
+      "Nota: como el documento contiene el resultado del procesamiento XML 1.0, este parámetro no se aplica a la normalización de valores de atributo definida en la sección 3.3.3 de [XML 1.0] y solo está pensado para lenguajes de esquemas distintos de la Document Type Definition (DTD).",
+      "false [obligatorio] (predeterminado) No realiza la normalización de esquema en el árbol.",
+      "\"element-content-whitespace\"",
+      "true [obligatorio] (predeterminado) Conserva todos los espacios en blanco del documento. false [opcional] Descarta todos los nodos Text que contengan espacios en blanco en el contenido de elementos, según se describe en [element content whitespace]. Se espera que la implementación use el atributo Text.isElementContentWhitespace para determinar si un nodo Text debe descartarse o no.",
+      "\"entities\"",
+      "true [obligatorio] (predeterminado) Conserva los nodos EntityReference en el documento.",
+      "false [obligatorio] Elimina todos los nodos EntityReference del documento, poniendo directamente en su lugar las expansiones de las entidades. Los nodos Text se normalizan según se define en Node.normalize. Solo se conservan en el documento las referencias a entidades no expandidas.",
+      "Nota: este parámetro no afecta a los nodos Entity.",
+      "\"error-handler\" [obligatorio] Contiene un objeto DOMErrorHandler. Si se encuentra un error en el documento, la implementación llamará al DOMErrorHandler registrado con este parámetro. La implementación puede proporcionar un objeto DOMErrorHandler predeterminado. Cuando se le llama, DOMError.relatedData contendrá el nodo más cercano a donde se produjo el error. Si la implementación no puede determinar el nodo donde se produce el error, DOMError.relatedData contendrá el nodo Document. Las mutaciones del documento desde un manejador de errores producen un comportamiento que depende de la implementación. \"infoset\"",
+      "true [obligatorio] Conserva en el documento la información definida en el XML Information Set [XML Information Set]. Esto fuerza a false los siguientes parámetros: \" validate-if-schema\", \"entities\", \"datatype-normalization\", \"cdata-sections \". Esto fuerza a true los siguientes parámetros: \" namespace-declarations\", \"well-formed\", \"element-content-whitespace\", \" comments\", \"namespaces\". Los demás parámetros no cambian salvo que se indique explícitamente en su descripción. Ten en cuenta que consultar este parámetro con getParameter solo devuelve true si los parámetros individuales indicados arriba están establecidos adecuadamente. false Poner infoset a false no tiene efecto.",
+      "\"namespaces\"",
+      "true [obligatorio] (predeterminado) Realiza el procesamiento de espacios de nombres según se define en [XML Namespaces]. false [opcional] No realiza el procesamiento de espacios de nombres.",
+      "\"namespace-declarations\" Este parámetro no tiene efecto si el parámetro \"namespaces\" es false.",
+      "true [obligatorio] (predeterminado) Incluye en el documento los atributos de declaración de espacio de nombres, especificados o tomados por defecto del esquema. Consulta también las secciones \"Declaring Namespaces\" de [XML Namespaces] y [XML Namespaces 1.1]. false [obligatorio] Descarta todos los atributos de declaración de espacio de nombres. Los prefijos de espacio de nombres (Node.prefix) se conservan aunque este parámetro sea false.",
+      "\"normalize-characters\"",
+      "true [opcional] Normaliza completamente los caracteres del documento según se define en el apéndice B de [XML 1.1].",
+      "false [obligatorio] (predeterminado) No realiza la normalización de caracteres.",
+      "\"schema-location\" [opcional] Representa un objeto DOMString que contiene una lista de URI separadas por espacios en blanco (caracteres que cumplen la producción no terminal S definida en la sección 2.3 de [XML 1.0]), que representa los esquemas contra los que debe realizarse la validación, es decir, el esquema actual. Los tipos de esquema referenciados en esta lista deben coincidir con el tipo especificado con schema-type; de lo contrario, el comportamiento de la implementación es indefinido. Los esquemas especificados con esta propiedad tienen precedencia sobre la información de esquema especificada en el propio documento. Para esquemas con espacios de nombres, si un esquema especificado con esta propiedad y otro especificado en la instancia del documento (es decir, con el atributo schemaLocation) o en un documento de esquema (es decir, con los mecanismos de importación de esquemas) comparten el mismo targetNamespace, se usará el esquema especificado por el usuario con esta propiedad. Si dos esquemas especificados con esta propiedad comparten el mismo targetNamespace o no tienen espacio de nombres, el comportamiento depende de la implementación. Si no se ha proporcionado ninguna ubicación, este parámetro es null.",
+      "Nota: el parámetro \"schema-location\" se ignora salvo que se establezca el valor del parámetro \"schema-type\". Se recomienda encarecidamente establecer Document.documentURI para que la implementación pueda resolver correctamente cualquier entidad externa referenciada.",
+      "\"schema-type\" [opcional] Representa un objeto DOMString que contiene una URI absoluta y representa el tipo de lenguaje de esquemas usado para validar un documento. Ten en cuenta que no se realiza ninguna comprobación léxica sobre la URI absoluta. Si no se establece este parámetro, la implementación puede proporcionar un valor predeterminado, según los lenguajes de esquemas admitidos y el lenguaje usado en el momento de la carga. Si no se proporciona ningún valor, este parámetro es null.",
+      "Nota: para XML Schema [XML Schema Part 1], las aplicaciones deben usar el valor \"http://www.w3.org/2001/XMLSchema\". Para la DTD de XML [XML 1.0], deben usar el valor \"http://www.w3.org/TR/REC-xml\". Otros lenguajes de esquemas quedan fuera del ámbito del W3C y, por tanto, deben recomendar una URI absoluta para usar este método. \"split-cdata-sections\"",
+      "true [obligatorio] (predeterminado) Divide las secciones CDATA que contienen el marcador de fin de sección CDATA ']]>'. Cuando se divide una sección CDATA, se emite una advertencia con DOMError.type igual a \"cdata-sections-splitted\" y DOMError.relatedData igual al primer nodo CDATASection, en orden del documento, resultante de la división.",
+      "false [obligatorio] Señala un error si una CDATASection contiene un carácter no representable.",
+      "\"validate\"",
+      "true [opcional] Exige la validación del documento contra un esquema (es decir, XML Schema, DTD u otro tipo o representación de esquema) mientras se normaliza, según se define en [XML 1.0]. Si se encuentran errores de validación, o no se encuentra ningún esquema, se notifica al manejador de errores. Los valores normalizados por el esquema no se expondrán según el esquema en uso salvo que el parámetro \"datatype-normalization\" sea true. Este parámetro reevaluará:",
+      "Los nodos de atributo con Attr.specified igual a false, según se especifica en la descripción de la interfaz Attr;",
+      "El valor del atributo Text.isElementContentWhitespace de todos los nodos Text;",
+      "El valor del atributo Attr.isId de todos los nodos Attr;",
+      "Los atributos Element.schemaTypeInfo y Attr.schemaTypeInfo.",
+      "Nota: \"validate-if-schema\" y \"validate\" son mutuamente excluyentes; poner uno de ellos a true pone el otro a false. Las aplicaciones también deberían considerar poner el parámetro \"well-formed\" a true, que es su valor predeterminado, al validar el documento. false [obligatorio] (predeterminado) No realiza el procesamiento de esquema, incluido el del subconjunto interno. Se conserva la información de los valores de atributo predeterminados. Ten en cuenta que la validación puede producirse igualmente si \"validate-if-schema\" es true.",
+      "\"validate-if-schema\"",
+      "true [opcional] Habilita la validación solo si puede encontrarse una declaración para el elemento del documento en un esquema (independientemente de dónde se encuentre, es decir, XML Schema, DTD u otro tipo o representación de esquema). Si la validación está habilitada, este parámetro se comporta igual que el parámetro \"validate\" a true.",
+      "Nota: \"validate-if-schema\" y \"validate\" son mutuamente excluyentes; poner uno de ellos a true pone el otro a false. false [obligatorio] (predeterminado) No debe realizarse ningún procesamiento de esquema si el documento tiene un esquema, incluido el del subconjunto interno. Se conserva la información de los valores de atributo predeterminados. Ten en cuenta que la validación debe producirse igualmente si \"validate \" es true.",
+      "\"well-formed\"",
+      "true [obligatorio] (predeterminado) Comprueba si todos los nodos están bien formados según la versión de XML en uso en Document.xmlVersion:",
+      "comprobar si el atributo Node.nodeName contiene caracteres no válidos según su tipo de nodo y generar, si es necesario, un DOMError de tipo \"wf-invalid-character-in-node-name\" con severidad DOMError.SEVERITY_ERROR;",
+      "comprobar si el contenido de texto de los nodos Attr, Element, Comment, Text y CDATASection tiene caracteres no válidos y generar, si es necesario, un DOMError de tipo \"wf-invalid-character\" con severidad DOMError.SEVERITY_ERROR;",
+      "comprobar si los datos de los nodos ProcessingInstruction tienen caracteres no válidos y generar, si es necesario, un DOMError de tipo \"wf-invalid-character\" con severidad DOMError.SEVERITY_ERROR;",
+      "false [opcional] No comprueba si el XML está bien formado.",
+      "La resolución de los identificadores de sistema asociados a las entidades se hace con Document.documentURI. Sin embargo, cuando la implementación DOM admite la característica \"LS\" definida en [DOM Level 3 Load and Save], también puede usarse el parámetro \"resource-resolver\" en los objetos DOMConfiguration asociados a nodos Document. Si se establece este parámetro, Document.normalizeDocument() invocará al resolvedor de recursos en lugar de usar Document.documentURI.",
+      "Consulta también la especificación Document Object Model (DOM) Level 3 Core."
+    ]
+  },
   "web-java-se-org.w3c.dom.Document.adoptNode": {
     "body": [
       "ATTRIBUTE_NODE El atributo ownerElement se establece a null y el flag specified se pone a true en el Attr adoptado. Los descendientes del Attr de origen se adoptan recursivamente. DOCUMENT_FRAGMENT_NODE Los descendientes del nodo de origen se adoptan recursivamente. DOCUMENT_NODE",
@@ -41307,6 +41366,321 @@
         "label": "DOMException",
         "detail": "NOT_SUPPORTED_ERR: se lanza si no se admite el tipo de nodo que se importa. INVALID_CHARACTER_ERR: se lanza si uno de los nombres importados no es un nombre XML según la versión de XML en uso especificada en el atributo Document.xmlVersion. Esto puede ocurrir, por ejemplo, al importar un elemento XML 1.1 [XML 1.1] en un documento XML 1.0."
       }
+    ]
+  },
+  "web-java-se-org.w3c.dom.DocumentFragment": {
+    "body": [
+      "Además, varias operaciones (como insertar nodos como hijos de otro Node) pueden recibir objetos DocumentFragment como argumentos; esto hace que todos los nodos hijos del DocumentFragment se muevan a la lista de hijos de este nodo.",
+      "Los hijos de un nodo DocumentFragment son cero o más nodos que representan las cimas de los subárboles que definen la estructura del documento. Los nodos DocumentFragment no tienen por qué ser documentos XML bien formados (aunque sí deben seguir las reglas impuestas a las entidades XML analizadas bien formadas, que pueden tener varios nodos superiores). Por ejemplo, un DocumentFragment podría tener un solo hijo y ese hijo podría ser un nodo Text. Un modelo de estructura así no representa ni un documento HTML ni un documento XML bien formado.",
+      "Cuando se inserta un DocumentFragment en un Document (o en cualquier otro Node que admita hijos), lo que se inserta en el Node son los hijos del DocumentFragment y no el propio DocumentFragment. Esto hace que DocumentFragment sea muy útil cuando el usuario quiere crear nodos hermanos; el DocumentFragment actúa como padre de esos nodos para que el usuario pueda usar los métodos estándar de la interfaz Node, como Node.insertBefore y Node.appendChild.",
+      "Consulta también la especificación Document Object Model (DOM) Level 3 Core."
+    ]
+  },
+  "web-java-se-org.w3c.dom.Element.setAttributeNS": {
+    "body": [
+      "Según [XML Namespaces], las aplicaciones deben usar el valor null como parámetro namespaceURI de los métodos si no quieren espacio de nombres."
+    ],
+    "parameters": [
+      {
+        "label": "namespaceURI",
+        "detail": "La URI de espacio de nombres del atributo que se crea o modifica."
+      },
+      {
+        "label": "qualifiedName",
+        "detail": "El nombre cualificado del atributo que se crea o modifica."
+      },
+      {
+        "label": "value",
+        "detail": "El valor que se establece, en forma de cadena."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "DOMException",
+        "detail": "INVALID_CHARACTER_ERR: se lanza si el nombre cualificado indicado no es un nombre XML según la versión de XML en uso especificada en el atributo Document.xmlVersion. NO_MODIFICATION_ALLOWED_ERR: se lanza si este nodo es de solo lectura. NAMESPACE_ERR: se lanza si qualifiedName está mal formado según la especificación Namespaces in XML, si qualifiedName tiene prefijo y namespaceURI es null, si qualifiedName tiene el prefijo \"xml\" y namespaceURI es distinta de \" http://www.w3.org/XML/1998/namespace\", si qualifiedName o su prefijo es \"xmlns\" y namespaceURI es distinta de \"http://www.w3.org/2000/xmlns/\", o si namespaceURI es \"http://www.w3.org/2000/xmlns/\" y ni qualifiedName ni su prefijo son \"xmlns\". NOT_SUPPORTED_ERR: puede lanzarse si la implementación no admite la característica \"XML\" y el lenguaje expuesto a través del Document no admite XML Namespaces (como [HTML 4.01])."
+      }
+    ]
+  },
+  "web-java-se-org.w3c.dom.Node.insertBefore": {
+    "body": [
+      "Si newChild es un objeto DocumentFragment, todos sus hijos se insertan, en el mismo orden, antes de refChild. Si newChild ya está en el árbol, primero se elimina.",
+      "Nota: insertar un nodo antes de sí mismo depende de la implementación."
+    ],
+    "parameters": [
+      {
+        "label": "newChild",
+        "detail": "El nodo que se inserta."
+      },
+      {
+        "label": "refChild",
+        "detail": "El nodo de referencia, es decir, el nodo antes del cual debe insertarse el nuevo."
+      }
+    ],
+    "returns": ["El nodo que se inserta."],
+    "exceptions": [
+      {
+        "label": "DOMException",
+        "detail": "HIERARCHY_REQUEST_ERR: se lanza si este nodo es de un tipo que no admite hijos del tipo del nodo newChild, si el nodo que se inserta es uno de los ancestros de este nodo o el propio nodo, o si este nodo es de tipo Document y la aplicación DOM intenta insertar un segundo nodo DocumentType o Element. WRONG_DOCUMENT_ERR: se lanza si newChild se creó a partir de un documento distinto del que creó este nodo. NO_MODIFICATION_ALLOWED_ERR: se lanza si este nodo es de solo lectura o si el padre del nodo que se inserta es de solo lectura. NOT_FOUND_ERR: se lanza si refChild no es hijo de este nodo. NOT_SUPPORTED_ERR: si este nodo es de tipo Document, puede lanzarse esta excepción si la implementación DOM no admite la inserción de un nodo DocumentType o Element."
+      }
+    ]
+  },
+  "web-java-se-org.w3c.dom.Node.normalize": {
+    "intro": [
+      "Pone todos los nodos Text de toda la profundidad del subárbol bajo este Node, incluidos los nodos de atributo, en una forma \"normal\" en la que solo la estructura (por ejemplo, elementos, comentarios, instrucciones de procesamiento, secciones CDATA y referencias a entidades) separa los nodos Text; es decir, no hay nodos Text adyacentes ni nodos Text vacíos. Puede usarse para garantizar que la vista DOM de un documento sea la misma que si se guardara y volviera a cargar, y es útil cuando se van a usar operaciones (como búsquedas XPointer [XPointer]) que dependen de una estructura de árbol concreta. Si el parámetro \"normalize-characters\" del objeto DOMConfiguration asociado a Node.ownerDocument es true, este método también normalizará completamente los caracteres de los nodos Text."
+    ],
+    "body": [
+      "Nota: cuando el documento contiene CDATASections, la operación normalize por sí sola puede no ser suficiente, ya que los XPointers no distinguen entre nodos Text y nodos CDATASection."
+    ]
+  },
+  "web-java-se-org.w3c.dom.Text.getWholeText": {
+    "body": [
+      "Por ejemplo, en el ejemplo siguiente, wholeText en el nodo Text que contiene \"bar\" devuelve \"barfoo\", y en el nodo Text que contiene \"foo\" también devuelve \"barfoo\".",
+      "+-----+ | <p> | +-----+ /\\ / \\ /-----\\ +-------+ | bar | | &ent; | \\-----/ +-------+ | | /-----\\ | foo | \\-----/",
+      "Figura: el valor de barTextNode.wholeText es \"barfoo\""
+    ]
+  },
+  "web-java-se-org.w3c.dom.Text.replaceWholeText": {
+    "body": [
+      "Este método devuelve el nodo que recibió el texto de reemplazo. El nodo devuelto es:",
+      "null, cuando el texto de reemplazo es la cadena vacía;",
+      "el nodo actual, salvo cuando es de solo lectura;",
+      "un nuevo nodo Text del mismo tipo (Text o CDATASection) que el nodo actual, insertado en la posición del reemplazo.",
+      "Por ejemplo, en el ejemplo anterior, llamar a replaceWholeText en el nodo Text que contiene \"bar\" con \"yo\" como argumento da como resultado lo siguiente:",
+      "+-----+ | <p> | +-----+ | | /-----\\ | yo | \\-----/",
+      "Figura: barTextNode.replaceWholeText(\"yo\") cambia el contenido textual de barTextNode a \"yo\"",
+      "Cuando los nodos que se van a eliminar son descendientes de solo lectura de una EntityReference, debe eliminarse la EntityReference en lugar de los nodos de solo lectura. Si alguna EntityReference que se va a eliminar tiene descendientes que no son nodos EntityReference, Text o CDATASection, el método replaceWholeText debe fallar antes de realizar ninguna modificación en el documento, lanzando una DOMException con el código NO_MODIFICATION_ALLOWED_ERR.",
+      "Por ejemplo, en el ejemplo siguiente, llamar a replaceWholeText en el nodo Text que contiene \"bar\" falla, porque el nodo EntityReference \"ent\" contiene un nodo Element que no puede eliminarse."
+    ],
+    "parameters": [
+      {
+        "label": "content",
+        "detail": "El contenido del nodo Text de reemplazo."
+      }
+    ],
+    "returns": ["El nodo Text creado con el contenido indicado."],
+    "exceptions": [
+      {
+        "label": "DOMException",
+        "detail": "NO_MODIFICATION_ALLOWED_ERR: se lanza si uno de los nodos Text que se reemplazan es de solo lectura."
+      }
+    ]
+  },
+  "web-java-se-org.w3c.dom.TypeInfo.DERIVATION_LIST": {
+    "body": [
+      "La definición de tipo de referencia deriva por lista de la otra definición de tipo si existen dos definiciones de tipo T1 y T2 tales que la definición de tipo de referencia deriva de T1 por DERIVATION_RESTRICTION o DERIVATION_EXTENSION, T2 deriva de la otra definición de tipo por DERIVATION_RESTRICTION, T1 tiene {variety} list y T2 es la {item type definition}. Ten en cuenta que T1 podría ser la propia definición de tipo de referencia, y T2 la propia otra definición de tipo."
+    ]
+  },
+  "web-java-se-org.w3c.dom.TypeInfo.isDerivedFrom": {
+    "parameters": [
+      {
+        "label": "typeNamespaceArg",
+        "detail": "el espacio de nombres de la otra definición de tipo."
+      },
+      {
+        "label": "typeNameArg",
+        "detail": "el nombre de la otra definición de tipo."
+      },
+      {
+        "label": "derivationMethod",
+        "detail": "el tipo de derivación y las condiciones aplicadas entre dos tipos, según se describe en la lista de constantes de esta interfaz."
+      }
+    ],
+    "returns": [
+      "Si el esquema del documento es una DTD o no hay ningún esquema asociado al documento, este método siempre devuelve false. Si el esquema del documento es un XML Schema, el método devuelve true si la definición de tipo de referencia deriva de la otra definición de tipo según el parámetro derivation. Si el valor del parámetro es 0 (ningún bit del parámetro derivationMethod está a 1), el método devuelve true si se puede llegar a la otra definición de tipo recorriendo cualquier combinación de {base type definition}, {item type definition} o {member type definitions} desde la definición de tipo de referencia."
+    ]
+  },
+  "web-java-se-org.w3c.dom.events.Event.initEvent": {
+    "parameters": [
+      {
+        "label": "eventTypeArg",
+        "detail": "Especifica el tipo de evento. Puede ser cualquier tipo de evento definido actualmente en esta especificación o un nuevo tipo de evento. La cadena debe ser un nombre XML. Ningún tipo de evento nuevo debe empezar por la cadena \"DOM\" en mayúsculas, minúsculas o una mezcla. Este prefijo está reservado para futuros conjuntos de eventos DOM. También se recomienda encarecidamente que los terceros que añadan sus propios eventos usen su propio prefijo para evitar confusiones y reducir la probabilidad de conflictos con otros eventos nuevos."
+      },
+      {
+        "label": "canBubbleArg",
+        "detail": "Especifica si el evento puede propagarse hacia arriba (bubbling)."
+      },
+      {
+        "label": "cancelableArg",
+        "detail": "Especifica si puede impedirse la acción predeterminada del evento."
+      }
+    ]
+  },
+  "web-java-se-org.w3c.dom.events.MouseEvent.initMouseEvent": {
+    "parameters": [
+      {
+        "label": "typeArg",
+        "detail": "Especifica el tipo de evento."
+      },
+      {
+        "label": "canBubbleArg",
+        "detail": "Especifica si el evento puede propagarse hacia arriba (bubbling)."
+      },
+      {
+        "label": "cancelableArg",
+        "detail": "Especifica si puede impedirse la acción predeterminada del evento."
+      },
+      {
+        "label": "viewArg",
+        "detail": "Especifica el AbstractView del Event."
+      },
+      {
+        "label": "detailArg",
+        "detail": "Especifica el número de clics de ratón del Event."
+      },
+      {
+        "label": "screenXArg",
+        "detail": "Especifica la coordenada x de pantalla del Event"
+      },
+      {
+        "label": "screenYArg",
+        "detail": "Especifica la coordenada y de pantalla del Event"
+      },
+      {
+        "label": "clientXArg",
+        "detail": "Especifica la coordenada x de cliente del Event"
+      },
+      {
+        "label": "clientYArg",
+        "detail": "Especifica la coordenada y de cliente del Event"
+      },
+      {
+        "label": "ctrlKeyArg",
+        "detail": "Especifica si la tecla Control estaba pulsada durante el Event."
+      },
+      {
+        "label": "altKeyArg",
+        "detail": "Especifica si la tecla Alt estaba pulsada durante el Event."
+      },
+      {
+        "label": "shiftKeyArg",
+        "detail": "Especifica si la tecla Mayús estaba pulsada durante el Event."
+      },
+      {
+        "label": "metaKeyArg",
+        "detail": "Especifica si la tecla Meta estaba pulsada durante el Event."
+      },
+      {
+        "label": "buttonArg",
+        "detail": "Especifica el botón del ratón del Event."
+      },
+      {
+        "label": "relatedTargetArg",
+        "detail": "Especifica el EventTarget relacionado del Event."
+      }
+    ]
+  },
+  "web-java-se-org.w3c.dom.events.MutationEvent.initMutationEvent": {
+    "parameters": [
+      {
+        "label": "typeArg",
+        "detail": "Especifica el tipo de evento."
+      },
+      {
+        "label": "canBubbleArg",
+        "detail": "Especifica si el evento puede propagarse hacia arriba (bubbling)."
+      },
+      {
+        "label": "cancelableArg",
+        "detail": "Especifica si puede impedirse la acción predeterminada del evento."
+      },
+      {
+        "label": "relatedNodeArg",
+        "detail": "Especifica el Node relacionado del Event."
+      },
+      {
+        "label": "prevValueArg",
+        "detail": "Especifica el atributo prevValue del Event. Este valor puede ser null."
+      },
+      {
+        "label": "newValueArg",
+        "detail": "Especifica el atributo newValue del Event. Este valor puede ser null."
+      },
+      {
+        "label": "attrNameArg",
+        "detail": "Especifica el atributo attrName del Event. Este valor puede ser null."
+      },
+      {
+        "label": "attrChangeArg",
+        "detail": "Especifica el atributo attrChange del Event"
+      }
+    ]
+  },
+  "web-java-se-org.w3c.dom.events.UIEvent.initUIEvent": {
+    "parameters": [
+      {
+        "label": "typeArg",
+        "detail": "Especifica el tipo de evento."
+      },
+      {
+        "label": "canBubbleArg",
+        "detail": "Especifica si el evento puede propagarse hacia arriba (bubbling)."
+      },
+      {
+        "label": "cancelableArg",
+        "detail": "Especifica si puede impedirse la acción predeterminada del evento."
+      },
+      {
+        "label": "viewArg",
+        "detail": "Especifica el AbstractView del Event."
+      },
+      {
+        "label": "detailArg",
+        "detail": "Especifica el detalle del Event."
+      }
+    ]
+  },
+  "web-java-se-org.w3c.dom.ls.LSParser": {
+    "body": [
+      "LSParser ofrece una API para analizar XML y construir la estructura de documento DOM correspondiente. Se puede obtener una instancia de LSParser invocando el método DOMImplementationLS.createLSParser().",
+      "Según se especifica en [DOM Level 3 Core], cuando un documento se pone a disposición por primera vez mediante el LSParser:",
+      "nunca habrá dos nodos adyacentes de tipo NODE_TEXT, y nunca habrá nodos de texto vacíos.",
+      "se espera que los atributos value y nodeValue de un nodo Attr devuelvan inicialmente el valor normalizado según XML 1.0. Sin embargo, si los parámetros \"validate-if-schema\" y \"datatype-normalization\" están a true, según la normalización de atributos usada, los valores de los atributos pueden diferir de los obtenidos con la normalización de atributos de XML 1.0. Si el parámetro \"datatype-normalization\" está a false, se garantiza la normalización de atributos de XML 1.0, y si la lista de atributos no contiene declaraciones de espacio de nombres, el atributo attributes del nodo Element representa la propiedad [attributes] definida en [XML Information Set].",
+      "Se espera que los objetos LSParser asíncronos implementen también la interfaz events::EventTarget, para que puedan registrarse listeners de eventos en ellos.",
+      "Los eventos que admiten los objetos LSParser asíncronos son:",
+      "load",
+      "El LSParser termina de cargar el documento. Consulta también la definición de la interfaz LSLoadEvent. progress El LSParser señala el progreso a medida que se analizan los datos. Esta especificación no intenta definir exactamente cuándo deben despacharse los eventos de progreso; se deja intencionadamente dependiente de la implementación. Este es un ejemplo de cómo una aplicación podría despachar eventos de progreso: cuando el parser empieza a recibir datos, se despacha un evento de progreso para indicar que empieza el análisis. A partir de ahí, se despacha un evento de progreso por cada 4096 bytes de datos recibidos y procesados. Es solo un ejemplo, y las implementaciones pueden despachar eventos de progreso en cualquier momento durante el análisis, o no despacharlos en absoluto. Consulta también la definición de la interfaz LSProgressEvent.",
+      "Nota: todos los eventos definidos en esta especificación usan la URI de espacio de nombres \"http://www.w3.org/2002/DOMLS\".",
+      "Al analizar una fuente de entrada, los errores se notifican a la aplicación mediante el manejador de errores (el parámetro \"error-handler\" de LSParser.domConfig). Esta especificación no intenta en absoluto definir todos los errores posibles que pueden producirse al analizar XML u otro marcado, pero sí define algunos casos de error habituales. Los tipos (DOMError.type) de errores y advertencias que define esta especificación son:",
+      "\"check-character-normalization-failure\" [error] Se lanza si el parámetro \"check-character-normalization\" está a true y se encuentra una cadena que no supera la comprobación de normalización. \"doctype-not-allowed\" [fatal] Se lanza si el parámetro de configuración \"disallow-doctype\" está a true y se encuentra un doctype. \"no-input-specified\" [fatal]",
+      "Se lanza al cargar un documento si no se especifica ninguna entrada en el objeto LSInput.",
+      "\"pi-base-uri-not-preserved\" [advertencia] Se lanza si se encuentra una instrucción de procesamiento en una posición donde no puede conservarse su URI base. Un ejemplo de caso en el que se lanzará esta advertencia es cuando el parámetro de configuración \"entities\" está a false y se analiza el siguiente archivo XML:",
+      "<!DOCTYPE root [ <!ENTITY e SYSTEM 'subdir/myentity.ent' ]> <root> &e; </root>",
+      "Y subdir/myentity.ent contiene:",
+      "<one> <two/> </one> <?pi 3.14159?> <more/>",
+      "\"unbound-prefix-in-entity\" [advertencia] Advertencia dependiente de la implementación que puede lanzarse si el parámetro de configuración \"namespaces\" está a true y se encuentra un prefijo de espacio de nombres no ligado en el texto de reemplazo de una entidad. No se impone lanzar esta advertencia, ya que algunos parsers existentes pueden no reconocer prefijos no ligados en el texto de reemplazo de las entidades.",
+      "\"unknown-character-denormalization\" [fatal] Se lanza si el parámetro de configuración \"ignore-unknown-character-denormalizations\" está a false y se encuentra un carácter cuyas propiedades de normalización no puede determinar el procesador.",
+      "\"unsupported-encoding\" [fatal] Se lanza si se encuentra una codificación no admitida. \"unsupported-media-type\" [fatal]",
+      "Se lanza si el parámetro de configuración \"supported-media-types-only\" está a true y se encuentra un tipo de medio no admitido.",
+      "Además de lanzar los errores y advertencias definidos, se espera que las implementaciones lancen errores y advertencias propios para cualquier otro caso, como errores de E/S (archivo no encontrado, permiso denegado...), errores de XML mal formado, etc.",
+      "Consulta también la especificación Document Object Model (DOM) Level 3 Load and Save."
+    ]
+  },
+  "web-java-se-org.w3c.dom.ls.LSSerializer": {
+    "body": [
+      "Durante la serialización de datos XML, la corrección de espacios de nombres se hace según el apéndice B de [DOM Level 3 Core]. [DOM Level 2 Core] permite cadenas vacías como URI de espacio de nombres real. Si el namespaceURI de un Node es la cadena vacía, la serialización lo tratará como null, ignorando el prefijo si lo hay.",
+      "LSSerializer acepta cualquier tipo de nodo para serializar. Para los nodos de tipo Document o Entity, se creará XML bien formado cuando sea posible (está garantizado si el documento o la entidad proceden de una operación de análisis y no han cambiado desde que se crearon). La salida serializada de estos tipos de nodo es, respectivamente, un documento XML o una entidad XML externa, y es una entrada aceptable para un parser XML. Para todos los demás tipos de nodo, la forma serializada depende de la implementación.",
+      "Dentro de un Document, DocumentFragment o Entity que se serializa, los Nodes se procesan así",
+      "Los nodos Document se escriben incluyendo la declaración XML (salvo que el parámetro \"xml-declaration\" esté a false) y un subconjunto DTD, si existe en el DOM. Escribir un nodo Document serializa el documento completo.",
+      "Los nodos Entity, cuando se escriben directamente con LSSerializer.write, generan la expansión de la entidad, pero no se hace ninguna corrección de espacios de nombres. La salida resultante será válida como entidad externa.",
+      "Si el parámetro \"entities\" está a true, los nodos EntityReference se serializan como referencia a entidad de la forma \" &entityName;\" en la salida. Los nodos hijos (la expansión) de la referencia a entidad se ignoran. Si el parámetro \"entities\" está a false, solo se serializan los hijos de la referencia a entidad. Los nodos EntityReference sin hijos (sin nodo Entity correspondiente o cuyos nodos Entity correspondientes no tienen hijos) siempre se serializan.",
+      "Las secciones CDATA que contienen caracteres que no pueden representarse en la codificación de salida indicada se tratan según el parámetro \"split-cdata-sections\". Si está a true, las secciones CDATA se dividen y los caracteres no representables se serializan como referencias numéricas a caracteres en contenido ordinario. No se especifican la posición exacta ni el número de divisiones. Si está a false, los caracteres no representables de una sección CDATA se notifican como errores \"wf-invalid-character\" si el parámetro \"well-formed\" está a true. El error no es recuperable: no hay mecanismo para proporcionar caracteres alternativos y continuar con la serialización.",
+      "Los nodos DocumentFragment se serializan serializando los hijos del fragmento de documento en el orden en que aparecen en él.",
+      "Todos los demás tipos de nodo (Element, Text, etc.) se serializan en su forma de código XML correspondiente.",
+      "Nota: la serialización de un Node no siempre genera un documento XML bien formado; es decir, un LSParser podría lanzar errores fatales al analizar la serialización resultante.",
+      "Dentro de los datos de caracteres de un documento (fuera del marcado), cualquier carácter que no pueda representarse directamente se reemplaza por una referencia a carácter. Las apariciones de '<' y '&' se reemplazan por las entidades predefinidas &lt; y &amp;. Las otras entidades predefinidas (&gt;, &apos; y &quot;) pueden no usarse, salvo donde haga falta (por ejemplo, usar &gt; en casos como ']]>'). Cualquier carácter que no pueda representarse directamente en la codificación de caracteres de salida se serializa como referencia numérica a carácter (y como los estándares de codificación suelen usar representaciones hexadecimales de los caracteres, se recomienda usar la representación hexadecimal al serializar referencias a caracteres).",
+      "Para que los valores de atributo puedan contener comillas simples y dobles, el apóstrofo o comilla simple (') puede representarse como \"&apos;\", y la comilla doble (\") como \"&quot;\". Los saltos de línea y otros caracteres que no pueden representarse directamente en los valores de atributo con la codificación de salida se serializan como referencia numérica a carácter.",
+      "Dentro del marcado, pero fuera de los atributos, cualquier aparición de un carácter que no pueda representarse en la codificación de salida se notifica como error fatal DOMError. Un ejemplo sería serializar el elemento <LaCañada/> con encoding=\"us-ascii\". Esto generará un DOMError \"wf-invalid-character-in-node-name\" (según se propone en \"well-formed\").",
+      "Cuando se solicita poniendo a true el parámetro \"normalize-characters\" de LSSerializer, se realiza la normalización de caracteres según la definición de caracteres completamente normalizados del apéndice E de [XML 1.1] sobre todos los datos que se serializan, tanto marcado como datos de caracteres. El proceso de normalización solo afecta a los datos mientras se escriben; no altera la vista DOM del documento una vez terminada la serialización.",
+      "Las implementaciones deben admitir las codificaciones \"UTF-8\", \"UTF-16\", \"UTF-16BE\" y \"UTF-16LE\" para garantizar que los datos se puedan serializar en todas las codificaciones que deben admitir todos los parsers XML. Cuando la codificación es UTF-8, que se serialice o no una marca de orden de bytes, o que la salida sea big-endian o little-endian, depende de la implementación. Cuando la codificación es UTF-16, que la salida sea big-endian o little-endian depende de la implementación, pero debe generarse una marca de orden de bytes para salidas que no son de caracteres, como LSOutput.byteStream o LSOutput.systemId. Si no se genera la marca de orden de bytes, se notifica una advertencia \"byte-order-mark-needed\". Cuando la codificación es UTF-16LE o UTF-16BE, la salida es big-endian (UTF-16BE) o little-endian (UTF-16LE) y no se genera la marca de orden de bytes. En todos los casos, la declaración de codificación, si se genera, corresponderá a la codificación usada en la serialización (por ejemplo, aparecerá encoding=\"UTF-16\" si se solicitó UTF-16).",
+      "Los espacios de nombres se corrigen durante la serialización: el proceso verifica que las declaraciones de espacio de nombres, los prefijos y la URI de espacio de nombres asociada a elementos y atributos sean coherentes. Si se encuentran incoherencias, la forma serializada del documento se modifica para eliminarlas. El método usado para corregir los espacios de nombres al serializar un documento es el algoritmo definido en el apéndice B.1, \"Namespace normalization\", de [DOM Level 3 Core].",
+      "Al serializar un documento, el parámetro \"discard-default-content\" controla si se serializan o no los datos no especificados.",
+      "Durante la serialización, los errores y advertencias se notifican a la aplicación mediante el manejador de errores (el parámetro \"error-handler\" de LSSerializer.domConfig). Esta especificación no intenta en absoluto definir todos los errores y advertencias posibles al serializar un nodo DOM, pero sí define algunos casos habituales. Los tipos (DOMError.type) de errores y advertencias que define esta especificación son:",
+      "\"no-output-specified\" [fatal] Se lanza al escribir en un LSOutput si no se especifica ninguna salida en el LSOutput.",
+      "\"unbound-prefix-in-entity-reference\" [fatal] Se lanza si el parámetro de configuración \"namespaces\" está a true y se referencia una entidad cuyo texto de reemplazo contiene prefijos de espacio de nombres no ligados en una posición donde no hay vínculos para esos prefijos.",
+      "\"unsupported-encoding\" [fatal] Se lanza si se encuentra una codificación no admitida.",
+      "Además de lanzar los errores y advertencias definidos, se espera que las implementaciones lancen errores y advertencias propios para cualquier otro caso, como errores de E/S (archivo no encontrado, permiso denegado...), etc.",
+      "Consulta también la",
+      "especificación Document Object Model (DOM) Level 3 Load and Save."
     ]
   }
 }
