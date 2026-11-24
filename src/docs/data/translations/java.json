@@ -35846,6 +35846,387 @@
       "Los Groups no tienen constructores públicos; usa en su lugar los métodos create de GroupLayout."
     ]
   },
+  "web-java-se-javax.swing.InputVerifier": {
+    "body": [
+      "El siguiente ejemplo tiene dos campos de texto, y el primero espera que el usuario introduzca la cadena \"pass\". Si se introduce esa cadena en el primer campo o el segundo campo contiene la cadena \"accept\", el usuario puede llevar el foco al segundo campo haciendo clic en él o pulsando TAB. Sin embargo, si se introduce otra cadena en el primer campo y el segundo no contiene \"accept\", el usuario no podrá transferir el foco al segundo campo de texto.",
+      "import java.awt.*; import javax.swing.*;",
+      "// This program demonstrates the use of the Swing InputVerifier class. // It creates two text fields; the first of the text fields expects the // string \"pass\" as input, and will allow focus to advance to the second text // field if either that string is typed in by the user or the second // field contains \"accept\" string.",
+      "public class VerifierTest extends JFrame {",
+      "public VerifierTest() { JTextField field1 = new JTextField(\"Type \\\"pass\\\" here\"); JTextField field2 = new JTextField(\"or \\\"accept\\\" here\"); getContentPane().add(field1, BorderLayout.NORTH); getContentPane().add(field2, BorderLayout.SOUTH);",
+      "field1.setInputVerifier(new InputVerifier() { public boolean verify(JComponent input) { return \"pass\".equals(((JTextField) input).getText()); }",
+      "public boolean verifyTarget(JComponent input) { return \"accept\".equals(((JTextField) input).getText()); }",
+      "public boolean shouldYieldFocus(JComponent source, JComponent target) { return verify(source) || verifyTarget(target); } });",
+      "pack(); setVisible(true); }",
+      "public static void main(String[] args) { SwingUtilities.invokeLater(VerifierTest::new); } }"
+    ]
+  },
+  "web-java-se-javax.swing.JComponent.getBaseline": {
+    "intro": [
+      "Devuelve la línea base, medida desde la parte superior del componente. Este método está pensado sobre todo para que los LayoutManagers alineen componentes por su línea base. Un valor menor que 0 indica que el componente no tiene una línea base razonable y que los LayoutManagers no deben alinearlo por ella."
+    ],
+    "body": [
+      "Este método llama al método del mismo nombre de ComponentUI. Si este componente no tiene ComponentUI, se devuelve -1. Si se devuelve un valor >= 0, el componente tiene una línea base válida para cualquier tamaño >= el tamaño mínimo, y puede usarse getBaselineResizeBehavior para saber cómo cambia la línea base con el tamaño."
+    ]
+  },
+  "web-java-se-javax.swing.JComponent.getListeners": {
+    "body": [
+      "Puedes especificar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los listeners de ratón de un JComponent c con el siguiente código:",
+      "MouseListener[] mls = (MouseListener[])(c.getListeners(MouseListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este componente, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JDialog.setDefaultLookAndFeelDecorated": {
+    "body": [
+      "Puedes conseguir el mismo efecto en un único JDialog haciendo lo siguiente:",
+      "JDialog dialog = new JDialog(); dialog.setUndecorated(true); dialog.getRootPane().setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);"
+    ],
+    "parameters": [
+      {
+        "label": "defaultLookAndFeelDecorated",
+        "detail": "Una sugerencia sobre si el look and feel actual debe proporcionar las decoraciones de la ventana"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JEditorPane": {
+    "body": [
+      "Este componente usa implementaciones de EditorKit para lograr su comportamiento. En la práctica se transforma en el tipo de editor de texto adecuado para el tipo de contenido que recibe. El tipo de contenido al que está ligado el editor en cada momento lo determina el EditorKit instalado. Si el contenido se establece a una nueva URL, se usa su tipo para determinar el EditorKit que debe usarse para cargarlo.",
+      "Por defecto, se conocen los siguientes tipos de contenido:",
+      "text/plain Texto plano, que es el tipo predeterminado cuando el tipo dado no se reconoce. El kit usado en este caso es una extensión de DefaultEditorKit que produce una vista de texto plano con ajuste de línea. text/html Texto HTML. El kit usado en este caso es la clase javax.swing.text.html.HTMLEditorKit, que admite HTML 3.2. text/rtf Texto RTF. El kit usado en este caso es la clase javax.swing.text.rtf.RTFEditorKit, que ofrece un soporte limitado del Rich Text Format.",
+      "Hay varias formas de cargar contenido en este componente.",
+      "El método setText puede usarse para inicializar el componente a partir de una cadena. En este caso se usa el EditorKit actual y se espera que el contenido sea de ese tipo.",
+      "El método read puede usarse para inicializar el componente a partir de un Reader. Ten en cuenta que, si el tipo de contenido es HTML, las referencias relativas (por ejemplo, para imágenes) no pueden resolverse a menos que se use la etiqueta <base> o se establezca la propiedad Base de HTMLDocument. En este caso se usa el EditorKit actual y se espera que el contenido sea de ese tipo.",
+      "El método setPage puede usarse para inicializar el componente a partir de una URL. En este caso, el tipo de contenido se determina a partir de la URL y se establece el EditorKit registrado para ese tipo de contenido.",
+      "Algunos tipos de contenido pueden admitir hipervínculos generando eventos de hipervínculo. El EditorKit de HTML genera eventos de hipervínculo si el JEditorPane no es editable (se ha llamado a JEditorPane.setEditable(false);). Si hay marcos HTML incrustados en el documento, la respuesta habitual sería cambiar una parte del documento actual. El siguiente fragmento de código es una posible implementación de un listener de hipervínculos que trata de forma especial los eventos de marcos HTML y simplemente muestra cualquier otro hipervínculo activado.",
+      "class Hyperactive implements HyperlinkListener {",
+      "public void hyperlinkUpdate(HyperlinkEvent e) { if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) { JEditorPane pane = (JEditorPane) e.getSource(); if (e instanceof HTMLFrameHyperlinkEvent) { HTMLFrameHyperlinkEvent evt = (HTMLFrameHyperlinkEvent)e; HTMLDocument doc = (HTMLDocument)pane.getDocument(); doc.processHTMLFrameHyperlinkEvent(evt); } else { try { pane.setPage(e.getURL()); } catch (Throwable t) { t.printStackTrace(); } } } } }",
+      "Para saber cómo personalizar el renderizado de text/html, consulta W3C_LENGTH_UNITS y HONOR_DISPLAY_PROPERTIES.",
+      "La información culturalmente dependiente de algunos documentos se trata mediante un mecanismo llamado codificación de caracteres. Una codificación de caracteres es una correspondencia inequívoca entre los miembros de un juego de caracteres (letras, ideogramas, dígitos, símbolos o funciones de control) y valores numéricos concretos. Representa la forma en que se almacena el archivo. Algunos ejemplos de codificaciones son ISO-8859-1, ISO-8859-5, Shift-jis, Euc-jp y UTF-8. Cuando el archivo se pasa a un agente de usuario (JEditorPane), se convierte al juego de caracteres del documento (ISO-10646, también llamado Unicode).",
+      "Hay varias formas de conseguir que JEditorPane aplique una correspondencia de juego de caracteres.",
+      "Una es especificar el juego de caracteres como parámetro del tipo MIME. Esto se establece con una llamada al método setContentType. Si el contenido se carga con el método setPage, el tipo de contenido se habrá establecido según la especificación de la URL. Si el archivo se carga directamente, se espera que el tipo de contenido se haya establecido antes de cargarlo.",
+      "Otra forma de especificar el juego de caracteres es en el propio documento. Esto requiere leer el documento antes de determinar el juego de caracteres deseado. Para gestionarlo, se espera que la operación EditorKit.read lance una ChangedCharSetException, que será capturada. Entonces la lectura se reinicia con un nuevo Reader que usa el juego de caracteres especificado en la ChangedCharSetException (que es una IOException).",
+      "Saltos de línea",
+      "Para ver cómo se tratan los saltos de línea, consulta DefaultEditorKit.",
+      "Advertencia: Swing no es seguro para hilos. Para más información, consulta la política de hilos de Swing.",
+      "Advertencia: los objetos serializados de esta clase no serán compatibles con futuras versiones de Swing. El soporte de serialización actual es adecuado para almacenamiento a corto plazo o RMI entre aplicaciones que ejecutan la misma versión de Swing. Desde la 1.4, el paquete java.beans incluye soporte para el almacenamiento a largo plazo de todos los JavaBeans. Consulta java.beans.XMLEncoder."
+    ]
+  },
+  "web-java-se-javax.swing.JFileChooser.setDragEnabled": {
+    "body": [
+      "Cuando el arrastre automático está habilitado, la mayoría de los look and feels inician una operación de arrastrar y soltar cada vez que el usuario pulsa el botón del ratón sobre un elemento y luego mueve el ratón unos píxeles. Por tanto, poner esta propiedad a true puede tener un efecto sutil en el comportamiento de las selecciones.",
+      "Algunos look and feels pueden no admitir el arrastrar y soltar automático; en ese caso ignorarán esta propiedad. Puedes sortearlo modificando el componente para que llame directamente al método exportAsDrag de un TransferHandler."
+    ],
+    "parameters": [
+      {
+        "label": "b",
+        "detail": "el valor al que se establece la propiedad dragEnabled"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "HeadlessException",
+        "detail": "si b es true y GraphicsEnvironment.isHeadless() devuelve true"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JFormattedTextField": {
+    "body": [
+      "JFormattedTextField ftf = new JFormattedTextField(); ftf.setValue(new Date());",
+      "Una vez creado un JFormattedTextField, puedes escuchar los cambios de edición añadiendo un PropertyChangeListener y atendiendo a los PropertyChangeEvent con el nombre de propiedad value.",
+      "JFormattedTextField permite configurar qué acción debe realizarse cuando se pierde el foco. Las configuraciones posibles son:",
+      "Configuraciones posibles de JFormattedTextField y su descripción",
+      "Valor · Descripción",
+      "JFormattedTextField.REVERT · Revierte lo mostrado para que coincida con getValue, pudiendo perder la edición actual.",
+      "JFormattedTextField.COMMIT · Confirma el valor actual. Si el AbstractFormatter no considera válido el valor que se está editando, es decir, si se lanza una ParseException, el valor no cambia y el valor editado se mantiene.",
+      "JFormattedTextField.COMMIT_OR_REVERT · Similar a COMMIT, pero si el valor no es válido se comporta como REVERT.",
+      "JFormattedTextField.PERSIST · No hace nada: no obtiene un nuevo AbstractFormatter ni actualiza el valor.",
+      "El valor predeterminado es JFormattedTextField.COMMIT_OR_REVERT; consulta setFocusLostBehavior para más información.",
+      "JFormattedTextField permite que el foco salga aunque el valor que se está editando no sea válido. Para bloquear el foco mientras el JFormattedTextField está en un estado de edición no válido, puedes adjuntar un InputVerifier. El siguiente fragmento de código muestra una posible implementación de ese InputVerifier:",
+      "public class FormattedTextFieldVerifier extends InputVerifier { public boolean verify(JComponent input) { if (input instanceof JFormattedTextField) { JFormattedTextField ftf = (JFormattedTextField)input; AbstractFormatter formatter = ftf.getFormatter(); if (formatter != null) { String text = ftf.getText(); try { formatter.stringToValue(text); return true; } catch (ParseException pe) { return false; } } } return true; } public boolean shouldYieldFocus(JComponent input) { return verify(input); } }",
+      "Como alternativa, podrías invocar commitEdit, que también confirmaría el valor.",
+      "JFormattedTextField no realiza el formateo por sí mismo; el formateo se hace mediante una instancia de JFormattedTextField.AbstractFormatter que se obtiene de una instancia de JFormattedTextField.AbstractFormatterFactory. Las instancias de JFormattedTextField.AbstractFormatter reciben aviso de que se activan mediante el método install, momento en el que el JFormattedTextField.AbstractFormatter puede instalar lo que necesite, normalmente un DocumentFilter. Del mismo modo, cuando JFormattedTextField ya no necesita el AbstractFormatter, invoca uninstall.",
+      "JFormattedTextField normalmente pide a la AbstractFormatterFactory un AbstractFormat cuando gana o pierde el foco, aunque esto puede cambiar según la política de pérdida de foco. Si la política es JFormattedTextField.PERSIST y el JFormattedTextField se ha editado, no se consultará la AbstractFormatterFactory hasta que se confirme el valor. Del mismo modo, si la política es JFormattedTextField.COMMIT y stringToValue lanza una excepción, no se consultará la AbstractFormatterFactory al perder o ganar el foco.",
+      "JFormattedTextField.AbstractFormatter también se encarga de determinar cuándo se confirman los valores en el JFormattedTextField. Algunos JFormattedTextField.AbstractFormatter ponen a disposición nuevos valores en cada edición, y otros nunca confirman el valor. Puedes forzar que se obtenga el valor actual del JFormattedTextField.AbstractFormatter actual invocando commitEdit. commitEdit se invoca cada vez que se pulsa Intro en el JFormattedTextField.",
+      "Si no se ha establecido explícitamente una AbstractFormatterFactory, se establecerá una según la Class del tipo del valor después de invocar setValue (suponiendo que el valor no sea null). Por ejemplo, en el siguiente código se crearán una AbstractFormatterFactory y un AbstractFormatter adecuados para formatear números:",
+      "JFormattedTextField tf = new JFormattedTextField(); tf.setValue(100);",
+      "Advertencia: como el AbstractFormatter normalmente instala un DocumentFilter en el Document y un NavigationFilter en el JFormattedTextField, no deberías instalar los tuyos. Si lo haces, es probable que veas un comportamiento extraño, ya que no se aplicará la política de edición del AbstractFormatter.",
+      "Advertencia: Swing no es seguro para hilos. Para más información, consulta la política de hilos de Swing.",
+      "Advertencia: los objetos serializados de esta clase no serán compatibles con futuras versiones de Swing. El soporte de serialización actual es adecuado para almacenamiento a corto plazo o RMI entre aplicaciones que ejecutan la misma versión de Swing. Desde la 1.4, el paquete java.beans incluye soporte para el almacenamiento a largo plazo de todos los JavaBeans. Consulta java.beans.XMLEncoder."
+    ]
+  },
+  "web-java-se-javax.swing.JFrame.setDefaultLookAndFeelDecorated": {
+    "body": [
+      "Puedes conseguir el mismo efecto en un único JFrame haciendo lo siguiente:",
+      "JFrame frame = new JFrame(); frame.setUndecorated(true); frame.getRootPane().setWindowDecorationStyle(JRootPane.FRAME);"
+    ],
+    "parameters": [
+      {
+        "label": "defaultLookAndFeelDecorated",
+        "detail": "Una sugerencia sobre si el look and feel actual debe proporcionar las decoraciones de la ventana"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JLayer": {
+    "body": [
+      "JLayer delega el tratamiento del pintado y de los eventos de entrada en un objeto javax.swing.plaf.LayerUI, que realiza la decoración propiamente dicha.",
+      "El pintado personalizado implementado en el LayerUI y la notificación de eventos funcionan para el propio JLayer y todos sus subcomponentes. Esta combinación permite enriquecer componentes existentes añadiendo funcionalidad avanzada, como el bloqueo temporal de una jerarquía, consejos de datos para componentes compuestos, un desplazamiento con ratón mejorado, etc.",
+      "JLayer es una buena solución si solo necesitas hacer un pintado personalizado sobre un componente compuesto o capturar los eventos de entrada de sus subcomponentes.",
+      "import javax.swing.*; import javax.swing.plaf.LayerUI; import java.awt.*;",
+      "public class JLayerSample {",
+      "private static JLayer<JComponent> createLayer() { // This custom layerUI will fill the layer with translucent green // and print out all mouseMotion events generated within its borders LayerUI<JComponent> layerUI = new LayerUI<JComponent>() {",
+      "public void paint(Graphics g, JComponent c) { // paint the layer as is super.paint(g, c); // fill it with the translucent green g.setColor(new Color(0, 128, 0, 128)); g.fillRect(0, 0, c.getWidth(), c.getHeight()); }",
+      "public void installUI(JComponent c) { super.installUI(c); // enable mouse motion events for the layer's subcomponents ((JLayer) c).setLayerEventMask(AWTEvent.MOUSE_MOTION_EVENT_MASK); }",
+      "public void uninstallUI(JComponent c) { super.uninstallUI(c); // reset the layer event mask ((JLayer) c).setLayerEventMask(0); }",
+      "// overridden method which catches MouseMotion events public void eventDispatched(AWTEvent e, JLayer<? extends JComponent> l) { System.out.println(\"AWTEvent detected: \" + e); } }; // create a component to be decorated with the layer JPanel panel = new JPanel(); panel.add(new JButton(\"JButton\"));",
+      "// create the layer for the panel using our custom layerUI return new JLayer<JComponent>(panel, layerUI); }",
+      "private static void createAndShowGUI() { final JFrame frame = new JFrame(); frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);",
+      "// work with the layer as with any other Swing component frame.add(createLayer());",
+      "frame.setSize(200, 200); frame.setLocationRelativeTo(null); frame.setVisible(true); }",
+      "public static void main(String[] args) throws Exception { SwingUtilities.invokeAndWait(new Runnable() { public void run() { createAndShowGUI(); } }); } }",
+      "Nota: JLayer no admite los siguientes métodos:",
+      "Container.add(java.awt.Component)",
+      "Container.add(String, java.awt.Component)",
+      "Container.add(java.awt.Component, int)",
+      "Container.add(java.awt.Component, Object)",
+      "Container.add(java.awt.Component, Object, int)",
+      "usar cualquiera de ellos provoca que se lance UnsupportedOperationException; para añadir un componente a JLayer usa setView(Component) o setGlassPane(JPanel)."
+    ],
+    "parameters": [
+      {
+        "label": "<V>",
+        "detail": "el tipo del componente vista del JLayer"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JLayer.imageUpdate": {
+    "intro": [
+      "Delega su funcionalidad en el método LayerUI.imageUpdate(java.awt.Image, int, int, int, int, int, JLayer), si el LayerUI está establecido."
+    ],
+    "parameters": [
+      {
+        "label": "img",
+        "detail": "la imagen que se observa"
+      },
+      {
+        "label": "infoflags",
+        "detail": "consulta imageUpdate para más información"
+      },
+      {
+        "label": "x",
+        "detail": "la coordenada x"
+      },
+      {
+        "label": "y",
+        "detail": "la coordenada y"
+      },
+      {
+        "label": "w",
+        "detail": "el ancho"
+      },
+      {
+        "label": "h",
+        "detail": "el alto"
+      }
+    ],
+    "returns": [
+      "false si los infoflags indican que la imagen está completamente cargada; true en caso contrario."
+    ]
+  },
+  "web-java-se-javax.swing.JLayer.setLayerEventMask": {
+    "body": [
+      "Los eventos se entregan siempre que haya un LayerUI establecido para este JLayer y el JLayer sea visualizable.",
+      "El siguiente ejemplo muestra cómo usar correctamente este método en las implementaciones de LayerUI:",
+      "public void installUI(JComponent c) { super.installUI(c); JLayer l = (JLayer) c; // this LayerUI will receive only key and focus events l.setLayerEventMask(AWTEvent.KEY_EVENT_MASK | AWTEvent.FOCUS_EVENT_MASK); }",
+      "public void uninstallUI(JComponent c) { super.uninstallUI(c); JLayer l = (JLayer) c; // JLayer must be returned to its initial state l.setLayerEventMask(0); }",
+      "Por defecto, JLayer no recibe eventos y su máscara de eventos es 0."
+    ],
+    "parameters": [
+      {
+        "label": "layerEventMask",
+        "detail": "la máscara de bits de los tipos de evento que se recibirán"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JList": {
+    "body": [
+      "Es fácil mostrar un array o un Vector de objetos usando el constructor de JList que crea automáticamente una instancia de ListModel de solo lectura:",
+      "{@code // Create a JList that displays strings from an array",
+      "String[] data = {\"one\", \"two\", \"three\", \"four\"}; JList myList = new JList(data);",
+      "// Create a JList that displays the superclasses of JList.class, by // creating it with a Vector populated with this data",
+      "Vector> superClasses = new Vector>(); Class rootClass = javax.swing.JList.class; for(Class cls = rootClass; cls != null; cls = cls.getSuperclass()) { superClasses.addElement(cls); } JList> myList = new JList>(superClasses);",
+      "// The automatically created model is stored in JList's \"model\" // property, which you can retrieve",
+      "ListModel> model = myList.getModel(); for(int i = 0; i < model.getSize(); i++) { System.out.println(model.getElementAt(i)); } }",
+      "Un ListModel puede pasarse directamente a un JList mediante un constructor o el método setModel. El contenido no tiene por qué ser estático: el número de elementos y sus valores pueden cambiar con el tiempo. Una implementación correcta de ListModel notifica al conjunto de javax.swing.event.ListDataListener que se le han añadido cada vez que se produce un cambio. Estos cambios se describen mediante un javax.swing.event.ListDataEvent, que identifica el rango de índices de la lista que se han modificado, añadido o eliminado. El ListUI de JList se encarga de mantener la representación visual al día escuchando al modelo.",
+      "Las aplicaciones JList sencillas con contenido dinámico pueden usar la clase DefaultListModel para mantener los elementos de la lista. Esta clase implementa la interfaz ListModel y además ofrece una API parecida a java.util.Vector. Las aplicaciones que necesiten una implementación de ListModel más personalizada pueden heredar de AbstractListModel, que ofrece soporte básico para gestionar y notificar a los listeners. Por ejemplo, una implementación de solo lectura de AbstractListModel:",
+      "{@code // This list model has about 2^16 elements. Enjoy scrolling.",
+      "ListModel bigData = new AbstractListModel() { public int getSize() { return Short.MAX_VALUE; } public String getElementAt(int index) { return \"Index \" + index; } }; }",
+      "El estado de selección de un JList lo gestiona otro modelo independiente, una instancia de ListSelectionModel. JList se inicializa con un modelo de selección al construirse y también contiene métodos para consultar o establecer ese modelo. Además, JList ofrece métodos cómodos para gestionar la selección. Estos métodos, como setSelectedIndex y getSelectedValue, son métodos envoltorio que se ocupan de los detalles de la interacción con el modelo de selección. Por defecto, el modelo de selección de JList permite seleccionar cualquier combinación de elementos a la vez: el modo de selección MULTIPLE_INTERVAL_SELECTION. El modo de selección puede cambiarse directamente en el modelo de selección o mediante el método envoltorio de JList. La responsabilidad de actualizar el modelo de selección en respuesta a los gestos del usuario recae en el ListUI de la lista.",
+      "Una implementación correcta de ListSelectionModel notifica al conjunto de javax.swing.event.ListSelectionListener que se le han añadido cada vez que cambia la selección. Estos cambios se describen mediante un javax.swing.event.ListSelectionEvent, que identifica el rango del cambio de selección.",
+      "La forma preferida de escuchar los cambios de selección de la lista es añadir ListSelectionListeners directamente al JList. JList se encarga entonces de escuchar al modelo de selección y de notificar los cambios a tus listeners.",
+      "La responsabilidad de escuchar los cambios de selección para mantener al día la representación visual de la lista recae en el ListUI de la lista.",
+      "El pintado de las celdas de un JList lo gestiona un delegado llamado renderizador de celdas, instalado en la lista como la propiedad cellRenderer. El renderizador proporciona un java.awt.Component que se usa como un «sello de goma» para pintar las celdas. Cada vez que hay que pintar una celda, el ListUI de la lista pide el componente al renderizador, lo coloca en su sitio y hace que pinte el contenido de la celda mediante su método paint. El ListUI de la lista instala un renderizador predeterminado que usa un componente JLabel. Puedes sustituirlo por tu propio renderizador con código como este:",
+      "{@code // Display an icon and a string for each object in the list.",
+      "class MyCellRenderer extends JLabel implements ListCellRenderer { static final ImageIcon longIcon = new ImageIcon(\"long.gif\"); static final ImageIcon shortIcon = new ImageIcon(\"short.gif\");",
+      "// This is the only method defined by ListCellRenderer. // We just reconfigure the JLabel each time we're called.",
+      "public Component getListCellRendererComponent( JList list, // the list Object value, // value to display int index, // cell index boolean isSelected, // is the cell selected boolean cellHasFocus) // does the cell have focus { String s = value.toString(); setText(s); setIcon((s.length() > 10) ? longIcon : shortIcon); if (isSelected) { setBackground(list.getSelectionBackground()); setForeground(list.getSelectionForeground()); } else { setBackground(list.getBackground()); setForeground(list.getForeground()); } setEnabled(list.isEnabled()); setFont(list.getFont()); setOpaque(true); return this; } }",
+      "myList.setCellRenderer(new MyCellRenderer()); }",
+      "Otra tarea del renderizador de celdas es ayudar a determinar la información de tamaño de la lista. Por defecto, el ListUI de la lista determina el tamaño de las celdas pidiendo al renderizador su tamaño preferido para cada elemento. Esto puede ser costoso en listas grandes. Para evitar estos cálculos, puedes establecer fixedCellWidth y fixedCellHeight en la lista, o hacer que estos valores se calculen automáticamente a partir de un único valor prototipo:",
+      "JList<String> bigDataList = new JList<String>(bigData);",
+      "// We don't want the JList implementation to compute the width // or height of all of the list cells, so we give it a string // that's as big as we'll need for any cell. It uses this to // compute values for the fixedCellWidth and fixedCellHeight // properties.",
+      "bigDataList.setPrototypeCellValue(\"Index 1234567890\");",
+      "JList no implementa el desplazamiento directamente. Para crear una lista con desplazamiento, conviértela en la vista del viewport de un JScrollPane. Por ejemplo:",
+      "JScrollPane scrollPane = new JScrollPane(myList);",
+      "// Or in two steps: JScrollPane scrollPane = new JScrollPane(); scrollPane.getViewport().setView(myList);",
+      "JList no trata de forma especial los dobles o triples (o N) clics de ratón, pero es fácil añadir un MouseListener si quieres actuar ante esos eventos. Usa el método locationToIndex para saber en qué celda se hizo clic. Por ejemplo:",
+      "MouseListener mouseListener = new MouseAdapter() { public void mouseClicked(MouseEvent e) { if (e.getClickCount() == 2) { int index = list.locationToIndex(e.getPoint()); System.out.println(\"Double clicked on Item \" + index); } } }; list.addMouseListener(mouseListener);",
+      "Advertencia: Swing no es seguro para hilos. Para más información, consulta la política de hilos de Swing.",
+      "Advertencia: los objetos serializados de esta clase no serán compatibles con futuras versiones de Swing. El soporte de serialización actual es adecuado para almacenamiento a corto plazo o RMI entre aplicaciones que ejecutan la misma versión de Swing. Desde la 1.4, el paquete java.beans incluye soporte para el almacenamiento a largo plazo de todos los JavaBeans. Consulta java.beans.XMLEncoder.",
+      "Consulta How to Use Lists en The Java Tutorial para más documentación."
+    ],
+    "parameters": [
+      {
+        "label": "<E>",
+        "detail": "el tipo de los elementos de esta lista"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JList.getPreferredScrollableViewportSize": {
+    "body": [
+      "VERTICAL:",
+      "Es trivial si se han establecido tanto fixedCellWidth como fixedCellHeight (explícitamente o especificando un valor de celda prototipo). El ancho es simplemente fixedCellWidth más los márgenes horizontales de la lista. El alto es fixedCellHeight multiplicado por visibleRowCount, más los márgenes verticales de la lista.",
+      "Si no se ha especificado fixedCellWidth o fixedCellHeight, se usan heurísticas. Si el modelo está vacío, el ancho es fixedCellWidth, si es mayor que 0, o un valor fijo de 256. El alto es fixedCellHeight multiplicado por visibleRowCount si fixedCellHeight es mayor que 0; en caso contrario, es un valor fijo de 16 multiplicado por visibleRowCount.",
+      "Si el modelo no está vacío, el ancho es el del tamaño preferido, normalmente el ancho del elemento más ancho de la lista. El alto es el alto de la celda de índice 0 multiplicado por visibleRowCount, más los márgenes verticales de la lista.",
+      "VERTICAL_WRAP o HORIZONTAL_WRAP:",
+      "Este método simplemente devuelve el valor de getPreferredSize. Se espera que el ListUI de la lista sobrescriba getPreferredSize para devolver un valor adecuado."
+    ],
+    "returns": [
+      "una dimensión con el tamaño del viewport necesario para mostrar visibleRowCount filas"
+    ]
+  },
+  "web-java-se-javax.swing.JList.getScrollableTracksViewportHeight": {
+    "body": [
+      "Si es false, no se sigue la altura del viewport. Esto permite el desplazamiento vertical si el propio JViewport está dentro de un JScrollPane."
+    ],
+    "returns": [
+      "si un viewport contenedor debe forzar que la altura de la lista coincida con la suya"
+    ]
+  },
+  "web-java-se-javax.swing.JList.getScrollableTracksViewportWidth": {
+    "body": [
+      "Si es false, no se sigue el ancho del viewport. Esto permite el desplazamiento horizontal si el propio JViewport está dentro de un JScrollPane."
+    ],
+    "returns": [
+      "si un viewport contenedor debe forzar que el ancho de la lista coincida con el suyo"
+    ]
+  },
+  "web-java-se-javax.swing.JList.setDragEnabled": {
+    "body": [
+      "La tarea de respetar esta propiedad y reconocer el gesto de arrastre del usuario recae en la implementación del look and feel y, en particular, en el ListUI de la lista. Cuando el arrastre automático está habilitado, la mayoría de los look and feels (incluidos los que heredan de BasicLookAndFeel) inician una operación de arrastrar y soltar cada vez que el usuario pulsa el botón del ratón sobre un elemento y luego mueve el ratón unos píxeles. Por tanto, poner esta propiedad a true puede tener un efecto sutil en el comportamiento de las selecciones.",
+      "Si se usa un look and feel que ignora esta propiedad, aún puedes iniciar una operación de arrastrar y soltar llamando a exportAsDrag sobre el TransferHandler de la lista."
+    ],
+    "parameters": [
+      {
+        "label": "b",
+        "detail": "si se habilita o no el arrastre automático"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "HeadlessException",
+        "detail": "si b es true y GraphicsEnvironment.isHeadless() devuelve true"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JMenu.menuSelectionChanged": {
+    "intro": [
+      "Se invoca cuando cambia la selección de la barra de menús para activar o desactivar este menú. Sobrescribe JMenuItem.menuSelectionChanged."
+    ],
+    "parameters": [
+      {
+        "label": "isIncluded",
+        "detail": "true si este menú está activo, false si no lo está"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JOptionPane": {
+    "body": [
+      "Aunque la clase JOptionPane pueda parecer compleja por su gran número de métodos, casi todos sus usos son llamadas de una línea a uno de los métodos estáticos showXxxDialog que se muestran a continuación:",
+      "Nombres habituales de métodos de JOptionPane y su descripción",
+      "Nombre del método · Descripción",
+      "showConfirmDialog · Hace una pregunta de confirmación, del tipo sí/no/cancelar.",
+      "showInputDialog · Solicita algún dato.",
+      "showMessageDialog · Informa al usuario de algo que ha ocurrido.",
+      "showOptionDialog · La gran unificación de los tres anteriores.",
+      "Cada uno de estos métodos tiene también una variante showInternalXXX, que usa un marco interno para contener el cuadro de diálogo (consulta JInternalFrame). También se han definido varios métodos de conveniencia: versiones sobrecargadas de los métodos básicos que usan distintas listas de parámetros.",
+      "Todos los diálogos son modales. Cada método showXxxDialog bloquea al llamador hasta que termina la interacción del usuario.",
+      "Diálogo habitual",
+      "icono · mensaje",
+      "valor de entrada",
+      "botones de opción",
+      "El aspecto básico de estos cuadros de diálogo suele parecerse a la imagen anterior, aunque el resultado final depende en última instancia de cada look and feel. En particular, los look and feels ajustan la disposición para adaptarse a la propiedad ComponentOrientation del panel de opciones.",
+      "Parámetros:",
+      "Los parámetros de estos métodos siguen patrones coherentes:",
+      "parentComponent Define el Component que será el padre de este cuadro de diálogo. Se usa de dos formas: el Frame que lo contiene se usa como Frame padre del diálogo, y sus coordenadas de pantalla se usan para colocar el diálogo. En general, el diálogo se coloca justo debajo del componente. Este parámetro puede ser null, en cuyo caso se usa un Frame predeterminado como padre y el diálogo se centra en la pantalla (según el L&F). message Un mensaje descriptivo que se coloca en el cuadro de diálogo. En el uso más habitual, message es simplemente un String o una constante String. Sin embargo, el tipo de este parámetro es en realidad Object. Su interpretación depende de su tipo:",
+      "Object[] Un array de objetos se interpreta como una serie de mensajes (uno por objeto) dispuestos en una pila vertical. La interpretación es recursiva: cada objeto del array se interpreta según su tipo. Component El Component se muestra en el diálogo. Icon El Icon se envuelve en un JLabel y se muestra en el diálogo. otros El objeto se convierte en String llamando a su método toString. El resultado se envuelve en un JLabel y se muestra.",
+      "messageType Define el estilo del mensaje. El gestor del look and feel puede disponer el diálogo de forma distinta según este valor y a menudo proporciona un icono predeterminado. Los valores posibles son:",
+      "ERROR_MESSAGE",
+      "INFORMATION_MESSAGE",
+      "WARNING_MESSAGE",
+      "QUESTION_MESSAGE",
+      "PLAIN_MESSAGE",
+      "optionType Define el conjunto de botones de opción que aparecen en la parte inferior del cuadro de diálogo:",
+      "DEFAULT_OPTION",
+      "YES_NO_OPTION",
+      "YES_NO_CANCEL_OPTION",
+      "OK_CANCEL_OPTION",
+      "No estás limitado a este conjunto de botones de opción. Puedes proporcionar los botones que quieras con el parámetro options. options Una descripción más detallada del conjunto de botones de opción que aparecerán en la parte inferior del cuadro de diálogo. El valor habitual del parámetro options es un array de Strings, pero el tipo del parámetro es un array de Objects. Se crea un botón por cada objeto según su tipo:",
+      "Component El componente se añade directamente a la fila de botones. Icon Se crea un JButton con él como etiqueta. otros El Object se convierte en cadena con su método toString y el resultado se usa como etiqueta de un JButton.",
+      "icon Un icono decorativo que se coloca en el cuadro de diálogo. Su valor predeterminado lo determina el parámetro messageType. title El título del cuadro de diálogo. initialValue La selección predeterminada (valor de entrada).",
+      "Cuando cambia la selección, se invoca setValue, que genera un PropertyChangeEvent.",
+      "Si un JOptionPane se ha configurado para admitir entrada con setWantsInput, también puede escucharse la propiedad ligada JOptionPane.INPUT_VALUE_PROPERTY para saber cuándo el usuario ha introducido o seleccionado un valor.",
+      "Cuando uno de los métodos showXxxDialog devuelve un entero, los valores posibles son:",
+      "YES_OPTION",
+      "NO_OPTION",
+      "CANCEL_OPTION",
+      "OK_OPTION",
+      "CLOSED_OPTION",
+      "Ejemplos:",
+      "Mostrar un diálogo de error con el mensaje 'alert':",
+      "JOptionPane.showMessageDialog(null, \"alert\", \"alert\", JOptionPane.ERROR_MESSAGE);",
+      "Mostrar un diálogo informativo interno con el mensaje 'information':",
+      "JOptionPane.showInternalMessageDialog(frame, \"information\", \"information\", JOptionPane.INFORMATION_MESSAGE);",
+      "Mostrar un panel informativo con las opciones sí/no y el mensaje 'choose one':",
+      "JOptionPane.showConfirmDialog(null, \"choose one\", \"choose one\", JOptionPane.YES_NO_OPTION);",
+      "Mostrar un diálogo informativo interno con las opciones sí/no/cancelar, el mensaje 'please choose one' y el título information:",
+      "JOptionPane.showInternalConfirmDialog(frame, \"please choose one\", \"information\", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);",
+      "Mostrar un diálogo de advertencia con las opciones OK y CANCEL, el título 'Warning' y el mensaje 'Click OK to continue':",
+      "Object[] options = { \"OK\", \"CANCEL\" }; JOptionPane.showOptionDialog(null, \"Click OK to continue\", \"Warning\", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);",
+      "Mostrar un diálogo que pide al usuario escribir un String:",
+      "String inputValue = JOptionPane.showInputDialog(\"Please input a value\");",
+      "Mostrar un diálogo que pide al usuario seleccionar un String:",
+      "Object[] possibleValues = { \"First\", \"Second\", \"Third\" };",
+      "Object selectedValue = JOptionPane.showInputDialog(null, \"Choose one\", \"Input\", JOptionPane.INFORMATION_MESSAGE, null, possibleValues, possibleValues[0]);",
+      "Uso directo:",
+      "Para crear y usar un JOptionPane directamente, el patrón estándar es aproximadamente el siguiente:",
+      "JOptionPane pane = new JOptionPane(arguments); pane.set.Xxxx(...); // Configure JDialog dialog = pane.createDialog(parentComponent, title); dialog.setVisible(true); Object selectedValue = pane.getValue(); if(selectedValue == null) return CLOSED_OPTION; //If there is not an array of option buttons: if(options == null) { if(selectedValue instanceof Integer) return ((Integer)selectedValue).intValue(); return CLOSED_OPTION; } //If there is an array of option buttons: for(int counter = 0, maxCounter = options.length; counter < maxCounter; counter++) { if(options[counter].equals(selectedValue)) return counter; } return CLOSED_OPTION;",
+      "Advertencia: Swing no es seguro para hilos. Para más información, consulta la política de hilos de Swing.",
+      "Advertencia: los objetos serializados de esta clase no serán compatibles con futuras versiones de Swing. El soporte de serialización actual es adecuado para almacenamiento a corto plazo o RMI entre aplicaciones que ejecutan la misma versión de Swing. Desde la 1.4, el paquete java.beans incluye soporte para el almacenamiento a largo plazo de todos los JavaBeans. Consulta java.beans.XMLEncoder."
+    ]
+  },
   "web-java-se-javax.swing.JSpinner%24NumberEditor.setComponentOrientation": {
     "body": [
       "Al construirlo, la orientación de un componente es ComponentOrientation.UNKNOWN, lo que indica que no se ha fijado explícitamente. La orientación UNKNOWN se comporta igual que ComponentOrientation.LEFT_TO_RIGHT.",
