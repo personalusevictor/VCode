@@ -1180,9 +1180,225 @@
       "Equivale a !is_absolute(). std::filesystem::absolute() convierte una ruta relativa en absoluta usando el directorio actual."
     ]
   },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Apath%3A%3Alexically_proximate": {
+    "body": [
+      "Es útil para mostrar rutas cortas cuando es posible sin arriesgarse a obtener una ruta vacía. Como lexically_relative(), no consulta el disco."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Apath%3A%3Alexically_relative": {
+    "body": [
+      "Por ejemplo, path(\"/a/d\").lexically_relative(\"/a/b/c\") devuelve \"../../d\". Si no es posible, como cuando las raíces son distintas, devuelve una ruta vacía.",
+      "Normaliza las rutas antes si pueden contener . o ..: los resultados son puramente textuales. Para resolver enlaces, usa std::filesystem::relative()."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Apath%3A%3Aoperator%20string_type": {
+    "body": [
+      "string_type es std::string en POSIX y std::wstring en Windows. Para obtener siempre std::string, usa string() o, en UTF-8, u8string()."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Apath%3A%3Aoperator%2F%3D": {
+    "body": [
+      "Añade un separador si hace falta: path(\"datos\") /= \"a.txt\" da \"datos/a.txt\". Si el argumento es una ruta absoluta, la reemplaza en lugar de añadirse.",
+      "Para concatenar texto sin separador, como una extensión, usa += o concat()."
+    ],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Apath%3A%3Aoperator%3C%3C": {
+    "body": [
+      "Usa std::quoted, así que std::cout << ruta muestra la ruta entre comillas. Para mostrarla sin comillas, escribe ruta.string()."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Apath%3A%3Aoperator%3D": {
+    "body": [
+      "La conversión desde cadenas de caracteres de un solo byte usa la codificación nativa del sistema."
+    ],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Apath%3A%3Aoperator%3E%3E": {
+    "body": [
+      "Usa std::quoted, así que espera la ruta entre comillas si contiene espacios, igual que la escribe operator<<."
+    ]
+  },
+  "web-cpp20-std%3A%3Afilesystem%3A%3Apath%3A%3Aswap": {
+    "intro": ["Intercambia el contenido de *this y rhs."],
+    "body": [
+      "Solo intercambia las cadenas internas; no toca el sistema de archivos."
+    ]
+  },
   "web-cpp20-std%3A%3Afilesystem%3A%3Apath%3A%3A~path": {
     "body": [
       "Solo libera la cadena con la ruta; el archivo al que se refiere no se ve afectado."
     ]
+  },
+  "web-cpp20-std%3A%3Aforward_list": {
+    "body": [
+      "Cada nodo solo apunta al siguiente, así que ocupa menos memoria que std::list, pero solo se recorre hacia delante y no tiene size().",
+      "Las inserciones y borrados se hacen después de una posición: insert_after(), emplace_after() y erase_after(). before_begin() da la posición anterior al primer elemento para operar al principio."
+    ]
+  },
+  "web-cpp20-std%3A%3Aforward_list%3A%3Abefore_begin": {
+    "body": [
+      "El iterador no se puede desreferenciar. Por ejemplo, lista.insert_after(lista.before_begin(), x) equivale a push_front(x)."
+    ]
+  },
+  "web-cpp20-std%3A%3Aforward_list%3A%3Acbefore_begin": {
+    "body": ["Equivale a before_begin() sobre una lista constante."]
+  },
+  "web-cpp20-std%3A%3Aforward_list%3A%3Aempty": {
+    "intro": [
+      "Comprueba si el contenedor no tiene elementos, es decir, si begin() == end()."
+    ],
+    "body": [
+      "forward_list no tiene size(); para contar elementos, usa std::distance(begin(), end()), que es lineal."
+    ]
+  },
+  "web-cpp20-std%3A%3Aforward_list%3A%3Aget_allocator": {
+    "intro": ["Devuelve el asignador asociado al contenedor."],
+    "body": [
+      "Es útil con asignadores con estado o polimórficos, como los de std::pmr."
+    ]
+  },
+  "web-cpp20-std%3A%3Aforward_list%3A%3Aremove": {
+    "body": [
+      "Solo invalida los iteradores y referencias a los elementos eliminados. Es lineal en el tamaño de la lista."
+    ],
+    "returns": ["El número de elementos eliminados."]
+  },
+  "web-cpp20-std%3A%3Aforward_list%3A%3Aremove_if": {
+    "body": [
+      "Solo invalida los iteradores y referencias a los elementos eliminados. Es lineal en el tamaño de la lista."
+    ],
+    "returns": ["El número de elementos eliminados."]
+  },
+  "web-cpp20-std%3A%3Aforward_list%3A%3Areverse": {
+    "body": ["Cambia los enlaces entre nodos sin copiar ni mover elementos."]
+  },
+  "web-cpp20-std%3A%3Afront_insert_iterator": {
+    "body": [
+      "Se crea normalmente con std::front_inserter(contenedor). Cada asignación llama a push_front(), así que los elementos copiados quedan en orden inverso.",
+      "El contenedor necesita push_front(), como std::deque, std::list o std::forward_list."
+    ]
+  },
+  "web-cpp20-std%3A%3Afront_insert_iterator%3A%3Afront_insert_iterator": {
+    "intro": [
+      "Inicializa el puntero interno al contenedor con std::addressof(x)."
+    ],
+    "body": [
+      "El constructor por defecto, añadido en C++20, deja el iterador sin contenedor asociado."
+    ]
+  },
+  "web-cpp20-std%3A%3Afunction": {
+    "body": [
+      "Puede guardar funciones, lambdas, objetos función o punteros a miembro con la firma indicada: std::function<int(int, int)> op = std::plus<>{};. Se llama como una función normal.",
+      "Es útil para guardar funciones de retrollamada cuyo tipo concreto no se conoce. Tiene cierto coste: puede reservar memoria y la llamada es indirecta."
+    ],
+    "caveats": ["Llamar a un std::function vacío lanza std::bad_function_call."]
+  },
+  "web-cpp20-std%3A%3Afunction%3A%3Aoperator%20bool": {
+    "intro": [
+      "Comprueba si *this guarda un objeto invocable, es decir, si no está vacío."
+    ],
+    "body": [
+      "Compruébalo antes de llamar si la función puede no haberse asignado: if (callback) callback();."
+    ]
+  },
+  "web-cpp20-std%3A%3Afunction%3A%3Aoperator%28%29": {
+    "body": [
+      "Los argumentos se reenvían al objetivo y el resultado se convierte al tipo R de la firma."
+    ]
+  },
+  "web-cpp20-std%3A%3Afunction%3A%3Aswap": {
+    "intro": [
+      "Intercambia los objetos invocables guardados en *this y en el otro std::function."
+    ],
+    "body": ["No copia los objetivos ni lanza excepciones."]
+  },
+  "web-cpp20-std%3A%3Afunction%3A%3Atarget_type": {
+    "body": [
+      "Junto con target<T>(), permite recuperar el objeto concreto guardado si conoces su tipo."
+    ]
+  },
+  "web-cpp20-std%3A%3Afunction%3A%3A~function": {
+    "body": [
+      "Si el objetivo es una lambda con capturas, también se destruyen los valores capturados."
+    ]
+  },
+  "web-cpp20-std%3A%3Afuture": {
+    "body": [
+      "Lo devuelven std::async, std::promise::get_future() y std::packaged_task::get_future(). get() espera el resultado y lo devuelve, o relanza la excepción que se produjo.",
+      "get() solo se puede llamar una vez; después, valid() devuelve false. Para que varios hilos lean el resultado, convierte el future con share() en un std::shared_future."
+    ]
+  },
+  "web-cpp20-std%3A%3Afuture%3A%3Afuture": {
+    "body": [
+      "El constructor por defecto crea un future sin estado compartido: valid() devuelve false. Solo se puede mover, no copiar."
+    ]
+  },
+  "web-cpp20-std%3A%3Afuture%3A%3A~future": {
+    "intro": ["Libera el estado compartido, si lo hay."],
+    "body": [
+      "Si es la última referencia al estado compartido, este se destruye. Si el estado lo creó std::async y la tarea no ha terminado, el destructor puede bloquear hasta que termine.",
+      "Por eso, si llamas a std::async sin guardar el future, la llamada se comporta de forma síncrona."
+    ]
+  },
+  "web-cpp20-std%3A%3Ainsert_iterator": {
+    "body": [
+      "Se crea con std::inserter(contenedor, posición). Cada asignación llama a insert() en la posición guardada y avanza tras el elemento insertado, así que los elementos quedan en el orden original.",
+      "Funciona también con contenedores asociativos como std::set, donde la posición solo es una pista."
+    ]
+  },
+  "web-cpp20-std%3A%3Aistream_iterator": {
+    "body": [
+      "Cada avance lee un valor con operator>>. Por ejemplo, std::vector<int> v(std::istream_iterator<int>(std::cin), {}); lee enteros hasta el final de la entrada o el primer error.",
+      "Como usa >>, se salta los espacios en blanco. Para leer caracteres sin saltarlos, usa std::istreambuf_iterator."
+    ]
+  },
+  "web-cpp20-std%3A%3Aistream_iterator%3A%3Aistream_iterator": {
+    "body": [
+      "El constructor desde default_sentinel_t, añadido en C++20, también crea el iterador de fin."
+    ]
+  },
+  "web-cpp20-std%3A%3Aistream_iterator%3A%3Aoperator%2B%2B": {
+    "body": ["La versión posfija devuelve una copia con el valor anterior."]
+  },
+  "web-cpp20-std%3A%3Aistream_iterator%3A%3Aoperator%3D": {
+    "body": [
+      "Como los dos leen del mismo flujo, avanzar uno consume datos que el otro ya no verá."
+    ]
+  },
+  "web-cpp20-std%3A%3Aistream_iterator%3A%3Aoperator*": {
+    "body": [
+      "Leer el valor no avanza el flujo: varias desreferencias seguidas devuelven el mismo valor."
+    ]
+  },
+  "web-cpp20-std%3A%3Aistream_iterator%3A%3Aoperator-%3E": {
+    "body": ["El iterador no debe ser el de fin."]
+  },
+  "web-cpp20-std%3A%3Aistream_iterator%3A%3A~istream_iterator": {
+    "body": ["No cierra ni modifica el flujo asociado."]
+  },
+  "web-cpp20-std%3A%3Ajthread": {
+    "body": [
+      "Funciona como std::thread, pero su destructor llama a request_stop() y después a join(), así que no termina el programa si se olvida unir el hilo.",
+      "Si la función recibe un std::stop_token como primer parámetro, puede comprobar stop_requested() para terminar cuando se le pida. Existe desde C++20."
+    ]
+  },
+  "web-cpp20-std%3A%3Ajthread%3A%3Aswap": {
+    "intro": ["Intercambia los hilos asociados a dos objetos jthread."],
+    "body": ["También intercambia sus estados de parada."]
+  },
+  "web-cpp20-std%3A%3Alatch": {
+    "body": [
+      "count_down() resta del contador y wait() espera a que llegue a cero; arrive_and_wait() hace las dos cosas. try_wait() comprueba sin bloquear.",
+      "Es de un solo uso: cuando el contador llega a cero no se puede reiniciar. Para fases repetidas, usa std::barrier. Existe desde C++20."
+    ]
+  },
+  "web-cpp20-std%3A%3Alatch%3A%3Alatch": {
+    "body": [
+      "expected no puede ser negativo ni superar max(). No se puede copiar ni mover."
+    ]
+  },
+  "web-cpp20-std%3A%3Alatch%3A%3Amax": {
+    "body": ["El valor inicial que se pasa al constructor no debe superarlo."]
   }
 }
