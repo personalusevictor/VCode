@@ -39477,5 +39477,576 @@
       "Precedencia de propiedades",
       "Las propiedades, incluidas las propiedades de acceso externo y USE_CATALOG, pueden especificarse mediante varias fuentes de configuración. Siguen el proceso de configuración definido en la sección Configuration del resumen del módulo."
     ]
+  },
+  "web-java-se-javax.xml.XMLConstants.RELAXNG_NS_URI": {
+    "intro": ["URI del espacio de nombres de RELAX NG."],
+    "body": ["Definido como \"http://relaxng.org/ns/structure/1.0\"."]
+  },
+  "web-java-se-javax.xml.catalog.CatalogFeatures": {
+    "body": [
+      "Características del catálogo",
+      "Característica · Descripción · Nombre de propiedad · Propiedad del sistema [1] · Valor [2] · Acción",
+      "Tipo · Valor",
+      "FILES · Lista de URI separadas por punto y coma para localizar los archivos de catálogo. Las URI deben ser absolutas y tener un manejador de protocolo URL para su esquema.",
+      "javax.xml.catalog.files · javax.xml.catalog.files · String · URIs · Lee el primer catálogo como catálogo actual; carga los demás si no se encuentra coincidencia en el catálogo actual, incluidos los catálogos delegados si los hay.",
+      "PREFER · Indica la preferencia entre los identificadores públicos y de sistema. El valor predeterminado es public [3]. · javax.xml.catalog.prefer · N/A · String · system · Busca coincidencias en las entradas system; busca en las entradas public cuando el identificador externo solo especifica un identificador público",
+      "public · Busca coincidencias en las entradas system; busca en las entradas public cuando no hay ninguna entrada system coincidente.",
+      "DEFER · Indica que los catálogos alternativos, incluidos los especificados en entradas delegate o nextCatalog, no se leen hasta que se necesitan. El valor predeterminado es true. · javax.xml.catalog.defer [4] · javax.xml.catalog.defer · String · true · Carga los catálogos alternativos según se necesitan.",
+      "false · Carga todos los catálogos [5].",
+      "RESOLVE · Determina la acción si no se encuentra ninguna entrada coincidente tras agotar todos los catálogos especificados. El valor predeterminado es strict. · javax.xml.catalog.resolve [4] · javax.xml.catalog.resolve · String · strict · Lanza CatalogException si no hay coincidencia.",
+      "continue · Permite que el parser XML continúe como si no hubiera coincidencia.",
+      "ignore · Indica al parser XML que omita las referencias externas si no hay coincidencia.",
+      "[1] No hay propiedad del sistema para las características marcadas como \"N/A\".",
+      "[2] El valor debe ser exactamente el que figura en esta tabla, distinguiendo mayúsculas de minúsculas. Cualquier valor no especificado provoca una IllegalArgumentException.",
+      "[3] La especificación Catalog definió reglas complejas sobre",
+      "el atributo prefer. Aunque prefer puede ser public o system, la especificación hizo en realidad de system la opción preferida; es decir, sea cual sea la opción, siempre se usa una entrada system si se encuentra. Las entradas public solo se consideran si prefer es public y no se encuentran entradas system. Por eso se recomienda establecer el atributo prefer como public (que es el valor predeterminado).",
+      "[4] Aunque son atributos no estándar en la especificación OASIS Catalog, la API Catalog de Java reconoce defer y resolve igual que prefer, como atributos de la entrada catalog del catálogo principal. Ten en cuenta que solo se usan los atributos especificados en la entrada catalog del archivo de catálogo principal.",
+      "[5] Si la intención es compartir un almacén de catálogos completo, puede convenir poner la propiedad javax.xml.catalog.defer a false para que todo el catálogo se cargue por adelantado.",
+      "Precedencia de propiedades",
+      "Las características del catálogo siguen la precedencia de propiedades descrita en el resumen del módulo en cuanto a la prioridad con que se obtienen sus valores de las distintas fuentes de configuración, como el archivo de configuración de JAXP, las propiedades del sistema y las de la API. Además de las fuentes de configuración generales, las características del catálogo también se admiten en el propio archivo de catálogo, donde pueden especificarse como atributos de las entradas catalog y group. Cuando se especifican estos atributos, tienen preferencia sobre cualquier otra fuente de configuración. Por ejemplo, si se establece un atributo prefer en el archivo de catálogo, como en <catalog prefer=\"public\">, cualquier otra entrada para la propiedad \"prefer\" es innecesaria o se ignorará.",
+      "Se puede crear una instancia de CatalogFeatures mediante su builder, como se ilustra en el siguiente código de ejemplo:",
+      "CatalogFeatures f = CatalogFeatures.builder() .with(Feature.FILES, \"file:///etc/xml/catalog\") .with(Feature.PREFER, \"public\") .with(Feature.DEFER, \"true\") .with(Feature.RESOLVE, \"ignore\") .build();",
+      "Soporte en los procesadores XML de JAXP",
+      "Las características del catálogo se admiten en todos los procesadores de JAXP, incluidos los parsers SAX y DOM (javax.xml.parsers) y StAX (javax.xml.stream), la validación de esquemas (javax.xml.validation) y la transformación XML (javax.xml.transform). Las características descritas pueden establecerse mediante las fábricas o procesadores de JAXP que definen una interfaz setProperty o setAttribute. Por ejemplo, el siguiente fragmento de código establece una URI a un archivo de catálogo en un parser SAX mediante la propiedad javax.xml.catalog.files:",
+      "SAXParserFactory spf = SAXParserFactory.newInstance(); spf.setFeature(XMLConstants.USE_CATALOG, true); [1] SAXParser parser = spf.newSAXParser(); parser.setProperty(CatalogFeatures.Feature.FILES.getPropertyName(), \"file:///etc/xml/catalog\");",
+      "[1] Ten en cuenta que esta sentencia no es necesaria, ya que el valor predeterminado de USE_CATALOG es true.",
+      "El soporte de Catalog en los procesadores de JAXP depende tanto de la característica USE_CATALOG como de que existan archivos de catálogo válidos. Un procesador de JAXP solo usará el catálogo cuando la característica sea true y se especifiquen archivos de catálogo válidos mediante la propiedad javax.xml.catalog.files. No intentará usar el catálogo si USE_CATALOG está a false o si no se ha especificado ningún archivo de catálogo.",
+      "Los procesadores de JAXP respetan la configuración predeterminada de javax.xml.catalog.CatalogFeatures. Por ejemplo, por defecto los procesadores informarán de una Exception cuando no se encuentre ninguna entrada coincidente, ya que el valor predeterminado de la propiedad javax.xml.catalog.resolve es strict.",
+      "Los procesadores de JAXP dan preferencia a los resolvedores personalizados que especifica el usuario. Si se registra uno, se usa antes que el CatalogResolver. Sin embargo, si devuelve null, los procesadores siguen resolviendo con el CatalogResolver. Si devuelve un origen vacío, el CatalogResolver no hará ningún intento.",
+      "El soporte de Catalog está disponible para cualquier proceso de la biblioteca JAXP que admita un resolvedor. La siguiente tabla enumera todos esos procesos.",
+      "Procesos con soporte de Catalog",
+      "Procesos con soporte de Catalog",
+      "Proceso · Tipo de entrada de catálogo · Ejemplo",
+      "DTD y entidades externas · public, system",
+      "La siguiente referencia a DTD: <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">",
+      "Puede resolverse con la siguiente entrada de catálogo: <public publicId=\"-//W3C//DTD XHTML 1.0 Strict//EN\" uri=\"catalog/xhtml1-strict.dtd\"/> o <systemSuffix systemIdSuffix=\"html1-strict.dtd\" uri=\"catalog/xhtml1-strict.dtd\"/>",
+      "XInclude · uri",
+      "El siguiente elemento XInclude: <xi:include href=\"https://openjdk.org/xml/disclaimer.xml\"/>",
+      "puede resolverse con una entrada URI: <uri name=\"https://openjdk.org/xml/disclaimer.xml\" uri=\"file:///pathto/local/disclaimer.xml\"/> o <uriSuffix uriSuffix=\"disclaimer.xml\" uri=\"file:///pathto/local/disclaimer.xml\"/>",
+      "XSD import · uri",
+      "El siguiente elemento import: <xsd:import namespace=\"https://openjdk.org/xsd/XSDImport_person\" schemaLocation=\"https://openjdk.org/xsd/XSDImport_person.xsd\"/>",
+      "puede resolverse con una entrada URI: <uri name=\"https://openjdk.org/xsd/XSDImport_person.xsd\" uri=\"file:///pathto/local/XSDImport_person.xsd\"/> o <uriSuffix uriSuffix=\"XSDImport_person.xsd\" uri=\"file:///pathto/local/XSDImport_person.xsd\"/> o <uriSuffix uriSuffix=\"https://openjdk.org/xsd/XSDImport_person\" uri=\"file:///pathto/local/XSDImport_person.xsd\"/>",
+      "XSD include · uri",
+      "El siguiente elemento include: <xsd:include schemaLocation=\"https://openjdk.org/xsd/XSDInclude_person.xsd\"/>",
+      "puede resolverse con una entrada URI: <uri name=\"https://openjdk.org/xsd/XSDInclude_person.xsd\" uri=\"file:///pathto/local/XSDInclude_person.xsd\"/> o <uriSuffix uriSuffix=\"XSDInclude_person.xsd\" uri=\"file:///pathto/local/XSDInclude_person.xsd\"/>",
+      "import e include de XSL · uri",
+      "El siguiente elemento include: <xsl:include href=\"https://openjdk.org/xsl/include.xsl\"/>",
+      "puede resolverse con una entrada URI: <uri name=\"https://openjdk.org/xsl/include.xsl\" uri=\"file:///pathto/local/include.xsl\"/> o <uriSuffix uriSuffix=\"include.xsl\" uri=\"file:///pathto/local/include.xsl\"/>",
+      "función document de XSL · uri",
+      "El documento del siguiente elemento: <xsl:variable name=\"dummy\" select=\"document('https://openjdk.org/xsl/list.xml')\"/>",
+      "puede resolverse con una entrada URI: <uri name=\"https://openjdk.org/xsl/list.xml\" uri=\"file:///pathto/local/list.xml\"/> o <uriSuffix uriSuffix=\"list.xml\" uri=\"file:///pathto/local/list.xml\"/>"
+    ]
+  },
+  "web-java-se-javax.xml.crypto.dsig.Manifest": {
+    "body": [
+      "<element name=\"Manifest\" type=\"ds:ManifestType\"/> <complexType name=\"ManifestType\"> <sequence> <element ref=\"ds:Reference\" maxOccurs=\"unbounded\"/> </sequence> <attribute name=\"Id\" type=\"ID\" use=\"optional\"/> </complexType>",
+      "Se puede crear una instancia de Manifest invocando uno de los métodos newManifest de la clase XMLSignatureFactory; por ejemplo:",
+      "XMLSignatureFactory factory = XMLSignatureFactory.getInstance(\"DOM\"); Reference ref = factory.newReference(\"#reference-1\", DigestMethod.SHA1); List<Reference> references = Collections.singletonList(ref); Manifest manifest = factory.newManifest(references, \"manifest-1\");"
+    ]
+  },
+  "web-java-se-javax.xml.crypto.dsig.SignatureMethod.RSA_PSS": {
+    "body": [
+      "Llamar a XMLSignatureFactory.newSignatureMethod(RSA_PSS, null) devuelve un objeto SignatureMethod que usa el parámetro predeterminado definido en la sección 2.3.9 de RFC 6931, que usa SHA-256 como DigestMethod, MGF1 con SHA-256 como MaskGenerationFunction, 32 como SaltLength y 1 como TrailerField. Este parámetro predeterminado se representa con el tipo RSAPSSParameterSpec y lo devuelve el método getParameterSpec() del objeto SignatureMethod."
+    ]
+  },
+  "web-java-se-javax.xml.crypto.dsig.TransformService": {
+    "body": [
+      "Cada instancia de TransformService admite un algoritmo de transformación o canonicalización concreto y un tipo de mecanismo XML. Para crear un TransformService, llama a uno de los métodos estáticos getInstance pasándole la URI del algoritmo y el tipo de mecanismo XML deseados, por ejemplo:",
+      "TransformService ts = TransformService.getInstance(Transform.XPATH2, \"DOM\");",
+      "Las implementaciones de TransformService se registran y cargan mediante el mecanismo java.security.Provider. Cada implementación de proveedor de servicio TransformService debe incluir un atributo de servicio MechanismType que identifique el tipo de mecanismo XML que admite. Si no se especifica el atributo, se asume \"DOM\". Por ejemplo, un proveedor de servicio que admita la transformación XPath Filter 2 y el mecanismo DOM se especificaría en la subclase de Provider así:",
+      "put(\"TransformService.\" + Transform.XPATH2, \"org.example.XPath2TransformService\"); put(\"TransformService.\" + Transform.XPATH2 + \" MechanismType\", \"DOM\");",
+      "Las implementaciones de TransformService que admiten el tipo de mecanismo DOM deben cumplir los requisitos de interoperabilidad DOM definidos en los requisitos del mecanismo DOM. Consulta la sección TransformService de la especificación Java Security Standard Algorithm Names para ver una lista de URI de algoritmos y tipos de mecanismo estándar.",
+      "Una vez creado un TransformService, puede usarse para procesar objetos Transform o CanonicalizationMethod. Si el Transform o CanonicalizationMethod existe en forma XML (por ejemplo, al validar un XMLSignature existente), primero debe llamarse al método init(XMLStructure, XMLCryptoContext) para inicializar la transformación y proporcionar el contexto del documento (aunque no haya parámetros). Como alternativa, si el Transform o CanonicalizationMethod se crea desde cero, se llama al método init(TransformParameterSpec) para inicializar la transformación con parámetros y al método marshalParams para serializar los parámetros a XML y proporcionar a la transformación el contexto del documento. Por último, se llama al método transform para realizar la transformación.",
+      "Acceso concurrente",
+      "Los métodos estáticos de esta clase son seguros con hilos: varios hilos pueden llamarlos a la vez sin problemas.",
+      "Sin embargo, esto no se cumple para los métodos no estáticos que define esta clase. Salvo que un proveedor concreto documente otra cosa, los hilos que necesiten acceder a una misma instancia de TransformService de forma concurrente deben sincronizarse entre sí y proporcionar el bloqueo necesario. Varios hilos que manipulan cada uno una instancia distinta de TransformService no necesitan sincronizarse."
+    ]
+  },
+  "web-java-se-javax.xml.crypto.dsig.XMLObject": {
+    "body": [
+      "<element name=\"Object\" type=\"ds:ObjectType\"/> <complexType name=\"ObjectType\" mixed=\"true\"> <sequence minOccurs=\"0\" maxOccurs=\"unbounded\"> <any namespace=\"##any\" processContents=\"lax\"/> </sequence> <attribute name=\"Id\" type=\"ID\" use=\"optional\"/> <attribute name=\"MimeType\" type=\"string\" use=\"optional\"/> <attribute name=\"Encoding\" type=\"anyURI\" use=\"optional\"/> </complexType>",
+      "Se puede crear una instancia de XMLObject invocando el método newXMLObject de la clase XMLSignatureFactory; por ejemplo:",
+      "XMLSignatureFactory fac = XMLSignatureFactory.getInstance(\"DOM\"); Manifest manifest = fac.newManifest(references); List<XMLStructure> content = Collections.singletonList(manifest); XMLObject object = factory.newXMLObject(content, \"object-1\", null, null);",
+      "Ten en cuenta que esta clase se llama XMLObject y no Object para evitar conflictos de nombres con la clase java.lang.Object existente."
+    ]
+  },
+  "web-java-se-javax.xml.crypto.dsig.XMLSignatureFactory": {
+    "body": [
+      "Tipo de XMLSignatureFactory",
+      "Cada instancia de XMLSignatureFactory admite un tipo de mecanismo XML concreto. Para crear un XMLSignatureFactory, llama a uno de los métodos estáticos getInstance pasándole el tipo de mecanismo XML deseado, por ejemplo:",
+      "XMLSignatureFactory factory = XMLSignatureFactory.getInstance(\"DOM\");",
+      "Los objetos que produce esta fábrica se basarán en DOM y cumplirán los requisitos de interoperabilidad DOM definidos en los requisitos del mecanismo DOM. Consulta la sección XMLSignatureFactory de la especificación Java Security Standard Algorithm Names para ver una lista de tipos de mecanismo estándar.",
+      "Las implementaciones de XMLSignatureFactory se registran y cargan mediante el mecanismo java.security.Provider. Por ejemplo, un proveedor de servicio que admita el mecanismo DOM se especificaría en la subclase de Provider así:",
+      "put(\"XMLSignatureFactory.DOM\", \"org.example.DOMXMLSignatureFactory\");",
+      "Una implementación DEBE admitir como mínimo el tipo de mecanismo predeterminado: DOM.",
+      "Ten en cuenta que el llamador debe usar la misma instancia de XMLSignatureFactory para crear las XMLStructure de un XMLSignature concreto que se vaya a generar. El comportamiento es indefinido si se usan juntas XMLStructure de distintos proveedores o de distintos tipos de mecanismo.",
+      "Además, las XMLStructure que crea esta fábrica pueden contener estado específico del XMLSignature y no están pensadas para reutilizarse.",
+      "Crear XMLSignatures desde cero",
+      "Una vez creado el XMLSignatureFactory, se pueden instanciar objetos llamando al método adecuado. Por ejemplo, se puede crear una instancia de Reference invocando uno de los métodos newReference.",
+      "Deserializar XMLSignatures desde XML",
+      "Como alternativa, se puede crear un XMLSignature a partir de una representación XML existente invocando el método unmarshalXMLSignature y pasándole una instancia de XMLValidateContext específica del mecanismo que contenga el contenido XML:",
+      "DOMValidateContext context = new DOMValidateContext(key, signatureElement); XMLSignature signature = factory.unmarshalXMLSignature(context);",
+      "Cada XMLSignatureFactory debe admitir los tipos de XMLValidateContext requeridos para su tipo de fábrica, pero puede admitir otros. Un XMLSignatureFactory DOM debe admitir objetos DOMValidateContext.",
+      "Firmar y serializar XMLSignatures a XML",
+      "Cada XMLSignature creado por la fábrica también puede serializarse a una representación XML y firmarse invocando el método sign del objeto XMLSignature y pasándole un objeto XMLSignContext específico del mecanismo que contenga la clave de firma y los parámetros de serialización (consulta DOMSignContext). Por ejemplo:",
+      "DOMSignContext context = new DOMSignContext(privateKey, document); signature.sign(context);",
+      "Acceso concurrente",
+      "Los métodos estáticos de esta clase son seguros con hilos: varios hilos pueden llamarlos a la vez sin problemas.",
+      "Sin embargo, esto no se cumple para los métodos no estáticos que define esta clase. Salvo que un proveedor concreto documente otra cosa, los hilos que necesiten acceder a una misma instancia de XMLSignatureFactory de forma concurrente deben sincronizarse entre sí y proporcionar el bloqueo necesario. Varios hilos que manipulan cada uno una instancia distinta de XMLSignatureFactory no necesitan sincronizarse."
+    ]
+  },
+  "web-java-se-javax.xml.crypto.dsig.keyinfo.KeyInfoFactory": {
+    "body": [
+      "Cada instancia de KeyInfoFactory admite un tipo de mecanismo XML concreto. Para crear un KeyInfoFactory, llama a uno de los métodos estáticos getInstance pasándole el tipo de mecanismo XML deseado, por ejemplo:",
+      "KeyInfoFactory factory = KeyInfoFactory.getInstance(\"DOM\");",
+      "Los objetos que produce esta fábrica se basarán en DOM y cumplirán los requisitos de interoperabilidad DOM definidos en los requisitos del mecanismo DOM. Consulta la sección KeyInfoFactory de la especificación Java Security Standard Algorithm Names para ver una lista de tipos de mecanismo estándar.",
+      "Las implementaciones de KeyInfoFactory se registran y cargan mediante el mecanismo java.security.Provider. Por ejemplo, un proveedor de servicio que admita el mecanismo DOM se especificaría en la subclase de Provider así:",
+      "put(\"KeyInfoFactory.DOM\", \"org.example.DOMKeyInfoFactory\");",
+      "Además, las XMLStructure que crea esta fábrica pueden contener estado específico del KeyInfo y no están pensadas para reutilizarse.",
+      "Una implementación DEBE admitir como mínimo el tipo de mecanismo predeterminado: DOM.",
+      "Ten en cuenta que el llamador debe usar la misma instancia de KeyInfoFactory para crear las XMLStructure de un objeto KeyInfo concreto. El comportamiento es indefinido si se usan juntas XMLStructure de distintos proveedores o de distintos tipos de mecanismo.",
+      "Acceso concurrente",
+      "Los métodos estáticos de esta clase son seguros con hilos: varios hilos pueden llamarlos a la vez sin problemas.",
+      "Sin embargo, esto no se cumple para los métodos no estáticos que define esta clase. Salvo que un proveedor concreto documente otra cosa, los hilos que necesiten acceder a una misma instancia de KeyInfoFactory de forma concurrente deben sincronizarse entre sí y proporcionar el bloqueo necesario. Varios hilos que manipulan cada uno una instancia distinta de KeyInfoFactory no necesitan sincronizarse."
+    ]
+  },
+  "web-java-se-javax.xml.crypto.dsig.keyinfo.KeyInfoFactory.newPGPData": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un PGPData a partir del identificador de clave pública PGP indicado."
+        ],
+        "parameters": [
+          {
+            "label": "keyId",
+            "detail": "un identificador de clave pública PGP según se define en la sección 11.2 de RFC 2440. El array se clona para protegerlo de modificaciones posteriores."
+          }
+        ],
+        "returns": ["un PGPData"],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si keyId es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el id de clave no tiene el formato correcto"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un PGPData a partir del identificador de clave pública PGP indicado y, opcionalmente, de un paquete de material de clave y una lista de elementos externos."
+        ],
+        "parameters": [
+          {
+            "label": "keyId",
+            "detail": "un identificador de clave pública PGP según se define en la sección 11.2 de RFC 2440. El array se clona para protegerlo de modificaciones posteriores."
+          },
+          {
+            "label": "keyPacket",
+            "detail": "un paquete de material de clave PGP según se define en la sección 5.5 de RFC 2440. El array se clona para protegerlo de modificaciones posteriores. Puede ser null."
+          },
+          {
+            "label": "other",
+            "detail": "una lista de XMLStructure que representan elementos de un espacio de nombres externo. La lista se copia de forma defensiva para protegerla de modificaciones posteriores. Puede ser null o estar vacía."
+          }
+        ],
+        "returns": ["un PGPData"],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si keyId es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si keyId o keyPacket no tienen el formato correcto. Para keyPacket, se comprueba el formato de la cabecera del paquete y se verifica que la etiqueta sea de tipo material de clave. No se comprueban el contenido ni el formato del cuerpo del paquete."
+          },
+          {
+            "label": "ClassCastException",
+            "detail": "si other contiene alguna entrada que no sea de tipo XMLStructure"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un PGPData a partir del paquete de material de clave PGP indicado y, opcionalmente, de una lista de elementos externos."
+        ],
+        "parameters": [
+          {
+            "label": "keyPacket",
+            "detail": "un paquete de material de clave PGP según se define en la sección 5.5 de RFC 2440. El array se clona para protegerlo de modificaciones posteriores."
+          },
+          {
+            "label": "other",
+            "detail": "una lista de XMLStructure que representan elementos de un espacio de nombres externo. La lista se copia de forma defensiva para protegerla de modificaciones posteriores. Puede ser null o estar vacía."
+          }
+        ],
+        "returns": ["un PGPData"],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si keyPacket es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si keyPacket no tiene el formato correcto. Para keyPacket, se comprueba el formato de la cabecera del paquete y se verifica que la etiqueta sea de tipo material de clave. No se comprueban el contenido ni el formato del cuerpo del paquete."
+          },
+          {
+            "label": "ClassCastException",
+            "detail": "si other contiene alguna entrada que no sea de tipo XMLStructure"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.xml.crypto.dsig.keyinfo.KeyInfoFactory.newX509Data": {
+    "parameters": [
+      {
+        "label": "content",
+        "detail": "una lista de uno o más tipos de contenido X.509. Los tipos válidos son String (nombres de sujeto), byte[] (ids de clave del sujeto), java.security.cert.X509Certificate, X509CRL o XMLStructure (objetos X509IssuerSerial o elementos de un espacio de nombres externo). Los nombres de sujeto son nombres distinguidos en formato String de RFC 2253. Las implementaciones DEBEN admitir las palabras clave de tipo de atributo definidas en RFC 2253 (CN, L, ST, O, OU, C, STREET, DC y UID). Las implementaciones PUEDEN admitir palabras clave adicionales. La lista se copia de forma defensiva para protegerla de modificaciones posteriores."
+      }
+    ],
+    "returns": ["un X509Data"],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si content es null"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si content está vacío, o si un nombre de sujeto no cumple RFC 2253 o no se reconoce una de las palabras clave de tipo de atributo."
+      },
+      {
+        "label": "ClassCastException",
+        "detail": "si content contiene alguna entrada que no sea de uno de los tipos válidos mencionados"
+      }
+    ]
+  },
+  "web-java-se-javax.xml.crypto.dsig.keyinfo.KeyInfoFactory.newX509IssuerSerial": {
+    "parameters": [
+      {
+        "label": "issuerName",
+        "detail": "el nombre distinguido del emisor en formato String de RFC 2253. Las implementaciones DEBEN admitir las palabras clave de tipo de atributo definidas en RFC 2253 (CN, L, ST, O, OU, C, STREET, DC y UID). Las implementaciones PUEDEN admitir palabras clave adicionales."
+      },
+      {
+        "label": "serialNumber",
+        "detail": "el número de serie"
+      }
+    ],
+    "returns": ["un X509IssuerSerial"],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si issuerName o serialNumber son null"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si el nombre del emisor no cumple RFC 2253 o no se reconoce una de las palabras clave de tipo de atributo."
+      }
+    ]
+  },
+  "web-java-se-javax.xml.crypto.dsig.spec.RSAPSSParameterSpec": {
+    "body": [
+      "La definición de XML Schema es:",
+      "<xs:element name=\"RSAPSSParams\" type=\"pss:RSAPSSParamsType\"> <xs:annotation> <xs:documentation> Top level element that can be used in xs:any namespace=\"#other\" wildcard of ds:SignatureMethod content. </xs:documentation> </xs:annotation> </xs:element> <xs:complexType name=\"RSAPSSParamsType\"> <xs:sequence> <xs:element ref=\"ds:DigestMethod\" minOccurs=\"0\"/> <xs:element name=\"MaskGenerationFunction\" type=\"pss:MaskGenerationFunctionType\" minOccurs=\"0\"/> <xs:element name=\"SaltLength\" type=\"xs:int\" minOccurs=\"0\"/> <xs:element name=\"TrailerField\" type=\"xs:int\" minOccurs=\"0\"/> </xs:sequence> </xs:complexType> <xs:complexType name=\"MaskGenerationFunctionType\"> <xs:sequence> <xs:element ref=\"ds:DigestMethod\" minOccurs=\"0\"/> </xs:sequence> <xs:attribute name=\"Algorithm\" type=\"xs:anyURI\" default=\"http://www.w3.org/2007/05/xmldsig-more#MGF1\"/> </xs:complexType>"
+    ]
+  },
+  "web-java-se-javax.xml.datatype.DatatypeFactory.newInstance": {
+    "overloads": [
+      {
+        "intro": [
+          "Obtiene una nueva instancia de DatatypeFactory. Este método usa el mecanismo de búsqueda de JAXP para determinar la clase de implementación de DatatypeFactory que se cargará."
+        ],
+        "returns": ["Nueva instancia de DatatypeFactory"],
+        "exceptions": [
+          {
+            "label": "DatatypeConfigurationException",
+            "detail": "Si la implementación no está disponible o no puede instanciarse."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Obtiene una nueva instancia de DatatypeFactory a partir del nombre de clase. Esta función es útil cuando hay varios proveedores en el classpath. Da más control a la aplicación, ya que puede especificar qué proveedor debe cargarse."
+        ],
+        "body": [
+          "Una vez que una aplicación ha obtenido una referencia a un DatatypeFactory, puede usar la fábrica para configurar y obtener instancias de tipos de datos.",
+          "Consejo para solucionar problemas",
+          "Establecer la propiedad del sistema jaxp.debug hace que este método imprima en System.err muchos mensajes de depuración sobre lo que hace y dónde busca.",
+          "Si tienes problemas, prueba:",
+          "java -Djaxp.debug=1 YourProgram ...."
+        ],
+        "parameters": [
+          {
+            "label": "factoryClassName",
+            "detail": "nombre de clase completamente cualificado de la fábrica que proporciona la implementación de javax.xml.datatype.DatatypeFactory."
+          },
+          {
+            "label": "classLoader",
+            "detail": "ClassLoader usado para cargar la clase de la fábrica. Si es null, se usa el classLoader de contexto del Thread actual para cargarla."
+          }
+        ],
+        "returns": ["Nueva instancia de DatatypeFactory"],
+        "exceptions": [
+          {
+            "label": "DatatypeConfigurationException",
+            "detail": "si factoryClassName es null o la clase de la fábrica no puede cargarse o instanciarse."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.xml.datatype.Duration.equals": {
+    "body": [
+      "Por ejemplo, \"P1D\" (1 día) es igual a \"PT24H\" (24 horas).",
+      "La duración X es igual a Y si y solo si los instantes t+X y t+Y son iguales para todos los instantes de prueba especificados en la sección 3.2.6.2 de la especificación XML Schema 1.0.",
+      "Ten en cuenta que hay casos en los que dos Duration son \"incomparables\" entre sí, como un mes y 30 días. Por ejemplo,",
+      "!new Duration(\"P1M\").isShorterThan(new Duration(\"P30D\")) !new Duration(\"P1M\").isLongerThan(new Duration(\"P30D\")) !new Duration(\"P1M\").equals(new Duration(\"P30D\"))"
+    ],
+    "parameters": [
+      {
+        "label": "duration",
+        "detail": "El objeto con el que comparar esta Duration."
+      }
+    ],
+    "returns": [
+      "true si esta duración tiene la misma longitud que duration. false si duration es null, no es un objeto Duration o su longitud es distinta de la de esta duración."
+    ],
+    "exceptions": [
+      {
+        "label": "UnsupportedOperationException",
+        "detail": "Si la implementación subyacente no puede procesar razonablemente la solicitud; por ejemplo, W3C XML Schema permite valores arbitrariamente grandes, pequeños o precisos, y la solicitud puede superar la capacidad de la implementación."
+      }
+    ]
+  },
+  "web-java-se-javax.xml.datatype.XMLGregorianCalendar.getTimeZone": {
+    "body": [
+      "Si el campo de zona horaria está definido para esta instancia, devuelve un TimeZone inicializado con el id de zona horaria personalizado de zoneoffset. Si el campo de zona horaria no está definido, se intenta con el defaultZoneoffset pasado. Si defaultZoneoffset es FIELD_UNDEFINED, devuelve la zona horaria predeterminada de este host (la misma predeterminada que java.util.GregorianCalendar)."
+    ],
+    "parameters": [
+      {
+        "label": "defaultZoneoffset",
+        "detail": "zoneoffset predeterminado si este zoneoffset es DatatypeConstants.FIELD_UNDEFINED."
+      }
+    ],
+    "returns": ["TimeZone de este objeto."]
+  },
+  "web-java-se-javax.xml.namespace.NamespaceContext.getPrefix": {
+    "body": [
+      "Para obtener todos los prefijos ligados a una URI de espacio de nombres en el ámbito actual, usa getPrefixes(String namespaceURI).",
+      "Al solicitar un prefijo por URI de espacio de nombres, la siguiente tabla describe el prefijo devuelto para todos los valores de URI de espacio de nombres:",
+      "Valor devuelto para las URI de espacio de nombres indicadas",
+      "Parámetro URI de espacio de nombres · prefijo devuelto",
+      "<URI de espacio de nombres predeterminado> · XMLConstants.DEFAULT_NS_PREFIX (\"\")",
+      "URI de espacio de nombres ligada · prefijo ligado a la URI de espacio de nombres en el ámbito actual; si hay varios prefijos ligados a esa URI en el ámbito actual, se devuelve uno arbitrario, cuya elección depende de la implementación",
+      "URI de espacio de nombres no ligada · null",
+      "XMLConstants.XML_NS_URI (\"http://www.w3.org/XML/1998/namespace\") · XMLConstants.XML_NS_PREFIX (\"xml\")",
+      "XMLConstants.XMLNS_ATTRIBUTE_NS_URI (\"http://www.w3.org/2000/xmlns/\") · XMLConstants.XMLNS_ATTRIBUTE (\"xmlns\")",
+      "null · se lanza IllegalArgumentException"
+    ],
+    "parameters": [
+      {
+        "label": "namespaceURI",
+        "detail": "URI del espacio de nombres que se busca"
+      }
+    ],
+    "returns": [
+      "prefijo ligado a la URI de espacio de nombres en el contexto actual"
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "Cuando namespaceURI es null"
+      }
+    ]
+  },
+  "web-java-se-javax.xml.parsers.DocumentBuilder.isNamespaceAware": {
+    "intro": [
+      "Indica si este parser está configurado para entender espacios de nombres."
+    ],
+    "returns": [
+      "true si este parser está configurado para entender espacios de nombres; false en caso contrario."
+    ]
+  },
+  "web-java-se-javax.xml.parsers.DocumentBuilder.isValidating": {
+    "intro": [
+      "Indica si este parser está configurado para validar documentos XML."
+    ],
+    "returns": [
+      "true si este parser está configurado para validar documentos XML; false en caso contrario."
+    ]
+  },
+  "web-java-se-javax.xml.parsers.DocumentBuilder.reset": {
+    "body": [
+      "DocumentBuilder se restablece al mismo estado que tenía al crearse con DocumentBuilderFactory.newDocumentBuilder(). reset() está pensado para permitir la reutilización de DocumentBuilders existentes, ahorrando así los recursos asociados a crear otros nuevos.",
+      "No se garantiza que el DocumentBuilder restablecido tenga los mismos objetos EntityResolver o ErrorHandler, por ejemplo según Object.equals(Object obj). Sí se garantiza que tenga un EntityResolver y un ErrorHandler funcionalmente iguales."
+    ],
+    "exceptions": [
+      {
+        "label": "UnsupportedOperationException",
+        "detail": "Cuando la implementación no sobrescribe este método."
+      }
+    ]
+  },
+  "web-java-se-javax.xml.parsers.DocumentBuilderFactory.isCoalescing": {
+    "intro": [
+      "Indica si la fábrica está configurada para producir parsers que convierten los nodos CDATA en nodos Text y los añaden al nodo Text adyacente (si lo hay)."
+    ],
+    "returns": [
+      "true si la fábrica está configurada para producir parsers que convierten los nodos CDATA en nodos Text y los añaden al nodo Text adyacente (si lo hay); false en caso contrario."
+    ]
+  },
+  "web-java-se-javax.xml.parsers.DocumentBuilderFactory.isExpandEntityReferences": {
+    "intro": [
+      "Indica si la fábrica está configurada para producir parsers que expanden los nodos de referencia a entidades."
+    ],
+    "returns": [
+      "true si la fábrica está configurada para producir parsers que expanden los nodos de referencia a entidades; false en caso contrario."
+    ]
+  },
+  "web-java-se-javax.xml.parsers.DocumentBuilderFactory.isIgnoringComments": {
+    "intro": [
+      "Indica si la fábrica está configurada para producir parsers que ignoran los comentarios."
+    ],
+    "returns": [
+      "true si la fábrica está configurada para producir parsers que ignoran los comentarios; false en caso contrario."
+    ]
+  },
+  "web-java-se-javax.xml.parsers.DocumentBuilderFactory.isIgnoringElementContentWhitespace": {
+    "intro": [
+      "Indica si la fábrica está configurada para producir parsers que ignoran los espacios en blanco ignorables del contenido de los elementos."
+    ],
+    "returns": [
+      "true si la fábrica está configurada para producir parsers que ignoran los espacios en blanco ignorables del contenido de los elementos; false en caso contrario."
+    ]
+  },
+  "web-java-se-javax.xml.parsers.DocumentBuilderFactory.isNamespaceAware": {
+    "intro": [
+      "Indica si la fábrica está configurada para producir parsers que reconocen espacios de nombres."
+    ],
+    "returns": [
+      "true si la fábrica está configurada para producir parsers que reconocen espacios de nombres; false en caso contrario."
+    ]
+  },
+  "web-java-se-javax.xml.parsers.DocumentBuilderFactory.isValidating": {
+    "intro": [
+      "Indica si la fábrica está configurada para producir parsers que validan el contenido XML durante el análisis."
+    ],
+    "returns": [
+      "true si la fábrica está configurada para producir parsers que validan el contenido XML durante el análisis; false en caso contrario."
+    ]
+  },
+  "web-java-se-javax.xml.parsers.DocumentBuilderFactory.newInstance": {
+    "overloads": [
+      {
+        "intro": [
+          "Obtiene una nueva instancia de DocumentBuilderFactory. Este método usa el mecanismo de búsqueda de JAXP para determinar la clase de implementación de DocumentBuilderFactory que se cargará."
+        ],
+        "body": [
+          "Una vez que una aplicación ha obtenido una referencia a un DocumentBuilderFactory, puede usar la fábrica para configurar y obtener instancias de parser.",
+          "Consejo para solucionar problemas",
+          "Establecer la propiedad del sistema jaxp.debug hace que este método imprima en System.err muchos mensajes de depuración sobre lo que hace y dónde busca.",
+          "Si tienes problemas al cargar DocumentBuilders, prueba:",
+          "java -Djaxp.debug=1 YourProgram ...."
+        ],
+        "returns": ["Nueva instancia de DocumentBuilderFactory"],
+        "exceptions": [
+          {
+            "label": "FactoryConfigurationError",
+            "detail": "en caso de error de configuración del servicio o si la implementación no está disponible o no puede instanciarse."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Obtiene una nueva instancia de DocumentBuilderFactory a partir del nombre de clase. Esta función es útil cuando hay varios proveedores en el classpath. Da más control a la aplicación, ya que puede especificar qué proveedor debe cargarse."
+        ],
+        "body": [
+          "Una vez que una aplicación ha obtenido una referencia a un DocumentBuilderFactory, puede usar la fábrica para configurar y obtener instancias de parser.",
+          "Consejo para solucionar problemas",
+          "Establecer la propiedad del sistema jaxp.debug hace que este método imprima en System.err muchos mensajes de depuración sobre lo que hace y dónde busca.",
+          "Si tienes problemas, prueba:",
+          "java -Djaxp.debug=1 YourProgram ...."
+        ],
+        "parameters": [
+          {
+            "label": "factoryClassName",
+            "detail": "nombre de clase completamente cualificado de la fábrica que proporciona la implementación de javax.xml.parsers.DocumentBuilderFactory."
+          },
+          {
+            "label": "classLoader",
+            "detail": "ClassLoader usado para cargar la clase de la fábrica. Si es null, se usa el classLoader de contexto del Thread actual para cargarla."
+          }
+        ],
+        "returns": ["Nueva instancia de DocumentBuilderFactory"],
+        "exceptions": [
+          {
+            "label": "FactoryConfigurationError",
+            "detail": "si factoryClassName es null o la clase de la fábrica no puede cargarse o instanciarse."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.xml.parsers.DocumentBuilderFactory.setFeature": {
+    "body": [
+      "Los nombres de características son java.net.URI completamente cualificadas. Las implementaciones pueden definir sus propias características. Se lanza una ParserConfigurationException si este DocumentBuilderFactory o los DocumentBuilders que crea no admiten la característica. Es posible que un DocumentBuilderFactory exponga el valor de una característica pero no pueda cambiar su estado.",
+      "Todas las implementaciones deben admitir la característica javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING. Cuando la característica es:",
+      "true: la implementación limitará el procesamiento XML para ajustarse a los límites de la implementación. Algunos ejemplos son los límites de expansión de entidades y las construcciones de XML Schema que consumirían grandes cantidades de recursos. Si el procesamiento XML se limita por motivos de seguridad, se informará mediante una llamada a ErrorHandler.fatalError(SAXParseException exception) del manejador registrado. Consulta DocumentBuilder.setErrorHandler(ErrorHandler errorHandler).",
+      "false: la implementación procesará el XML según las especificaciones XML sin tener en cuenta los posibles límites de la implementación."
+    ],
+    "parameters": [
+      {
+        "label": "name",
+        "detail": "Nombre de la característica."
+      },
+      {
+        "label": "value",
+        "detail": "Si el estado de la característica es true o false."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "ParserConfigurationException",
+        "detail": "si este DocumentBuilderFactory o los DocumentBuilders que crea no admiten esta característica."
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "Si el parámetro name es null."
+      }
+    ]
+  },
+  "web-java-se-javax.xml.parsers.SAXParser.isNamespaceAware": {
+    "intro": [
+      "Indica si este parser está configurado para entender espacios de nombres."
+    ],
+    "returns": [
+      "true si este parser está configurado para entender espacios de nombres; false en caso contrario."
+    ]
+  },
+  "web-java-se-javax.xml.parsers.SAXParser.isValidating": {
+    "intro": [
+      "Indica si este parser está configurado para validar documentos XML."
+    ],
+    "returns": [
+      "true si este parser está configurado para validar documentos XML; false en caso contrario."
+    ]
+  },
+  "web-java-se-javax.xml.parsers.SAXParserFactory.isNamespaceAware": {
+    "intro": [
+      "Indica si la fábrica está configurada para producir parsers que reconocen espacios de nombres."
+    ],
+    "returns": [
+      "true si la fábrica está configurada para producir parsers que reconocen espacios de nombres; false en caso contrario."
+    ]
+  },
+  "web-java-se-javax.xml.parsers.SAXParserFactory.isValidating": {
+    "intro": [
+      "Indica si la fábrica está configurada para producir parsers que validan el contenido XML durante el análisis."
+    ],
+    "returns": [
+      "true si la fábrica está configurada para producir parsers que validan el contenido XML durante el análisis; false en caso contrario."
+    ]
   }
 }
