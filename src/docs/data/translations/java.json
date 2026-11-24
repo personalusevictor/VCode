@@ -27382,6 +27382,525 @@
       "@jls 17.4 Memory Model"
     ]
   },
+  "web-java-se-java.util.jar.JarFile.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un JarFile nuevo para leer del archivo con el nombre indicado. Si está firmado, se verificará."
+        ],
+        "parameters": [
+          {
+            "label": "name",
+            "detail": "el nombre del archivo jar que se abre para lectura"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si el SecurityManager deniega el acceso al archivo"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un JarFile nuevo para leer del archivo con el nombre indicado."
+        ],
+        "parameters": [
+          {
+            "label": "name",
+            "detail": "el nombre del archivo jar que se abre para lectura"
+          },
+          {
+            "label": "verify",
+            "detail": "si se verifica el archivo jar en caso de estar firmado."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si el SecurityManager deniega el acceso al archivo"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un JarFile nuevo para leer del objeto File indicado. Si está firmado, se verificará."
+        ],
+        "parameters": [
+          {
+            "label": "file",
+            "detail": "el archivo jar que se abre para lectura"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si el SecurityManager deniega el acceso al archivo"
+          }
+        ]
+      },
+      {
+        "intro": ["Crea un JarFile nuevo para leer del objeto File indicado."],
+        "parameters": [
+          {
+            "label": "file",
+            "detail": "el archivo jar que se abre para lectura"
+          },
+          {
+            "label": "verify",
+            "detail": "si se verifica el archivo jar en caso de estar firmado."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si el SecurityManager deniega el acceso al archivo."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un JarFile nuevo para leer del objeto File indicado en el modo indicado. El argumento mode debe ser OPEN_READ u OPEN_READ | OPEN_DELETE."
+        ],
+        "parameters": [
+          {
+            "label": "file",
+            "detail": "el archivo jar que se abre para lectura"
+          },
+          {
+            "label": "verify",
+            "detail": "si se verifica el archivo jar en caso de estar firmado."
+          },
+          {
+            "label": "mode",
+            "detail": "el modo en que se abre el archivo"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el argumento mode no es válido"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si el SecurityManager deniega el acceso al archivo"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un JarFile nuevo para leer del objeto File indicado en el modo indicado. El argumento mode debe ser OPEN_READ u OPEN_READ | OPEN_DELETE. El argumento version, tras convertirse a forma canónica, sirve para configurar el JarFile para procesar archivos jar multiversión."
+        ],
+        "body": [
+          "La forma canónica derivada del parámetro version es Runtime.Version.parse(Integer.toString(n)), donde n es Math.max(version.feature(), JarFile.baseVersion().feature())."
+        ],
+        "parameters": [
+          {
+            "label": "file",
+            "detail": "el archivo jar que se abre para lectura"
+          },
+          {
+            "label": "verify",
+            "detail": "si se verifica el archivo jar en caso de estar firmado."
+          },
+          {
+            "label": "mode",
+            "detail": "el modo en que se abre el archivo"
+          },
+          {
+            "label": "version",
+            "detail": "indica la versión de lanzamiento para un archivo jar multiversión"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el argumento mode no es válido"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si el SecurityManager deniega el acceso al archivo"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si version es null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.util.logging.Level.WARNING": {
+    "body": [
+      "En general, los mensajes WARNING deben describir eventos que interesen a los usuarios finales o a los administradores del sistema, o que indiquen posibles problemas. Este nivel se inicializa a 900."
+    ]
+  },
+  "web-java-se-java.util.logging.LogManager.updateConfiguration": {
+    "overloads": [
+      {
+        "intro": ["Actualiza la configuración de logging."],
+        "body": [
+          "Si está fijada la propiedad del sistema \"java.util.logging.config.file\", su valor indica el archivo de propiedades que se lee como nueva configuración. Si no, se usa la configuración predeterminada de LogManager.",
+          "La configuración predeterminada suele cargarse del archivo de propiedades \"conf/logging.properties\" del directorio de instalación de Java.",
+          "Este método lee la nueva configuración y llama a updateConfiguration(ins, mapper) para actualizarla."
+        ],
+        "parameters": [
+          {
+            "label": "mapper",
+            "detail": "una interfaz funcional que recibe una clave de configuración k y devuelve una función f(o,n) cuyo resultado se aplica a la configuración resultante. f puede devolver null para indicar que la propiedad k no se añadirá a la configuración resultante. Si mapper es null, se supone (k) -> ((o, n) -> n). Para cada k, se invoca la función f correspondiente con el valor asociado a k en la configuración antigua (o) y en la nueva (n). Un valor null en o o n indica que k no tenía valor en la configuración correspondiente."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "SecurityException",
+            "detail": "si hay un gestor de seguridad y quien llama no tiene LoggingPermission(\"control\"), o no tiene los permisos necesarios para establecer la configuración (p. ej. abrir el archivo indicado para los FileHandlers, etc.)"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si mapper devuelve una función null al invocarse."
+          },
+          {
+            "label": "IOException",
+            "detail": "si hay problemas al leer el archivo de configuración de logging."
+          }
+        ],
+        "caveats": [
+          "Este método actualiza la configuración de logging leyendo un archivo de propiedades e ignora la propiedad del sistema \"java.util.logging.config.class\". Esa propiedad solo la usa readConfiguration() para cargar una clase de configuración personalizada como configuración inicial."
+        ]
+      },
+      {
+        "intro": ["Actualiza la configuración de logging."],
+        "body": [
+          "Para cada clave de configuración de la configuración existente y de la del flujo de entrada dado, se invoca la función mapper para obtener a partir de la clave una función f(o,n) que recibe el valor antiguo y el nuevo y devuelve el valor que se aplica en la configuración resultante, como indica la tabla de abajo.",
+          "Sea k una clave de la configuración antigua o nueva, o el valor antiguo (el asociado a k en la configuración antigua), n el valor nuevo (el asociado a k en la nueva) y f la función que devuelve mapper.apply(k): entonces v = f(o,n) es el valor resultante. Si v no es null, se añade a la configuración resultante una propiedad k con valor v. Si no, se omite.",
+          "Puede pasarse null a f para indicar que la configuración correspondiente no tiene la clave k. f puede devolver null para indicar que k no tendrá valor en la configuración resultante.",
+          "Si mapper es null, v será n.",
+          "Las propiedades de LogManager se actualizan con el valor resultante en la configuración resultante.",
+          "Los listeners de configuración registrados se invocan tras actualizar la configuración correctamente.",
+          "Actualización de las propiedades de configuración",
+          "Propiedad · Comportamiento resultante",
+          "<logger>.level",
+          "Si la configuración resultante define un nivel para un logger y es distinto del de la configuración antigua (o no estaba en ella), y el logger o sus hijos existen, se actualiza el nivel de ese logger y el cambio se propaga a sus hijos existentes. Puede hacer que se cree el logger, si hace falta.",
+          "Si la configuración antigua definía un nivel para un logger y la resultante no, el cambio no se propaga a los loggers existentes. Para sustituir por completo una configuración, quien llama debe llamar a reset para vaciar la actual antes de llamar a updateConfiguration.",
+          "<logger>.useParentHandlers",
+          "Si el valor resultante o el antiguo de useParentHandlers no es null, y el logger o sus hijos existen, se actualiza ese logger al valor resultante. El valor de useParentHandlers es el indicado en la configuración; si no se indica, es true.",
+          "<logger>.handlers",
+          "Si la configuración resultante define una lista de handlers para un logger y es distinta de la antigua (que podía estar vacía), y el logger o sus hijos existen, se cierran y quitan los handlers asociados a ese logger, se crean los nuevos según la configuración resultante y se añaden al logger, creándolo si hace falta.",
+          "Si la configuración antigua definía handlers para un logger y la resultante no, y el logger existe, se quitan y cierran sus handlers.",
+          "Cambiar la lista de handlers de un logger existente hace que se quiten y cierren todos sus handlers anteriores, se hayan creado desde la configuración o mediante código. Los antiguos se sustituyen por los nuevos, si los hay.",
+          "<handler-name>.*",
+          "Las propiedades configuradas o cambiadas en clases de handler solo afectan a los handlers recién creados. Si un nodo tiene la misma lista de handlers en la configuración antigua y en la resultante, esos handlers no cambian.",
+          "config y cualquier otra propiedad",
+          "El valor resultante de estas propiedades se guarda en las propiedades de LogManager, pero updateConfiguration no analiza ni procesa sus valores.",
+          "Ejemplos de funciones mapper:",
+          "Sustituir todas las propiedades de logging por la nueva configuración:",
+          "equivale a pasar null como mapper.",
+          "Combinar la configuración nueva y la antigua usando el valor nuevo si k existe en la nueva:",
+          "(k) -> ((o, n) -> n == null ? o : n):",
+          "como si se combinaran dos colecciones así: result.putAll(oldc); result.putAll(newc).",
+          "Combinar la configuración nueva y la antigua usando el valor antiguo si k existe en la antigua:",
+          "(k) -> ((o, n) -> o == null ? n : o):",
+          "como si se combinaran dos colecciones así: result.putAll(newc); result.putAll(oldc).",
+          "Sustituir todas las propiedades por la nueva configuración salvo la propiedad handler de los loggers que no son el raíz:",
+          "(k) -> k.endsWith(\".handlers\") ? ((o, n) -> (o == null ? n : o)) : ((o, n) -> n)",
+          "Para reinicializar por completo una configuración, una aplicación puede llamar primero a reset para quitar del todo la antigua y después a updateConfiguration para inicializar la nueva."
+        ],
+        "parameters": [
+          {
+            "label": "ins",
+            "detail": "un flujo del que leer las propiedades"
+          },
+          {
+            "label": "mapper",
+            "detail": "una interfaz funcional que recibe una clave de configuración k y devuelve una función f(o,n) cuyo resultado se aplica a la configuración resultante. f puede devolver null para indicar que la propiedad k no se añadirá a la configuración resultante. Si mapper es null, se supone (k) -> ((o, n) -> n). Para cada k, se invoca la función f correspondiente con el valor asociado a k en la configuración antigua (o) y en la nueva (n). Un valor null en o o n indica que k no tenía valor en la configuración correspondiente."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "SecurityException",
+            "detail": "si hay un gestor de seguridad y quien llama no tiene LoggingPermission(\"control\"), o no tiene los permisos necesarios para establecer la configuración (p. ej. abrir los archivos indicados para los FileHandlers)"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si ins es null o si mapper devuelve una función null al invocarse."
+          },
+          {
+            "label": "IOException",
+            "detail": "si hay problemas al leer del flujo o el flujo no está en formato de archivo de propiedades."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.util.logging.Logger": {
+    "body": [
+      "Los objetos Logger se obtienen con alguno de los métodos de fábrica getLogger, que crean un Logger nuevo o devuelven uno existente adecuado. Es importante saber que el recolector de basura puede recoger en cualquier momento el Logger devuelto por getLogger si no se guarda una referencia fuerte a él.",
+      "Los mensajes de log se reenvían a los objetos Handler registrados, que pueden enviarlos a distintos destinos: consolas, archivos, logs del sistema operativo, etc.",
+      "Cada Logger sabe cuál es su Logger \"padre\", su ancestro existente más cercano en el espacio de nombres de Logger.",
+      "Cada Logger tiene un \"Level\" asociado, que indica el nivel mínimo que le interesa. Si el nivel de un Logger es null, su nivel efectivo se hereda del padre, que a su vez puede obtenerlo de su propio padre, y así hacia arriba en el árbol.",
+      "El nivel de log puede configurarse con las propiedades del archivo de configuración de logging, como se describe en la clase LogManager. También puede cambiarse dinámicamente con Logger.setLevel. Si cambia el nivel de un logger, el cambio puede afectar también a sus hijos, porque cualquier hijo con nivel null hereda el nivel efectivo del padre.",
+      "En cada llamada de log, el Logger hace primero una comprobación barata del nivel de la petición (p. ej. SEVERE o FINE) frente a su nivel efectivo. Si el nivel de la petición es menor, la llamada retorna de inmediato.",
+      "Superada esta primera comprobación (barata), el Logger crea un LogRecord que describe el mensaje. Después llama a un Filter (si lo hay) para comprobar con más detalle si debe publicarse. Si pasa, publica el LogRecord en sus Handlers de salida. Por defecto, los loggers también publican en los Handlers de su padre, recursivamente hacia arriba en el árbol.",
+      "Cada Logger puede tener un ResourceBundle asociado, indicado por nombre con el método de fábrica getLogger(String, String) o por valor con setResourceBundle. Este bundle se usa para localizar los mensajes de log. Si un Logger no tiene ResourceBundle ni nombre de resource bundle propio, lo hereda de su padre, recursivamente hacia arriba en el árbol.",
+      "La mayoría de los métodos de salida del logger reciben un argumento \"msg\", que puede ser un valor tal cual o una clave de localización. Al formatear, si el logger tiene (o hereda) un ResourceBundle de localización y este tiene una entrada para msg, se sustituye por el valor localizado; si no, se usa msg tal cual. Normalmente los formateadores usan el estilo de java.text.MessageFormat para formatear parámetros; por ejemplo, la cadena de formato \"{0} {1}\" formatea dos parámetros como cadenas.",
+      "Un conjunto de métodos recibe un argumento \"msgSupplier\" en lugar de \"msg\". Reciben una función Supplier<String> que solo se invoca para construir el mensaje cuando realmente va a registrarse según el nivel efectivo, evitando construir mensajes innecesarios. Por ejemplo, si el desarrollador quiere registrar el estado de salud del sistema para diagnóstico, con la versión que recibe un String el código sería:",
+      "{@code",
+      "class DiagnosisMessages { static String systemHealthStatus() { // collect system health information ... } } ... logger.log(Level.FINER, DiagnosisMessages.systemHealthStatus()); }",
+      "Con ese código, el estado de salud se recoge innecesariamente aunque el nivel FINER esté desactivado. Con la versión que recibe un Supplier, como abajo, solo se recoge si FINER está activado.",
+      "logger.log(Level.FINER, DiagnosisMessages::systemHealthStatus);",
+      "Al buscar un ResourceBundle, el logger mira primero si se indicó uno con setResourceBundle y solo después si se indicó un nombre con el método de fábrica getLogger(String, String). Si no encuentra ninguno, usa el ResourceBundle o nombre más cercano heredado de su árbol de padres.",
+      "Si el ResourceBundle se heredó o se indicó con setResourceBundle, se usa ese. Si el logger solo tiene o hereda un nombre de resource bundle, ese nombre se convierte en un objeto ResourceBundle con el Locale predeterminado en el momento del log.",
+      "Al convertir nombres de resource bundle en objetos ResourceBundle, el logger intenta primero usar el cargador de clases de contexto del hilo. Si es null, prueba con el cargador de clases del sistema. Si aún no lo encuentra, usa el cargador de clases del primer llamante del método de fábrica getLogger(String, String).",
+      "El formateo (incluida la localización) es responsabilidad del Handler de salida, que normalmente llama a un Formatter.",
+      "El formateo no tiene por qué ser síncrono. Puede retrasarse hasta que el LogRecord se escribe realmente en un destino externo.",
+      "Los métodos de log se agrupan en cinco categorías principales:",
+      "Métodos \"log\", que reciben un nivel de log, una cadena de mensaje y, opcionalmente, parámetros para ella.",
+      "Métodos \"logp\" (de \"log precise\"), como los \"log\" pero que además reciben explícitamente el nombre de la clase y del método de origen.",
+      "Métodos \"logrb\" (de \"log with resource bundle\"), como los \"logp\" pero que además reciben explícitamente un resource bundle para localizar el mensaje.",
+      "Métodos de conveniencia para trazar entradas en métodos (\"entering\"), retornos de métodos (\"exiting\") y lanzamiento de excepciones (\"throwing\").",
+      "Por último, métodos de conveniencia para los casos más sencillos, cuando el desarrollador solo quiere registrar una cadena con un nivel dado. Llevan el nombre de los niveles estándar (\"severe\", \"warning\", \"info\", etc.) y reciben un único argumento, la cadena del mensaje.",
+      "En los métodos que no reciben explícitamente el nombre de origen y de método, el framework de logging intenta \"lo mejor posible\" averiguar qué clase y método llamaron al método de log. Pero hay que saber que esta información inferida automáticamente puede ser solo aproximada (¡o incluso bastante errónea!). Las máquinas virtuales pueden hacer optimizaciones extensas al compilar con JIT y eliminar por completo marcos de pila, lo que impide localizar de forma fiable la clase y el método llamantes.",
+      "Todos los métodos de Logger son seguros con varios hilos.",
+      "Información para subclases: un LogManager puede ofrecer su propia implementación de Loggers con nombre en cualquier punto del espacio de nombres. Por eso, las subclases de Logger (salvo que se implementen junto con una nueva clase LogManager) deben obtener una instancia de Logger del LogManager y delegar en ella operaciones como \"isLoggable\" y \"log(LogRecord)\". Para interceptar toda la salida de log, a las subclases les basta con sobrescribir log(LogRecord); todos los demás métodos de log se implementan como llamadas a ese método."
+    ]
+  },
+  "web-java-se-java.util.logging.Logger.getUseParentHandlers": {
+    "intro": ["Indica si este logger envía su salida a su logger padre."],
+    "returns": ["true si la salida se envía al padre del logger"]
+  },
+  "web-java-se-java.util.logging.Logger.setUseParentHandlers": {
+    "intro": [
+      "Indica si este logger debe enviar su salida a su Logger padre. Esto significa que los LogRecord también se escriben en los Handlers del padre y, potencialmente, en los de su padre, recursivamente hacia arriba en el espacio de nombres."
+    ],
+    "parameters": [
+      {
+        "label": "useParentHandlers",
+        "detail": "true si la salida se envía al padre del logger."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "SecurityException",
+        "detail": "si hay un gestor de seguridad, este logger no es anónimo y quien llama no tiene LoggingPermission(\"control\")."
+      }
+    ]
+  },
+  "web-java-se-java.util.logging.SimpleFormatter.format": {
+    "body": [
+      "El formato puede personalizarse indicando la cadena de formato en la propiedad java.util.logging.SimpleFormatter.format. El LogRecord dado se formatea como si se llamara a:",
+      "String.format(format, date, source, logger, level, message, thrown);",
+      "donde los argumentos son:",
+      "format: la cadena de formato de java.util.Formatter indicada en la propiedad java.util.logging.SimpleFormatter.format, o el formato predeterminado.",
+      "date: un ZonedDateTime con el momento del evento del registro en la zona horaria del sistema ZoneId.systemDefault().",
+      "source: una cadena que representa a quien llama, si está disponible; si no, el nombre del logger.",
+      "logger: el nombre del logger.",
+      "level: el nivel de log.",
+      "message: el mensaje formateado que devuelve Formatter.formatMessage(LogRecord). Usa el formateo de java.text y no el argumento format de java.util.Formatter.",
+      "thrown: una cadena con el throwable asociado al registro y su traza, empezando por un salto de línea, si lo hay; si no, una cadena vacía.",
+      "Algunos formatos de ejemplo:",
+      "java.util.logging.SimpleFormatter.format=\"%4$s: %5$s [%1$tc]%n\"",
+      "Imprime 1 línea con el nivel (4$), el mensaje (5$) y la marca de tiempo (1$) entre corchetes.",
+      "WARNING: warning message [Tue Mar 22 13:11:31 PDT 2011]",
+      "java.util.logging.SimpleFormatter.format=\"%1$tc %2$s%n%4$s: %5$s%6$s%n\"",
+      "Imprime 2 líneas: la primera con la marca de tiempo (1$) y el origen (2$); la segunda con el nivel (4$) y el mensaje (5$), seguidos del throwable y su traza (6$), si los hay:",
+      "Tue Mar 22 13:11:31 PDT 2011 MyClass fatal SEVERE: several message with an exception java.lang.IllegalArgumentException: invalid argument at MyClass.mash(MyClass.java:9) at MyClass.crunch(MyClass.java:6) at MyClass.main(MyClass.java:3)",
+      "java.util.logging.SimpleFormatter.format=\"%1$tb %1$td, %1$tY %1$tl:%1$tM:%1$tS %1$Tp %2$s%n%4$s: %5$s%n\"",
+      "Imprime 2 líneas como el ejemplo anterior, con otro formato de fecha/hora y sin el throwable ni su traza:",
+      "Mar 22, 2011 1:11:31 PM MyClass fatal SEVERE: several message with an exception",
+      "java.util.logging.SimpleFormatter.format=\"%1$tb %1$td, %1$tY %1$tl:%1$tM:%1$tS.%1$tN %1$Tp %2$s%n%4$s: %5$s%6$s%n\"",
+      "Desde JDK 9, java.util.logging usa java.time para crear marcas de tiempo más precisas. El formato anterior añade .%1$tN al formato de fecha/hora para imprimir también los nanosegundos:",
+      "Feb 06, 2015 5:33:10.279216000 PM example.Main main INFO: This is a test",
+      "Este método también puede sobrescribirse en una subclase. Se recomienda usar el método de conveniencia Formatter.formatMessage para localizar y formatear el campo del mensaje."
+    ],
+    "parameters": [
+      {
+        "label": "record",
+        "detail": "el registro de log que se formatea."
+      }
+    ],
+    "returns": ["un registro de log formateado"]
+  },
+  "web-java-se-java.util.prefs.Preferences": {
+    "intro": [
+      "Un nodo de una colección jerárquica de datos de preferencias. Esta clase permite a las aplicaciones guardar y recuperar preferencias y datos de configuración del usuario y del sistema. Los datos se guardan de forma persistente en un almacén dependiente de la implementación. Las implementaciones típicas usan archivos planos, registros propios del sistema operativo, servidores de directorio o bases de datos SQL. Quien usa esta clase no tiene que preocuparse por los detalles del almacén."
+    ],
+    "body": [
+      "Hay dos árboles de nodos de preferencias separados, uno para las preferencias del usuario y otro para las del sistema. Cada usuario tiene su propio árbol de preferencias de usuario, y todos los usuarios de un sistema comparten el mismo árbol de preferencias del sistema. La descripción exacta de \"usuario\" y \"sistema\" varía según la implementación. En el árbol de usuario se suele guardar, por ejemplo, la fuente, el color o la posición y tamaño de ventana preferidos de una aplicación. En el del sistema, por ejemplo, datos de configuración de instalación de una aplicación.",
+      "Los nodos de un árbol de preferencias se nombran de forma parecida a los directorios de un sistema de archivos jerárquico. Cada nodo tiene un nombre de nodo (no necesariamente único), un nombre de ruta absoluto único y un nombre de ruta relativo a cada ancestro, incluido él mismo.",
+      "El nodo raíz tiene como nombre la cadena vacía (\"\"). Los demás nodos tienen un nombre arbitrario, indicado al crearlos. Las únicas restricciones son que no puede ser la cadena vacía ni contener la barra ('/').",
+      "El nodo raíz tiene la ruta absoluta \"/\". Sus hijos tienen rutas absolutas \"/\" +<node name>. Los demás nodos tienen rutas absolutas <parent's absolute path name>+ \"/\" +<node name>. Todas las rutas absolutas empiezan por barra.",
+      "La ruta de un nodo n relativa a su ancestro a es simplemente la cadena que hay que añadir a la ruta absoluta de a para formar la de n, sin la barra inicial (si la hay). Ten en cuenta que:",
+      "Ninguna ruta relativa empieza por barra.",
+      "La ruta de un nodo relativa a sí mismo es la cadena vacía.",
+      "La ruta de un nodo relativa a su padre es su nombre de nodo (salvo el raíz, que no tiene padre).",
+      "La ruta de un nodo relativa a la raíz es su ruta absoluta sin la barra inicial.",
+      "Por último:",
+      "Ninguna ruta contiene varias barras seguidas.",
+      "Ninguna ruta, salvo la ruta absoluta de la raíz, termina en barra.",
+      "Cualquier cadena que cumpla estas dos reglas es una ruta válida.",
+      "Todos los métodos que modifican preferencias pueden funcionar de forma asíncrona: pueden retornar de inmediato, y los cambios acabarán llegando al almacén persistente con un retraso dependiente de la implementación. El método flush permite forzar de forma síncrona las actualizaciones en el almacén. La terminación normal de la máquina virtual Java no pierde las actualizaciones pendientes: no hace falta llamar explícitamente a flush al terminar para que se hagan persistentes.",
+      "Todos los métodos que leen preferencias de un objeto Preferences exigen que quien llama dé un valor predeterminado, que se devuelve si no se ha fijado ningún valor o si el almacén no está disponible. La idea es que las aplicaciones sigan funcionando, aunque con algo menos de funcionalidad, aunque el almacén no esté disponible. Algunos métodos, como flush, tienen una semántica que les impide funcionar sin almacén. Las aplicaciones normales no deberían necesitar llamarlos; se reconocen porque declaran que lanzan BackingStoreException.",
+      "Varios hilos de una misma JVM pueden llamar a la vez a los métodos de esta clase sin sincronización externa, y el resultado equivaldrá a alguna ejecución en serie. Si varias JVM que guardan sus preferencias en el mismo almacén usan esta clase a la vez, el almacén no se corromperá, pero no hay más garantías sobre la coherencia de los datos de preferencias.",
+      "Esta clase tiene una función de exportación e importación que permite \"exportar\" preferencias a un documento XML e \"importar\" de vuelta documentos XML que las representan. Puede usarse para hacer copia de seguridad de todo o parte de un árbol de preferencias y restaurarlo después.",
+      "El documento XML tiene esta declaración DOCTYPE:",
+      "<!DOCTYPE preferences SYSTEM \"http://java.sun.com/dtd/preferences.dtd\">",
+      "Al exportar o importar no se accede a la URI del sistema (http://java.sun.com/dtd/preferences.dtd); solo sirve como cadena que identifica de forma única la DTD, que es:",
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+      "<!-- DTD for a Preferences tree. -->",
+      "<!-- The preferences element is at the root of an XML document representing a Preferences tree. --> <!ELEMENT preferences (root)>",
+      "<!-- The preferences element contains an optional version attribute, which specifies version of DTD. --> <!ATTLIST preferences EXTERNAL_XML_VERSION CDATA \"0.0\" >",
+      "<!-- The root element has a map representing the root's preferences (if any), and one node for each child of the root (if any). --> <!ELEMENT root (map, node*) >",
+      "<!-- Additionally, the root contains a type attribute, which specifies whether it's the system or user root. --> <!ATTLIST root type (system|user) #REQUIRED >",
+      "<!-- Each node has a map representing its preferences (if any), and one node for each child (if any). --> <!ELEMENT node (map, node*) >",
+      "<!-- Additionally, each node has a name attribute --> <!ATTLIST node name CDATA #REQUIRED >",
+      "<!-- A map represents the preferences stored at a node (if any). --> <!ELEMENT map (entry*) >",
+      "<!-- An entry represents a single preference, which is simply a key-value pair. --> <!ELEMENT entry EMPTY > <!ATTLIST entry key CDATA #REQUIRED value CDATA #REQUIRED >",
+      "Toda implementación de Preferences debe tener asociada una implementación de PreferencesFactory. Toda implementación de Java SE debe ofrecer alguna forma de indicar qué PreferencesFactory se usa para generar los nodos raíz. Así el administrador puede sustituir la implementación predeterminada de preferencias por otra."
+    ]
+  },
+  "web-java-se-java.util.prefs.Preferences.exportNode": {
+    "body": [
+      "El documento XML tendrá esta declaración DOCTYPE:",
+      "<!DOCTYPE preferences SYSTEM \"http://java.sun.com/dtd/preferences.dtd\">",
+      "Se usa la codificación UTF-8.",
+      "Este método es una excepción a la regla general de que ejecutar a la vez varios métodos de esta clase da resultados equivalentes a alguna ejecución en serie. Si las preferencias de este nodo se modifican a la vez que se ejecuta este método, las preferencias exportadas son una \"instantánea difusa\" de las del nodo: algunas modificaciones concurrentes pueden reflejarse en los datos exportados y otras no."
+    ],
+    "parameters": [
+      {
+        "label": "os",
+        "detail": "el flujo de salida en el que se emite el documento XML."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IOException",
+        "detail": "si escribir en el flujo de salida provoca una IOException."
+      },
+      {
+        "label": "BackingStoreException",
+        "detail": "si no pueden leerse las preferencias del almacén."
+      },
+      {
+        "label": "IllegalStateException",
+        "detail": "si este nodo (o un ancestro) se ha eliminado con removeNode()."
+      }
+    ]
+  },
+  "web-java-se-java.util.prefs.Preferences.exportSubtree": {
+    "body": [
+      "El documento XML tendrá esta declaración DOCTYPE:",
+      "<!DOCTYPE preferences SYSTEM \"http://java.sun.com/dtd/preferences.dtd\">",
+      "Se usa la codificación UTF-8.",
+      "Este método es una excepción a la regla general de que ejecutar a la vez varios métodos de esta clase da resultados equivalentes a alguna ejecución en serie. Si las preferencias o los nodos del subárbol que cuelga de este nodo se modifican a la vez que se ejecuta este método, las preferencias exportadas son una \"instantánea difusa\" del subárbol: algunas modificaciones concurrentes pueden reflejarse en los datos exportados y otras no."
+    ],
+    "parameters": [
+      {
+        "label": "os",
+        "detail": "el flujo de salida en el que se emite el documento XML."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IOException",
+        "detail": "si escribir en el flujo de salida provoca una IOException."
+      },
+      {
+        "label": "BackingStoreException",
+        "detail": "si no pueden leerse las preferencias del almacén."
+      },
+      {
+        "label": "IllegalStateException",
+        "detail": "si este nodo (o un ancestro) se ha eliminado con removeNode()."
+      }
+    ]
+  },
+  "web-java-se-java.util.prefs.Preferences.getBoolean": {
+    "intro": [
+      "Devuelve el valor boolean que representa la cadena asociada a la clave indicada en este nodo. Las cadenas válidas son \"true\", que representa true, y \"false\", que representa false. No distingue mayúsculas, así que \"TRUE\" y \"False\" también son válidas. Este método está pensado para usarse junto con putBoolean."
+    ],
+    "body": [
+      "Devuelve el valor predeterminado indicado si la clave no tiene valor asociado, el almacén no es accesible o el valor asociado no es \"true\" ni \"false\" (sin distinguir mayúsculas).",
+      "Si la implementación admite valores predeterminados guardados y existe uno accesible, se usa en lugar del indicado, salvo que no sea \"true\" ni \"false\" (sin distinguir mayúsculas); en ese caso se usa el indicado."
+    ],
+    "parameters": [
+      {
+        "label": "key",
+        "detail": "la clave cuyo valor asociado se devuelve como boolean."
+      },
+      {
+        "label": "def",
+        "detail": "el valor que se devuelve si este nodo no tiene valor asociado a key, si el valor no puede interpretarse como boolean o si el almacén no es accesible."
+      }
+    ],
+    "returns": [
+      "el valor boolean que representa la cadena asociada a key en este nodo, o def si no existe o no puede interpretarse como boolean."
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalStateException",
+        "detail": "si este nodo (o un ancestro) se ha eliminado con removeNode()."
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "si key es null."
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si key contiene el carácter de control nulo, punto de código U+0000."
+      }
+    ]
+  },
+  "web-java-se-java.util.prefs.Preferences.importPreferences": {
+    "body": [
+      "El documento XML debe tener esta declaración DOCTYPE:",
+      "<!DOCTYPE preferences SYSTEM \"http://java.sun.com/dtd/preferences.dtd\">",
+      "(Este método está pensado para usarse junto con exportNode(OutputStream) y exportSubtree(OutputStream).",
+      "Este método es una excepción a la regla general de que ejecutar a la vez varios métodos de esta clase da resultados equivalentes a alguna ejecución en serie. Se comporta como si estuviera implementado sobre los demás métodos públicos de esta clase, en concreto node(String) y put(String, String)."
+    ],
+    "parameters": [
+      {
+        "label": "is",
+        "detail": "el flujo de entrada del que se lee el documento XML."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IOException",
+        "detail": "si leer del flujo de entrada provoca una IOException."
+      },
+      {
+        "label": "InvalidPreferencesFormatException",
+        "detail": "Los datos del flujo de entrada no forman un documento XML válido con el tipo de documento exigido."
+      },
+      {
+        "label": "SecurityException",
+        "detail": "Si hay un gestor de seguridad y deniega RuntimePermission(\"preferences\")."
+      }
+    ]
+  },
   "web-java-se-java.util.regex.Matcher.useAnchoringBounds": {
     "body": [
       "Llamar a este método con true hace que este matcher use límites de anclaje. Si el argumento es false, se usarán límites sin anclaje.",
