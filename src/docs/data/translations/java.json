@@ -27043,6 +27043,345 @@
       "private final Sync sync = new Sync(); public boolean isSignalled() { return sync.isSignalled(); } public void signal() { sync.releaseShared(1); } public void await() throws InterruptedException { sync.acquireSharedInterruptibly(1); } }}"
     ]
   },
+  "web-java-se-java.util.concurrent.locks.Condition": {
+    "body": [
+      "Las condiciones (también llamadas colas de condición o variables de condición) permiten que un hilo suspenda su ejecución (que \"espere\") hasta que otro hilo le avise de que cierta condición de estado puede cumplirse ya. Como el acceso a esa información de estado compartida ocurre en distintos hilos, debe protegerse, así que la condición lleva asociado algún tipo de lock. La propiedad clave de esperar en una condición es que libera atómicamente el lock asociado y suspende el hilo actual, igual que Object.wait.",
+      "Una instancia de Condition está ligada intrínsecamente a un lock. Para obtener una Condition de un Lock concreto, usa su método newCondition().",
+      "Por ejemplo, supón un búfer acotado con métodos put y take. Si se intenta take sobre un búfer vacío, el hilo se bloquea hasta que haya un elemento; si se intenta put sobre un búfer lleno, se bloquea hasta que haya hueco. Nos gustaría mantener los hilos que esperan en put y en take en conjuntos de espera separados, para poder avisar solo a un hilo cada vez que haya elementos o hueco. Esto se consigue con dos instancias de Condition.",
+      "class BoundedBuffer<E> { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition();",
+      "final Object[] items = new Object[100]; int putptr, takeptr, count;",
+      "public void put(E x) throws InterruptedException { lock.lock(); try { while (count == items.length) notFull.await(); items[putptr] = x; if (++putptr == items.length) putptr = 0; ++count; notEmpty.signal(); } finally { lock.unlock(); } }",
+      "public E take() throws InterruptedException { lock.lock(); try { while (count == 0) notEmpty.await(); E x = (E) items[takeptr]; if (++takeptr == items.length) takeptr = 0; --count; notFull.signal(); return x; } finally { lock.unlock(); } } }",
+      "(La clase java.util.concurrent.ArrayBlockingQueue ya ofrece esta funcionalidad, así que no hay motivo para implementar esta clase de ejemplo).",
+      "Una implementación de Condition puede ofrecer un comportamiento y una semántica distintos de los métodos de monitor de Object, como un orden garantizado de las notificaciones o no exigir tener el lock al notificar. Si lo hace, debe documentar esa semántica.",
+      "Las instancias de Condition son objetos normales: pueden usarse como destino de una sentencia synchronized y se puede llamar a sus propios métodos de monitor wait y notify. Adquirir el lock de monitor de una Condition, o usar sus métodos de monitor, no tiene ninguna relación especificada con adquirir el Lock asociado a esa Condition ni con usar sus métodos de espera y señalización. Para evitar confusiones, se recomienda no usar nunca las Condition de esta forma, salvo quizá dentro de su propia implementación.",
+      "Salvo que se indique lo contrario, pasar null en cualquier parámetro lanza NullPointerException.",
+      "Consideraciones de implementación",
+      "Al esperar en una Condition, en general se permite que ocurra un \"despertar espurio\", como concesión a la semántica de la plataforma subyacente. Esto tiene poco impacto práctico en la mayoría de las aplicaciones, porque siempre se debe esperar en una Condition dentro de un bucle que compruebe el predicado de estado esperado. Una implementación puede eliminar la posibilidad de despertares espurios, pero se recomienda que los programadores supongan siempre que pueden ocurrir y esperen siempre en un bucle.",
+      "Las tres formas de esperar en una condición (interrumpible, no interrumpible y con tiempo) pueden diferir en su facilidad de implementación en algunas plataformas y en su rendimiento. En concreto, puede ser difícil ofrecer estas funcionalidades y mantener semánticas concretas, como garantías de orden. Además, poder interrumpir la suspensión real del hilo no siempre es factible en todas las plataformas.",
+      "Por eso, una implementación no tiene por qué definir exactamente las mismas garantías o semántica para las tres formas de espera, ni tiene por qué admitir la interrupción de la suspensión real del hilo.",
+      "Una implementación debe documentar claramente la semántica y las garantías de cada método de espera y, si admite la interrupción de la suspensión del hilo, debe respetar la semántica de interrupción definida en esta interfaz.",
+      "Como la interrupción suele implicar cancelación y las comprobaciones de interrupción suelen ser poco frecuentes, una implementación puede priorizar responder a una interrupción frente al retorno normal del método, aunque pueda demostrarse que la interrupción ocurrió después de otra acción que podría haber desbloqueado el hilo. La implementación debería documentar este comportamiento."
+    ]
+  },
+  "web-java-se-java.util.concurrent.locks.Condition.awaitNanos": {
+    "body": [
+      "El lock asociado a esta condición se libera atómicamente y el hilo actual queda deshabilitado para la planificación y en reposo hasta que ocurra una de estas cinco cosas:",
+      "Otro hilo llama a signal sobre esta Condition y el hilo actual resulta elegido para despertar; o",
+      "Otro hilo llama a signalAll sobre esta Condition; o",
+      "Otro hilo interrumpe el hilo actual y se admite la interrupción de la suspensión; o",
+      "Pasa el tiempo de espera indicado; o",
+      "Ocurre un \"despertar espurio\".",
+      "En todos los casos, antes de que este método retorne, el hilo actual debe volver a adquirir el lock asociado a esta condición. Cuando el hilo retorna, se garantiza que tiene el lock.",
+      "Si el hilo actual:",
+      "tiene el estado de interrupción activado al entrar en el método; o",
+      "se interrumpe mientras espera y se admite la interrupción de la suspensión,",
+      "entonces se lanza InterruptedException y se borra el estado de interrupción del hilo actual. En el primer caso no se especifica si la comprobación de interrupción ocurre antes o después de liberar el lock.",
+      "El método devuelve una estimación de los nanosegundos que quedan por esperar, dado el valor nanosTimeout, o un valor menor o igual que cero si se agotó el tiempo. Este valor sirve para decidir si volver a esperar y cuánto, cuando la espera retorna pero la condición esperada aún no se cumple. Los usos típicos tienen esta forma:",
+      "{@code boolean aMethod(long timeout, TimeUnit unit) throws InterruptedException { long nanosRemaining = unit.toNanos(timeout); lock.lock(); try { while (!conditionBeingWaitedFor()) { if (nanosRemaining <= 0L) return false; nanosRemaining = theCondition.awaitNanos(nanosRemaining); } // ... return true; } finally { lock.unlock(); } }}",
+      "Nota de diseño: este método requiere un argumento en nanosegundos para evitar errores de truncamiento al informar del tiempo restante. Esa pérdida de precisión haría difícil garantizar que los tiempos de espera totales no sean sistemáticamente más cortos de lo indicado al volver a esperar.",
+      "Consideraciones de implementación",
+      "Se supone que el hilo actual tiene el lock asociado a esta Condition al llamar a este método. Corresponde a la implementación comprobarlo y decidir cómo responder si no es así. Normalmente se lanza una excepción (como IllegalMonitorStateException), y la implementación debe documentarlo.",
+      "Una implementación puede priorizar responder a una interrupción frente al retorno normal tras una señal, o frente a indicar que ha pasado el tiempo de espera. En ambos casos debe garantizar que la señal se redirija a otro hilo en espera, si lo hay."
+    ],
+    "parameters": [
+      {
+        "label": "nanosTimeout",
+        "detail": "el tiempo máximo de espera, en nanosegundos"
+      }
+    ],
+    "returns": [
+      "una estimación del valor nanosTimeout menos el tiempo esperado al retornar de este método. Un valor positivo puede usarse como argumento de otra llamada para terminar de esperar el tiempo deseado. Un valor menor o igual que cero indica que no queda tiempo."
+    ],
+    "exceptions": [
+      {
+        "label": "InterruptedException",
+        "detail": "si se interrumpe el hilo actual (y se admite la interrupción de la suspensión)"
+      }
+    ]
+  },
+  "web-java-se-java.util.concurrent.locks.Condition.awaitUntil": {
+    "body": [
+      "El lock asociado a esta condición se libera atómicamente y el hilo actual queda deshabilitado para la planificación y en reposo hasta que ocurra una de estas cinco cosas:",
+      "Otro hilo llama a signal sobre esta Condition y el hilo actual resulta elegido para despertar; o",
+      "Otro hilo llama a signalAll sobre esta Condition; o",
+      "Otro hilo interrumpe el hilo actual y se admite la interrupción de la suspensión; o",
+      "Pasa el plazo indicado; o",
+      "Ocurre un \"despertar espurio\".",
+      "En todos los casos, antes de que este método retorne, el hilo actual debe volver a adquirir el lock asociado a esta condición. Cuando el hilo retorna, se garantiza que tiene el lock.",
+      "Si el hilo actual:",
+      "tiene el estado de interrupción activado al entrar en el método; o",
+      "se interrumpe mientras espera y se admite la interrupción de la suspensión,",
+      "entonces se lanza InterruptedException y se borra el estado de interrupción del hilo actual. En el primer caso no se especifica si la comprobación de interrupción ocurre antes o después de liberar el lock.",
+      "El valor de retorno indica si ha pasado el plazo, y puede usarse así:",
+      "{@code boolean aMethod(Date deadline) throws InterruptedException { boolean stillWaiting = true; lock.lock(); try { while (!conditionBeingWaitedFor()) { if (!stillWaiting) return false; stillWaiting = theCondition.awaitUntil(deadline); } // ... return true; } finally { lock.unlock(); } }}",
+      "Consideraciones de implementación",
+      "Se supone que el hilo actual tiene el lock asociado a esta Condition al llamar a este método. Corresponde a la implementación comprobarlo y decidir cómo responder si no es así. Normalmente se lanza una excepción (como IllegalMonitorStateException), y la implementación debe documentarlo.",
+      "Una implementación puede priorizar responder a una interrupción frente al retorno normal tras una señal, o frente a indicar que ha pasado el plazo. En ambos casos debe garantizar que la señal se redirija a otro hilo en espera, si lo hay."
+    ],
+    "parameters": [
+      {
+        "label": "deadline",
+        "detail": "el instante absoluto hasta el que esperar"
+      }
+    ],
+    "returns": [
+      "false si ha pasado el plazo al retornar; true en caso contrario"
+    ],
+    "exceptions": [
+      {
+        "label": "InterruptedException",
+        "detail": "si se interrumpe el hilo actual (y se admite la interrupción de la suspensión)"
+      }
+    ]
+  },
+  "web-java-se-java.util.concurrent.locks.LockSupport": {
+    "body": [
+      "Esta clase asocia a cada hilo que la usa un permiso (en el sentido de la clase Semaphore). Una llamada a park retorna de inmediato si el permiso está disponible, consumiéndolo; si no, puede bloquearse. Una llamada a unpark pone el permiso disponible, si no lo estaba ya. (A diferencia de los Semaphore, los permisos no se acumulan: hay como mucho uno). Un uso fiable requiere variables volatile (o atómicas) para controlar cuándo hacer park o unpark. El orden de las llamadas a estos métodos se mantiene respecto a los accesos a variables volatile, pero no necesariamente respecto a los de variables no volatile.",
+      "Los métodos park y unpark permiten bloquear y desbloquear hilos de forma eficiente sin los problemas que hacen inservibles para esto los métodos obsoletos Thread.suspend y Thread.resume: gracias al permiso, las carreras entre un hilo que llama a park y otro que intenta hacerle unpark mantienen la vivacidad. Además, park retorna si se interrumpe el hilo que llama, y hay versiones con tiempo límite. park también puede retornar en cualquier otro momento \"sin motivo\", así que en general debe llamarse dentro de un bucle que vuelva a comprobar las condiciones al retornar. En este sentido, park es una optimización de una \"espera activa\" que no gasta tanto tiempo girando, pero debe emparejarse con un unpark para ser efectiva.",
+      "Las tres formas de park admiten también un parámetro objeto bloqueador. Se registra mientras el hilo está bloqueado para que las herramientas de monitorización y diagnóstico puedan identificar por qué están bloqueados los hilos. (Estas herramientas pueden acceder a los bloqueadores con getBlocker(Thread)). Se recomienda encarecidamente usar estas formas en lugar de las originales sin el parámetro. Dentro de la implementación de un lock, el argumento normal como bloqueador es this.",
+      "Estos métodos están pensados como herramientas para crear utilidades de sincronización de más alto nivel, y por sí mismos no son útiles para la mayoría de las aplicaciones de control de concurrencia. El método park está pensado para usarse solo en construcciones de esta forma:",
+      "{@code while (!canProceed()) { // ensure request to unpark is visible to other threads ... LockSupport.park(this); }}",
+      "donde ninguna acción del hilo que publica una petición de unpark antes de la llamada a park implica bloquear o adquirir locks. Como cada hilo tiene asociado un solo permiso, cualquier uso intermedio de park, incluido el implícito por carga de clases, podría dejar un hilo sin respuesta (un \"unpark perdido\").",
+      "Ejemplo de uso. Este es un esbozo de una clase de lock no reentrante FIFO:",
+      "{@code class FIFOMutex { private final AtomicBoolean locked = new AtomicBoolean(false); private final Queue waiters = new ConcurrentLinkedQueue<>();",
+      "public void lock() { boolean wasInterrupted = false; // publish current thread for unparkers waiters.add(Thread.currentThread());",
+      "// Block while not first in queue or cannot acquire lock while (waiters.peek() != Thread.currentThread() || !locked.compareAndSet(false, true)) { LockSupport.park(this); // ignore interrupts while waiting if (Thread.interrupted()) wasInterrupted = true; }",
+      "waiters.remove(); // ensure correct interrupt status on return if (wasInterrupted) Thread.currentThread().interrupt(); }",
+      "public void unlock() { locked.set(false); LockSupport.unpark(waiters.peek()); }",
+      "static { // Reduce the risk of \"lost unpark\" due to classloading Class ensureLoaded = LockSupport.class; } }}"
+    ]
+  },
+  "web-java-se-java.util.concurrent.locks.ReentrantLock.tryLock": {
+    "overloads": [
+      {
+        "intro": [
+          "Adquiere el lock solo si ningún otro hilo lo tiene en el momento de la llamada."
+        ],
+        "body": [
+          "Adquiere el lock si ningún otro hilo lo tiene y retorna de inmediato con true, poniendo el contador de retención a uno. Aunque el lock esté configurado con una política de orden justa, una llamada a tryLock() adquiere el lock de inmediato si está libre, haya o no otros hilos esperándolo. Este comportamiento de \"colarse\" puede ser útil en algunos casos, aunque rompe la justicia. Si quieres respetar la justicia de este lock, usa tryLock(0, TimeUnit.SECONDS), que es casi equivalente (también detecta interrupciones).",
+          "Si el hilo actual ya tiene este lock, el contador de retención se incrementa en uno y el método devuelve true.",
+          "Si otro hilo tiene el lock, este método retorna de inmediato con false."
+        ],
+        "returns": [
+          "true si el lock estaba libre y lo ha adquirido el hilo actual, o si el hilo actual ya lo tenía; false en caso contrario"
+        ]
+      },
+      {
+        "intro": [
+          "Adquiere el lock si ningún otro hilo lo tiene dentro del tiempo de espera dado y el hilo actual no ha sido interrumpido."
+        ],
+        "body": [
+          "Adquiere el lock si ningún otro hilo lo tiene y retorna de inmediato con true, poniendo el contador de retención a uno. Si el lock está configurado con una política de orden justa, no se adquiere aunque esté libre si hay otros hilos esperándolo. Esto contrasta con tryLock(). Si quieres un tryLock con tiempo que sí permita colarse en un lock justo, combina las formas con y sin tiempo:",
+          "{@code if (lock.tryLock() || lock.tryLock(timeout, unit)) { ... }}",
+          "Si el hilo actual ya tiene este lock, el contador de retención se incrementa en uno y el método devuelve true.",
+          "Si otro hilo tiene el lock, el hilo actual queda deshabilitado para la planificación y en reposo hasta que ocurra una de estas tres cosas:",
+          "El hilo actual adquiere el lock; o",
+          "Otro hilo interrumpe al hilo actual; o",
+          "Pasa el tiempo de espera indicado",
+          "Si se adquiere el lock, se devuelve true y el contador de retención se pone a uno.",
+          "Si el hilo actual:",
+          "tiene el estado de interrupción activado al entrar en el método; o",
+          "se interrumpe mientras adquiere el lock,",
+          "se lanza InterruptedException y se borra su estado de interrupción.",
+          "Si pasa el tiempo de espera, devuelve false. Si el tiempo es menor o igual que cero, no espera.",
+          "En esta implementación, como este método es un punto de interrupción explícito, se da preferencia a responder a la interrupción frente a la adquisición normal o reentrante del lock, y frente a informar de que ha pasado el tiempo de espera."
+        ],
+        "parameters": [
+          {
+            "label": "timeout",
+            "detail": "el tiempo de espera para el lock"
+          },
+          {
+            "label": "unit",
+            "detail": "la unidad de tiempo del argumento timeout"
+          }
+        ],
+        "returns": [
+          "true si el lock estaba libre y lo ha adquirido el hilo actual, o si el hilo actual ya lo tenía; false si pasó el tiempo de espera antes de poder adquirirlo"
+        ],
+        "exceptions": [
+          {
+            "label": "InterruptedException",
+            "detail": "si se interrumpe el hilo actual"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si la unidad de tiempo es null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.util.concurrent.locks.ReentrantReadWriteLock": {
+    "body": [
+      "Esta clase tiene estas propiedades:",
+      "Orden de adquisición",
+      "Esta clase no impone una preferencia de lectores o escritores en el acceso al lock. Sí admite una política de justicia opcional.",
+      "Modo no justo (predeterminado): si se crea como no justo (lo predeterminado), el orden de entrada al lock de lectura y de escritura no está especificado, con las restricciones de reentrancia. Un lock no justo en disputa continua puede aplazar indefinidamente uno o más hilos lectores o escritores, pero normalmente tiene más rendimiento que uno justo.",
+      "Modo justo: si se crea como justo, los hilos compiten por entrar con una política aproximadamente por orden de llegada. Al liberarse el lock, se asigna el lock de escritura al hilo escritor que más tiempo lleva esperando o, si hay un grupo de hilos lectores que llevan esperando más que todos los escritores, se asigna el lock de lectura a ese grupo.",
+      "Un hilo que intenta adquirir un lock de lectura justo (de forma no reentrante) se bloquea si el lock de escritura está ocupado o hay un escritor esperando. No adquirirá el lock de lectura hasta que el escritor más antiguo en espera haya adquirido y liberado el de escritura. Claro que, si un escritor abandona la espera y quedan uno o más lectores como los que más esperan con el lock de escritura libre, se les asigna el lock de lectura.",
+      "Un hilo que intenta adquirir un lock de escritura justo (de forma no reentrante) se bloquea salvo que tanto el lock de lectura como el de escritura estén libres (lo que implica que no hay hilos esperando). (Los métodos no bloqueantes ReadLock.tryLock() y WriteLock.tryLock() no respetan esta justicia y adquieren el lock de inmediato si es posible, haya hilos esperando o no).",
+      "Reentrancia",
+      "Este lock permite que lectores y escritores vuelvan a adquirir locks de lectura o escritura al estilo de ReentrantLock. No se permiten lectores no reentrantes hasta que el hilo escritor haya liberado todos sus locks de escritura.",
+      "Además, un escritor puede adquirir el lock de lectura, pero no al revés. Entre otros usos, la reentrancia puede ser útil cuando se tienen locks de escritura durante llamadas o callbacks a métodos que leen con locks de lectura. Si un lector intenta adquirir el lock de escritura, nunca lo conseguirá.",
+      "Degradación del lock",
+      "La reentrancia también permite degradar del lock de escritura a uno de lectura: adquiriendo el de escritura, luego el de lectura y después liberando el de escritura. En cambio, no es posible pasar de un lock de lectura al de escritura.",
+      "Interrupción de la adquisición",
+      "Tanto el lock de lectura como el de escritura admiten interrupción durante la adquisición.",
+      "Soporte de Condition",
+      "El lock de escritura ofrece una implementación de Condition que se comporta respecto a él igual que la Condition de ReentrantLock.newCondition respecto a ReentrantLock. Esta Condition solo puede usarse, claro, con el lock de escritura.",
+      "El lock de lectura no admite Condition, y readLock().newCondition() lanza UnsupportedOperationException.",
+      "Instrumentación",
+      "Esta clase tiene métodos para saber si los locks están ocupados o en disputa. Están pensados para monitorizar el estado del sistema, no para controlar la sincronización.",
+      "La serialización de esta clase se comporta igual que la de los locks integrados: un lock deserializado está desbloqueado, sea cual sea su estado al serializarse.",
+      "Ejemplos de uso. Este es un esbozo de código que muestra cómo degradar el lock tras actualizar una caché (el manejo de excepciones es especialmente delicado al usar varios locks de forma no anidada):",
+      "{@code class CachedData { Object data; boolean cacheValid; final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();",
+      "void processCachedData() { rwl.readLock().lock(); if (!cacheValid) { // Must release read lock before acquiring write lock rwl.readLock().unlock(); rwl.writeLock().lock(); try { // Recheck state because another thread might have // acquired write lock and changed state before we did. if (!cacheValid) { data = ...; cacheValid = true; } // Downgrade by acquiring read lock before releasing write lock rwl.readLock().lock(); } finally { rwl.writeLock().unlock(); // Unlock write, still hold read } }",
+      "try { use(data); } finally { rwl.readLock().unlock(); } } }}",
+      "Los ReentrantReadWriteLock pueden mejorar la concurrencia en algunos usos de ciertos tipos de colecciones. Normalmente solo merece la pena cuando se espera que las colecciones sean grandes, las usen más hilos lectores que escritores y sus operaciones tengan un coste mayor que el de la sincronización. Por ejemplo, esta clase usa un TreeMap que se espera grande y con acceso concurrente.",
+      "{@code class RWDictionary { private final Map m = new TreeMap<>(); private final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock(); private final Lock r = rwl.readLock(); private final Lock w = rwl.writeLock();",
+      "public Data get(String key) { r.lock(); try { return m.get(key); } finally { r.unlock(); } } public List allKeys() { r.lock(); try { return new ArrayList<>(m.keySet()); } finally { r.unlock(); } } public Data put(String key, Data value) { w.lock(); try { return m.put(key, value); } finally { w.unlock(); } } public void clear() { w.lock(); try { m.clear(); } finally { w.unlock(); } } }}",
+      "Notas de implementación",
+      "Este lock admite como máximo 65535 locks de escritura recursivos y 65535 locks de lectura. Intentar superar estos límites hace que los métodos de bloqueo lancen Error."
+    ]
+  },
+  "web-java-se-java.util.concurrent.locks.ReentrantReadWriteLock%24ReadLock.tryLock": {
+    "overloads": [
+      {
+        "intro": [
+          "Adquiere el lock de lectura solo si ningún otro hilo tiene el de escritura en el momento de la llamada."
+        ],
+        "body": [
+          "Adquiere el lock de lectura si ningún otro hilo tiene el de escritura y retorna de inmediato con true. Aunque el lock esté configurado con una política de orden justa, una llamada a tryLock() adquiere el lock de lectura de inmediato si está libre, haya o no otros hilos esperándolo. Este comportamiento de \"colarse\" puede ser útil en algunos casos, aunque rompe la justicia. Si quieres respetar la justicia de este lock, usa tryLock(0, TimeUnit.SECONDS), que es casi equivalente (también detecta interrupciones).",
+          "Si otro hilo tiene el lock de escritura, este método retorna de inmediato con false."
+        ],
+        "returns": ["true si se ha adquirido el lock de lectura"]
+      },
+      {
+        "intro": [
+          "Adquiere el lock de lectura si ningún otro hilo tiene el de escritura dentro del tiempo de espera dado y el hilo actual no ha sido interrumpido."
+        ],
+        "body": [
+          "Adquiere el lock de lectura si ningún otro hilo tiene el de escritura y retorna de inmediato con true. Si el lock está configurado con una política de orden justa, no se adquiere aunque esté libre si hay otros hilos esperándolo. Esto contrasta con tryLock(). Si quieres un tryLock con tiempo que sí permita colarse en un lock justo, combina las formas con y sin tiempo:",
+          "{@code if (lock.tryLock() || lock.tryLock(timeout, unit)) { ... }}",
+          "Si otro hilo tiene el lock de escritura, el hilo actual queda deshabilitado para la planificación y en reposo hasta que ocurra una de estas tres cosas:",
+          "El hilo actual adquiere el lock de lectura; o",
+          "Otro hilo interrumpe al hilo actual; o",
+          "Pasa el tiempo de espera indicado.",
+          "Si se adquiere el lock de lectura, se devuelve true.",
+          "Si el hilo actual:",
+          "tiene el estado de interrupción activado al entrar en el método; o",
+          "se interrumpe mientras adquiere el lock de lectura,",
+          "se lanza InterruptedException y se borra su estado de interrupción.",
+          "Si pasa el tiempo de espera, devuelve false. Si el tiempo es menor o igual que cero, no espera.",
+          "En esta implementación, como este método es un punto de interrupción explícito, se da preferencia a responder a la interrupción frente a la adquisición normal o reentrante del lock, y frente a informar de que ha pasado el tiempo de espera."
+        ],
+        "parameters": [
+          {
+            "label": "timeout",
+            "detail": "el tiempo de espera para el lock de lectura"
+          },
+          {
+            "label": "unit",
+            "detail": "la unidad de tiempo del argumento timeout"
+          }
+        ],
+        "returns": ["true si se ha adquirido el lock de lectura"],
+        "exceptions": [
+          {
+            "label": "InterruptedException",
+            "detail": "si se interrumpe el hilo actual"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si la unidad de tiempo es null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.util.concurrent.locks.ReentrantReadWriteLock%24WriteLock.tryLock": {
+    "overloads": [
+      {
+        "intro": [
+          "Adquiere el lock de escritura solo si ningún otro hilo lo tiene en el momento de la llamada."
+        ],
+        "body": [
+          "Adquiere el lock de escritura si ningún otro hilo tiene el de lectura ni el de escritura, y retorna de inmediato con true, poniendo el contador de retención de escritura a uno. Aunque el lock esté configurado con una política de orden justa, una llamada a tryLock() lo adquiere de inmediato si está libre, haya o no otros hilos esperando el de escritura. Este comportamiento de \"colarse\" puede ser útil en algunos casos, aunque rompe la justicia. Si quieres respetar la justicia de este lock, usa tryLock(0, TimeUnit.SECONDS), que es casi equivalente (también detecta interrupciones).",
+          "Si el hilo actual ya tiene este lock, el contador de retención se incrementa en uno y el método devuelve true.",
+          "Si otro hilo tiene el lock, este método retorna de inmediato con false."
+        ],
+        "returns": [
+          "true si el lock estaba libre y lo ha adquirido el hilo actual, o si el hilo actual ya tenía el de escritura; false en caso contrario."
+        ]
+      },
+      {
+        "intro": [
+          "Adquiere el lock de escritura si ningún otro hilo lo tiene dentro del tiempo de espera dado y el hilo actual no ha sido interrumpido."
+        ],
+        "body": [
+          "Adquiere el lock de escritura si ningún otro hilo tiene el de lectura ni el de escritura, y retorna de inmediato con true, poniendo el contador de retención de escritura a uno. Si el lock está configurado con una política de orden justa, no se adquiere aunque esté libre si hay otros hilos esperando el de escritura. Esto contrasta con tryLock(). Si quieres un tryLock con tiempo que sí permita colarse en un lock justo, combina las formas con y sin tiempo:",
+          "{@code if (lock.tryLock() || lock.tryLock(timeout, unit)) { ... }}",
+          "Si el hilo actual ya tiene este lock, el contador de retención se incrementa en uno y el método devuelve true.",
+          "Si otro hilo tiene el lock, el hilo actual queda deshabilitado para la planificación y en reposo hasta que ocurra una de estas tres cosas:",
+          "El hilo actual adquiere el lock de escritura; o",
+          "Otro hilo interrumpe al hilo actual; o",
+          "Pasa el tiempo de espera indicado",
+          "Si se adquiere el lock de escritura, se devuelve true y el contador de retención de escritura se pone a uno.",
+          "Si el hilo actual:",
+          "tiene el estado de interrupción activado al entrar en el método; o",
+          "se interrumpe mientras adquiere el lock de escritura,",
+          "se lanza InterruptedException y se borra su estado de interrupción.",
+          "Si pasa el tiempo de espera, devuelve false. Si el tiempo es menor o igual que cero, no espera.",
+          "En esta implementación, como este método es un punto de interrupción explícito, se da preferencia a responder a la interrupción frente a la adquisición normal o reentrante del lock, y frente a informar de que ha pasado el tiempo de espera."
+        ],
+        "parameters": [
+          {
+            "label": "timeout",
+            "detail": "el tiempo de espera para el lock de escritura"
+          },
+          {
+            "label": "unit",
+            "detail": "la unidad de tiempo del argumento timeout"
+          }
+        ],
+        "returns": [
+          "true si el lock estaba libre y lo ha adquirido el hilo actual, o si el hilo actual ya tenía el de escritura; false si pasó el tiempo de espera antes de poder adquirirlo."
+        ],
+        "exceptions": [
+          {
+            "label": "InterruptedException",
+            "detail": "si se interrumpe el hilo actual"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si la unidad de tiempo es null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.util.concurrent.locks.StampedLock": {
+    "body": [
+      "Escritura. El método writeLock puede bloquearse esperando acceso exclusivo y devuelve un sello que puede usarse en unlockWrite para liberar el lock. También hay versiones con y sin tiempo de tryWriteLock. Mientras el lock está en modo escritura, no pueden obtenerse locks de lectura y todas las validaciones de lectura optimista fallan.",
+      "Lectura. El método readLock puede bloquearse esperando acceso no exclusivo y devuelve un sello que puede usarse en unlockRead para liberar el lock. También hay versiones con y sin tiempo de tryReadLock.",
+      "Lectura optimista. El método tryOptimisticRead devuelve un sello distinto de cero solo si el lock no está en modo escritura. validate devuelve true si el lock no se ha adquirido en modo escritura desde que se obtuvo un sello dado; en ese caso, todas las acciones anteriores a la última liberación del lock de escritura ocurren-antes que las posteriores a la llamada a tryOptimisticRead. Este modo puede verse como una versión extremadamente débil de un lock de lectura, que un escritor puede romper en cualquier momento. Usar lectura optimista en trozos cortos de código de solo lectura suele reducir la disputa y mejorar el rendimiento. Pero su uso es intrínsecamente frágil. Las secciones de lectura optimista solo deben leer campos y guardarlos en variables locales para usarlos después de validar. Los campos leídos en modo optimista pueden ser totalmente incoherentes, así que solo debe usarse si conoces lo bastante la representación de los datos para comprobar su coherencia y/o llamar repetidamente a validate(). Por ejemplo, estos pasos suelen ser necesarios al leer primero una referencia a un objeto o array y después acceder a uno de sus campos, elementos o métodos.",
+      "Esta clase también tiene métodos que convierten condicionalmente entre los tres modos. Por ejemplo, tryConvertToWriteLock intenta \"subir\" de modo y devuelve un sello de escritura válido si (1) ya está en modo escritura, (2) está en modo lectura y no hay otros lectores, o (3) está en lectura optimista y el lock está disponible. Estos métodos están pensados para reducir parte del código repetitivo que aparece en diseños basados en reintentos.",
+      "Los StampedLock están pensados como utilidades internas para desarrollar componentes seguros con hilos. Su uso requiere conocer las propiedades internas de los datos, objetos y métodos que protegen. No son reentrantes, así que el código bajo lock no debe llamar a otros métodos desconocidos que puedan intentar volver a adquirir locks (aunque puedes pasar un sello a otros métodos que lo usen o conviertan). Los modos de lectura requieren que las secciones de código asociadas no tengan efectos secundarios. Las secciones de lectura optimista sin validar no pueden llamar a métodos de los que no se sepa que toleran posibles incoherencias. Los sellos usan representaciones finitas y no son criptográficamente seguros (es decir, un sello válido puede adivinarse). Los valores de sello pueden repetirse tras (no antes de) un año de funcionamiento continuo; un sello guardado sin usar ni validar más tiempo puede no validarse correctamente. Los StampedLock son serializables, pero siempre se deserializan en el estado inicial desbloqueado, así que no sirven para bloqueos remotos.",
+      "Como Semaphore, pero a diferencia de la mayoría de las implementaciones de Lock, los StampedLock no tienen noción de propietario: los locks adquiridos en un hilo pueden liberarse o convertirse en otro.",
+      "La política de planificación de StampedLock no prefiere sistemáticamente a lectores frente a escritores ni al revés. Todos los métodos \"try\" son de mejor esfuerzo y no siguen necesariamente ninguna política de planificación ni de justicia. Que un método \"try\" de adquisición o conversión devuelva cero no da información sobre el estado del lock; una llamada posterior puede tener éxito.",
+      "Como admite un uso coordinado de varios modos de lock, esta clase no implementa directamente las interfaces Lock ni ReadWriteLock. Aun así, un StampedLock puede verse como asReadLock(), asWriteLock() o asReadWriteLock() en aplicaciones que solo necesiten ese conjunto de funcionalidades.",
+      "Sincronización de memoria. Los métodos que bloquean con éxito en cualquier modo tienen los mismos efectos de sincronización de memoria que una acción Lock, como se describe en el capítulo 17 de The Java Language Specification. Los que desbloquean con éxito en modo escritura tienen los mismos efectos que una acción Unlock. En las lecturas optimistas, solo se garantiza que las acciones anteriores a la última liberación en modo escritura ocurren-antes que las posteriores a un tryOptimisticRead si un validate posterior devuelve true; si no, no hay garantía de que las lecturas entre tryOptimisticRead y validate obtengan una instantánea coherente.",
+      "Ejemplo de uso. Lo siguiente muestra algunos patrones de uso en una clase que mantiene puntos bidimensionales sencillos. El código muestra algunas convenciones try/catch aunque aquí no son estrictamente necesarias, porque en sus cuerpos no pueden producirse excepciones.",
+      "{@code class Point { private double x, y; private final StampedLock sl = new StampedLock();",
+      "// an exclusively locked method void move(double deltaX, double deltaY) { long stamp = sl.writeLock(); try { x += deltaX; y += deltaY; } finally { sl.unlockWrite(stamp); } }",
+      "// a read-only method // upgrade from optimistic read to read lock double distanceFromOrigin() { long stamp = sl.tryOptimisticRead(); try { retryHoldingLock: for (;; stamp = sl.readLock()) { if (stamp == 0L) continue retryHoldingLock; // possibly racy reads double currentX = x; double currentY = y; if (!sl.validate(stamp)) continue retryHoldingLock; return Math.hypot(currentX, currentY); } } finally { if (StampedLock.isReadLockStamp(stamp)) sl.unlockRead(stamp); } }",
+      "// upgrade from optimistic read to write lock void moveIfAtOrigin(double newX, double newY) { long stamp = sl.tryOptimisticRead(); try { retryHoldingLock: for (;; stamp = sl.writeLock()) { if (stamp == 0L) continue retryHoldingLock; // possibly racy reads double currentX = x; double currentY = y; if (!sl.validate(stamp)) continue retryHoldingLock; if (currentX != 0.0 || currentY != 0.0) break; stamp = sl.tryConvertToWriteLock(stamp); if (stamp == 0L) continue retryHoldingLock; // exclusive access x = newX; y = newY; return; } } finally { if (StampedLock.isWriteLockStamp(stamp)) sl.unlockWrite(stamp); } }",
+      "// upgrade read lock to write lock void moveIfAtOrigin2(double newX, double newY) { long stamp = sl.readLock(); try { while (x == 0.0 && y == 0.0) { long ws = sl.tryConvertToWriteLock(stamp); if (ws != 0L) { stamp = ws; x = newX; y = newY; break; } else { sl.unlockRead(stamp); stamp = sl.writeLock(); } } } finally { sl.unlock(stamp); } } }}",
+      "@jls 17.4 Memory Model"
+    ]
+  },
   "web-java-se-java.util.regex.Matcher.useAnchoringBounds": {
     "body": [
       "Llamar a este método con true hace que este matcher use límites de anclaje. Si el argumento es false, se usarán límites sin anclaje.",
