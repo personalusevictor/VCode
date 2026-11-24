@@ -40017,6 +40017,17 @@
       }
     ]
   },
+  "web-java-se-javax.xml.parsers.DocumentBuilderFactory.setIgnoringElementContentWhitespace": {
+    "intro": [
+      "Especifica que los parsers creados por esta fábrica deben eliminar los espacios en blanco del contenido de los elementos (a veces llamados, de forma imprecisa, «espacios en blanco ignorables») al analizar documentos XML (consulta XML Rec 2.10). Ten en cuenta que solo se eliminan los espacios en blanco contenidos directamente en el contenido de un elemento cuyo modelo de contenido es solo de elementos (consulta XML Rec 3.2.1). Como depende del modelo de contenido, este ajuste requiere que el parser esté en modo de validación. Por defecto, su valor es false."
+    ],
+    "parameters": [
+      {
+        "label": "whitespace",
+        "detail": "true si el parser creado debe eliminar los espacios en blanco del contenido de los elementos al analizar documentos XML; false en caso contrario."
+      }
+    ]
+  },
   "web-java-se-javax.xml.parsers.SAXParser.isNamespaceAware": {
     "intro": [
       "Indica si este parser está configurado para entender espacios de nombres."
@@ -40047,6 +40058,830 @@
     ],
     "returns": [
       "true si la fábrica está configurada para producir parsers que validan el contenido XML durante el análisis; false en caso contrario."
+    ]
+  },
+  "web-java-se-javax.xml.parsers.SAXParserFactory.newInstance": {
+    "overloads": [
+      {
+        "intro": [
+          "Obtiene una nueva instancia de SAXParserFactory. Este método usa el mecanismo de búsqueda de JAXP para determinar la clase de implementación de SAXParserFactory que se cargará."
+        ],
+        "body": [
+          "Una vez que una aplicación ha obtenido una referencia a un SAXParserFactory, puede usar la fábrica para configurar y obtener instancias de parser.",
+          "Consejo para solucionar problemas",
+          "Establecer la propiedad del sistema jaxp.debug hace que este método imprima en System.err muchos mensajes de depuración sobre lo que hace y dónde busca.",
+          "Si tienes problemas al cargar SAXParsers, prueba:",
+          "java -Djaxp.debug=1 YourProgram ...."
+        ],
+        "returns": ["Una nueva instancia de SAXParserFactory."],
+        "exceptions": [
+          {
+            "label": "FactoryConfigurationError",
+            "detail": "en caso de error de configuración del servicio o si la implementación no está disponible o no puede instanciarse."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Obtiene una nueva instancia de SAXParserFactory a partir del nombre de clase. Esta función es útil cuando hay varios proveedores en el classpath. Da más control a la aplicación, ya que puede especificar qué proveedor debe cargarse."
+        ],
+        "body": [
+          "Una vez que una aplicación ha obtenido una referencia a un SAXParserFactory, puede usar la fábrica para configurar y obtener instancias de parser.",
+          "Consejo para solucionar problemas",
+          "Establecer la propiedad del sistema jaxp.debug hace que este método imprima en System.err muchos mensajes de depuración sobre lo que hace y dónde busca.",
+          "Si tienes problemas, prueba:",
+          "java -Djaxp.debug=1 YourProgram ...."
+        ],
+        "parameters": [
+          {
+            "label": "factoryClassName",
+            "detail": "nombre de clase completamente cualificado de la fábrica que proporciona la implementación de javax.xml.parsers.SAXParserFactory."
+          },
+          {
+            "label": "classLoader",
+            "detail": "ClassLoader usado para cargar la clase de la fábrica. Si es null, se usa el classLoader de contexto del Thread actual para cargarla."
+          }
+        ],
+        "returns": ["Nueva instancia de SAXParserFactory"],
+        "exceptions": [
+          {
+            "label": "FactoryConfigurationError",
+            "detail": "si factoryClassName es null o la clase de la fábrica no puede cargarse o instanciarse."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.xml.stream.XMLEventFactory.newFactory": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea una nueva instancia de la fábrica. Este método usa el mecanismo de búsqueda de JAXP para determinar la clase de implementación de XMLEventFactory que se cargará."
+        ],
+        "body": [
+          "Una vez que una aplicación ha obtenido una referencia a un XMLEventFactory, puede usar la fábrica para configurar y obtener instancias de flujo."
+        ],
+        "returns": ["una instancia de XMLEventFactory"],
+        "exceptions": [
+          {
+            "label": "FactoryConfigurationError",
+            "detail": "en caso de error de configuración del servicio o si la implementación no está disponible o no puede instanciarse."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una nueva instancia de la fábrica. Si el argumento classLoader es null, se usa el ContextClassLoader."
+        ],
+        "body": [
+          "Este método usa el siguiente procedimiento de búsqueda ordenado para determinar la clase de implementación de XMLEventFactory que se cargará:",
+          "Usa el valor de la propiedad del sistema identificada por factoryId.",
+          "Usa el valor de la propiedad factoryId establecida en el archivo de configuración, jaxp.properties por defecto. Si el archivo existe y la propiedad factoryId está especificada en él, su valor se usa como clase de implementación.",
+          "Si factoryId es \"javax.xml.stream.XMLEventFactory\", usa el mecanismo de carga de proveedores de servicio definido por la clase java.util.ServiceLoader para intentar localizar y cargar una implementación del servicio con el ClassLoader indicado, mediante ServiceLoader.load(java.lang.Class, java.lang.ClassLoader). Si classLoader es null, se aplica el mecanismo de carga predeterminado: es decir, el mecanismo de carga de proveedores de servicio usa el class loader de contexto del hilo actual para intentar cargar el servicio. Si el class loader de contexto es null, se usa el class loader del sistema.",
+          "En otro caso, lanza un FactoryConfigurationError.",
+          "Ten en cuenta que este es un método nuevo que sustituye al método obsoleto XMLEventFactory.newInstance(String factoryId, ClassLoader classLoader). Este método de sustitución no define ningún cambio de comportamiento respecto al obsoleto."
+        ],
+        "parameters": [
+          {
+            "label": "factoryId",
+            "detail": "Nombre de la fábrica que se busca, igual que un nombre de propiedad"
+          },
+          {
+            "label": "classLoader",
+            "detail": "classLoader que se usará"
+          }
+        ],
+        "returns": ["la implementación de la fábrica"],
+        "exceptions": [
+          {
+            "label": "FactoryConfigurationError",
+            "detail": "en caso de error de configuración del servicio o si la implementación no está disponible o no puede instanciarse."
+          }
+        ],
+        "caveats": [
+          "El parámetro factoryId definido aquí no es coherente con el de otras fábricas de JAXP, donde el primer parámetro es el nombre de clase completamente cualificado de la fábrica que proporciona su implementación."
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.xml.stream.XMLInputFactory.newFactory": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea una nueva instancia de la fábrica. Si el argumento classLoader es null, se usa el ContextClassLoader."
+        ],
+        "body": [
+          "Este método usa el siguiente procedimiento de búsqueda ordenado para determinar la clase de implementación de XMLInputFactory que se cargará:",
+          "Usa el valor de la propiedad del sistema identificada por factoryId.",
+          "Usa el valor de la propiedad factoryId establecida en el archivo de configuración, jaxp.properties por defecto. Si el archivo existe y la propiedad factoryId está especificada en él, su valor se usa como clase de implementación.",
+          "Si factoryId es \"javax.xml.stream.XMLInputFactory\", usa el mecanismo de carga de proveedores de servicio definido por la clase java.util.ServiceLoader para intentar localizar y cargar una implementación del servicio con el ClassLoader indicado, mediante ServiceLoader.load(java.lang.Class, java.lang.ClassLoader). Si classLoader es null, se aplica el mecanismo de carga predeterminado: es decir, el mecanismo de carga de proveedores de servicio usa el class loader de contexto del hilo actual para intentar cargar el servicio. Si el class loader de contexto es null, se usa el class loader del sistema.",
+          "En otro caso, lanza un FactoryConfigurationError.",
+          "Ten en cuenta que este es un método nuevo que sustituye al método obsoleto XMLEventFactory.newInstance(String factoryId, ClassLoader classLoader). Este método de sustitución no define ningún cambio de comportamiento respecto al obsoleto."
+        ],
+        "parameters": [
+          {
+            "label": "factoryId",
+            "detail": "Nombre de la fábrica que se busca, igual que un nombre de propiedad"
+          },
+          {
+            "label": "classLoader",
+            "detail": "classLoader que se usará"
+          }
+        ],
+        "returns": ["la implementación de la fábrica"],
+        "exceptions": [
+          {
+            "label": "FactoryConfigurationError",
+            "detail": "en caso de error de configuración del servicio o si la implementación no está disponible o no puede instanciarse."
+          },
+          {
+            "label": "FactoryConfigurationError",
+            "detail": "si no se puede cargar una instancia de esta fábrica"
+          }
+        ],
+        "caveats": [
+          "El parámetro factoryId definido aquí no es coherente con el de otras fábricas de JAXP, donde el primer parámetro es el nombre de clase completamente cualificado de la fábrica que proporciona su implementación."
+        ]
+      },
+      {
+        "intro": [
+          "Crea una nueva instancia de la fábrica. Este método usa el mecanismo de búsqueda de JAXP para determinar la clase de implementación de XMLInputFactory que se cargará."
+        ],
+        "body": [
+          "Una vez que una aplicación ha obtenido una referencia a un XMLInputFactory, puede usar la fábrica para configurar y obtener instancias de flujo."
+        ],
+        "returns": ["una instancia de XMLInputFactory"],
+        "exceptions": [
+          {
+            "label": "FactoryConfigurationError",
+            "detail": "en caso de error de configuración del servicio o si la implementación no está disponible o no puede instanciarse."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.xml.stream.XMLOutputFactory": {
+    "body": [
+      "La siguiente tabla define las propiedades estándar de esta especificación. Cada propiedad varía en el nivel de soporte exigido a cada implementación. El nivel de soporte exigido se describe en la columna 'Required'.",
+      "Parámetros de configuración",
+      "Nombre de propiedad · Comportamiento · Tipo de retorno · Valor predeterminado · Obligatoria",
+      "javax.xml.stream.isRepairingNamespaces · asigna prefijos predeterminados en la salida · Boolean · False · Sí",
+      "Los siguientes párrafos describen el algoritmo de reparación de espacios de nombres y prefijos:",
+      "La propiedad puede establecerse con la siguiente línea de código: setProperty(\"javax.xml.stream.isRepairingNamespaces\", Boolean.TRUE);",
+      "Esta propiedad especifica que el escritor declare automáticamente los prefijos de espacio de nombres. El valor predeterminado es false.",
+      "Si un escritor tiene isRepairingNamespaces, creará una declaración de espacio de nombres en el StartElement actual para cualquier atributo que no tenga una declaración de espacio de nombres en el ámbito. Si el StartElement tiene una uri pero no se especifica prefijo, se le asignará uno; si el prefijo no se ha declarado en un padre del StartElement actual, se declarará en el StartElement actual. Si el espacio de nombres predeterminado está ligado y en el ámbito, y coincide con la URI del QName del atributo o del StartElement, no se asignará ningún prefijo.",
+      "Si el nombre de un elemento o atributo tiene prefijo pero no está ligado a ninguna URI de espacio de nombres, el prefijo se elimina durante la serialización.",
+      "Si los nombres de elemento y/o atributo de una misma etiqueta de inicio o de elemento vacío están ligados a URI de espacio de nombres distintas y usan el mismo prefijo, el elemento o el primer atributo que aparece conserva el prefijo original, y a los atributos siguientes se les reemplaza el prefijo por uno nuevo ligado a sus URI de espacio de nombres.",
+      "Si el nombre de un elemento o atributo usa un prefijo ligado a una URI distinta de la heredada del contexto de espacios de nombres del padre de ese elemento, y no hay ninguna declaración de espacio de nombres en el contexto del elemento actual, se añade esa declaración.",
+      "Si el nombre de un elemento o atributo está ligado a un prefijo y hay una declaración de espacio de nombres que liga ese prefijo a una URI distinta, esa declaración se elimina si la correspondencia correcta se hereda del contexto padre del elemento, o se cambia a la URI de espacio de nombres del elemento o atributo que usa ese prefijo."
+    ]
+  },
+  "web-java-se-javax.xml.stream.XMLOutputFactory.newFactory": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea una nueva instancia de la fábrica. Este método usa el mecanismo de búsqueda de JAXP para determinar la clase de implementación de XMLOutputFactory que se cargará."
+        ],
+        "body": [
+          "Una vez que una aplicación ha obtenido una referencia a un XMLOutputFactory, puede usar la fábrica para configurar y obtener instancias de flujo."
+        ],
+        "returns": ["una instancia de XMLOutputFactory"],
+        "exceptions": [
+          {
+            "label": "FactoryConfigurationError",
+            "detail": "en caso de error de configuración del servicio o si la implementación no está disponible o no puede instanciarse."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una nueva instancia de la fábrica. Si el argumento classLoader es null, se usa el ContextClassLoader."
+        ],
+        "body": [
+          "Este método usa el siguiente procedimiento de búsqueda ordenado para determinar la clase de implementación de XMLOutputFactory que se cargará:",
+          "Usa el valor de la propiedad del sistema identificada por factoryId.",
+          "Usa el valor de la propiedad factoryId establecida en el archivo de configuración, jaxp.properties por defecto. Si el archivo existe y la propiedad factoryId está especificada en él, su valor se usa como clase de implementación.",
+          "Si factoryId es \"javax.xml.stream.XMLOutputFactory\", usa el mecanismo de carga de proveedores de servicio definido por la clase java.util.ServiceLoader para intentar localizar y cargar una implementación del servicio con el ClassLoader indicado, mediante ServiceLoader.load(java.lang.Class, java.lang.ClassLoader). Si classLoader es null, se aplica el mecanismo de carga predeterminado: es decir, el mecanismo de carga de proveedores de servicio usa el class loader de contexto del hilo actual para intentar cargar el servicio. Si el class loader de contexto es null, se usa el class loader del sistema.",
+          "En otro caso, lanza un FactoryConfigurationError."
+        ],
+        "parameters": [
+          {
+            "label": "factoryId",
+            "detail": "Nombre de la fábrica que se busca, igual que un nombre de propiedad"
+          },
+          {
+            "label": "classLoader",
+            "detail": "classLoader que se usará"
+          }
+        ],
+        "returns": ["la implementación de la fábrica"],
+        "exceptions": [
+          {
+            "label": "FactoryConfigurationError",
+            "detail": "en caso de error de configuración del servicio o si la implementación no está disponible o no puede instanciarse."
+          }
+        ],
+        "caveats": [
+          "El parámetro factoryId definido aquí no es coherente con el de otras fábricas de JAXP, donde el primer parámetro es el nombre de clase completamente cualificado de la fábrica que proporciona su implementación.",
+          "Ten en cuenta que este es un método nuevo que sustituye al método obsoleto XMLOutputFactory.newInstance(String factoryId, ClassLoader classLoader). El método original estaba definido incorrectamente para devolver XMLInputFactory."
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.xml.stream.XMLStreamReader.getElementText": {
+    "body": [
+      "Precondición: el evento actual es START_ELEMENT.",
+      "Postcondición: el evento actual es el END_ELEMENT correspondiente.",
+      "El método hace lo siguiente (las implementaciones pueden optimizarlo, pero deben realizar un procesamiento equivalente):",
+      "if(getEventType() != XMLStreamConstants.START_ELEMENT) { throw new XMLStreamException( \"parser must be on START_ELEMENT to read next text\", getLocation()); }",
+      "int eventType = next(); StringBuffer content = new StringBuffer(); while(eventType != XMLStreamConstants.END_ELEMENT) { if(eventType == XMLStreamConstants.CHARACTERS || eventType == XMLStreamConstants.CDATA || eventType == XMLStreamConstants.SPACE || eventType == XMLStreamConstants.ENTITY_REFERENCE) { buf.append(getText()); } else if(eventType == XMLStreamConstants.PROCESSING_INSTRUCTION || eventType == XMLStreamConstants.COMMENT) { // skipping } else if(eventType == XMLStreamConstants.END_DOCUMENT) { throw new XMLStreamException( \"unexpected end of document when reading element text content\", this); } else if(eventType == XMLStreamConstants.START_ELEMENT) { throw new XMLStreamException( \"element text content may not contain START_ELEMENT\", getLocation()); } else { throw new XMLStreamException( \"Unexpected event type \"+eventType, getLocation()); } eventType = next(); } return buf.toString();"
+    ],
+    "returns": ["el contenido de un elemento solo de texto"],
+    "exceptions": [
+      {
+        "label": "XMLStreamException",
+        "detail": "si el evento actual no es un START_ELEMENT o si se encuentra un elemento que no es de texto"
+      }
+    ]
+  },
+  "web-java-se-javax.xml.stream.XMLStreamReader.nextTag": {
+    "body": [
+      "Precondición: ninguna",
+      "Postcondición: el evento actual es START_ELEMENT o END_ELEMENT y el cursor puede haber avanzado sobre eventos de espacio en blanco.",
+      "En esencia hace lo siguiente (las implementaciones pueden optimizarlo, pero deben realizar un procesamiento equivalente):",
+      "{@code int eventType = next(); while((eventType == XMLStreamConstants.CHARACTERS && isWhiteSpace()) // skip whitespace || (eventType == XMLStreamConstants.CDATA && isWhiteSpace()) // skip whitespace || eventType == XMLStreamConstants.SPACE || eventType == XMLStreamConstants.PROCESSING_INSTRUCTION || eventType == XMLStreamConstants.COMMENT ) { eventType = next(); } if (eventType != XMLStreamConstants.START_ELEMENT && eventType != XMLStreamConstants.END_ELEMENT) { throw new String XMLStreamException(\"expected start or end tag\", getLocation()); } return eventType; }"
+    ],
+    "returns": [
+      "el tipo de evento del elemento leído (START_ELEMENT o END_ELEMENT)"
+    ],
+    "exceptions": [
+      {
+        "label": "XMLStreamException",
+        "detail": "si el evento actual no es espacio en blanco, PROCESSING_INSTRUCTION, START_ELEMENT ni END_ELEMENT"
+      },
+      {
+        "label": "java.util.NoSuchElementException",
+        "detail": "si se llama cuando hasNext() devuelve false"
+      }
+    ]
+  },
+  "web-java-se-javax.xml.stream.XMLStreamWriter": {
+    "body": [
+      "Cada NAMESPACE y ATTRIBUTE debe escribirse por separado.",
+      "Espacios de nombres XML, javax.xml.stream.isRepairingNamespaces y comportamiento de los métodos write",
+      "Método · isRepairingNamespaces == true · isRepairingNamespaces == false",
+      "namespaceURI ligada · namespaceURI no ligada · namespaceURI ligada · namespaceURI no ligada",
+      "writeAttribute(namespaceURI, localName, value)",
+      "prefix:localName=\"value\" [1]",
+      "xmlns:{generated}=\"namespaceURI\" {generated}:localName=\"value\"",
+      "prefix:localName=\"value\" [1]",
+      "XMLStreamException",
+      "writeAttribute(prefix, namespaceURI, localName, value)",
+      "ligado al mismo prefijo:",
+      "prefix:localName=\"value\" [1]",
+      "ligado a un prefijo distinto:",
+      "xmlns:{generated}=\"namespaceURI\" {generated}:localName=\"value\"",
+      "xmlns:prefix=\"namespaceURI\" prefix:localName=\"value\" [3]",
+      "ligado al mismo prefijo:",
+      "prefix:localName=\"value\" [1][2]",
+      "ligado a un prefijo distinto:",
+      "XMLStreamException[2]",
+      "xmlns:prefix=\"namespaceURI\" prefix:localName=\"value\" [2][5]",
+      "writeStartElement(namespaceURI, localName)",
+      "writeEmptyElement(namespaceURI, localName)",
+      "<prefix:localName> [1]",
+      "{@code <{generated}:localName xmlns:{generated}=\"namespaceURI\">}",
+      "prefix:localName> [1]",
+      "XMLStreamException",
+      "writeStartElement(prefix, localName, namespaceURI)",
+      "writeEmptyElement(prefix, localName, namespaceURI)",
+      "ligado al mismo prefijo:",
+      "<prefix:localName> [1]",
+      "ligado a un prefijo distinto:",
+      "{@code <{generated}:localName xmlns:{generated}=\"namespaceURI\">}",
+      "<prefix:localName xmlns:prefix=\"namespaceURI\"> [4]",
+      "ligado al mismo prefijo:",
+      "<prefix:localName> [1]",
+      "ligado a un prefijo distinto:",
+      "XMLStreamException",
+      "<prefix:localName>",
+      "Notas:",
+      "[1] si namespaceURI == URI de espacio de nombres predeterminado, no se escribe ningún prefijo",
+      "[2] si prefix == \"\" || null && namespaceURI == \"\", no se genera ni escribe ningún prefijo ni declaración de espacio de nombres",
+      "[3] si prefix == \"\" || null, se genera un prefijo aleatorio",
+      "[4] si prefix == \"\" || null, se trata como el espacio de nombres predeterminado y no se genera ni escribe ningún prefijo; se genera y escribe una declaración xmlns si namespaceURI no está ligada",
+      "[5] si prefix == \"\" || null, se trata como un intento no válido de definir el espacio de nombres predeterminado y se lanza una XMLStreamException"
+    ]
+  },
+  "web-java-se-javax.xml.stream.util.StreamReaderDelegate.getElementText": {
+    "body": [
+      "Precondición: el evento actual es START_ELEMENT.",
+      "Postcondición: el evento actual es el END_ELEMENT correspondiente.",
+      "El método hace lo siguiente (las implementaciones pueden optimizarlo, pero deben realizar un procesamiento equivalente):",
+      "if(getEventType() != XMLStreamConstants.START_ELEMENT) { throw new XMLStreamException( \"parser must be on START_ELEMENT to read next text\", getLocation()); }",
+      "int eventType = next(); StringBuffer content = new StringBuffer(); while(eventType != XMLStreamConstants.END_ELEMENT) { if(eventType == XMLStreamConstants.CHARACTERS || eventType == XMLStreamConstants.CDATA || eventType == XMLStreamConstants.SPACE || eventType == XMLStreamConstants.ENTITY_REFERENCE) { buf.append(getText()); } else if(eventType == XMLStreamConstants.PROCESSING_INSTRUCTION || eventType == XMLStreamConstants.COMMENT) { // skipping } else if(eventType == XMLStreamConstants.END_DOCUMENT) { throw new XMLStreamException( \"unexpected end of document when reading element text content\", this); } else if(eventType == XMLStreamConstants.START_ELEMENT) { throw new XMLStreamException( \"element text content may not contain START_ELEMENT\", getLocation()); } else { throw new XMLStreamException( \"Unexpected event type \"+eventType, getLocation()); } eventType = next(); } return buf.toString();"
+    ],
+    "returns": ["el contenido de un elemento solo de texto"],
+    "exceptions": [
+      {
+        "label": "XMLStreamException",
+        "detail": "si el evento actual no es un START_ELEMENT o si se encuentra un elemento que no es de texto"
+      }
+    ]
+  },
+  "web-java-se-javax.xml.stream.util.StreamReaderDelegate.nextTag": {
+    "body": [
+      "Precondición: ninguna",
+      "Postcondición: el evento actual es START_ELEMENT o END_ELEMENT y el cursor puede haber avanzado sobre eventos de espacio en blanco.",
+      "En esencia hace lo siguiente (las implementaciones pueden optimizarlo, pero deben realizar un procesamiento equivalente):",
+      "{@code int eventType = next(); while((eventType == XMLStreamConstants.CHARACTERS && isWhiteSpace()) // skip whitespace || (eventType == XMLStreamConstants.CDATA && isWhiteSpace()) // skip whitespace || eventType == XMLStreamConstants.SPACE || eventType == XMLStreamConstants.PROCESSING_INSTRUCTION || eventType == XMLStreamConstants.COMMENT ) { eventType = next(); } if (eventType != XMLStreamConstants.START_ELEMENT && eventType != XMLStreamConstants.END_ELEMENT) { throw new String XMLStreamException(\"expected start or end tag\", getLocation()); } return eventType; }"
+    ],
+    "returns": [
+      "el tipo de evento del elemento leído (START_ELEMENT o END_ELEMENT)"
+    ],
+    "exceptions": [
+      {
+        "label": "XMLStreamException",
+        "detail": "si el evento actual no es espacio en blanco, PROCESSING_INSTRUCTION, START_ELEMENT ni END_ELEMENT"
+      },
+      {
+        "label": "java.util.NoSuchElementException",
+        "detail": "si se llama cuando hasNext() devuelve false"
+      }
+    ]
+  },
+  "web-java-se-javax.xml.transform.OutputKeys.DOCTYPE_PUBLIC": {
+    "intro": ["doctype-public = string."],
+    "body": [
+      "Consulta la documentación de la propiedad DOCTYPE_SYSTEM para ver una descripción de cuál debe ser el valor de la clave."
+    ]
+  },
+  "web-java-se-javax.xml.transform.OutputKeys.INDENT": {
+    "intro": ["indent = \"yes\" | \"no\"."],
+    "body": [
+      "indent especifica si el Transformer puede añadir espacios en blanco adicionales al generar el árbol de resultado; el valor debe ser yes o no."
+    ]
+  },
+  "web-java-se-javax.xml.transform.OutputKeys.METHOD": {
+    "intro": ["method = \"xml\" | \"html\" | \"text\" | expanded name."],
+    "body": [
+      "El valor de la propiedad method identifica el método general que debe usarse para generar el árbol de resultado. Pueden usarse otros valores sin espacio de nombres, como \"xhtml\", pero, si se aceptan, su tratamiento depende de la implementación. Si alguno de los valores de method no se acepta y no está cualificado con espacio de nombres, javax.xml.transform.Transformer.setOutputProperty o javax.xml.transform.Transformer.setOutputProperties lanzarán una java.lang.IllegalArgumentException."
+    ]
+  },
+  "web-java-se-javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION": {
+    "intro": ["omit-xml-declaration = \"yes\" | \"no\"."],
+    "body": [
+      "omit-xml-declaration especifica si el procesador XSLT debe generar una declaración XML; el valor debe ser yes o no."
+    ]
+  },
+  "web-java-se-javax.xml.transform.OutputKeys.STANDALONE": {
+    "intro": ["standalone = \"yes\" | \"no\"."],
+    "body": [
+      "standalone especifica si el Transformer debe generar una declaración de documento independiente; el valor debe ser yes o no."
+    ]
+  },
+  "web-java-se-javax.xml.transform.TransformerFactory.newInstance": {
+    "overloads": [
+      {
+        "intro": [
+          "Obtiene una nueva instancia de TransformerFactory. Este método usa el mecanismo de búsqueda de JAXP para determinar la clase de implementación de TransformerFactory que se cargará."
+        ],
+        "body": [
+          "Una vez que una aplicación ha obtenido una referencia a un TransformerFactory, puede usar la fábrica para configurar y obtener instancias de transformador."
+        ],
+        "returns": ["nueva instancia de TransformerFactory, nunca null."],
+        "exceptions": [
+          {
+            "label": "TransformerFactoryConfigurationError",
+            "detail": "Se lanza en caso de error de configuración del servicio o si la implementación no está disponible o no puede instanciarse."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Obtiene una nueva instancia de TransformerFactory a partir del nombre de clase de la fábrica. Esta función es útil cuando hay varios proveedores en el classpath. Da más control a la aplicación, ya que puede especificar qué proveedor debe cargarse."
+        ],
+        "body": [
+          "Una vez que una aplicación ha obtenido una referencia a un TransformerFactory, puede usar la fábrica para configurar y obtener instancias de transformador.",
+          "Consejo para solucionar problemas",
+          "Establecer la propiedad del sistema jaxp.debug hace que este método imprima en System.err muchos mensajes de depuración sobre lo que hace y dónde busca.",
+          "Si tienes problemas, prueba:",
+          "java -Djaxp.debug=1 YourProgram ...."
+        ],
+        "parameters": [
+          {
+            "label": "factoryClassName",
+            "detail": "nombre de clase completamente cualificado de la fábrica que proporciona la implementación de javax.xml.transform.TransformerFactory."
+          },
+          {
+            "label": "classLoader",
+            "detail": "ClassLoader usado para cargar la clase de la fábrica. Si es null, se usa el classLoader de contexto del Thread actual para cargarla."
+          }
+        ],
+        "returns": ["nueva instancia de TransformerFactory, nunca null."],
+        "exceptions": [
+          {
+            "label": "TransformerFactoryConfigurationError",
+            "detail": "si factoryClassName es null o la clase de la fábrica no puede cargarse o instanciarse."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.xml.transform.sax.SAXResult.setLexicalHandler": {
+    "body": [
+      "Es necesario para tratar comentarios XML y similares. Si no se establece el manejador léxico, el transformador debe intentar convertir el org.xml.sax.ContentHandler en un LexicalHandler."
+    ],
+    "parameters": [
+      {
+        "label": "handler",
+        "detail": "Un LexicalHandler no nulo para tratar los eventos léxicos del análisis."
+      }
+    ]
+  },
+  "web-java-se-javax.xml.validation.SchemaFactory": {
+    "body": [
+      "SchemaFactory es un compilador de esquemas. Lee representaciones externas de esquemas y las prepara para la validación.",
+      "La clase SchemaFactory no es segura entre hilos. Es decir, es responsabilidad de la aplicación asegurarse de que como mucho un hilo use un objeto SchemaFactory en cada momento. Se anima a las implementaciones a marcar los métodos como synchronized para protegerse de clientes defectuosos.",
+      "SchemaFactory no es reentrante. Mientras se está invocando uno de los métodos newSchema, las aplicaciones no pueden intentar invocar recursivamente el método newSchema, ni siquiera desde el mismo hilo.",
+      "Lenguaje de esquemas",
+      "Esta especificación usa una URI de espacio de nombres para designar un lenguaje de esquemas. La siguiente tabla muestra los valores que define esta especificación.",
+      "Para cumplir la especificación, la implementación solo está obligada a admitir W3C XML Schema 1.0. Sin embargo, si decide admitir otros lenguajes de esquemas enumerados aquí, debe ajustarse a los comportamientos correspondientes descritos en esta especificación.",
+      "Se espera que los lenguajes de esquemas no enumerados aquí introduzcan sus propias URI para representarse. La clase SchemaFactory es capaz de localizar en tiempo de ejecución otras implementaciones para otros lenguajes de esquemas.",
+      "Ten en cuenta que, como la DTD de XML está muy ligada al proceso de análisis y tiene un efecto importante en él, es imposible definir la validación con DTD como un proceso independiente del análisis. Por eso esta especificación no define la semántica de la DTD de XML. Esto no prohíbe a los implementadores implementarla como consideren oportuno, pero se advierte a los usuarios de que cualquier validación con DTD implementada en esta interfaz se desvía necesariamente de la semántica de la DTD de XML definida en XML 1.0.",
+      "URI de los lenguajes de esquemas admitidos",
+      "valor · lenguaje",
+      "javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI (\"http://www.w3.org/2001/XMLSchema\") · W3C XML Schema 1.0",
+      "javax.xml.XMLConstants.RELAXNG_NS_URI (\"http://relaxng.org/ns/structure/1.0\") · RELAX NG 1.0"
+    ]
+  },
+  "web-java-se-javax.xml.validation.SchemaFactory.newDefaultInstance": {
+    "returns": [
+      "Una nueva instancia de la implementación predeterminada del sistema integrada de SchemaFactory."
+    ],
+    "caveats": [
+      "La implementación predeterminada del sistema integrada de SchemaFactory solo está obligada a admitir W3C XML Schema 1.0, pero puede admitir otros lenguajes de esquemas."
+    ]
+  },
+  "web-java-se-javax.xml.validation.SchemaFactory.newInstance": {
+    "overloads": [
+      {
+        "intro": [
+          "Obtiene una nueva instancia de SchemaFactory que admite el lenguaje de esquemas indicado. Este método usa el mecanismo de búsqueda de JAXP para determinar y cargar la implementación de SchemaFactory que admite ese lenguaje."
+        ],
+        "body": [
+          "Consejo para solucionar problemas:",
+          "Consulta java.util.Properties.load(java.io.InputStream) para ver exactamente cómo se analiza un archivo de propiedades. En particular, los dos puntos ':' deben escaparse en un archivo de propiedades, así que asegúrate de que las URI de lenguajes de esquemas estén bien escapadas en él. Por ejemplo:",
+          "http\\://www.w3.org/2001/XMLSchema=org.acme.foo.XSSchemaFactory"
+        ],
+        "parameters": [
+          {
+            "label": "schemaLanguage",
+            "detail": "Especifica el lenguaje de esquemas que entenderá el SchemaFactory devuelto. Consulta la lista de lenguajes de esquemas disponibles para ver los valores posibles."
+          }
+        ],
+        "returns": ["Nueva instancia de SchemaFactory"],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "Si no hay ninguna implementación disponible para el lenguaje de esquemas."
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "Si el parámetro schemaLanguage es null."
+          },
+          {
+            "label": "SchemaFactoryConfigurationError",
+            "detail": "Si se encuentra un error de configuración."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Obtiene una nueva instancia de SchemaFactory a partir del nombre de clase. Se devuelve el SchemaFactory si el nombre de clase de fábrica indicado admite el lenguaje de esquemas indicado. Esta función es útil cuando hay varios proveedores en el classpath. Da más control a la aplicación, ya que puede especificar qué proveedor debe cargarse."
+        ],
+        "body": [
+          "Consejo para solucionar problemas",
+          "Establecer la propiedad del sistema jaxp.debug hace que este método imprima en System.err muchos mensajes de depuración sobre lo que hace y dónde busca.",
+          "Si tienes problemas, prueba:",
+          "java -Djaxp.debug=1 YourProgram ...."
+        ],
+        "parameters": [
+          {
+            "label": "schemaLanguage",
+            "detail": "Especifica el lenguaje de esquemas que entenderá el SchemaFactory devuelto. Consulta la lista de lenguajes de esquemas disponibles para ver los valores posibles."
+          },
+          {
+            "label": "factoryClassName",
+            "detail": "nombre de clase completamente cualificado de la fábrica que proporciona la implementación de javax.xml.validation.SchemaFactory."
+          },
+          {
+            "label": "classLoader",
+            "detail": "ClassLoader usado para cargar la clase de la fábrica. Si es null, se usa el classLoader de contexto del Thread actual para cargarla."
+          }
+        ],
+        "returns": ["Nueva instancia de SchemaFactory"],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si factoryClassName es null, o la clase de la fábrica no puede cargarse o instanciarse, o no admite el lenguaje de esquemas indicado en el parámetro schemLanguage."
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "Si el parámetro schemaLanguage es null."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.xml.validation.SchemaFactory.newSchema": {
+    "overloads": [
+      {
+        "intro": [
+          "Analiza el origen indicado como esquema y lo devuelve como esquema."
+        ],
+        "body": [
+          "Es un método de conveniencia para newSchema(Source[] schemas)."
+        ],
+        "parameters": [
+          {
+            "label": "schema",
+            "detail": "Source que representa un esquema."
+          }
+        ],
+        "returns": ["Nuevo Schema obtenido al analizar schema."],
+        "exceptions": [
+          {
+            "label": "SAXException",
+            "detail": "Si se produce un error SAX durante el análisis."
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si schema es null."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Analiza el File indicado como esquema y lo devuelve como Schema."
+        ],
+        "body": ["Es un método de conveniencia para newSchema(Source schema)."],
+        "parameters": [
+          {
+            "label": "schema",
+            "detail": "File que representa un esquema."
+          }
+        ],
+        "returns": ["Nuevo Schema obtenido al analizar schema."],
+        "exceptions": [
+          {
+            "label": "SAXException",
+            "detail": "Si se produce un error SAX durante el análisis."
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si schema es null."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Analiza la URL indicada como esquema y la devuelve como Schema."
+        ],
+        "body": ["Es un método de conveniencia para newSchema(Source schema)."],
+        "parameters": [
+          {
+            "label": "schema",
+            "detail": "URL que representa un esquema."
+          }
+        ],
+        "returns": ["Nuevo Schema obtenido al analizar schema."],
+        "exceptions": [
+          {
+            "label": "SAXException",
+            "detail": "Si se produce un error SAX durante el análisis."
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si schema es null."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Analiza los orígenes indicados como esquema y lo devuelve como esquema."
+        ],
+        "body": [
+          "El método llamado leerá todos los Sources y los combinará en un único esquema. La semántica exacta de la combinación depende del lenguaje de esquemas para el que se creó este objeto SchemaFactory.",
+          "Cuando hay un ErrorHandler establecido, el método llamado informará al manejador de todos los errores encontrados en los orígenes. Si el manejador lanza una excepción, se abortará la compilación del esquema y este método lanzará esa misma excepción. Además, tras informar de un error al manejador, el método llamado puede abortar el resto del procesamiento lanzándolo. Si no hay manejador de errores, el método llamado lanzará el primer error que encuentre en los orígenes.",
+          "W3C XML Schema 1.0",
+          "El esquema resultante contiene componentes de los orígenes indicados. Se obtendría el mismo resultado si todos estos orígenes se importaran, con valores adecuados de schemaLocation y namespace, en un único documento de esquema con un targetNamespace distinto y sin componentes propios, si los elementos import se dieran en el mismo orden que los orígenes. La sección 4.2.3 de la recomendación XML Schema describe las opciones que tienen los procesadores al respecto. Aunque un procesador debería ser coherente en su tratamiento de los orígenes de esquema de JAXP y de los imports de XML Schema, el comportamiento puede variar entre parsers compatibles con JAXP; en particular, los parsers pueden optar por ignorar todos los <import> salvo el primero para un espacio de nombres dado, independientemente de la información de schemaLocation.",
+          "Si el conjunto de esquemas analizado incluye errores según la sección 5.1 de la especificación XML Schema, el error debe notificarse al ErrorHandler.",
+          "RELAX NG",
+          "Para RELAX NG, este método debe lanzar UnsupportedOperationException si schemas.length!=1."
+        ],
+        "parameters": [
+          {
+            "label": "schemas",
+            "detail": "entradas que se analizarán. SchemaFactory debe reconocer javax.xml.transform.sax.SAXSource, StreamSource, javax.xml.transform.stax.StAXSource y javax.xml.transform.dom.DOMSource. Los esquemas de entrada deben ser documentos o elementos XML y no deben ser null. Por compatibilidad hacia atrás, el resultado de pasar cualquier otra cosa que no sea un documento o un elemento depende de la implementación. Las implementaciones deben reconocer y procesar la entrada o lanzar una IllegalArgumentException."
+          }
+        ],
+        "returns": [
+          "Siempre devuelve un objeto Schema válido no nulo. Ten en cuenta que, cuando se ha notificado un error, no hay garantía de que el objeto Schema devuelto tenga sentido."
+        ],
+        "exceptions": [
+          {
+            "label": "SAXException",
+            "detail": "Si se encuentra un error al procesar las entradas indicadas. Cuando hay un ErrorHandler establecido, los errores se le notifican primero. Consulta setErrorHandler(ErrorHandler)."
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "Si el propio parámetro schemas es null o algún elemento del array es null."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "Si este método no reconoce algún elemento del array."
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "Si el lenguaje de esquemas no admite esta operación."
+          }
+        ]
+      },
+      {
+        "intro": ["Crea un objeto Schema especial."],
+        "body": [
+          "La semántica exacta del objeto Schema devuelto depende del lenguaje de esquemas para el que se creó este SchemaFactory.",
+          "Además, las implementaciones pueden usar propiedades o características específicas para alterar la semántica de este método.",
+          "Los implementadores y desarrolladores deben prestar especial atención a cómo procesa este Schema especial las características establecidas en este SchemaFactory. En algunos casos, por ejemplo cuando el SchemaFactory y la clase que realmente carga el esquema proceden de implementaciones distintas, puede que las características del SchemaFactory no se hereden automáticamente. Los desarrolladores deben asegurarse de que características como el procesamiento seguro se establezcan explícitamente en ambos sitios.",
+          "W3C XML Schema 1.0",
+          "Para XML Schema, este método crea un objeto Schema que valida usando las pistas de ubicación especificadas en los documentos.",
+          "El objeto Schema devuelto asume que, si los documentos se refieren a la misma URL en las pistas de ubicación del esquema, siempre se resolverán al mismo documento de esquema. Esta suposición permite a las implementaciones reutilizar los resultados del análisis de los documentos de esquema, de modo que varias validaciones contra el mismo esquema se ejecuten más rápido.",
+          "Ten en cuenta que el uso de pistas de ubicación de esquema introduce una vulnerabilidad a ataques de denegación de servicio.",
+          "RELAX NG",
+          "RELAX NG no admite esta operación."
+        ],
+        "returns": ["Siempre devuelve un objeto Schema válido no nulo."],
+        "exceptions": [
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "Si el método llamado no admite esta operación."
+          },
+          {
+            "label": "SAXException",
+            "detail": "Si esta operación se admite pero ha fallado por algún motivo."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.xml.validation.SchemaFactory.setErrorHandler": {
+    "body": [
+      "El manejador de errores puede usarse para personalizar el tratamiento de errores durante el análisis de esquemas. Cuando hay un ErrorHandler establecido, los errores encontrados durante el análisis de esquemas se envían primero al ErrorHandler.",
+      "El manejador de errores puede abortar inmediatamente el análisis de un esquema lanzando una SAXException desde el manejador. O, por ejemplo, puede imprimir un error en pantalla e intentar continuar el procesamiento retornando normalmente desde el ErrorHandler.",
+      "Si un ErrorHandler lanza cualquier Throwable (o instancias de sus clases derivadas), al llamador del método newSchema se le lanzará el mismo objeto Throwable.",
+      "SchemaFactory no puede lanzar SAXException sin haberla notificado antes al ErrorHandler.",
+      "Las aplicaciones pueden llamar a este método incluso mientras se está analizando un Schema.",
+      "Cuando el ErrorHandler es null, la implementación se comporta como si estuviera establecido el siguiente ErrorHandler:",
+      "class DraconianErrorHandler implements ErrorHandler { public void fatalError( org.xml.sax.SAXParseException e ) throws SAXException { throw e; } public void error( org.xml.sax.SAXParseException e ) throws SAXException { throw e; } public void warning( org.xml.sax.SAXParseException e ) throws SAXException { // noop } }",
+      "Cuando se crea un nuevo objeto SchemaFactory, este campo vale inicialmente null. Este campo NO lo heredan los Schemas, Validators ni ValidatorHandlers creados a partir de este SchemaFactory."
+    ],
+    "parameters": [
+      {
+        "label": "errorHandler",
+        "detail": "El nuevo manejador de errores que se establece. Este parámetro puede ser null."
+      }
+    ]
+  },
+  "web-java-se-javax.xml.validation.SchemaFactory.setFeature": {
+    "body": [
+      "Los implementadores y desarrolladores deben prestar especial atención a cómo se procesa el objeto Schema especial que devuelve newSchema(). En algunos casos, por ejemplo cuando el SchemaFactory y la clase que realmente carga el esquema proceden de implementaciones distintas, puede que las características del SchemaFactory no se hereden automáticamente. Los desarrolladores deben asegurarse de que características como el procesamiento seguro se establezcan explícitamente en ambos sitios.",
+      "El nombre de la característica es cualquier URI completamente cualificada. Es posible que un SchemaFactory exponga el valor de una característica pero no pueda cambiar su valor actual.",
+      "Todas las implementaciones deben admitir la característica javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING. Cuando la característica es:",
+      "true: la implementación limitará el procesamiento XML para ajustarse a los límites de la implementación. Algunos ejemplos son los límites de expansión de entidades y las construcciones de XML Schema que consumirían grandes cantidades de recursos. Si el procesamiento XML se limita por motivos de seguridad, se informará mediante una llamada a ErrorHandler.fatalError(SAXParseException exception) del manejador registrado. Consulta DocumentBuilder.setErrorHandler(ErrorHandler errorHandler).",
+      "false: la implementación procesará el XML según las especificaciones XML sin tener en cuenta los posibles límites de la implementación."
+    ],
+    "parameters": [
+      {
+        "label": "name",
+        "detail": "El nombre de la característica, que es una URI completamente cualificada no nula."
+      },
+      {
+        "label": "value",
+        "detail": "El valor solicitado de la característica (true o false)."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "SAXNotRecognizedException",
+        "detail": "Si el valor de la característica no puede asignarse ni obtenerse."
+      },
+      {
+        "label": "SAXNotSupportedException",
+        "detail": "Cuando el SchemaFactory reconoce el nombre de la característica pero no puede establecer el valor solicitado."
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "Si name es null."
+      }
+    ]
+  },
+  "web-java-se-javax.xml.validation.SchemaFactory.setResourceResolver": {
+    "body": [
+      "SchemaFactory usa un LSResourceResolver cuando necesita localizar recursos externos al analizar esquemas, aunque qué constituye exactamente «localizar recursos externos» depende de cada lenguaje de esquemas. Por ejemplo, en W3C XML Schema incluye los archivos referenciados con <include> o <import>, las DTD referenciadas desde archivos de esquema, etc.",
+      "Las aplicaciones pueden llamar a este método incluso mientras se está analizando un Schema.",
+      "Cuando el LSResourceResolver es null, la implementación se comporta como si estuviera establecido el siguiente LSResourceResolver:",
+      "class DumbDOMResourceResolver implements LSResourceResolver { public org.w3c.dom.ls.LSInput resolveResource( String publicId, String systemId, String baseURI) {",
+      "return null; // always return null } }",
+      "Si un LSResourceResolver lanza una RuntimeException (o instancias de sus clases derivadas), el SchemaFactory abortará el análisis y el llamador del método newSchema recibirá la misma RuntimeException.",
+      "Cuando se crea un nuevo objeto SchemaFactory, este campo vale inicialmente null. Este campo NO lo heredan los Schemas, Validators ni ValidatorHandlers creados a partir de este SchemaFactory."
+    ],
+    "parameters": [
+      {
+        "label": "resourceResolver",
+        "detail": "El nuevo resolvedor de recursos que se establece. Este parámetro puede ser null."
+      }
+    ]
+  },
+  "web-java-se-javax.xml.validation.Validator.setErrorHandler": {
+    "body": [
+      "El manejador de errores puede usarse para personalizar el tratamiento de errores durante una validación. Cuando hay un ErrorHandler establecido, los errores encontrados durante la validación se envían primero al ErrorHandler.",
+      "El manejador de errores puede abortar inmediatamente el resto de la validación lanzando una SAXException desde el manejador. O, por ejemplo, puede imprimir un error en pantalla e intentar continuar la validación retornando normalmente desde el ErrorHandler.",
+      "Si un ErrorHandler lanza cualquier Throwable, al llamador del método validate se le lanzará el mismo objeto Throwable.",
+      "Validator no puede lanzar SAXException sin haberla notificado antes al ErrorHandler.",
+      "Cuando el ErrorHandler es null, la implementación se comporta como si estuviera establecido el siguiente ErrorHandler:",
+      "class DraconianErrorHandler implements ErrorHandler { public void fatalError( org.xml.sax.SAXParseException e ) throws SAXException { throw e; } public void error( org.xml.sax.SAXParseException e ) throws SAXException { throw e; } public void warning( org.xml.sax.SAXParseException e ) throws SAXException { // noop } }",
+      "Cuando se crea un nuevo objeto Validator, este campo vale inicialmente null."
+    ],
+    "parameters": [
+      {
+        "label": "errorHandler",
+        "detail": "El nuevo manejador de errores que se establece. Este parámetro puede ser null."
+      }
+    ]
+  },
+  "web-java-se-javax.xml.validation.Validator.setResourceResolver": {
+    "body": [
+      "Validator usa un LSResourceResolver cuando necesita localizar recursos externos durante una validación, aunque qué constituye exactamente «localizar recursos externos» depende de cada lenguaje de esquemas.",
+      "Cuando el LSResourceResolver es null, la implementación se comporta como si estuviera establecido el siguiente LSResourceResolver:",
+      "class DumbLSResourceResolver implements LSResourceResolver { public org.w3c.dom.ls.LSInput resolveResource( String publicId, String systemId, String baseURI) {",
+      "return null; // always return null } }",
+      "Si un LSResourceResolver lanza una RuntimeException (o instancias de sus clases derivadas), el Validator abortará el análisis y el llamador del método validate recibirá la misma RuntimeException.",
+      "Cuando se crea un nuevo objeto Validator, este campo vale inicialmente null."
+    ],
+    "parameters": [
+      {
+        "label": "resourceResolver",
+        "detail": "El nuevo resolvedor de recursos que se establece. Este parámetro puede ser null."
+      }
+    ]
+  },
+  "web-java-se-javax.xml.validation.ValidatorHandler.setFeature": {
+    "body": [
+      "Las características pueden usarse para controlar cómo analiza esquemas un ValidatorHandler. El nombre de la característica es cualquier URI completamente cualificada. Es posible que un SchemaFactory exponga el valor de una característica pero no pueda cambiar su valor actual. Algunos valores pueden ser inmutables o solo mutables en contextos concretos, como antes, durante o después de una validación.",
+      "Todas las implementaciones deben admitir la característica javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING. Cuando la característica es:",
+      "true: la implementación limitará el procesamiento XML para ajustarse a los límites de la implementación. Algunos ejemplos son los límites de expansión de entidades y las construcciones de XML Schema que consumirían grandes cantidades de recursos. Si el procesamiento XML se limita por motivos de seguridad, se informará mediante una llamada a ErrorHandler.fatalError(SAXParseException exception) del manejador registrado. Consulta DocumentBuilder.setErrorHandler(ErrorHandler errorHandler).",
+      "false: la implementación procesará el XML según las especificaciones XML sin tener en cuenta los posibles límites de la implementación."
+    ],
+    "parameters": [
+      {
+        "label": "name",
+        "detail": "El nombre de la característica, que es una URI completamente cualificada no nula."
+      },
+      {
+        "label": "value",
+        "detail": "El valor solicitado de la característica (true o false)."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "SAXNotRecognizedException",
+        "detail": "Si el valor de la característica no puede asignarse ni obtenerse."
+      },
+      {
+        "label": "SAXNotSupportedException",
+        "detail": "Cuando el ValidatorHandler reconoce el nombre de la característica pero no puede establecer el valor solicitado."
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "Cuando name es null."
+      }
+    ]
+  },
+  "web-java-se-javax.xml.validation.ValidatorHandler.setResourceResolver": {
+    "body": [
+      "ValidatorHandler usa un LSResourceResolver cuando necesita localizar recursos externos durante una validación, aunque qué constituye exactamente «localizar recursos externos» depende de cada lenguaje de esquemas.",
+      "Cuando el LSResourceResolver es null, la implementación se comporta como si estuviera establecido el siguiente LSResourceResolver:",
+      "class DumbLSResourceResolver implements LSResourceResolver { public org.w3c.dom.ls.LSInput resolveResource( String publicId, String systemId, String baseURI) {",
+      "return null; // always return null } }",
+      "Si un LSResourceResolver lanza una RuntimeException (o instancias de sus clases derivadas), el ValidatorHandler abortará el análisis y el llamador del método validate recibirá la misma RuntimeException.",
+      "Cuando se crea un nuevo objeto ValidatorHandler, este campo vale inicialmente null."
+    ],
+    "parameters": [
+      {
+        "label": "resourceResolver",
+        "detail": "El nuevo resolvedor de recursos que se establece. Este parámetro puede ser null."
+      }
     ]
   }
 }
