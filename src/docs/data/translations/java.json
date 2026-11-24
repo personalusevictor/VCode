@@ -2881,6 +2881,256 @@
       "NumericShaper.Range.TAI_THAM_THAM · NumericShaper.Range.TAI_THAM_THAM"
     ]
   },
+  "web-java-se-java.awt.font.NumericShaper%24Range": {
+    "intro": [
+      "Un NumericShaper.Range representa un rango Unicode de una escritura con sus propios dígitos decimales. Por ejemplo, el rango NumericShaper.Range.THAI tiene los dígitos tailandeses, de THAI DIGIT ZERO (U+0E50) a THAI DIGIT NINE (U+0E59)."
+    ],
+    "body": [
+      "El enum Range sustituye a los valores tradicionales basados en máscaras de bits (p. ej. NumericShaper.ARABIC) y admite más rangos Unicode que ellos. Por ejemplo, este código con máscara de bits:",
+      "NumericShaper.getContextualShaper(NumericShaper.ARABIC | NumericShaper.TAMIL, NumericShaper.EUROPEAN);",
+      "puede escribirse con este enum así:",
+      "NumericShaper.getContextualShaper(EnumSet.of( NumericShaper.Range.ARABIC, NumericShaper.Range.TAMIL), NumericShaper.Range.EUROPEAN);"
+    ]
+  },
+  "web-java-se-java.awt.font.NumericShaper.getContextualShaper": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve un conversor contextual para los rangos Unicode indicados. Los dígitos Latin-1 (EUROPEAN) se convierten en los dígitos decimales del rango del texto anterior, si ese rango es uno de los indicados. Varios rangos se representan combinando los valores con OR, como NumericShaper.ARABIC | NumericShaper.THAI. El conversor supone EUROPEAN como contexto inicial: si aparecen dígitos EUROPEAN antes de cualquier texto con dirección fuerte en la cadena, se supone contexto EUROPEAN y los dígitos no se convierten."
+        ],
+        "parameters": [
+          {
+            "label": "ranges",
+            "detail": "los rangos Unicode indicados"
+          }
+        ],
+        "returns": ["un conversor para los rangos indicados"]
+      },
+      {
+        "intro": [
+          "Devuelve un conversor contextual para los rangos Unicode indicados. Los dígitos Latin-1 (EUROPEAN) se convierten en los dígitos decimales del rango del texto anterior, si ese rango es uno de los indicados."
+        ],
+        "body": [
+          "El conversor supone EUROPEAN como contexto inicial: si aparecen dígitos EUROPEAN antes de cualquier texto con dirección fuerte en la cadena, se supone contexto EUROPEAN y los dígitos no se convierten."
+        ],
+        "parameters": [
+          {
+            "label": "ranges",
+            "detail": "los rangos Unicode indicados"
+          }
+        ],
+        "returns": ["un conversor contextual para los rangos indicados"],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si ranges es null."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un conversor contextual para los rangos Unicode indicados. Los dígitos Latin-1 (EUROPEAN) se convertirán en los dígitos decimales del rango del texto anterior, si ese rango es uno de los indicados. Varios rangos se representan combinando los valores con OR, por ejemplo NumericShaper.ARABIC | NumericShaper.THAI. El conversor usa defaultContext como contexto inicial."
+        ],
+        "parameters": [
+          {
+            "label": "ranges",
+            "detail": "los rangos Unicode indicados"
+          },
+          {
+            "label": "defaultContext",
+            "detail": "el contexto inicial, como NumericShaper.EUROPEAN"
+          }
+        ],
+        "returns": ["un conversor para los rangos Unicode indicados."],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el defaultContext indicado no es un único rango válido."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un conversor contextual para los rangos Unicode indicados. Los dígitos Latin-1 (EUROPEAN) se convertirán en los dígitos decimales del rango del texto anterior, si ese rango es uno de los indicados. El conversor usa defaultContext como contexto inicial."
+        ],
+        "parameters": [
+          {
+            "label": "ranges",
+            "detail": "los rangos Unicode indicados"
+          },
+          {
+            "label": "defaultContext",
+            "detail": "el contexto inicial, como NumericShaper.Range.EUROPEAN"
+          }
+        ],
+        "returns": [
+          "un conversor contextual para los rangos Unicode indicados."
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si ranges o defaultContext es null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.font.NumericShaper.isContextual": {
+    "intro": [
+      "Devuelve un boolean que indica si este conversor convierte de forma contextual."
+    ],
+    "returns": [
+      "true si este conversor es contextual; false en caso contrario."
+    ]
+  },
+  "web-java-se-java.awt.font.TextHitInfo": {
+    "intro": [
+      "La clase TextHitInfo representa una posición de carácter en un modelo de texto y un sesgo, o \"lado\", del carácter. El sesgo es inicial (el borde izquierdo, en un carácter de izquierda a derecha) o final (el borde derecho, en un carácter de izquierda a derecha). Las instancias de TextHitInfo se usan para indicar posiciones del cursor y de inserción en el texto."
+    ],
+    "body": [
+      "Por ejemplo, en el texto \"abc\", TextHitInfo.trailing(1) corresponde al lado derecho de la 'b'.",
+      "TextHitInfo lo usan sobre todo TextLayout y sus clientes. Los clientes de TextLayout consultan las instancias de TextHitInfo para obtener el desplazamiento de inserción, donde se inserta texto nuevo en el modelo. El desplazamiento de inserción es igual a la posición del carácter en el TextHitInfo si el sesgo es inicial, y un carácter más si es final. El desplazamiento de inserción de TextHitInfo.trailing(1) es 2.",
+      "A veces conviene crear un TextHitInfo con el mismo desplazamiento de inserción que otro pero en el carácter opuesto. El método getOtherHit crea un TextHitInfo nuevo con el mismo desplazamiento de inserción, sobre el carácter del otro lado. Llamar a getOtherHit sobre trailing(1) devuelve leading(2). En general, getOtherHit de trailing(n) devuelve leading(n+1) y getOtherHit de leading(n) devuelve trailing(n-1).",
+      "Ejemplo:",
+      "Convertir un punto gráfico en un punto de inserción dentro de un modelo de texto",
+      "TextLayout layout = ...; Point2D.Float hitPoint = ...; TextHitInfo hitInfo = layout.hitTestChar(hitPoint.x, hitPoint.y); int insPoint = hitInfo.getInsertionIndex(); // insPoint is relative to layout; may need to adjust for use // in a text model"
+    ]
+  },
+  "web-java-se-java.awt.font.TextLayout.getBaseline": {
+    "intro": [
+      "Devuelve la línea base de este TextLayout. Es uno de los valores definidos en Font: romana, centrada o colgante. El ascenso y el descenso son relativos a esta línea base, igual que los baselineOffsets."
+    ],
+    "returns": ["la línea base de este TextLayout."]
+  },
+  "web-java-se-java.awt.geom.AffineTransform": {
+    "body": [
+      "Esta transformación de coordenadas puede representarse con una matriz de 3 filas por 3 columnas con una última fila implícita [ 0 0 1 ]. La matriz transforma las coordenadas de origen (x,y) en las de destino (x',y') tratándolas como un vector columna y multiplicando ese vector por la matriz así:",
+      "Manejo de las rotaciones de 90 grados",
+      "En algunas variantes de los métodos rotate de AffineTransform, un argumento de doble precisión indica el ángulo de rotación en radianes. Estos métodos tratan de forma especial las rotaciones de aproximadamente 90 grados (y sus múltiplos, como 180, 270 y 360) para que el caso habitual de rotación por cuadrantes sea más eficiente. Este tratamiento puede hacer que ángulos muy cercanos a múltiplos de 90 grados se traten como múltiplos exactos. Para múltiplos pequeños de 90 grados, el rango de ángulos tratados como rotación por cuadrantes mide unos 0.00000121 grados. Esta sección explica por qué hace falta y cómo se implementa.",
+      "Como 90 grados es PI/2 en radianes y PI es un número trascendente (y por tanto irracional), no es posible representar exactamente un múltiplo de 90 grados como valor de doble precisión en radianes. Por eso es teóricamente imposible describir rotaciones por cuadrantes (90, 180, 270 o 360 grados) con estos valores. Los valores de doble precisión pueden acercarse mucho a múltiplos no nulos de PI/2, pero nunca lo bastante para que el seno o el coseno sean exactamente 0.0, 1.0 o -1.0. Así, Math.sin() y Math.cos() nunca devuelven 0.0 salvo en Math.sin(0.0). En cambio, sí devuelven exactamente 1.0 y -1.0 para cierto rango de números alrededor de cada múltiplo de 90 grados, porque la respuesta correcta está tan cerca de 1.0 o -1.0 que la mantisa de doble precisión no puede representar la diferencia con tanta precisión como cerca de 0.0.",
+      "El resultado es que, si se usaran Math.sin() y Math.cos() directamente para calcular los valores de la matriz en estas rotaciones en radianes, la transformación nunca podría clasificarse estrictamente como rotación por cuadrantes, ni siquiera en un caso simple como rotate(Math.PI/2.0), por las pequeñas variaciones de la matriz debidas a que el seno y el coseno no dan 0.0. Si no se clasifican como rotaciones por cuadrantes, el código posterior que intenta optimizar operaciones según el tipo de transformación acabaría usando su implementación más general.",
+      "Como las rotaciones por cuadrantes son bastante habituales, esta clase debe tratarlas con rapidez razonable, tanto al aplicar la rotación a la transformación como al aplicar la transformación resultante a las coordenadas. Para ello, los métodos que reciben un ángulo en radianes intentan detectar los ángulos que pretenden ser rotaciones por cuadrantes y los tratan como tales. Por eso consideran que un ángulo theta es una rotación por cuadrantes si Math.sin(theta) o Math.cos(theta) devuelve exactamente 1.0 o -1.0. Como regla general, esto se cumple en un rango de unos 0.0000000211 radianes (o 0.00000121 grados) alrededor de múltiplos pequeños de Math.PI/2.0."
+    ]
+  },
+  "web-java-se-java.awt.geom.AffineTransform.getMatrix": {
+    "intro": [
+      "Obtiene los 6 valores configurables de la matriz de transformación afín de 3x3 y los guarda en un array de valores de doble precisión, en el orden { m00 m10 m01 m11 m02 m12 }. También puede pasarse un array de 4 doubles; en ese caso solo se obtienen los cuatro primeros elementos, que no son de traslación, y se guardan como { m00 m10 m01 m11 }"
+    ],
+    "parameters": [
+      {
+        "label": "flatmatrix",
+        "detail": "el array double donde se guardan los valores devueltos."
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.AffineTransform.getScaleInstance": {
+    "body": ["[ sx 0 0 ] [ 0 sy 0 ] [ 0 0 1 ]"],
+    "parameters": [
+      {
+        "label": "sx",
+        "detail": "el factor por el que se escalan las coordenadas en el eje X"
+      },
+      {
+        "label": "sy",
+        "detail": "el factor por el que se escalan las coordenadas en el eje Y"
+      }
+    ],
+    "returns": [
+      "un AffineTransform que escala las coordenadas por los factores indicados."
+    ]
+  },
+  "web-java-se-java.awt.geom.AffineTransform.getTranslateInstance": {
+    "body": ["[ 1 0 tx ] [ 0 1 ty ] [ 0 0 1 ]"],
+    "parameters": [
+      {
+        "label": "tx",
+        "detail": "la distancia que se trasladan las coordenadas en el eje X"
+      },
+      {
+        "label": "ty",
+        "detail": "la distancia que se trasladan las coordenadas en el eje Y"
+      }
+    ],
+    "returns": [
+      "un AffineTransform que representa una traslación, creado con el vector indicado."
+    ]
+  },
+  "web-java-se-java.awt.geom.AffineTransform.scale": {
+    "body": ["[ sx 0 0 ] [ 0 sy 0 ] [ 0 0 1 ]"],
+    "parameters": [
+      {
+        "label": "sx",
+        "detail": "el factor por el que se escalan las coordenadas en el eje X"
+      },
+      {
+        "label": "sy",
+        "detail": "el factor por el que se escalan las coordenadas en el eje Y"
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.AffineTransform.setToScale": {
+    "body": ["[ sx 0 0 ] [ 0 sy 0 ] [ 0 0 1 ]"],
+    "parameters": [
+      {
+        "label": "sx",
+        "detail": "el factor por el que se escalan las coordenadas en el eje X"
+      },
+      {
+        "label": "sy",
+        "detail": "el factor por el que se escalan las coordenadas en el eje Y"
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.AffineTransform.setToTranslation": {
+    "body": ["[ 1 0 tx ] [ 0 1 ty ] [ 0 0 1 ]"],
+    "parameters": [
+      {
+        "label": "tx",
+        "detail": "la distancia que se trasladan las coordenadas en el eje X"
+      },
+      {
+        "label": "ty",
+        "detail": "la distancia que se trasladan las coordenadas en el eje Y"
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.AffineTransform.translate": {
+    "body": ["[ 1 0 tx ] [ 0 1 ty ] [ 0 0 1 ]"],
+    "parameters": [
+      {
+        "label": "tx",
+        "detail": "la distancia que se trasladan las coordenadas en el eje X"
+      },
+      {
+        "label": "ty",
+        "detail": "la distancia que se trasladan las coordenadas en el eje Y"
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.Arc2D.intersects": {
+    "intro": [
+      "Indica si el interior del arco corta el interior del rectángulo indicado."
+    ],
+    "parameters": [
+      {
+        "label": "x",
+        "detail": "La coordenada X de la esquina superior izquierda del rectángulo."
+      },
+      {
+        "label": "y",
+        "detail": "La coordenada Y de la esquina superior izquierda del rectángulo."
+      },
+      {
+        "label": "w",
+        "detail": "La anchura del rectángulo."
+      },
+      {
+        "label": "h",
+        "detail": "La altura del rectángulo."
+      }
+    ],
+    "returns": ["true si el arco corta el rectángulo; false si no."]
+  },
   "web-java-se-java.awt.geom.Area.contains": {
     "overloads": [
       {
@@ -2965,6 +3215,120 @@
         ],
         "returns": [
           "true si el interior del Shape contiene por completo el Rectangle2D; false en caso contrario o si el Shape contiene el Rectangle2D, el método intersects devuelve true y los cálculos de contención serían demasiado costosos."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.Area.exclusiveOr": {
+    "body": [
+      "// Example: Area a1 = new Area([triangle 0,0 => 8,0 => 0,8]); Area a2 = new Area([triangle 0,0 => 8,0 => 8,8]); a1.exclusiveOr(a2);",
+      "a1(antes) xor a2 = a1(después)"
+    ],
+    "parameters": [
+      {
+        "label": "rhs",
+        "detail": "el Area con la que se hace un OR exclusivo con esta Area."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si rhs es null"
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.CubicCurve2D%24Double.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea e inicializa un CubicCurve con las coordenadas (0, 0, 0, 0, 0, 0, 0, 0)."
+        ]
+      },
+      {
+        "intro": [
+          "Crea e inicializa un CubicCurve2D a partir de las coordenadas double indicadas."
+        ],
+        "parameters": [
+          {
+            "label": "x1",
+            "detail": "la coordenada X del punto inicial del CubicCurve2D resultante"
+          },
+          {
+            "label": "y1",
+            "detail": "la coordenada Y del punto inicial del CubicCurve2D resultante"
+          },
+          {
+            "label": "ctrlx1",
+            "detail": "la coordenada X del primer punto de control del CubicCurve2D resultante"
+          },
+          {
+            "label": "ctrly1",
+            "detail": "la coordenada Y del primer punto de control del CubicCurve2D resultante"
+          },
+          {
+            "label": "ctrlx2",
+            "detail": "la coordenada X del segundo punto de control del CubicCurve2D resultante"
+          },
+          {
+            "label": "ctrly2",
+            "detail": "la coordenada Y del segundo punto de control del CubicCurve2D resultante"
+          },
+          {
+            "label": "x2",
+            "detail": "la coordenada X del punto final del CubicCurve2D resultante"
+          },
+          {
+            "label": "y2",
+            "detail": "la coordenada Y del punto final del CubicCurve2D resultante"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.CubicCurve2D%24Float.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea e inicializa un CubicCurve con las coordenadas (0, 0, 0, 0, 0, 0, 0, 0)."
+        ]
+      },
+      {
+        "intro": [
+          "Crea e inicializa un CubicCurve2D a partir de las coordenadas float indicadas."
+        ],
+        "parameters": [
+          {
+            "label": "x1",
+            "detail": "la coordenada X del punto inicial del CubicCurve2D resultante"
+          },
+          {
+            "label": "y1",
+            "detail": "la coordenada Y del punto inicial del CubicCurve2D resultante"
+          },
+          {
+            "label": "ctrlx1",
+            "detail": "la coordenada X del primer punto de control del CubicCurve2D resultante"
+          },
+          {
+            "label": "ctrly1",
+            "detail": "la coordenada Y del primer punto de control del CubicCurve2D resultante"
+          },
+          {
+            "label": "ctrlx2",
+            "detail": "la coordenada X del segundo punto de control del CubicCurve2D resultante"
+          },
+          {
+            "label": "ctrly2",
+            "detail": "la coordenada Y del segundo punto de control del CubicCurve2D resultante"
+          },
+          {
+            "label": "x2",
+            "detail": "la coordenada X del punto final del CubicCurve2D resultante"
+          },
+          {
+            "label": "y2",
+            "detail": "la coordenada Y del punto final del CubicCurve2D resultante"
+          }
         ]
       }
     ]
@@ -3057,6 +3421,42 @@
       }
     ]
   },
+  "web-java-se-java.awt.geom.CubicCurve2D.solveCubic": {
+    "overloads": [
+      {
+        "intro": [
+          "Resuelve la ecuación cúbica cuyos coeficientes están en el array eqn y guarda las raíces no complejas en ese mismo array, devolviendo el número de raíces. La cúbica resuelta se representa con la ecuación:"
+        ],
+        "body": [
+          "eqn = {c, b, a, d} dx^3 + ax^2 + bx + c = 0",
+          "El valor de retorno -1 sirve para distinguir una ecuación constante, que puede ser siempre 0 o nunca 0, de una ecuación sin ceros."
+        ],
+        "parameters": [
+          {
+            "label": "eqn",
+            "detail": "un array con los coeficientes de una cúbica"
+          }
+        ],
+        "returns": ["el número de raíces, o -1 si la ecuación es constante."]
+      },
+      {
+        "intro": [
+          "Resuelve la ecuación cúbica cuyos coeficientes están en el array eqn y guarda las raíces no complejas en el array res, devolviendo el número de raíces. La cúbica resuelta se representa con la ecuación: eqn = {c, b, a, d} dx^3 + ax^2 + bx + c = 0. El valor de retorno -1 sirve para distinguir una ecuación constante, que puede ser siempre 0 o nunca 0, de una ecuación sin ceros."
+        ],
+        "parameters": [
+          {
+            "label": "eqn",
+            "detail": "el array de coeficientes con el que se resuelve la ecuación cúbica"
+          },
+          {
+            "label": "res",
+            "detail": "el array con las raíces no complejas de la solución de la ecuación cúbica"
+          }
+        ],
+        "returns": ["el número de raíces, o -1 si la ecuación es constante"]
+      }
+    ]
+  },
   "web-java-se-java.awt.geom.Ellipse2D.contains": {
     "overloads": [
       {
@@ -3107,6 +3507,98 @@
         ],
         "returns": [
           "true si el interior del Shape contiene por completo el área rectangular indicada; false en caso contrario o si el Shape contiene el área, el método intersects devuelve true y los cálculos de contención serían demasiado costosos."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.Path2D.createTransformedShape": {
+    "intro": [
+      "Devuelve un Shape nuevo que representa una versión transformada de este Path2D. El tipo exacto y la precisión de coordenadas del valor devuelto no están especificados. El Shape devuelto no tendrá menos precisión para la geometría transformada que la que mantiene este Path2D, pero tampoco necesariamente más. Si importa el compromiso entre precisión y tamaño, deberían usarse los constructores de conveniencia Path2D.Float(Shape, AffineTransform) y Path2D.Double(Shape, AffineTransform) para hacer explícita la elección."
+    ],
+    "parameters": [
+      {
+        "label": "at",
+        "detail": "el AffineTransform usado para transformar un Shape nuevo."
+      }
+    ],
+    "returns": ["un Shape nuevo, transformado con el AffineTransform indicado."]
+  },
+  "web-java-se-java.awt.geom.QuadCurve2D%24Double.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea e inicializa un QuadCurve2D con las coordenadas (0, 0, 0, 0, 0, 0)."
+        ]
+      },
+      {
+        "intro": [
+          "Crea e inicializa un QuadCurve2D a partir de las coordenadas double indicadas."
+        ],
+        "parameters": [
+          {
+            "label": "x1",
+            "detail": "la coordenada X del punto inicial"
+          },
+          {
+            "label": "y1",
+            "detail": "la coordenada Y del punto inicial"
+          },
+          {
+            "label": "ctrlx",
+            "detail": "la coordenada X del punto de control"
+          },
+          {
+            "label": "ctrly",
+            "detail": "la coordenada Y del punto de control"
+          },
+          {
+            "label": "x2",
+            "detail": "la coordenada X del punto final"
+          },
+          {
+            "label": "y2",
+            "detail": "la coordenada Y del punto final"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.QuadCurve2D%24Float.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea e inicializa un QuadCurve2D con las coordenadas (0, 0, 0, 0, 0, 0)."
+        ]
+      },
+      {
+        "intro": [
+          "Crea e inicializa un QuadCurve2D a partir de las coordenadas float indicadas."
+        ],
+        "parameters": [
+          {
+            "label": "x1",
+            "detail": "la coordenada X del punto inicial"
+          },
+          {
+            "label": "y1",
+            "detail": "la coordenada Y del punto inicial"
+          },
+          {
+            "label": "ctrlx",
+            "detail": "la coordenada X del punto de control"
+          },
+          {
+            "label": "ctrly",
+            "detail": "la coordenada Y del punto de control"
+          },
+          {
+            "label": "x2",
+            "detail": "la coordenada X del punto final"
+          },
+          {
+            "label": "y2",
+            "detail": "la coordenada Y del punto final"
+          }
         ]
       }
     ]
@@ -3195,6 +3687,78 @@
         ],
         "returns": [
           "true si el interior del Shape contiene por completo el Rectangle2D; false en caso contrario o si el Shape contiene el Rectangle2D, el método intersects devuelve true y los cálculos de contención serían demasiado costosos."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.QuadCurve2D.solveQuadratic": {
+    "overloads": [
+      {
+        "intro": [
+          "Resuelve la ecuación cuadrática cuyos coeficientes están en el array eqn y guarda las raíces no complejas en ese mismo array, devolviendo el número de raíces. La cuadrática resuelta se representa con la ecuación:"
+        ],
+        "body": [
+          "eqn = {C, B, A}; ax^2 + bx + c = 0",
+          "El valor de retorno -1 sirve para distinguir una ecuación constante, que puede ser siempre 0 o nunca 0, de una ecuación sin ceros."
+        ],
+        "parameters": [
+          {
+            "label": "eqn",
+            "detail": "el array con los coeficientes de la cuadrática"
+          }
+        ],
+        "returns": ["el número de raíces, o -1 si la ecuación es constante"]
+      },
+      {
+        "intro": [
+          "Resuelve la ecuación cuadrática cuyos coeficientes están en el array eqn y guarda las raíces no complejas en el array res, devolviendo el número de raíces. La cuadrática resuelta se representa con la ecuación:"
+        ],
+        "body": [
+          "eqn = {C, B, A}; ax^2 + bx + c = 0",
+          "El valor de retorno -1 sirve para distinguir una ecuación constante, que puede ser siempre 0 o nunca 0, de una ecuación sin ceros."
+        ],
+        "parameters": [
+          {
+            "label": "eqn",
+            "detail": "el array de coeficientes con el que se resuelve la ecuación cuadrática"
+          },
+          {
+            "label": "res",
+            "detail": "el array con las raíces no complejas de la solución de la ecuación cuadrática"
+          }
+        ],
+        "returns": ["el número de raíces, o -1 si la ecuación es constante."]
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.Rectangle2D%24Float.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un Rectangle2D nuevo en la posición (0.0, 0.0) y con tamaño (0.0, 0.0)."
+        ]
+      },
+      {
+        "intro": [
+          "Crea e inicializa un Rectangle2D a partir de las coordenadas float indicadas."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X de la esquina superior izquierda del nuevo Rectangle2D"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y de la esquina superior izquierda del nuevo Rectangle2D"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura del nuevo Rectangle2D"
+          },
+          {
+            "label": "h",
+            "detail": "la altura del nuevo Rectangle2D"
+          }
         ]
       }
     ]
@@ -3291,6 +3855,86 @@
       }
     ]
   },
+  "web-java-se-java.awt.geom.RoundRectangle2D%24Double.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un RoundRectangle2D nuevo en la posición (0.0, 0.0), con tamaño (0.0, 0.0) y arcos de esquina de radio 0.0."
+        ]
+      },
+      {
+        "intro": [
+          "Crea e inicializa un RoundRectangle2D a partir de las coordenadas double indicadas."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X del nuevo RoundRectangle2D"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y del nuevo RoundRectangle2D"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura que se asigna al nuevo RoundRectangle2D"
+          },
+          {
+            "label": "h",
+            "detail": "la altura que se asigna al nuevo RoundRectangle2D"
+          },
+          {
+            "label": "arcw",
+            "detail": "la anchura del arco usado para redondear las esquinas del nuevo RoundRectangle2D"
+          },
+          {
+            "label": "arch",
+            "detail": "la altura del arco usado para redondear las esquinas del nuevo RoundRectangle2D"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.RoundRectangle2D%24Float.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un RoundRectangle2D nuevo en la posición (0.0, 0.0), con tamaño (0.0, 0.0) y arcos de esquina de radio 0.0."
+        ]
+      },
+      {
+        "intro": [
+          "Crea e inicializa un RoundRectangle2D a partir de las coordenadas float indicadas."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X del nuevo RoundRectangle2D"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y del nuevo RoundRectangle2D"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura que se asigna al nuevo RoundRectangle2D"
+          },
+          {
+            "label": "h",
+            "detail": "la altura que se asigna al nuevo RoundRectangle2D"
+          },
+          {
+            "label": "arcw",
+            "detail": "la anchura del arco usado para redondear las esquinas del nuevo RoundRectangle2D"
+          },
+          {
+            "label": "arch",
+            "detail": "la altura del arco usado para redondear las esquinas del nuevo RoundRectangle2D"
+          }
+        ]
+      }
+    ]
+  },
   "web-java-se-java.awt.geom.RoundRectangle2D.contains": {
     "overloads": [
       {
@@ -3341,6 +3985,298 @@
         ],
         "returns": [
           "true si el interior del Shape contiene por completo el área rectangular indicada; false en caso contrario o si el Shape contiene el área, el método intersects devuelve true y los cálculos de contención serían demasiado costosos."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.BandedSampleModel": {
+    "intro": [
+      "Esta clase representa datos de imagen guardados por bandas separadas, en los que cada muestra de un píxel ocupa un elemento del DataBuffer. Es subclase de ComponentSampleModel pero ofrece una implementación más eficiente para acceder a datos de imagen por bandas. Suele usarse con imágenes que guardan las muestras de cada banda en un banco distinto del DataBuffer. Ofrece métodos de acceso para manipular directamente los datos de imagen. El paso de píxel es el número de elementos del array entre dos muestras de la misma banda en la misma línea de barrido; en un BandedSampleModel es uno. El paso de línea es el número de elementos entre una muestra y la correspondiente de la misma columna en la siguiente línea de barrido. Los desplazamientos de banda indican el número de elementos desde el primer elemento del banco del DataBuffer que contiene cada banda hasta la primera muestra de esa banda. Las bandas se numeran de 0 a N-1. Los índices de banco indican la correspondencia entre un banco del búfer y una banda de la imagen. Esta clase admite los tipos TYPE_BYTE, TYPE_USHORT, TYPE_SHORT, TYPE_INT, TYPE_FLOAT y TYPE_DOUBLE"
+    ]
+  },
+  "web-java-se-java.awt.image.BufferedImage.getRGB": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve un píxel entero en el modelo de color RGB predeterminado (TYPE_INT_ARGB) y el espacio de color sRGB predeterminado. Se hace conversión de color si el modelo predeterminado no coincide con el ColorModel de la imagen. Con este método, cada componente de color devuelto solo tiene 8 bits de precisión."
+        ],
+        "body": [
+          "Puede lanzarse ArrayOutOfBoundsException si las coordenadas están fuera de rango. Sin embargo, no se garantiza una comprobación explícita de límites."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X del píxel que se obtiene en el modelo de color RGB predeterminado y el espacio sRGB"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y del píxel que se obtiene en el modelo de color RGB predeterminado y el espacio sRGB"
+          }
+        ],
+        "returns": [
+          "un píxel entero en el modelo de color RGB predeterminado y el espacio sRGB predeterminado."
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un array de píxeles enteros en el modelo de color RGB predeterminado (TYPE_INT_ARGB) y el espacio sRGB predeterminado, de una parte de los datos de imagen. Se hace conversión de color si el modelo predeterminado no coincide con el ColorModel de la imagen. Con este método, cada componente de color devuelto solo tiene 8 bits de precisión. Dada una coordenada (x, y) de la imagen, el píxel ARGB se obtiene así:"
+        ],
+        "body": [
+          "pixel = rgbArray[offset + (y-startY)*scansize + (x-startX)];",
+          "Puede lanzarse ArrayOutOfBoundsException si la región está fuera de rango. Sin embargo, no se garantiza una comprobación explícita de límites."
+        ],
+        "parameters": [
+          {
+            "label": "startX",
+            "detail": "la coordenada X inicial"
+          },
+          {
+            "label": "startY",
+            "detail": "la coordenada Y inicial"
+          },
+          {
+            "label": "w",
+            "detail": "anchura de la región"
+          },
+          {
+            "label": "h",
+            "detail": "altura de la región"
+          },
+          {
+            "label": "rgbArray",
+            "detail": "si no es null, aquí se escriben los píxeles RGB"
+          },
+          {
+            "label": "offset",
+            "detail": "desplazamiento dentro de rgbArray"
+          },
+          {
+            "label": "scansize",
+            "detail": "paso de línea de rgbArray"
+          }
+        ],
+        "returns": ["array de píxeles RGB."]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.BufferedImage.setRGB": {
+    "overloads": [
+      {
+        "intro": [
+          "Escribe un array de píxeles enteros en el modelo de color RGB predeterminado (TYPE_INT_ARGB) y el espacio sRGB predeterminado en una parte de los datos de imagen. Se hace conversión de color si el modelo predeterminado no coincide con el ColorModel de la imagen. Con este método, cada componente de color solo tiene 8 bits de precisión. Dada una coordenada (x, y) de esta imagen, el píxel ARGB se obtiene así:"
+        ],
+        "body": [
+          "pixel = rgbArray[offset + (y-startY)*scansize + (x-startX)];",
+          "ADVERTENCIA: no se aplica tramado.",
+          "Puede lanzarse ArrayOutOfBoundsException si la región está fuera de rango. Sin embargo, no se garantiza una comprobación explícita de límites."
+        ],
+        "parameters": [
+          {
+            "label": "startX",
+            "detail": "la coordenada X inicial"
+          },
+          {
+            "label": "startY",
+            "detail": "la coordenada Y inicial"
+          },
+          {
+            "label": "w",
+            "detail": "anchura de la región"
+          },
+          {
+            "label": "h",
+            "detail": "altura de la región"
+          },
+          {
+            "label": "rgbArray",
+            "detail": "los píxeles RGB"
+          },
+          {
+            "label": "offset",
+            "detail": "desplazamiento dentro de rgbArray"
+          },
+          {
+            "label": "scansize",
+            "detail": "paso de línea de rgbArray"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Fija un píxel de este BufferedImage al valor RGB indicado. Se supone que el píxel está en el modelo de color RGB predeterminado, TYPE_INT_ARGB, y el espacio sRGB predeterminado. En imágenes con IndexColorModel, se elige el índice con el color más cercano."
+        ],
+        "body": [
+          "Puede lanzarse ArrayOutOfBoundsException si las coordenadas están fuera de rango. Sin embargo, no se garantiza una comprobación explícita de límites."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X del píxel que se fija"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y del píxel que se fija"
+          },
+          {
+            "label": "rgb",
+            "detail": "el valor RGB"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.ColorModel": {
+    "body": [
+      "La clase ColorModel admite dos representaciones de los valores de píxel: un único int de 32 bits o un array de tipos primitivos. Las API de las plataformas Java 1.0 y 1.1 representaban los píxeles como un único byte o int, y para ColorModel los argumentos de píxel se pasaban como int. La API de la plataforma Java 2 introdujo clases adicionales para representar imágenes. Con BufferedImage o RenderedImage, basadas en las clases Raster y SampleModel, los valores de píxel pueden no ser cómodos de representar como un único int. Por eso ColorModel tiene ahora métodos que aceptan valores de píxel como arrays de tipos primitivos. El tipo primitivo que usa un ColorModel concreto se llama su tipo de transferencia.",
+      "Los ColorModel usados con imágenes cuyos píxeles no se representan cómodamente como un único int lanzan IllegalArgumentException al llamar a métodos que reciben un píxel int. Las subclases de ColorModel deben indicar en qué condiciones ocurre. Esto no ocurre con DirectColorModel ni IndexColorModel.",
+      "Actualmente, los tipos de transferencia que admite la API Java 2D son DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT, DataBuffer.TYPE_INT, DataBuffer.TYPE_SHORT, DataBuffer.TYPE_FLOAT y DataBuffer.TYPE_DOUBLE. La mayoría de las operaciones de renderizado son mucho más rápidas con ColorModels e imágenes basados en los tres primeros. Además, algunas operaciones de filtrado de imagen no se admiten con los tres últimos. El tipo de transferencia de un ColorModel se fija al crearlo, explícitamente o por defecto. Todas las subclases deben indicar los tipos de transferencia posibles y cómo se determina el número de elementos de los arrays primitivos que representan píxeles.",
+      "En los BufferedImage, el tipo de transferencia de su Raster y del SampleModel del Raster (disponible con los métodos getTransferType de esas clases) debe coincidir con el del ColorModel. El número de elementos de un array que representa un píxel para el Raster y el SampleModel (disponible con getNumDataElements) debe coincidir con el del ColorModel.",
+      "El algoritmo para convertir valores de píxel en componentes de color y alfa depende de la subclase. Por ejemplo, no tiene por qué haber una correspondencia uno a uno entre las muestras del SampleModel del Raster de un BufferedImage y los componentes de color/alfa. Incluso cuando la hay, el número de bits de una muestra no tiene por qué coincidir con el del componente correspondiente. Cada subclase debe indicar cómo se traducen los valores de píxel a componentes de color/alfa.",
+      "Los métodos de ColorModel usan dos representaciones de los componentes de color y alfa: una forma normalizada y otra sin normalizar. En la forma normalizada, cada componente es un float entre un mínimo y un máximo. Para el alfa, el mínimo es 0.0 y el máximo 1.0. Para los componentes de color, el mínimo y el máximo se obtienen del ColorSpace. A menudo serán 0.0 y 1.0 (p. ej. los componentes normalizados del espacio sRGB predeterminado van de 0.0 a 1.0), pero algunos espacios de color tienen otros límites, que pueden obtenerse con getMinValue y getMaxValue de ColorSpace. Los componentes de color normalizados no están premultiplicados. Todos los ColorModel deben admitir la forma normalizada.",
+      "En la forma sin normalizar, cada componente es un entero sin signo entre 0 y 2n - 1, donde n es el número de bits significativos de ese componente. Si los valores de píxel de un ColorModel representan muestras de color premultiplicadas por el alfa, los componentes de color sin normalizar también están premultiplicados. La forma sin normalizar solo se usa con ColorModel cuyo ColorSpace tiene mínimos 0.0 y máximos 1.0 en todos los componentes. Es una representación cómoda cuando todos los componentes normalizados están entre 0.0 y 1.0; en ese caso el entero 0 corresponde a 0.0 y 2n - 1 a 1.0. En otros casos, como cuando los componentes normalizados pueden ser negativos o positivos, no es cómoda, y esos ColorModel lanzan IllegalArgumentException al llamar a métodos con argumentos sin normalizar. Las subclases de ColorModel deben indicar en qué condiciones ocurre."
+    ]
+  },
+  "web-java-se-java.awt.image.ColorModel.getBlue": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve el componente azul del píxel indicado, escalado de 0 a 255 en el ColorSpace RGB predeterminado, sRGB. Se hace conversión de color si es necesario. El píxel se indica como int. Se lanza IllegalArgumentException si los píxeles de este ColorModel no se representan cómodamente como un único int. El valor devuelto no está premultiplicado: por ejemplo, si el alfa está premultiplicado, este método lo divide antes de devolver el valor. Si el alfa es 0, el azul es 0."
+        ],
+        "parameters": [
+          {
+            "label": "pixel",
+            "detail": "el píxel indicado"
+          }
+        ],
+        "returns": ["el valor del componente azul del píxel indicado."]
+      },
+      {
+        "intro": [
+          "Devuelve el componente azul del píxel indicado, escalado de 0 a 255 en el ColorSpace RGB predeterminado, sRGB. Se hace conversión de color si es necesario. El píxel se indica con un array de elementos de tipo transferType pasado como referencia a objeto. El valor devuelto no está premultiplicado: por ejemplo, si el alfa está premultiplicado, este método lo divide antes de devolver el valor. Si el alfa es 0, el azul será 0. Si inData no es un array primitivo de tipo transferType, se lanza ClassCastException. Se lanza ArrayIndexOutOfBoundsException si inData no es lo bastante grande para contener un píxel de este ColorModel. Si no se admite este transferType, se lanza UnsupportedOperationException. Como ColorModel es abstracta, cualquier instancia lo es de una subclase. Las subclases heredan esta implementación y, si no la sobrescriben, lanza una excepción si la subclase usa un transferType distinto de DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT o DataBuffer.TYPE_INT."
+        ],
+        "parameters": [
+          {
+            "label": "inData",
+            "detail": "un array de valores de píxel"
+          }
+        ],
+        "returns": ["el valor del componente azul del píxel indicado."],
+        "exceptions": [
+          {
+            "label": "ClassCastException",
+            "detail": "si inData no es un array primitivo de tipo transferType"
+          },
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "si inData no es lo bastante grande para contener un píxel de este ColorModel"
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si este ColorModel no admite este transferType"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.ColorModel.getComponents": {
+    "intro": [],
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve un array de componentes de color/alfa sin normalizar a partir de un píxel de este ColorModel. El píxel se indica como int. Se lanza IllegalArgumentException si los píxeles de este ColorModel no se representan cómodamente como un único int o si sus componentes de color no se representan cómodamente en forma sin normalizar. Por ejemplo, este método puede usarse para obtener los componentes de un píxel concreto en un DirectColorModel. Si el array components es null, se crea uno nuevo. Se devuelve el array components. Los componentes de color/alfa se guardan en él empezando en offset (aunque el array lo cree este método). Se lanza ArrayIndexOutOfBoundsException si components no es null y no es lo bastante grande para contener todos los componentes de color y alfa (a partir de offset). Como ColorModel es abstracta, cualquier instancia lo es de una subclase. Las subclases deben sobrescribir este método, porque la implementación de esta clase abstracta lanza UnsupportedOperationException."
+        ],
+        "parameters": [
+          {
+            "label": "pixel",
+            "detail": "el píxel indicado"
+          },
+          {
+            "label": "components",
+            "detail": "el array que recibe los componentes de color y alfa del píxel indicado"
+          },
+          {
+            "label": "offset",
+            "detail": "el desplazamiento dentro del array components a partir del cual se guardan los componentes de color y alfa"
+          }
+        ],
+        "returns": [
+          "un array con los componentes de color y alfa del píxel indicado a partir del desplazamiento indicado."
+        ],
+        "exceptions": [
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si este ColorModel no admite este método"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un array de componentes de color/alfa sin normalizar a partir de un píxel de este ColorModel. El píxel se indica con un array de elementos de tipo transferType pasado como referencia a objeto. Si pixel no es un array primitivo de tipo transferType, se lanza ClassCastException. Se lanza IllegalArgumentException si los componentes de color de este ColorModel no se representan cómodamente en forma sin normalizar. Se lanza ArrayIndexOutOfBoundsException si pixel no es lo bastante grande para contener un píxel de este ColorModel. Este método puede usarse para obtener los componentes de un píxel concreto en cualquier ColorModel. Si el array components es null, se crea uno nuevo. Se devuelve el array components. Los componentes de color/alfa se guardan en él empezando en offset (aunque el array lo cree este método). Se lanza ArrayIndexOutOfBoundsException si components no es null y no es lo bastante grande para contener todos los componentes de color y alfa (a partir de offset). Como ColorModel es abstracta, cualquier instancia lo es de una subclase. Las subclases deben sobrescribir este método, porque la implementación de esta clase abstracta lanza UnsupportedOperationException."
+        ],
+        "parameters": [
+          {
+            "label": "pixel",
+            "detail": "el píxel indicado"
+          },
+          {
+            "label": "components",
+            "detail": "un array que recibe los componentes de color y alfa del píxel indicado"
+          },
+          {
+            "label": "offset",
+            "detail": "el índice del array components a partir del cual se guardan los componentes de color y alfa del píxel indicado"
+          }
+        ],
+        "returns": [
+          "un array con los componentes de color y alfa del píxel indicado a partir del desplazamiento indicado."
+        ],
+        "exceptions": [
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si este ColorModel no admite este método"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.ColorModel.getGreen": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve el componente verde del píxel indicado, escalado de 0 a 255 en el ColorSpace RGB predeterminado, sRGB. Se hace conversión de color si es necesario. El píxel se indica como int. Se lanza IllegalArgumentException si los píxeles de este ColorModel no se representan cómodamente como un único int. El valor devuelto no está premultiplicado: por ejemplo, si el alfa está premultiplicado, este método lo divide antes de devolver el valor. Si el alfa es 0, el verde es 0."
+        ],
+        "parameters": [
+          {
+            "label": "pixel",
+            "detail": "el píxel indicado"
+          }
+        ],
+        "returns": ["el valor del componente verde del píxel indicado."]
+      },
+      {
+        "intro": [
+          "Devuelve el componente verde del píxel indicado, escalado de 0 a 255 en el ColorSpace RGB predeterminado, sRGB. Se hace conversión de color si es necesario. El píxel se indica con un array de elementos de tipo transferType pasado como referencia a objeto. El valor devuelto no está premultiplicado: por ejemplo, si el alfa está premultiplicado, este método lo divide antes de devolver el valor. Si el alfa es 0, el verde es 0. Si inData no es un array primitivo de tipo transferType, se lanza ClassCastException. Se lanza ArrayIndexOutOfBoundsException si inData no es lo bastante grande para contener un píxel de este ColorModel. Si no se admite este transferType, se lanza UnsupportedOperationException. Como ColorModel es abstracta, cualquier instancia lo es de una subclase. Las subclases heredan esta implementación y, si no la sobrescriben, lanza una excepción si la subclase usa un transferType distinto de DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT o DataBuffer.TYPE_INT."
+        ],
+        "parameters": [
+          {
+            "label": "inData",
+            "detail": "un array de valores de píxel"
+          }
+        ],
+        "returns": ["el valor del componente verde del píxel indicado."],
+        "exceptions": [
+          {
+            "label": "ClassCastException",
+            "detail": "si inData no es un array primitivo de tipo transferType"
+          },
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "si inData no es lo bastante grande para contener un píxel de este ColorModel"
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si este ColorModel no admite este transferType"
+          }
         ]
       }
     ]
