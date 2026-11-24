@@ -33473,6 +33473,498 @@
       "Como consecuencia, dos hilos no deben llamar a la vez al mismo método (wrap() o unwrap()), porque no hay forma de garantizar el orden final de los paquetes."
     ]
   },
+  "web-java-se-javax.net.ssl.SSLEngine.setNeedClientAuth": {
+    "body": [
+      "El ajuste de autenticación de cliente de un motor es uno de estos:",
+      "autenticación de cliente obligatoria",
+      "autenticación de cliente solicitada",
+      "no se desea autenticación de cliente",
+      "A diferencia de setWantClientAuth(boolean), si esta opción está activa y el cliente decide no dar información de autenticación, la negociación se detiene y el motor empieza su procedimiento de cierre.",
+      "Llamar a este método sustituye cualquier ajuste anterior hecho con este método o con setWantClientAuth(boolean)."
+    ],
+    "parameters": [
+      {
+        "label": "need",
+        "detail": "true si la autenticación de cliente es obligatoria, o false si no se desea."
+      }
+    ]
+  },
+  "web-java-se-javax.net.ssl.SSLEngine.setWantClientAuth": {
+    "body": [
+      "El ajuste de autenticación de cliente de un motor es uno de estos:",
+      "autenticación de cliente obligatoria",
+      "autenticación de cliente solicitada",
+      "no se desea autenticación de cliente",
+      "A diferencia de setNeedClientAuth(boolean), si esta opción está activa y el cliente decide no dar información de autenticación, la negociación continúa.",
+      "Llamar a este método sustituye cualquier ajuste anterior hecho con este método o con setNeedClientAuth(boolean)."
+    ],
+    "parameters": [
+      {
+        "label": "want",
+        "detail": "true si se solicita autenticación de cliente, o false si no se desea."
+      }
+    ]
+  },
+  "web-java-se-javax.net.ssl.SSLEngine.unwrap": {
+    "overloads": [
+      {
+        "intro": [
+          "Intenta decodificar datos de red SSL/TLS/DTLS en un búfer de datos de aplicación en claro."
+        ],
+        "body": [
+          "Una llamada a este método se comporta exactamente igual que:",
+          "{@link #unwrap(ByteBuffer, ByteBuffer[], int, int) engine.unwrap(src, new ByteBuffer[] { dst }, 0, 1);}"
+        ],
+        "parameters": [
+          {
+            "label": "src",
+            "detail": "un ByteBuffer con datos de red de entrada."
+          },
+          {
+            "label": "dst",
+            "detail": "un ByteBuffer para los datos de aplicación de entrada."
+          }
+        ],
+        "returns": [
+          "un SSLEngineResult que describe el resultado de esta operación."
+        ],
+        "exceptions": [
+          {
+            "label": "SSLException",
+            "detail": "Se produjo un problema al procesar los datos que hizo que el SSLEngine abortara. Consulta la descripción de la clase para más información sobre el cierre del motor."
+          },
+          {
+            "label": "ReadOnlyBufferException",
+            "detail": "si el búfer dst es de solo lectura."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si src o dst es null."
+          },
+          {
+            "label": "IllegalStateException",
+            "detail": "si aún no se ha fijado el modo cliente/servidor."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Intenta decodificar datos de red SSL/TLS/DTLS en una secuencia de búferes de datos de aplicación en claro."
+        ],
+        "body": [
+          "Una llamada a este método se comporta exactamente igual que:",
+          "engine.unwrap(src, dsts, 0, dsts.length);"
+        ],
+        "parameters": [
+          {
+            "label": "src",
+            "detail": "un ByteBuffer con datos de red de entrada."
+          },
+          {
+            "label": "dsts",
+            "detail": "un array de ByteBuffer para los datos de aplicación de entrada."
+          }
+        ],
+        "returns": [
+          "un SSLEngineResult que describe el resultado de esta operación."
+        ],
+        "exceptions": [
+          {
+            "label": "SSLException",
+            "detail": "Se produjo un problema al procesar los datos que hizo que el SSLEngine abortara. Consulta la descripción de la clase para más información sobre el cierre del motor."
+          },
+          {
+            "label": "ReadOnlyBufferException",
+            "detail": "si alguno de los búferes dst es de solo lectura."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si src o dsts es null, o si algún elemento de dsts es null."
+          },
+          {
+            "label": "IllegalStateException",
+            "detail": "si aún no se ha fijado el modo cliente/servidor."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Intenta decodificar datos de red SSL/TLS/DTLS en una subsecuencia de búferes de datos de aplicación en claro. Esta operación de \"dispersión\" decodifica, en una sola llamada, una secuencia de bytes en uno o más búferes de una secuencia dada. Suele ser útil al implementar protocolos de red o formatos de archivo que, por ejemplo, agrupan los datos en segmentos con una o más cabeceras de longitud fija seguidas de un cuerpo de longitud variable. Consulta java.nio.channels.ScatteringByteChannel para más información sobre la dispersión, y ScatteringByteChannel.read(ByteBuffer[], int, int) sobre el comportamiento con subsecuencias."
+        ],
+        "body": [
+          "Según el estado del SSLEngine, este método puede consumir datos de red sin producir datos de aplicación (por ejemplo, puede consumir datos de handshake).",
+          "La aplicación debe obtener de forma fiable los datos de red de la otra parte y llamar a unwrap() con ellos en el orden en que se recibieron. Debe sincronizar correctamente las llamadas múltiples a este método.",
+          "Si el SSLEngine aún no ha empezado su handshake inicial, este método lo empieza automáticamente.",
+          "Este método intenta consumir un paquete de red SSL/TLS/DTLS completo, pero nunca consume más que la suma de los bytes restantes en los búferes. La posición de cada ByteBuffer se actualiza según los datos consumidos o producidos; los límites no cambian.",
+          "La memoria subyacente de los ByteBuffer src y dsts no debe ser la misma.",
+          "El búfer de red de entrada, src, puede modificarse con esta llamada, así que si el paquete de datos de red hace falta para otra cosa, hay que duplicarlo antes. Nota: los datos de red no servirán a un segundo SSLEngine, porque cada uno tiene un estado aleatorio propio que influye en los mensajes SSL/TLS/DTLS.",
+          "Consulta la descripción de la clase para más información sobre el cierre del motor."
+        ],
+        "parameters": [
+          {
+            "label": "src",
+            "detail": "un ByteBuffer con datos de red de entrada."
+          },
+          {
+            "label": "dsts",
+            "detail": "un array de ByteBuffer para los datos de aplicación de entrada."
+          },
+          {
+            "label": "offset",
+            "detail": "El desplazamiento dentro del array del primer búfer al que se transfieren bytes; debe ser no negativo y no mayor que dsts.length."
+          },
+          {
+            "label": "length",
+            "detail": "El número máximo de búferes a los que se accede; debe ser no negativo y no mayor que dsts.length - offset."
+          }
+        ],
+        "returns": [
+          "un SSLEngineResult que describe el resultado de esta operación."
+        ],
+        "exceptions": [
+          {
+            "label": "SSLException",
+            "detail": "Se produjo un problema al procesar los datos que hizo que el SSLEngine abortara. Consulta la descripción de la clase para más información sobre el cierre del motor."
+          },
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "Si no se cumplen las condiciones previas de los parámetros offset y length."
+          },
+          {
+            "label": "ReadOnlyBufferException",
+            "detail": "si alguno de los búferes dst es de solo lectura."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si src o dsts es null, o si algún elemento de la subsecuencia indicada de dsts es null."
+          },
+          {
+            "label": "IllegalStateException",
+            "detail": "si aún no se ha fijado el modo cliente/servidor."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.net.ssl.SSLServerSocket.setNeedClientAuth": {
+    "body": [
+      "El ajuste de autenticación de cliente de un socket es uno de estos:",
+      "autenticación de cliente obligatoria",
+      "autenticación de cliente solicitada",
+      "no se desea autenticación de cliente",
+      "A diferencia de setWantClientAuth(boolean), si la opción está activa en el socket aceptado y el cliente decide no dar información de autenticación, la negociación se detiene y se corta la conexión.",
+      "Llamar a este método sustituye cualquier ajuste anterior hecho con este método o con setWantClientAuth(boolean).",
+      "El ajuste heredado inicial puede sustituirse llamando a SSLSocket.setNeedClientAuth(boolean) o SSLSocket.setWantClientAuth(boolean)."
+    ],
+    "parameters": [
+      {
+        "label": "need",
+        "detail": "true si la autenticación de cliente es obligatoria, o false si no se desea."
+      }
+    ]
+  },
+  "web-java-se-javax.net.ssl.SSLServerSocket.setWantClientAuth": {
+    "body": [
+      "El ajuste de autenticación de cliente de un socket es uno de estos:",
+      "autenticación de cliente obligatoria",
+      "autenticación de cliente solicitada",
+      "no se desea autenticación de cliente",
+      "A diferencia de setNeedClientAuth(boolean), si la opción está activa en el socket aceptado y el cliente decide no dar información de autenticación, la negociación continúa.",
+      "Llamar a este método sustituye cualquier ajuste anterior hecho con este método o con setNeedClientAuth(boolean).",
+      "El ajuste heredado inicial puede sustituirse llamando a SSLSocket.setNeedClientAuth(boolean) o SSLSocket.setWantClientAuth(boolean)."
+    ],
+    "parameters": [
+      {
+        "label": "want",
+        "detail": "true si se solicita autenticación de cliente, o false si no se desea."
+      }
+    ]
+  },
+  "web-java-se-javax.net.ssl.SSLSocket": {
+    "body": [
+      "Estos sockets son sockets de flujo normales, pero añaden una capa de protección de seguridad sobre el protocolo de transporte de red subyacente, como TCP. Esas protecciones incluyen:",
+      "Protección de integridad. SSL protege frente a la modificación de mensajes por parte de un intruso activo.",
+      "Autenticación. En la mayoría de los modos, SSL autentica a la otra parte. Normalmente se autentica al servidor, y al cliente si el servidor lo pide.",
+      "Confidencialidad (protección de la privacidad). En la mayoría de los modos, SSL cifra los datos entre cliente y servidor. Así protege su confidencialidad, de modo que quien escuche pasivamente no vea datos sensibles como información financiera o personal de muchos tipos.",
+      "Estos tipos de protección los indica una \"suite de cifrado\", una combinación de algoritmos criptográficos que usa una conexión SSL. Durante la negociación, los dos extremos deben acordar una suite disponible en ambos entornos. Si no tienen ninguna en común, no puede establecerse la conexión SSL ni intercambiarse datos.",
+      "La suite de cifrado se establece en un proceso de negociación llamado \"handshake\". Su objetivo es crear o reanudar una \"sesión\", que puede proteger muchas conexiones con el tiempo. Una vez completado, puedes acceder a los atributos de la sesión con getSession. El handshake inicial de esta conexión puede empezar de tres formas:",
+      "llamando a startHandshake, que empieza el handshake explícitamente, o",
+      "al intentar leer o escribir datos de aplicación en este socket, lo que provoca un handshake implícito, o",
+      "al llamar a getSession, que intenta establecer una sesión si no hay ninguna válida y hace un handshake implícito.",
+      "Si el handshake falla por cualquier motivo, el SSLSocket se cierra y no pueden hacerse más comunicaciones.",
+      "Al gestionar suites de cifrado hay dos grupos que conviene conocer:",
+      "Suites admitidas: todas las que admite la implementación SSL. Esta lista la da getSupportedCipherSuites.",
+      "Suites activadas, que pueden ser menos que las admitidas. Se fijan con setEnabledCipherSuites y se consultan con getEnabledCipherSuites. Al principio, un socket nuevo tiene activado un conjunto predeterminado que representa la configuración mínima sugerida.",
+      "Los valores predeterminados de la implementación exigen que por defecto solo se activen suites que autentiquen al servidor y den confidencialidad. Solo se elegirá una suite sin autenticación y/o sin privacidad (sin cifrar) si ambas partes lo acuerdan explícitamente.",
+      "Al crear un SSLSocket no se hace ningún handshake, para que la aplicación pueda fijar antes sus preferencias de comunicación: qué suites usar, si el socket está en modo cliente o servidor, etc. Aun así, la seguridad siempre está en marcha cuando se envían datos de aplicación por la conexión.",
+      "Puedes registrarte para recibir un aviso cuando termine el handshake. Para ello se usan dos clases adicionales: los objetos HandshakeCompletedEvent se pasan a las instancias de HandshakeCompletedListener, que registran los usuarios de esta API.",
+      "Un SSLSocket lo crea un SSLSocketFactory, o se obtiene al aceptar una conexión de un SSLServerSocket.",
+      "Un socket SSL debe elegir funcionar en modo cliente o servidor. Esto determina quién empieza el handshake y qué mensajes envía cada parte. Cada conexión debe tener un cliente y un servidor; si no, el handshake no avanzará bien. Una vez empezado el handshake inicial, un socket no puede cambiar entre modo cliente y servidor, ni siquiera al renegociar.",
+      "Los valores String de ApplicationProtocol que devuelven los métodos de esta clase están en la representación de bytes de red que envía la otra parte. Los bytes pueden compararse directamente o convertirse a String Unicode para compararlos.",
+      "String networkString = sslSocket.getHandshakeApplicationProtocol(); byte[] bytes = networkString.getBytes(StandardCharsets.ISO_8859_1);",
+      "// // Match using bytes: // // \"http/1.1\" (7-bit ASCII values same in UTF-8) // MEETEI MAYEK LETTERS \"HUK UN I\" (Unicode 0xabcd->0xabcf) // String HTTP1_1 = \"http/1.1\"; byte[] HTTP1_1_BYTES = HTTP1_1.getBytes(StandardCharsets.UTF_8);",
+      "byte[] HUK_UN_I_BYTES = new byte[] { (byte) 0xab, (byte) 0xcd, (byte) 0xab, (byte) 0xce, (byte) 0xab, (byte) 0xcf};",
+      "if ((Arrays.compare(bytes, HTTP1_1_BYTES) == 0 ) || Arrays.compare(bytes, HUK_UN_I_BYTES) == 0) { ... }",
+      "// // Alternatively match using string.equals() if we know the ALPN value // was encoded from a String using a certain character set, // for example UTF-8. The ALPN value must first be properly // decoded to a Unicode String before use. // String unicodeString = new String(bytes, StandardCharsets.UTF_8); if (unicodeString.equals(HTTP1_1) || unicodeString.equals(\"\\uabcd\\uabce\\uabcf\")) { ... }"
+    ],
+    "caveats": [
+      "Cuando la conexión ya no hace falta, el cliente y el servidor deben cerrar ambos lados de sus conexiones. Puede hacerse de una vez con Socket.close(), o cerrando cada lado por separado con Socket.shutdownOutput() / Socket.shutdownInput(), útil en versiones del protocolo que admiten conexiones medio cerradas.",
+      "En algunos casos, cerrar el flujo de entrada puede depender de que antes se cierre el de salida de la otra parte. Si la conexión no se cierra de forma ordenada (por ejemplo, se llama a Socket.shutdownInput() antes de recibir el aviso de cierre de escritura de la otra parte), pueden lanzarse excepciones para indicar el error.",
+      "Un SSLSocket cerrado no puede reutilizarse: hay que crear uno nuevo."
+    ]
+  },
+  "web-java-se-javax.net.ssl.SSLSocket.setNeedClientAuth": {
+    "body": [
+      "El ajuste de autenticación de cliente de un socket es uno de estos:",
+      "autenticación de cliente obligatoria",
+      "autenticación de cliente solicitada",
+      "no se desea autenticación de cliente",
+      "A diferencia de setWantClientAuth(boolean), si esta opción está activa y el cliente decide no dar información de autenticación, la negociación se detiene y se corta la conexión.",
+      "Llamar a este método sustituye cualquier ajuste anterior hecho con este método o con setWantClientAuth(boolean)."
+    ],
+    "parameters": [
+      {
+        "label": "need",
+        "detail": "true si la autenticación de cliente es obligatoria, o false si no se desea."
+      }
+    ]
+  },
+  "web-java-se-javax.net.ssl.SSLSocket.setWantClientAuth": {
+    "body": [
+      "El ajuste de autenticación de cliente de un socket es uno de estos:",
+      "autenticación de cliente obligatoria",
+      "autenticación de cliente solicitada",
+      "no se desea autenticación de cliente",
+      "A diferencia de setNeedClientAuth(boolean), si esta opción está activa y el cliente decide no dar información de autenticación, la negociación continúa.",
+      "Llamar a este método sustituye cualquier ajuste anterior hecho con este método o con setNeedClientAuth(boolean)."
+    ],
+    "parameters": [
+      {
+        "label": "want",
+        "detail": "true si se solicita autenticación de cliente, o false si no se desea."
+      }
+    ]
+  },
+  "web-java-se-javax.net.ssl.X509ExtendedTrustManager.checkServerTrusted": {
+    "overloads": [
+      {
+        "intro": [
+          "Construye y valida la ruta de certificados a partir de la cadena, parcial o completa, que da la otra parte, según el tipo de autenticación y los parámetros SSL."
+        ],
+        "body": [
+          "El tipo de autenticación es la parte del algoritmo de intercambio de claves de la suite de cifrado, como String, por ejemplo \"RSA\" o \"DHE_DSS\". Nota: en algunas suites exportables, el algoritmo de intercambio de claves se determina en tiempo de ejecución durante el handshake. Por ejemplo, con TLS_RSA_EXPORT_WITH_RC4_40_MD5, authType debe ser RSA_EXPORT cuando se usa una clave RSA efímera para el intercambio, y RSA cuando se usa la clave del certificado del servidor. La comprobación distingue mayúsculas.",
+          "Si el parámetro socket es una instancia de javax.net.ssl.SSLSocket y el algoritmo de identificación de extremo de los SSLParameters no está vacío, para evitar ataques de intermediario debe comprobarse la dirección a la que se conectó el socket frente a la identidad de la otra parte que aparece en el certificado X509 de entidad final, según ese algoritmo.",
+          "Si el parámetro socket es una instancia de javax.net.ssl.SSLSocket y las restricciones de algoritmos de los SSLParameters no son null, para cada certificado de la ruta los campos como la clave pública del sujeto, el algoritmo de firma, el uso de clave, el uso de clave extendido, etc., deben cumplir las restricciones de algoritmos vigentes en el socket."
+        ],
+        "parameters": [
+          {
+            "label": "chain",
+            "detail": "la cadena de certificados de la otra parte"
+          },
+          {
+            "label": "authType",
+            "detail": "el algoritmo de intercambio de claves usado"
+          },
+          {
+            "label": "socket",
+            "detail": "el socket usado en esta conexión. Puede ser null, lo que indica que las implementaciones no necesitan comprobar los parámetros SSL"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si se pasa null o un array vacío en chain, o null o una cadena vacía en authType"
+          },
+          {
+            "label": "CertificateException",
+            "detail": "si este TrustManager no confía en la cadena de certificados"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Construye y valida la ruta de certificados a partir de la cadena, parcial o completa, que da la otra parte, según el tipo de autenticación y los parámetros SSL."
+        ],
+        "body": [
+          "El tipo de autenticación es la parte del algoritmo de intercambio de claves de la suite de cifrado, como String, por ejemplo \"RSA\" o \"DHE_DSS\". Nota: en algunas suites exportables, el algoritmo de intercambio de claves se determina en tiempo de ejecución durante el handshake. Por ejemplo, con TLS_RSA_EXPORT_WITH_RC4_40_MD5, authType debe ser RSA_EXPORT cuando se usa una clave RSA efímera para el intercambio, y RSA cuando se usa la clave del certificado del servidor. La comprobación distingue mayúsculas.",
+          "Si el parámetro engine está disponible y el algoritmo de identificación de extremo de los SSLParameters no está vacío, para evitar ataques de intermediario debe comprobarse la dirección a la que se conectó el motor frente a la identidad de la otra parte que aparece en el certificado X509 de entidad final, según ese algoritmo.",
+          "Si el parámetro engine está disponible y las restricciones de algoritmos de los SSLParameters no son null, para cada certificado de la ruta los campos como la clave pública del sujeto, el algoritmo de firma, el uso de clave, el uso de clave extendido, etc., deben cumplir las restricciones de algoritmos vigentes en el motor."
+        ],
+        "parameters": [
+          {
+            "label": "chain",
+            "detail": "la cadena de certificados de la otra parte"
+          },
+          {
+            "label": "authType",
+            "detail": "el algoritmo de intercambio de claves usado"
+          },
+          {
+            "label": "engine",
+            "detail": "el motor usado en esta conexión. Puede ser null, lo que indica que las implementaciones no necesitan comprobar los parámetros SSL"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si se pasa null o un array vacío en chain, o null o una cadena vacía en authType"
+          },
+          {
+            "label": "CertificateException",
+            "detail": "si este TrustManager no confía en la cadena de certificados"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.net.ssl.X509TrustManager.checkServerTrusted": {
+    "body": [
+      "El tipo de autenticación es la parte del algoritmo de intercambio de claves de la suite de cifrado, como String, por ejemplo \"RSA\" o \"DHE_DSS\". Nota: en algunas suites exportables, el algoritmo de intercambio de claves se determina en tiempo de ejecución durante el handshake. Por ejemplo, con TLS_RSA_EXPORT_WITH_RC4_40_MD5, authType debe ser RSA_EXPORT cuando se usa una clave RSA efímera para el intercambio, y RSA cuando se usa la clave del certificado del servidor. La comprobación distingue mayúsculas."
+    ],
+    "parameters": [
+      {
+        "label": "chain",
+        "detail": "la cadena de certificados de la otra parte"
+      },
+      {
+        "label": "authType",
+        "detail": "el algoritmo de intercambio de claves usado"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si se pasa null o una cadena vacía en chain, o null o una cadena vacía en authType"
+      },
+      {
+        "label": "CertificateException",
+        "detail": "si este TrustManager no confía en la cadena de certificados."
+      }
+    ]
+  },
+  "web-java-se-javax.print.CancelablePrintJob": {
+    "intro": [
+      "Una aplicación de impresión usa esta interfaz para cancelar un trabajo de impresión. Extiende DocPrintJob. Un DocPrintJob devuelto por un servicio de impresión implementa esta interfaz si el trabajo puede cancelarse. Antes de intentar cancelar, el cliente debe comprobar si el DocPrintJob la implementa realmente; nunca debe suponerlo. Un servicio puede admitir la cancelación solo para ciertos tipos de datos de impresión y nombres de clase de representación, así que solo algunos de los DocPrintJob que devuelve la implementarán."
+    ],
+    "body": [
+      "Se anima a quien implemente servicios a implementar esta interfaz opcional y a enviar un evento javax.print.event.PrintJobEvent.JOB_CANCELED a los listeners si un trabajo se cancela correctamente con ella. Los servicios deben tener en cuenta también que este método puede llamarse desde un hilo cliente distinto del que hizo la petición de impresión, así que la implementación debe ser segura con hilos."
+    ]
+  },
+  "web-java-se-javax.print.PrintService": {
+    "body": [
+      "Ejemplo:",
+      "{@code DocFlavor flavor = DocFlavor.INPUT_STREAM.POSTSCRIPT; PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet(); aset.add(MediaSizeName.ISO_A4); PrintService[] pservices = PrintServiceLookup.lookupPrintServices(flavor, aset); if (pservices.length > 0) { DocPrintJob pj = pservices[0].createPrintJob(); try { FileInputStream fis = new FileInputStream(\"test.ps\"); Doc doc = new SimpleDoc(fis, flavor, null); pj.print(doc, aset); } catch (FileNotFoundException fe) { } catch (PrintException e) { } } }"
+    ]
+  },
+  "web-java-se-javax.print.PrintService.getServiceUIFactory": {
+    "intro": [
+      "Devuelve una fábrica de componentes de interfaz que permiten a los usuarios interactuar con el servicio en distintos papeles. Los servicios sin interfaz deben devolver null. Los servicios de impresión que tienen interfaz pero quieren admitirse en entornos sin soporte de interfaz deben asegurarse de no inicializar la fábrica salvo que la aplicación llame a este método para obtenerla. Consulta ServiceUIFactory para más información."
+    ],
+    "returns": ["null o una fábrica de componentes de interfaz"]
+  },
+  "web-java-se-javax.print.attribute.EnumSyntax": {
+    "body": [
+      "public class Bach extends EnumSyntax { public static final Bach JOHANN_SEBASTIAN = new Bach(0); public static final Bach WILHELM_FRIEDEMANN = new Bach(1); public static final Bach CARL_PHILIP_EMMANUEL = new Bach(2); public static final Bach JOHANN_CHRISTIAN = new Bach(3); public static final Bach P_D_Q = new Bach(4);",
+      "private static final String[] stringTable = { \"Johann Sebastian Bach\", \"Wilhelm Friedemann Bach\", \"Carl Philip Emmanuel Bach\", \"Johann Christian Bach\", \"P.D.Q. Bach\" };",
+      "protected String[] getStringTable() { return stringTable; }",
+      "private static final Bach[] enumValueTable = { JOHANN_SEBASTIAN, WILHELM_FRIEDEMANN, CARL_PHILIP_EMMANUEL, JOHANN_CHRISTIAN, P_D_Q };",
+      "protected EnumSyntax[] getEnumValueTable() { return enumValueTable; } }",
+      "Después puedes escribir código que use los operadores == y != para comparar valores de la enumeración; por ejemplo:",
+      "Bach theComposer; . . . if (theComposer == Bach.JOHANN_SEBASTIAN) { System.out.println (\"The greatest composer of all time!\"); }",
+      "El método equals() de una clase de enumeración solo comprueba si los objetos son idénticos (==).",
+      "Puedes convertir un valor de la enumeración en cadena con toString(). La cadena sale de una tabla que da la clase de enumeración.",
+      "Por dentro, un valor de enumeración es solo un entero, distinto para cada valor dentro de una clase de enumeración. Puedes obtenerlo con getValue(). El entero se fija al construir el valor (consulta EnumSyntax(int)). Como el constructor es protected, los únicos valores posibles son los objetos únicos declarados en la clase; no pueden crearse valores adicionales en tiempo de ejecución.",
+      "Puedes definir una subclase de una clase de enumeración que la amplíe con más valores. Los enteros de los valores de la subclase no tienen por qué ser distintos de los de la superclase; ==, !=, equals() y toString() seguirán funcionando aunque la subclase use algunos de los mismos enteros. Aun así, la aplicación en que se usen la clase y la subclase puede necesitar enteros distintos en ambas."
+    ]
+  },
+  "web-java-se-javax.print.attribute.standard.ColorSupported": {
+    "body": [
+      "Nota: los usuarios finales pueden conocer la naturaleza y los detalles del soporte de color consultando el atributo PrinterMoreInfoManufacturer.",
+      "No confundas el atributo ColorSupported con Chromaticity. Chromaticity es un atributo que el cliente puede indicar en un trabajo para decirle a la impresora si imprime un documento en monocromo o en color, lo que puede hacer que imprima en monocromo un documento en color. ColorSupported es un atributo de descripción de la impresora que indica si puede imprimir en color, sea cual sea la forma en que el cliente pida imprimir un documento concreto.",
+      "Compatibilidad con IPP: el valor booleano IPP es \"true\" para SUPPORTED y \"false\" para NOT_SUPPORTED. El nombre de categoría que devuelve getName() es el nombre del atributo IPP. El entero de la enumeración es el valor enum IPP. toString() devuelve la representación en cadena IPP del valor del atributo."
+    ]
+  },
+  "web-java-se-javax.print.attribute.standard.Fidelity": {
+    "intro": [
+      "La clase Fidelity es una clase de atributo de impresión, una enumeración, que indica si se exige fidelidad total a los atributos de la petición de impresión del cliente. Si se indica FIDELITY_TRUE y un servicio no puede imprimir el trabajo exactamente como se pide, debe rechazarlo. Si se indica FIDELITY_FALSE, basta con un intento razonable. Si no se indica, el valor predeterminado es FIDELITY_FALSE."
+    ],
+    "body": [
+      "Compatibilidad con IPP: el valor booleano IPP es \"true\" para FIDELITY_TRUE y \"false\" para FIDELITY_FALSE. El nombre de categoría que devuelve getName() es el nombre del atributo IPP. El entero de la enumeración es el valor enum IPP. toString() devuelve la representación en cadena IPP del valor del atributo. Consulta la sección 15.1 de RFC 2911 para una descripción más completa del atributo de fidelidad de IPP."
+    ]
+  },
+  "web-java-se-javax.print.attribute.standard.JobState.CANCELED": {
+    "intro": [
+      "Una persona ha cancelado el trabajo, la impresora ha terminado de cancelarlo y todos los atributos de estado han alcanzado sus valores finales. Mientras la impresora cancela el trabajo, este sigue en su estado actual, pero su atributo JobStateReasons debe contener PROCESSING_TO_STOP_POINT y uno de CANCELED_BY_USER, CANCELED_BY_OPERATOR o CANCELED_AT_DEVICE. Al pasar al estado CANCELED, debe quitarse PROCESSING_TO_STOP_POINT, si está, pero el valor CANCELED_BY_xxx, si está, debe mantenerse."
+    ]
+  },
+  "web-java-se-javax.print.attribute.standard.JobStateReasons": {
+    "body": [
+      "Las instancias de JobStateReason no aparecen directamente en el conjunto de atributos de un trabajo de impresión, sino que aparece un atributo JobStateReasons. Este contiene cero, uno o más objetos JobStateReason relativos al estado del trabajo. La impresora añade un JobStateReason al atributo JobStateReasons cuando la condición correspondiente pasa a cumplirse, y lo quita cuando deja de cumplirse, haya cambiado o no el JobState general del trabajo.",
+      "La clase JobStateReasons hereda su implementación de java.util.HashSet. A diferencia de la mayoría de los atributos de impresión, que son inmutables una vez construidos, JobStateReasons está pensada para ser mutable: puedes añadir y quitar objetos JobStateReason de un JobStateReasons existente. Pero, como java.util.HashSet, no es segura con varios hilos. Si varios hilos van a usar un JobStateReasons, sincroniza sus operaciones (por ejemplo, con una vista de conjunto sincronizada de java.util.Collections).",
+      "Compatibilidad con IPP: el valor de cadena que devuelve toString() de cada JobStateReason da la palabra clave IPP. El nombre de categoría que devuelve getName() da el nombre del atributo IPP."
+    ]
+  },
+  "web-java-se-javax.print.attribute.standard.PrinterIsAcceptingJobs": {
+    "body": [
+      "Compatibilidad con IPP: el valor booleano IPP es \"true\" para ACCEPTING_JOBS y \"false\" para NOT_ACCEPTING_JOBS. El nombre de categoría que devuelve getName() es el nombre del atributo IPP. El entero de la enumeración es el valor enum IPP. toString() devuelve la representación en cadena IPP del valor del atributo."
+    ]
+  },
+  "web-java-se-javax.print.attribute.standard.PrinterStateReason": {
+    "body": [
+      "Las instancias de PrinterStateReason no aparecen directamente en el conjunto de atributos de un servicio de impresión, sino que aparece un atributo PrinterStateReasons. Este contiene cero, uno o más objetos PrinterStateReason relativos al estado del servicio, y cada uno está asociado a un nivel de gravedad (Severity): REPORT (el menos grave), WARNING o ERROR (el más grave). La impresora añade un PrinterStateReason al atributo PrinterStateReasons cuando la condición correspondiente pasa a cumplirse, y lo quita cuando deja de cumplirse, haya cambiado o no el PrinterState general del servicio.",
+      "Compatibilidad con IPP: los valores de cadena que devuelven los toString() de cada PrinterStateReason y de su Severity asociado, unidos con un guion (\"-\"), dan la palabra clave IPP de un PrinterStateReasons. El nombre de categoría que devuelve getName() da el nombre del atributo IPP."
+    ]
+  },
+  "web-java-se-javax.print.attribute.standard.PrinterStateReasons": {
+    "body": [
+      "Las instancias de PrinterStateReason no aparecen directamente en el conjunto de atributos de un servicio de impresión, sino que aparece un atributo PrinterStateReasons. Este contiene cero, uno o más objetos PrinterStateReason relativos al estado del servicio, y cada uno está asociado a un nivel de gravedad (Severity): REPORT (el menos grave), WARNING o ERROR (el más grave). La impresora añade un PrinterStateReason al atributo PrinterStateReasons cuando la condición correspondiente pasa a cumplirse, y lo quita cuando deja de cumplirse, haya cambiado o no el PrinterState general del servicio.",
+      "La clase PrinterStateReasons hereda su implementación de java.util.HashMap. Cada entrada del mapa asocia un PrinterStateReason (clave) a un Severity (valor):",
+      "A diferencia de la mayoría de los atributos de impresión, que son inmutables una vez construidos, PrinterStateReasons está pensada para ser mutable: puedes añadir y quitar objetos PrinterStateReason de un PrinterStateReasons existente. Pero, como java.util.HashMap, no es segura con varios hilos. Si varios hilos van a usar un PrinterStateReasons, sincroniza sus operaciones (por ejemplo, con una vista de mapa sincronizada de java.util.Collections).",
+      "Compatibilidad con IPP: los valores de cadena que devuelven los toString() de cada PrinterStateReason y de su Severity asociado, unidos con un guion (\"-\"), dan la palabra clave IPP. El nombre de categoría que devuelve getName() da el nombre del atributo IPP."
+    ]
+  },
+  "web-java-se-javax.print.attribute.standard.PrinterStateReasons.printerStateReasonSet": {
+    "intro": [
+      "Obtiene una vista de conjunto no modificable de los motivos de estado de la impresora con el nivel de gravedad dado en este atributo PrinterStateReasons. Cada elemento es un PrinterStateReason, y solo están los que corresponden a esa gravedad. La vista está respaldada por este atributo, así que sus cambios se reflejan en ella. No admite insertar ni quitar elementos, y su iterador no admite quitarlos."
+    ],
+    "parameters": [
+      {
+        "label": "severity",
+        "detail": "nivel de gravedad"
+      }
+    ],
+    "returns": [
+      "vista de conjunto de los PrinterStateReason con el nivel de gravedad dado"
+    ],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si severity es null"
+      }
+    ]
+  },
+  "web-java-se-javax.print.attribute.standard.ReferenceUriSchemesSupported.NEWS": {
+    "intro": ["Noticias de USENET."]
+  },
+  "web-java-se-javax.print.attribute.standard.SheetCollate": {
+    "body": [
+      "Si el efecto de intercalar hojas se consigue colocando copias del documento en varias bandejas de salida o en la misma con separación de documentos definida por la implementación, depende de la implementación. También depende de ella si se consigue haciendo varias pasadas por el trabajo o con un clasificador de salida.",
+      "Si una impresora no admite el atributo SheetCollate (es decir, el cliente no puede indicar ningún intercalado de hojas), debe comportarse como si SheetCollate valiera siempre COLLATED.",
+      "El atributo SheetCollate interactúa con MultipleDocumentHandling. MultipleDocumentHandling describe el intercalado de documentos enteros, y SheetCollate la semántica de intercalar las páginas dentro de un documento.",
+      "El efecto de SheetCollate en un trabajo con varios documentos depende de si todos tienen el mismo intercalado indicado o distintos, y del valor (quizá predeterminado) de MultipleDocumentHandling.",
+      "Si todos los documentos tienen el mismo intercalado, se permiten estas combinaciones de SheetCollate y MultipleDocumentHandling, y la impresora informa de un error al enviar el trabajo si se indica cualquier otra:",
+      "SheetCollate = COLLATED, MultipleDocumentHandling = SINGLE_DOCUMENT: todos los documentos de entrada se combinan en uno de salida. Se producen varias copias con las páginas intercaladas, es decir, 1, 2, 3, . . ., 1, 2, 3, . . .",
+      "SheetCollate = COLLATED, MultipleDocumentHandling = SINGLE_DOCUMENT_NEW_SHEET: todos los documentos de entrada se combinan en uno de salida, y la primera impresión de cada documento de entrada empieza siempre en una hoja nueva. Se producen varias copias con las páginas intercaladas, es decir, 1, 2, 3, . . ., 1, 2, 3, . . .",
+      "SheetCollate = COLLATED, MultipleDocumentHandling = SEPARATE_DOCUMENTS_UNCOLLATED_COPIES: cada documento de entrada sigue siendo un documento de salida separado. Se producen varias copias de cada uno (llamémoslos A, B, . . .) con sus páginas intercaladas pero los documentos sin intercalar, es decir, A1, A2, A3, . . ., A1, A2, A3, . . ., B1, B2, B3, . . ., B1, B2, B3, . . .",
+      "SheetCollate = COLLATED, MultipleDocumentHandling = SEPARATE_DOCUMENTS_COLLATED_COPIES: cada documento de entrada sigue siendo un documento de salida separado. Se producen varias copias de cada uno (A, B, . . .) con sus páginas intercaladas y los documentos también intercalados, es decir, A1, A2, A3, . . ., B1, B2, B3, . . ., A1, A2, A3, . . ., B1, B2, B3, . . .",
+      "SheetCollate = UNCOLLATED, MultipleDocumentHandling = SINGLE_DOCUMENT: todos los documentos de entrada se combinan en uno de salida. Se producen varias copias con las páginas sin intercalar, es decir, 1, 1, . . ., 2, 2, . . ., 3, 3, . . .",
+      "SheetCollate = UNCOLLATED, MultipleDocumentHandling = SINGLE_DOCUMENT_NEW_SHEET: todos los documentos de entrada se combinan en uno de salida, y la primera impresión de cada documento de entrada empieza siempre en una hoja nueva. Se producen varias copias con las páginas sin intercalar, es decir, 1, 1, . . ., 2, 2, . . ., 3, 3, . . .",
+      "SheetCollate = UNCOLLATED, MultipleDocumentHandling = SEPARATE_DOCUMENTS_UNCOLLATED_COPIES: cada documento de entrada sigue siendo un documento de salida separado. Se producen varias copias de cada uno (A, B, . . .) con sus páginas sin intercalar y los documentos tampoco intercalados, es decir, A1, A1, . . ., A2, A2, . . ., A3, A3, . . ., B1, B1, . . ., B2, B2, . . ., B3, B3, . . .",
+      "Si los documentos tienen intercalados distintos, solo se permite un valor de MultipleDocumentHandling, y la impresora informa de un error al enviar el trabajo si se indica otro:",
+      "MultipleDocumentHandling = SEPARATE_DOCUMENTS_UNCOLLATED_COPIES: cada documento de entrada sigue siendo un documento de salida separado. Se producen varias copias de cada uno (A, B, . . .) con sus páginas intercaladas o no según indique el SheetCollate de cada documento, y los documentos sin intercalar. Si el documento A tenía SheetCollate = UNCOLLATED y el B SheetCollate = COLLATED, se producirían estas páginas: A1, A1, . . ., A2, A2, . . ., A3, A3, . . ., B1, B2, B3, . . ., B1, B2, B3, . . .",
+      "Compatibilidad con IPP: SheetCollate no es por ahora un atributo IPP."
+    ]
+  },
   "web-java-se-javax.security.cert.X509Certificate.getSerialNumber": {
     "intro": [
       "Obtiene el valor serialNumber del certificado. El número de serie es un entero que la autoridad de certificación asigna a cada certificado. Debe ser único para cada certificado emitido por una CA (es decir, el nombre del emisor y el número de serie identifican un único certificado). Su definición ASN.1 es:"
