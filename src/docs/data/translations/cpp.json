@@ -1400,5 +1400,230 @@
   },
   "web-cpp20-std%3A%3Alatch%3A%3Amax": {
     "body": ["El valor inicial que se pasa al constructor no debe superarlo."]
+  },
+  "web-cpp20-std%3A%3Alatch%3A%3Aoperator%3D": {
+    "body": [
+      "Un latch no se puede asignar porque los hilos que esperan dependen de su contador interno."
+    ]
+  },
+  "web-cpp20-std%3A%3Alcm": {
+    "body": [
+      "Por ejemplo, std::lcm(4, 6) devuelve 12. Ambos argumentos deben ser enteros, y se usa el valor absoluto, así que el resultado nunca es negativo.",
+      "Es constexpr y existe desde C++17, igual que std::gcd, que calcula el máximo común divisor."
+    ]
+  },
+  "web-cpp20-std%3A%3Alist": {
+    "body": [
+      "Insertar y borrar en cualquier posición cuesta O(1) si ya tienes el iterador, y no invalida los iteradores ni referencias de los demás elementos.",
+      "No tiene acceso por índice. splice() mueve elementos de una lista a otra sin copiarlos, y sort(), merge(), unique() y remove() son métodos propios porque los algoritmos genéricos no aprovechan los enlaces."
+    ]
+  },
+  "web-cpp20-std%3A%3Alist%3A%3Aempty": {
+    "intro": [
+      "Comprueba si el contenedor no tiene elementos, es decir, si begin() == end()."
+    ],
+    "body": ["Para vaciar el contenedor se usa clear(), no empty()."]
+  },
+  "web-cpp20-std%3A%3Alist%3A%3Aget_allocator": {
+    "intro": ["Devuelve el asignador asociado al contenedor."],
+    "body": [
+      "Es útil con asignadores con estado o polimórficos, como los de std::pmr."
+    ]
+  },
+  "web-cpp20-std%3A%3Alist%3A%3Aremove": {
+    "body": [
+      "Solo invalida los iteradores y referencias a los elementos eliminados. Desde C++20, std::erase(lista, valor) hace lo mismo."
+    ],
+    "returns": ["El número de elementos eliminados."]
+  },
+  "web-cpp20-std%3A%3Alist%3A%3Aremove_if": {
+    "body": [
+      "Solo invalida los iteradores y referencias a los elementos eliminados. Desde C++20, std::erase_if(lista, predicado) hace lo mismo."
+    ],
+    "returns": ["El número de elementos eliminados."]
+  },
+  "web-cpp20-std%3A%3Alist%3A%3Areverse": {
+    "body": ["Cambia los enlaces entre nodos sin copiar ni mover elementos."]
+  },
+  "web-cpp20-std%3A%3Alist%3A%3Asize": {
+    "intro": [
+      "Devuelve el número de elementos del contenedor, es decir, std::distance(begin(), end())."
+    ],
+    "body": [
+      "Desde C++11 es de tiempo constante, porque la lista guarda su tamaño."
+    ]
+  },
+  "web-cpp20-std%3A%3Alock_guard%3A%3Aoperator%3D": {
+    "body": [
+      "Un lock_guard no se puede copiar ni asignar: cada bloqueo pertenece a un único objeto."
+    ]
+  },
+  "web-cpp20-std%3A%3Alock_guard%3A%3A~lock_guard": {
+    "intro": ["Desbloquea el mutex que se bloqueó en el constructor."],
+    "body": [
+      "Se ejecuta al salir del ámbito, tanto si es de forma normal como por una excepción."
+    ]
+  },
+  "web-cpp20-std%3A%3Amake_shared": {
+    "body": [
+      "Pasa los argumentos al constructor de T: auto p = std::make_shared<Punto>(1, 2);. Es más eficiente y más seguro ante excepciones que std::shared_ptr<T>(new T(...)).",
+      "Desde C++20 también admite arrays, como std::make_shared<int[]>(10)."
+    ],
+    "caveats": [
+      "Puede agrupar el bloque de control y el objeto en una sola asignación de memoria.",
+      "Como la memoria es un único bloque, no se libera hasta que desaparecen también los weak_ptr, aunque el objeto ya se haya destruido."
+    ]
+  },
+  "web-cpp20-std%3A%3Amap%3A%3Aempty": {
+    "intro": [
+      "Comprueba si el contenedor no tiene elementos, es decir, si begin() == end()."
+    ],
+    "body": ["Para vaciar el contenedor se usa clear(), no empty()."]
+  },
+  "web-cpp20-std%3A%3Amap%3A%3Afind": {
+    "body": [
+      "Úsalo para consultar sin insertar: auto it = mapa.find(clave); if (it != mapa.end()) usar(it->second);. Desde C++20, contains() basta si solo necesitas saber si existe.",
+      "Las sobrecargas con plantilla permiten buscar con otro tipo, como una std::string_view, si el comparador es transparente (por ejemplo std::less<>)."
+    ]
+  },
+  "web-cpp20-std%3A%3Amap%3A%3Aget_allocator": {
+    "intro": ["Devuelve el asignador asociado al contenedor."],
+    "body": [
+      "Es útil con asignadores con estado o polimórficos, como los de std::pmr."
+    ]
+  },
+  "web-cpp20-std%3A%3Amap%3A%3Asize": {
+    "intro": [
+      "Devuelve el número de elementos del contenedor, es decir, std::distance(begin(), end())."
+    ],
+    "body": [
+      "Cada clave cuenta una sola vez, porque std::map no admite claves repetidas."
+    ]
+  },
+  "web-cpp20-std%3A%3Amatch_results": {
+    "body": [
+      "Lo rellenan std::regex_match y std::regex_search. m[0] es la coincidencia completa y m[1], m[2]... los grupos de captura; str(n), position(n) y length(n) dan el texto, la posición y la longitud de cada uno.",
+      "prefix() y suffix() dan el texto anterior y posterior a la coincidencia. std::smatch y std::cmatch son los alias para std::string y const char*."
+    ],
+    "caveats": [
+      "Guarda iteradores a la cadena buscada: no la destruyas ni la modifiques mientras uses el resultado."
+    ]
+  },
+  "web-cpp20-std%3A%3Amatch_results%3A%3Acend": {
+    "intro": ["Devuelve un iterador al final de la lista de subcoincidencias."],
+    "body": [
+      "Equivale a end(); los iteradores de match_results son siempre constantes."
+    ],
+    "returns": ["Iterador a la posición siguiente a la última subcoincidencia."]
+  },
+  "web-cpp20-std%3A%3Amatch_results%3A%3Aend": {
+    "intro": ["Devuelve un iterador al final de la lista de subcoincidencias."],
+    "body": [
+      "Junto con begin(), permite recorrer la coincidencia completa y todos los grupos: for (const auto& grupo : m) { ... }."
+    ],
+    "returns": ["Iterador a la posición siguiente a la última subcoincidencia."]
+  },
+  "web-cpp20-std%3A%3Amatch_results%3A%3Aget_allocator": {
+    "body": [
+      "El asignador gestiona el almacenamiento de los objetos sub_match."
+    ]
+  },
+  "web-cpp20-std%3A%3Amatch_results%3A%3Amatch_results": {
+    "body": [
+      "Un objeto construido por defecto está vacío: empty() devuelve true y ready() false hasta que una búsqueda lo rellena."
+    ]
+  },
+  "web-cpp20-std%3A%3Amatch_results%3A%3Aswap": {
+    "intro": ["Intercambia el contenido de dos objetos match_results."],
+    "body": ["Es de tiempo constante."]
+  },
+  "web-cpp20-std%3A%3Amatch_results%3A%3A~match_results": {
+    "intro": [
+      "Destruye el objeto match_results y las subcoincidencias asociadas."
+    ]
+  },
+  "web-cpp20-std%3A%3Amersenne_twister_engine": {
+    "body": [
+      "Normalmente se usa a través de los alias std::mt19937 (32 bits) y std::mt19937_64 (64 bits). Se combina con una distribución para obtener números en el rango deseado: std::uniform_int_distribution<int> dado(1, 6); dado(motor);.",
+      "Para semillas no reproducibles se suele usar std::random_device. No es adecuado para criptografía: su estado se puede deducir observando suficientes valores."
+    ]
+  },
+  "web-cpp20-std%3A%3Amersenne_twister_engine%3A%3Amin": {
+    "body": [
+      "Siempre es 0. Junto con max(), lo usan las distribuciones para transformar la salida del motor."
+    ],
+    "returns": ["0"]
+  },
+  "web-cpp20-std%3A%3Amersenne_twister_engine%3A%3Aoperator%28%29": {
+    "body": [
+      "El valor está entre min() y max(). Para obtener valores en un rango concreto, pásalo a una distribución en lugar de usar el operador %, que introduce sesgo."
+    ]
+  },
+  "web-cpp20-std%3A%3Amove_iterator": {
+    "body": [
+      "Se crea con std::make_move_iterator(it). Al desreferenciarlo devuelve una referencia rvalue, así que los algoritmos y constructores mueven los elementos en lugar de copiarlos: std::vector<std::string> destino(std::make_move_iterator(origen.begin()), std::make_move_iterator(origen.end()));.",
+      "Después, los elementos de origen quedan en un estado válido pero no especificado."
+    ]
+  },
+  "web-cpp20-std%3A%3Amove_iterator%3A%3Abase": {
+    "body": [
+      "La sobrecarga para valores temporales mueve el iterador en lugar de copiarlo."
+    ]
+  },
+  "web-cpp20-std%3A%3Amove_iterator%3A%3Aiter_swap": {
+    "body": [
+      "Lo encuentra la búsqueda dependiente de argumentos y lo usa std::ranges::iter_swap."
+    ]
+  },
+  "web-cpp20-std%3A%3Amove_iterator%3A%3Aoperator%2B": {
+    "body": ["Requiere que el iterador base sea de acceso aleatorio."]
+  },
+  "web-cpp20-std%3A%3Amove_iterator%3A%3Aoperator%2B%2B": {
+    "body": [
+      "Si el iterador base solo es de entrada, la forma posfija no devuelve nada (void), porque no se puede conservar la posición anterior."
+    ]
+  },
+  "web-cpp20-std%3A%3Amove_iterator%3A%3Aoperator%2B%3D": {
+    "body": ["Requiere que el iterador base sea de acceso aleatorio."],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Amove_iterator%3A%3Aoperator%3D%3D": {
+    "body": [
+      "Esta sobrecarga compara con un move_sentinel. La comparación entre dos move_iterator compara directamente sus iteradores base."
+    ]
+  },
+  "web-cpp20-std%3A%3Amove_iterator%3A%3Aoperator*": {
+    "body": [
+      "Leer dos veces el mismo elemento a través de un move_iterator puede dar un valor ya movido."
+    ]
+  },
+  "web-cpp20-std%3A%3Amove_iterator%3A%3Aoperator-": {
+    "body": [
+      "Las sobrecargas con move_sentinel calculan la distancia hasta un centinela, si el tipo del centinela lo permite."
+    ]
+  },
+  "web-cpp20-std%3A%3Amove_iterator%3A%3Aoperator-%3D": {
+    "body": ["Requiere que el iterador base sea de acceso aleatorio."],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Amove_iterator%3A%3Aoperator--": {
+    "body": ["Requiere que el iterador base sea bidireccional."]
+  },
+  "web-cpp20-std%3A%3Amultimap": {
+    "body": [
+      "Igual que std::map, pero admite varias entradas con la misma clave y mantiene el orden de inserción entre ellas. No tiene operator[] ni at().",
+      "equal_range() devuelve todas las entradas de una clave, y count() cuántas hay."
+    ]
+  },
+  "web-cpp20-std%3A%3Amultimap%3A%3Aempty": {
+    "intro": [
+      "Comprueba si el contenedor no tiene elementos, es decir, si begin() == end()."
+    ],
+    "body": ["Para vaciar el contenedor se usa clear(), no empty()."]
+  },
+  "web-cpp20-std%3A%3Amultimap%3A%3Afind": {
+    "body": [
+      "Si hay varias entradas con esa clave, puede devolver cualquiera de ellas. Para obtenerlas todas, usa equal_range()."
+    ]
   }
 }
