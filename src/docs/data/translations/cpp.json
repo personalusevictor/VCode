@@ -520,5 +520,222 @@
   },
   "web-cpp20-std%3A%3Abitset%3A%3Aall": {
     "body": ["any() comprueba si hay al menos uno y none() si no hay ninguno."]
+  },
+  "web-cpp20-std%3A%3Abitset%3A%3Aany": {
+    "body": [
+      "Equivale a count() != 0, pero puede detenerse en cuanto encuentra un bit a uno."
+    ],
+    "returns": ["true si al menos un bit está a uno; false en caso contrario."]
+  },
+  "web-cpp20-std%3A%3Abitset%3A%3Acount": {
+    "body": [
+      "Para un entero sin signo, std::popcount() de <bit> (C++20) hace lo mismo."
+    ]
+  },
+  "web-cpp20-std%3A%3Abitset%3A%3Anone": {
+    "body": [
+      "Un bitset construido por defecto tiene todos los bits a cero, así que none() devuelve true."
+    ],
+    "returns": ["true si ningún bit está a uno; false en caso contrario."]
+  },
+  "web-cpp20-std%3A%3Abitset%3A%3Aoperator%26%3D": {
+    "body": [
+      "Solo quedan a uno los bits que estaban a uno en ambos conjuntos. Es útil para aplicar una máscara."
+    ],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Abitset%3A%3Aoperator%3C%3C": {
+    "body": [
+      "Los bits que salen por el extremo superior se pierden. Si pos es mayor o igual que N, el resultado tiene todos los bits a cero."
+    ]
+  },
+  "web-cpp20-std%3A%3Abitset%3A%3Aoperator%3C%3C%3D": {
+    "body": [
+      "Los bits que salen por el extremo superior se pierden. Si pos es mayor o igual que N, todos los bits quedan a cero."
+    ],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Abitset%3A%3Aoperator%3D%3D": {
+    "intro": [
+      "Compara dos conjuntos bit a bit. Desde C++20, el operador != se genera a partir de ==."
+    ],
+    "body": ["Solo se pueden comparar bitsets del mismo tamaño N."],
+    "returns": ["true si todos los bits coinciden; false en caso contrario."]
+  },
+  "web-cpp20-std%3A%3Abitset%3A%3Aoperator%3E%3E": {
+    "body": [
+      "Los bits que salen por el extremo inferior se pierden. Si pos es mayor o igual que N, el resultado tiene todos los bits a cero."
+    ]
+  },
+  "web-cpp20-std%3A%3Abitset%3A%3Aoperator%3E%3E%3D": {
+    "body": [
+      "Los bits que salen por el extremo inferior se pierden. Si pos es mayor o igual que N, todos los bits quedan a cero."
+    ],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Abitset%3A%3Aoperator%5E%3D": {
+    "body": [
+      "Quedan a uno los bits que son distintos en ambos conjuntos. Aplicarlo dos veces con el mismo conjunto devuelve el valor original."
+    ],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Abitset%3A%3Aoperator%7C%3D": {
+    "body": [
+      "Quedan a uno los bits que estaban a uno en cualquiera de los dos conjuntos. Es útil para activar varios indicadores a la vez."
+    ],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Abitset%3A%3Aoperator~": {
+    "body": ["Para invertir los bits del propio objeto, usa flip()."]
+  },
+  "web-cpp20-std%3A%3Abitset%3A%3Asize": {
+    "body": [
+      "Es constexpr, así que se puede usar en expresiones constantes. Para saber cuántos bits están a uno, usa count()."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Aday": {
+    "body": [
+      "Guarda un valor entre 0 y 255; ok() indica si está entre 1 y 31. Se combina con month y year para formar fechas completas, por ejemplo con el literal 15d y el operador /: 2024y / std::chrono::March / 15d.",
+      "Existe desde C++20. Comprobar si el día existe en un mes concreto corresponde a year_month_day::ok()."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Aday%3A%3Aday": {
+    "body": [
+      "El constructor por defecto deja el valor sin inicializar. El constructor explícito guarda d; si d es mayor que 255, el valor es no especificado."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Aday%3A%3Aoperator%20unsigned": {
+    "body": [
+      "La conversión es explícita: escribe static_cast<unsigned>(d) o unsigned{d}."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Aday%3A%3Aoperator%2B%2B": {
+    "intro": ["Suma 1 al valor del día."],
+    "body": [
+      "La versión prefija devuelve una referencia al objeto modificado y la posfija una copia del valor anterior. No pasa al mes siguiente: solo cambia el número."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Aday%3A%3Aoperator--": {
+    "intro": ["Resta 1 al valor del día."],
+    "body": [
+      "La versión prefija devuelve una referencia al objeto modificado y la posfija una copia del valor anterior. No pasa al mes anterior: solo cambia el número."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Aduration": {
+    "body": [
+      "Rep es el tipo del recuento y Period la fracción de segundo que representa cada tick: std::chrono::milliseconds es duration<long long, std::milli>. count() devuelve el número de ticks.",
+      "Las conversiones que no pierden precisión son implícitas, como de segundos a milisegundos; las que pueden perderla requieren std::chrono::duration_cast. Desde C++14 hay literales como 10s o 250ms."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Aduration%3A%3Aoperator%25%3D": {
+    "body": [
+      "Por ejemplo, con un recuento entero de segundos, d %= std::chrono::minutes(1) se queda solo con los segundos que sobran del último minuto."
+    ],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Aduration%3A%3Aoperator%2B": {
+    "body": ["Existe por simetría con el operador - unario."]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Aduration%3A%3Aoperator%2B%3D": {
+    "body": [
+      "Para sumar duraciones de distintos tipos, usa el operador + binario, que devuelve el tipo común."
+    ],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Aduration%3A%3Aoperator%2F%3D": {
+    "body": ["Con un recuento entero, la división trunca: 7s / 2 da 3s."],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Aduration%3A%3Aoperator%3D": {
+    "body": [
+      "La asignación desde una duración de otro tipo funciona si existe la conversión implícita, porque se construye antes una duración temporal."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Aduration%3A%3Aoperator*%3D": {
+    "body": ["El periodo no cambia: multiplicar 2s por 3 da 6s."],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Aduration%3A%3Aoperator-": {
+    "body": ["Permite escribir -5s para expresar un intervalo negativo."]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Aduration%3A%3Aoperator-%3D": {
+    "body": [
+      "Para restar duraciones de distintos tipos, usa el operador - binario, que devuelve el tipo común."
+    ],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Aduration%3A%3A~duration": {
+    "body": ["Es trivial: una duración solo contiene el recuento de ticks."]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Amonth": {
+    "body": [
+      "Guarda un valor entre 0 y 255; ok() indica si está entre 1 y 12. Hay constantes para cada mes, de std::chrono::January a std::chrono::December.",
+      "Sumar o restar meses da la vuelta: December + months(1) es January. Existe desde C++20."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Amonth%3A%3Amonth": {
+    "body": [
+      "El constructor por defecto deja el valor sin inicializar. El explícito guarda m; si m es mayor que 255, el valor es no especificado."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Amonth%3A%3Aoperator%20unsigned": {
+    "intro": ["Devuelve el número de mes almacenado en *this."],
+    "body": ["La conversión es explícita: escribe static_cast<unsigned>(m)."],
+    "returns": ["El número de mes almacenado en *this."]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Asteady_clock": {
+    "body": [
+      "Sus valores nunca retroceden, aunque se cambie la hora del sistema, así que es el reloj adecuado para medir cuánto tarda algo: guarda now() antes y después y resta.",
+      "Su origen no está especificado (a menudo es el arranque del sistema), así que no sirve para obtener la fecha y la hora."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Asteady_clock%3A%3Anow": {
+    "body": [
+      "La diferencia entre dos llamadas es una duración fiable; conviértela con duration_cast para mostrarla en la unidad que quieras."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Asystem_clock": {
+    "body": [
+      "Es el único reloj que se puede convertir a std::time_t con to_time_t() y desde él con from_time_t(). Desde C++20, su origen es la época de Unix (1 de enero de 1970, UTC).",
+      "Para medir intervalos usa steady_clock, porque la hora del sistema puede ajustarse hacia delante o hacia atrás."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Asystem_clock%3A%3Anow": {
+    "body": [
+      "El resultado es un std::chrono::system_clock::time_point; desde C++20 se puede formatear con std::format o convertir a una fecha con std::chrono::floor<std::chrono::days>."
+    ],
+    "returns": ["Un time_point con el instante actual del reloj del sistema."]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Atime_point": {
+    "body": [
+      "time_since_epoch() devuelve la duración desde el origen del reloj. Restar dos time_point del mismo reloj da una duración, y sumar una duración a un time_point da otro instante.",
+      "Solo se pueden combinar instantes del mismo reloj; para cambiar la precisión, usa std::chrono::time_point_cast."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Atime_point%3A%3Amax": {
+    "intro": [
+      "Devuelve un time_point con la mayor duración posible, es decir, time_point(duration::max())."
+    ],
+    "body": [
+      "Es útil como valor centinela, por ejemplo para indicar un plazo sin límite."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Atime_point%3A%3Amin": {
+    "intro": [
+      "Devuelve un time_point con la menor duración posible, es decir, time_point(duration::min())."
+    ],
+    "body": [
+      "Con representaciones con signo es un instante anterior al origen del reloj."
+    ]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Atime_point%3A%3Aoperator%2B%3D": {
+    "body": ["Por ejemplo, plazo += 5s retrasa un instante cinco segundos."],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Achrono%3A%3Atime_point%3A%3Aoperator-%3D": {
+    "body": [
+      "Para restar una duración de otro tipo y obtener un nuevo instante, usa el operador - binario."
+    ],
+    "returns": ["*this"]
   }
 }
