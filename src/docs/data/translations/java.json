@@ -4281,6 +4281,1749 @@
       }
     ]
   },
+  "web-java-se-java.awt.image.ColorModel.getNormalizedComponents": {
+    "intro": [],
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve un array con todos los componentes de color/alfa en forma normalizada a partir de un array de componentes sin normalizar. Los componentes sin normalizar son enteros sin signo entre 0 y 2n - 1, donde n es el número de bits de cada componente. Los normalizados son floats entre un mínimo y un máximo por componente indicados por el ColorSpace de este ColorModel. Se lanza IllegalArgumentException si los componentes de color de este ColorModel no se representan cómodamente en forma sin normalizar. Si el array normComponents es null, se crea uno nuevo. Se devuelve el array normComponents. Los componentes de color/alfa se guardan en él empezando en normOffset (aunque el array lo cree este método). Se lanza ArrayIndexOutOfBoundsException si normComponents no es null y no es lo bastante grande para contener todos los componentes de color y alfa (a partir de normOffset). Se lanza IllegalArgumentException si el array components no es lo bastante grande para contener todos los componentes de color y alfa a partir de offset."
+        ],
+        "body": [
+          "Como ColorModel es abstracta, cualquier instancia lo es de una subclase. La implementación predeterminada de este método supone que los componentes de esta clase se representan cómodamente en forma sin normalizar. Por eso, las subclases que puedan tener instancias que no admitan esa forma deben sobrescribir este método."
+        ],
+        "parameters": [
+          {
+            "label": "components",
+            "detail": "un array con componentes sin normalizar"
+          },
+          {
+            "label": "offset",
+            "detail": "el desplazamiento dentro del array components a partir del cual se leen los componentes sin normalizar"
+          },
+          {
+            "label": "normComponents",
+            "detail": "un array que recibe los componentes normalizados"
+          },
+          {
+            "label": "normOffset",
+            "detail": "el índice de normComponents a partir del cual se guardan los componentes normalizados"
+          }
+        ],
+        "returns": [
+          "un array con los componentes de color y alfa normalizados."
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "Si los componentes de este ColorModel no se representan cómodamente en forma sin normalizar."
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si el constructor de este ColorModel llamó al constructor super(bits) pero no sobrescribió este método. Consulta el constructor ColorModel(int)."
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si este método no puede determinar el número de bits por componente"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un array con todos los componentes de color/alfa en forma normalizada a partir de un píxel de este ColorModel. El píxel se indica con un array de elementos de tipo transferType pasado como referencia a objeto. Si pixel no es un array primitivo de tipo transferType, se lanza ClassCastException. Se lanza ArrayIndexOutOfBoundsException si pixel no es lo bastante grande para contener un píxel de este ColorModel. Los componentes normalizados son floats entre un mínimo y un máximo por componente indicados por el ColorSpace de este ColorModel. Si el array normComponents es null, se crea uno nuevo. Se devuelve el array normComponents. Los componentes de color/alfa se guardan en él empezando en normOffset (aunque el array lo cree este método). Se lanza ArrayIndexOutOfBoundsException si normComponents no es null y no es lo bastante grande para contener todos los componentes de color y alfa (a partir de normOffset). Como ColorModel es abstracta, cualquier instancia lo es de una subclase. La implementación predeterminada obtiene primero los componentes sin normalizar con getComponents(Object, int[], int) y luego llama a getNormalizedComponents(int[], int, float[], int). Las subclases que puedan tener instancias que no admitan la forma sin normalizar deben sobrescribir este método."
+        ],
+        "parameters": [
+          {
+            "label": "pixel",
+            "detail": "el píxel indicado"
+          },
+          {
+            "label": "normComponents",
+            "detail": "un array que recibe los componentes normalizados"
+          },
+          {
+            "label": "normOffset",
+            "detail": "el desplazamiento dentro del array normComponents a partir del cual se guardan los componentes normalizados"
+          }
+        ],
+        "returns": [
+          "un array con los componentes de color y alfa normalizados."
+        ],
+        "exceptions": [
+          {
+            "label": "ClassCastException",
+            "detail": "si pixel no es un array primitivo de tipo transferType"
+          },
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "si normComponents no es lo bastante grande para contener todos los componentes de color y alfa a partir de normOffset"
+          },
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "si pixel no es lo bastante grande para contener un píxel de este ColorModel."
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si el constructor de este ColorModel llamó al constructor super(bits) pero no sobrescribió este método. Consulta el constructor ColorModel(int)."
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si este método no puede determinar el número de bits por componente"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.ColorModel.getRed": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve el componente rojo del píxel indicado, escalado de 0 a 255 en el ColorSpace RGB predeterminado, sRGB. Se hace conversión de color si es necesario. El píxel se indica como int. Se lanza IllegalArgumentException si los píxeles de este ColorModel no se representan cómodamente como un único int. El valor devuelto no está premultiplicado: por ejemplo, si el alfa está premultiplicado, este método lo divide antes de devolver el valor. Si el alfa es 0, el rojo es 0."
+        ],
+        "parameters": [
+          {
+            "label": "pixel",
+            "detail": "un píxel indicado"
+          }
+        ],
+        "returns": ["el valor del componente rojo del píxel indicado."]
+      },
+      {
+        "intro": [
+          "Devuelve el componente rojo del píxel indicado, escalado de 0 a 255 en el ColorSpace RGB predeterminado, sRGB. Se hace conversión de color si es necesario. El píxel se indica con un array de elementos de tipo transferType pasado como referencia a objeto. El valor devuelto no está premultiplicado: por ejemplo, si el alfa está premultiplicado, este método lo divide antes de devolver el valor. Si el alfa es 0, el rojo es 0. Si inData no es un array primitivo de tipo transferType, se lanza ClassCastException. Se lanza ArrayIndexOutOfBoundsException si inData no es lo bastante grande para contener un píxel de este ColorModel. Si no se admite este transferType, se lanza UnsupportedOperationException. Como ColorModel es abstracta, cualquier instancia lo es de una subclase. Las subclases heredan esta implementación y, si no la sobrescriben, lanza una excepción si la subclase usa un transferType distinto de DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT o DataBuffer.TYPE_INT."
+        ],
+        "parameters": [
+          {
+            "label": "inData",
+            "detail": "un array de valores de píxel"
+          }
+        ],
+        "returns": ["el valor del componente rojo del píxel indicado."],
+        "exceptions": [
+          {
+            "label": "ClassCastException",
+            "detail": "si inData no es un array primitivo de tipo transferType"
+          },
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "si inData no es lo bastante grande para contener un píxel de este ColorModel"
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si este ColorModel no admite este transferType"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.ColorModel.hasAlpha": {
+    "intro": ["Indica si este ColorModel admite alfa."],
+    "returns": ["true si este ColorModel admite alfa; false en caso contrario."]
+  },
+  "web-java-se-java.awt.image.ComponentColorModel": {
+    "body": [
+      "En los métodos que representan el píxel con un array primitivo de tipo transferType, la longitud del array es igual al número de muestras de color y alfa. Primero van las muestras de color y después la de alfa, si existe. El orden de las muestras de color lo indica el ColorSpace y suele reflejar el nombre del tipo de espacio de color. Por ejemplo, en TYPE_RGB el índice 0 es el rojo, el 1 el verde y el 2 el azul.",
+      "La traducción de las muestras de píxel a componentes de color/alfa para mostrarlos o procesarlos se basa en una correspondencia uno a uno entre muestras y componentes. Según el tipo de transferencia usado para crear el ComponentColorModel, las muestras pueden tener signo o no y ser enteras, float o double (ver detalles abajo). La traducción a componentes normalizados debe seguir ciertas reglas. Para muestras float y double es la identidad, es decir, el componente normalizado es igual a la muestra. Para muestras enteras debe ser solo un escalado y un desplazamiento simples, cuyas constantes pueden variar por componente. El resultado es un conjunto de componentes de color/alfa que caen con seguridad dentro de cierto rango. Normalmente el rango de un componente de color es el que definen getMinValue y getMaxValue de ColorSpace, y el del alfa, de 0.0 a 1.0.",
+      "Las instancias de ComponentColorModel creadas con los tipos DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT y DataBuffer.TYPE_INT tratan las muestras como enteros sin signo. El número de bits de una muestra de color o alfa puede no coincidir con el indicado para ese componente en el constructor ComponentColorModel(ColorSpace, int[], boolean, boolean, int, int). En ese caso, esta clase supone que los n bits menos significativos de la muestra contienen el valor, donde n es el número de bits significativos indicado en el constructor, y que los bits superiores son cero. Así, las muestras van de 0 a 2n - 1. Esta clase hace corresponder 0 con el valor de getMinValue del ColorSpace para cada componente y 2n - 1 con el de getMaxValue. Para crear un ComponentColorModel con otra correspondencia hay que crear una subclase y sobrescribir getNormalizedComponents(Object, float[], int). Para el alfa, 0 siempre corresponde a 0.0 y 2n - 1 a 1.0.",
+      "En las instancias con muestras sin signo, la representación sin normalizar solo se admite si se cumplen dos condiciones. Primera: la muestra 0 debe corresponder a 0.0 y 2n - 1 a 1.0. Segunda: el rango mínimo/máximo de todos los componentes de color del ColorSpace debe ser de 0.0 a 1.0. En ese caso, cada componente son los n bits menos significativos de su muestra, es decir, un entero sin signo entre 0 y 2n - 1. Si no se cumplen estas condiciones, cualquier método que reciba componentes sin normalizar lanza IllegalArgumentException.",
+      "Las instancias de ComponentColorModel creadas con DataBuffer.TYPE_SHORT, DataBuffer.TYPE_FLOAT y DataBuffer.TYPE_DOUBLE tratan las muestras como short con signo, float o double. No admiten la representación sin normalizar, así que los métodos que la reciben lanzan IllegalArgumentException con estas instancias. El rango de los componentes normalizados depende del tipo de transferencia: para float, todo el rango de float; para double, todo el rango de float (al convertir double a float); para short, aproximadamente de -maxVal a +maxVal, donde maxVal es el máximo por componente del ColorSpace (-32767 corresponde a -maxVal, 0 a 0.0 y 32767 a +maxVal). Una subclase puede cambiar el escalado de short a componentes normalizados sobrescribiendo getNormalizedComponents(Object, float[], int). Para float y double, los componentes normalizados son iguales a las muestras, y las subclases no deben añadir ningún escalado distinto de la identidad.",
+      "Las instancias de ComponentColorModel creadas con DataBuffer.TYPE_SHORT, DataBuffer.TYPE_FLOAT y DataBuffer.TYPE_DOUBLE usan todos los bits de todas las muestras. Así, los componentes tienen 16 bits con DataBuffer.TYPE_SHORT, 32 con DataBuffer.TYPE_FLOAT y 64 con DataBuffer.TYPE_DOUBLE. Si se usa el constructor ComponentColorModel(ColorSpace, int[], boolean, boolean, int, int) con uno de estos tipos, se ignora el array bits.",
+      "Puede haber muestras de color/alfa que no puedan interpretarse razonablemente como componentes para renderizar. Puede pasar al crear una subclase de ComponentColorModel que cambie la correspondencia de muestras sin signo a componentes normalizados, o al usar muestras con signo fuera de cierto rango. (Por ejemplo, indicar un alfa como short con signo fuera del rango 0 a 32767, rango normalizado 0.0 a 1.0, puede dar resultados inesperados). Es responsabilidad de la aplicación escalar los datos antes de renderizar para que los componentes de color queden dentro del rango normalizado del ColorSpace (obtenido con getMinValue y getMaxValue) y el alfa entre 0.0 y 1.0. Si algún componente queda fuera de estos rangos, el resultado del renderizado es indeterminado.",
+      "Los métodos que usan un único int como píxel lanzan IllegalArgumentException, salvo que el ComponentColorModel tenga un solo componente sin signo; es decir, un único componente de color con tipo DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT o DataBuffer.TYPE_INT y sin alfa.",
+      "Un ComponentColorModel puede usarse junto con un ComponentSampleModel, un BandedSampleModel o un PixelInterleavedSampleModel para crear un BufferedImage."
+    ]
+  },
+  "web-java-se-java.awt.image.ComponentColorModel.%3Cinit%3E": {
+    "intro": [],
+    "overloads": [
+      {
+        "intro": [
+          "Crea un ComponentColorModel con los parámetros indicados. Los componentes de color están en el ColorSpace indicado. Los tipos de transferencia admitidos son DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT, DataBuffer.TYPE_INT, DataBuffer.TYPE_SHORT, DataBuffer.TYPE_FLOAT y DataBuffer.TYPE_DOUBLE. Si no es null, el array bits indica el número de bits significativos de cada componente de color y alfa, y su longitud debe ser al menos el número de componentes del ColorSpace si no hay alfa, o uno más si lo hay. Con DataBuffer.TYPE_SHORT, DataBuffer.TYPE_FLOAT o DataBuffer.TYPE_DOUBLE se ignora el array bits. hasAlpha indica si hay información de alfa. Si hasAlpha es true, isAlphaPremultiplied indica cómo interpretar las muestras de color y alfa: si es true, se supone que las muestras de color están multiplicadas por la de alfa. transparency indica qué valores de alfa puede representar este modelo; los valores válidos son OPAQUE, BITMASK o TRANSLUCENT. transferType es el tipo de array primitivo usado para representar los píxeles."
+        ],
+        "parameters": [
+          {
+            "label": "colorSpace",
+            "detail": "El ColorSpace asociado a este modelo de color."
+          },
+          {
+            "label": "bits",
+            "detail": "El número de bits significativos por componente. Puede ser null, y entonces todos los bits de todas las muestras son significativos. Se ignora si transferType es DataBuffer.TYPE_SHORT, DataBuffer.TYPE_FLOAT o DataBuffer.TYPE_DOUBLE, en cuyo caso todos los bits son significativos."
+          },
+          {
+            "label": "hasAlpha",
+            "detail": "Si es true, este modelo de color admite alfa."
+          },
+          {
+            "label": "isAlphaPremultiplied",
+            "detail": "Si es true, el alfa está premultiplicado."
+          },
+          {
+            "label": "transparency",
+            "detail": "Indica qué valores de alfa puede representar este modelo de color."
+          },
+          {
+            "label": "transferType",
+            "detail": "Indica el tipo de array primitivo usado para representar los píxeles."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "Si el array bits no es null, su longitud es menor que el número de componentes de color y alfa, y transferType es DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT o DataBuffer.TYPE_INT."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "Si transferType no es DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT, DataBuffer.TYPE_INT, DataBuffer.TYPE_SHORT, DataBuffer.TYPE_FLOAT ni DataBuffer.TYPE_DOUBLE."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un ComponentColorModel con los parámetros indicados. Los componentes de color están en el ColorSpace indicado. Los tipos de transferencia admitidos son DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT, DataBuffer.TYPE_INT, DataBuffer.TYPE_SHORT, DataBuffer.TYPE_FLOAT y DataBuffer.TYPE_DOUBLE. El número de bits significativos por componente será 8, 16, 32, 16, 32 o 64, respectivamente. El número de componentes de color será el del ColorSpace, y habrá un componente alfa si hasAlpha es true. Si hasAlpha es true, isAlphaPremultiplied indica cómo interpretar las muestras de color y alfa: si es true, se supone que las muestras de color están multiplicadas por la de alfa. transparency indica qué valores de alfa puede representar este modelo; los valores válidos son OPAQUE, BITMASK o TRANSLUCENT. transferType es el tipo de array primitivo usado para representar los píxeles."
+        ],
+        "parameters": [
+          {
+            "label": "colorSpace",
+            "detail": "El ColorSpace asociado a este modelo de color."
+          },
+          {
+            "label": "hasAlpha",
+            "detail": "Si es true, este modelo de color admite alfa."
+          },
+          {
+            "label": "isAlphaPremultiplied",
+            "detail": "Si es true, el alfa está premultiplicado."
+          },
+          {
+            "label": "transparency",
+            "detail": "Indica qué valores de alfa puede representar este modelo de color."
+          },
+          {
+            "label": "transferType",
+            "detail": "Indica el tipo de array primitivo usado para representar los píxeles."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "Si transferType no es DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT, DataBuffer.TYPE_INT, DataBuffer.TYPE_SHORT, DataBuffer.TYPE_FLOAT ni DataBuffer.TYPE_DOUBLE."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.ComponentColorModel.getDataElements": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve la representación como array de elementos de un píxel de este ColorModel a partir de su representación entera en el modelo RGB predeterminado. Este array puede pasarse después al método setDataElements de un WritableRaster. Si el parámetro pixel es null, se crea un array nuevo. Como ComponentColorModel puede tener subclases, estas heredan esta implementación y, si no la sobrescriben, lanzan una excepción si usan un transferType no admitido."
+        ],
+        "parameters": [
+          {
+            "label": "rgb",
+            "detail": "la representación entera del píxel en el modelo de color RGB"
+          },
+          {
+            "label": "pixel",
+            "detail": "el píxel indicado"
+          }
+        ],
+        "returns": [
+          "La representación como array de elementos de un píxel de este ColorModel."
+        ],
+        "exceptions": [
+          {
+            "label": "ClassCastException",
+            "detail": "Si pixel no es null y no es un array primitivo de tipo transferType."
+          },
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "Si pixel no es lo bastante grande para contener un píxel de este ColorModel."
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "Si el tipo de transferencia de este ComponentColorModel no es uno de los admitidos: DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT, DataBuffer.TYPE_INT, DataBuffer.TYPE_SHORT, DataBuffer.TYPE_FLOAT o DataBuffer.TYPE_DOUBLE."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve la representación como array de elementos de un píxel de este ColorModel a partir de un array de componentes de color/alfa sin normalizar. Este array puede pasarse después al método setDataElements de un WritableRaster."
+        ],
+        "parameters": [
+          {
+            "label": "components",
+            "detail": "Un array de componentes de color/alfa sin normalizar."
+          },
+          {
+            "label": "offset",
+            "detail": "El desplazamiento entero dentro del array components."
+          },
+          {
+            "label": "obj",
+            "detail": "El objeto donde se guarda la representación del píxel como array de elementos. Si obj es null, se crea un array nuevo. Si no es null, debe ser un array primitivo de tipo transferType. Se lanza ArrayIndexOutOfBoundsException si obj no es lo bastante grande para contener un píxel de este ColorModel. Como ComponentColorModel puede tener subclases, estas heredan esta implementación y, si no la sobrescriben, lanzan una excepción si usan un transferType no admitido."
+          }
+        ],
+        "returns": [
+          "La representación como array de elementos de un píxel de este ColorModel."
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "Si el array components no es lo bastante grande para contener todos los componentes de color y alfa (a partir de offset)."
+          },
+          {
+            "label": "ClassCastException",
+            "detail": "Si obj no es null y no es un array primitivo de tipo transferType."
+          },
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "Si obj no es lo bastante grande para contener un píxel de este ColorModel."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "Si este ComponentColorModel no admite la forma sin normalizar"
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "Si el tipo de transferencia de este ComponentColorModel no es DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT ni DataBuffer.TYPE_INT."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve la representación como array de elementos de un píxel de este ColorModel a partir de un array de componentes de color/alfa normalizados. Este array puede pasarse después al método setDataElements de un WritableRaster. Se lanza ArrayIndexOutOfBoundsException si normComponents no es lo bastante grande para contener todos los componentes de color y alfa (a partir de normOffset). Si obj es null, se crea un array nuevo. Si no es null, debe ser un array primitivo de tipo transferType; si no, se lanza ClassCastException. Se lanza ArrayIndexOutOfBoundsException si obj no es lo bastante grande para contener un píxel de este ColorModel."
+        ],
+        "parameters": [
+          {
+            "label": "normComponents",
+            "detail": "un array de componentes de color y alfa normalizados"
+          },
+          {
+            "label": "normOffset",
+            "detail": "el índice de normComponents a partir del cual se leen los componentes de color y alfa"
+          },
+          {
+            "label": "obj",
+            "detail": "un array de datos primitivo donde se guarda el píxel devuelto"
+          }
+        ],
+        "returns": [
+          "un Object que es la representación de un píxel como array de datos primitivo"
+        ],
+        "exceptions": [
+          {
+            "label": "ClassCastException",
+            "detail": "si obj no es un array primitivo de tipo transferType"
+          },
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "si obj no es lo bastante grande para contener un píxel de este ColorModel o normComponents no es lo bastante grande para contener todos los componentes de color y alfa a partir de normOffset"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.ComponentColorModel.getNormalizedComponents": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve un array con todos los componentes de color/alfa en forma normalizada a partir de un array de componentes sin normalizar. Los componentes sin normalizar son enteros sin signo entre 0 y 2n - 1, donde n es el número de bits de cada componente. Los normalizados son floats entre un mínimo y un máximo por componente indicados por el ColorSpace de este ColorModel. Se lanza IllegalArgumentException si los componentes de color de este ColorModel no se representan cómodamente en forma sin normalizar. Si el array normComponents es null, se crea uno nuevo. Se devuelve el array normComponents. Los componentes de color/alfa se guardan en él empezando en normOffset (aunque el array lo cree este método). Se lanza ArrayIndexOutOfBoundsException si normComponents no es null y no es lo bastante grande para contener todos los componentes de color y alfa (a partir de normOffset). Se lanza IllegalArgumentException si el array components no es lo bastante grande para contener todos los componentes de color y alfa a partir de offset."
+        ],
+        "parameters": [
+          {
+            "label": "components",
+            "detail": "un array con componentes sin normalizar"
+          },
+          {
+            "label": "offset",
+            "detail": "el desplazamiento dentro del array components a partir del cual se leen los componentes sin normalizar"
+          },
+          {
+            "label": "normComponents",
+            "detail": "un array que recibe los componentes normalizados"
+          },
+          {
+            "label": "normOffset",
+            "detail": "el índice de normComponents a partir del cual se guardan los componentes normalizados"
+          }
+        ],
+        "returns": [
+          "un array con los componentes de color y alfa normalizados."
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "Si este ComponentColorModel no admite la forma sin normalizar"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un array con todos los componentes de color/alfa en forma normalizada a partir de un píxel de este ColorModel. El píxel se indica con un array de elementos de tipo transferType pasado como referencia a objeto. Si pixel no es un array primitivo de tipo transferType, se lanza ClassCastException. Se lanza ArrayIndexOutOfBoundsException si pixel no es lo bastante grande para contener un píxel de este ColorModel. Los componentes normalizados son floats entre un mínimo y un máximo por componente indicados por el ColorSpace de este ColorModel. Si el array normComponents es null, se crea uno nuevo. Se devuelve el array normComponents. Los componentes de color/alfa se guardan en él empezando en normOffset (aunque el array lo cree este método). Se lanza ArrayIndexOutOfBoundsException si normComponents no es null y no es lo bastante grande para contener todos los componentes de color y alfa (a partir de normOffset)."
+        ],
+        "body": [
+          "Las subclases que traduzcan las muestras de píxel a componentes de color de forma no predeterminada deben sobrescribir este método. Las traducciones predeterminadas de esta clase se describen en los comentarios de la clase, y cualquier subclase con una traducción no predeterminada debe respetar las restricciones allí definidas."
+        ],
+        "parameters": [
+          {
+            "label": "pixel",
+            "detail": "el píxel indicado"
+          },
+          {
+            "label": "normComponents",
+            "detail": "un array que recibe los componentes normalizados"
+          },
+          {
+            "label": "normOffset",
+            "detail": "el desplazamiento dentro del array normComponents a partir del cual se guardan los componentes normalizados"
+          }
+        ],
+        "returns": [
+          "un array con los componentes de color y alfa normalizados."
+        ],
+        "exceptions": [
+          {
+            "label": "ClassCastException",
+            "detail": "si pixel no es un array primitivo de tipo transferType"
+          },
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "si normComponents no es lo bastante grande para contener todos los componentes de color y alfa a partir de normOffset"
+          },
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "si pixel no es lo bastante grande para contener un píxel de este ColorModel."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.ComponentColorModel.isCompatibleSampleModel": {
+    "intro": [
+      "Comprueba si el SampleModel indicado es compatible con este ColorModel."
+    ],
+    "parameters": [
+      {
+        "label": "sm",
+        "detail": "El SampleModel cuya compatibilidad se comprueba."
+      }
+    ],
+    "returns": [
+      "true si el SampleModel es compatible con este ColorModel; false si no."
+    ]
+  },
+  "web-java-se-java.awt.image.ComponentSampleModel": {
+    "intro": [
+      "Esta clase representa datos de imagen guardados de forma que cada muestra de un píxel ocupa un elemento del DataBuffer. Guarda las N muestras de un píxel en N elementos separados del array. Las distintas bandas pueden estar en distintos bancos del DataBuffer. Ofrece métodos de acceso para manipular directamente los datos de imagen. Admite distintos tipos de entrelazado, como por bandas, por líneas de barrido y por píxeles. El paso de píxel es el número de elementos del array entre dos muestras de la misma banda en la misma línea de barrido. El paso de línea es el número de elementos entre una muestra y la correspondiente de la misma columna en la siguiente línea. Los desplazamientos de banda indican el número de elementos desde el primer elemento del banco del DataBuffer que contiene cada banda hasta la primera muestra de esa banda. Las bandas se numeran de 0 a N-1. Esta clase puede representar datos en los que cada muestra es un entero sin signo de 8, 16 o 32 bits (con DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT o DataBuffer.TYPE_INT, respectivamente), un entero con signo de 16 bits (con DataBuffer.TYPE_SHORT) o un float o double con signo (con DataBuffer.TYPE_FLOAT o DataBuffer.TYPE_DOUBLE, respectivamente). Todas las muestras de un ComponentSampleModel se guardan con la misma precisión. Todos los pasos y desplazamientos deben ser no negativos. Esta clase admite TYPE_BYTE, TYPE_USHORT, TYPE_SHORT, TYPE_INT, TYPE_FLOAT y TYPE_DOUBLE."
+    ]
+  },
+  "web-java-se-java.awt.image.DataBuffer": {
+    "intro": [
+      "Esta clase existe para envolver uno o más arrays de datos. Cada array del DataBuffer se llama banco. Hay métodos para leer y escribir elementos de los bancos con y sin indicar el banco; los que no lo indican usan el banco 0. El DataBuffer puede tener un desplazamiento por banco, para poder usar datos de un array existente aunque los datos útiles no empiecen en la posición cero. Leer o escribir el elemento 0 de un banco usa el elemento (0+offset) del array. El campo size indica cuánto del array está disponible. size + offset de un banco nunca debe superar la longitud de su array. El tipo de datos del búfer indica el tipo de los arrays y también puede indicar semántica adicional, como guardar datos de 8 bits sin signo en un array de byte. Puede ser TYPE_UNDEFINED o uno de los tipos definidos abajo; en el futuro pueden añadirse otros. Normalmente un DataBuffer se convierte a una de sus subclases específicas de tipo para acceder a métodos más eficientes. Actualmente, las clases de imagen de la API Java 2D usan DataBuffers TYPE_BYTE, TYPE_USHORT, TYPE_INT, TYPE_SHORT, TYPE_FLOAT y TYPE_DOUBLE para guardar los datos de imagen."
+    ]
+  },
+  "web-java-se-java.awt.image.DirectColorModel.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un DirectColorModel a partir de las máscaras que indican qué bits de un píxel int contienen las muestras rojo, verde y azul. Como los píxeles no contienen alfa, todos se tratan como opacos, es decir, alfa = 1.0. Los bits de cada máscara deben ser contiguos y caber en el número indicado de bits menos significativos del int. El ColorSpace es el sRGB predeterminado. La transparencia es Transparency.OPAQUE. El tipo de transferencia es el menor de DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT o DataBuffer.TYPE_INT que pueda contener un píxel."
+        ],
+        "parameters": [
+          {
+            "label": "bits",
+            "detail": "el número de bits de los valores de píxel; por ejemplo, la suma de los bits de las máscaras."
+          },
+          {
+            "label": "rmask",
+            "detail": "una máscara que indica qué bits de un píxel entero contienen el componente rojo"
+          },
+          {
+            "label": "gmask",
+            "detail": "una máscara que indica qué bits de un píxel entero contienen el componente verde"
+          },
+          {
+            "label": "bmask",
+            "detail": "una máscara que indica qué bits de un píxel entero contienen el componente azul"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un DirectColorModel a partir de las máscaras que indican qué bits de un píxel int contienen las muestras rojo, verde y azul y la de alfa, si existe. Si amask es 0, los píxeles no contienen alfa y todos se tratan como opacos, es decir, alfa = 1.0. Los bits de cada máscara deben ser contiguos y caber en el número indicado de bits menos significativos del int. El alfa, si existe, no está premultiplicado. El ColorSpace es el sRGB predeterminado. La transparencia es Transparency.OPAQUE si no hay alfa, o Transparency.TRANSLUCENT si lo hay. El tipo de transferencia es el menor de DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT o DataBuffer.TYPE_INT que pueda contener un píxel."
+        ],
+        "parameters": [
+          {
+            "label": "bits",
+            "detail": "el número de bits de los valores de píxel; por ejemplo, la suma de los bits de las máscaras."
+          },
+          {
+            "label": "rmask",
+            "detail": "una máscara que indica qué bits de un píxel entero contienen el componente rojo"
+          },
+          {
+            "label": "gmask",
+            "detail": "una máscara que indica qué bits de un píxel entero contienen el componente verde"
+          },
+          {
+            "label": "bmask",
+            "detail": "una máscara que indica qué bits de un píxel entero contienen el componente azul"
+          },
+          {
+            "label": "amask",
+            "detail": "una máscara que indica qué bits de un píxel entero contienen el componente alfa"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un DirectColorModel con los parámetros indicados. Los componentes de color están en el ColorSpace indicado, que debe ser de tipo ColorSpace.TYPE_RGB y tener todos sus mínimos normalizados a 0.0 y sus máximos a 1.0. Las máscaras indican qué bits de un píxel int contienen las muestras rojo, verde y azul y la de alfa, si existe. Si amask es 0, los píxeles no contienen alfa y todos se tratan como opacos, es decir, alfa = 1.0. Los bits de cada máscara deben ser contiguos y caber en el número indicado de bits menos significativos del int. Si hay alfa, isAlphaPremultiplied indica cómo interpretar las muestras: si es true, se supone que las muestras de color están multiplicadas por la de alfa. La transparencia es Transparency.OPAQUE si no hay alfa, o Transparency.TRANSLUCENT si lo hay. El tipo de transferencia es el tipo de array primitivo usado para los píxeles y debe ser DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT o DataBuffer.TYPE_INT."
+        ],
+        "parameters": [
+          {
+            "label": "space",
+            "detail": "el ColorSpace indicado"
+          },
+          {
+            "label": "bits",
+            "detail": "el número de bits de los valores de píxel; por ejemplo, la suma de los bits de las máscaras."
+          },
+          {
+            "label": "rmask",
+            "detail": "una máscara que indica qué bits de un píxel entero contienen el componente rojo"
+          },
+          {
+            "label": "gmask",
+            "detail": "una máscara que indica qué bits de un píxel entero contienen el componente verde"
+          },
+          {
+            "label": "bmask",
+            "detail": "una máscara que indica qué bits de un píxel entero contienen el componente azul"
+          },
+          {
+            "label": "amask",
+            "detail": "una máscara que indica qué bits de un píxel entero contienen el componente alfa"
+          },
+          {
+            "label": "isAlphaPremultiplied",
+            "detail": "true si las muestras de color están premultiplicadas por la muestra de alfa; false en caso contrario"
+          },
+          {
+            "label": "transferType",
+            "detail": "el tipo de array usado para representar los píxeles"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si space no es de tipo TYPE_RGB o si los mínimos/máximos normalizados no son 0.0/1.0."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.DirectColorModel.getBlue": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve el componente azul del píxel indicado, escalado de 0 a 255 en el ColorSpace RGB predeterminado, sRGB. Se hace conversión de color si es necesario. El píxel se indica como int. El valor devuelto no está premultiplicado: si el alfa está premultiplicado, este método lo divide antes de devolver el valor. Por ejemplo, si el alfa es 0, el azul es 0."
+        ],
+        "parameters": [
+          {
+            "label": "pixel",
+            "detail": "el píxel indicado"
+          }
+        ],
+        "returns": [
+          "el componente azul del píxel indicado, de 0 a 255 en el ColorSpace sRGB."
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve el componente azul del píxel indicado, escalado de 0 a 255 en el ColorSpace RGB predeterminado, sRGB. Se hace conversión de color si es necesario. El píxel se indica con un array de elementos de tipo transferType pasado como referencia a objeto. El valor devuelto no está premultiplicado: si el alfa está premultiplicado, este método lo divide antes de devolver el valor. Por ejemplo, si el alfa es 0, el azul es 0. Si inData no es un array primitivo de tipo transferType, se lanza ClassCastException. Se lanza ArrayIndexOutOfBoundsException si inData no es lo bastante grande para contener un píxel de este ColorModel. Como DirectColorModel puede tener subclases, estas heredan esta implementación y, si no la sobrescriben, lanzan una excepción si usan un transferType no admitido. Se lanza UnsupportedOperationException si este ColorModel no admite este transferType."
+        ],
+        "parameters": [
+          {
+            "label": "inData",
+            "detail": "el array que contiene el valor del píxel"
+          }
+        ],
+        "returns": ["el valor del componente azul del píxel indicado."],
+        "exceptions": [
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "si inData no es lo bastante grande para contener un píxel de este modelo de color"
+          },
+          {
+            "label": "ClassCastException",
+            "detail": "si inData no es un array primitivo de tipo transferType"
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si este modelo de color no admite este transferType"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.DirectColorModel.getComponents": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve un array de componentes de color/alfa sin normalizar a partir de un píxel de este ColorModel. El píxel se indica como int. Si el array components es null, se crea uno nuevo. Se devuelve el array components. Los componentes de color/alfa se guardan en él empezando en offset, aunque el array lo cree este método. Se lanza ArrayIndexOutOfBoundsException si components no es null y no es lo bastante grande para contener todos los componentes de color y alfa a partir de offset."
+        ],
+        "parameters": [
+          {
+            "label": "pixel",
+            "detail": "el píxel indicado"
+          },
+          {
+            "label": "components",
+            "detail": "el array que recibe los componentes de color y alfa del píxel indicado"
+          },
+          {
+            "label": "offset",
+            "detail": "el desplazamiento dentro del array components a partir del cual se guardan los componentes de color y alfa"
+          }
+        ],
+        "returns": [
+          "un array con los componentes de color y alfa del píxel indicado a partir del desplazamiento indicado."
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un array de componentes de color/alfa sin normalizar a partir de un píxel de este ColorModel. El píxel se indica con un array de elementos de tipo transferType pasado como referencia a objeto. Si pixel no es un array primitivo de tipo transferType, se lanza ClassCastException. Se lanza ArrayIndexOutOfBoundsException si pixel no es lo bastante grande para contener un píxel de este ColorModel. Si el array components es null, se crea uno nuevo. Se devuelve el array components. Los componentes de color/alfa se guardan en él empezando en offset, aunque el array lo cree este método. Se lanza ArrayIndexOutOfBoundsException si components no es null y no es lo bastante grande para contener todos los componentes de color y alfa a partir de offset. Como DirectColorModel puede tener subclases, estas heredan esta implementación y, si no la sobrescriben, lanzan una excepción si usan un transferType no admitido."
+        ],
+        "parameters": [
+          {
+            "label": "pixel",
+            "detail": "el píxel indicado"
+          },
+          {
+            "label": "components",
+            "detail": "el array que recibe los componentes de color y alfa del píxel indicado"
+          },
+          {
+            "label": "offset",
+            "detail": "el desplazamiento dentro del array components a partir del cual se guardan los componentes de color y alfa"
+          }
+        ],
+        "returns": [
+          "un array con los componentes de color y alfa del píxel indicado a partir del desplazamiento indicado."
+        ],
+        "exceptions": [
+          {
+            "label": "ClassCastException",
+            "detail": "si pixel no es un array primitivo de tipo transferType"
+          },
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "si pixel no es lo bastante grande para contener un píxel de este ColorModel, o si components no es null y no es lo bastante grande para contener todos los componentes de color y alfa a partir de offset"
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si este modelo de color no admite este transferType"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.DirectColorModel.getRed": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve el componente rojo del píxel indicado, escalado de 0 a 255 en el ColorSpace RGB predeterminado, sRGB. Se hace conversión de color si es necesario. El píxel se indica como int. El valor devuelto no está premultiplicado: si el alfa está premultiplicado, este método lo divide antes de devolver el valor. Por ejemplo, si el alfa es 0, el rojo es 0."
+        ],
+        "parameters": [
+          {
+            "label": "pixel",
+            "detail": "el píxel indicado"
+          }
+        ],
+        "returns": [
+          "el componente rojo del píxel indicado, de 0 a 255 en el ColorSpace sRGB."
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve el componente rojo del píxel indicado, escalado de 0 a 255 en el ColorSpace RGB predeterminado, sRGB. Se hace conversión de color si es necesario. El píxel se indica con un array de elementos de tipo transferType pasado como referencia a objeto. El valor devuelto no está premultiplicado: si el alfa está premultiplicado, este método lo divide antes de devolver el valor. Por ejemplo, si el alfa es 0, el rojo es 0. Si inData no es un array primitivo de tipo transferType, se lanza ClassCastException. Se lanza ArrayIndexOutOfBoundsException si inData no es lo bastante grande para contener un píxel de este ColorModel. Como DirectColorModel puede tener subclases, estas heredan esta implementación y, si no la sobrescriben, lanzan una excepción si usan un transferType no admitido. Se lanza UnsupportedOperationException si este ColorModel no admite este transferType."
+        ],
+        "parameters": [
+          {
+            "label": "inData",
+            "detail": "el array que contiene el valor del píxel"
+          }
+        ],
+        "returns": ["el valor del componente rojo del píxel indicado."],
+        "exceptions": [
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "si inData no es lo bastante grande para contener un píxel de este modelo de color"
+          },
+          {
+            "label": "ClassCastException",
+            "detail": "si inData no es un array primitivo de tipo transferType"
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si este modelo de color no admite este transferType"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.IndexColorModel.convertToIntDiscrete": {
+    "intro": [
+      "Devuelve un BufferedImage nuevo de tipo TYPE_INT_ARGB o TYPE_INT_RGB con un Raster cuyos píxeles se calculan expandiendo los índices del Raster de origen con los arrays de componentes de color/alfa de este ColorModel. Solo se usan los n bits inferiores de cada índice del Raster de origen, tal como indica la descripción de la clase, para calcular los colores y alfas de la imagen devuelta. Si forceARGB es true, se devuelve una imagen TYPE_INT_ARGB tenga o no este ColorModel un array de alfa o un píxel transparente."
+    ],
+    "parameters": [
+      {
+        "label": "raster",
+        "detail": "el Raster indicado"
+      },
+      {
+        "label": "forceARGB",
+        "detail": "si es true, el BufferedImage devuelto es TYPE_INT_ARGB; si no, TYPE_INT_RGB"
+      }
+    ],
+    "returns": ["un BufferedImage creado con el Raster indicado"],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si el argumento raster no es compatible con este IndexColorModel"
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.IndexColorModel.getDataElements": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve la representación como array de elementos de un píxel de este ColorModel a partir de su representación entera en el modelo RGB predeterminado. Este array puede pasarse después al método setDataElements(int, int, Object) de un WritableRaster. Si pixel es null, se crea un array nuevo. Si no es null, debe ser un array primitivo de tipo transferType; si no, se lanza ClassCastException. Se lanza ArrayIndexOutOfBoundsException si pixel no es lo bastante grande para contener un píxel de este ColorModel. Se devuelve el array pixel."
+        ],
+        "body": [
+          "Como IndexColorModel puede tener subclases, estas heredan esta implementación y, si no la sobrescriben, lanzan una excepción si usan un transferType no admitido."
+        ],
+        "parameters": [
+          {
+            "label": "rgb",
+            "detail": "la representación entera del píxel en el modelo de color RGB predeterminado"
+          },
+          {
+            "label": "pixel",
+            "detail": "el píxel indicado"
+          }
+        ],
+        "returns": [
+          "una representación como array del píxel indicado en este IndexColorModel."
+        ],
+        "exceptions": [
+          {
+            "label": "ClassCastException",
+            "detail": "si pixel no es un array primitivo de tipo transferType"
+          },
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "si pixel no es lo bastante grande para contener un píxel de este ColorModel"
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si transferType no es válido"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve la representación como array de elementos de un píxel de este ColorModel a partir de un array de componentes de color/alfa sin normalizar. Este array puede pasarse después al método setDataElements de un WritableRaster. Se lanza ArrayIndexOutOfBoundsException si el array components no es lo bastante grande para contener todos los componentes de color y alfa a partir de offset. Si pixel es null, se crea un array nuevo. Si no es null, debe ser un array primitivo de tipo transferType; si no, se lanza ClassCastException. Se lanza ArrayIndexOutOfBoundsException si pixel no es lo bastante grande para contener un píxel de este ColorModel."
+        ],
+        "body": [
+          "Como IndexColorModel puede tener subclases, estas heredan esta implementación y, si no la sobrescriben, lanzan una excepción si usan un transferType no admitido"
+        ],
+        "parameters": [
+          {
+            "label": "components",
+            "detail": "un array de componentes de color y alfa sin normalizar"
+          },
+          {
+            "label": "offset",
+            "detail": "el índice de components a partir del cual se leen los componentes de color y alfa"
+          },
+          {
+            "label": "pixel",
+            "detail": "el Object que representa un array de componentes de color y alfa"
+          }
+        ],
+        "returns": [
+          "un Object que representa un array de componentes de color y alfa."
+        ],
+        "exceptions": [
+          {
+            "label": "ClassCastException",
+            "detail": "si pixel no es un array primitivo de tipo transferType"
+          },
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "si pixel no es lo bastante grande para contener un píxel de este ColorModel o el array components no es lo bastante grande para contener todos los componentes de color y alfa a partir de offset"
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si transferType no es uno de los tipos de transferencia admitidos"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.MemoryImageSource": {
+    "body": [
+      "{@code",
+      "int w = 100; int h = 100; int pix[] = new int[w * h]; int index = 0; for (int y = 0; y < h; y++) { int red = (y * 255) / (h - 1); for (int x = 0; x < w; x++) { int blue = (x * 255) / (w - 1); pix[index++] = (255 << 24) | (red << 16) | blue; } } Image img = createImage(new MemoryImageSource(w, h, pix, 0, w));",
+      "MemoryImageSource también puede gestionar una imagen en memoria que cambia con el tiempo, para hacer animaciones o renderizado personalizado. Este ejemplo muestra cómo preparar la fuente de animación y avisar de los cambios en los datos (adaptado de MemoryAnimationSourceDemo de Garth Dickie):",
+      "{@code",
+      "int pixels[]; MemoryImageSource source;",
+      "public void init() { int width = 50; int height = 50; int size = width * height; pixels = new int[size];",
+      "int value = getBackground().getRGB(); for (int i = 0; i < size; i++) { pixels[i] = value; }",
+      "source = new MemoryImageSource(width, height, pixels, 0, width); source.setAnimated(true); image = createImage(source); }",
+      "public void run() { Thread me = Thread.currentThread( ); me.setPriority(Thread.MIN_PRIORITY);",
+      "while (true) { try { Thread.sleep(10); } catch( InterruptedException e ) { return; }",
+      "// Modify the values in the pixels array at (x, y, w, h)",
+      "// Send the new data to the interested ImageConsumers source.newPixels(x, y, w, h); } }"
+    ]
+  },
+  "web-java-se-java.awt.image.MultiPixelPackedSampleModel": {
+    "intro": [
+      "La clase MultiPixelPackedSampleModel representa imágenes de una sola banda y puede empaquetar varios píxeles de una muestra en un mismo elemento de datos. Un píxel no puede repartirse entre elementos. El tipo de datos puede ser DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT o DataBuffer.TYPE_INT. Cada píxel debe ocupar un número de bits potencia de 2, y en un elemento debe caber exactamente un número de píxeles potencia de 2. El paso de bits de píxel es igual a los bits por píxel. El paso de línea se mide en elementos de datos y los últimos elementos pueden rellenarse con píxeles sin usar. El desplazamiento de bits es la distancia en bits desde el principio del DataBuffer hasta el primer píxel y debe ser múltiplo del paso de bits de píxel."
+    ],
+    "body": [
+      "El siguiente código muestra cómo extraer los bits del píxel x, y de los datos del DataBuffer, guardados en elementos de tipo dataType:",
+      "int dataElementSize = DataBuffer.getDataTypeSize(dataType); int bitnum = dataBitOffset + x*pixelBitStride; int element = data.getElem(y*scanlineStride + bitnum/dataElementSize); int shift = dataElementSize - (bitnum & (dataElementSize-1)) - pixelBitStride; int pixel = (element >> shift) & ((1 << pixelBitStride) - 1);"
+    ]
+  },
+  "web-java-se-java.awt.image.MultiPixelPackedSampleModel.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un MultiPixelPackedSampleModel con el tipo de datos, la anchura, la altura y el número de bits por píxel indicados."
+        ],
+        "parameters": [
+          {
+            "label": "dataType",
+            "detail": "el tipo de datos con el que se guardan las muestras"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura, en píxeles, de la región de imagen descrita"
+          },
+          {
+            "label": "h",
+            "detail": "la altura, en píxeles, de la región de imagen descrita"
+          },
+          {
+            "label": "numberOfBits",
+            "detail": "el número de bits por píxel"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si dataType no es DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT ni DataBuffer.TYPE_INT"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un MultiPixelPackedSampleModel con el tipo de datos, la anchura, la altura, el número de bits por píxel, el paso de línea y el desplazamiento de bits indicados."
+        ],
+        "parameters": [
+          {
+            "label": "dataType",
+            "detail": "el tipo de datos con el que se guardan las muestras"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura, en píxeles, de la región de imagen descrita"
+          },
+          {
+            "label": "h",
+            "detail": "la altura, en píxeles, de la región de imagen descrita"
+          },
+          {
+            "label": "numberOfBits",
+            "detail": "el número de bits por píxel"
+          },
+          {
+            "label": "scanlineStride",
+            "detail": "el paso de línea de los datos de imagen"
+          },
+          {
+            "label": "dataBitOffset",
+            "detail": "el desplazamiento de bits de la región de imagen descrita"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "RasterFormatException",
+            "detail": "si el número de bits por píxel no es potencia de 2 o si no cabe un número de píxeles potencia de 2 en un elemento de datos."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si w o h no es mayor que 0"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si dataType no es DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT ni DataBuffer.TYPE_INT"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.PackedColorModel.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un PackedColorModel a partir de un array de máscaras de color, que indica qué bits de un píxel int contienen cada muestra de color, y de una máscara de alfa. Los componentes de color están en el ColorSpace indicado. La longitud de colorMaskArray debe ser el número de componentes del ColorSpace. Los bits de cada máscara deben ser contiguos y caber en el número indicado de bits menos significativos del int. Si alphaMask es 0, no hay alfa. Si lo hay, isAlphaPremultiplied indica cómo interpretar las muestras: si es true, se supone que las muestras de color están multiplicadas por la de alfa. trans indica qué valores de alfa puede representar este modelo. El tipo de transferencia es el tipo de array primitivo usado para los píxeles."
+        ],
+        "parameters": [
+          {
+            "label": "space",
+            "detail": "el ColorSpace indicado"
+          },
+          {
+            "label": "bits",
+            "detail": "el número de bits de los valores de píxel"
+          },
+          {
+            "label": "colorMaskArray",
+            "detail": "array con las máscaras de los bits de los píxeles que representan los componentes de color"
+          },
+          {
+            "label": "alphaMask",
+            "detail": "la máscara de los bits de los píxeles que representan el componente alfa"
+          },
+          {
+            "label": "isAlphaPremultiplied",
+            "detail": "true si las muestras de color están premultiplicadas por la muestra de alfa; false en caso contrario"
+          },
+          {
+            "label": "trans",
+            "detail": "el valor de alfa que puede representar este modelo de color"
+          },
+          {
+            "label": "transferType",
+            "detail": "el tipo de array usado para representar los píxeles"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si bits es menor que 1 o mayor que 32"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un PackedColorModel a partir de las máscaras que indican qué bits de un píxel int contienen las muestras alfa, rojo, verde y azul. Los componentes de color están en el ColorSpace indicado, que debe ser de tipo ColorSpace.TYPE_RGB. Los bits de cada máscara deben ser contiguos y caber en el número indicado de bits menos significativos del int. Si amask es 0, no hay alfa. Si lo hay, isAlphaPremultiplied indica cómo interpretar las muestras: si es true, se supone que las muestras de color están multiplicadas por la de alfa. trans indica qué valores de alfa puede representar este modelo. El tipo de transferencia es el tipo de array primitivo usado para los píxeles."
+        ],
+        "parameters": [
+          {
+            "label": "space",
+            "detail": "el ColorSpace indicado"
+          },
+          {
+            "label": "bits",
+            "detail": "el número de bits de los valores de píxel"
+          },
+          {
+            "label": "rmask",
+            "detail": "la máscara de los bits de los píxeles que representan el componente rojo"
+          },
+          {
+            "label": "gmask",
+            "detail": "la máscara de los bits de los píxeles que representan el componente verde"
+          },
+          {
+            "label": "bmask",
+            "detail": "la máscara de los bits de los píxeles que representan el componente azul"
+          },
+          {
+            "label": "amask",
+            "detail": "la máscara de los bits de los píxeles que representan el componente alfa"
+          },
+          {
+            "label": "isAlphaPremultiplied",
+            "detail": "true si las muestras de color están premultiplicadas por la muestra de alfa; false en caso contrario"
+          },
+          {
+            "label": "trans",
+            "detail": "el valor de alfa que puede representar este modelo de color"
+          },
+          {
+            "label": "transferType",
+            "detail": "el tipo de array usado para representar los píxeles"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si space no es de tipo TYPE_RGB"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.PixelGrabber": {
+    "body": [
+      "{@code",
+      "public void handlesinglepixel(int x, int y, int pixel) { int alpha = (pixel >> 24) & 0xff; int red = (pixel >> 16) & 0xff; int green = (pixel >> 8) & 0xff; int blue = (pixel ) & 0xff; // Deal with the pixel as necessary... }",
+      "public void handlepixels(Image img, int x, int y, int w, int h) { int[] pixels = new int[w * h]; PixelGrabber pg = new PixelGrabber(img, x, y, w, h, pixels, 0, w); try { pg.grabPixels(); } catch (InterruptedException e) { System.err.println(\"interrupted waiting for pixels!\"); return; } if ((pg.getStatus() & ImageObserver.ABORT) != 0) { System.err.println(\"image fetch aborted or errored\"); return; } for (int j = 0; j < h; j++) { for (int i = 0; i < w; i++) { handlesinglepixel(x+i, y+j, pixels[j * w + i]); } } }"
+    ]
+  },
+  "web-java-se-java.awt.image.PixelInterleavedSampleModel": {
+    "intro": [
+      "Esta clase representa datos de imagen entrelazados por píxeles, en los que cada muestra de un píxel ocupa un elemento del DataBuffer. Es subclase de ComponentSampleModel pero ofrece una implementación más eficiente para acceder a datos entrelazados por píxeles. Guarda las muestras de todas las bandas en un único banco del DataBuffer. Ofrece métodos de acceso para manipular directamente los datos de imagen. El paso de píxel es el número de elementos del array entre dos muestras de la misma banda en la misma línea de barrido. El paso de línea es el número de elementos entre una muestra y la correspondiente de la misma columna en la siguiente línea. Los desplazamientos de banda indican el número de elementos desde el primer elemento del banco del DataBuffer que contiene cada banda hasta la primera muestra de esa banda. Las bandas se numeran de 0 a N-1. Los índices de banco indican la correspondencia entre un banco del búfer y una banda de la imagen. Esta clase admite los tipos TYPE_BYTE, TYPE_USHORT, TYPE_SHORT, TYPE_INT, TYPE_FLOAT y TYPE_DOUBLE."
+    ]
+  },
+  "web-java-se-java.awt.image.RGBImageFilter": {
+    "body": [
+      "{@code",
+      "class RedBlueSwapFilter extends RGBImageFilter { public RedBlueSwapFilter() { // The filter's operation does not depend on the // pixel's location, so IndexColorModels can be // filtered directly. canFilterIndexColorModel = true; }",
+      "public int filterRGB(int x, int y, int rgb) { return ((rgb & 0xff00ff00) | ((rgb & 0xff0000) >> 16) | ((rgb & 0xff) << 16)); } }"
+    ]
+  },
+  "web-java-se-java.awt.image.Raster.createBandedRaster": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un Raster basado en un BandedSampleModel con el tipo de datos, la anchura, la altura y el número de bandas indicados."
+        ],
+        "body": [
+          "La esquina superior izquierda del Raster la da el argumento location. Si location es null, se usa (0, 0). El parámetro dataType debe ser uno de los valores enumerados en la clase DataBuffer.",
+          "Actualmente solo se admiten los tipos TYPE_BYTE, TYPE_USHORT y TYPE_INT."
+        ],
+        "parameters": [
+          {
+            "label": "dataType",
+            "detail": "el tipo de datos con el que se guardan las muestras"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura en píxeles de los datos de imagen"
+          },
+          {
+            "label": "h",
+            "detail": "la altura en píxeles de los datos de imagen"
+          },
+          {
+            "label": "bands",
+            "detail": "el número de bandas"
+          },
+          {
+            "label": "location",
+            "detail": "la esquina superior izquierda del Raster"
+          }
+        ],
+        "returns": [
+          "un WritableRaster con el tipo de datos, la anchura, la altura y el número de bandas indicados."
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si dataType no es uno de los tipos admitidos: DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT o DataBuffer.TYPE_INT"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si w y h no son ambos mayores que 0"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el producto de w por h es mayor que Integer.MAX_VALUE"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si calcular location.x + w o location.y + h provoca un desbordamiento de entero"
+          },
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "si bands es menor que 1"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un Raster basado en un BandedSampleModel con el tipo de datos, la anchura, la altura, el paso de línea, los índices de banco y los desplazamientos de banda indicados. El número de bandas se deduce de bankIndices.length y bandOffsets.length, que deben coincidir."
+        ],
+        "body": [
+          "La esquina superior izquierda del Raster la da el argumento location. El parámetro dataType debe ser uno de los valores enumerados en la clase DataBuffer.",
+          "Actualmente solo se admiten los tipos TYPE_BYTE, TYPE_USHORT y TYPE_INT."
+        ],
+        "parameters": [
+          {
+            "label": "dataType",
+            "detail": "el tipo de datos con el que se guardan las muestras"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura en píxeles de los datos de imagen"
+          },
+          {
+            "label": "h",
+            "detail": "la altura en píxeles de los datos de imagen"
+          },
+          {
+            "label": "scanlineStride",
+            "detail": "el paso de línea de los datos de imagen"
+          },
+          {
+            "label": "bankIndices",
+            "detail": "los índices de banco de cada banda"
+          },
+          {
+            "label": "bandOffsets",
+            "detail": "los desplazamientos de todas las bandas"
+          },
+          {
+            "label": "location",
+            "detail": "la esquina superior izquierda del Raster"
+          }
+        ],
+        "returns": [
+          "un WritableRaster con el tipo de datos, la anchura, la altura, el paso de línea, los índices de banco y los desplazamientos de banda indicados."
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si dataType no es uno de los tipos admitidos: DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT o DataBuffer.TYPE_INT"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si w y h no son ambos mayores que 0"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el producto de w por h es mayor que Integer.MAX_VALUE"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si calcular location.x + w o location.y + h provoca un desbordamiento de entero"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si scanlineStride es menor que 0"
+          },
+          {
+            "label": "ArrayIndexOutOfBoundsException",
+            "detail": "si bankIndices es null"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si bandOffsets es null"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un Raster basado en un BandedSampleModel con el DataBuffer, la anchura, la altura, el paso de línea, los índices de banco y los desplazamientos de banda indicados. El número de bandas se deduce de bankIndices.length y bandOffsets.length, que deben coincidir. La esquina superior izquierda del Raster la da el argumento location. Si location es null, se usa (0, 0)."
+        ],
+        "parameters": [
+          {
+            "label": "dataBuffer",
+            "detail": "el DataBuffer que contiene los datos de imagen"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura en píxeles de los datos de imagen"
+          },
+          {
+            "label": "h",
+            "detail": "la altura en píxeles de los datos de imagen"
+          },
+          {
+            "label": "scanlineStride",
+            "detail": "el paso de línea de los datos de imagen"
+          },
+          {
+            "label": "bankIndices",
+            "detail": "los índices de banco de cada banda"
+          },
+          {
+            "label": "bandOffsets",
+            "detail": "los desplazamientos de todas las bandas"
+          },
+          {
+            "label": "location",
+            "detail": "la esquina superior izquierda del Raster"
+          }
+        ],
+        "returns": [
+          "un WritableRaster con el DataBuffer, la anchura, la altura, el paso de línea, los índices de banco y los desplazamientos de banda indicados."
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si dataBuffer, bankIndices o bandOffsets es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si dataType no es uno de los tipos admitidos (DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT o DataBuffer.TYPE_INT), si w o h es menor o igual que cero, si el producto de w por h es mayor que Integer.MAX_VALUE, si scanlineStride es menor que cero o si la longitud de bankIndices no es igual a la de bandOffsets"
+          },
+          {
+            "label": "RasterFormatException",
+            "detail": "si calcular location.x + w o location.y + h provoca un desbordamiento de entero"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.Raster.createChild": {
+    "body": [
+      "Los parámetros parentX, parentY, width y height forman un Rectangle en el espacio de coordenadas de este Raster que indica el área de píxeles compartida. Se lanza un error si este Rectangle no está dentro de los límites del Raster actual.",
+      "Además, el nuevo Raster puede trasladarse a un sistema de coordenadas del plano distinto del que usa el Raster actual. Los parámetros childMinX y childMinY dan la nueva coordenada (x, y) del píxel superior izquierdo del Raster devuelto; la coordenada (childMinX, childMinY) del nuevo Raster corresponde al mismo píxel que (parentX, parentY) en el actual.",
+      "Con el parámetro bandList, el nuevo Raster puede contener solo un subconjunto de las bandas del actual, posiblemente reordenadas. Si bandList es null, se incluyen todas las bandas del Raster actual en su orden actual.",
+      "Para crear un Raster nuevo que contenga una subregión del actual pero comparta su sistema de coordenadas y sus bandas, llama a este método con childMinX igual a parentX, childMinY igual a parentY y bandList igual a null."
+    ],
+    "parameters": [
+      {
+        "label": "parentX",
+        "detail": "La coordenada X de la esquina superior izquierda en las coordenadas de este Raster"
+      },
+      {
+        "label": "parentY",
+        "detail": "La coordenada Y de la esquina superior izquierda en las coordenadas de este Raster"
+      },
+      {
+        "label": "width",
+        "detail": "Anchura de la región que empieza en (parentX, parentY)"
+      },
+      {
+        "label": "height",
+        "detail": "Altura de la región que empieza en (parentX, parentY)."
+      },
+      {
+        "label": "childMinX",
+        "detail": "La coordenada X de la esquina superior izquierda del Raster devuelto"
+      },
+      {
+        "label": "childMinY",
+        "detail": "La coordenada Y de la esquina superior izquierda del Raster devuelto"
+      },
+      {
+        "label": "bandList",
+        "detail": "Array de índices de banda, o null para usar todas las bandas"
+      }
+    ],
+    "returns": ["un Raster nuevo."],
+    "exceptions": [
+      {
+        "label": "RasterFormatException",
+        "detail": "si la subregión indicada está fuera de los límites del raster."
+      },
+      {
+        "label": "RasterFormatException",
+        "detail": "si width o height es menor o igual que cero, o si calcular parentX + width, parentY + height, childMinX + width o childMinY + height provoca un desbordamiento de entero"
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.Raster.createInterleavedRaster": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un Raster basado en un PixelInterleavedSampleModel con el tipo de datos, la anchura, la altura y el número de bandas indicados."
+        ],
+        "body": [
+          "La esquina superior izquierda del Raster la da el argumento location. Si location es null, se usa (0, 0). El parámetro dataType debe ser uno de los valores enumerados en la clase DataBuffer.",
+          "No se admiten Raster entrelazados de tipo DataBuffer.TYPE_INT. Para crear un Raster de una banda de tipo DataBuffer.TYPE_INT, usa Raster.createPackedRaster().",
+          "Actualmente solo se admiten los tipos TYPE_BYTE y TYPE_USHORT."
+        ],
+        "parameters": [
+          {
+            "label": "dataType",
+            "detail": "el tipo de datos con el que se guardan las muestras"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura en píxeles de los datos de imagen"
+          },
+          {
+            "label": "h",
+            "detail": "la altura en píxeles de los datos de imagen"
+          },
+          {
+            "label": "bands",
+            "detail": "el número de bandas"
+          },
+          {
+            "label": "location",
+            "detail": "la esquina superior izquierda del Raster"
+          }
+        ],
+        "returns": [
+          "un WritableRaster con el tipo de datos, la anchura, la altura y el número de bandas indicados."
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si dataType no es uno de los tipos admitidos"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si bands es menor que 1"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si w y h no son ambos > 0"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el producto de w por h es mayor que Integer.MAX_VALUE"
+          },
+          {
+            "label": "RasterFormatException",
+            "detail": "si calcular location.x + w o location.y + h provoca un desbordamiento de entero"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un Raster basado en un PixelInterleavedSampleModel con el tipo de datos, la anchura, la altura, el paso de línea, el paso de píxel y los desplazamientos de banda indicados. El número de bandas se deduce de bandOffsets.length."
+        ],
+        "body": [
+          "La esquina superior izquierda del Raster la da el argumento location. Si location es null, se usa (0, 0). El parámetro dataType debe ser uno de los valores enumerados en la clase DataBuffer.",
+          "No se admiten Raster entrelazados de tipo DataBuffer.TYPE_INT. Para crear un Raster de una banda de tipo DataBuffer.TYPE_INT, usa Raster.createPackedRaster().",
+          "Actualmente solo se admiten los tipos TYPE_BYTE y TYPE_USHORT."
+        ],
+        "parameters": [
+          {
+            "label": "dataType",
+            "detail": "el tipo de datos con el que se guardan las muestras"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura en píxeles de los datos de imagen"
+          },
+          {
+            "label": "h",
+            "detail": "la altura en píxeles de los datos de imagen"
+          },
+          {
+            "label": "scanlineStride",
+            "detail": "el paso de línea de los datos de imagen"
+          },
+          {
+            "label": "pixelStride",
+            "detail": "el paso de píxel de los datos de imagen"
+          },
+          {
+            "label": "bandOffsets",
+            "detail": "los desplazamientos de todas las bandas"
+          },
+          {
+            "label": "location",
+            "detail": "la esquina superior izquierda del Raster"
+          }
+        ],
+        "returns": [
+          "un WritableRaster con el tipo de datos, la anchura, la altura, el paso de línea, el paso de píxel y los desplazamientos de banda indicados."
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si dataType no es uno de los tipos admitidos: DataBuffer.TYPE_BYTE o DataBuffer.TYPE_USHORT."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si w y h no son ambos > 0"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el producto de w por h es mayor que Integer.MAX_VALUE"
+          },
+          {
+            "label": "RasterFormatException",
+            "detail": "si calcular location.x + w o location.y + h provoca un desbordamiento de entero"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si scanlineStride es menor que 0"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si pixelStride es menor que 0"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si bandOffsets es null"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un Raster basado en un PixelInterleavedSampleModel con el DataBuffer, la anchura, la altura, el paso de línea, el paso de píxel y los desplazamientos de banda indicados. El número de bandas se deduce de bandOffsets.length. La esquina superior izquierda del Raster la da el argumento location. Si location es null, se usa (0, 0)."
+        ],
+        "body": [
+          "No se admiten Raster entrelazados de tipo DataBuffer.TYPE_INT. Para crear un Raster de una banda de tipo DataBuffer.TYPE_INT, usa Raster.createPackedRaster()."
+        ],
+        "parameters": [
+          {
+            "label": "dataBuffer",
+            "detail": "el DataBuffer que contiene los datos de imagen"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura en píxeles de los datos de imagen"
+          },
+          {
+            "label": "h",
+            "detail": "la altura en píxeles de los datos de imagen"
+          },
+          {
+            "label": "scanlineStride",
+            "detail": "el paso de línea de los datos de imagen"
+          },
+          {
+            "label": "pixelStride",
+            "detail": "el paso de píxel de los datos de imagen"
+          },
+          {
+            "label": "bandOffsets",
+            "detail": "los desplazamientos de todas las bandas"
+          },
+          {
+            "label": "location",
+            "detail": "la esquina superior izquierda del Raster"
+          }
+        ],
+        "returns": [
+          "un WritableRaster con el DataBuffer, la anchura, la altura, el paso de línea, el paso de píxel y los desplazamientos de banda indicados."
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si dataType no es uno de los tipos admitidos: DataBuffer.TYPE_BYTE o DataBuffer.TYPE_USHORT"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si dataBuffer es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si dataType no es uno de los tipos admitidos: DataBuffer.TYPE_BYTE o DataBuffer.TYPE_USHORT."
+          },
+          {
+            "label": "RasterFormatException",
+            "detail": "si dataBuffer tiene más de un banco."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si w y h no son ambos > 0"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el producto de w por h es mayor que Integer.MAX_VALUE"
+          },
+          {
+            "label": "RasterFormatException",
+            "detail": "si calcular location.x + w o location.y + h provoca un desbordamiento de entero"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si scanlineStride es menor que 0"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si pixelStride es menor que 0"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si bandOffsets es null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.Raster.createWritableRaster": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un WritableRaster con el SampleModel indicado. La esquina superior izquierda del Raster la da el argumento location. Si location es null, se usa (0, 0)."
+        ],
+        "parameters": [
+          {
+            "label": "sm",
+            "detail": "el SampleModel indicado"
+          },
+          {
+            "label": "location",
+            "detail": "la esquina superior izquierda del WritableRaster"
+          }
+        ],
+        "returns": [
+          "un WritableRaster con el SampleModel y la posición indicados."
+        ],
+        "exceptions": [
+          {
+            "label": "RasterFormatException",
+            "detail": "si calcular location.x + sm.getWidth() o location.y + sm.getHeight() provoca un desbordamiento de entero"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un WritableRaster con el SampleModel y el DataBuffer indicados. La esquina superior izquierda del Raster la da el argumento location. Si location es null, se usa (0, 0)."
+        ],
+        "parameters": [
+          {
+            "label": "sm",
+            "detail": "el SampleModel indicado"
+          },
+          {
+            "label": "db",
+            "detail": "el DataBuffer indicado"
+          },
+          {
+            "label": "location",
+            "detail": "la esquina superior izquierda del WritableRaster"
+          }
+        ],
+        "returns": [
+          "un WritableRaster con el SampleModel, el DataBuffer y la posición indicados."
+        ],
+        "exceptions": [
+          {
+            "label": "RasterFormatException",
+            "detail": "si calcular location.x + sm.getWidth() o location.y + sm.getHeight() provoca un desbordamiento de entero"
+          },
+          {
+            "label": "RasterFormatException",
+            "detail": "si db tiene más de un banco y sm es un PixelInterleavedSampleModel, SinglePixelPackedSampleModel o MultiPixelPackedSampleModel."
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si SampleModel o DataBuffer es null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.image.ShortLookupTable.getTable": {
+    "returns": ["Array de datos de ShortLookupTable."]
+  },
+  "web-java-se-java.awt.image.WritableRaster.createWritableChild": {
+    "body": [
+      "Los parámetros parentX, parentY, width y height forman un Rectangle en el espacio de coordenadas de este WritableRaster que indica el área de píxeles compartida. Se lanza un error si este Rectangle no está dentro de los límites del WritableRaster actual.",
+      "Además, el nuevo WritableRaster puede trasladarse a un sistema de coordenadas del plano distinto del que usa el actual. Los parámetros childMinX y childMinY dan la nueva coordenada (x, y) del píxel superior izquierdo del WritableRaster devuelto; la coordenada (childMinX, childMinY) del nuevo corresponde al mismo píxel que (parentX, parentY) en el actual.",
+      "Con el parámetro bandList, el nuevo WritableRaster puede contener solo un subconjunto de las bandas del actual, posiblemente reordenadas. Si bandList es null, se incluyen todas las bandas del WritableRaster actual en su orden actual.",
+      "Para crear un WritableRaster nuevo que contenga una subregión del actual pero comparta su sistema de coordenadas y sus bandas, llama a este método con childMinX igual a parentX, childMinY igual a parentY y bandList igual a null."
+    ],
+    "parameters": [
+      {
+        "label": "parentX",
+        "detail": "Coordenada X de la esquina superior izquierda en las coordenadas de este WritableRaster."
+      },
+      {
+        "label": "parentY",
+        "detail": "Coordenada Y de la esquina superior izquierda en las coordenadas de este WritableRaster."
+      },
+      {
+        "label": "w",
+        "detail": "Anchura de la región que empieza en (parentX, parentY)."
+      },
+      {
+        "label": "h",
+        "detail": "Altura de la región que empieza en (parentX, parentY)."
+      },
+      {
+        "label": "childMinX",
+        "detail": "Coordenada X de la esquina superior izquierda del WritableRaster devuelto."
+      },
+      {
+        "label": "childMinY",
+        "detail": "Coordenada Y de la esquina superior izquierda del WritableRaster devuelto."
+      },
+      {
+        "label": "bandList",
+        "detail": "Array de índices de banda, o null para usar todas las bandas."
+      }
+    ],
+    "returns": [
+      "un WritableRaster que comparte todo o parte del DataBuffer de este WritableRaster."
+    ],
+    "exceptions": [
+      {
+        "label": "RasterFormatException",
+        "detail": "si la subregión está fuera de los límites del raster."
+      },
+      {
+        "label": "RasterFormatException",
+        "detail": "si w o h es menor o igual que cero, o si calcular parentX + w, parentY + h, childMinX + w o childMinY + h provoca un desbordamiento de entero"
+      }
+    ]
+  },
+  "web-java-se-java.beans.Beans.instantiate": {
+    "overloads": [
+      {
+        "intro": ["Instancia un JavaBean."],
+        "parameters": [
+          {
+            "label": "cls",
+            "detail": "el cargador de clases con el que se crea el bean. Si es null, se usa el cargador de clases del sistema."
+          },
+          {
+            "label": "beanName",
+            "detail": "el nombre del bean dentro del cargador de clases. Por ejemplo \"sun.beanbox.foobah\""
+          }
+        ],
+        "returns": ["un JavaBean"],
+        "exceptions": [
+          {
+            "label": "ClassNotFoundException",
+            "detail": "si no se encuentra la clase de un objeto serializado."
+          },
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S."
+          }
+        ]
+      },
+      {
+        "intro": ["Instancia un JavaBean."],
+        "parameters": [
+          {
+            "label": "cls",
+            "detail": "el cargador de clases con el que se crea el bean. Si es null, se usa el cargador de clases del sistema."
+          },
+          {
+            "label": "beanName",
+            "detail": "el nombre del bean dentro del cargador de clases. Por ejemplo \"sun.beanbox.foobah\""
+          },
+          {
+            "label": "beanContext",
+            "detail": "El BeanContext en el que se anida el nuevo bean"
+          }
+        ],
+        "returns": ["un JavaBean"],
+        "exceptions": [
+          {
+            "label": "ClassNotFoundException",
+            "detail": "si no se encuentra la clase de un objeto serializado."
+          },
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S."
+          }
+        ]
+      },
+      {
+        "intro": ["Instancia un bean."],
+        "body": [
+          "El bean se crea a partir de un nombre relativo a un cargador de clases. Debe ser un nombre separado por puntos, como \"a.b.c\".",
+          "En Beans 1.0, el nombre puede indicar un objeto serializado o una clase. En el futuro pueden añadirse otros mecanismos. En Beans 1.0 primero se intenta tratar beanName como nombre de objeto serializado y luego como nombre de clase.",
+          "Al tratar beanName como nombre de objeto serializado, se convierte en una ruta de recurso y se le añade el sufijo \".ser\". Después se intenta cargar un objeto serializado de ese recurso.",
+          "Por ejemplo, con beanName \"x.y\", Beans.instantiate intentaría primero leer un objeto serializado del recurso \"x/y.ser\" y, si falla, cargaría la clase \"x.y\" y crearía una instancia.",
+          "Si el bean es un subtipo de java.applet.Applet, recibe una inicialización especial. Primero se le da un AppletStub y un AppletContext predeterminados. Segundo, si se instanció a partir de un nombre de clase, se llama a su método \"init\". (Si el bean se deserializó, este paso se omite).",
+          "En los beans que son applets, es responsabilidad de quien llama invocar \"start\" en el applet. Para que funcione bien, debe hacerse después de añadir el applet a un contenedor AWT visible.",
+          "Los applets creados con beans.instantiate se ejecutan en un entorno algo distinto al de los applets dentro de navegadores. En concreto, los bean-applets no tienen acceso a \"parameters\", así que puede interesarles ofrecer métodos get/set de propiedades para fijar los valores. Recomendamos probar los bean-applets tanto con el appletviewer del JDK (como entorno de navegador de referencia) como con el BeanBox del BDK (como contenedor de beans de referencia)."
+        ],
+        "parameters": [
+          {
+            "label": "cls",
+            "detail": "el cargador de clases con el que se crea el bean. Si es null, se usa el cargador de clases del sistema."
+          },
+          {
+            "label": "beanName",
+            "detail": "el nombre del bean dentro del cargador de clases. Por ejemplo \"sun.beanbox.foobah\""
+          },
+          {
+            "label": "beanContext",
+            "detail": "El BeanContext en el que se anida el nuevo bean"
+          },
+          {
+            "label": "initializer",
+            "detail": "El AppletInitializer del nuevo bean"
+          }
+        ],
+        "returns": ["un JavaBean"],
+        "exceptions": [
+          {
+            "label": "ClassNotFoundException",
+            "detail": "si no se encuentra la clase de un objeto serializado."
+          },
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S."
+          }
+        ],
+        "caveats": [
+          "Se recomienda usar instantiate(ClassLoader, String, BeanContext), porque la API de Applet está obsoleta. Consulta la documentación del paquete java.applet para más información."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.beans.ConstructorProperties": {
+    "body": [
+      "public class Point { @ConstructorProperties({\"x\", \"y\"}) public Point(int x, int y) { this.x = x; this.y = y; }",
+      "public int getX() { return x; }",
+      "public int getY() { return y; }",
+      "private final int x, y; }",
+      "La anotación indica que el primer parámetro del constructor puede obtenerse con getX() y el segundo con getY(). Como en general los nombres de los parámetros no están disponibles en tiempo de ejecución, sin la anotación no habría forma de saber si los parámetros corresponden a getX() y getY() o al revés."
+    ]
+  },
+  "web-java-se-java.beans.Encoder.getPersistenceDelegate": {
+    "body": [
+      "Si se ha asociado un delegado de persistencia al tipo dado con el método setPersistenceDelegate, se devuelve ese.",
+      "Si no, se busca un delegado de persistencia por el nombre formado por el nombre completo del tipo y el sufijo \"PersistenceDelegate\". Por ejemplo, el delegado de la clase Bean debería llamarse BeanPersistenceDelegate y estar en el mismo paquete.",
+      "public class Bean { ... } public class BeanPersistenceDelegate { ... }",
+      "Para la clase Bean se devuelve la instancia de BeanPersistenceDelegate.",
+      "Si el tipo es null, se devuelve un delegado interno compartido que codifica el valor null.",
+      "Si el tipo es una declaración enum, se devuelve un delegado interno compartido que codifica las constantes de la enumeración por su nombre.",
+      "Si el tipo es primitivo o su envoltorio, se devuelve un delegado interno compartido que codifica valores de ese tipo.",
+      "Si el tipo es un array, se devuelve un delegado interno compartido que codifica un array del tipo y longitud adecuados, y cada elemento como si fuera una propiedad.",
+      "Si el tipo es un proxy, se devuelve un delegado interno compartido que codifica la instancia con el método java.lang.reflect.Proxy.newProxyInstance.",
+      "Si el BeanInfo de este tipo tiene un BeanDescriptor que define el atributo \"persistenceDelegate\", se devuelve el valor de ese atributo.",
+      "En los demás casos se devuelve el delegado de persistencia predeterminado. Este supone que el tipo es un JavaBean, es decir, que tiene un constructor predeterminado y que su estado puede describirse con los pares de métodos \"setter\" y \"getter\" que devuelve la clase Introspector. El constructor predeterminado es el que tiene más parámetros entre los anotados con ConstructorProperties. Si ninguno tiene esa anotación, se usa el constructor sin parámetros. Por ejemplo, en el siguiente fragmento se usará el constructor sin parámetros de Foo y el de dos parámetros de Bar.",
+      "public class Foo { public Foo() { ... } public Foo(int x) { ... } } public class Bar { public Bar() { ... } @ConstructorProperties({\"x\"}) public Bar(int x) { ... } @ConstructorProperties({\"x\", \"y\"}) public Bar(int x, int y) { ... } }"
+    ],
+    "parameters": [
+      {
+        "label": "type",
+        "detail": "la clase de los objetos"
+      }
+    ],
+    "returns": ["el delegado de persistencia del tipo dado"]
+  },
+  "web-java-se-java.beans.EventHandler": {
+    "body": [
+      "La clase EventHandler está pensada para herramientas interactivas, como constructores de aplicaciones, que permiten a los desarrolladores conectar beans. Normalmente las conexiones van de un bean de interfaz de usuario (el origen del evento) a un bean de lógica de la aplicación (el destino). Las conexiones más eficaces de este tipo aíslan la lógica de la aplicación de la interfaz. Por ejemplo, el EventHandler de una conexión entre un JCheckBox y un método que acepta un boolean puede encargarse de extraer el estado de la casilla y pasarlo directamente al método, de modo que este queda aislado de la capa de interfaz.",
+      "Las clases internas son otra forma, más general, de manejar los eventos de la interfaz. EventHandler solo cubre una parte de lo que permiten las clases internas, pero funciona mejor con el esquema de persistencia a largo plazo. Además, en aplicaciones grandes en las que se implementa muchas veces la misma interfaz, usar EventHandler puede reducir el espacio que ocupa la aplicación en disco y en memoria.",
+      "Los listeners creados con EventHandler ocupan tan poco porque la clase Proxy, en la que se basa EventHandler, comparte las implementaciones de interfaces idénticas. Por ejemplo, si creas todos los ActionListener de una aplicación con los métodos create de EventHandler, todos serán instancias de una única clase (creada por Proxy). En general, los listeners basados en Proxy necesitan una clase por tipo de listener (interfaz), mientras que con clases internas hace falta una clase por listener (objeto que implementa la interfaz).",
+      "Normalmente no se trabaja directamente con instancias de EventHandler. En su lugar, se usa uno de los métodos create de EventHandler para crear un objeto que implementa una interfaz de listener. Ese objeto usa internamente un EventHandler para encapsular la información del evento, el objeto al que se envía un mensaje cuando ocurre, el mensaje (método) que se envía y los argumentos del método. La sección siguiente muestra ejemplos de cómo crear listeners con los métodos create.",
+      "Ejemplos de uso de EventHandler",
+      "El uso más sencillo de EventHandler es instalar un listener que llama a un método sin argumentos del objeto destino. En el siguiente ejemplo creamos un ActionListener que invoca el método toFront de una instancia de javax.swing.JFrame.",
+      "myButton.addActionListener( (ActionListener)EventHandler.create(ActionListener.class, frame, \"toFront\"));",
+      "Al pulsar myButton se ejecuta frame.toFront(). Se puede conseguir lo mismo, con algo más de seguridad de tipos en compilación, definiendo una implementación de ActionListener y añadiendo una instancia al botón:",
+      "//Equivalent code using an inner class instead of EventHandler. myButton.addActionListener(new ActionListener() { public void actionPerformed(ActionEvent e) { frame.toFront(); } });",
+      "El siguiente uso más sencillo es extraer el valor de una propiedad del primer argumento del método de la interfaz (normalmente un evento) y usarlo para fijar una propiedad del objeto destino. En el siguiente ejemplo creamos un ActionListener que fija la propiedad nextFocusableComponent del destino (myButton) al valor de la propiedad \"source\" del evento.",
+      "EventHandler.create(ActionListener.class, myButton, \"nextFocusableComponent\", \"source\")",
+      "Esto equivale a la siguiente implementación con clase interna:",
+      "//Equivalent code using an inner class instead of EventHandler. new ActionListener() { public void actionPerformed(ActionEvent e) { myButton.setNextFocusableComponent((Component)e.getSource()); } }",
+      "También se puede crear un EventHandler que simplemente pase el evento recibido a la acción del destino. Si el cuarto argumento de EventHandler.create es una cadena vacía, el evento se pasa tal cual:",
+      "EventHandler.create(ActionListener.class, target, \"doActionEvent\", \"\")",
+      "Esto equivale a la siguiente implementación con clase interna:",
+      "//Equivalent code using an inner class instead of EventHandler. new ActionListener() { public void actionPerformed(ActionEvent e) { target.doActionEvent(e); } }",
+      "Probablemente el uso más habitual de EventHandler es extraer el valor de una propiedad del origen del evento y asignarlo a una propiedad del objeto destino. En el siguiente ejemplo creamos un ActionListener que fija la propiedad \"label\" del destino al valor de la propiedad \"text\" del origen (el valor de la propiedad \"source\") del evento.",
+      "EventHandler.create(ActionListener.class, myButton, \"label\", \"source.text\")",
+      "Esto equivale a la siguiente implementación con clase interna:",
+      "//Equivalent code using an inner class instead of EventHandler. new ActionListener { public void actionPerformed(ActionEvent e) { myButton.setLabel(((JTextField)e.getSource()).getText()); } }",
+      "La propiedad del evento puede \"cualificarse\" con cualquier número de prefijos de propiedad separados por \".\". Los nombres que aparecen antes de cada \".\" se toman como propiedades que se aplican al evento, empezando por la de más a la izquierda.",
+      "Por ejemplo, este action listener",
+      "EventHandler.create(ActionListener.class, target, \"a\", \"b.c.d\")",
+      "podría escribirse como esta clase interna (suponiendo que todas las propiedades tienen getters canónicos y devuelven los tipos adecuados):",
+      "//Equivalent code using an inner class instead of EventHandler. new ActionListener { public void actionPerformed(ActionEvent e) { target.setA(e.getB().getC().isD()); } }",
+      "La propiedad del destino también puede \"cualificarse\" con cualquier número de prefijos de propiedad separados por \".\". Por ejemplo, este action listener:",
+      "EventHandler.create(ActionListener.class, target, \"a.b\", \"c.d\")",
+      "podría escribirse como esta clase interna (suponiendo que todas las propiedades tienen getters canónicos y devuelven los tipos adecuados):",
+      "//Equivalent code using an inner class instead of EventHandler. new ActionListener { public void actionPerformed(ActionEvent e) { target.getA().setB(e.getC().isD()); } }",
+      "Como EventHandler acaba usando reflexión para invocar un método, recomendamos no apuntar a métodos sobrecargados. Por ejemplo, si el destino es una instancia de la clase MyTarget, definida así:",
+      "public class MyTarget { public void doIt(String); public void doIt(Object); }",
+      "el método doIt está sobrecargado. EventHandler invocará el que corresponda según el origen. Si el origen es null, cualquiera de los dos vale y no está definido cuál se invoca. Por eso recomendamos no apuntar a métodos sobrecargados."
+    ]
+  },
   "web-java-se-java.io.DataInput": {
     "body": [
       "En general, en todas las rutinas de lectura de esta interfaz, si se llega al final del archivo antes de leer los bytes deseados, se lanza EOFException (un tipo de IOException). Si algún byte no se puede leer por cualquier otro motivo, se lanza una IOException distinta de EOFException. En particular, puede lanzarse IOException si el flujo de entrada se ha cerrado.",
