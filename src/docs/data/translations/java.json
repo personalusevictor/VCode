@@ -565,12 +565,526 @@
       }
     ]
   },
+  "web-java-se-java.awt.Dialog.setVisible": {
+    "parameters": [
+      {
+        "label": "b",
+        "detail": "si es true, hace visible el Dialog; si no, lo oculta. Si el diálogo o su propietario aún no son visualizables, ambos se hacen visualizables. El diálogo se valida antes de hacerse visible. Si es false, oculta el Dialog y hace que setVisible(true) retorne si está bloqueado en ese momento. Notas para diálogos modales. setVisible(true): si el diálogo no es visible todavía, esta llamada no retorna hasta que se oculta con setVisible(false) o dispose. setVisible(false): oculta el diálogo y hace que setVisible(true) retorne si está bloqueado. Se puede llamar a este método desde el hilo de despacho de eventos, porque el toolkit garantiza que los demás eventos no se bloquean mientras este método está bloqueado."
+      }
+    ]
+  },
   "web-java-se-java.awt.DisplayMode.toString": {
     "returns": ["una representación en cadena del objeto."],
     "caveats": [
       "En general, toString devuelve una cadena que «representa textualmente» el objeto. Debería ser una representación concisa pero informativa y fácil de leer. Se recomienda que todas las subclases sobrescriban este método. La cadena no tiene por qué ser estable en el tiempo ni entre ejecuciones de la JVM.",
       "El toString de Object devuelve una cadena con el nombre de la clase de la que el objeto es instancia, el carácter arroba '@' y la representación hexadecimal sin signo del código hash del objeto. Es decir, devuelve una cadena igual al valor de:",
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
+    ]
+  },
+  "web-java-se-java.awt.FlowLayout.setAlignOnBaseline": {
+    "parameters": [
+      {
+        "label": "alignOnBaseline",
+        "detail": "si los componentes deben alinearse verticalmente por su línea base"
+      }
+    ]
+  },
+  "web-java-se-java.awt.Font.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un Font nuevo a partir del nombre, estilo y tamaño en puntos indicados."
+        ],
+        "body": [
+          "El nombre puede ser el de una cara tipográfica o el de una familia. Se usa junto con el estilo para encontrar una cara adecuada. Si se indica una familia, el argumento style sirve para elegir la cara más apropiada de esa familia. Si se indica una cara, su estilo y el argumento style se combinan para localizar la fuente que mejor encaje dentro de la misma familia. Por ejemplo, si se indica la cara \"Arial Bold\" con estilo Font.ITALIC, el sistema busca en la familia \"Arial\" una cara negrita y cursiva, y puede asociar la instancia a la cara física \"Arial Bold Italic\". El argumento style se combina con el estilo de la cara, no se suma ni se resta. Es decir, indicar una cara negrita y un estilo negrita no duplica la negrita, e indicar una cara negrita con estilo normal no aclara la fuente.",
+          "Si no se encuentra una cara para el estilo pedido, el sistema puede aplicar un estilo algorítmico. Por ejemplo, si se pide ITALIC y no hay cara cursiva, los glifos de la cara normal pueden inclinarse algorítmicamente.",
+          "La búsqueda del nombre no distingue mayúsculas de minúsculas y usa las reglas de plegado de mayúsculas de la configuración regional de EE. UU.",
+          "Si el parámetro name no es una fuente lógica, es decir, se interpreta como una cara o familia física, y la implementación no puede asociarlo a una fuente física o a una alternativa compatible, el sistema asociará la instancia de Font a \"Dialog\", de modo que, por ejemplo, la familia que devuelva getFamily será \"Dialog\"."
+        ],
+        "parameters": [
+          {
+            "label": "name",
+            "detail": "el nombre de la fuente. Puede ser el nombre de una cara o de una familia, y puede representar una fuente lógica o una física disponible en este GraphicsEnvironment. Las familias de las fuentes lógicas son: Dialog, DialogInput, Monospaced, Serif y SansSerif. Hay constantes String predefinidas para todos estos nombres, por ejemplo DIALOG. Si name es null, el nombre lógico del nuevo Font que devuelve getName() pasa a ser \"Default\"."
+          },
+          {
+            "label": "style",
+            "detail": "la constante de estilo del Font. El argumento style es una máscara de bits entera que puede ser PLAIN o una unión bit a bit de BOLD y/o ITALIC (por ejemplo, ITALIC o BOLD|ITALIC). Si no corresponde a ninguna de las máscaras esperadas, el estilo se fija a PLAIN."
+          },
+          {
+            "label": "size",
+            "detail": "el tamaño en puntos del Font"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un Font nuevo con los atributos indicados. Solo se reconocen las claves definidas en TextAttribute. Además, este constructor no reconoce el atributo FONT (consulta getAvailableAttributes). Solo los atributos con valores de tipos válidos afectan al nuevo Font."
+        ],
+        "body": [
+          "Si attributes es null, el nuevo Font se inicializa con valores predeterminados."
+        ],
+        "parameters": [
+          {
+            "label": "attributes",
+            "detail": "los atributos que se asignan al nuevo Font, o null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.Font.LAYOUT_NO_LIMIT_CONTEXT": {
+    "intro": [
+      "Indicador para layoutGlyphVector que señala que no debe examinarse el texto del array de caracteres posterior al límite indicado."
+    ]
+  },
+  "web-java-se-java.awt.Font.TYPE1_FONT": {
+    "intro": [
+      "Identifica un recurso de fuente de tipo TYPE1. Se usa para indicar un recurso de fuente Type1 al método createFont."
+    ]
+  },
+  "web-java-se-java.awt.Font.getSize": {
+    "body": [
+      "La API Java 2D adopta la convención de que un punto equivale a una unidad en coordenadas de usuario. Con una transformación normalizada para pasar de coordenadas de usuario a coordenadas de dispositivo, 72 unidades de usuario equivalen a 1 pulgada en el dispositivo. En ese caso, un punto es 1/72 de pulgada."
+    ],
+    "returns": [
+      "el tamaño en puntos de este Font, en unidades de 1/72 de pulgada."
+    ]
+  },
+  "web-java-se-java.awt.Font.getStringBounds": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve los límites lógicos del String indicado en el FontRenderContext indicado. Los límites lógicos contienen el origen, el ascenso, el avance y la altura, que incluye el interlineado. No siempre encierran todo el texto: por ejemplo, en algunos idiomas y fuentes, los acentos pueden quedar por encima del ascenso o por debajo del descenso. Para obtener un rectángulo visual que encierre todo el texto, usa el método getBounds de TextLayout."
+        ],
+        "body": [
+          "Nota: los límites devueltos están en coordenadas relativas a la línea base (consulta las notas de la clase)."
+        ],
+        "parameters": [
+          {
+            "label": "str",
+            "detail": "el String indicado"
+          },
+          {
+            "label": "frc",
+            "detail": "el FontRenderContext indicado"
+          }
+        ],
+        "returns": [
+          "un Rectangle2D que es el rectángulo delimitador del String indicado en el FontRenderContext indicado."
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve los límites lógicos del String indicado en el FontRenderContext indicado. Los límites lógicos contienen el origen, el ascenso, el avance y la altura, que incluye el interlineado. No siempre encierran todo el texto: por ejemplo, en algunos idiomas y fuentes, los acentos pueden quedar por encima del ascenso o por debajo del descenso. Para obtener un rectángulo visual que encierre todo el texto, usa el método getBounds de TextLayout."
+        ],
+        "body": [
+          "Nota: los límites devueltos están en coordenadas relativas a la línea base (consulta las notas de la clase)."
+        ],
+        "parameters": [
+          {
+            "label": "str",
+            "detail": "el String indicado"
+          },
+          {
+            "label": "beginIndex",
+            "detail": "el desplazamiento inicial de str"
+          },
+          {
+            "label": "limit",
+            "detail": "el desplazamiento final de str"
+          },
+          {
+            "label": "frc",
+            "detail": "el FontRenderContext indicado"
+          }
+        ],
+        "returns": [
+          "un Rectangle2D que es el rectángulo delimitador del String indicado en el FontRenderContext indicado."
+        ],
+        "exceptions": [
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "si beginIndex es menor que cero, limit es mayor que la longitud de str o beginIndex es mayor que limit."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve los límites lógicos del array de caracteres indicado en el FontRenderContext indicado. Los límites lógicos contienen el origen, el ascenso, el avance y la altura, que incluye el interlineado. No siempre encierran todo el texto: por ejemplo, en algunos idiomas y fuentes, los acentos pueden quedar por encima del ascenso o por debajo del descenso. Para obtener un rectángulo visual que encierre todo el texto, usa el método getBounds de TextLayout."
+        ],
+        "body": [
+          "Nota: los límites devueltos están en coordenadas relativas a la línea base (consulta las notas de la clase)."
+        ],
+        "parameters": [
+          {
+            "label": "chars",
+            "detail": "un array de caracteres"
+          },
+          {
+            "label": "beginIndex",
+            "detail": "el desplazamiento inicial en el array de caracteres"
+          },
+          {
+            "label": "limit",
+            "detail": "el desplazamiento final en el array de caracteres"
+          },
+          {
+            "label": "frc",
+            "detail": "el FontRenderContext indicado"
+          }
+        ],
+        "returns": [
+          "un Rectangle2D que es el rectángulo delimitador del array de caracteres indicado en el FontRenderContext indicado."
+        ],
+        "exceptions": [
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "si beginIndex es menor que cero, limit es mayor que la longitud de chars o beginIndex es mayor que limit."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve los límites lógicos de los caracteres indexados en el CharacterIterator indicado en el FontRenderContext indicado. Los límites lógicos contienen el origen, el ascenso, el avance y la altura, que incluye el interlineado. No siempre encierran todo el texto: por ejemplo, en algunos idiomas y fuentes, los acentos pueden quedar por encima del ascenso o por debajo del descenso. Para obtener un rectángulo visual que encierre todo el texto, usa el método getBounds de TextLayout."
+        ],
+        "body": [
+          "Nota: los límites devueltos están en coordenadas relativas a la línea base (consulta las notas de la clase)."
+        ],
+        "parameters": [
+          {
+            "label": "ci",
+            "detail": "el CharacterIterator indicado"
+          },
+          {
+            "label": "beginIndex",
+            "detail": "el desplazamiento inicial en ci"
+          },
+          {
+            "label": "limit",
+            "detail": "el desplazamiento final en ci"
+          },
+          {
+            "label": "frc",
+            "detail": "el FontRenderContext indicado"
+          }
+        ],
+        "returns": [
+          "un Rectangle2D que es el rectángulo delimitador de los caracteres indexados en el CharacterIterator indicado en el FontRenderContext indicado."
+        ],
+        "exceptions": [
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "si beginIndex es menor que el índice inicial de ci, limit es mayor que el índice final de ci o beginIndex es mayor que limit"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.Font.hasUniformLineMetrics": {
+    "intro": [
+      "Comprueba si este Font tiene métricas de línea uniformes. Un Font lógico puede ser una fuente compuesta, formada por varias fuentes físicas que cubren distintos rangos de códigos, y cada una puede tener LineMetrics distintas. Si el Font lógico es una única fuente, las métricas son uniformes."
+    ],
+    "returns": [
+      "true si este Font tiene métricas de línea uniformes; false en caso contrario."
+    ]
+  },
+  "web-java-se-java.awt.Font.isBold": {
+    "intro": ["Indica si el estilo de este Font es BOLD."],
+    "returns": [
+      "true si el estilo de este Font es BOLD; false en caso contrario."
+    ]
+  },
+  "web-java-se-java.awt.Font.isItalic": {
+    "intro": ["Indica si el estilo de este Font es ITALIC."],
+    "returns": [
+      "true si el estilo de este Font es ITALIC; false en caso contrario."
+    ]
+  },
+  "web-java-se-java.awt.Font.isPlain": {
+    "intro": ["Indica si el estilo de este Font es PLAIN."],
+    "returns": [
+      "true si este Font tiene estilo PLAIN; false en caso contrario."
+    ]
+  },
+  "web-java-se-java.awt.FontMetrics": {
+    "body": [
+      "Nota para quien cree subclases: como muchos de estos métodos forman bucles cerrados y mutuamente recursivos, debes implementar al menos uno de los métodos de cada bucle para evitar una recursión infinita al usar tu subclase. En concreto, este es el conjunto mínimo de métodos que se recomienda sobrescribir para garantizar que funcione bien y evitar la recursión infinita (aunque otros subconjuntos son igual de válidos):",
+      "getAscent()",
+      "getLeading()",
+      "getMaxAdvance()",
+      "charWidth(char)",
+      "charsWidth(char[], int, int)",
+      "Las implementaciones de estos métodos son poco eficientes, por lo que suelen sobrescribirse con versiones más eficientes propias de cada toolkit.",
+      "Cuando una aplicación pide colocar un carácter en la posición (x, y), el carácter se coloca de modo que su punto de referencia (el punto de la imagen adjunta) quede en esa posición. El punto de referencia define una línea horizontal llamada línea base del carácter. En la impresión normal, las líneas base de los caracteres deben quedar alineadas.",
+      "Además, cada carácter de una fuente tiene un ascenso, un descenso y una anchura de avance. El ascenso es lo que el carácter sube por encima de la línea base. El descenso es lo que baja por debajo. La anchura de avance indica la posición en la que AWT debe colocar el siguiente carácter.",
+      "Un array de caracteres o una cadena también pueden tener ascenso, descenso y anchura de avance. El ascenso del array es el ascenso máximo de sus caracteres, y el descenso, el descenso máximo. La anchura de avance es la suma de las anchuras de avance de cada carácter. El avance de un String es la distancia a lo largo de su línea base; es la anchura que debe usarse para centrarlo o alinearlo a la derecha.",
+      "El avance de un String no es necesariamente la suma de los avances de sus caracteres medidos por separado, porque la anchura de un carácter puede variar según su contexto. Por ejemplo, en árabe la forma de un carácter puede cambiar para enlazar con otros. Y en algunas escrituras ciertas secuencias de caracteres pueden representarse con una sola forma, llamada ligadura. Medir los caracteres uno a uno no tiene en cuenta estas transformaciones.",
+      "Las métricas de fuente son relativas a la línea base, es decir, en general no dependen de la rotación aplicada a la fuente (salvo posibles efectos de ajuste a la cuadrícula). Consulta Font."
+    ]
+  },
+  "web-java-se-java.awt.Frame.MAXIMIZED_BOTH": {
+    "intro": [
+      "Este bit de estado indica que el frame está totalmente maximizado (en horizontal y en vertical). Es solo un alias de conveniencia de MAXIMIZED_VERT | MAXIMIZED_HORIZ."
+    ],
+    "body": [
+      "La comprobación correcta de que el frame está totalmente maximizado es",
+      "(state & Frame.MAXIMIZED_BOTH) == Frame.MAXIMIZED_BOTH",
+      "Para comprobar si el frame está maximizado en alguna dirección, usa",
+      "(state & Frame.MAXIMIZED_BOTH) != 0"
+    ]
+  },
+  "web-java-se-java.awt.Graphics2D": {
+    "body": [
+      "Espacios de coordenadas",
+      "Todas las coordenadas que se pasan a un Graphics2D se expresan en un sistema independiente del dispositivo llamado espacio de usuario, que es el que usan las aplicaciones. El Graphics2D contiene, como parte de su estado de renderizado, un AffineTransform que define cómo pasar de coordenadas de usuario a coordenadas dependientes del dispositivo en el espacio de dispositivo.",
+      "Las coordenadas del espacio de dispositivo suelen referirse a píxeles concretos y se sitúan en los huecos infinitamente finos entre ellos. Algunos Graphics2D pueden capturar operaciones de renderizado para guardarlas en un metarchivo gráfico y reproducirlas más tarde en un dispositivo concreto de resolución física desconocida. Como la resolución puede no conocerse al capturar, la transformación del Graphics2D se configura para pasar las coordenadas de usuario a un espacio de dispositivo virtual que aproxima la resolución esperada. Si la estimación es incorrecta, puede ser necesario aplicar más transformaciones al reproducir.",
+      "Algunas operaciones de los objetos de atributos de renderizado ocurren en el espacio de dispositivo, pero todos los métodos de Graphics2D reciben coordenadas de usuario.",
+      "Cada Graphics2D está asociado a un destino que define dónde se renderiza. Un GraphicsConfiguration define las características de ese destino, como el formato de píxel y la resolución. Se usa el mismo destino durante toda la vida del Graphics2D.",
+      "Al crear un Graphics2D, el GraphicsConfiguration indica la transformación predeterminada para su destino (un Component o una Image). Esta transformación hace corresponder el espacio de usuario con las coordenadas de pantalla e impresora de modo que el origen queda en la esquina superior izquierda de la región de destino, con X creciendo hacia la derecha e Y hacia abajo. La escala de esta transformación es la identidad en dispositivos cercanos a 72 ppp, como las pantallas, y aproximadamente 72 unidades de usuario por pulgada en dispositivos de alta resolución, como las impresoras. En los búferes de imagen, la transformación predeterminada es la identidad.",
+      "Proceso de renderizado",
+      "El proceso de renderizado se divide en cuatro fases controladas por los atributos de renderizado del Graphics2D. El renderizador puede optimizar muchos de estos pasos, ya sea guardando resultados para llamadas futuras, juntando varios pasos virtuales en una sola operación o reconociendo atributos como casos simples comunes que pueden eliminarse modificando otras partes de la operación.",
+      "Los pasos del proceso de renderizado son:",
+      "Determinar qué se renderiza.",
+      "Limitar la operación de renderizado al Clip actual. El Clip lo define un Shape en espacio de usuario y lo controla el programa con los métodos de recorte de Graphics y Graphics2D. Este recorte de usuario se transforma al espacio de dispositivo con la Transform actual y se combina con el recorte del dispositivo, definido por la visibilidad de las ventanas y los límites del dispositivo. La combinación de ambos define el recorte compuesto, que determina la región de recorte final. El sistema de renderizado no modifica el recorte de usuario para reflejar el recorte compuesto resultante.",
+      "Determinar qué colores se renderizan.",
+      "Aplicar los colores a la superficie de destino con el atributo Composite actual del contexto Graphics2D.",
+      "Los tres tipos de operaciones de renderizado, con los detalles de cada proceso, son:",
+      "Operaciones con Shape",
+      "Si la operación es draw(Shape), se usa el método createStrokedShape del atributo Stroke actual del Graphics2D para construir un Shape nuevo con el contorno del Shape indicado.",
+      "El Shape se transforma del espacio de usuario al de dispositivo con la Transform actual del Graphics2D.",
+      "El contorno del Shape se extrae con su método getPathIterator, que devuelve un PathIterator que recorre el borde del Shape.",
+      "Si el Graphics2D no puede manejar los segmentos curvos que devuelve el PathIterator, puede llamar al método alternativo getPathIterator(AffineTransform, double) de Shape, que aplana el Shape.",
+      "Se pide al Paint actual del Graphics2D un PaintContext, que indica los colores que se renderizan en el espacio de dispositivo.",
+      "Operaciones de texto",
+      "Para determinar el conjunto de glifos necesario para renderizar el String indicado se siguen estos pasos:",
+      "Si el argumento es un String, se pide al Font actual del Graphics2D que convierta los caracteres Unicode del String en un conjunto de glifos, con los algoritmos básicos de disposición y forma que implemente la fuente.",
+      "Si el argumento es un AttributedCharacterIterator, se le pide que se convierta en un TextLayout usando sus atributos de fuente. TextLayout implementa algoritmos de disposición de glifos más elaborados, que aplican automáticamente los ajustes bidireccionales de Unicode para varias fuentes con distintas direcciones de escritura.",
+      "Si el argumento es un GlyphVector, ya contiene los códigos de glifo adecuados de la fuente con coordenadas explícitas para la posición de cada glifo.",
+      "Se consulta el Font actual para obtener los contornos de los glifos indicados. Estos contornos se tratan como formas en espacio de usuario, relativas a la posición de cada glifo determinada en el paso 1.",
+      "Los contornos de los caracteres se rellenan como se indica arriba en Operaciones con Shape.",
+      "Se pide al Paint actual un PaintContext, que indica los colores que se renderizan en el espacio de dispositivo.",
+      "Operaciones con imágenes",
+      "La región de interés la define el rectángulo delimitador de la Image de origen. Este rectángulo se expresa en el espacio de imagen, que es el sistema de coordenadas local del objeto Image.",
+      "Si se pasa un AffineTransform a drawImage(Image, AffineTransform, ImageObserver), se usa para transformar el rectángulo delimitador del espacio de imagen al de usuario. Si no se pasa ninguno, el rectángulo se trata como si ya estuviera en espacio de usuario.",
+      "El rectángulo delimitador de la Image de origen se transforma del espacio de usuario al de dispositivo con la Transform actual. El resultado no tiene por qué ser una región rectangular en el espacio de dispositivo.",
+      "El objeto Image determina qué colores se renderizan, muestreados según la correspondencia de coordenadas de origen a destino que definen la Transform actual y la transformación de imagen opcional.",
+      "Atributos de renderizado predeterminados",
+      "Los valores predeterminados de los atributos de renderizado de Graphics2D son:",
+      "Paint: el color del Component. Font: el Font del Component. Stroke: un trazo cuadrado de grosor 1, sin guiones, con uniones en inglete y extremos cuadrados. Transform: el getDefaultTransform del GraphicsConfiguration del Component. Composite: la regla AlphaComposite.SRC_OVER. Clip: sin Clip de renderizado; la salida se recorta al Component.",
+      "Problemas de compatibilidad de renderizado",
+      "El modelo de renderizado de JDK 1.1 se basa en un modelo de pixelado en el que las coordenadas son infinitamente finas y están entre los píxeles. Las operaciones de dibujo usan un trazo de un píxel de ancho que rellena el píxel situado abajo a la derecha del punto de anclaje del trayecto. Este modelo es coherente con la mayoría de los renderizadores de plataforma existentes, que deben convertir las coordenadas enteras en un trazo discreto que caiga completamente en un número concreto de píxeles.",
+      "La API Java 2D (plataforma Java 2) admite renderizadores con antialiasing. Un trazo de un píxel de ancho no tiene que caer completamente en el píxel N en lugar del N+1; puede caer parcialmente en ambos. No hace falta elegir una dirección de sesgo para un trazo ancho, porque la mezcla en los bordes del trazo hace visible su posición subpíxel. En cambio, cuando se desactiva el antialiasing poniendo la clave KEY_ANTIALIASING a VALUE_ANTIALIAS_OFF, el renderizador puede necesitar aplicar un sesgo para decidir qué píxel modificar cuando el trazo cae justo en el límite entre píxeles, como al dibujar sobre una coordenada entera del espacio de dispositivo. Aunque con antialiasing ya no es necesario que el modelo defina un sesgo para el trazo, conviene que los renderizadores con y sin antialiasing se comporten de forma parecida en el caso habitual de líneas horizontales y verticales de un píxel. Para que activar el antialiasing con KEY_ANTIALIASING a VALUE_ANTIALIAS_ON no haga que esas líneas pasen de repente a ser el doble de anchas y la mitad de opacas, conviene que el modelo defina un trayecto para ellas que cubra por completo un conjunto concreto de píxeles y así se vean más nítidas.",
+      "La API Java 2D mantiene la compatibilidad con el renderizado de JDK 1.1, de modo que las operaciones heredadas y el comportamiento de los renderizadores existentes no cambian. Se definen los métodos heredados en términos de los métodos generales draw y fill, lo que indica claramente cómo Graphics2D amplía Graphics según los atributos Stroke y Transform y las pistas de renderizado. Con los atributos predeterminados, el comportamiento es idéntico. Por ejemplo, el Stroke predeterminado es un BasicStroke de grosor 1 sin guiones y la Transform predeterminada para pantalla es la identidad.",
+      "Las dos reglas siguientes dan un renderizado predecible tanto con aliasing como con antialiasing.",
+      "Las coordenadas de dispositivo se definen entre píxeles, lo que evita resultados incoherentes entre el renderizado con y sin antialiasing. Si las coordenadas estuvieran en el centro de cada píxel, algunos píxeles cubiertos por una forma, como un rectángulo, quedarían cubiertos solo a medias. Sin antialiasing, esos píxeles se dibujarían dentro o fuera de la forma; con antialiasing, todos los píxeles del borde quedarían cubiertos a medias. En cambio, al definir las coordenadas entre píxeles, un rectángulo no tiene píxeles cubiertos a medias, se renderice o no con antialiasing.",
+      "Las líneas y trayectos trazados con BasicStroke pueden \"normalizarse\" para que los contornos se vean igual estén donde estén en la superficie y se dibujen con o sin antialiasing. Esta normalización la controla la pista KEY_STROKE_CONTROL. El algoritmo exacto no está especificado, pero su objetivo es que las líneas tengan un aspecto coherente sin importar cómo caigan sobre la cuadrícula de píxeles, y que en modo antialiasing las líneas horizontales y verticales sean más sólidas y se parezcan más a las equivalentes sin antialiasing. Un paso típico podría llevar los extremos de las líneas con antialiasing al centro de los píxeles para reducir la mezcla, o ajustar la posición subpíxel de las líneas sin antialiasing para que los grosores en coma flotante se redondeen a un número par o impar de píxeles con la misma probabilidad. Este proceso puede mover los extremos hasta medio píxel (normalmente hacia el infinito positivo en ambos ejes) para conseguir resultados coherentes.",
+      "Las siguientes definiciones de los métodos heredados generales se comportan igual que lo especificado antes con los atributos predeterminados:",
+      "En las operaciones de relleno, como fillRect, fillRoundRect, fillOval, fillArc, fillPolygon y clearRect, ahora puede llamarse a fill con el Shape deseado. Por ejemplo, al rellenar un rectángulo:",
+      "fill(new Rectangle(x, y, w, h));",
+      "se llama a esto.",
+      "Del mismo modo, en las operaciones de dibujo, como drawLine, drawRect, drawRoundRect, drawOval, drawArc, drawPolyline y drawPolygon, ahora puede llamarse a draw con el Shape deseado. Por ejemplo, al dibujar un rectángulo:",
+      "draw(new Rectangle(x, y, w, h));",
+      "se llama a esto.",
+      "Los métodos draw3DRect y fill3DRect estaban implementados con drawLine y fillRect de la clase Graphics, lo que haría que su comportamiento dependiera de los Stroke y Paint actuales de un Graphics2D. Esta clase sobrescribe esas implementaciones con versiones que usan solo el Color actual, ignorando el Paint actual, y que usan fillRect para reproducir exactamente el comportamiento de los métodos anteriores sea cual sea el Stroke actual.",
+      "La clase Graphics solo define el método setColor para controlar el color de pintado. Como la API Java 2D amplía Color para implementar la nueva interfaz Paint, setColor pasa a ser un método de conveniencia que fija el atributo Paint actual a un objeto Color. setColor(c) equivale a setPaint(c).",
+      "La clase Graphics define dos métodos para controlar cómo se aplican los colores al destino.",
+      "El método setPaintMode se implementa como método de conveniencia que fija el Composite predeterminado, equivalente a setComposite(new AlphaComposite.SrcOver).",
+      "El método setXORMode(Color xorcolor) se implementa como método de conveniencia que fija un Composite especial que ignora el componente alfa de los colores de origen y pone el color de destino al valor:",
+      "dstpixel = (PixelOf(srccolor) ^ PixelOf(xorcolor) ^ dstpixel);"
+    ]
+  },
+  "web-java-se-java.awt.Graphics2D.drawRenderableImage": {
+    "body": [
+      "Las pistas de renderizado fijadas en el Graphics2D pueden usarse al renderizar la RenderableImage. Si necesitas controlar explícitamente pistas concretas que reconoce una RenderableImage concreta, o saber qué pistas se usan, obtén un RenderedImage directamente de la RenderableImage y renderízalo con drawRenderedImage(RenderedImage, AffineTransform)."
+    ],
+    "parameters": [
+      {
+        "label": "img",
+        "detail": "la imagen que se va a renderizar. Si img es null, este método no hace nada."
+      },
+      {
+        "label": "xform",
+        "detail": "la transformación del espacio de imagen al espacio de usuario"
+      }
+    ]
+  },
+  "web-java-se-java.awt.Graphics2D.getFontRenderContext": {
+    "intro": [
+      "Obtiene el contexto de renderizado del Font dentro de este contexto Graphics2D. El FontRenderContext encapsula pistas de la aplicación, como el antialiasing y las métricas fraccionarias, e información del dispositivo de destino, como los puntos por pulgada. La aplicación debe proporcionar esta información al usar objetos que hacen formateo tipográfico, como Font y TextLayout. También deben proporcionarla las aplicaciones que hacen su propia disposición y necesitan medidas precisas de los glifos, como el avance y la altura de línea, cuando se han aplicado pistas de renderizado al texto."
+    ],
+    "returns": ["una referencia a una instancia de FontRenderContext."]
+  },
+  "web-java-se-java.awt.Graphics2D.scale": {
+    "body": ["[ sx 0 0 ] [ 0 sy 0 ] [ 0 0 1 ]"],
+    "parameters": [
+      {
+        "label": "sx",
+        "detail": "el factor por el que se multiplican las coordenadas X en las operaciones de renderizado posteriores respecto a las anteriores."
+      },
+      {
+        "label": "sy",
+        "detail": "el factor por el que se multiplican las coordenadas Y en las operaciones de renderizado posteriores respecto a las anteriores."
+      }
+    ]
+  },
+  "web-java-se-java.awt.Graphics2D.translate": {
+    "overloads": [
+      {
+        "intro": [
+          "Traslada el origen del contexto Graphics2D al punto (x, y) del sistema de coordenadas actual. Modifica el contexto para que su nuevo origen corresponda al punto (x, y) del sistema de coordenadas anterior. Todas las coordenadas de las operaciones de renderizado posteriores en este contexto son relativas a este nuevo origen."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada x indicada"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada y indicada"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Concatena la Transform actual del Graphics2D con una traslación. El renderizado posterior se desplaza la distancia indicada respecto a la posición anterior. Equivale a llamar a transform(T), donde T es un AffineTransform representado por esta matriz:"
+        ],
+        "body": ["[ 1 0 tx ] [ 0 1 ty ] [ 0 0 1 ]"],
+        "parameters": [
+          {
+            "label": "tx",
+            "detail": "la distancia de traslación en el eje x"
+          },
+          {
+            "label": "ty",
+            "detail": "la distancia de traslación en el eje y"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.GraphicsConfiguration": {
+    "body": [
+      "En un entorno multipantalla de dispositivo virtual, donde el escritorio puede ocupar varias pantallas físicas, los límites de los GraphicsConfiguration son relativos al sistema de coordenadas virtual. Al fijar la posición de un componente, usa getBounds para obtener los límites del GraphicsConfiguration deseado y desplaza la posición con sus coordenadas, como muestra este ejemplo:",
+      "Frame f = new Frame(gc); // where gc is a GraphicsConfiguration Rectangle bounds = gc.getBounds(); f.setLocation(10 + bounds.x, 10 + bounds.y);",
+      "Para saber si tu entorno es de dispositivo virtual, llama a getBounds en todos los GraphicsConfiguration del sistema. Si algún origen de los límites devueltos no es (0, 0), es un entorno de dispositivo virtual.",
+      "También puedes usar getBounds para obtener los límites del dispositivo virtual. Para ello, llama a getBounds en todos los GraphicsConfiguration del sistema y calcula la unión de todos los límites devueltos. Esa unión son los límites del dispositivo virtual. Este ejemplo los calcula:",
+      "{@code Rectangle virtualBounds = new Rectangle(); GraphicsEnvironment ge = GraphicsEnvironment. getLocalGraphicsEnvironment(); GraphicsDevice[] gs = ge.getScreenDevices(); for (int j = 0; j < gs.length; j++) { GraphicsDevice gd = gs[j]; GraphicsConfiguration[] gc = gd.getConfigurations(); for (int i=0; i < gc.length; i++) { virtualBounds = virtualBounds.union(gc[i].getBounds()); } } }"
+    ]
+  },
+  "web-java-se-java.awt.GraphicsConfiguration.getNormalizingTransform": {
+    "body": [
+      "Para un Graphics2D concreto, g, se puede restablecer la transformación para crear esa correspondencia con este pseudocódigo:",
+      "GraphicsConfiguration gc = g.getDeviceConfiguration();",
+      "g.setTransform(gc.getDefaultTransform()); g.transform(gc.getNormalizingTransform());",
+      "A veces este AffineTransform es la identidad, como en impresoras o salida a metarchivo, y solo es tan preciso como la información que da el sistema subyacente. En búferes de imagen no asociados a un dispositivo, como los que no se crean con createCompatibleImage, este AffineTransform es la identidad, porque no hay una medida de distancia válida."
+    ],
+    "returns": [
+      "un AffineTransform que se concatena al AffineTransform predeterminado para que 72 unidades del espacio de usuario correspondan a 1 pulgada en el espacio de dispositivo."
+    ]
+  },
+  "web-java-se-java.awt.GraphicsDevice": {
+    "body": [
+      "En un entorno multipantalla, los GraphicsConfiguration permiten renderizar componentes en varias pantallas. Este ejemplo crea un JFrame para cada GraphicsConfiguration de cada pantalla del GraphicsEnvironment:",
+      "{@code GraphicsEnvironment ge = GraphicsEnvironment. getLocalGraphicsEnvironment(); GraphicsDevice[] gs = ge.getScreenDevices(); for (int j = 0; j < gs.length; j++) { GraphicsDevice gd = gs[j]; GraphicsConfiguration[] gc = gd.getConfigurations(); for (int i=0; i < gc.length; i++) { JFrame f = new JFrame(gs[j].getDefaultConfiguration()); Canvas c = new Canvas(gc[i]); Rectangle gcBounds = gc[i].getBounds(); int xoffs = gcBounds.x; int yoffs = gcBounds.y; f.getContentPane().add(c); f.setLocation((i*50)+xoffs, (i*60)+yoffs); f.show(); } } }",
+      "Para más información sobre la API del modo exclusivo de pantalla completa, consulta el",
+      "tutorial Full-Screen Exclusive Mode API."
+    ]
+  },
+  "web-java-se-java.awt.GraphicsEnvironment.isHeadless": {
+    "intro": [
+      "Comprueba si este entorno puede tener pantalla, teclado y ratón. Si este método devuelve true, las partes de Toolkit y GraphicsEnvironment que dependen de pantalla, teclado o ratón lanzan HeadlessException."
+    ],
+    "returns": [
+      "true si este entorno no admite pantalla, teclado y ratón; false en caso contrario"
+    ]
+  },
+  "web-java-se-java.awt.GraphicsEnvironment.isHeadlessInstance": {
+    "intro": [
+      "Indica si este entorno gráfico puede tener pantalla, teclado y ratón. Si devuelve true, las partes del entorno gráfico que dependen de pantalla, teclado o ratón lanzan HeadlessException."
+    ],
+    "returns": [
+      "true si este entorno admite pantalla, teclado y ratón; false en caso contrario"
+    ]
+  },
+  "web-java-se-java.awt.GridBagLayout": {
+    "body": [
+      "Cada componente gestionado por un GridBagLayout está asociado a una instancia de GridBagConstraints. El objeto de restricciones indica dónde debe situarse en la rejilla el área de visualización del componente y cómo se coloca el componente dentro de ella. Además de las restricciones, GridBagLayout tiene en cuenta los tamaños mínimo y preferido de cada componente para decidir su tamaño.",
+      "La orientación general de la rejilla depende de la propiedad ComponentOrientation del contenedor. En orientaciones horizontales de izquierda a derecha, la coordenada (0,0) está en la esquina superior izquierda del contenedor, con x creciendo hacia la derecha e y hacia abajo. En orientaciones de derecha a izquierda, la coordenada (0,0) está en la esquina superior derecha, con x creciendo hacia la izquierda e y hacia abajo.",
+      "Para usar bien un GridBagLayout, tienes que personalizar uno o más de los GridBagConstraints asociados a sus componentes. Se personalizan fijando una o más de sus variables de instancia:",
+      "GridBagConstraints.gridx, GridBagConstraints.gridy: indican la celda que contiene la esquina inicial del área de visualización del componente; la celda del origen de la rejilla tiene la dirección gridx = 0, gridy = 0. En disposición horizontal de izquierda a derecha, la esquina inicial es la superior izquierda; de derecha a izquierda, la superior derecha. Usa GridBagConstraints.RELATIVE (el valor predeterminado) para que el componente se coloque justo después (en el eje x para gridx o en el eje y para gridy) del componente añadido al contenedor justo antes. GridBagConstraints.gridwidth, GridBagConstraints.gridheight: indican el número de celdas en una fila (gridwidth) o columna (gridheight) del área de visualización del componente. El valor predeterminado es 1. Usa GridBagConstraints.REMAINDER para que el área vaya desde gridx hasta la última celda de la fila (gridwidth) o desde gridy hasta la última celda de la columna (gridheight).",
+      "Usa GridBagConstraints.RELATIVE para que el área de visualización vaya desde gridx hasta la penúltima celda de su fila (gridwidth) o desde gridy hasta la penúltima celda de su columna (gridheight).",
+      "GridBagConstraints.fill: se usa cuando el área de visualización es mayor que el tamaño pedido por el componente, para decidir si se redimensiona y cómo. Los valores posibles son GridBagConstraints.NONE (predeterminado), GridBagConstraints.HORIZONTAL (ensancha el componente para llenar su área en horizontal sin cambiar su altura), GridBagConstraints.VERTICAL (lo alarga para llenar su área en vertical sin cambiar su anchura) y GridBagConstraints.BOTH (llena el área por completo). GridBagConstraints.ipadx, GridBagConstraints.ipady: indican el relleno interno del componente, es decir, cuánto se suma a su tamaño mínimo. La anchura será al menos la mínima más ipadx píxeles y la altura, al menos la mínima más ipady píxeles. GridBagConstraints.insets: indica el relleno externo, el espacio mínimo entre el componente y los bordes de su área. GridBagConstraints.anchor: indica dónde se coloca el componente dentro de su área. Hay tres tipos de valores: absolutos, relativos a la orientación y relativos a la línea base. Los relativos a la orientación se interpretan según la propiedad ComponentOrientation del contenedor; los absolutos no. Los relativos a la línea base se calculan respecto a ella. Los valores válidos son:",
+      "Valores absolutos:",
+      "GridBagConstraints.NORTH",
+      "GridBagConstraints.SOUTH",
+      "GridBagConstraints.WEST",
+      "GridBagConstraints.EAST",
+      "GridBagConstraints.NORTHWEST",
+      "GridBagConstraints.NORTHEAST",
+      "GridBagConstraints.SOUTHWEST",
+      "GridBagConstraints.SOUTHEAST",
+      "GridBagConstraints.CENTER (predeterminado)",
+      "Valores relativos a la orientación:",
+      "GridBagConstraints.PAGE_START",
+      "GridBagConstraints.PAGE_END",
+      "GridBagConstraints.LINE_START",
+      "GridBagConstraints.LINE_END",
+      "GridBagConstraints.FIRST_LINE_START",
+      "GridBagConstraints.FIRST_LINE_END",
+      "GridBagConstraints.LAST_LINE_START",
+      "GridBagConstraints.LAST_LINE_END",
+      "Valores relativos a la línea base:",
+      "GridBagConstraints.BASELINE",
+      "GridBagConstraints.BASELINE_LEADING",
+      "GridBagConstraints.BASELINE_TRAILING",
+      "GridBagConstraints.ABOVE_BASELINE",
+      "GridBagConstraints.ABOVE_BASELINE_LEADING",
+      "GridBagConstraints.ABOVE_BASELINE_TRAILING",
+      "GridBagConstraints.BELOW_BASELINE",
+      "GridBagConstraints.BELOW_BASELINE_LEADING",
+      "GridBagConstraints.BELOW_BASELINE_TRAILING",
+      "GridBagConstraints.weightx, GridBagConstraints.weighty: determinan cómo se reparte el espacio, algo importante para definir el comportamiento al redimensionar. Si no das peso a al menos un componente de una fila (weightx) y de una columna (weighty), todos los componentes se agrupan en el centro del contenedor. Esto ocurre porque, con peso cero (el valor predeterminado), GridBagLayout pone el espacio sobrante entre la rejilla de celdas y los bordes del contenedor.",
+      "Cada fila puede tener una línea base, determinada por los componentes de esa fila que tienen una línea base válida y están alineados por ella (su anchor es BASELINE, BASELINE_LEADING o BASELINE_TRAILING). Si ningún componente de la fila tiene línea base válida, la fila no tiene línea base.",
+      "Si un componente ocupa varias filas, se alinea con la línea base de la fila inicial (si su comportamiento de redimensionado de línea base es CONSTANT_ASCENT) o con la de la fila final (si es CONSTANT_DESCENT). La fila con la que se alinea se llama fila predominante.",
+      "La siguiente figura muestra una disposición por línea base con un componente que ocupa varias filas:",
+      "Esta disposición tiene tres componentes:",
+      "Un panel que empieza en la fila 0 y termina en la 1. Su comportamiento de redimensionado de línea base es CONSTANT_DESCENT y su anchor es BASELINE. Al ser CONSTANT_DESCENT, su fila predominante es la 1.",
+      "Dos botones, cada uno con comportamiento de redimensionado de línea base CENTER_OFFSET y anchor BASELINE.",
+      "Como el segundo botón y el panel comparten fila predominante, ambos se alinean por su línea base.",
+      "Los componentes colocados con un valor relativo a la línea base se redimensionan de forma distinta a los colocados con un valor absoluto o relativo a la orientación. Cómo cambian depende de cómo cambia la línea base de la fila predominante. La línea base se ancla a la parte inferior del área si algún componente con la misma fila predominante tiene comportamiento CONSTANT_DESCENT; si no, se ancla a la parte superior. El redimensionado sigue estas reglas:",
+      "Los componentes redimensionables situados encima de la línea base solo pueden crecer hasta la altura de la línea base. Por ejemplo, si la línea base está en 100 y anclada arriba, un componente redimensionable situado encima nunca puede crecer más de 100 unidades.",
+      "Del mismo modo, los componentes redimensionables situados debajo de la línea base solo pueden crecer hasta la diferencia entre la altura del área y la línea base.",
+      "Los componentes redimensionables situados en la línea base con comportamiento OTHER solo se redimensionan si la línea base al nuevo tamaño cabe en el área. Si no cabe, el componente no se redimensiona.",
+      "Los componentes situados en la línea base cuyo comportamiento no es OTHER solo pueden crecer hasta altura del área - línea base + línea base del componente.",
+      "Si colocas un componente en la línea base pero no tiene una línea base válida, se centra verticalmente en su espacio. Del mismo modo, si lo colocas respecto a la línea base y ningún componente de la fila tiene línea base válida, se centra verticalmente.",
+      "Las siguientes figuras muestran diez componentes (todos botones) gestionados por un GridBagLayout. La figura 2 muestra la disposición en un contenedor horizontal de izquierda a derecha y la figura 3, en uno de derecha a izquierda.",
+      "Figura 2: horizontal, de izquierda a derecha",
+      "Figura 3: horizontal, de derecha a izquierda",
+      "Los diez componentes tienen el campo fill de su GridBagConstraints a GridBagConstraints.BOTH. Además, tienen estas restricciones no predeterminadas:",
+      "Button1, Button2, Button3: weightx = 1.0",
+      "Button4: weightx = 1.0, gridwidth = GridBagConstraints.REMAINDER",
+      "Button5: gridwidth = GridBagConstraints.REMAINDER",
+      "Button6: gridwidth = GridBagConstraints.RELATIVE",
+      "Button7: gridwidth = GridBagConstraints.REMAINDER",
+      "Button8: gridheight = 2, weighty = 1.0",
+      "Button9, Button 10: gridwidth = GridBagConstraints.REMAINDER",
+      "Este es el código que implementa el ejemplo anterior:",
+      "import java.awt.*; import java.util.*; import java.applet.Applet;",
+      "public class GridBagEx1 extends Applet {",
+      "protected void makebutton(String name, GridBagLayout gridbag, GridBagConstraints c) { Button button = new Button(name); gridbag.setConstraints(button, c); add(button); }",
+      "public void init() { GridBagLayout gridbag = new GridBagLayout(); GridBagConstraints c = new GridBagConstraints();",
+      "setFont(new Font(\"SansSerif\", Font.PLAIN, 14)); setLayout(gridbag);",
+      "c.fill = GridBagConstraints.BOTH; c.weightx = 1.0; makebutton(\"Button1\", gridbag, c); makebutton(\"Button2\", gridbag, c); makebutton(\"Button3\", gridbag, c);",
+      "c.gridwidth = GridBagConstraints.REMAINDER; //end row makebutton(\"Button4\", gridbag, c);",
+      "c.weightx = 0.0; //reset to the default makebutton(\"Button5\", gridbag, c); //another row",
+      "c.gridwidth = GridBagConstraints.RELATIVE; //next-to-last in row makebutton(\"Button6\", gridbag, c);",
+      "c.gridwidth = GridBagConstraints.REMAINDER; //end row makebutton(\"Button7\", gridbag, c);",
+      "c.gridwidth = 1; //reset to the default c.gridheight = 2; c.weighty = 1.0; makebutton(\"Button8\", gridbag, c);",
+      "c.weighty = 0.0; //reset to the default c.gridwidth = GridBagConstraints.REMAINDER; //end row c.gridheight = 1; //reset to the default makebutton(\"Button9\", gridbag, c); makebutton(\"Button10\", gridbag, c);",
+      "setSize(300, 100); }",
+      "public static void main(String args[]) { Frame f = new Frame(\"GridBag Layout Example\"); GridBagEx1 ex1 = new GridBagEx1();",
+      "ex1.init();",
+      "f.add(\"Center\", ex1); f.pack(); f.setSize(f.getPreferredSize()); f.show(); } }"
     ]
   },
   "web-java-se-java.awt.JobAttributes%24DefaultSelectionType.toString": {
@@ -613,6 +1127,162 @@
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
     ]
   },
+  "web-java-se-java.awt.JobAttributes.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea una instancia de JobAttributes con valores predeterminados para todos los atributos. El diálogo es por defecto DialogType.NATIVE. La página mínima es 1. La página máxima es Integer.MAX_VALUE. El destino es DestinationType.PRINTER. La selección es DefaultSelectionType.ALL. El número de copias es 1. El manejo de varios documentos es MultipleDocumentHandlingType.SEPARATE_DOCUMENTS_UNCOLLATED_COPIES. Las caras son SidesType.ONE_SIDED. El nombre de archivo es null."
+        ]
+      },
+      {
+        "intro": [
+          "Crea una instancia de JobAttributes que es copia de la JobAttributes indicada."
+        ],
+        "parameters": [
+          {
+            "label": "obj",
+            "detail": "la JobAttributes que se copia"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una instancia de JobAttributes con los valores indicados para todos los atributos."
+        ],
+        "parameters": [
+          {
+            "label": "copies",
+            "detail": "un entero mayor que 0"
+          },
+          {
+            "label": "defaultSelection",
+            "detail": "DefaultSelectionType.ALL, DefaultSelectionType.RANGE o DefaultSelectionType.SELECTION"
+          },
+          {
+            "label": "destination",
+            "detail": "DestinationType.FILE o DestinationType.PRINTER"
+          },
+          {
+            "label": "dialog",
+            "detail": "DialogType.COMMON, DialogType.NATIVE o DialogType.NONE"
+          },
+          {
+            "label": "fileName",
+            "detail": "el nombre de archivo, que puede ser null"
+          },
+          {
+            "label": "maxPage",
+            "detail": "un entero mayor que cero y mayor o igual que minPage"
+          },
+          {
+            "label": "minPage",
+            "detail": "un entero mayor que cero y menor o igual que maxPage"
+          },
+          {
+            "label": "multipleDocumentHandling",
+            "detail": "MultipleDocumentHandlingType.SEPARATE_DOCUMENTS_COLLATED_COPIES o MultipleDocumentHandlingType.SEPARATE_DOCUMENTS_UNCOLLATED_COPIES"
+          },
+          {
+            "label": "pageRanges",
+            "detail": "un array de arrays de enteros de dos elementos; cada array se interpreta como un rango que abarca todas las páginas entre las indicadas, ambas incluidas; los rangos deben ir en orden ascendente y no solaparse; las páginas indicadas no pueden ser menores que minPage ni mayores que maxPage; por ejemplo, (new int[][] { new int[] { 1, 3 }, new int[] { 5, 5 }, new int[] { 15, 19 } }) indica las páginas 1, 2, 3, 5, 15, 16, 17, 18 y 19. ({@code new int[][] { new int[] { 1, 1 }, new int[] { 1, 2 } }}) no es un conjunto de rangos válido porque los dos rangos se solapan"
+          },
+          {
+            "label": "printer",
+            "detail": "el nombre de la impresora, que puede ser null"
+          },
+          {
+            "label": "sides",
+            "detail": "SidesType.ONE_SIDED, SidesType.TWO_SIDED_LONG_EDGE o SidesType.TWO_SIDED_SHORT_EDGE"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si se incumple alguna de las condiciones anteriores"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.KeyboardFocusManager.getDefaultFocusTraversalPolicy": {
+    "returns": ["la FocusTraversalPolicy predeterminada. Nunca devuelve null."]
+  },
+  "web-java-se-java.awt.List": {
+    "body": [
+      "Por ejemplo, el código . . .",
+      "List lst = new List(4, false); lst.add(\"Mercury\"); lst.add(\"Venus\"); lst.add(\"Earth\"); lst.add(\"JavaSoft\"); lst.add(\"Mars\"); lst.add(\"Jupiter\"); lst.add(\"Saturn\"); lst.add(\"Uranus\"); lst.add(\"Neptune\"); lst.add(\"Pluto\"); cnt.add(lst);",
+      "donde cnt es un contenedor, produce la siguiente lista con desplazamiento:",
+      "Si la List permite selección múltiple, hacer clic en un elemento ya seleccionado lo deselecciona. En el ejemplo anterior solo se puede seleccionar un elemento a la vez, porque el segundo argumento al crear la lista es false. Si la List no permite selección múltiple, seleccionar un elemento deselecciona cualquier otro.",
+      "La lista del ejemplo se creó con cuatro filas visibles. Una vez creada, el número de filas visibles no puede cambiarse. Una List predeterminada se crea con cuatro filas, así que lst = new List() equivale a list = new List(4, false).",
+      "Desde Java 1.1, el Abstract Window Toolkit envía al objeto List todos los eventos de ratón, teclado y foco que ocurren sobre él. (El antiguo modelo de eventos de AWT se mantiene solo por compatibilidad y se desaconseja su uso).",
+      "Cuando el usuario selecciona o deselecciona un elemento, AWT envía una instancia de ItemEvent a la lista. Cuando el usuario hace doble clic en un elemento, AWT envía una instancia de ActionEvent tras el evento de elemento. AWT también genera un evento de acción cuando el usuario pulsa Intro con un elemento seleccionado.",
+      "Si una aplicación quiere hacer algo cuando el usuario selecciona o activa un elemento de esta lista, debe implementar ItemListener o ActionListener según corresponda y registrar el listener para recibir eventos de la lista.",
+      "En listas con selección múltiple, se considera mejor interfaz usar un gesto externo (como pulsar un botón) para lanzar la acción."
+    ]
+  },
+  "web-java-se-java.awt.List.getListeners": {
+    "body": [
+      "Puedes indicar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los item listeners de una List l con este código:",
+      "ItemListener[] ils = (ItemListener[])(l.getListeners(ItemListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en esta lista, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-java.awt.MediaTracker": {
+    "body": [
+      "Para usar un media tracker, crea una instancia de MediaTracker y llama a su método addImage por cada imagen que quieras seguir. Además, a cada imagen se le puede asignar un identificador, que controla el orden de prioridad en que se obtienen las imágenes. También sirve para identificar subconjuntos de imágenes que pueden esperarse por separado. Las imágenes con ID más bajo se cargan antes que las de ID más alto.",
+      "Seguir una imagen animada no siempre es útil, porque su carga y pintado se hacen por partes, pero está admitido. MediaTracker considera una imagen animada completamente cargada cuando lo está su primer fotograma. En ese momento avisa a quienes esperan de que la imagen está cargada. Si ningún ImageObserver observa la imagen cuando termina de cargarse el primer fotograma, la imagen puede vaciarse para ahorrar recursos (consulta Image.flush()).",
+      "Este es un ejemplo de uso de MediaTracker:",
+      "{@code import java.applet.Applet; import java.awt.Color; import java.awt.Image; import java.awt.Graphics; import java.awt.MediaTracker;",
+      "public class ImageBlaster extends Applet implements Runnable { MediaTracker tracker; Image bg; Image anim[] = new Image[5]; int index; Thread animator;",
+      "// Get the images for the background (id == 0) // and the animation frames (id == 1) // and add them to the MediaTracker public void init() { tracker = new MediaTracker(this); bg = getImage(getDocumentBase(), \"images/background.gif\"); tracker.addImage(bg, 0); for (int i = 0; i < 5; i++) { anim[i] = getImage(getDocumentBase(), \"images/anim\"+i+\".gif\"); tracker.addImage(anim[i], 1); } }",
+      "// Start the animation thread. public void start() { animator = new Thread(this); animator.start(); }",
+      "// Stop the animation thread. public void stop() { animator = null; }",
+      "// Run the animation thread. // First wait for the background image to fully load // and paint. Then wait for all of the animation // frames to finish loading. Finally, loop and // increment the animation frame index. public void run() { try { tracker.waitForID(0); tracker.waitForID(1); } catch (InterruptedException e) { return; } Thread me = Thread.currentThread(); while (animator == me) { try { Thread.sleep(100); } catch (InterruptedException e) { break; } synchronized (this) { index++; if (index >= anim.length) { index = 0; } } repaint(); } }",
+      "// The background image fills the frame so we // don't need to clear the applet on repaints. // Just call the paint method. public void update(Graphics g) { paint(g); }",
+      "// Paint a large red rectangle if there are any errors // loading the images. Otherwise always paint the // background so that it appears incrementally as it // is loading. Finally, only paint the current animation // frame if all of the frames (id == 1) are done loading, // so that we don't get partial animations. public void paint(Graphics g) { if ((tracker.statusAll(false) & MediaTracker.ERRORED) != 0) { g.setColor(Color.red); g.fillRect(0, 0, size().width, size().height); return; } g.drawImage(bg, 0, 0, this); if (tracker.statusID(1, false) == MediaTracker.COMPLETE) { g.drawImage(anim[index], 10, 10, this); } } } }"
+    ]
+  },
+  "web-java-se-java.awt.MenuItem.getListeners": {
+    "body": [
+      "Puedes indicar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los action listeners de un MenuItem m con este código:",
+      "ActionListener[] als = (ActionListener[])(m.getListeners(ActionListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de los listeners"
+      },
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este elemento de menú, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
   "web-java-se-java.awt.PageAttributes%24ColorType.toString": {
     "returns": ["una representación en cadena del objeto."],
     "caveats": [
@@ -651,6 +1321,1374 @@
       "En general, toString devuelve una cadena que «representa textualmente» el objeto. Debería ser una representación concisa pero informativa y fácil de leer. Se recomienda que todas las subclases sobrescriban este método. La cadena no tiene por qué ser estable en el tiempo ni entre ejecuciones de la JVM.",
       "El toString de Object devuelve una cadena con el nombre de la clase de la que el objeto es instancia, el carácter arroba '@' y la representación hexadecimal sin signo del código hash del objeto. Es decir, devuelve una cadena igual al valor de:",
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
+    ]
+  },
+  "web-java-se-java.awt.PageAttributes.getPrinterResolution": {
+    "intro": [
+      "Devuelve la resolución de impresión de las páginas que usan estos atributos. El índice 0 del array indica la resolución en la dirección transversal al avance del papel (normalmente la horizontal). El índice 1 indica la resolución en la dirección de avance (normalmente la vertical). El índice 2 indica si las resoluciones están en puntos por pulgada o por centímetro: 3 significa puntos por pulgada y 4, puntos por centímetro."
+    ],
+    "returns": [
+      "un array de enteros de 3 elementos. El primero debe ser mayor que 0. El segundo debe ser mayor que 0. El tercero debe ser 3 o 4."
+    ]
+  },
+  "web-java-se-java.awt.RadialGradientPaint.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un RadialGradientPaint con el método de repetición predeterminado NO_CYCLE y el espacio de color SRGB, usando el centro como punto focal."
+        ],
+        "parameters": [
+          {
+            "label": "cx",
+            "detail": "la coordenada X en espacio de usuario del centro del círculo que define el degradado. El último color del degradado se asigna al perímetro de este círculo."
+          },
+          {
+            "label": "cy",
+            "detail": "la coordenada Y en espacio de usuario del centro del círculo que define el degradado. El último color del degradado se asigna al perímetro de este círculo."
+          },
+          {
+            "label": "radius",
+            "detail": "el radio del círculo que define la extensión del degradado"
+          },
+          {
+            "label": "fractions",
+            "detail": "números entre 0.0 y 1.0 que indican la distribución de los colores a lo largo del degradado"
+          },
+          {
+            "label": "colors",
+            "detail": "array de colores del degradado. El primer color se usa en el punto focal y el último, en el perímetro del círculo."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si el array fractions o el array colors es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si radius no es positivo, fractions.length != colors.length, colors tiene menos de 2 elementos, algún valor de fractions es menor que 0.0 o mayor que 1.0, o las fracciones no están en orden estrictamente creciente"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un RadialGradientPaint con el método de repetición predeterminado NO_CYCLE y el espacio de color SRGB, usando el centro como punto focal."
+        ],
+        "parameters": [
+          {
+            "label": "center",
+            "detail": "el centro, en espacio de usuario, del círculo que define el degradado"
+          },
+          {
+            "label": "radius",
+            "detail": "el radio del círculo que define la extensión del degradado"
+          },
+          {
+            "label": "fractions",
+            "detail": "números entre 0.0 y 1.0 que indican la distribución de los colores a lo largo del degradado"
+          },
+          {
+            "label": "colors",
+            "detail": "array de colores del degradado. El primer color se usa en el punto focal y el último, en el perímetro del círculo."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si el centro, el array fractions o el array colors es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si radius no es positivo, fractions.length != colors.length, colors tiene menos de 2 elementos, algún valor de fractions es menor que 0.0 o mayor que 1.0, o las fracciones no están en orden estrictamente creciente"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un RadialGradientPaint con el espacio de color predeterminado SRGB, usando el centro como punto focal."
+        ],
+        "parameters": [
+          {
+            "label": "cx",
+            "detail": "la coordenada X en espacio de usuario del centro del círculo que define el degradado. El último color del degradado se asigna al perímetro de este círculo."
+          },
+          {
+            "label": "cy",
+            "detail": "la coordenada Y en espacio de usuario del centro del círculo que define el degradado. El último color del degradado se asigna al perímetro de este círculo."
+          },
+          {
+            "label": "radius",
+            "detail": "el radio del círculo que define la extensión del degradado"
+          },
+          {
+            "label": "fractions",
+            "detail": "números entre 0.0 y 1.0 que indican la distribución de los colores a lo largo del degradado"
+          },
+          {
+            "label": "colors",
+            "detail": "array de colores del degradado. El primer color se usa en el punto focal y el último, en el perímetro del círculo."
+          },
+          {
+            "label": "cycleMethod",
+            "detail": "NO_CYCLE, REFLECT o REPEAT"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si el array fractions, el array colors o cycleMethod es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si radius no es positivo, fractions.length != colors.length, colors tiene menos de 2 elementos, algún valor de fractions es menor que 0.0 o mayor que 1.0, o las fracciones no están en orden estrictamente creciente"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un RadialGradientPaint con el espacio de color predeterminado SRGB, usando el centro como punto focal."
+        ],
+        "parameters": [
+          {
+            "label": "center",
+            "detail": "el centro, en espacio de usuario, del círculo que define el degradado"
+          },
+          {
+            "label": "radius",
+            "detail": "el radio del círculo que define la extensión del degradado"
+          },
+          {
+            "label": "fractions",
+            "detail": "números entre 0.0 y 1.0 que indican la distribución de los colores a lo largo del degradado"
+          },
+          {
+            "label": "colors",
+            "detail": "array de colores del degradado. El primer color se usa en el punto focal y el último, en el perímetro del círculo."
+          },
+          {
+            "label": "cycleMethod",
+            "detail": "NO_CYCLE, REFLECT o REPEAT"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si el centro, el array fractions, el array colors o cycleMethod es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si radius no es positivo, fractions.length != colors.length, colors tiene menos de 2 elementos, algún valor de fractions es menor que 0.0 o mayor que 1.0, o las fracciones no están en orden estrictamente creciente"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un RadialGradientPaint con el espacio de color predeterminado SRGB."
+        ],
+        "parameters": [
+          {
+            "label": "cx",
+            "detail": "la coordenada X en espacio de usuario del centro del círculo que define el degradado. El último color del degradado se asigna al perímetro de este círculo."
+          },
+          {
+            "label": "cy",
+            "detail": "la coordenada Y en espacio de usuario del centro del círculo que define el degradado. El último color del degradado se asigna al perímetro de este círculo."
+          },
+          {
+            "label": "radius",
+            "detail": "el radio del círculo que define la extensión del degradado"
+          },
+          {
+            "label": "fx",
+            "detail": "la coordenada X del punto en espacio de usuario al que se asigna el primer color"
+          },
+          {
+            "label": "fy",
+            "detail": "la coordenada Y del punto en espacio de usuario al que se asigna el primer color"
+          },
+          {
+            "label": "fractions",
+            "detail": "números entre 0.0 y 1.0 que indican la distribución de los colores a lo largo del degradado"
+          },
+          {
+            "label": "colors",
+            "detail": "array de colores del degradado. El primer color se usa en el punto focal y el último, en el perímetro del círculo."
+          },
+          {
+            "label": "cycleMethod",
+            "detail": "NO_CYCLE, REFLECT o REPEAT"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si el array fractions, el array colors o cycleMethod es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si radius no es positivo, fractions.length != colors.length, colors tiene menos de 2 elementos, algún valor de fractions es menor que 0.0 o mayor que 1.0, o las fracciones no están en orden estrictamente creciente"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un RadialGradientPaint con el espacio de color predeterminado SRGB."
+        ],
+        "parameters": [
+          {
+            "label": "center",
+            "detail": "el centro, en espacio de usuario, del círculo que define el degradado. El último color del degradado se asigna al perímetro de este círculo."
+          },
+          {
+            "label": "radius",
+            "detail": "el radio del círculo que define la extensión del degradado"
+          },
+          {
+            "label": "focus",
+            "detail": "el punto en espacio de usuario al que se asigna el primer color"
+          },
+          {
+            "label": "fractions",
+            "detail": "números entre 0.0 y 1.0 que indican la distribución de los colores a lo largo del degradado"
+          },
+          {
+            "label": "colors",
+            "detail": "array de colores del degradado. El primer color se usa en el punto focal y el último, en el perímetro del círculo."
+          },
+          {
+            "label": "cycleMethod",
+            "detail": "NO_CYCLE, REFLECT o REPEAT"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si alguno de los puntos, el array fractions, el array colors o cycleMethod es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si radius no es positivo, fractions.length != colors.length, colors tiene menos de 2 elementos, algún valor de fractions es menor que 0.0 o mayor que 1.0, o las fracciones no están en orden estrictamente creciente"
+          }
+        ]
+      },
+      {
+        "intro": ["Crea un RadialGradientPaint."],
+        "parameters": [
+          {
+            "label": "center",
+            "detail": "el centro en espacio de usuario del círculo que define el degradado. El último color del degradado se asigna al perímetro de este círculo."
+          },
+          {
+            "label": "radius",
+            "detail": "el radio del círculo que define la extensión del degradado"
+          },
+          {
+            "label": "focus",
+            "detail": "el punto en espacio de usuario al que se asigna el primer color"
+          },
+          {
+            "label": "fractions",
+            "detail": "números entre 0.0 y 1.0 que indican la distribución de los colores a lo largo del degradado"
+          },
+          {
+            "label": "colors",
+            "detail": "array de colores del degradado. El primer color se usa en el punto focal y el último, en el perímetro del círculo."
+          },
+          {
+            "label": "cycleMethod",
+            "detail": "NO_CYCLE, REFLECT o REPEAT"
+          },
+          {
+            "label": "colorSpace",
+            "detail": "el espacio de color usado para interpolar, SRGB o LINEAR_RGB"
+          },
+          {
+            "label": "gradientTransform",
+            "detail": "la transformación que se aplica al degradado"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si alguno de los puntos, el array fractions, el array colors, cycleMethod, colorSpace o gradientTransform es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si radius no es positivo, fractions.length != colors.length, colors tiene menos de 2 elementos, algún valor de fractions es menor que 0.0 o mayor que 1.0, o las fracciones no están en orden estrictamente creciente"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un RadialGradientPaint con el espacio de color predeterminado SRGB. El círculo del degradado lo define el rectángulo delimitador indicado."
+        ],
+        "body": [
+          "Este constructor es una forma más cómoda de expresar el siguiente código (equivalente):",
+          "double gw = gradientBounds.getWidth(); double gh = gradientBounds.getHeight(); double cx = gradientBounds.getCenterX(); double cy = gradientBounds.getCenterY(); Point2D center = new Point2D.Double(cx, cy);",
+          "AffineTransform gradientTransform = new AffineTransform(); gradientTransform.translate(cx, cy); gradientTransform.scale(gw / 2, gh / 2); gradientTransform.translate(-cx, -cy);",
+          "RadialGradientPaint gp = new RadialGradientPaint(center, 1.0f, center, fractions, colors, cycleMethod, ColorSpaceType.SRGB, gradientTransform);"
+        ],
+        "parameters": [
+          {
+            "label": "gradientBounds",
+            "detail": "el rectángulo delimitador, en espacio de usuario, del círculo que define la extensión exterior del degradado"
+          },
+          {
+            "label": "fractions",
+            "detail": "números entre 0.0 y 1.0 que indican la distribución de los colores a lo largo del degradado"
+          },
+          {
+            "label": "colors",
+            "detail": "array de colores del degradado. El primer color se usa en el punto focal y el último, en el perímetro del círculo."
+          },
+          {
+            "label": "cycleMethod",
+            "detail": "NO_CYCLE, REFLECT o REPEAT"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si gradientBounds, el array fractions, el array colors o cycleMethod es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si gradientBounds está vacío, fractions.length != colors.length, colors tiene menos de 2 elementos, algún valor de fractions es menor que 0.0 o mayor que 1.0, o las fracciones no están en orden estrictamente creciente"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.Rectangle": {
+    "body": [
+      "La anchura y la altura de un Rectangle son campos públicos. Los constructores que crean un Rectangle y los métodos que pueden modificarlo no impiden poner un valor negativo en width o height.",
+      "Un Rectangle cuya anchura o altura es exactamente cero tiene posición en los ejes de dimensión cero, pero por lo demás se considera vacío. isEmpty devuelve true para ese Rectangle. Los métodos que comprueban si un Rectangle vacío contiene o corta un punto o rectángulo siempre devuelven false si alguna dimensión es cero. Los métodos que combinan ese Rectangle con un punto o rectángulo incluyen su posición en ese eje en el resultado, como si se llamara a add(Point).",
+      "Un Rectangle con anchura o altura negativa no tiene ni posición ni dimensión en los ejes con dimensión negativa, y se trata como inexistente en ellos. También se considera vacío en los cálculos de contención, y los métodos que comprueban si contiene o corta un punto o rectángulo siempre devuelven false. Los métodos que lo combinan con un punto o rectángulo lo ignoran por completo al generar el resultado. Si se combinan dos Rectangle y ambos tienen una dimensión negativa, el resultado tendrá al menos una dimensión negativa.",
+      "Los métodos que solo afectan a la posición de un Rectangle actúan sobre ella tenga o no una dimensión negativa o cero en algún eje.",
+      "Un Rectangle creado con el constructor sin argumentos tiene dimensiones 0x0 y, por tanto, está vacío. Aun así tiene posición (0,0) y la aporta a las operaciones union y add. Por eso, el código que acumula los límites de un conjunto de puntos debería crear el Rectangle con anchura y altura negativas, o crearlo con el primer punto del conjunto. Por ejemplo:",
+      "{@code Rectangle bounds = new Rectangle(0, 0, -1, -1); for (int i = 0; i < points.length; i++) { bounds.add(points[i]); } }",
+      "o, si sabemos que el array points contiene al menos un punto:",
+      "{@code Rectangle bounds = new Rectangle(points[0]); for (int i = 1; i < points.length; i++) { bounds.add(points[i]); } }",
+      "Esta clase guarda su posición y dimensiones en enteros de 32 bits. Con frecuencia, las operaciones pueden producir resultados que superan el rango de un entero de 32 bits. Los métodos calculan los resultados evitando el desbordamiento de 32 bits en los valores intermedios y luego eligen la mejor representación para guardar el resultado final en los campos de 32 bits de posición y dimensiones. La posición se guarda en x e y recortando el resultado real al valor de 32 bits más cercano. En width y height se guardan los valores de 32 bits que abarcan la mayor parte posible del resultado real. En general, esto significa que la dimensión se recorta de forma independiente al rango de los enteros de 32 bits, salvo que, si hubo que mover la posición para guardarla, las dimensiones se ajustan respecto a la \"mejor representación\" de la posición. Si el resultado real tenía una dimensión negativa y no existía en uno o ambos ejes, las dimensiones guardadas serán negativas en esos ejes. Si la posición real cabía en el rango de 32 bits pero tenía dimensión cero en uno o ambos ejes, las dimensiones guardadas serán cero en esos ejes."
+    ]
+  },
+  "web-java-se-java.awt.RenderingHints.KEY_ANTIALIASING": {
+    "intro": [
+      "Clave de pista de antialiasing. La pista ANTIALIASING controla si los métodos de renderizado de geometría de un Graphics2D intentan reducir los artefactos de dentado en los bordes de las formas."
+    ],
+    "body": [
+      "Un algoritmo típico de antialiasing mezcla los colores existentes de los píxeles del borde de una forma con el relleno pedido según la cobertura parcial estimada de cada píxel.",
+      "Los valores admitidos para esta pista son",
+      "VALUE_ANTIALIAS_ON",
+      "VALUE_ANTIALIAS_OFF",
+      "VALUE_ANTIALIAS_DEFAULT"
+    ]
+  },
+  "web-java-se-java.awt.Robot.mousePress": {
+    "parameters": [
+      {
+        "label": "buttons",
+        "detail": "la máscara de botones; una combinación de una o más máscaras de botón del ratón. Solo se admite como parámetro buttons una combinación de valores válidos. Una combinación válida se compone de InputEvent.BUTTON1_DOWN_MASK, InputEvent.BUTTON2_DOWN_MASK, InputEvent.BUTTON3_DOWN_MASK y los valores devueltos por InputEvent.getMaskForButton(button). Además depende del valor de Toolkit.areExtraMouseButtonsEnabled(): si Java tiene desactivado el soporte de botones extendidos, solo se admiten las máscaras estándar InputEvent.BUTTON1_DOWN_MASK, InputEvent.BUTTON2_DOWN_MASK e InputEvent.BUTTON3_DOWN_MASK. Si Java lo tiene activado, se admiten las máscaras estándar y las de los botones extendidos existentes, si el ratón tiene más de tres botones; es decir, las máscaras de los botones del 1 a MouseInfo.getNumberOfButtons(). Se recomienda usar InputEvent.getMaskForButton(button) para obtener la máscara de cualquier botón por su número. También se aceptan las máscaras estándar InputEvent.BUTTON1_MASK, InputEvent.BUTTON2_MASK e InputEvent.BUTTON3_MASK, aunque se recomienda usar en su lugar InputEvent.BUTTON1_DOWN_MASK, InputEvent.BUTTON2_DOWN_MASK e InputEvent.BUTTON3_DOWN_MASK. Usa o bien los valores extendidos _DOWN_MASK o bien los antiguos _MASK, pero no mezcles ambos modelos."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si la máscara contiene la de un botón extra del ratón y Java tiene desactivado el soporte de botones extendidos"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si la máscara contiene la de un botón extra que no existe en el ratón y Java tiene activado el soporte de botones extendidos"
+      }
+    ]
+  },
+  "web-java-se-java.awt.Robot.mouseRelease": {
+    "parameters": [
+      {
+        "label": "buttons",
+        "detail": "la máscara de botones; una combinación de una o más máscaras de botón del ratón. Solo se admite como parámetro buttons una combinación de valores válidos. Una combinación válida se compone de InputEvent.BUTTON1_DOWN_MASK, InputEvent.BUTTON2_DOWN_MASK, InputEvent.BUTTON3_DOWN_MASK y los valores devueltos por InputEvent.getMaskForButton(button). Además depende del valor de Toolkit.areExtraMouseButtonsEnabled(): si Java tiene desactivado el soporte de botones extendidos, solo se admiten las máscaras estándar InputEvent.BUTTON1_DOWN_MASK, InputEvent.BUTTON2_DOWN_MASK e InputEvent.BUTTON3_DOWN_MASK. Si Java lo tiene activado, se admiten las máscaras estándar y las de los botones extendidos existentes, si el ratón tiene más de tres botones; es decir, las máscaras de los botones del 1 a MouseInfo.getNumberOfButtons(). Se recomienda usar InputEvent.getMaskForButton(button) para obtener la máscara de cualquier botón por su número. También se aceptan las máscaras estándar InputEvent.BUTTON1_MASK, InputEvent.BUTTON2_MASK e InputEvent.BUTTON3_MASK, aunque se recomienda usar en su lugar InputEvent.BUTTON1_DOWN_MASK, InputEvent.BUTTON2_DOWN_MASK e InputEvent.BUTTON3_DOWN_MASK. Usa o bien los valores extendidos _DOWN_MASK o bien los antiguos _MASK, pero no mezcles ambos modelos."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si la máscara contiene la de un botón extra del ratón y Java tiene desactivado el soporte de botones extendidos"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si la máscara contiene la de un botón extra que no existe en el ratón y Java tiene activado el soporte de botones extendidos"
+      }
+    ]
+  },
+  "web-java-se-java.awt.Scrollbar.getListeners": {
+    "body": [
+      "Puedes indicar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los mouse listeners de un Scrollbar c con este código:",
+      "MouseListener[] mls = (MouseListener[])(c.getListeners(MouseListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este componente, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-java.awt.SecondaryLoop": {
+    "body": [
+      "Los objetos que implementan esta interfaz se crean con el método EventQueue.createSecondaryLoop. La interfaz ofrece dos métodos, enter y exit, para iniciar y detener el bucle de eventos.",
+      "Al llamar a enter, el hilo actual se bloquea hasta que exit termina el bucle. Además, se inicia un nuevo bucle de eventos en el hilo de despacho de eventos, que puede ser o no el hilo actual. El bucle puede terminarse desde cualquier hilo llamando a exit. Una vez terminado, el objeto SecondaryLoop puede reutilizarse para ejecutar otro bucle anidado.",
+      "Un caso de uso típico de esta interfaz son los diálogos modales de AWT y Swing. Cuando se muestra un diálogo modal en el hilo de despacho de eventos, entra en un nuevo bucle secundario. Después, cuando el diálogo se oculta o se libera, sale del bucle y el hilo continúa.",
+      "El siguiente ejemplo muestra un uso sencillo de los bucles secundarios:",
+      "SecondaryLoop loop;",
+      "JButton jButton = new JButton(\"Button\"); jButton.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) { Toolkit tk = Toolkit.getDefaultToolkit(); EventQueue eq = tk.getSystemEventQueue(); loop = eq.createSecondaryLoop();",
+      "// Spawn a new thread to do the work Thread worker = new WorkerThread(); worker.start();",
+      "// Enter the loop to block the current event // handler, but leave UI responsive if (!loop.enter()) { // Report an error } } });",
+      "class WorkerThread extends Thread { @Override public void run() { // Perform calculations doSomethingUseful();",
+      "// Exit the loop loop.exit(); } }"
+    ]
+  },
+  "web-java-se-java.awt.Shape.contains": {
+    "overloads": [
+      {
+        "intro": [
+          "Comprueba si las coordenadas indicadas están dentro del contorno del Shape, según la definición de interioridad."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X que se comprueba"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y que se comprueba"
+          }
+        ],
+        "returns": [
+          "true si las coordenadas indicadas están dentro del contorno del Shape; false en caso contrario."
+        ]
+      },
+      {
+        "intro": [
+          "Comprueba si el Point2D indicado está dentro del contorno del Shape, según la"
+        ],
+        "body": ["definición de interioridad."],
+        "parameters": [
+          {
+            "label": "p",
+            "detail": "el Point2D que se comprueba"
+          }
+        ],
+        "returns": [
+          "true si el Point2D indicado está dentro del contorno del Shape; false en caso contrario."
+        ]
+      },
+      {
+        "intro": [
+          "Comprueba si el interior del Shape contiene por completo el área rectangular indicada. Todas las coordenadas del área rectangular deben estar dentro del Shape para que se considere contenida."
+        ],
+        "body": [
+          "El método Shape.contains() permite que una implementación de Shape devuelva false de forma conservadora cuando:",
+          "el método intersect devuelve true y",
+          "los cálculos para saber si el Shape contiene por completo el área rectangular son demasiado costosos.",
+          "Esto significa que, para algunos Shape, este método puede devolver false aunque el Shape contenga el área rectangular. La clase Area hace cálculos geométricos más precisos que la mayoría de los Shape y puede usarse si se necesita una respuesta más exacta."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X de la esquina superior izquierda del área rectangular indicada"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y de la esquina superior izquierda del área rectangular indicada"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura del área rectangular indicada"
+          },
+          {
+            "label": "h",
+            "detail": "la altura del área rectangular indicada"
+          }
+        ],
+        "returns": [
+          "true si el interior del Shape contiene por completo el área rectangular indicada; false en caso contrario o si el Shape contiene el área, el método intersects devuelve true y los cálculos de contención serían demasiado costosos."
+        ]
+      },
+      {
+        "intro": [
+          "Comprueba si el interior del Shape contiene por completo el Rectangle2D indicado. El método Shape.contains() permite que una implementación de Shape devuelva false de forma conservadora cuando:"
+        ],
+        "body": [
+          "el método intersect devuelve true y",
+          "los cálculos para saber si el Shape contiene por completo el Rectangle2D son demasiado costosos.",
+          "Esto significa que, para algunos Shape, este método puede devolver false aunque el Shape contenga el Rectangle2D. La clase Area hace cálculos geométricos más precisos que la mayoría de los Shape y puede usarse si se necesita una respuesta más exacta."
+        ],
+        "parameters": [
+          {
+            "label": "r",
+            "detail": "El Rectangle2D indicado"
+          }
+        ],
+        "returns": [
+          "true si el interior del Shape contiene por completo el Rectangle2D; false en caso contrario o si el Shape contiene el Rectangle2D, el método intersects devuelve true y los cálculos de contención serían demasiado costosos."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.SplashScreen": {
+    "body": [
+      "Si tu aplicación se empaqueta en un jar, puedes usar la opción \"SplashScreen-Image\" del manifiesto para mostrar una pantalla de bienvenida. Coloca la imagen en el jar e indica su ruta en la opción. La ruta no debe empezar por barra.",
+      "Por ejemplo, en el archivo manifest.mf:",
+      "Manifest-Version: 1.0 Main-Class: Test SplashScreen-Image: filename.gif",
+      "Si la implementación de Java ofrece interfaz de línea de comandos y ejecutas la aplicación desde la línea de comandos o un acceso directo, usa la opción del lanzador para mostrar la pantalla de bienvenida. La implementación de referencia de Oracle permite indicar la imagen con la opción -splash:.",
+      "Por ejemplo:",
+      "java -splash:filename.gif Test",
+      "También se admiten imágenes escaladas HiDPI. En manifest.mf o en -splash: debe pasarse el nombre de la imagen sin escalar, es decir filename.gif, para todos los tipos de imagen, sea HiDPI o no. Esta es la convención de nombres de las imágenes escaladas: escala 1.25: filename@125pct.gif; escala 1.50: filename@150pct.gif; escala 2: se admiten filename@200pct.gif y filename@2x.gif; escala 2.50: filename@250pct.gif; escala 3: se admiten filename@300pct.gif y filename@3x.gif. La línea de comandos tiene prioridad sobre el manifiesto.",
+      "La pantalla de bienvenida se mostrará lo más fielmente posible, presentando la imagen completa dentro de las limitaciones de la plataforma y la pantalla.",
+      "Se entiende que la imagen se presenta en pantalla \"tal cual\", es decir, conservando los valores de color exactos del archivo. Aun así, en algunos casos la imagen mostrada puede diferir; por ejemplo, al aplicar tramado de color para mostrar una imagen de 32 bits por píxel (bpp) en una pantalla de 16 u 8 bpp. La configuración de pantalla de la plataforma nativa también puede afectar a los colores (perfiles de color, etc.).",
+      "La clase SplashScreen ofrece la API para controlar la pantalla de bienvenida. Permite cerrarla, cambiar su imagen, obtener la posición y tamaño de su ventana nativa y pintar en ella. No sirve para crearla; para eso debes usar las opciones de la implementación de Java.",
+      "Esta clase no se puede instanciar. Solo puede existir una instancia, que se obtiene con el método estático getSplashScreen(). Si la pantalla de bienvenida no se creó al arrancar la aplicación mediante la línea de comandos o el manifiesto, getSplashScreen devuelve null."
+    ]
+  },
+  "web-java-se-java.awt.SystemTray": {
+    "body": [
+      "En algunas plataformas la bandeja del sistema puede no existir o no estar admitida; en ese caso SystemTray.getSystemTray() lanza UnsupportedOperationException. Para saber si está admitida, usa SystemTray.isSupported.",
+      "La SystemTray puede contener uno o más TrayIcon, que se añaden con el método add y se quitan con remove cuando ya no se necesitan. Un TrayIcon consta de una imagen, un menú emergente y un conjunto de listeners asociados. Consulta la clase TrayIcon para más detalles.",
+      "Cada aplicación Java tiene una única instancia de SystemTray que le permite interactuar con la bandeja del sistema del escritorio mientras se ejecuta. Se obtiene con el método getSystemTray. Una aplicación no puede crear su propia instancia de SystemTray.",
+      "El siguiente fragmento muestra cómo acceder a la bandeja del sistema y personalizarla:",
+      "TrayIcon trayIcon = null; if (SystemTray.isSupported()) { // get the SystemTray instance SystemTray tray = SystemTray.getSystemTray; // load an image java.awt.Image image = Toolkit.getDefaultToolkit().getImage(...); // create a action listener to listen for default action executed on the tray icon java.awt.event.ActionListener listener = new ActionListener() { public void actionPerformed(java.awt.event.ActionEvent e) { // execute default action of the application // ... } }; // create a popup menu java.awt.PopupMenu popup = new PopupMenu(); // create menu item for the default action MenuItem defaultItem = new MenuItem(...); defaultItem.addActionListener(listener); popup.add(defaultItem); /// ... add other items // construct a TrayIcon trayIcon = new String, java.awt.PopupMenu) TrayIcon(image, \"Tray Demo\", popup); // set the TrayIcon properties trayIcon.addActionListener(listener); // ... // add the tray image try { tray.add(trayIcon); } catch (AWTException e) { System.err.println(e); } // ... } else { // disable tray option in your application or // perform other actions ... } // ... // some time later // the application state has changed - update the image if (trayIcon != null) { trayIcon.setImage(updatedImage); } // ..."
+    ]
+  },
+  "web-java-se-java.awt.SystemTray.addPropertyChangeListener": {
+    "body": [
+      "Propiedades de SystemTray",
+      "Propiedad · Descripción",
+      "trayIcons · El array de objetos TrayIcon de la SystemTray. Se accede con el método getTrayIcons. Cambia cuando se añade o se quita un icono de la bandeja; por ejemplo, cuando la bandeja deja de estar disponible en el escritorio y los iconos se quitan automáticamente.",
+      "systemTray · Contiene la instancia de SystemTray cuando la bandeja está disponible, o null en caso contrario. Cambia cuando la bandeja pasa a estar disponible o deja de estarlo en el escritorio. Se accede con el método getSystemTray.",
+      "El listener solo escucha cambios de propiedad en este contexto.",
+      "Si listener es null, no se lanza ninguna excepción ni se hace nada."
+    ],
+    "parameters": [
+      {
+        "label": "propertyName",
+        "detail": "la propiedad indicada"
+      },
+      {
+        "label": "listener",
+        "detail": "el listener de cambios de propiedad que se añade"
+      }
+    ]
+  },
+  "web-java-se-java.awt.TextComponent.getListeners": {
+    "body": [
+      "Puedes indicar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los text listeners de un TextComponent t con este código:",
+      "TextListener[] tls = (TextListener[])(t.getListeners(TextListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este componente de texto, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-java.awt.TextField": {
+    "body": [
+      "Por ejemplo, la siguiente imagen muestra un frame con cuatro campos de texto de distinta anchura. Dos de ellos muestran el texto predefinido \"Hello\".",
+      "Este es el código que crea esos cuatro campos de texto:",
+      "TextField tf1, tf2, tf3, tf4; // a blank text field tf1 = new TextField(); // blank field of 20 columns tf2 = new TextField(\"\", 20); // predefined text displayed tf3 = new TextField(\"Hello!\"); // predefined text in 30 columns tf4 = new TextField(\"Hello\", 30);",
+      "Cada vez que el usuario pulsa una tecla en el campo de texto, se le envían uno o más eventos de teclado. Un KeyEvent puede ser de tres tipos: keyPressed, keyReleased o keyTyped. Sus propiedades indican de qué tipo es y dan información adicional, como qué modificadores se aplican y el momento en que ocurrió.",
+      "El evento de teclado se pasa a cada KeyListener o KeyAdapter registrado con el método addKeyListener del componente. (Los KeyAdapter implementan la interfaz KeyListener).",
+      "También se puede lanzar un ActionEvent. Si los eventos de acción están activados en el campo de texto, se lanzan al pulsar Intro.",
+      "El método processEvent de TextField examina el evento de acción y lo pasa a processActionEvent, que lo redirige a los ActionListener registrados para recibir los eventos de acción de este campo de texto."
+    ]
+  },
+  "web-java-se-java.awt.TextField.getListeners": {
+    "body": [
+      "Puedes indicar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los action listeners de un TextField t con este código:",
+      "ActionListener[] als = (ActionListener[])(t.getListeners(ActionListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este campo de texto, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-java.awt.TextField.setEchoChar": {
+    "body": [
+      "Un carácter de eco es útil en campos de texto donde lo que escribe el usuario no debe verse en pantalla, como un campo para introducir una contraseña. Poner echoChar = 0 hace que la entrada vuelva a mostrarse.",
+      "Una implementación de la plataforma Java puede admitir solo un conjunto limitado, no vacío, de caracteres de eco. Si se intenta fijar uno no admitido, se usará el carácter de eco predeterminado. Las llamadas posteriores a getEchoChar() devolverán el carácter pedido originalmente, que puede coincidir o no con el que usa realmente la implementación de TextField."
+    ],
+    "parameters": [
+      {
+        "label": "c",
+        "detail": "el carácter de eco de este campo de texto."
+      }
+    ]
+  },
+  "web-java-se-java.awt.Toolkit": {
+    "body": [
+      "Muchos eventos de la GUI pueden entregarse de forma asíncrona si no se indica lo contrario, y muchas operaciones de la GUI también pueden hacerse de forma asíncrona. Esto significa que, si se fija el estado de un componente y se consulta justo después, el valor devuelto puede no reflejar todavía el cambio. Esto incluye, entre otros casos:",
+      "Desplazarse a una posición indicada.",
+      "Por ejemplo, llamar a ScrollPane.setScrollPosition y luego a getScrollPosition puede devolver un valor incorrecto si la petición original aún no se ha procesado.",
+      "Mover el foco de un componente a otro.",
+      "Para más información, consulta Timing Focus Transfers, una sección de The Swing Tutorial.",
+      "Hacer visible un contenedor de nivel superior.",
+      "Llamar a setVisible(true) en un Window, Frame o Dialog puede ocurrir de forma asíncrona.",
+      "Fijar el tamaño o la posición de un contenedor de nivel superior.",
+      "Las llamadas a setSize, setBounds o setLocation en un Window, Frame o Dialog se reenvían al gestor de ventanas subyacente, que puede ignorarlas o modificarlas. Consulta java.awt.Window para más información.",
+      "La mayoría de las aplicaciones no deberían llamar directamente a ningún método de esta clase. Los métodos de Toolkit son el \"pegamento\" que une las clases independientes de la plataforma de java.awt con sus equivalentes de java.awt.peer. Algunos métodos de Toolkit consultan directamente el sistema operativo nativo."
+    ]
+  },
+  "web-java-se-java.awt.Toolkit.isFrameStateSupported": {
+    "intro": [
+      "Indica si Toolkit admite este estado para los Frame. Este método dice si se admite un concepto de interfaz como la maximización o la minimización. Siempre devuelve false para estados \"compuestos\" como Frame.ICONIFIED|Frame.MAXIMIZED_VERT. Dicho de otro modo, solo tienen sentido las consultas con una única constante de estado como argumento."
+    ],
+    "body": [
+      "Admitir un concepto depende de la plataforma. Por limitaciones nativas, el Toolkit puede decir que admite un estado y, a la vez, no poder aplicarlo a un frame concreto. Esto tiene dos consecuencias:",
+      "Solo el valor false de este método indica de verdad que el estado no se admite. Si devuelve true, el estado puede seguir sin estar admitido o disponible para un frame concreto.",
+      "El desarrollador debería examinar el valor de java.awt.event.WindowEvent.getNewState del WindowEvent recibido a través de java.awt.event.WindowStateListener, en lugar de suponer que el estado pasado a setExtendedState() se aplicará con seguridad. Para más información, consulta la documentación de Frame.setExtendedState."
+    ],
+    "parameters": [
+      {
+        "label": "state",
+        "detail": "una de las constantes de estado de frame."
+      }
+    ],
+    "returns": [
+      "true si esta implementación de Toolkit admite este estado de frame; false en caso contrario."
+    ],
+    "exceptions": [
+      {
+        "label": "HeadlessException",
+        "detail": "si GraphicsEnvironment.isHeadless() devuelve true."
+      }
+    ]
+  },
+  "web-java-se-java.awt.TrayIcon.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": ["Crea un TrayIcon con la imagen indicada."],
+        "parameters": [
+          {
+            "label": "image",
+            "detail": "la Image que se usa"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si image es null"
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si la plataforma actual no admite la bandeja del sistema"
+          },
+          {
+            "label": "HeadlessException",
+            "detail": "si GraphicsEnvironment.isHeadless() devuelve true"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si no se concede el permiso accessSystemTray"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un TrayIcon con la imagen y el texto de ayuda indicados. En algunas plataformas el texto de ayuda puede no verse."
+        ],
+        "parameters": [
+          {
+            "label": "image",
+            "detail": "la Image que se usa"
+          },
+          {
+            "label": "tooltip",
+            "detail": "la cadena usada como texto de ayuda; si es null no se muestra"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si image es null"
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si la plataforma actual no admite la bandeja del sistema"
+          },
+          {
+            "label": "HeadlessException",
+            "detail": "si GraphicsEnvironment.isHeadless() devuelve true"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si no se concede el permiso accessSystemTray"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un TrayIcon con la imagen, el texto de ayuda y el menú emergente indicados. En algunas plataformas el texto de ayuda puede no verse."
+        ],
+        "parameters": [
+          {
+            "label": "image",
+            "detail": "la Image que se usa"
+          },
+          {
+            "label": "tooltip",
+            "detail": "la cadena usada como texto de ayuda; si es null no se muestra"
+          },
+          {
+            "label": "popup",
+            "detail": "el menú usado como menú emergente del icono; si es null no se muestra ninguno"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si image es null"
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si la plataforma actual no admite la bandeja del sistema"
+          },
+          {
+            "label": "HeadlessException",
+            "detail": "si GraphicsEnvironment.isHeadless() devuelve true"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si no se concede el permiso accessSystemTray"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.Window.getListeners": {
+    "body": [
+      "Puedes indicar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los window listeners de un Window w con este código:",
+      "WindowListener[] wls = (WindowListener[])(w.getListeners(WindowListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en esta ventana, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "si listenerType es null"
+      }
+    ]
+  },
+  "web-java-se-java.awt.Window.setIconImages": {
+    "body": [
+      "Según las capacidades de la plataforma, se usarán una o varias imágenes de distintos tamaños como icono de la ventana.",
+      "La lista de iconos también puede contener imágenes MultiResolutionImage. De la MultiResolutionImage base se extrae la imagen adecuada a la resolución de pantalla y se añade a la lista, y la imagen base se quita. La lista se recorre desde el principio buscando las imágenes de tamaño más adecuado. Si hay varias del mismo tamaño, se usa la primera.",
+      "Las ventanas sin propietario y sin icono indicado usan el icono predeterminado de la plataforma. Una ventana con propietario puede heredar su icono salvo que se sobrescriba explícitamente. Fijar el icono a null o a una lista vacía restablece el comportamiento predeterminado.",
+      "Nota: los sistemas de ventanas nativos pueden usar imágenes de distintos tamaños para representar una ventana según el contexto (decoración, lista de ventanas, barra de tareas, etc.). También pueden usar una sola imagen para todo o ninguna."
+    ],
+    "parameters": [
+      {
+        "label": "icons",
+        "detail": "la lista de imágenes de icono que se muestran."
+      }
+    ]
+  },
+  "web-java-se-java.awt.Window.setVisible": {
+    "body": [
+      "Si el método muestra la ventana, también le da el foco cuando se cumple lo siguiente:",
+      "La Window cumple los requisitos descritos en el método isFocusableWindow.",
+      "La propiedad autoRequestFocus de la Window vale true.",
+      "El sistema de ventanas nativo permite que la Window reciba el foco.",
+      "Hay una excepción a la segunda condición (el valor de autoRequestFocus): no se tiene en cuenta si la ventana es un diálogo modal que bloquea la ventana que tiene el foco.",
+      "Los desarrolladores nunca deben suponer que la ventana tiene el foco o está activa hasta que recibe un evento WINDOW_GAINED_FOCUS o WINDOW_ACTIVATED."
+    ],
+    "parameters": [
+      {
+        "label": "b",
+        "detail": "si es true, hace visible la Window; si no, la oculta. Si la Window o su propietario aún no son visualizables, ambos se hacen visualizables. La Window se valida antes de hacerse visible. Si ya es visible, se trae al frente. Si es false, oculta esta Window, sus subcomponentes y todas sus ventanas hijas. Pueden volver a hacerse visibles con #setVisible(true)."
+      }
+    ]
+  },
+  "web-java-se-java.awt.color.ICC_ColorSpace.fromCIEXYZ": {
+    "body": [
+      "Este método transforma valores de color con colorimetría relativa, tal como la define la especificación ICC. Esto significa que los valores XYZ que recibe están expresados respecto al punto blanco D50 del espacio de color CS_CIEXYZ. Esta representación es útil en una conversión de color en dos pasos, en la que los colores pasan de un espacio de entrada a CS_CIEXYZ y luego a un espacio de salida. Los valores de color devueltos no son los que producirían el valor XYZ pasado si se midieran con un colorímetro. Si tienes valores XYZ de mediciones hechas según las prácticas recomendadas actuales de la CIE, debes convertirlos a valores relativos a D50 antes de pasarlos a este método. Los párrafos siguientes lo explican con más detalle.",
+      "El estándar ICC usa un espacio de color independiente del dispositivo (DICS) como mecanismo para convertir el color de un dispositivo a otro. En esta arquitectura, los colores pasan del espacio del dispositivo de origen al DICS de ICC y de ahí al espacio del dispositivo de destino. El estándar define perfiles de dispositivo con las transformaciones entre el espacio de color del dispositivo y el DICS. La conversión completa se hace conectando la transformación dispositivo-a-DICS del perfil de origen con la transformación DICS-a-dispositivo del perfil de destino. Por eso el DICS de ICC suele llamarse espacio de conexión de perfiles (PCS). El espacio de color usado en toCIEXYZ y fromCIEXYZ es el PCS CIEXYZ definido por la especificación ICC, que también es el representado por ColorSpace.CS_CIEXYZ.",
+      "Los valores XYZ de un color suelen expresarse respecto a algún punto blanco, así que su significado real no se conoce sin saber ese punto blanco. Esto se llama colorimetría relativa. El PCS usa el punto blanco D50, así que sus valores XYZ son relativos a D50. Por ejemplo, el blanco en el PCS tiene los valores XYZ de D50, definidos como X=.9642, Y=1.000 y Z=0.8249. Este punto blanco es habitual en artes gráficas, pero en otras aplicaciones se usan otros.",
+      "Para cuantificar las características de color de un dispositivo, como una impresora o un monitor, normalmente se miden los valores XYZ de colores concretos del dispositivo. Aquí, el término valores XYZ del dispositivo se refiere a los valores XYZ que se medirían a partir de los colores del dispositivo según las prácticas recomendadas actuales de la CIE.",
+      "Convertir entre los valores XYZ del dispositivo y los valores XYZ del PCS que recibe este método equivale a convertir entre el espacio de color del dispositivo, representado por valores colorimétricos CIE, y el PCS. En este proceso intervienen muchos factores, algunos muy sutiles. El más importante es el ajuste por la diferencia entre el punto blanco del dispositivo y el del PCS. Hay muchas técnicas para ello y es objeto de mucha investigación y debate. Algunos métodos habituales son el escalado XYZ, la transformación de von Kries y la transformación de Bradford. El método adecuado depende de cada aplicación.",
+      "El método más sencillo es el escalado XYZ. Cada valor XYZ del dispositivo se convierte a un valor XYZ del PCS multiplicándolo por la razón entre el punto blanco del PCS (D50) y el del dispositivo.",
+      "Xd, Yd, Zd are the device XYZ values Xdw, Ydw, Zdw are the device XYZ white point values Xp, Yp, Zp are the PCS XYZ values Xd50, Yd50, Zd50 are the PCS XYZ white point values",
+      "Xp = Xd * (Xd50 / Xdw) Yp = Yd * (Yd50 / Ydw) Zp = Zd * (Zd50 / Zdw)",
+      "La conversión del PCS al dispositivo se haría invirtiendo estas ecuaciones:",
+      "Xd = Xp * (Xdw / Xd50) Yd = Yp * (Ydw / Yd50) Zd = Zp * (Zdw / Zd50)",
+      "La etiqueta de punto blanco del medio de un perfil ICC no es lo mismo que el punto blanco del dispositivo. La etiqueta se expresa en valores del PCS y representa la diferencia entre el XYZ del iluminante del dispositivo y el XYZ del medio medido bajo ese iluminante. El punto blanco del dispositivo se expresa como los valores XYZ del dispositivo correspondientes al blanco mostrado en él. Por ejemplo, mostrar el color RGB (1.0, 1.0, 1.0) en un dispositivo sRGB da un valor XYZ medido de D65, que no coincide con el XYZ de la etiqueta de punto blanco del medio del perfil ICC de un dispositivo sRGB."
+    ],
+    "parameters": [
+      {
+        "label": "colorvalue",
+        "detail": "un array float de longitud al menos 3"
+      }
+    ],
+    "returns": [
+      "un array float de longitud igual al número de componentes de este ColorSpace"
+    ],
+    "exceptions": [
+      {
+        "label": "ArrayIndexOutOfBoundsException",
+        "detail": "si la longitud del array no es al menos 3"
+      }
+    ]
+  },
+  "web-java-se-java.awt.color.ICC_ColorSpace.getMaxValue": {
+    "intro": [
+      "Devuelve el valor máximo normalizado del componente de color indicado. En los espacios TYPE_XYZ devuelve 1.0 + (32767.0 / 32768.0) para todos los componentes. En los espacios TYPE_Lab devuelve 100.0 para L y 127.0 para a y b. Esto es coherente con la codificación de los espacios de conexión de perfiles XYZ y Lab de la especificación ICC. En los demás tipos devuelve 1.0 para todos los componentes. Si usas un ICC_ColorSpace con un perfil que necesita otros valores máximos, tienes que crear una subclase y sobrescribir este método."
+    ],
+    "parameters": [
+      {
+        "label": "component",
+        "detail": "el índice del componente"
+      }
+    ],
+    "returns": ["el valor máximo normalizado del componente"],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si component es menor que 0 o mayor que numComponents - 1"
+      }
+    ]
+  },
+  "web-java-se-java.awt.color.ICC_ColorSpace.toCIEXYZ": {
+    "body": [
+      "Este método transforma valores de color con colorimetría relativa, tal como la define la especificación ICC. Esto significa que los valores XYZ que devuelve están expresados respecto al punto blanco D50 del espacio de color CS_CIEXYZ. Esta representación es útil en una conversión de color en dos pasos, en la que los colores pasan de un espacio de entrada a CS_CIEXYZ y luego a un espacio de salida. No coincide con los valores XYZ que mediría un colorímetro a partir del color dado; hace falta otra transformación para obtener los valores XYZ que se medirían según las prácticas recomendadas actuales de la CIE. Los párrafos siguientes lo explican con más detalle.",
+      "El estándar ICC usa un espacio de color independiente del dispositivo (DICS) como mecanismo para convertir el color de un dispositivo a otro. En esta arquitectura, los colores pasan del espacio del dispositivo de origen al DICS de ICC y de ahí al espacio del dispositivo de destino. El estándar define perfiles de dispositivo con las transformaciones entre el espacio de color del dispositivo y el DICS. La conversión completa se hace conectando la transformación dispositivo-a-DICS del perfil de origen con la transformación DICS-a-dispositivo del perfil de destino. Por eso el DICS de ICC suele llamarse espacio de conexión de perfiles (PCS). El espacio de color usado en toCIEXYZ y fromCIEXYZ es el PCS CIEXYZ definido por la especificación ICC, que también es el representado por ColorSpace.CS_CIEXYZ.",
+      "Los valores XYZ de un color suelen expresarse respecto a algún punto blanco, así que su significado real no se conoce sin saber ese punto blanco. Esto se llama colorimetría relativa. El PCS usa el punto blanco D50, así que sus valores XYZ son relativos a D50. Por ejemplo, el blanco en el PCS tiene los valores XYZ de D50, definidos como X=.9642, Y=1.000 y Z=0.8249. Este punto blanco es habitual en artes gráficas, pero en otras aplicaciones se usan otros.",
+      "Para cuantificar las características de color de un dispositivo, como una impresora o un monitor, normalmente se miden los valores XYZ de colores concretos del dispositivo. Aquí, el término valores XYZ del dispositivo se refiere a los valores XYZ que se medirían a partir de los colores del dispositivo según las prácticas recomendadas actuales de la CIE.",
+      "Convertir entre los valores XYZ del dispositivo y los valores XYZ del PCS que devuelve este método equivale a convertir entre el espacio de color del dispositivo, representado por valores colorimétricos CIE, y el PCS. En este proceso intervienen muchos factores, algunos muy sutiles. El más importante es el ajuste por la diferencia entre el punto blanco del dispositivo y el del PCS. Hay muchas técnicas para ello y es objeto de mucha investigación y debate. Algunos métodos habituales son el escalado XYZ, la transformación de von Kries y la transformación de Bradford. El método adecuado depende de cada aplicación.",
+      "El método más sencillo es el escalado XYZ. Cada valor XYZ del dispositivo se convierte a un valor XYZ del PCS multiplicándolo por la razón entre el punto blanco del PCS (D50) y el del dispositivo.",
+      "Xd, Yd, Zd are the device XYZ values Xdw, Ydw, Zdw are the device XYZ white point values Xp, Yp, Zp are the PCS XYZ values Xd50, Yd50, Zd50 are the PCS XYZ white point values",
+      "Xp = Xd * (Xd50 / Xdw) Yp = Yd * (Yd50 / Ydw) Zp = Zd * (Zd50 / Zdw)",
+      "La conversión del PCS al dispositivo se haría invirtiendo estas ecuaciones:",
+      "Xd = Xp * (Xdw / Xd50) Yd = Yp * (Ydw / Yd50) Zd = Zp * (Zdw / Zd50)",
+      "La etiqueta de punto blanco del medio de un perfil ICC no es lo mismo que el punto blanco del dispositivo. La etiqueta se expresa en valores del PCS y representa la diferencia entre el XYZ del iluminante del dispositivo y el XYZ del medio medido bajo ese iluminante. El punto blanco del dispositivo se expresa como los valores XYZ del dispositivo correspondientes al blanco mostrado en él. Por ejemplo, mostrar el color RGB (1.0, 1.0, 1.0) en un dispositivo sRGB da un valor XYZ medido de D65, que no coincide con el XYZ de la etiqueta de punto blanco del medio del perfil ICC de un dispositivo sRGB."
+    ],
+    "parameters": [
+      {
+        "label": "colorvalue",
+        "detail": "un array float de longitud al menos igual al número de componentes de este ColorSpace"
+      }
+    ],
+    "returns": ["un array float de longitud 3"],
+    "exceptions": [
+      {
+        "label": "ArrayIndexOutOfBoundsException",
+        "detail": "si la longitud del array no es al menos el número de componentes de este ColorSpace"
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.Area.contains": {
+    "overloads": [
+      {
+        "intro": [
+          "Comprueba si las coordenadas indicadas están dentro del contorno del Shape, según la definición de interioridad."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X que se comprueba"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y que se comprueba"
+          }
+        ],
+        "returns": [
+          "true si las coordenadas indicadas están dentro del contorno del Shape; false en caso contrario."
+        ]
+      },
+      {
+        "intro": [
+          "Comprueba si el Point2D indicado está dentro del contorno del Shape, según la"
+        ],
+        "body": ["definición de interioridad."],
+        "parameters": [
+          {
+            "label": "p",
+            "detail": "el Point2D que se comprueba"
+          }
+        ],
+        "returns": [
+          "true si el Point2D indicado está dentro del contorno del Shape; false en caso contrario."
+        ]
+      },
+      {
+        "intro": [
+          "Comprueba si el interior del Shape contiene por completo el área rectangular indicada. Todas las coordenadas del área rectangular deben estar dentro del Shape para que se considere contenida."
+        ],
+        "body": [
+          "El método Shape.contains() permite que una implementación de Shape devuelva false de forma conservadora cuando:",
+          "el método intersect devuelve true y",
+          "los cálculos para saber si el Shape contiene por completo el área rectangular son demasiado costosos.",
+          "Esto significa que, para algunos Shape, este método puede devolver false aunque el Shape contenga el área rectangular. La clase Area hace cálculos geométricos más precisos que la mayoría de los Shape y puede usarse si se necesita una respuesta más exacta."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X de la esquina superior izquierda del área rectangular indicada"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y de la esquina superior izquierda del área rectangular indicada"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura del área rectangular indicada"
+          },
+          {
+            "label": "h",
+            "detail": "la altura del área rectangular indicada"
+          }
+        ],
+        "returns": [
+          "true si el interior del Shape contiene por completo el área rectangular indicada; false en caso contrario o si el Shape contiene el área, el método intersects devuelve true y los cálculos de contención serían demasiado costosos."
+        ]
+      },
+      {
+        "intro": [
+          "Comprueba si el interior del Shape contiene por completo el Rectangle2D indicado. El método Shape.contains() permite que una implementación de Shape devuelva false de forma conservadora cuando:"
+        ],
+        "body": [
+          "el método intersect devuelve true y",
+          "los cálculos para saber si el Shape contiene por completo el Rectangle2D son demasiado costosos.",
+          "Esto significa que, para algunos Shape, este método puede devolver false aunque el Shape contenga el Rectangle2D. La clase Area hace cálculos geométricos más precisos que la mayoría de los Shape y puede usarse si se necesita una respuesta más exacta."
+        ],
+        "parameters": [
+          {
+            "label": "r",
+            "detail": "El Rectangle2D indicado"
+          }
+        ],
+        "returns": [
+          "true si el interior del Shape contiene por completo el Rectangle2D; false en caso contrario o si el Shape contiene el Rectangle2D, el método intersects devuelve true y los cálculos de contención serían demasiado costosos."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.CubicCurve2D.contains": {
+    "overloads": [
+      {
+        "intro": [
+          "Comprueba si las coordenadas indicadas están dentro del contorno del Shape, según la definición de interioridad."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X que se comprueba"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y que se comprueba"
+          }
+        ],
+        "returns": [
+          "true si las coordenadas indicadas están dentro del contorno del Shape; false en caso contrario."
+        ]
+      },
+      {
+        "intro": [
+          "Comprueba si el Point2D indicado está dentro del contorno del Shape, según la"
+        ],
+        "body": ["definición de interioridad."],
+        "parameters": [
+          {
+            "label": "p",
+            "detail": "el Point2D que se comprueba"
+          }
+        ],
+        "returns": [
+          "true si el Point2D indicado está dentro del contorno del Shape; false en caso contrario."
+        ]
+      },
+      {
+        "intro": [
+          "Comprueba si el interior del Shape contiene por completo el área rectangular indicada. Todas las coordenadas del área rectangular deben estar dentro del Shape para que se considere contenida."
+        ],
+        "body": [
+          "El método Shape.contains() permite que una implementación de Shape devuelva false de forma conservadora cuando:",
+          "el método intersect devuelve true y",
+          "los cálculos para saber si el Shape contiene por completo el área rectangular son demasiado costosos.",
+          "Esto significa que, para algunos Shape, este método puede devolver false aunque el Shape contenga el área rectangular. La clase Area hace cálculos geométricos más precisos que la mayoría de los Shape y puede usarse si se necesita una respuesta más exacta."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X de la esquina superior izquierda del área rectangular indicada"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y de la esquina superior izquierda del área rectangular indicada"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura del área rectangular indicada"
+          },
+          {
+            "label": "h",
+            "detail": "la altura del área rectangular indicada"
+          }
+        ],
+        "returns": [
+          "true si el interior del Shape contiene por completo el área rectangular indicada; false en caso contrario o si el Shape contiene el área, el método intersects devuelve true y los cálculos de contención serían demasiado costosos."
+        ]
+      },
+      {
+        "intro": [
+          "Comprueba si el interior del Shape contiene por completo el Rectangle2D indicado. El método Shape.contains() permite que una implementación de Shape devuelva false de forma conservadora cuando:"
+        ],
+        "body": [
+          "el método intersect devuelve true y",
+          "los cálculos para saber si el Shape contiene por completo el Rectangle2D son demasiado costosos.",
+          "Esto significa que, para algunos Shape, este método puede devolver false aunque el Shape contenga el Rectangle2D. La clase Area hace cálculos geométricos más precisos que la mayoría de los Shape y puede usarse si se necesita una respuesta más exacta."
+        ],
+        "parameters": [
+          {
+            "label": "r",
+            "detail": "El Rectangle2D indicado"
+          }
+        ],
+        "returns": [
+          "true si el interior del Shape contiene por completo el Rectangle2D; false en caso contrario o si el Shape contiene el Rectangle2D, el método intersects devuelve true y los cálculos de contención serían demasiado costosos."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.Ellipse2D.contains": {
+    "overloads": [
+      {
+        "intro": [
+          "Comprueba si las coordenadas indicadas están dentro del contorno del Shape, según la definición de interioridad."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X que se comprueba"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y que se comprueba"
+          }
+        ],
+        "returns": [
+          "true si las coordenadas indicadas están dentro del contorno del Shape; false en caso contrario."
+        ]
+      },
+      {
+        "intro": [
+          "Comprueba si el interior del Shape contiene por completo el área rectangular indicada. Todas las coordenadas del área rectangular deben estar dentro del Shape para que se considere contenida."
+        ],
+        "body": [
+          "El método Shape.contains() permite que una implementación de Shape devuelva false de forma conservadora cuando:",
+          "el método intersect devuelve true y",
+          "los cálculos para saber si el Shape contiene por completo el área rectangular son demasiado costosos.",
+          "Esto significa que, para algunos Shape, este método puede devolver false aunque el Shape contenga el área rectangular. La clase Area hace cálculos geométricos más precisos que la mayoría de los Shape y puede usarse si se necesita una respuesta más exacta."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X de la esquina superior izquierda del área rectangular indicada"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y de la esquina superior izquierda del área rectangular indicada"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura del área rectangular indicada"
+          },
+          {
+            "label": "h",
+            "detail": "la altura del área rectangular indicada"
+          }
+        ],
+        "returns": [
+          "true si el interior del Shape contiene por completo el área rectangular indicada; false en caso contrario o si el Shape contiene el área, el método intersects devuelve true y los cálculos de contención serían demasiado costosos."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.QuadCurve2D.contains": {
+    "overloads": [
+      {
+        "intro": [
+          "Comprueba si las coordenadas indicadas están dentro del contorno del Shape, según la definición de interioridad."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X que se comprueba"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y que se comprueba"
+          }
+        ],
+        "returns": [
+          "true si las coordenadas indicadas están dentro del contorno del Shape; false en caso contrario."
+        ]
+      },
+      {
+        "intro": [
+          "Comprueba si el Point2D indicado está dentro del contorno del Shape, según la"
+        ],
+        "body": ["definición de interioridad."],
+        "parameters": [
+          {
+            "label": "p",
+            "detail": "el Point2D que se comprueba"
+          }
+        ],
+        "returns": [
+          "true si el Point2D indicado está dentro del contorno del Shape; false en caso contrario."
+        ]
+      },
+      {
+        "intro": [
+          "Comprueba si el interior del Shape contiene por completo el área rectangular indicada. Todas las coordenadas del área rectangular deben estar dentro del Shape para que se considere contenida."
+        ],
+        "body": [
+          "El método Shape.contains() permite que una implementación de Shape devuelva false de forma conservadora cuando:",
+          "el método intersect devuelve true y",
+          "los cálculos para saber si el Shape contiene por completo el área rectangular son demasiado costosos.",
+          "Esto significa que, para algunos Shape, este método puede devolver false aunque el Shape contenga el área rectangular. La clase Area hace cálculos geométricos más precisos que la mayoría de los Shape y puede usarse si se necesita una respuesta más exacta."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X de la esquina superior izquierda del área rectangular indicada"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y de la esquina superior izquierda del área rectangular indicada"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura del área rectangular indicada"
+          },
+          {
+            "label": "h",
+            "detail": "la altura del área rectangular indicada"
+          }
+        ],
+        "returns": [
+          "true si el interior del Shape contiene por completo el área rectangular indicada; false en caso contrario o si el Shape contiene el área, el método intersects devuelve true y los cálculos de contención serían demasiado costosos."
+        ]
+      },
+      {
+        "intro": [
+          "Comprueba si el interior del Shape contiene por completo el Rectangle2D indicado. El método Shape.contains() permite que una implementación de Shape devuelva false de forma conservadora cuando:"
+        ],
+        "body": [
+          "el método intersect devuelve true y",
+          "los cálculos para saber si el Shape contiene por completo el Rectangle2D son demasiado costosos.",
+          "Esto significa que, para algunos Shape, este método puede devolver false aunque el Shape contenga el Rectangle2D. La clase Area hace cálculos geométricos más precisos que la mayoría de los Shape y puede usarse si se necesita una respuesta más exacta."
+        ],
+        "parameters": [
+          {
+            "label": "r",
+            "detail": "El Rectangle2D indicado"
+          }
+        ],
+        "returns": [
+          "true si el interior del Shape contiene por completo el Rectangle2D; false en caso contrario o si el Shape contiene el Rectangle2D, el método intersects devuelve true y los cálculos de contención serían demasiado costosos."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.Rectangle2D.contains": {
+    "overloads": [
+      {
+        "intro": [
+          "Comprueba si las coordenadas indicadas están dentro del contorno del Shape, según la definición de interioridad."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X que se comprueba"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y que se comprueba"
+          }
+        ],
+        "returns": [
+          "true si las coordenadas indicadas están dentro del contorno del Shape; false en caso contrario."
+        ]
+      },
+      {
+        "intro": [
+          "Comprueba si el interior del Shape contiene por completo el área rectangular indicada. Todas las coordenadas del área rectangular deben estar dentro del Shape para que se considere contenida."
+        ],
+        "body": [
+          "El método Shape.contains() permite que una implementación de Shape devuelva false de forma conservadora cuando:",
+          "el método intersect devuelve true y",
+          "los cálculos para saber si el Shape contiene por completo el área rectangular son demasiado costosos.",
+          "Esto significa que, para algunos Shape, este método puede devolver false aunque el Shape contenga el área rectangular. La clase Area hace cálculos geométricos más precisos que la mayoría de los Shape y puede usarse si se necesita una respuesta más exacta."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X de la esquina superior izquierda del área rectangular indicada"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y de la esquina superior izquierda del área rectangular indicada"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura del área rectangular indicada"
+          },
+          {
+            "label": "h",
+            "detail": "la altura del área rectangular indicada"
+          }
+        ],
+        "returns": [
+          "true si el interior del Shape contiene por completo el área rectangular indicada; false en caso contrario o si el Shape contiene el área, el método intersects devuelve true y los cálculos de contención serían demasiado costosos."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.RectangularShape.contains": {
+    "overloads": [
+      {
+        "intro": [
+          "Comprueba si el Point2D indicado está dentro del contorno del Shape, según la"
+        ],
+        "body": ["definición de interioridad."],
+        "parameters": [
+          {
+            "label": "p",
+            "detail": "el Point2D que se comprueba"
+          }
+        ],
+        "returns": [
+          "true si el Point2D indicado está dentro del contorno del Shape; false en caso contrario."
+        ]
+      },
+      {
+        "intro": [
+          "Comprueba si el interior del Shape contiene por completo el Rectangle2D indicado. El método Shape.contains() permite que una implementación de Shape devuelva false de forma conservadora cuando:"
+        ],
+        "body": [
+          "el método intersect devuelve true y",
+          "los cálculos para saber si el Shape contiene por completo el Rectangle2D son demasiado costosos.",
+          "Esto significa que, para algunos Shape, este método puede devolver false aunque el Shape contenga el Rectangle2D. La clase Area hace cálculos geométricos más precisos que la mayoría de los Shape y puede usarse si se necesita una respuesta más exacta."
+        ],
+        "parameters": [
+          {
+            "label": "r",
+            "detail": "El Rectangle2D indicado"
+          }
+        ],
+        "returns": [
+          "true si el interior del Shape contiene por completo el Rectangle2D; false en caso contrario o si el Shape contiene el Rectangle2D, el método intersects devuelve true y los cálculos de contención serían demasiado costosos."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.geom.RoundRectangle2D.contains": {
+    "overloads": [
+      {
+        "intro": [
+          "Comprueba si las coordenadas indicadas están dentro del contorno del Shape, según la definición de interioridad."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X que se comprueba"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y que se comprueba"
+          }
+        ],
+        "returns": [
+          "true si las coordenadas indicadas están dentro del contorno del Shape; false en caso contrario."
+        ]
+      },
+      {
+        "intro": [
+          "Comprueba si el interior del Shape contiene por completo el área rectangular indicada. Todas las coordenadas del área rectangular deben estar dentro del Shape para que se considere contenida."
+        ],
+        "body": [
+          "El método Shape.contains() permite que una implementación de Shape devuelva false de forma conservadora cuando:",
+          "el método intersect devuelve true y",
+          "los cálculos para saber si el Shape contiene por completo el área rectangular son demasiado costosos.",
+          "Esto significa que, para algunos Shape, este método puede devolver false aunque el Shape contenga el área rectangular. La clase Area hace cálculos geométricos más precisos que la mayoría de los Shape y puede usarse si se necesita una respuesta más exacta."
+        ],
+        "parameters": [
+          {
+            "label": "x",
+            "detail": "la coordenada X de la esquina superior izquierda del área rectangular indicada"
+          },
+          {
+            "label": "y",
+            "detail": "la coordenada Y de la esquina superior izquierda del área rectangular indicada"
+          },
+          {
+            "label": "w",
+            "detail": "la anchura del área rectangular indicada"
+          },
+          {
+            "label": "h",
+            "detail": "la altura del área rectangular indicada"
+          }
+        ],
+        "returns": [
+          "true si el interior del Shape contiene por completo el área rectangular indicada; false en caso contrario o si el Shape contiene el área, el método intersects devuelve true y los cálculos de contención serían demasiado costosos."
+        ]
+      }
     ]
   },
   "web-java-se-java.io.DataInput": {
