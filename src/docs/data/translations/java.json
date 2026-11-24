@@ -11369,6 +11369,1278 @@
       }
     ]
   },
+  "web-java-se-java.lang.invoke.MethodHandleInfo": {
+    "body": [
+      "Method handles directos",
+      "Un method handle directo representa un método, constructor o campo sin enlaces de argumentos ni otras transformaciones intermedias. El método, constructor o campo al que hace referencia se llama su miembro subyacente. Los method handles directos pueden obtenerse de cualquiera de estas formas:",
+      "Ejecutando una instrucción ldc sobre una constante CONSTANT_MethodHandle. (Consulta la Java Virtual Machine Specification, secciones 4.4.8 y 5.4.3.5).",
+      "Llamando a uno de los métodos de fábrica de Lookup, como Lookup.findVirtual, para resolver una referencia simbólica en un method handle. Una referencia simbólica consta de una clase, una cadena con el nombre y un tipo.",
+      "Llamando al método de fábrica Lookup.unreflect o Lookup.unreflectSpecial para convertir un Method en un method handle.",
+      "Llamando al método de fábrica Lookup.unreflectConstructor para convertir un Constructor en un method handle.",
+      "Llamando al método de fábrica Lookup.unreflectGetter o Lookup.unreflectSetter para convertir un Field en un method handle.",
+      "Restricciones para descomponer",
+      "Con un objeto Lookup adecuado, es posible descomponer cualquier method handle directo para recuperar una referencia simbólica del método, constructor o campo subyacente. Debe hacerse con un Lookup equivalente al que creó el method handle, o con uno que tenga permisos suficientes para recrear un method handle equivalente.",
+      "Si el método subyacente es sensible a quien llama, el method handle directo habrá quedado \"ligado\" a una clase llamante concreta, la clase del Lookup con el que se creó. Descomponerlo con otra clase de Lookup fallará aunque el método subyacente sea público (como Class.forName).",
+      "Exigir que el Lookup coincida da un comportamiento de \"fallo rápido\" a los programas que, si no, podrían fiarse de la revelación errónea de un method handle con información simbólica (o ligado a quien llama) desde un ámbito inesperado. Usa java.lang.invoke.MethodHandles.reflectAs para saltarte esta limitación.",
+      "Tipos de referencia",
+      "Los métodos de fábrica de Lookup cubren todos los casos de uso principales de métodos, constructores y campos. Estos casos pueden distinguirse con pequeños enteros así:",
+      "tipos de referencia",
+      "tipo de referencia · nombre descriptivo · ámbito · miembro · comportamiento",
+      "1 · REF_getField · clase · FT f; · (T) this.f;",
+      "2 · REF_getStatic · clase o interfaz · static",
+      "FT f; · (T) C.f;",
+      "3 · REF_putField · clase · FT f; · this.f = x;",
+      "4 · REF_putStatic · clase · static",
+      "FT f; · C.f = arg;",
+      "5 · REF_invokeVirtual · clase · T m(A*); · (T) this.m(arg*);",
+      "6 · REF_invokeStatic · clase o interfaz · static",
+      "T m(A*); · (T) C.m(arg*);",
+      "7 · REF_invokeSpecial · clase o interfaz · T m(A*); · (T) super.m(arg*);",
+      "8 · REF_newInvokeSpecial · clase · C(A*); · new C(arg*);",
+      "9 · REF_invokeInterface · interfaz · T m(A*); · (T) this.m(arg*);"
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles%24Lookup": {
+    "body": [
+      "Una clase de búsqueda que necesita crear method handles llama a MethodHandles.lookup para crearse una fábrica. Al crear el objeto fábrica Lookup, se determina la identidad de la clase de búsqueda y se guarda de forma segura en él. Después, la clase de búsqueda (o sus delegados) puede usar los métodos de fábrica del Lookup para crear method handles de miembros con control de acceso. Esto incluye todos los métodos, constructores y campos permitidos a la clase de búsqueda, incluso los privados.",
+      "Métodos de fábrica de Lookup",
+      "Los métodos de fábrica de un Lookup cubren todos los casos de uso principales de métodos, constructores y campos. Cada method handle creado por un método de fábrica equivale funcionalmente a un comportamiento de bytecode concreto. (Los comportamientos de bytecode se describen en la sección 5.4.3.5 de la Java Virtual Machine Specification). Este es un resumen de la correspondencia entre estos métodos de fábrica y el comportamiento de los method handles resultantes:",
+      "comportamientos de los métodos de búsqueda",
+      "expresión de búsqueda · miembro · comportamiento de bytecode",
+      "lookup.findGetter(C.class,\"f\",FT.class) · FT f; · (T) this.f;",
+      "lookup.findStaticGetter(C.class,\"f\",FT.class) · static",
+      "FT f; · (FT) C.f;",
+      "lookup.findSetter(C.class,\"f\",FT.class) · FT f; · this.f = x;",
+      "lookup.findStaticSetter(C.class,\"f\",FT.class) · static",
+      "FT f; · C.f = arg;",
+      "lookup.findVirtual(C.class,\"m\",MT) · T m(A*); · (T) this.m(arg*);",
+      "lookup.findStatic(C.class,\"m\",MT) · static",
+      "T m(A*); · (T) C.m(arg*);",
+      "lookup.findSpecial(C.class,\"m\",MT,this.class) · T m(A*); · (T) super.m(arg*);",
+      "lookup.findConstructor(C.class,MT) · C(A*); · new C(arg*);",
+      "lookup.unreflectGetter(aField) · (static)?",
+      "FT f; · (FT) aField.get(thisOrNull);",
+      "lookup.unreflectSetter(aField) · (static)?",
+      "FT f; · aField.set(thisOrNull, arg);",
+      "lookup.unreflect(aMethod) · (static)?",
+      "T m(A*); · (T) aMethod.invoke(thisOrNull, arg*);",
+      "lookup.unreflectConstructor(aConstructor) · C(A*); · (C) aConstructor.newInstance(arg*);",
+      "lookup.unreflectSpecial(aMethod,this.class) · T m(A*); · (T) super.m(arg*);",
+      "lookup.findClass(\"C\") · {@code class C { ... }} · C.class;",
+      "Aquí, el tipo C es la clase o interfaz en la que se busca el miembro, documentada como parámetro refc en los métodos de búsqueda. El tipo de método MT se compone del tipo de retorno T y la secuencia de tipos de argumento A*. El constructor también tiene una secuencia de tipos de argumento A* y se considera que devuelve el objeto recién creado de tipo C. Tanto MT como el tipo de campo FT se documentan como parámetro type. El parámetro formal this representa la autorreferencia de tipo C; si está presente, siempre es el primer argumento de la invocación del method handle. (En el caso de algunos miembros protected, su tipo puede quedar restringido a la clase de búsqueda; ver abajo). El nombre arg representa todos los demás argumentos del method handle. En los ejemplos de la API Core Reflection, thisOrNull representa una referencia null si el método o campo accedido es estático, y this si no. Los nombres aMethod, aField y aConstructor representan los objetos reflexivos de los miembros dados declarados en el tipo C.",
+      "El comportamiento de bytecode de findClass es la carga de una clase constante, como con ldc CONSTANT_Class. No se representa como method handle, sino directamente como una constante Class.",
+      "Si el miembro dado es de aridad variable (es decir, un método o constructor), el method handle devuelto también lo será. En todos los demás casos será de aridad fija.",
+      "Explicación: la equivalencia entre los method handles buscados y los miembros de clase y comportamientos de bytecode subyacentes puede romperse de varias formas:",
+      "Si C no es accesible simbólicamente desde el cargador de la clase de búsqueda, la búsqueda puede tener éxito aunque no haya una expresión Java ni una constante de bytecode equivalente.",
+      "Del mismo modo, si T o MT no son accesibles simbólicamente desde el cargador de la clase de búsqueda, la búsqueda puede tener éxito. Por ejemplo, las búsquedas de MethodHandle.invokeExact y MethodHandle.invoke siempre tienen éxito, sea cual sea el tipo pedido.",
+      "Si hay un gestor de seguridad instalado, puede prohibir la búsqueda por varios motivos (ver abajo). En cambio, la instrucción ldc sobre una constante CONSTANT_MethodHandle no está sujeta a las comprobaciones del gestor de seguridad.",
+      "Si el método buscado tiene una aridad muy grande, crear el method handle puede fallar con IllegalArgumentException, porque su tipo tendría demasiados parámetros.",
+      "Control de acceso",
+      "Los controles de acceso se aplican en los métodos de fábrica de Lookup, al crear el method handle. Es una diferencia clave con la API Core Reflection, porque java.lang.reflect.Method.invoke comprueba el acceso de cada llamante en cada llamada.",
+      "Todos los controles de acceso parten de un objeto Lookup, que compara su clase de búsqueda registrada con todas las peticiones de crear method handles. Un único Lookup puede crear cualquier número de method handles con control de acceso, todos comprobados frente a una única clase de búsqueda.",
+      "Un objeto Lookup puede compartirse con otro código de confianza, como un protocolo de metaobjetos. Un Lookup compartido delega la capacidad de crear method handles sobre miembros privados de la clase de búsqueda. Aunque lo use código privilegiado, el control de acceso se limita a los privilegios de la clase de búsqueda original.",
+      "Una búsqueda puede fallar porque la clase contenedora no es accesible para la clase de búsqueda, porque falta el miembro deseado, porque el miembro no es accesible para la clase de búsqueda o porque el objeto Lookup no tiene confianza suficiente para acceder al miembro. En el caso de un setter de un campo final, el respeto a final se trata como un tipo de control de acceso y la búsqueda falla, salvo en casos especiales de Lookup.unreflectSetter. En cualquiera de estos casos, la búsqueda lanza una ReflectiveOperationException. La clase exacta será una de estas:",
+      "NoSuchMethodException: si se pide un método que no existe",
+      "NoSuchFieldException: si se pide un campo que no existe",
+      "IllegalAccessException: si el miembro existe pero falla un control de acceso",
+      "En general, las condiciones para buscar un method handle de un método M no son más restrictivas que las condiciones en las que la clase de búsqueda podría haber compilado, verificado y resuelto una llamada a M. Donde la JVM lanzaría excepciones como NoSuchMethodError, la búsqueda de method handles suele lanzar la excepción comprobada correspondiente, como NoSuchMethodException. Y el efecto de invocar el method handle resultante es exactamente equivalente a ejecutar la llamada compilada, verificada y resuelta a M. Lo mismo vale para campos y constructores.",
+      "Explicación: los controles de acceso solo se aplican a métodos, constructores y campos con nombre y reflejados. Otros métodos de creación de method handles, como MethodHandle.asType, no requieren controles de acceso y se usan con independencia de cualquier Lookup.",
+      "Si el miembro deseado es protected, se aplican las reglas habituales de la JVM, incluido el requisito de que la clase de búsqueda esté en el mismo paquete que el miembro o lo herede. (Consulta la Java Virtual Machine Specification, secciones 4.9.2, 5.4.3.5 y 6.4). Además, si el miembro es un campo o método no estático de otro paquete, el method handle resultante solo puede aplicarse a objetos de la clase de búsqueda o de sus subclases. Este requisito se impone estrechando el tipo del parámetro inicial this de C (que necesariamente es una superclase de la clase de búsqueda) a la propia clase de búsqueda.",
+      "La JVM impone un requisito parecido a la instrucción invokespecial: el argumento receptor debe coincidir con el método resuelto y con la clase actual. De nuevo, se impone estrechando el tipo del parámetro inicial del method handle resultante. (Consulta la Java Virtual Machine Specification, sección 4.10.1.9).",
+      "La JVM representa los constructores y los bloques de inicialización estática como métodos internos con nombres especiales (ConstantDescs.INIT_NAME y ConstantDescs.CLASS_INIT_NAME). La sintaxis interna de las instrucciones de invocación permite referirse a ellos como si fueran métodos normales, pero el verificador de bytecode de la JVM los rechaza. Buscar uno de estos métodos internos produce NoSuchMethodException.",
+      "Si la relación entre tipos anidados se expresa directamente con los atributos NestHost y NestMembers (consulta la Java Virtual Machine Specification, secciones 4.7.28 y 4.7.29), el Lookup asociado da acceso directo a la clase de búsqueda y a todos sus compañeros de nido (consulta Class.getNestHost). Si no, el acceso entre clases anidadas se consigue con métodos envoltorio que crea el compilador de Java para acceder a un método privado de otra clase del mismo nido. Por ejemplo, una clase anidada C.D puede acceder a miembros privados de otras clases relacionadas, como C, C.D.E o C.B, pero el compilador puede tener que generar métodos envoltorio en esas clases. En esos casos, un Lookup sobre C.E no podría acceder a esos miembros privados. Una solución a esta limitación es el método Lookup.in, que puede transformar un Lookup sobre C.E en uno sobre cualquiera de esas otras clases sin elevar privilegios.",
+      "Los accesos permitidos a un Lookup pueden limitarse, según su conjunto de lookupModes, a un subconjunto de los miembros normalmente accesibles para la clase de búsqueda. Por ejemplo, publicLookup produce un Lookup que solo puede acceder a miembros públicos de clases públicas de paquetes exportados. El método sensible a quien llama lookup produce un Lookup con todas las capacidades respecto a su clase llamante, para emular todos los comportamientos de bytecode admitidos. Además, Lookup.in puede producir un Lookup con menos modos de acceso que el original.",
+      "Explicación del acceso privado y de módulo: decimos que un Lookup tiene acceso privado si sus modos incluyen la posibilidad de acceder a miembros privados (incluidos los de los compañeros de nido). Como se documenta en los métodos correspondientes, solo los Lookup con acceso privado tienen estas capacidades:",
+      "acceder a campos, métodos y constructores privados de la clase de búsqueda y de sus compañeros de nido",
+      "crear method handles que emulan instrucciones invokespecial",
+      "evitar los controles de acceso de paquete para clases accesibles para la clase de búsqueda",
+      "crear Lookup delegados con acceso privado a otras clases del mismo miembro de paquete",
+      "Del mismo modo, un Lookup con acceso de módulo garantiza que quien lo creó originalmente era miembro del mismo módulo que la clase de búsqueda.",
+      "El acceso privado y el de módulo son modos independientes; un Lookup puede tener uno, ambos o ninguno. Un Lookup con ambos modos tiene acceso con privilegios completos.",
+      "Un Lookup con acceso original garantiza que lo creó la clase de búsqueda original y el método bootstrap invocado por la VM. Un Lookup así también tiene acceso privado y de módulo, con esta capacidad adicional:",
+      "crear method handles que invocan métodos sensibles a quien llama, como Class.forName",
+      "obtener los datos de clase asociados a la clase de búsqueda con classData(MethodHandles.Lookup, String, Class)",
+      "Cada uno de estos permisos se debe a que un Lookup con acceso privado puede rastrearse de forma segura hasta una clase de origen, cuyos comportamientos de bytecode y permisos de acceso del lenguaje Java pueden determinarse de forma fiable y emularse con method handles.",
+      "Búsquedas entre módulos",
+      "Cuando una clase de búsqueda de un módulo M1 accede a una clase de otro módulo M2, se hacen controles de acceso adicionales además de los bits de modo de acceso. Un Lookup con modo PUBLIC y clase de búsqueda en M1 puede acceder a tipos públicos de M2 cuando M1 puede leer M2 y el tipo está en un paquete de M2 exportado al menos a M1.",
+      "Un Lookup sobre C también puede teletransportarse a una clase destino con Lookup.in y MethodHandles.privateLookupIn(Class, MethodHandles.Lookup). Teletransportarse entre módulos siempre registra la clase de búsqueda original como clase de búsqueda anterior y elimina el acceso MODULE. Si la clase destino está en el mismo módulo que C, pasa a ser la nueva clase de búsqueda y la clase anterior no cambia. Si está en un módulo distinto de M1 (el de C), C pasa a ser la nueva clase anterior y la clase destino la nueva clase de búsqueda. En ese caso, si ya había una clase anterior en M0 y es distinta de M1 y M2, el Lookup resultante pierde todos los privilegios. Por ejemplo,",
+      "El método de fábrica lookup() produce un Lookup con clase anterior null. lookup.in(D.class) transforma el Lookup de la clase C en uno de la clase D sin elevar privilegios. Si C y D están en el mismo módulo, lookup2 registra D como nueva clase de búsqueda y mantiene la misma clase anterior que el original, o null si no la había.",
+      "Cuando un Lookup se teletransporta de una clase de un nido a otro nido, pierde el acceso PRIVATE. De un paquete a otro, pierde el acceso PACKAGE. De un módulo a otro, pierde el acceso MODULE. Teletransportarse entre módulos elimina la capacidad de acceder a clases no exportadas tanto del módulo de la nueva clase de búsqueda como del de la anterior, y el Lookup resultante solo conserva el acceso PUBLIC. Un Lookup puede ir y volver entre una clase del módulo de la clase de búsqueda y una del módulo de la clase anterior. Teletransportarse entre módulos solo puede reducir el acceso, nunca aumentarlo. Teletransportarse a un tercer módulo elimina todos los accesos.",
+      "En el ejemplo anterior, si C y D están en módulos distintos, lookup2 registra D como clase de búsqueda y C como clase anterior, y solo tiene acceso PUBLIC. lookup2 puede teletransportarse a otras clases del módulo de C y del de D. Si la clase E está en un tercer módulo, lookup2.in(E.class) crea un Lookup sobre E sin acceso, y la clase de búsqueda de lookup2, D, se registra como su clase anterior.",
+      "Teletransportarse entre módulos limita el acceso a los tipos públicos a los que pueden acceder por igual la clase de búsqueda y la anterior (ver abajo).",
+      "MethodHandles.privateLookupIn(T.class, lookup) puede usarse para teletransportar un Lookup de la clase C a la clase T y producir un Lookup nuevo con acceso privado si la clase de búsqueda tiene permitido hacer reflexión profunda sobre T. El Lookup debe tener acceso MODULE y PRIVATE para llamar a privateLookupIn. Un Lookup sobre C del módulo M1 puede hacer reflexión profunda sobre todas las clases de M1; si T está en M1, privateLookupIn produce un Lookup nuevo sobre T con todas las capacidades. Un Lookup sobre C también puede hacer reflexión profunda sobre T en otro módulo M2 si M1 lee M2 y M2 abre el paquete de T al menos a M1. T pasa a ser la nueva clase de búsqueda, C la nueva clase anterior, y el Lookup resultante pierde el acceso MODULE. Ese Lookup puede usarse para buscar miembros o teletransportarse a otra clase con Lookup::in, pero no para obtener otro Lookup privado con privateLookupIn, porque no tiene acceso MODULE.",
+      "El Lookup que devuelve privateLookupIn puede definir clases en el paquete de ejecución de T. Hay que tener muchísimo cuidado al abrir un paquete a otro módulo, porque esas clases definidas tienen el mismo acceso con privilegios completos que los demás miembros de M2.",
+      "Controles de acceso entre módulos",
+      "Un Lookup con modo PUBLIC o UNCONDITIONAL permite el acceso entre módulos. El control de acceso se hace respecto a la clase de búsqueda y a la clase anterior, si existe.",
+      "Un Lookup con modo UNCONDITIONAL puede acceder a tipos públicos de todos los módulos cuando el tipo está en un paquete exportado incondicionalmente.",
+      "Si un Lookup sobre LC en M1 no tiene clase anterior, con modo PUBLIC puede acceder a todos los tipos públicos de los módulos legibles por M1 cuyo paquete esté exportado al menos a M1.",
+      "Si un Lookup sobre LC en M1 tiene una clase anterior PLC en M0, con modo PUBLIC puede acceder a la intersección de los tipos públicos accesibles para M1 con los accesibles para M0. M0 lee M1, así que el conjunto de tipos accesibles incluye:",
+      "paquetes exportados incondicionalmente desde M1",
+      "paquetes exportados incondicionalmente desde M0 si M1 lee M0",
+      "paquetes exportados incondicionalmente desde un tercer módulo M2 si M0 y M1 leen M2",
+      "paquetes exportados de forma cualificada desde M1 a M0",
+      "paquetes exportados de forma cualificada desde M0 a M1 si M1 lee M0",
+      "paquetes exportados de forma cualificada desde un tercer módulo M2 a M0 y M1 si ambos leen M2",
+      "Modos de acceso",
+      "La tabla siguiente muestra los modos de acceso de un Lookup producido por cualquiera de estos métodos de fábrica o transformación:",
+      "MethodHandles::lookup",
+      "MethodHandles::publicLookup",
+      "MethodHandles::privateLookupIn",
+      "Lookup::in",
+      "Lookup::dropLookupMode",
+      "Resumen de modos de acceso",
+      "Objeto Lookup · original · protected · private · package · module · public",
+      "CL = MethodHandles.lookup() en C · ORI · PRO · PRI · PAC · MOD · 1R",
+      "CL.in(C1) mismo paquete · · · · PAC · MOD · 1R",
+      "CL.in(C1) mismo módulo · · · · · MOD · 1R",
+      "CL.in(D) módulo distinto · · · · · · 2R",
+      "CL.in(D).in(C) vuelta al módulo · · · · · · 2R",
+      "PRI1 = privateLookupIn(C1,CL) · · PRO · PRI · PAC · MOD · 1R",
+      "PRI1a = privateLookupIn(C,PRI1) · · PRO · PRI · PAC · MOD · 1R",
+      "PRI1.in(C1) mismo paquete · · · · PAC · MOD · 1R",
+      "PRI1.in(C1) paquete distinto · · · · · MOD · 1R",
+      "PRI1.in(D) módulo distinto · · · · · · 2R",
+      "PRI1.dropLookupMode(PROTECTED) · · · PRI · PAC · MOD · 1R",
+      "PRI1.dropLookupMode(PRIVATE) · · · · PAC · MOD · 1R",
+      "PRI1.dropLookupMode(PACKAGE) · · · · · MOD · 1R",
+      "PRI1.dropLookupMode(MODULE) · · · · · · 1R",
+      "PRI1.dropLookupMode(PUBLIC) · · · · · · ninguno",
+      "PRI2 = privateLookupIn(D,CL) · · PRO · PRI · PAC · · 2R",
+      "privateLookupIn(D,PRI1) · · PRO · PRI · PAC · · 2R",
+      "privateLookupIn(C,PRI2) falla · · · · · · IAE",
+      "PRI2.in(D2) mismo paquete · · · · PAC · · 2R",
+      "PRI2.in(D2) paquete distinto · · · · · · 2R",
+      "PRI2.in(C1) vuelta al módulo · · · · · · 2R",
+      "PRI2.in(E) salto a un tercer módulo · · · · · · ninguno",
+      "PRI2.dropLookupMode(PROTECTED) · · · PRI · PAC · · 2R",
+      "PRI2.dropLookupMode(PRIVATE) · · · · PAC · · 2R",
+      "PRI2.dropLookupMode(PACKAGE) · · · · · · 2R",
+      "PRI2.dropLookupMode(MODULE) · · · · · · 2R",
+      "PRI2.dropLookupMode(PUBLIC) · · · · · · ninguno",
+      "CL.dropLookupMode(PROTECTED) · · · PRI · PAC · MOD · 1R",
+      "CL.dropLookupMode(PRIVATE) · · · · PAC · MOD · 1R",
+      "CL.dropLookupMode(PACKAGE) · · · · · MOD · 1R",
+      "CL.dropLookupMode(MODULE) · · · · · · 1R",
+      "CL.dropLookupMode(PUBLIC) · · · · · · ninguno",
+      "PUB = publicLookup() · · · · · · U",
+      "PUB.in(D) módulo distinto · · · · · · U",
+      "PUB.in(D).in(E) tercer módulo · · · · · · U",
+      "PUB.dropLookupMode(UNCONDITIONAL) · · · · · · ninguno",
+      "privateLookupIn(C1,PUB) falla · · · · · · IAE",
+      "ANY.in(X), con X inaccesible · · · · · · ninguno",
+      "Notas:",
+      "Las clases C y C1 están en el módulo M1, D y D2 en el módulo M2, y E en el módulo M3. X es una clase inaccesible para el Lookup. ANY es cualquiera de los Lookup del ejemplo.",
+      "ORI indica el bit ORIGINAL activo, PRO el bit PROTECTED, PRI el bit PRIVATE, PAC el bit PACKAGE y MOD el bit MODULE; 1R y 2R indican el bit PUBLIC activo, U el bit UNCONDITIONAL, e IAE que se lanza IllegalAccessException.",
+      "El acceso público es de tres tipos:",
+      "incondicional (U): el Lookup supone legibilidad. Tiene clase anterior null.",
+      "lectura de un módulo (1R): el control de acceso de módulo se hace respecto a la clase de búsqueda. Tiene clase anterior null.",
+      "lectura de dos módulos (2R): el control de acceso de módulo se hace respecto a la clase de búsqueda y a la anterior. Tiene una clase anterior no null, en un módulo distinto del de la clase de búsqueda actual.",
+      "Cualquier intento de llegar a un tercer módulo pierde todo el acceso.",
+      "Si una clase destino X no es accesible para Lookup::in, se pierden todos los modos de acceso.",
+      "Interacción con el gestor de seguridad",
+      "Aunque las instrucciones de bytecode solo pueden referirse a clases de un cargador relacionado, esta API puede buscar métodos en cualquier clase, siempre que se disponga de una referencia a su objeto Class. Estas referencias entre cargadores también son posibles con la API Core Reflection, pero imposibles para instrucciones de bytecode como invokestatic o getfield. Hay una API del gestor de seguridad para que las aplicaciones comprueben estas referencias entre cargadores. Estas comprobaciones se aplican tanto a la API MethodHandles.Lookup como a la API Core Reflection (la de Class).",
+      "Si hay un gestor de seguridad, las búsquedas de miembros y clases están sujetas a comprobaciones adicionales: se hacen de una a tres llamadas al gestor, y cualquiera puede denegar el acceso lanzando SecurityException. Sea smgr el gestor de seguridad, lookc la clase de búsqueda del Lookup actual, refc la clase contenedora en la que se busca el miembro y defc la clase en la que el miembro está realmente definido. (Si se accede a una clase u otro tipo, refc y defc son la propia clase). Se considera que lookc no está presente si el Lookup actual no tiene acceso con privilegios completos. Las llamadas siguen estas reglas:",
+      "Paso 1: si lookc no está presente, o si su cargador de clases no es el de refc ni un ancestro suyo, se llama a smgr.checkPackageAccess(refcPkg), donde refcPkg es el paquete de refc.",
+      "Paso 2a: si el miembro obtenido no es público y lookc no está presente, se llama a smgr.checkPermission con RuntimePermission(\"accessDeclaredMembers\").",
+      "Paso 2b: si la clase obtenida tiene un cargador de clases null y lookc no está presente, se llama a smgr.checkPermission con RuntimePermission(\"getClassLoader\").",
+      "Paso 3: si el miembro obtenido no es público, lookc no está presente y defc y refc son distintas, se llama a smgr.checkPackageAccess(defcPkg), donde defcPkg es el paquete de defc.",
+      "Las comprobaciones de seguridad se hacen después de superar los demás controles de acceso. Por eso, las reglas anteriores suponen un miembro o clase público, o bien uno al que se accede desde una clase de búsqueda con derecho a acceder a él.",
+      "Si hay un gestor de seguridad y el Lookup actual no tiene acceso con privilegios completos, defineClass, defineHiddenClass(byte[], boolean, ClassOption...) y defineHiddenClassWithClassData(byte[], Object, boolean, ClassOption...) llaman a smgr.checkPermission con RuntimePermission(\"defineClass\").",
+      "Métodos sensibles a quien llama",
+      "Unos pocos métodos de Java tienen una propiedad especial llamada sensibilidad a quien llama: pueden comportarse de forma distinta según la identidad de su llamante inmediato.",
+      "Si se pide un method handle de un método sensible a quien llama, se aplican las reglas generales de comportamiento de bytecode, pero teniendo en cuenta la clase de búsqueda de forma especial. El method handle resultante se comporta como si se llamara desde una instrucción de la clase de búsqueda, de modo que el método detecta la clase de búsqueda. (En cambio, se ignora quién invoca el method handle). Así, con métodos sensibles a quien llama, distintas clases de búsqueda pueden dar method handles con comportamientos distintos.",
+      "Si el Lookup es publicLookup(), u otro sin acceso original, se ignora la clase de búsqueda. En esos casos no puede crearse ningún method handle sensible a quien llama: el acceso está prohibido y la búsqueda falla con IllegalAccessException.",
+      "Explicación: por ejemplo, el método sensible a quien llama Class.forName(x) puede devolver clases distintas o lanzar excepciones distintas según el cargador de la clase que lo llama. Una búsqueda pública de Class.forName fallará, porque no hay forma razonable de determinar su comportamiento de bytecode.",
+      "Si una aplicación guarda en caché method handles para compartirlos ampliamente, debe crearlos con publicLookup(). Si busca Class.forName, fallará, y la aplicación debe actuar en consecuencia. Puede que una búsqueda posterior, quizá durante la invocación de un método bootstrap, pueda incorporar la identidad concreta del llamante y hacer accesible el método.",
+      "La función MethodHandles.lookup es sensible a quien llama para que haya una base segura para las búsquedas. Casi todos los demás métodos de la API JSR 292 dependen de objetos Lookup para comprobar las peticiones de acceso.",
+      "@revised 9"
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles%24Lookup.bind": {
+    "body": [
+      "El method handle devuelto será de aridad variable si y solo si el bit modificador de aridad variable del método (0x0080) está activo y el último argumento array no es el único argumento. (Si el último argumento array es el único, se le enlaza el receptor dado).",
+      "Esto equivale casi a este código, con algunas diferencias que se indican abajo:",
+      "donde defc es receiver.getClass() o un supertipo de esa clase en el que el método pedido es accesible para la clase de búsqueda. (A diferencia de bind, bindTo no conserva la aridad variable. Además, bindTo puede lanzar ClassCastException donde bind lanzaría IllegalAccessException, como cuando el miembro es protected y findVirtual restringe el receptor a la clase de búsqueda)."
+    ],
+    "parameters": [
+      {
+        "label": "receiver",
+        "detail": "el objeto desde el que se accede al método"
+      },
+      {
+        "label": "name",
+        "detail": "el nombre del método"
+      },
+      {
+        "label": "type",
+        "detail": "el tipo del método, sin el argumento receptor"
+      }
+    ],
+    "returns": ["el method handle deseado"],
+    "exceptions": [
+      {
+        "label": "NoSuchMethodException",
+        "detail": "si el método no existe"
+      },
+      {
+        "label": "IllegalAccessException",
+        "detail": "si falla el control de acceso o si el bit de aridad variable del método está activo y asVarargsCollector falla"
+      },
+      {
+        "label": "SecurityException",
+        "detail": "si hay un gestor de seguridad y deniega el acceso"
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "si algún argumento es null"
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles%24Lookup.defineHiddenClass": {
+    "body": [
+      "Normalmente, una clase o interfaz C la crea un cargador de clases, que define C directamente o delega en otro cargador. Un cargador define C directamente invocando ClassLoader::defineClass(String, byte[], int, int, ProtectionDomain), lo que hace que la Java Virtual Machine derive C a partir de una supuesta representación en formato de archivo de clase. Cuando no conviene usar un cargador de clases, C puede crearse con este método. Este método puede definir C, y así crearla, sin invocar ClassLoader::defineClass. En su lugar, define C como si hiciera que la Java Virtual Machine derive una clase o interfaz C (no array) a partir de una supuesta representación en formato de archivo de clase, con estas reglas:",
+      "Los modos de este Lookup deben incluir acceso con privilegios completos. Este nivel de acceso es necesario para crear C en el módulo de la clase de búsqueda de este Lookup.",
+      "La supuesta representación en bytes debe ser una estructura ClassFile (JVMS 4.1) de una versión mayor y menor admitidas. La versión puede diferir de la del archivo de clase de la clase de búsqueda de este Lookup.",
+      "El valor de this_class debe ser un índice válido de la tabla constant_pool, y la entrada en ese índice debe ser una estructura CONSTANT_Class_info válida. Sea N el nombre binario codificado en forma interna que indica esa estructura. N debe denotar una clase o interfaz del mismo paquete que la clase de búsqueda.",
+      "Sea CN la cadena N + \".\" + <suffix>, donde <suffix> es un nombre no cualificado.",
+      "Sea newBytes la estructura ClassFile dada por bytes con una entrada adicional en la tabla constant_pool, una estructura CONSTANT_Utf8_info para CN, y en la que la estructura CONSTANT_Class_info indicada por this_class hace referencia a la nueva CONSTANT_Utf8_info.",
+      "Sea L el cargador de clases que define la clase de búsqueda de este Lookup.",
+      "C se deriva con el nombre CN, el cargador L y la supuesta representación newBytes, como con las reglas de JVMS 5.3.5, con estos ajustes:",
+      "La constante indicada por this_class puede especificar un nombre que incluya un único carácter \".\", aunque no sea un nombre binario de clase o interfaz válido en forma interna.",
+      "La Java Virtual Machine marca L como cargador definidor de C, pero no registra ningún cargador como cargador iniciador de C.",
+      "Se considera que C tiene el mismo paquete de ejecución, módulo y dominio de protección que la clase de búsqueda de este Lookup.",
+      "Sea GN el nombre binario que se obtiene al tomar N (un nombre binario en forma interna) y sustituir las barras ASCII por puntos ASCII. Para la instancia de java.lang.Class que representa C:",
+      "Class.getName() devuelve la cadena GN + \"/\" + <suffix>, aunque no sea un nombre binario de clase o interfaz válido.",
+      "Class.descriptorString() devuelve la cadena \"L\" + N + \".\" + <suffix> + \";\", aunque no sea un nombre de descriptor de tipo válido.",
+      "Class.describeConstable() devuelve un Optional vacío, porque C no puede describirse en forma nominal.",
+      "Una vez derivada, la Java Virtual Machine enlaza C. El enlace se hace como indica JVMS 5.4, con estos ajustes:",
+      "Durante la verificación, cada vez que haga falta cargar la clase llamada CN, el intento tiene éxito y produce la clase C. No se hace ninguna petición a ningún cargador de clases.",
+      "En cualquier intento de resolver la entrada del pool de constantes de ejecución indicada por this_class, se considera que la referencia simbólica se resuelve a C y la resolución siempre tiene éxito de inmediato.",
+      "Si el parámetro initialize es true, la Java Virtual Machine inicializa C.",
+      "La clase o interfaz C recién creada es la clase de búsqueda del Lookup que devuelve este método. C es oculta en el sentido de que ninguna otra clase o interfaz puede referirse a ella mediante una entrada del pool de constantes. Es decir, ninguna otra clase puede usar una clase o interfaz oculta como supertipo, tipo de campo, tipo de parámetro ni tipo de retorno. Esto se debe a que no tiene nombre binario, así que no hay forma interna que registrar en el pool de constantes de ninguna clase. Una clase o interfaz oculta no puede encontrarse con Class.forName(String, boolean, ClassLoader), ClassLoader.loadClass(String, boolean) ni findClass(String), y no pueden modificarla los agentes Java ni los agentes de herramientas que usan la JVM Tool Interface.",
+      "Una clase o interfaz creada por un cargador de clases (con ClassLoader::defineClass(String, byte[], int, int, ProtectionDomain)) tiene una relación fuerte con ese cargador: todo objeto Class contiene una referencia al ClassLoader que lo definió. Esto significa que una clase creada por un cargador puede descargarse si y solo si su cargador definidor no es alcanzable y, por tanto, puede recogerlo el recolector de basura (JLS 12.7).",
+      "Por defecto, sin embargo, una clase o interfaz oculta puede descargarse aunque el cargador marcado como su definidor sea alcanzable. Esto es útil cuando una clase oculta sirve a varias clases definidas por cargadores arbitrarios. En otros casos, una clase oculta puede estar ligada a una única clase (o a unas pocas) con el mismo cargador definidor. En esos casos, en los que la clase oculta debe tener la misma vida que una clase normal, puede pasarse la opción STRONG en options. Así la clase oculta tiene la misma relación fuerte con su cargador definidor que una clase normal con el suyo.",
+      "Si no se usa STRONG, quien invoca defineHiddenClass puede evitar igualmente que la clase oculta se descargue asegurándose de que el objeto Class sea alcanzable.",
+      "Las características de descarga se fijan para cada clase oculta al definirla y no pueden cambiarse después. Una ventaja de permitir que las clases ocultas se descarguen con independencia de su cargador definidor es que una aplicación puede crear un número muy grande de ellas. En cambio, si se usa STRONG, la JVM puede quedarse sin memoria, igual que si los cargadores crearan clases normales.",
+      "Las clases e interfaces de un nido pueden acceder mutuamente a sus miembros privados. La relación de nido la determinan los atributos NestHost (JVMS 4.7.28) y NestMembers (JVMS 4.7.29) del archivo de clase. Por defecto, una clase oculta pertenece a un nido formado solo por ella misma, porque no tiene nombre binario. Puede pasarse la opción NESTMATE en options para crear C como miembro de un nido. El nido al que pertenece C no se basa en ningún atributo NestHost de la estructura ClassFile de la que se derivó, sino que el anfitrión del nido de C se determina con estas reglas:",
+      "Si ya se ha determinado antes el anfitrión del nido de la clase de búsqueda de este Lookup, sea H ese anfitrión. Si no, se determina con el algoritmo de JVMS 5.4.4, lo que da H.",
+      "El anfitrión del nido de C es H, el anfitrión del nido de la clase de búsqueda.",
+      "Una clase o interfaz oculta puede ser serializable, pero requiere un mecanismo de serialización personalizado para que sus instancias se serialicen y deserialicen correctamente. El mecanismo predeterminado solo admite clases e interfaces que se puedan encontrar por su nombre de clase."
+    ],
+    "parameters": [
+      {
+        "label": "bytes",
+        "detail": "los bytes que forman los datos de la clase, en el formato de un archivo de clase válido según la Java Virtual Machine Specification."
+      },
+      {
+        "label": "initialize",
+        "detail": "si es true, la clase se inicializa."
+      },
+      {
+        "label": "options",
+        "detail": "opciones de la clase"
+      }
+    ],
+    "returns": [
+      "el Lookup sobre la clase oculta, con acceso original y con privilegios completos"
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalAccessException",
+        "detail": "si este Lookup no tiene acceso con privilegios completos"
+      },
+      {
+        "label": "SecurityException",
+        "detail": "si hay un gestor de seguridad y deniega el acceso"
+      },
+      {
+        "label": "ClassFormatError",
+        "detail": "si bytes no es una estructura ClassFile"
+      },
+      {
+        "label": "UnsupportedClassVersionError",
+        "detail": "si bytes no es de una versión mayor o menor admitida"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si bytes denota una clase de un paquete distinto al de la clase de búsqueda, o no es una clase o interfaz (el indicador ACC_MODULE está activo en access_flags)"
+      },
+      {
+        "label": "IncompatibleClassChangeError",
+        "detail": "si la clase o interfaz indicada como superclase directa de C es en realidad una interfaz, o si alguna de las indicadas como superinterfaces directas de C no es realmente una interfaz"
+      },
+      {
+        "label": "ClassCircularityError",
+        "detail": "si alguna de las superclases o superinterfaces de C es la propia C"
+      },
+      {
+        "label": "VerifyError",
+        "detail": "si la clase recién creada no puede verificarse"
+      },
+      {
+        "label": "LinkageError",
+        "detail": "si la clase recién creada no puede enlazarse por cualquier otro motivo"
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "si algún parámetro es null"
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles%24Lookup.findSpecial": {
+    "body": [
+      "Antes de resolver el método, si la clase llamante indicada explícitamente no es idéntica a la clase de búsqueda, o si este Lookup no tiene privilegios de acceso privado, el acceso falla.",
+      "El method handle devuelto será de aridad variable si y solo si el bit modificador de aridad variable del método (0x0080) está activo.",
+      "(Nota: los métodos internos de la JVM llamados ConstantDescs.INIT_NAME no son visibles para esta API, aunque la instrucción invokespecial pueda referirse a ellos en circunstancias especiales. Usa findConstructor para acceder de forma segura a los métodos de inicialización de instancias).",
+      "Ejemplo: {@snippet lang=\"java\" : import static java.lang.invoke.MethodHandles.*; import static java.lang.invoke.MethodType.*; ... static class Listie extends ArrayList { public String toString() { return \"[wee Listie]\"; } static Lookup lookup() { return MethodHandles.lookup(); } } ... // no access to constructor via invokeSpecial: MethodHandle MH_newListie = Listie.lookup() .findConstructor(Listie.class, methodType(void.class)); Listie l = (Listie) MH_newListie.invokeExact(); try { assertEquals(\"impossible\", Listie.lookup().findSpecial( Listie.class, \"\", methodType(void.class), Listie.class)); } catch (NoSuchMethodException ex) { } // OK // access to super and self methods via invokeSpecial: MethodHandle MH_super = Listie.lookup().findSpecial( ArrayList.class, \"toString\" , methodType(String.class), Listie.class); MethodHandle MH_this = Listie.lookup().findSpecial( Listie.class, \"toString\" , methodType(String.class), Listie.class); MethodHandle MH_duper = Listie.lookup().findSpecial( Object.class, \"toString\" , methodType(String.class), Listie.class); assertEquals(\"[]\", (String) MH_super.invokeExact(l)); assertEquals(\"\"+l, (String) MH_this.invokeExact(l)); assertEquals(\"[]\", (String) MH_duper.invokeExact(l)); // ArrayList method try { assertEquals(\"inaccessible\", Listie.lookup().findSpecial( String.class, \"toString\", methodType(String.class), Listie.class)); } catch (IllegalAccessException ex) { } // OK Listie subl = new Listie() { public String toString() { return \"[subclass]\"; } }; assertEquals(\"\"+l, (String) MH_this.invokeExact(subl)); // Listie method }"
+    ],
+    "parameters": [
+      {
+        "label": "refc",
+        "detail": "la clase o interfaz desde la que se accede al método"
+      },
+      {
+        "label": "name",
+        "detail": "el nombre del método (que no debe ser \"<init>\")"
+      },
+      {
+        "label": "type",
+        "detail": "el tipo del método, sin el argumento receptor"
+      },
+      {
+        "label": "specialCaller",
+        "detail": "la clase llamante propuesta que ejecuta el invokespecial"
+      }
+    ],
+    "returns": ["el method handle deseado"],
+    "exceptions": [
+      {
+        "label": "NoSuchMethodException",
+        "detail": "si el método no existe"
+      },
+      {
+        "label": "IllegalAccessException",
+        "detail": "si falla el control de acceso, si el método es estático, o si el bit de aridad variable del método está activo y asVarargsCollector falla"
+      },
+      {
+        "label": "SecurityException",
+        "detail": "si hay un gestor de seguridad y deniega el acceso"
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "si algún argumento es null"
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles%24Lookup.findStaticVarHandle": {
+    "body": [
+      "El control de acceso se hace inmediatamente en nombre de la clase de búsqueda.",
+      "Si se opera con el VarHandle devuelto, se inicializa la clase declarante si aún no lo está.",
+      "Algunos modos de acceso del VarHandle devuelto no se admiten en estas condiciones:",
+      "si el campo es final, no se admiten los modos de escritura, actualización atómica, actualización atómica numérica ni actualización atómica bit a bit.",
+      "si el tipo del campo no es byte, short, char, int, long, float ni double, no se admiten los modos de actualización atómica numérica.",
+      "si el tipo del campo no es boolean, byte, short, char, int ni long, no se admiten los modos de actualización atómica bit a bit.",
+      "Si el campo es volatile, el VarHandle devuelto prevalece sobre el acceso al campo (en la práctica ignora la declaración volatile) según sus modos de acceso.",
+      "Si el tipo del campo es float o double, los modos de actualización numérica y atómica comparan los valores por su representación en bits (consulta Float.floatToRawIntBits y Double.doubleToRawLongBits, respectivamente)."
+    ],
+    "parameters": [
+      {
+        "label": "decl",
+        "detail": "la clase que declara el campo estático"
+      },
+      {
+        "label": "name",
+        "detail": "el nombre del campo"
+      },
+      {
+        "label": "type",
+        "detail": "el tipo del campo, de tipo T"
+      }
+    ],
+    "returns": ["un VarHandle que da acceso a un campo estático"],
+    "exceptions": [
+      {
+        "label": "NoSuchFieldException",
+        "detail": "si el campo no existe"
+      },
+      {
+        "label": "IllegalAccessException",
+        "detail": "si falla el control de acceso o si el campo no es estático"
+      },
+      {
+        "label": "SecurityException",
+        "detail": "si hay un gestor de seguridad y deniega el acceso"
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "si algún argumento es null"
+      }
+    ],
+    "caveats": [
+      "La comparación bit a bit de valores float o double que hacen los modos de actualización numérica y atómica difiere del operador primitivo == y de los métodos Float.equals y Double.equals, sobre todo al comparar NaN o -0.0 con +0.0. Hay que tener cuidado al hacer compare-and-set o compare-and-exchange con estos valores, porque la operación puede fallar inesperadamente. En Java hay muchos valores que se consideran NaN, aunque ninguna operación de coma flotante IEEE 754 de Java puede distinguirlos. La operación puede fallar si el valor esperado o el testigo es un NaN que se transforma (quizá de forma dependiente de la plataforma) en otro NaN con distinta representación en bits (consulta Float.intBitsToFloat o Double.longBitsToDouble). Los valores -0.0 y +0.0 tienen representaciones en bits distintas pero se consideran iguales con el operador ==. La operación puede fallar si, por ejemplo, un algoritmo numérico calcula un valor esperado de -0.0 y antes calculó un testigo de +0.0."
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles%24Lookup.findVarHandle": {
+    "body": [
+      "El control de acceso se hace inmediatamente en nombre de la clase de búsqueda.",
+      "Algunos modos de acceso del VarHandle devuelto no se admiten en estas condiciones:",
+      "si el campo es final, no se admiten los modos de escritura, actualización atómica, actualización atómica numérica ni actualización atómica bit a bit.",
+      "si el tipo del campo no es byte, short, char, int, long, float ni double, no se admiten los modos de actualización atómica numérica.",
+      "si el tipo del campo no es boolean, byte, short, char, int ni long, no se admiten los modos de actualización atómica bit a bit.",
+      "Si el campo es volatile, el VarHandle devuelto prevalece sobre el acceso al campo (en la práctica ignora la declaración volatile) según sus modos de acceso.",
+      "Si el tipo del campo es float o double, los modos de actualización numérica y atómica comparan los valores por su representación en bits (consulta Float.floatToRawIntBits y Double.doubleToRawLongBits, respectivamente)."
+    ],
+    "parameters": [
+      {
+        "label": "recv",
+        "detail": "la clase receptora, de tipo R, que declara el campo no estático"
+      },
+      {
+        "label": "name",
+        "detail": "el nombre del campo"
+      },
+      {
+        "label": "type",
+        "detail": "el tipo del campo, de tipo T"
+      }
+    ],
+    "returns": ["un VarHandle que da acceso a campos no estáticos."],
+    "exceptions": [
+      {
+        "label": "NoSuchFieldException",
+        "detail": "si el campo no existe"
+      },
+      {
+        "label": "IllegalAccessException",
+        "detail": "si falla el control de acceso o si el campo es estático"
+      },
+      {
+        "label": "SecurityException",
+        "detail": "si hay un gestor de seguridad y deniega el acceso"
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "si algún argumento es null"
+      }
+    ],
+    "caveats": [
+      "La comparación bit a bit de valores float o double que hacen los modos de actualización numérica y atómica difiere del operador primitivo == y de los métodos Float.equals y Double.equals, sobre todo al comparar NaN o -0.0 con +0.0. Hay que tener cuidado al hacer compare-and-set o compare-and-exchange con estos valores, porque la operación puede fallar inesperadamente. En Java hay muchos valores que se consideran NaN, aunque ninguna operación de coma flotante IEEE 754 de Java puede distinguirlos. La operación puede fallar si el valor esperado o el testigo es un NaN que se transforma (quizá de forma dependiente de la plataforma) en otro NaN con distinta representación en bits (consulta Float.intBitsToFloat o Double.longBitsToDouble). Los valores -0.0 y +0.0 tienen representaciones en bits distintas pero se consideran iguales con el operador ==. La operación puede fallar si, por ejemplo, un algoritmo numérico calcula un valor esperado de -0.0 y antes calculó un testigo de +0.0."
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles%24Lookup.findVirtual": {
+    "body": [
+      "Al llamarlo, el handle trata el primer argumento como receptor y, en los métodos no privados, despacha según el tipo del receptor para decidir qué implementación ejecutar. En los métodos privados, se invoca sobre el receptor el método indicado de refc. (El despacho es idéntico al de una instrucción invokevirtual o invokeinterface).",
+      "El primer argumento será de tipo refc si la clase de búsqueda tiene privilegios completos para acceder al miembro. Si no, el miembro debe ser protected y el tipo del primer argumento se restringe a la clase de búsqueda.",
+      "El method handle devuelto será de aridad variable si y solo si el bit modificador de aridad variable del método (0x0080) está activo.",
+      "Por la equivalencia general entre las instrucciones invokevirtual y los method handles de findVirtual, si la clase es MethodHandle y el nombre es invokeExact o invoke, el method handle resultante equivale al que producen MethodHandles.exactInvoker o MethodHandles.invoker con el mismo argumento de tipo.",
+      "Si la clase es VarHandle y el nombre corresponde a un método de modo de acceso polimórfico en firma, el method handle resultante equivale al que produce java.lang.invoke.MethodHandles.varHandleInvoker con el modo de acceso correspondiente al nombre y los mismos argumentos de tipo.",
+      "Ejemplo: {@snippet lang=\"java\" : import static java.lang.invoke.MethodHandles.*; import static java.lang.invoke.MethodType.*; ... MethodHandle MH_concat = publicLookup().findVirtual(String.class, \"concat\", methodType(String.class, String.class)); MethodHandle MH_hashCode = publicLookup().findVirtual(Object.class, \"hashCode\", methodType(int.class)); MethodHandle MH_hashCode_String = publicLookup().findVirtual(String.class, \"hashCode\", methodType(int.class)); assertEquals(\"xy\", (String) MH_concat.invokeExact(\"x\", \"y\")); assertEquals(\"xy\".hashCode(), (int) MH_hashCode.invokeExact((Object)\"xy\")); assertEquals(\"xy\".hashCode(), (int) MH_hashCode_String.invokeExact(\"xy\")); // interface method: MethodHandle MH_subSequence = publicLookup().findVirtual(CharSequence.class, \"subSequence\", methodType(CharSequence.class, int.class, int.class)); assertEquals(\"def\", MH_subSequence.invoke(\"abcdefghi\", 3, 6).toString()); // constructor \"internal method\" must be accessed differently: MethodType MT_newString = methodType(void.class); //()V for new String() try { assertEquals(\"impossible\", lookup() .findVirtual(String.class, \"\", MT_newString)); } catch (NoSuchMethodException ex) { } // OK MethodHandle MH_newString = publicLookup() .findConstructor(String.class, MT_newString); assertEquals(\"\", (String) MH_newString.invokeExact()); }"
+    ],
+    "parameters": [
+      {
+        "label": "refc",
+        "detail": "la clase o interfaz desde la que se accede al método"
+      },
+      {
+        "label": "name",
+        "detail": "el nombre del método"
+      },
+      {
+        "label": "type",
+        "detail": "el tipo del método, sin el argumento receptor"
+      }
+    ],
+    "returns": ["el method handle deseado"],
+    "exceptions": [
+      {
+        "label": "NoSuchMethodException",
+        "detail": "si el método no existe"
+      },
+      {
+        "label": "IllegalAccessException",
+        "detail": "si falla el control de acceso, si el método es estático, o si el bit de aridad variable del método está activo y asVarargsCollector falla"
+      },
+      {
+        "label": "SecurityException",
+        "detail": "si hay un gestor de seguridad y deniega el acceso"
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "si algún argumento es null"
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles%24Lookup.unreflectVarHandle": {
+    "body": [
+      "El control de acceso se hace inmediatamente en nombre de la clase de búsqueda, sea cual sea el valor del indicador accessible del campo.",
+      "Si el campo es estático y se opera con el VarHandle devuelto, se inicializa la clase declarante del campo si aún no lo está.",
+      "Algunos modos de acceso del VarHandle devuelto no se admiten en estas condiciones:",
+      "si el campo es final, no se admiten los modos de escritura, actualización atómica, actualización atómica numérica ni actualización atómica bit a bit.",
+      "si el tipo del campo no es byte, short, char, int, long, float ni double, no se admiten los modos de actualización atómica numérica.",
+      "si el tipo del campo no es boolean, byte, short, char, int ni long, no se admiten los modos de actualización atómica bit a bit.",
+      "Si el campo es volatile, el VarHandle devuelto prevalece sobre el acceso al campo (en la práctica ignora la declaración volatile) según sus modos de acceso.",
+      "Si el tipo del campo es float o double, los modos de actualización numérica y atómica comparan los valores por su representación en bits (consulta Float.floatToRawIntBits y Double.doubleToRawLongBits, respectivamente)."
+    ],
+    "parameters": [
+      {
+        "label": "f",
+        "detail": "el campo reflejado, con un campo de tipo T y una clase declarante de tipo R"
+      }
+    ],
+    "returns": [
+      "un VarHandle que da acceso a campos no estáticos o a un campo estático"
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalAccessException",
+        "detail": "si falla el control de acceso"
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "si el argumento es null"
+      }
+    ],
+    "caveats": [
+      "La comparación bit a bit de valores float o double que hacen los modos de actualización numérica y atómica difiere del operador primitivo == y de los métodos Float.equals y Double.equals, sobre todo al comparar NaN o -0.0 con +0.0. Hay que tener cuidado al hacer compare-and-set o compare-and-exchange con estos valores, porque la operación puede fallar inesperadamente. En Java hay muchos valores que se consideran NaN, aunque ninguna operación de coma flotante IEEE 754 de Java puede distinguirlos. La operación puede fallar si el valor esperado o el testigo es un NaN que se transforma (quizá de forma dependiente de la plataforma) en otro NaN con distinta representación en bits (consulta Float.intBitsToFloat o Double.longBitsToDouble). Los valores -0.0 y +0.0 tienen representaciones en bits distintas pero se consideran iguales con el operador ==. La operación puede fallar si, por ejemplo, un algoritmo numérico calcula un valor esperado de -0.0 y antes calculó un testigo de +0.0."
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles.arrayElementVarHandle": {
+    "body": [
+      "Algunos modos de acceso del VarHandle devuelto no se admiten en estas condiciones:",
+      "si el tipo de componente no es byte, short, char, int, long, float ni double, no se admiten los modos de actualización atómica numérica.",
+      "si el tipo de componente no es boolean, byte, short, char, int ni long, no se admiten los modos de actualización atómica bit a bit.",
+      "Si el tipo de componente es float o double, los modos de actualización numérica y atómica comparan los valores por su representación en bits (consulta Float.floatToRawIntBits y Double.doubleToRawLongBits, respectivamente).",
+      "Al invocar el VarHandle devuelto, se comprueban la referencia y el índice del array. Se lanza NullPointerException si la referencia es null y ArrayIndexOutOfBoundsException si el índice es negativo o mayor o igual que la longitud del array."
+    ],
+    "parameters": [
+      {
+        "label": "arrayClass",
+        "detail": "la clase de un array, de tipo T[]"
+      }
+    ],
+    "returns": ["un VarHandle que da acceso a los elementos de un array"],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si arrayClass es null"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si arrayClass no es un tipo array"
+      }
+    ],
+    "caveats": [
+      "La comparación bit a bit de valores float o double que hacen los modos de actualización numérica y atómica difiere del operador primitivo == y de los métodos Float.equals y Double.equals, sobre todo al comparar NaN o -0.0 con +0.0. Hay que tener cuidado al hacer compare-and-set o compare-and-exchange con estos valores, porque la operación puede fallar inesperadamente. En Java hay muchos valores que se consideran NaN, aunque ninguna operación de coma flotante IEEE 754 de Java puede distinguirlos. La operación puede fallar si el valor esperado o el testigo es un NaN que se transforma (quizá de forma dependiente de la plataforma) en otro NaN con distinta representación en bits (consulta Float.intBitsToFloat o Double.longBitsToDouble). Los valores -0.0 y +0.0 tienen representaciones en bits distintas pero se consideran iguales con el operador ==. La operación puede fallar si, por ejemplo, un algoritmo numérico calcula un valor esperado de -0.0 y antes calculó un testigo de +0.0."
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles.catchException": {
+    "body": [
+      "El destino y el manejador deben tener los mismos tipos de argumento y de retorno correspondientes, salvo que el manejador puede omitir argumentos finales (como el predicado de guardWithTest). Además, el manejador debe tener un parámetro inicial adicional de tipo exType o un supertipo.",
+      "Este es el pseudocódigo del adaptador resultante. En el código, T es el tipo de retorno del destino y del manejador, y por tanto del adaptador; A/a, los tipos y valores de los argumentos del handle resultante que consume el manejador; y B/b, los de los argumentos que el manejador descarta. {@snippet lang=\"java\" : T target(A..., B...); T handler(ExType, A...); T adapter(A... a, B... b) { try { return target(a..., b...); } catch (ExType ex) { return handler(ex, a...); } } } Los argumentos guardados (a... en el pseudocódigo) no pueden modificarse durante la ejecución del destino, así que se pasan sin cambios de quien llama al manejador, si este se invoca.",
+      "El destino y el manejador deben devolver el mismo tipo, aunque el manejador siempre lance una excepción. (Puede pasar, por ejemplo, porque el manejador simula una cláusula finally). Para crear un manejador así, combina la lógica que lo crea con throwException, para obtener un method handle con el tipo de retorno correcto."
+    ],
+    "parameters": [
+      {
+        "label": "target",
+        "detail": "method handle que se llama"
+      },
+      {
+        "label": "exType",
+        "detail": "el tipo de excepción que capturará el manejador"
+      },
+      {
+        "label": "handler",
+        "detail": "method handle que se llama si se lanza una excepción coincidente"
+      }
+    ],
+    "returns": ["method handle que incorpora la lógica try/catch indicada"],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si algún argumento es null"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si handler no acepta el tipo de excepción dado, o si los tipos de los method handles no coinciden en el tipo de retorno y en los parámetros correspondientes"
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles.collectArguments": {
+    "body": [
+      "Si el filtro devuelve un valor, el destino debe aceptarlo como argumento en la posición pos, precedido o seguido de los argumentos que no se pasan al filtro. Si el filtro devuelve void, el destino debe aceptar todos los argumentos no pasados al filtro. No se reordena ningún argumento, y el resultado del filtro sustituye (en orden) a toda la subsecuencia de argumentos pasada originalmente al adaptador.",
+      "Los tipos de argumento del filtro (si los hay) sustituyen a cero o un tipo de argumento del destino, en la posición pos, en el method handle adaptado resultante. El tipo de retorno del filtro (si lo hay) debe ser idéntico al tipo del argumento del destino en la posición pos, y ese argumento lo aporta el valor de retorno del filtro.",
+      "En todos los casos, pos debe ser mayor o igual que cero y menor o igual que la aridad del destino.",
+      "Ejemplo:",
+      "Este es el pseudocódigo del adaptador resultante. En el código, T es el tipo de retorno del destino y del adaptador. V/v son el tipo de retorno y el valor del filtro, que también aparecen en la firma y los argumentos del destino, salvo que V sea void. A/a y C/c son los tipos y valores de los parámetros anteriores y posteriores a la posición de recogida, pos, en la firma del destino. También aparecen en la firma y los argumentos del adaptador, rodeando a B/b, que son los tipos y argumentos del filtro (si los hay). {@snippet lang=\"java\" : T target(A...,V,C...); V filter(B...); T adapter(A... a,B... b,C... c) { V v = filter(b...); return target(a...,v,c...); } // and if the filter has no arguments: T target2(A...,V,C...); V filter2(); T adapter2(A... a,C... c) { V v = filter2(); return target2(a...,v,c...); } // and if the filter has a void return: T target3(A...,C...); void filter3(B...); T adapter3(A... a,B... b,C... c) { filter3(b...); return target3(a...,c...); } }",
+      "Un adaptador de recogida collectArguments(mh, 0, coll) equivale a uno que primero \"pliega\" los argumentos afectados y luego los descarta, en pasos separados así:",
+      "Si el method handle destino no consume más argumentos que el resultado (si lo hay) del filtro coll, collectArguments(mh, 0, coll) equivale a filterReturnValue(coll, mh). Si el method handle filtro coll consume un argumento y produce un resultado no void, collectArguments(mh, N, coll) equivale a filterArguments(mh, N, coll). Hay otras equivalencias posibles, pero requerirían permutar argumentos.",
+      "Nota: el adaptador resultante nunca es un method handle de aridad variable, aunque el destino original lo fuera."
+    ],
+    "parameters": [
+      {
+        "label": "target",
+        "detail": "el method handle que se invoca tras filtrar la subsecuencia de argumentos"
+      },
+      {
+        "label": "pos",
+        "detail": "la posición del primer argumento del adaptador que se pasa al filtro, y/o del argumento del destino que recibe el resultado del filtro"
+      },
+      {
+        "label": "filter",
+        "detail": "method handle que se llama sobre la subsecuencia de argumentos"
+      }
+    ],
+    "returns": [
+      "method handle que incorpora la lógica de filtrado de la subsecuencia de argumentos indicada"
+    ],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si alguno de los argumentos es null"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si el tipo de retorno del filtro no es void y no coincide con el argumento pos del destino, si pos no está entre 0 y la aridad del destino (ambos incluidos), o si el tipo del method handle resultante tendría demasiados parámetros"
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles.countedLoop": {
+    "overloads": [
+      {
+        "intro": [
+          "Construye un bucle que se ejecuta un número dado de iteraciones. Es un envoltorio de conveniencia del combinador genérico loop."
+        ],
+        "body": [
+          "El número de iteraciones lo determina el resultado de evaluar el handle iterations. El contador i es una variable de iteración adicional de tipo int. Se inicializa a 0 y se incrementa en 1 en cada iteración.",
+          "Si el handle body devuelve un tipo V no void, también hay una variable de iteración inicial de ese tipo. Se inicializa con el handle opcional init, o al valor predeterminado de V si ese handle es null.",
+          "En cada iteración, las variables de iteración se pasan a una invocación del handle body. Un valor no void devuelto por body (de tipo V) actualiza la variable inicial. El resultado del handle del bucle es el valor final de esa variable V (o void si no hay variable V).",
+          "Se cumplen estas reglas para los handles argumento:",
+          "El handle iterations no debe ser null y debe devolver el tipo int, llamado aquí I en las listas de tipos de parámetros.",
+          "El handle body no debe ser null; su tipo debe ser de la forma (V I A...)V, con V no void, o bien (I A...)void. (En el caso void, asignamos el tipo void al nombre V y escribimos (V I A...)V entendiendo que un tipo V void se elimina en silencio de la lista de parámetros, quedando (I A...)V).",
+          "La lista de parámetros (V I A...) de body aporta una lista de tipos llamada lista interna de parámetros, que limita las listas de parámetros de las demás partes del bucle.",
+          "Como caso especial, si body solo aporta los tipos V e I, sin tipos A adicionales, la lista interna se amplía con los tipos de argumento A... del handle iterations.",
+          "Si se quitan de la lista interna los tipos de las variables de iteración (V I), la lista más corta resultante (A...) se llama lista externa de parámetros.",
+          "El tipo de retorno V de body, si no es void, determina el tipo de una variable de estado adicional del bucle. body debe aceptar un parámetro inicial y devolver un valor de este tipo V.",
+          "Si init no es null, debe tener tipo de retorno V. Su lista de parámetros (de alguna forma (A*)) debe ser efectivamente idéntica a la lista externa (A...).",
+          "Si init es null, la variable del bucle se inicializa a su valor predeterminado.",
+          "La lista de parámetros de iterations (de alguna forma (A*)) debe ser efectivamente idéntica a la lista externa (A...).",
+          "El tipo de resultado y la firma de parámetros del handle del bucle se determinan así:",
+          "El tipo de resultado del handle del bucle es el tipo de resultado V de body.",
+          "Los tipos de parámetro del handle del bucle son los tipos (A...) de la lista externa.",
+          "Este es el pseudocódigo del handle del bucle resultante. En el código, V/v son el tipo y valor de la segunda variable del bucle y también el tipo de resultado del bucle; A.../a... son los argumentos pasados al bucle. {@snippet lang=\"java\" : int iterations(A...); V init(A...); V body(V, int, A...); V countedLoop(A... a...) { int end = iterations(a...); V v = init(a...); for (int i = 0; i < end; ++i) { v = body(v, i, a...); } return v; } }"
+        ],
+        "parameters": [
+          {
+            "label": "iterations",
+            "detail": "un handle no null que devuelve el número de iteraciones del bucle. Su tipo de resultado debe ser int. Consulta arriba las demás restricciones."
+          },
+          {
+            "label": "init",
+            "detail": "inicializador opcional que da el valor inicial de la variable del bucle. Puede ser null, lo que implica un valor inicial predeterminado. Consulta arriba las demás restricciones."
+          },
+          {
+            "label": "body",
+            "detail": "cuerpo del bucle, que no puede ser null. Controla los parámetros del bucle y el tipo de resultado en el caso estándar (consulta arriba los detalles). Debe aceptar su propio tipo de retorno (si no es void) más un parámetro int (el contador), y puede aceptar cualquier número de tipos adicionales. Consulta arriba las demás restricciones."
+          }
+        ],
+        "returns": ["un method handle que representa el bucle."],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si el handle iterations o body es null."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si algún argumento incumple las reglas formuladas arriba."
+          }
+        ],
+        "caveats": [
+          "Ejemplo con un método body totalmente conforme: {@snippet lang=\"java\" : // String s = \"Lambdaman!\"; for (int i = 0; i < 13; ++i) { s = \"na \" + s; } return s; // => a variation on a well known theme static String step(String v, int counter, String init) { return \"na \" + v; } // assume MH_step is a handle to the method above MethodHandle fit13 = MethodHandles.constant(int.class, 13); MethodHandle start = MethodHandles.identity(String.class); MethodHandle loop = MethodHandles.countedLoop(fit13, start, MH_step); assertEquals(\"na na na na na na na na na na na na na Lambdaman!\", loop.invoke(\"Lambdaman!\")); }",
+          "Ejemplo con el tipo de método body más simple posible, pasando el número de iteraciones en la invocación del bucle: {@snippet lang=\"java\" : // String s = \"Lambdaman!\"; for (int i = 0; i < 13; ++i) { s = \"na \" + s; } return s; // => a variation on a well known theme static String step(String v, int counter ) { return \"na \" + v; } // assume MH_step is a handle to the method above MethodHandle count = MethodHandles.dropArguments(MethodHandles.identity(int.class), 1, String.class); MethodHandle start = MethodHandles.dropArguments(MethodHandles.identity(String.class), 0, int.class); MethodHandle loop = MethodHandles.countedLoop(count, start, MH_step); // (v, i) -> \"na \" + v assertEquals(\"na na na na na na na na na na na na na Lambdaman!\", loop.invoke(13, \"Lambdaman!\")); }",
+          "Ejemplo que trata como parámetros del bucle el número de iteraciones, la cadena a la que se añade y la cadena que se añade: {@snippet lang=\"java\" : // String s = \"Lambdaman!\", t = \"na\"; for (int i = 0; i < 13; ++i) { s = t + \" \" + s; } return s; // => a variation on a well known theme static String step(String v, int counter, int iterations_, String pre, String start_) { return pre + \" \" + v; } // assume MH_step is a handle to the method above MethodHandle count = MethodHandles.identity(int.class); MethodHandle start = MethodHandles.dropArguments(MethodHandles.identity(String.class), 0, int.class, String.class); MethodHandle loop = MethodHandles.countedLoop(count, start, MH_step); // (v, i, _, pre, _) -> pre + \" \" + v assertEquals(\"na na na na na na na na na na na na na Lambdaman!\", loop.invoke(13, \"na\", \"Lambdaman!\")); }",
+          "Ejemplo que muestra el uso de dropArgumentsToMatch(MethodHandle, int, List, int) para imponer un tipo de bucle: {@snippet lang=\"java\" : // String s = \"Lambdaman!\", t = \"na\"; for (int i = 0; i < 13; ++i) { s = t + \" \" + s; } return s; // => a variation on a well known theme static String step(String v, int counter, String pre) { return pre + \" \" + v; } // assume MH_step is a handle to the method above MethodType loopType = methodType(String.class, String.class, int.class, String.class); MethodHandle count = MethodHandles.dropArgumentsToMatch(MethodHandles.identity(int.class), 0, loopType.parameterList(), 1); MethodHandle start = MethodHandles.dropArgumentsToMatch(MethodHandles.identity(String.class), 0, loopType.parameterList(), 2); MethodHandle body = MethodHandles.dropArgumentsToMatch(MH_step, 2, loopType.parameterList(), 0); MethodHandle loop = MethodHandles.countedLoop(count, start, body); // (v, i, pre, _, _) -> pre + \" \" + v assertEquals(\"na na na na na na na na na na na na na Lambdaman!\", loop.invoke(\"na\", 13, \"Lambdaman!\")); }",
+          "La implementación de este método puede expresarse así: {@snippet lang=\"java\" : MethodHandle countedLoop(MethodHandle iterations, MethodHandle init, MethodHandle body) { return countedLoop(empty(iterations.type()), iterations, init, body); } }"
+        ]
+      },
+      {
+        "intro": [
+          "Construye un bucle que recorre un rango de números. Es un envoltorio de conveniencia del combinador genérico loop."
+        ],
+        "body": [
+          "El contador i es una variable de iteración de tipo int. Los handles start y end determinan el valor inicial (incluido) y final (excluido) del contador. El contador se inicializa al int devuelto por start y avanza hasta el valor devuelto por end (sin incluirlo) con paso 1.",
+          "Si el handle body devuelve un tipo V no void, también hay una variable de iteración inicial de ese tipo. Se inicializa con el handle opcional init, o al valor predeterminado de V si ese handle es null.",
+          "En cada iteración, las variables de iteración se pasan a una invocación del handle body. Un valor no void devuelto por body (de tipo V) actualiza la variable inicial. El resultado del handle del bucle es el valor final de esa variable V (o void si no hay variable V).",
+          "Se cumplen estas reglas para los handles argumento:",
+          "Los handles start y end no deben ser null y ambos deben devolver el tipo común int, llamado aquí I en las listas de tipos de parámetros.",
+          "El handle body no debe ser null; su tipo debe ser de la forma (V I A...)V, con V no void, o bien (I A...)void. (En el caso void, asignamos el tipo void al nombre V y escribimos (V I A...)V entendiendo que un tipo V void se elimina en silencio de la lista de parámetros, quedando (I A...)V).",
+          "La lista de parámetros (V I A...) de body aporta una lista de tipos llamada lista interna de parámetros, que limita las listas de parámetros de las demás partes del bucle.",
+          "Como caso especial, si body solo aporta los tipos V e I, sin tipos A adicionales, la lista interna se amplía con los tipos de argumento A... del handle end.",
+          "Si se quitan de la lista interna los tipos de las variables de iteración (V I), la lista más corta resultante (A...) se llama lista externa de parámetros.",
+          "El tipo de retorno V de body, si no es void, determina el tipo de una variable de estado adicional del bucle. body debe aceptar un parámetro inicial y devolver un valor de este tipo V.",
+          "Si init no es null, debe tener tipo de retorno V. Su lista de parámetros (de alguna forma (A*)) debe ser efectivamente idéntica a la lista externa (A...).",
+          "Si init es null, la variable del bucle se inicializa a su valor predeterminado.",
+          "La lista de parámetros de start (de alguna forma (A*)) debe ser efectivamente idéntica a la lista externa (A...).",
+          "Del mismo modo, la lista de parámetros de end debe ser efectivamente idéntica a la lista externa.",
+          "El tipo de resultado y la firma de parámetros del handle del bucle se determinan así:",
+          "El tipo de resultado del handle del bucle es el tipo de resultado V de body.",
+          "Los tipos de parámetro del handle del bucle son los tipos (A...) de la lista externa.",
+          "Este es el pseudocódigo del handle del bucle resultante. En el código, V/v son el tipo y valor de la segunda variable del bucle y también el tipo de resultado del bucle; A.../a... son los argumentos pasados al bucle. {@snippet lang=\"java\" : int start(A...); int end(A...); V init(A...); V body(V, int, A...); V countedLoop(A... a...) { int e = end(a...); int s = start(a...); V v = init(a...); for (int i = s; i < e; ++i) { v = body(v, i, a...); } return v; } }"
+        ],
+        "parameters": [
+          {
+            "label": "start",
+            "detail": "un handle no null que devuelve el valor inicial del contador, que debe ser int. Consulta arriba las demás restricciones."
+          },
+          {
+            "label": "end",
+            "detail": "un handle no null que devuelve el valor final del contador (el bucle llega hasta end-1). Su tipo de resultado debe ser int. Consulta arriba las demás restricciones."
+          },
+          {
+            "label": "init",
+            "detail": "inicializador opcional que da el valor inicial de la variable del bucle. Puede ser null, lo que implica un valor inicial predeterminado. Consulta arriba las demás restricciones."
+          },
+          {
+            "label": "body",
+            "detail": "cuerpo del bucle, que no puede ser null. Controla los parámetros del bucle y el tipo de resultado en el caso estándar (consulta arriba los detalles). Debe aceptar su propio tipo de retorno (si no es void) más un parámetro int (el contador), y puede aceptar cualquier número de tipos adicionales. Consulta arriba las demás restricciones."
+          }
+        ],
+        "returns": ["un method handle que representa el bucle."],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si alguno de los handles start, end o body es null."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si algún argumento incumple las reglas formuladas arriba."
+          }
+        ],
+        "caveats": [
+          "La implementación de este método puede expresarse así: {@snippet lang=\"java\" : MethodHandle countedLoop(MethodHandle start, MethodHandle end, MethodHandle init, MethodHandle body) { MethodHandle returnVar = dropArguments(identity(init.type().returnType()), 0, int.class, int.class); // assume MH_increment and MH_predicate are handles to implementation-internal methods with // the following semantics: // MH_increment: (int limit, int counter) -> counter + 1 // MH_predicate: (int limit, int counter) -> counter < limit Class counterType = start.type().returnType(); // int Class returnType = body.type().returnType(); MethodHandle incr = MH_increment, pred = MH_predicate, retv = null; if (returnType != void.class) { // ignore the V variable incr = dropArguments(incr, 1, returnType); // (limit, v, i) => (limit, i) pred = dropArguments(pred, 1, returnType); // ditto retv = dropArguments(identity(returnType), 0, counterType); // ignore limit } body = dropArguments(body, 0, counterType); // ignore the limit variable MethodHandle[] loopLimit = { end, null, pred, retv }, // limit = end(); i < limit || return v bodyClause = { init, body }, // v = init(); v = body(v, i) indexVar = { start, incr }; // i = start(); i = i + 1 return loop(loopLimit, bodyClause, indexVar); } }"
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles.filterReturnValue": {
+    "body": [
+      "Si el destino devuelve un valor, el filtro debe aceptarlo como único argumento. Si el destino devuelve void, el filtro no debe aceptar argumentos.",
+      "El tipo de retorno del filtro sustituye al del destino en el method handle adaptado resultante. El tipo del argumento del filtro (si lo hay) debe ser idéntico al tipo de retorno del destino.",
+      "Ejemplo:",
+      "Este es el pseudocódigo del adaptador resultante. En el código, T/t son el tipo de resultado y el valor del destino; V, el tipo de resultado del filtro; y A/a, los tipos y valores de los parámetros y argumentos del destino y del adaptador. {@snippet lang=\"java\" : T target(A...); V filter(T); V adapter(A... a) { T t = target(a...); return filter(t); } // and if the target has a void return: void target2(A...); V filter2(); V adapter2(A... a) { target2(a...); return filter2(); } // and if the filter has a void return: T target3(A...); void filter3(V); void adapter3(A... a) { T t = target3(a...); filter3(t); } }",
+      "Nota: el adaptador resultante nunca es un method handle de aridad variable, aunque el destino original lo fuera."
+    ],
+    "parameters": [
+      {
+        "label": "target",
+        "detail": "el method handle que se invoca antes de filtrar el valor de retorno"
+      },
+      {
+        "label": "filter",
+        "detail": "method handle que se llama sobre el valor de retorno"
+      }
+    ],
+    "returns": [
+      "method handle que incorpora la lógica de filtrado del valor de retorno indicada"
+    ],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si alguno de los argumentos es null"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si la lista de argumentos del filtro no coincide con el tipo de retorno del destino como se describe arriba"
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles.foldArguments": {
+    "overloads": [
+      {
+        "intro": [
+          "Adapta un method handle destino preprocesando algunos de sus argumentos y luego llamando al destino con el resultado del preprocesado insertado en la secuencia original de argumentos."
+        ],
+        "body": [
+          "El preprocesado lo hace combiner, un segundo method handle. De los argumentos pasados al adaptador, los N primeros se copian al combinador, que se llama a continuación. (N es el número de parámetros del combinador). Después el control pasa al destino, con el resultado del combinador (si lo hay) insertado antes de los N argumentos originales.",
+          "Si el combinador devuelve un valor, el primer tipo de parámetro del destino debe ser idéntico al tipo de retorno del combinador, y los N siguientes tipos de parámetro del destino deben coincidir exactamente con los parámetros del combinador.",
+          "Si el combinador devuelve void, no se inserta ningún resultado, y los N primeros tipos de parámetro del destino deben coincidir exactamente con los parámetros del combinador.",
+          "El adaptador resultante tiene el mismo tipo que el destino, salvo que se elimina el primer tipo de parámetro si corresponde al resultado del combinador.",
+          "(dropArguments puede usarse para quitar argumentos que el combinador o el destino no quieran recibir. Si algunos argumentos recibidos son solo para el combinador, considera usar asCollector, porque así esos argumentos no tendrán que seguir vivos en la pila al entrar en el destino).",
+          "Ejemplo:",
+          "Este es el pseudocódigo del adaptador resultante. En el código, T es el tipo de resultado del destino y del adaptador. V/v son el tipo y valor del parámetro y argumento del destino que precede a la posición de plegado; V es también el tipo de resultado del combinador. A/a son los tipos y valores de los N parámetros y argumentos en la posición de plegado. B/b son los tipos y valores de los parámetros y argumentos del destino que siguen a los plegados. {@snippet lang=\"java\" : // there are N arguments in A... T target(V, A[N]..., B...); V combiner(A...); T adapter(A... a, B... b) { V v = combiner(a...); return target(v, a..., b...); } // and if the combiner has a void return: T target2(A[N]..., B...); void combiner2(A...); T adapter2(A... a, B... b) { combiner2(a...); return target2(a..., b...); } }",
+          "Nota: el adaptador resultante nunca es un method handle de aridad variable, aunque el destino original lo fuera."
+        ],
+        "parameters": [
+          {
+            "label": "target",
+            "detail": "el method handle que se invoca después de combinar los argumentos"
+          },
+          {
+            "label": "combiner",
+            "detail": "method handle que se llama primero sobre los argumentos recibidos"
+          }
+        ],
+        "returns": [
+          "method handle que incorpora la lógica de plegado de argumentos indicada"
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si alguno de los argumentos es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el tipo de retorno del combinador no es void y no coincide con el primer tipo de argumento del destino, o si los N primeros tipos de argumento del destino (saltando el que coincide con el tipo de retorno del combinador) no son idénticos a los del combinador"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Adapta un method handle destino preprocesando algunos de sus argumentos, a partir de una posición dada, y luego llamando al destino con el resultado del preprocesado insertado en la secuencia original justo antes de los argumentos plegados."
+        ],
+        "body": [
+          "Este método está muy relacionado con foldArguments(MethodHandle, MethodHandle), pero permite controlar en qué posición de la lista de parámetros se hace el plegado. El argumento que lo controla, pos, es un índice que empieza en cero. El método foldArguments(MethodHandle, MethodHandle) supone la posición 0."
+        ],
+        "parameters": [
+          {
+            "label": "target",
+            "detail": "el method handle que se invoca después de combinar los argumentos"
+          },
+          {
+            "label": "pos",
+            "detail": "la posición en la que empieza el plegado y en la que se inserta su resultado; si es 0, el efecto es el mismo que con foldArguments(MethodHandle, MethodHandle)."
+          },
+          {
+            "label": "combiner",
+            "detail": "method handle que se llama primero sobre los argumentos recibidos"
+          }
+        ],
+        "returns": [
+          "method handle que incorpora la lógica de plegado de argumentos indicada"
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si alguno de los argumentos es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si se cumple alguna de estas dos condiciones: (1) el tipo de retorno del combinador no es void y no coincide con el tipo del argumento en la posición pos de la firma del destino; (2) los N tipos de argumento en la posición pos de la firma del destino (saltando el que coincide con el tipo de retorno del combinador) no son idénticos a los del combinador."
+          }
+        ],
+        "caveats": [
+          "Ejemplo:",
+          "Este es el pseudocódigo del adaptador resultante. En el código, T es el tipo de resultado del destino y del adaptador. V/v son el tipo y valor del parámetro y argumento del destino que precede a la posición de plegado; V es también el tipo de resultado del combinador. A/a son los tipos y valores de los N parámetros y argumentos en la posición de plegado. Z/z y B/b son los tipos y valores de los parámetros y argumentos del destino que preceden y siguen, respectivamente, a los plegados a partir de pos. {@snippet lang=\"java\" : // there are N arguments in A... T target(Z..., V, A[N]..., B...); V combiner(A...); T adapter(Z... z, A... a, B... b) { V v = combiner(a...); return target(z..., v, a..., b...); } // and if the combiner has a void return: T target2(Z..., A[N]..., B...); void combiner2(A...); T adapter2(Z... z, A... a, B... b) { combiner2(a...); return target2(z..., a..., b...); } }",
+          "Nota: el adaptador resultante nunca es un method handle de aridad variable, aunque el destino original lo fuera."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles.guardWithTest": {
+    "body": [
+      "Este es el pseudocódigo del adaptador resultante. En el código, T es el tipo de resultado común de los tres handles implicados; A/a, los tipos y valores de los parámetros y argumentos del destino que consume la prueba; y B/b, los que no consume. {@snippet lang=\"java\" : boolean test(A...); T target(A...,B...); T fallback(A...,B...); T adapter(A... a,B... b) { if (test(a...)) return target(a..., b...); else return fallback(a..., b...); } } Los argumentos de la prueba (a... en el pseudocódigo) no pueden modificarse durante su ejecución, así que se pasan sin cambios de quien llama al destino o a la alternativa, según corresponda."
+    ],
+    "parameters": [
+      {
+        "label": "test",
+        "detail": "method handle usado como prueba; debe devolver boolean"
+      },
+      {
+        "label": "target",
+        "detail": "method handle que se llama si la prueba se cumple"
+      },
+      {
+        "label": "fallback",
+        "detail": "method handle que se llama si la prueba falla"
+      }
+    ],
+    "returns": ["method handle que incorpora la lógica if/then/else indicada"],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si algún argumento es null"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si test no devuelve boolean, o si los tres tipos de método no coinciden (cambiando el tipo de retorno de test para que coincida con el del destino)."
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles.iteratedLoop": {
+    "body": [
+      "El iterador lo determina la evaluación del handle iterator. Cada valor que produce se guarda en una variable de iteración de tipo T.",
+      "Si el handle body devuelve un tipo V no void, también hay una variable de iteración inicial de ese tipo. Se inicializa con el handle opcional init, o al valor predeterminado de V si ese handle es null.",
+      "En cada iteración, las variables de iteración se pasan a una invocación del handle body. Un valor no void devuelto por body (de tipo V) actualiza la variable inicial. El resultado del handle del bucle es el valor final de esa variable V (o void si no hay variable V).",
+      "Se cumplen estas reglas para los handles argumento:",
+      "El handle body no debe ser null; su tipo debe ser de la forma (V T A...)V, con V no void, o bien (T A...)void. (En el caso void, asignamos el tipo void al nombre V y escribimos (V T A...)V entendiendo que un tipo V void se elimina en silencio de la lista de parámetros, quedando (T A...)V).",
+      "La lista de parámetros (V T A...) de body aporta una lista de tipos llamada lista interna de parámetros, que limita las listas de parámetros de las demás partes del bucle.",
+      "Como caso especial, si body solo aporta los tipos V y T, sin tipos A adicionales, la lista interna se amplía con los tipos de argumento A... del handle iterator; si es null, se añade el tipo único Iterable, que forma la lista A....",
+      "Si se quitan de la lista interna los tipos de las variables de iteración (V T), la lista más corta resultante (A...) se llama lista externa de parámetros.",
+      "El tipo de retorno V de body, si no es void, determina el tipo de una variable de estado adicional del bucle. body debe aceptar un parámetro inicial y devolver un valor de este tipo V.",
+      "Si init no es null, debe tener tipo de retorno V. Su lista de parámetros (de alguna forma (A*)) debe ser efectivamente idéntica a la lista externa (A...).",
+      "Si init es null, la variable del bucle se inicializa a su valor predeterminado.",
+      "Si el handle iterator no es null, debe tener tipo de retorno java.util.Iterator o un subtipo. Se supone que el iterador que produce al ejecutar el bucle da valores convertibles al tipo T.",
+      "La lista de parámetros de un iterator no null (de alguna forma (A*)) debe ser efectivamente idéntica a la lista externa (A...).",
+      "Si iterator es null, se usa por defecto un method handle que se comporta como java.lang.Iterable.iterator(). En ese caso, la lista interna (V T A...) debe tener al menos un tipo A, y el parámetro del iterator predeterminado se ajusta para aceptar el tipo A inicial, como con el método de conversión asType. El tipo A inicial debe ser Iterable o un subtipo. Este paso de conversión, hecho al construir el bucle, no debe lanzar WrongMethodTypeException.",
+      "El tipo T puede ser primitivo o referencia. Como en la representación de method handles el tipo Iterator<T> se borra al tipo crudo Iterator, el combinador iteratedLoop ajusta el tipo del argumento inicial de body a Object, como con el método de conversión asType. Por eso, si al ejecutar el bucle aparece un iterador del tipo incorrecto, pueden producirse excepciones en tiempo de ejecución por las conversiones dinámicas de MethodHandle.asType(MethodType).",
+      "El tipo de resultado y la firma de parámetros del handle del bucle se determinan así:",
+      "El tipo de resultado del handle del bucle es el tipo de resultado V de body.",
+      "Los tipos de parámetro del handle del bucle son los tipos (A...) de la lista externa.",
+      "Este es el pseudocódigo del handle del bucle resultante. En el código, V/v son el tipo y valor de la variable del bucle y también el tipo de resultado del bucle; T/t, el de los elementos de la estructura que recorre el bucle; y A.../a..., los argumentos pasados al bucle. {@snippet lang=\"java\" : Iterator iterator(A...); // defaults to Iterable::iterator V init(A...); V body(V,T,A...); V iteratedLoop(A... a...) { Iterator it = iterator(a...); V v = init(a...); while (it.hasNext()) { T t = it.next(); v = body(v, t, a...); } return v; } }"
+    ],
+    "parameters": [
+      {
+        "label": "iterator",
+        "detail": "un handle opcional que devuelve el iterador con el que empieza el bucle. Si no es null, debe devolver java.util.Iterator o un subtipo. Consulta arriba las demás restricciones."
+      },
+      {
+        "label": "init",
+        "detail": "inicializador opcional que da el valor inicial de la variable del bucle. Puede ser null, lo que implica un valor inicial predeterminado. Consulta arriba las demás restricciones."
+      },
+      {
+        "label": "body",
+        "detail": "cuerpo del bucle, que no puede ser null. Controla los parámetros del bucle y el tipo de resultado en el caso estándar (consulta arriba los detalles). Debe aceptar su propio tipo de retorno (si no es void) más un parámetro T (los valores recorridos), y puede aceptar cualquier número de tipos adicionales. Consulta arriba las demás restricciones."
+      }
+    ],
+    "returns": ["un method handle que implementa el bucle de iteración."],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si el handle body es null."
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si algún argumento incumple los requisitos anteriores."
+      }
+    ],
+    "caveats": [
+      "Ejemplo: {@snippet lang=\"java\" : // get an iterator from a list static List reverseStep(List r, String e) { r.add(0, e); return r; } static List newArrayList() { return new ArrayList<>(); } // assume MH_reverseStep and MH_newArrayList are handles to the above methods MethodHandle loop = MethodHandles.iteratedLoop(null, MH_newArrayList, MH_reverseStep); List list = Arrays.asList(\"a\", \"b\", \"c\", \"d\", \"e\"); List reversedList = Arrays.asList(\"e\", \"d\", \"c\", \"b\", \"a\"); assertEquals(reversedList, (List) loop.invoke(list)); }",
+      "La implementación de este método puede expresarse aproximadamente así: {@snippet lang=\"java\" : MethodHandle iteratedLoop(MethodHandle iterator, MethodHandle init, MethodHandle body) { // assume MH_next, MH_hasNext, MH_startIter are handles to methods of Iterator/Iterable Class returnType = body.type().returnType(); Class ttype = body.type().parameterType(returnType == void.class ? 0 : 1); MethodHandle nextVal = MH_next.asType(MH_next.type().changeReturnType(ttype)); MethodHandle retv = null, step = body, startIter = iterator; if (returnType != void.class) { // the simple thing first: in (I V A...), drop the I to get V retv = dropArguments(identity(returnType), 0, Iterator.class); // body type signature (V T A...), internal loop types (I V A...) step = swapArguments(body, 0, 1); // swap V <-> T } if (startIter == null) startIter = MH_getIter; MethodHandle[] iterVar = { startIter, null, MH_hasNext, retv }, // it = iterator; while (it.hasNext()) bodyClause = { init, filterArguments(step, 0, nextVal) }; // v = body(v, t, a) return loop(iterVar, bodyClause); } }"
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles.loop": {
+    "body": [
+      "Intuitivamente, todo bucle está formado por una o más \"cláusulas\", cada una con una variable de iteración local y/o una salida del bucle. Cada iteración ejecuta las cláusulas en orden. Una cláusula puede actualizar su variable de iteración y también puede hacer una prueba y salir del bucle condicionalmente. Para expresar esta lógica con method handles, cada cláusula indica hasta cuatro acciones independientes:",
+      "init: antes de ejecutar el bucle, la inicialización de una variable de iteración v de tipo V.",
+      "step: al ejecutar una cláusula, un paso de actualización de la variable de iteración v.",
+      "pred: al ejecutar una cláusula, la ejecución de un predicado que comprueba si se sale del bucle.",
+      "fini: si una cláusula hace salir del bucle, la ejecución de un finalizador que calcula el valor de retorno del bucle.",
+      "La secuencia completa de tipos de las variables de iteración, en el orden de las cláusulas, se escribirá (V...), y sus valores (v...). Cuando hablemos de \"listas de parámetros\" normalmente nos referiremos a tipos, pero en algunos contextos (al describir la ejecución) serán listas de valores reales.",
+      "Algunas de estas partes pueden omitirse según ciertas reglas, y en ese caso se ofrece un comportamiento predeterminado útil. Más abajo hay una descripción detallada.",
+      "Parámetros opcionales en todas partes: cada función de cláusula puede, pero no tiene por qué, aceptar un parámetro por cada variable de iteración v. Como excepción, las funciones init no pueden recibir parámetros v, porque esos valores aún no están calculados cuando se ejecutan. Cualquier función de cláusula puede omitir cualquier subsecuencia final de los parámetros que le corresponden. De hecho, cualquier función de cláusula puede no recibir ningún argumento.",
+      "Parámetros del bucle: una función de cláusula puede recibir todos los valores de las variables de iteración que le corresponden y, en ese caso, también más parámetros al final. Esos valores extra se llaman parámetros del bucle, con tipos y valores (A...) y (a...). Pasan a ser los parámetros del handle del bucle resultante y se proporcionan cada vez que se ejecuta. (Como las funciones init no aceptan variables de iteración v, cualquier parámetro de una función init es automáticamente un parámetro del bucle a). Igual que con las variables de iteración, las funciones de cláusula pueden, pero no tienen por qué, aceptar parámetros del bucle. Estos parámetros actúan como valores invariantes visibles en todo el bucle.",
+      "Parámetros visibles en todas partes: cada función de cláusula que no es init puede observar todo el estado del bucle, porque puede recibir la lista completa (v... a...) de valores actuales de las variables de iteración y de parámetros del bucle. Las funciones init pueden observar el estado inicial previo al bucle, en la forma (a...). La mayoría de las funciones no necesitarán toda esta información, pero estarán conectadas formalmente a ella como con dropArguments.",
+      "En concreto, usaremos la notación (V*) para expresar un prefijo arbitrario de una secuencia completa (V...) (y lo mismo con (v*), (A*), (a*)). Con esa notación, la forma general de la lista de parámetros de una función init es (A*), y la de una función que no es init, (V*) o (V... A*).",
+      "Comprobación de la estructura de las cláusulas: dado un conjunto de cláusulas, se hacen varias comprobaciones y ajustes para conectar todas las partes del bucle. Se detallan en los pasos siguientes. En ellos, cada aparición de la palabra \"debe\" corresponde a un punto en el que se lanzará IllegalArgumentException si las entradas del combinador loop no cumplen la restricción.",
+      "Secuencias efectivamente idénticas:",
+      "Una lista de parámetros A es efectivamente idéntica a otra B si A y B son idénticas, o si A es más corta e idéntica a un prefijo propio de B. Para un conjunto no ordenado de listas, decimos que el conjunto es \"efectivamente idéntico\" en su conjunto si contiene una lista más larga y todos sus miembros son efectivamente idénticos a ella. Por ejemplo, cualquier conjunto de secuencias de tipos de la forma (V*) es efectivamente idéntico, y lo sigue siendo si se añaden secuencias de la forma (V... A*).",
+      "Paso 0: determinar la estructura de las cláusulas.",
+      "El array de cláusulas (de tipo MethodHandle[][]) no debe ser null y debe contener al menos un elemento.",
+      "El array de cláusulas no puede contener nulls ni subarrays de más de cuatro elementos.",
+      "Las cláusulas de menos de cuatro elementos se tratan como si se rellenaran con nulls hasta longitud cuatro. El relleno se hace añadiendo elementos al final del array.",
+      "Las cláusulas formadas solo por nulls se ignoran.",
+      "Cada cláusula se trata como una tupla de cuatro funciones, llamadas \"init\", \"step\", \"pred\" y \"fini\".",
+      "Paso 1A: determinar los tipos de las variables de iteración (V...).",
+      "El tipo de la variable de iteración de cada cláusula se determina con los tipos de retorno de init y step de esa cláusula.",
+      "Si se omiten ambas funciones, la cláusula no tiene variable de iteración (se usa void como tipo para indicarlo). Si se omite una, el tipo de retorno de la otra define el tipo de la variable. Si se dan ambas, su tipo de retorno común (deben ser idénticos) define el tipo de la variable.",
+      "Se forma la lista de tipos de retorno (en el orden de las cláusulas), omitiendo todas las apariciones de void.",
+      "Esta lista de tipos se llama \"tipos de las variables de iteración\" ((V...)).",
+      "Paso 1B: determinar los parámetros del bucle (A...).",
+      "Se examinan y reúnen las listas de parámetros de las funciones init (de la forma (A*)).",
+      "Se examinan y reúnen los sufijos de las listas de parámetros de step, pred y fini, tras quitar los tipos de las variables de iteración. (Deben tener la forma (V... A*); solo se reúnen las partes (A*)).",
+      "No se reúnen sufijos de las listas de step, pred y fini que no empiecen con todos los tipos de las variables de iteración. (Estos tipos se comprobarán en el paso 2, junto con todos los tipos de las funciones de cláusula).",
+      "Las funciones de cláusula omitidas se ignoran. (Equivale a considerar que tienen listas de parámetros vacías).",
+      "Todas las listas reunidas deben ser efectivamente idénticas.",
+      "La lista más larga (que es necesariamente única) se llama \"lista externa de parámetros\" ((A...)).",
+      "Si no hay ninguna lista, la lista externa es la secuencia vacía.",
+      "La lista combinada formada por los tipos de las variables de iteración seguidos de los tipos de la lista externa se llama \"lista interna de parámetros\".",
+      "Paso 1C: determinar el tipo de retorno del bucle.",
+      "Se examinan los tipos de retorno de las funciones fini, ignorando las omitidas.",
+      "Si no hay funciones fini, el tipo de retorno del bucle es void.",
+      "En otro caso, el tipo de retorno común R de las funciones fini (deben ser idénticos) define el tipo de retorno del bucle.",
+      "Paso 1D: comprobar otros tipos.",
+      "Debe haber al menos una función pred no omitida.",
+      "Toda función pred no omitida debe tener tipo de retorno boolean.",
+      "Paso 2: determinar las listas de parámetros.",
+      "La lista de parámetros del handle del bucle resultante será la lista externa (A...).",
+      "La lista de parámetros de las funciones init se ajusta a la lista externa. (Sus listas ya son efectivamente idénticas a ella).",
+      "La lista de parámetros de toda función no omitida que no sea init (step, pred y fini) debe ser efectivamente idéntica a la lista interna (V... A...).",
+      "Paso 3: completar las funciones omitidas.",
+      "Si se omite una función init, se usa un valor predeterminado del tipo de la variable de iteración de la cláusula.",
+      "Si se omite una función step, se usa una función identidad del tipo de la variable de iteración de la cláusula, insertando antes de su parámetro parámetros descartados para las variables de iteración no void de las cláusulas anteriores. (Esto convierte la variable del bucle en un invariante local del bucle).",
+      "Si se omite una función pred, se usa una función constante true. (Así, en lo que respecta a esta cláusula, el bucle sigue. En ese caso la función fini correspondiente es inalcanzable).",
+      "Si se omite una función fini, se usa un valor predeterminado del tipo de retorno del bucle.",
+      "Paso 4: completar los tipos de parámetro que faltan.",
+      "En este punto, la lista de parámetros de cada función init es efectivamente idéntica a la lista externa (A...), pero algunas pueden ser más cortas. Para cada función init con una lista corta, se rellena el final de la lista.",
+      "En este punto, la lista de parámetros de cada función que no es init es efectivamente idéntica a la lista interna (V... A...), pero algunas pueden ser más cortas. Para cada una con una lista corta, se rellena el final de la lista.",
+      "Las listas de argumentos se rellenan con dropArgumentsToMatch(MethodHandle, int, List, int), descartando los argumentos finales no usados.",
+      "Observaciones finales.",
+      "Tras estos pasos, todas las cláusulas quedan ajustadas con las funciones y argumentos que faltaban.",
+      "Todas las funciones init tienen una lista común de tipos de parámetro (A...), que también tendrá el handle del bucle final.",
+      "Todas las funciones fini tienen un tipo de retorno común R, que también tendrá el handle del bucle final.",
+      "Todas las funciones que no son init tienen una lista común de tipos de parámetro (V... A...), con las variables de iteración V (no void) seguidas de los parámetros del bucle.",
+      "Cada par de funciones init y step coincide en su tipo de retorno V.",
+      "Cada función que no es init podrá observar los valores actuales (v...) de todas las variables de iteración.",
+      "Cada función podrá observar los valores recibidos (a...) de todos los parámetros del bucle.",
+      "Ejemplo. Como consecuencia del paso 1A, el combinador loop tiene esta propiedad:",
+      "Dadas N cláusulas {@code Cn = {null, Sn, Pn}} con n = 1..N.",
+      "Supón que los handles de predicado Pn son null o no tienen parámetros. (Solo hace falta que un Pn no sea null).",
+      "Supón que los handles de paso Sn tienen firmas (B1..BX)Rn, para alguna constante X>=N.",
+      "Supón que Q es el número de tipos Rn no void y que (V1...VQ) es la secuencia de esos tipos.",
+      "Debe cumplirse que Vn == Bn para n = 1..min(X,Q).",
+      "Los tipos de parámetro Vn se interpretarán como elementos del estado local del bucle (V...).",
+      "Los tipos restantes BQ+1..BX (si Q<X) determinarán los tipos de parámetro del handle del bucle resultante (A...).",
+      "En este ejemplo, los parámetros del handle del bucle (A...) se derivan de las funciones step, lo cual es natural si la mayor parte del cálculo ocurre en los pasos. En algunos bucles el peso del cálculo puede estar en las funciones pred, que entonces pueden necesitar los parámetros del bucle. En bucles con lógica de salida compleja, las funciones fini pueden necesitarlos, y lo mismo las funciones init en bucles con lógica de entrada compleja. Por eso, las reglas para determinar estos parámetros son lo más simétricas posible entre todas las partes de las cláusulas. En general, los parámetros del bucle funcionan como valores invariantes comunes a todo el bucle, mientras que las variables de iteración funcionan como valores variables comunes o (si no hay función step) como temporales invariantes internos del bucle.",
+      "Ejecución del bucle.",
+      "Al llamar al bucle, sus valores de entrada se guardan en variables locales, que se pasan a cada función de cláusula. Estas variables son invariantes del bucle.",
+      "Cada función init se ejecuta en el orden de las cláusulas (pasándole los argumentos externos (a...)) y los valores no void se guardan (como variables de iteración (v...)) en variables locales. Estas variables cambian en el bucle (salvo que sus pasos se comporten como funciones identidad, como se indicó arriba).",
+      "Todas las ejecuciones de funciones (salvo las init) reciben la lista interna de parámetros, formada por los valores de iteración no void (v...) (en el orden de las cláusulas) y luego las entradas del bucle (a...) (en el orden de los argumentos).",
+      "Después se ejecutan las funciones step y pred, en el orden de las cláusulas (step antes que pred), hasta que una función pred devuelve false.",
+      "El resultado no void de una llamada a step actualiza el valor correspondiente de la secuencia (v...) de variables del bucle. El valor actualizado es visible de inmediato para todas las llamadas posteriores.",
+      "Si una función pred devuelve false, se llama a la función fini correspondiente y el valor resultante (de tipo R) es lo que devuelve el bucle.",
+      "Si todas las funciones pred devuelven siempre true, nunca se invoca ninguna fini y el bucle solo puede salir lanzando una excepción.",
+      "Consejos de uso.",
+      "Aunque cada función step recibe los valores actuales de todas las variables del bucle, a veces solo necesita el valor de su propia variable. En ese caso puede tener que descartar explícitamente todas las variables anteriores, lo que obliga a mencionar sus tipos, en una expresión como dropArguments(step, 0, V0.class, ...).",
+      "Las variables del bucle no tienen por qué cambiar; pueden ser invariantes. Una cláusula puede crear un invariante con una función init adecuada y sin step, pred ni fini. Puede ser útil para \"conectar\" un argumento recibido por el bucle con la función step o pred de una variable adyacente.",
+      "Si algunas funciones de cláusula son métodos virtuales de una instancia, la propia instancia puede colocarse cómodamente en una \"variable\" invariante inicial, con una cláusula inicial como {@code new MethodHandle[]{identity(ObjType.class)}}. En ese caso, la referencia a la instancia será el primer valor de las variables de iteración, y será fácil usar métodos virtuales como partes de las cláusulas, porque todos recibirán una referencia inicial a la instancia que coincide con ese valor.",
+      "Este es el pseudocódigo del handle del bucle resultante. Como arriba, V y v son los tipos y valores de las variables del bucle; A y a, los argumentos pasados a todo el bucle; y R, el tipo de resultado común de todos los finalizadores y del bucle resultante. {@snippet lang=\"java\" : V... init...(A...); boolean pred...(V..., A...); V... step...(V..., A...); R fini...(V..., A...); R loop(A... a) { V... v... = init...(a...); for (;;) { for ((v, p, s, f) in (v..., pred..., step..., fini...)) { v = s(v..., a...); if (!p(v..., a...)) { return f(v..., a...); } } } } } Las listas de tipos de parámetro (V...) y (A...) se han expandido a su longitud completa, aunque cada función de cláusula pueda omitir algunas. Como se indicó arriba, los parámetros que faltan se completan como con dropArgumentsToMatch(MethodHandle, int, List, int)."
+    ],
+    "parameters": [
+      {
+        "label": "clauses",
+        "detail": "un array de arrays (tuplas de 4) de MethodHandles que cumplen las reglas descritas arriba."
+      }
+    ],
+    "returns": [
+      "un method handle que implementa el bucle definido por los argumentos."
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si se incumple alguna de las restricciones descritas arriba."
+      }
+    ],
+    "caveats": [
+      "Ejemplo: {@snippet lang=\"java\" : // iterative implementation of the factorial function as a loop handle static int one(int k) { return 1; } static int inc(int i, int acc, int k) { return i + 1; } static int mult(int i, int acc, int k) { return i * acc; } static boolean pred(int i, int acc, int k) { return i < k; } static int fin(int i, int acc, int k) { return acc; } // assume MH_one, MH_inc, MH_mult, MH_pred, and MH_fin are handles to the above methods // null initializer for counter, should initialize to 0 MethodHandle[] counterClause = new MethodHandle[]{null, MH_inc}; MethodHandle[] accumulatorClause = new MethodHandle[]{MH_one, MH_mult, MH_pred, MH_fin}; MethodHandle loop = MethodHandles.loop(counterClause, accumulatorClause); assertEquals(120, loop.invoke(5)); } El mismo ejemplo, descartando argumentos y usando combinadores: {@snippet lang=\"java\" : // simplified implementation of the factorial function as a loop handle static int inc(int i) { return i + 1; } // drop acc, k static int mult(int i, int acc) { return i * acc; } //drop k static boolean cmp(int i, int k) { return i < k; } // assume MH_inc, MH_mult, and MH_cmp are handles to the above methods // null initializer for counter, should initialize to 0 MethodHandle MH_one = MethodHandles.constant(int.class, 1); MethodHandle MH_pred = MethodHandles.dropArguments(MH_cmp, 1, int.class); // drop acc MethodHandle MH_fin = MethodHandles.dropArguments(MethodHandles.identity(int.class), 0, int.class); // drop i MethodHandle[] counterClause = new MethodHandle[]{null, MH_inc}; MethodHandle[] accumulatorClause = new MethodHandle[]{MH_one, MH_mult, MH_pred, MH_fin}; MethodHandle loop = MethodHandles.loop(counterClause, accumulatorClause); assertEquals(720, loop.invoke(6)); } Un ejemplo parecido, con un objeto auxiliar que guarda un parámetro del bucle: {@snippet lang=\"java\" : // instance-based implementation of the factorial function as a loop handle static class FacLoop { final int k; FacLoop(int k) { this.k = k; } int inc(int i) { return i + 1; } int mult(int i, int acc) { return i * acc; } boolean pred(int i) { return i < k; } int fin(int i, int acc) { return acc; } } // assume MH_FacLoop is a handle to the constructor // assume MH_inc, MH_mult, MH_pred, and MH_fin are handles to the above methods // null initializer for counter, should initialize to 0 MethodHandle MH_one = MethodHandles.constant(int.class, 1); MethodHandle[] instanceClause = new MethodHandle[]{MH_FacLoop}; MethodHandle[] counterClause = new MethodHandle[]{null, MH_inc}; MethodHandle[] accumulatorClause = new MethodHandle[]{MH_one, MH_mult, MH_pred, MH_fin}; MethodHandle loop = MethodHandles.loop(instanceClause, counterClause, accumulatorClause); assertEquals(5040, loop.invoke(7)); }"
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodHandles.whileLoop": {
+    "body": [
+      "El handle pred describe la condición del bucle, y body, su cuerpo. En cada iteración, el bucle resultante evalúa primero el predicado y luego ejecuta el cuerpo (si el predicado da true). El bucle termina cuando el predicado da false (y en ese caso no se ejecuta el cuerpo).",
+      "El handle init describe el valor inicial de una variable local opcional adicional del bucle. En cada iteración, esa variable, si existe, se pasa al cuerpo y se actualiza con el valor que devuelve. El resultado del bucle es el valor final de esa variable (si existe).",
+      "Se cumplen estas reglas para estos handles argumento:",
+      "El handle body no debe ser null; su tipo debe ser de la forma (V A...)V, con V no void, o bien (A...)void. (En el caso void, asignamos el tipo void al nombre V y escribimos (V A...)V entendiendo que un tipo V void se elimina en silencio de la lista de parámetros, quedando (A...)V).",
+      "La lista de parámetros (V A...) de body se llama lista interna de parámetros y limita las listas de parámetros de las demás partes del bucle.",
+      "Si se quita de la lista interna el tipo de la variable de iteración V, la lista más corta resultante (A...) se llama lista externa de parámetros.",
+      "El tipo de retorno V de body, si no es void, determina el tipo de una variable de estado adicional del bucle. body debe aceptar y devolver un valor de este tipo V.",
+      "Si init no es null, debe tener tipo de retorno V. Su lista de parámetros (de alguna forma (A*)) debe ser efectivamente idéntica a la lista externa (A...).",
+      "Si init es null, la variable del bucle se inicializa a su valor predeterminado.",
+      "El handle pred no debe ser null y debe tener tipo de retorno boolean. Su lista de parámetros (vacía o de la forma (V A*)) debe ser efectivamente idéntica a la lista interna.",
+      "El tipo de resultado y la firma de parámetros del handle del bucle se determinan así:",
+      "El tipo de resultado del handle del bucle es el tipo de resultado V de body.",
+      "Los tipos de parámetro del handle del bucle son los tipos (A...) de la lista externa.",
+      "Este es el pseudocódigo del handle del bucle resultante. En el código, V/v son el tipo y valor de la única variable del bucle y también el tipo de resultado del bucle; A/a, los del argumento pasado al bucle. {@snippet lang=\"java\" : V init(A...); boolean pred(V, A...); V body(V, A...); V whileLoop(A... a...) { V v = init(a...); while (pred(v, a...)) { v = body(v, a...); } return v; } }"
+    ],
+    "parameters": [
+      {
+        "label": "init",
+        "detail": "inicializador opcional que da el valor inicial de la variable del bucle. Puede ser null, lo que implica un valor inicial predeterminado. Consulta arriba las demás restricciones."
+      },
+      {
+        "label": "pred",
+        "detail": "condición del bucle, que no puede ser null. Su tipo de resultado debe ser boolean. Consulta arriba las demás restricciones."
+      },
+      {
+        "label": "body",
+        "detail": "cuerpo del bucle, que no puede ser null. Controla los parámetros y el tipo de resultado del bucle. Consulta arriba las demás restricciones."
+      }
+    ],
+    "returns": [
+      "un method handle que implementa el bucle while descrito por los argumentos."
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si se incumplen las reglas de los argumentos."
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "si pred o body es null."
+      }
+    ],
+    "caveats": [
+      "Ejemplo: {@snippet lang=\"java\" : // implement the zip function for lists as a loop handle static List initZip(Iterator a, Iterator b) { return new ArrayList<>(); } static boolean zipPred(List zip, Iterator a, Iterator b) { return a.hasNext() && b.hasNext(); } static List zipStep(List zip, Iterator a, Iterator b) { zip.add(a.next()); zip.add(b.next()); return zip; } // assume MH_initZip, MH_zipPred, and MH_zipStep are handles to the above methods MethodHandle loop = MethodHandles.whileLoop(MH_initZip, MH_zipPred, MH_zipStep); List a = Arrays.asList(\"a\", \"b\", \"c\", \"d\"); List b = Arrays.asList(\"e\", \"f\", \"g\", \"h\"); List zipped = Arrays.asList(\"a\", \"e\", \"b\", \"f\", \"c\", \"g\", \"d\", \"h\"); assertEquals(zipped, (List) loop.invoke(a.iterator(), b.iterator())); }",
+      "La implementación de este método puede expresarse así: {@snippet lang=\"java\" : MethodHandle whileLoop(MethodHandle init, MethodHandle pred, MethodHandle body) { MethodHandle fini = (body.type().returnType() == void.class ? null : identity(body.type().returnType())); MethodHandle[] checkExit = { null, null, pred, fini }, varBody = { init, body }; return loop(checkExit, varBody); } }"
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodType.methodType": {
+    "overloads": [
+      {
+        "intro": ["Busca o crea una instancia del tipo de método dado."],
+        "parameters": [
+          {
+            "label": "rtype",
+            "detail": "el tipo de retorno"
+          },
+          {
+            "label": "ptypes",
+            "detail": "los tipos de parámetro"
+          }
+        ],
+        "returns": ["un tipo de método con los componentes dados"],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si rtype, ptypes o algún elemento de ptypes es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si algún elemento de ptypes es void.class"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Busca o crea un tipo de método con los componentes dados. Método de conveniencia de methodType(Class, Class[])."
+        ],
+        "parameters": [
+          {
+            "label": "rtype",
+            "detail": "el tipo de retorno"
+          },
+          {
+            "label": "ptypes",
+            "detail": "los tipos de parámetro"
+          }
+        ],
+        "returns": ["un tipo de método con los componentes dados"],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si rtype, ptypes o algún elemento de ptypes es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si algún elemento de ptypes es void.class"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Busca o crea un tipo de método con los componentes dados. Método de conveniencia de methodType(Class, Class[]). El primer tipo de parámetro se antepone al resto del array."
+        ],
+        "parameters": [
+          {
+            "label": "rtype",
+            "detail": "el tipo de retorno"
+          },
+          {
+            "label": "ptype0",
+            "detail": "el primer tipo de parámetro"
+          },
+          {
+            "label": "ptypes",
+            "detail": "los demás tipos de parámetro"
+          }
+        ],
+        "returns": ["un tipo de método con los componentes dados"],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si rtype, ptype0, ptypes o algún elemento de ptypes es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si ptype0, ptypes o algún elemento de ptypes es void.class"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Busca o crea un tipo de método con los componentes dados. Método de conveniencia de methodType(Class, Class[]). El método resultante no tiene tipos de parámetro."
+        ],
+        "parameters": [
+          {
+            "label": "rtype",
+            "detail": "el tipo de retorno"
+          }
+        ],
+        "returns": ["un tipo de método con el valor de retorno dado"],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si rtype es null"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Busca o crea un tipo de método con los componentes dados. Método de conveniencia de methodType(Class, Class[]). El método resultante tiene el único tipo de parámetro dado."
+        ],
+        "parameters": [
+          {
+            "label": "rtype",
+            "detail": "el tipo de retorno"
+          },
+          {
+            "label": "ptype0",
+            "detail": "el tipo de parámetro"
+          }
+        ],
+        "returns": [
+          "un tipo de método con el valor de retorno y el tipo de parámetro dados"
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si rtype o ptype0 es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si ptype0 es void.class"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Busca o crea un tipo de método con los componentes dados. Método de conveniencia de methodType(Class, Class[]). El método resultante tiene los mismos tipos de parámetro que ptypes y el tipo de retorno indicado."
+        ],
+        "parameters": [
+          {
+            "label": "rtype",
+            "detail": "el tipo de retorno"
+          },
+          {
+            "label": "ptypes",
+            "detail": "el tipo de método que aporta los tipos de parámetro"
+          }
+        ],
+        "returns": ["un tipo de método con los componentes dados"],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si rtype o ptypes es null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.MethodType.toMethodDescriptorString": {
+    "caveats": [
+      "No es el inverso estricto de fromMethodDescriptorString, que requiere un descriptor de tipo de método (JVMS 4.3.3) y un cargador de clases adecuado. Dos MethodType distintos pueden tener el mismo descriptor, porque clases distintas pueden tener el mismo nombre con cargadores diferentes.",
+      "Este método se incluye para las aplicaciones que deben generar bytecodes que procesan method handles e invokedynamic. @jvms 4.3.3 Method Descriptors"
+    ]
+  },
+  "web-java-se-java.lang.invoke.MutableCallSite": {
+    "body": [
+      "Este es un ejemplo de call site mutable que introduce una variable de estado en una cadena de method handles.",
+      "MutableCallSite name = new MutableCallSite(MethodType.methodType(String.class)); MethodHandle MH_name = name.dynamicInvoker(); MethodType MT_str1 = MethodType.methodType(String.class); MethodHandle MH_upcase = MethodHandles.lookup() .findVirtual(String.class, \"toUpperCase\", MT_str1); MethodHandle worker1 = MethodHandles.filterReturnValue(MH_name, MH_upcase); name.setTarget(MethodHandles.constant(String.class, \"Rocky\")); assertEquals(\"ROCKY\", (String) worker1.invokeExact()); name.setTarget(MethodHandles.constant(String.class, \"Fred\")); assertEquals(\"FRED\", (String) worker1.invokeExact()); // (mutation can be continued indefinitely)",
+      "El mismo call site puede usarse en varios sitios a la vez.",
+      "MethodType MT_str2 = MethodType.methodType(String.class, String.class); MethodHandle MH_cat = lookup().findVirtual(String.class, \"concat\", methodType(String.class, String.class)); MethodHandle MH_dear = MethodHandles.insertArguments(MH_cat, 1, \", dear?\"); MethodHandle worker2 = MethodHandles.filterReturnValue(MH_name, MH_dear); assertEquals(\"Fred, dear?\", (String) worker2.invokeExact()); name.setTarget(MethodHandles.constant(String.class, \"Wilma\")); assertEquals(\"WILMA\", (String) worker1.invokeExact()); assertEquals(\"Wilma, dear?\", (String) worker2.invokeExact());",
+      "Sin sincronización de los valores del destino: escribir el destino de un call site mutable no obliga a los demás hilos a enterarse del nuevo valor. Los hilos que no hagan acciones de sincronización adecuadas respecto al call site pueden guardar en caché el destino antiguo y retrasar indefinidamente el uso del nuevo. (Es una consecuencia normal del Java Memory Model aplicado a campos de objetos).",
+      "La operación syncAll permite obligar a los hilos a aceptar un nuevo valor de destino, aunque no haya otra sincronización.",
+      "Para destinos que se actualicen con frecuencia, considera usar un call site volátil."
+    ]
+  },
   "web-java-se-java.lang.invoke.MutableCallSite.dynamicInvoker": {
     "body": [
       "Este método equivale a este código:",
@@ -11384,6 +12656,121 @@
       "En general, toString devuelve una cadena que «representa textualmente» el objeto. Debería ser una representación concisa pero informativa y fácil de leer. Se recomienda que todas las subclases sobrescriban este método. La cadena no tiene por qué ser estable en el tiempo ni entre ejecuciones de la JVM.",
       "El toString de Object devuelve una cadena con el nombre de la clase de la que el objeto es instancia, el carácter arroba '@' y la representación hexadecimal sin signo del código hash del objeto. Es decir, devuelve una cadena igual al valor de:",
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
+    ]
+  },
+  "web-java-se-java.lang.invoke.StringConcatFactory.makeConcatWithTemplate": {
+    "intro": [
+      "Método de concatenación simplificado para facilitar la concatenación de StringTemplate. Devuelve un único método de concatenación que intercala fragmentos y valores: fragment|value|fragment|value|...|value|fragment. Debe haber un fragmento más que tipos en ptypes. El número total de ranuras que ocupan los ptypes debe ser menor o igual que MAX_INDY_CONCAT_ARG_SLOTS."
+    ],
+    "parameters": [
+      {
+        "label": "fragments",
+        "detail": "lista de fragmentos de cadena"
+      },
+      {
+        "label": "ptypes",
+        "detail": "lista de tipos de las expresiones"
+      }
+    ],
+    "returns": ["el MethodHandle de concatenación"],
+    "exceptions": [
+      {
+        "label": "StringConcatException",
+        "detail": "Si se incumple alguna de las invariantes de enlace."
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "Si alguno de los argumentos recibidos es null."
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "Si el número de ranuras de valores supera MAX_INDY_CONCAT_ARG_SLOTS."
+      }
+    ]
+  },
+  "web-java-se-java.lang.invoke.SwitchPoint": {
+    "body": [
+      "Un único switch point puede controlar cualquier número de method handles (y, por tanto, indirectamente, cualquier número de call sites). Para ello se usa como fábrica que combina cualquier número de pares de method handles protegidos en delegadores protegidos.",
+      "Al crear un delegador protegido a partir de un par protegido, el par se envuelve en un method handle nuevo M, asociado permanentemente al switch point que lo creó. Cada par consta de un destino T y una alternativa F. Mientras el switch point es válido, las invocaciones de M se delegan en T. Una vez invalidado, se delegan en F.",
+      "La invalidación es global e inmediata, como si el switch point contuviera una variable boolean volátil consultada en cada llamada a M. También es permanente: el switch point solo puede cambiar de estado una vez y, tras invalidarse, siempre delega en F. En ese momento guardWithTest puede ignorar T y devolver F.",
+      "Este es un ejemplo de switch point en acción:",
+      "{@code MethodHandle MH_strcat = MethodHandles.lookup() .findVirtual(String.class, \"concat\", MethodType.methodType(String.class, String.class)); SwitchPoint spt = new SwitchPoint(); assert(!spt.hasBeenInvalidated()); // the following steps may be repeated to re-use the same switch point: MethodHandle worker1 = MH_strcat; MethodHandle worker2 = MethodHandles.permuteArguments(MH_strcat, MH_strcat.type(), 1, 0); MethodHandle worker = spt.guardWithTest(worker1, worker2); assertEquals(\"method\", (String) worker.invokeExact(\"met\", \"hod\")); SwitchPoint.invalidateAll(new SwitchPoint[]{ spt }); assert(spt.hasBeenInvalidated()); assertEquals(\"hodmet\", (String) worker.invokeExact(\"met\", \"hod\")); }",
+      "Explicación: los switch points son útiles sin crear subclases, aunque también pueden extenderse, por ejemplo para asociarles una lógica de invalidación propia de la aplicación. No hay asociación permanente entre un switch point y los method handles que produce y consume: el recolector de basura puede recogerlos con independencia de la vida útil del propio switch point.",
+      "Nota de implementación: un switch point se comporta como si estuviera implementado sobre MutableCallSite, aproximadamente así:",
+      "{@code public class SwitchPoint { private static final MethodHandle K_true = MethodHandles.constant(boolean.class, true), K_false = MethodHandles.constant(boolean.class, false); private final MutableCallSite mcs; private final MethodHandle mcsInvoker; public SwitchPoint() { this.mcs = new MutableCallSite(K_true); this.mcsInvoker = mcs.dynamicInvoker(); } public MethodHandle guardWithTest( MethodHandle target, MethodHandle fallback) { // Note: mcsInvoker is of type ()boolean. // Target and fallback may take any arguments, but must have the same type. return MethodHandles.guardWithTest(this.mcsInvoker, target, fallback); } public static void invalidateAll(SwitchPoint[] spts) { List mcss = new ArrayList<>(); for (SwitchPoint spt : spts) mcss.add(spt.mcs); for (MutableCallSite mcs : mcss) mcs.setTarget(K_false); MutableCallSite.syncAll(mcss.toArray(new MutableCallSite[0])); } } }"
+    ]
+  },
+  "web-java-se-java.lang.invoke.VarHandle": {
+    "body": [
+      "Los VarHandles son inmutables y no tienen estado visible. El usuario no puede crear subclases de VarHandle.",
+      "Un VarHandle tiene:",
+      "un tipo de variable T, el tipo de todas las variables a las que hace referencia; y",
+      "una lista de tipos de coordenada CT1, CT2, ..., CTn, los tipos de las expresiones de coordenada que, juntas, localizan una variable a la que hace referencia.",
+      "Los tipos de variable y de coordenada pueden ser primitivos o referencias, y se representan con objetos Class. La lista de tipos de coordenada puede estar vacía.",
+      "Los métodos de fábrica que producen o buscan instancias de VarHandle documentan el tipo de variable admitido y la lista de tipos de coordenada.",
+      "Cada modo de acceso está asociado a un método de modo de acceso, un método polimórfico en firma con el nombre del modo. Al invocarlo sobre un VarHandle, los primeros argumentos son expresiones de coordenada que indican exactamente en qué objeto se accede a la variable. Los argumentos finales representan valores relevantes para el modo de acceso. Por ejemplo, los distintos modos compare-and-set o compare-and-exchange requieren dos argumentos finales: el valor esperado de la variable y el nuevo.",
+      "La aridad y los tipos de los argumentos de un método de modo de acceso no se comprueban estáticamente. En su lugar, cada método indica un tipo de modo de acceso, representado como instancia de MethodType, que hace de firma con la que se comprueban dinámicamente los argumentos. El tipo de modo de acceso da los tipos de parámetro formales en función de los tipos de coordenada del VarHandle y de los tipos de los valores relevantes para el modo. También da un tipo de retorno, a menudo en función del tipo de variable del VarHandle. Al invocar un método de modo de acceso sobre un VarHandle, el descriptor de tipo simbólico del call site, los tipos en ejecución de los argumentos y el tipo en ejecución del valor de retorno deben coincidir con los del tipo de modo de acceso. Si no coinciden, se lanza una excepción en tiempo de ejecución.",
+      "Por ejemplo, el método compareAndSet indica que, si su receptor es un VarHandle con tipos de coordenada CT1, ..., CTn y tipo de variable T, su tipo de modo de acceso es (CT1 c1, ..., CTn cn, T expectedValue, T newValue)boolean. Supón que un VarHandle accede a elementos de un array, con tipos de coordenada String[] e int y tipo de variable String. El tipo de modo de acceso de compareAndSet sobre él sería (String[] c1, int c2, String expectedValue, String newValue)boolean. Ese VarHandle puede obtenerse con el método de fábrica de arrays y acceder a los elementos así:",
+      "String[] sa = ... VarHandle avh = MethodHandles.arrayElementVarHandle(String[].class); boolean r = avh.compareAndSet(sa, 10, \"expected\", \"new\");",
+      "Los modos de acceso controlan las propiedades de atomicidad y consistencia. Las lecturas (get) y escrituras (set) normales solo garantizan atomicidad a nivel de bits para referencias y valores primitivos de hasta 32 bits, y no imponen restricciones de orden observables respecto a hilos distintos del que ejecuta. Las operaciones Opaque son atómicas a nivel de bits y están ordenadas coherentemente respecto a los accesos a la misma variable. Además de cumplir lo de Opaque, las lecturas en modo Acquire y sus accesos posteriores quedan ordenados después de las escrituras Release correspondientes y sus accesos anteriores. Además de cumplir Acquire y Release, todas las operaciones Volatile están totalmente ordenadas entre sí.",
+      "Los modos de acceso se agrupan en estas categorías:",
+      "modos de lectura, que obtienen el valor de una variable con efectos de orden de memoria indicados. Los métodos de este grupo son get, getVolatile, getAcquire y getOpaque.",
+      "modos de escritura, que fijan el valor de una variable con efectos de orden de memoria indicados. Los métodos de este grupo son set, setVolatile, setRelease y setOpaque.",
+      "modos de actualización atómica, que, por ejemplo, comparan y fijan atómicamente el valor de una variable con efectos de orden de memoria indicados. Los métodos de este grupo son compareAndSet, weakCompareAndSetPlain, weakCompareAndSet, weakCompareAndSetAcquire, weakCompareAndSetRelease, compareAndExchangeAcquire, compareAndExchange, compareAndExchangeRelease, getAndSet, getAndSetAcquire y getAndSetRelease.",
+      "modos de actualización atómica numérica, que, por ejemplo, obtienen y fijan atómicamente con suma el valor de una variable con efectos de orden de memoria indicados. Los métodos de este grupo son getAndAdd, getAndAddAcquire y getAndAddRelease,",
+      "modos de actualización atómica bit a bit, que, por ejemplo, obtienen y aplican atómicamente un OR bit a bit al valor de una variable con efectos de orden de memoria indicados. Los métodos de este grupo son getAndBitwiseOr, getAndBitwiseOrAcquire, getAndBitwiseOrRelease, getAndBitwiseAnd, getAndBitwiseAndAcquire, getAndBitwiseAndRelease, getAndBitwiseXor, getAndBitwiseXorAcquire y getAndBitwiseXorRelease.",
+      "Los métodos de fábrica que producen o buscan instancias de VarHandle documentan los modos de acceso admitidos, incluidas posibles restricciones según el tipo de variable y si es de solo lectura. Si un modo no se admite, su método lanza UnsupportedOperationException al invocarlo. Los métodos de fábrica deben documentar las excepciones no declaradas adicionales que puedan lanzar los métodos de modo de acceso. El modo get se admite en todos los VarHandle y su método nunca lanza UnsupportedOperationException. Si un VarHandle hace referencia a una variable de solo lectura (por ejemplo, un campo final), no se admiten los modos de escritura, actualización atómica, actualización atómica numérica ni actualización atómica bit a bit, y sus métodos lanzan UnsupportedOperationException. Los modos de lectura/escritura (si se admiten), salvo get y set, dan acceso atómico para tipos referencia y todos los tipos primitivos. Salvo que la documentación del método de fábrica diga otra cosa, get y set (si se admiten) dan acceso atómico para tipos referencia y todos los primitivos, salvo long y double en plataformas de 32 bits.",
+      "Los modos de acceso prevalecen sobre cualquier efecto de orden de memoria indicado en la declaración de la variable. Por ejemplo, un VarHandle que accede a un campo con el modo get accede según ese modo aunque el campo sea volatile. Al mezclar accesos hay que tener muchísimo cuidado, porque el Java Memory Model puede permitir resultados sorprendentes.",
+      "Además del acceso a variables con distintos modos, se ofrece un conjunto de métodos estáticos, llamados métodos de barrera de memoria, para controlar con detalle el orden de memoria.",
+      "La Java Language Specification permite que otros hilos observen las operaciones como si se ejecutaran en un orden distinto al que se ve en el código fuente, con las restricciones que imponen, por ejemplo, los locks, los campos volatile o los VarHandles. Los métodos estáticos fullFence, acquireFence, releaseFence, loadLoadFence y storeStoreFence también pueden usarse para imponer restricciones. Sus especificaciones, como las de ciertos modos de acceso, se expresan en términos de la ausencia de \"reordenaciones\": efectos de orden observables que podrían ocurrir si la barrera no estuviera. En futuras actualizaciones de la Java Language Specification puede llegar una redacción más precisa de las especificaciones de los métodos de modo de acceso y de barrera de memoria.",
+      "Compilar la invocación de métodos de modo de acceso",
+      "Una expresión de llamada Java que nombra un método de modo de acceso puede invocar un VarHandle desde código fuente. Desde el punto de vista del código fuente, estos métodos aceptan cualquier argumento y su resultado polimórfico (si se expresa) puede convertirse a cualquier tipo de retorno. Formalmente, esto se consigue dando a los métodos de modo de acceso argumentos Object de aridad variable y tipo de retorno Object (si el retorno es polimórfico), pero tienen una cualidad adicional llamada polimorfismo de firma que conecta esta libertad de invocación directamente con la pila de ejecución de la JVM.",
+      "Como es habitual con los métodos virtuales, las llamadas a métodos de modo de acceso en el código fuente se compilan a una instrucción invokevirtual. Lo inusual es que el compilador debe registrar los tipos reales de los argumentos y no puede aplicarles conversiones de invocación de métodos. En su lugar, debe generar instrucciones que los apilen según sus propios tipos sin convertir. El objeto VarHandle se apila antes que los argumentos. Después el compilador genera una instrucción invokevirtual que invoca el método de modo de acceso con un descriptor de tipo simbólico que describe los tipos de argumento y de retorno.",
+      "Para emitir un descriptor de tipo simbólico completo, el compilador también debe determinar el tipo de retorno (si es polimórfico). Se basa en la conversión de tipo aplicada a la expresión de invocación, si la hay; si no, Object si la invocación es una expresión, o void si es una sentencia. La conversión puede ser a un tipo primitivo (pero no a void).",
+      "Como caso límite, a un argumento null sin conversión se le da el descriptor de tipo simbólico java.lang.Void. La ambigüedad con el tipo Void no hace daño, porque no hay referencias de tipo Void salvo la referencia null.",
+      "Ejecutar la invocación de métodos de modo de acceso",
+      "La primera vez que se ejecuta una instrucción invokevirtual, se enlaza resolviendo simbólicamente sus nombres y verificando que la llamada es estáticamente legal. Esto también vale para las llamadas a métodos de modo de acceso. En este caso, se comprueba la sintaxis del descriptor de tipo simbólico que emitió el compilador y se resuelven sus nombres. Así, una invokevirtual que invoca un método de modo de acceso siempre se enlaza, siempre que el descriptor esté bien formado y los tipos existan.",
+      "Cuando se ejecuta la invokevirtual tras el enlace, la JVM comprueba primero que el tipo de modo de acceso del VarHandle receptor coincide con el descriptor de tipo simbólico. Si no coincide, significa que el método de modo de acceso que invoca quien llama no existe en ese VarHandle concreto.",
+      "Por defecto, invocar un método de modo de acceso se comporta como una invocación de MethodHandle.invoke, en la que el method handle receptor acepta la instancia de VarHandle como primer argumento. En concreto, lo siguiente, donde {@code {access-mode}} es el nombre del método de modo de acceso:",
+      "{@code VarHandle vh = .. R r = (R) vh.{access-mode}(p1, p2, ..., pN); }",
+      "se comporta como:",
+      "{@code VarHandle vh = .. VarHandle.AccessMode am = VarHandle.AccessMode.valueFromMethodName(\"{access-mode}\"); MethodHandle mh = MethodHandles.varHandleExactInvoker( am, vh.accessModeType(am));",
+      "R r = (R) mh.invoke(vh, p1, p2, ..., pN) }",
+      "(salvo que los métodos de modo de acceso no declaran que lanzan Throwable). Esto equivale a:",
+      "{@code MethodHandle mh = MethodHandles.lookup().findVirtual( VarHandle.class, \"{access-mode}\", MethodType.methodType(R, p1, p2, ..., pN));",
+      "R r = (R) mh.invokeExact(vh, p1, p2, ..., pN) }",
+      "donde el tipo de método deseado es el descriptor de tipo simbólico y se ejecuta un MethodHandle.invokeExact, porque antes de invocar al destino el handle aplica las conversiones de referencias necesarias y empaqueta, desempaqueta o amplía los valores primitivos, como con asType (consulta también MethodHandles.varHandleInvoker).",
+      "Dicho de forma más concisa, ese comportamiento equivale a:",
+      "{@code VarHandle vh = .. VarHandle.AccessMode am = VarHandle.AccessMode.valueFromMethodName(\"{access-mode}\"); MethodHandle mh = vh.toMethodHandle(am);",
+      "R r = (R) mh.invoke(p1, p2, ..., pN) }",
+      "Donde, en este caso, el method handle está enlazado a la instancia de VarHandle.",
+      "El comportamiento de invocación de un VarHandle puede ajustarse (consulta withInvokeExactBehavior) para que invocar un método de modo de acceso se comporte como MethodHandle.invokeExact, en la que el method handle receptor acepta la instancia de VarHandle como primer argumento. En concreto, lo siguiente, donde {@code {access-mode}} es el nombre del método de modo de acceso:",
+      "{@code VarHandle vh = .. R r = (R) vh.{access-mode}(p1, p2, ..., pN); }",
+      "se comporta como:",
+      "{@code VarHandle vh = .. VarHandle.AccessMode am = VarHandle.AccessMode.valueFromMethodName(\"{access-mode}\"); MethodHandle mh = MethodHandles.varHandleExactInvoker( am, vh.accessModeType(am));",
+      "R r = (R) mh.invokeExact(vh, p1, p2, ..., pN) }",
+      "(salvo que los métodos de modo de acceso no declaran que lanzan Throwable).",
+      "Dicho de forma más concisa, ese comportamiento equivale a:",
+      "{@code VarHandle vh = .. VarHandle.AccessMode am = VarHandle.AccessMode.valueFromMethodName(\"{access-mode}\"); MethodHandle mh = vh.toMethodHandle(am);",
+      "R r = (R) mh.invokeExact(p1, p2, ..., pN) }",
+      "Donde, en este caso, el method handle está enlazado a la instancia de VarHandle.",
+      "Comprobación de la invocación",
+      "En programas normales, la comprobación del tipo de modo de acceso de un VarHandle suele tener éxito. Pero si falla, la JVM lanza WrongMethodTypeException.",
+      "Así, una discrepancia de tipo que en un programa con tipado estático aparecería como error de enlace puede aparecer como WrongMethodTypeException dinámica en un programa que usa VarHandles.",
+      "Como los tipos de modo de acceso contienen objetos Class \"vivos\", la comprobación de tipos tiene en cuenta tanto los nombres de los tipos como los cargadores de clases. Así, aunque un VarHandle VH se cree en un cargador L1 y se use en otro L2, las llamadas a sus métodos de modo de acceso son seguras en tipos, porque el descriptor simbólico de quien llama, resuelto en L2, se compara con el del método llamado original, resuelto en L1. La resolución en L1 ocurre al crear VH y asignar sus tipos de modo de acceso; la de L2, al enlazar la instrucción invokevirtual.",
+      "Aparte de las comprobaciones de descriptores de tipo, la capacidad de un VarHandle para acceder a sus variables no tiene restricciones. Si una clase con acceso a una variable no pública crea un VarHandle sobre ella, cualquier llamante que reciba una referencia a ese VarHandle puede usarlo en cualquier sitio.",
+      "A diferencia de la API Core Reflection, donde el acceso se comprueba cada vez que se invoca un método reflexivo, el control de acceso de un VarHandle se hace al crearlo. Por eso, en general, los VarHandles de variables no públicas, o de variables de clases no públicas, deben mantenerse en secreto. No deben pasarse a código no fiable salvo que su uso desde ese código sea inofensivo.",
+      "Creación de VarHandles",
+      "El código Java puede crear un VarHandle que acceda directamente a cualquier campo accesible para ese código. Se hace con una API reflexiva basada en capacidades llamada MethodHandles.Lookup. Por ejemplo, un VarHandle de un campo no estático puede obtenerse con Lookup.findVarHandle. También hay un método de conversión desde objetos de la API Core Reflection, Lookup.unreflectVarHandle.",
+      "El acceso a campos protected se limita a receptores de la clase que accede o de sus subclases, y la clase que accede debe ser a su vez subclase (o del mismo paquete) de la clase que define el miembro protected. Si un VarHandle hace referencia a un campo protected no estático de una clase declarante de otro paquete, el argumento receptor se estrecha al tipo de la clase que accede.",
+      "Interoperabilidad entre VarHandles y la API Core Reflection",
+      "Con los métodos de fábrica de la API Lookup, cualquier campo representado por un objeto de la API Core Reflection puede convertirse en un VarHandle de comportamiento equivalente. Por ejemplo, un Field reflexivo puede convertirse con Lookup.unreflectVarHandle. Los VarHandles resultantes suelen dar un acceso más directo y eficiente a los campos subyacentes.",
+      "Como caso especial, cuando se usa la API Core Reflection para ver los métodos de modo de acceso polimórficos en firma de esta clase, aparecen como métodos normales no polimórficos. Su aspecto reflexivo, visto con Class.getDeclaredMethod, no se ve afectado por su estado especial en esta API. Por ejemplo, Method.getModifiers informará exactamente de los bits modificadores que requeriría cualquier método declarado de forma parecida, incluidos en este caso los bits native y varargs.",
+      "Como cualquier método reflejado, estos métodos (reflejados) pueden invocarse directamente con java.lang.reflect.Method.invoke, con JNI o indirectamente con Lookup.unreflect. Sin embargo, esas llamadas reflexivas no producen invocaciones de métodos de modo de acceso. Una llamada así, si recibe el argumento requerido (uno solo, de tipo Object[]), lo ignora y lanza UnsupportedOperationException.",
+      "Como las instrucciones invokevirtual pueden invocar de forma nativa los métodos de modo de acceso de VarHandle con cualquier descriptor de tipo simbólico, esta vista reflexiva choca con la presentación normal de estos métodos mediante bytecodes. Por eso, estos métodos nativos, vistos de forma reflexiva con Class.getDeclaredMethod, pueden considerarse meros marcadores de posición.",
+      "Para obtener un método invocador para un tipo de modo de acceso concreto, usa java.lang.invoke.MethodHandles.varHandleExactInvoker o java.lang.invoke.MethodHandles.varHandleInvoker. La API Lookup.findVirtual también puede devolver un method handle que llame a un método de modo de acceso para cualquier tipo de modo indicado, con un comportamiento equivalente a java.lang.invoke.MethodHandles.varHandleInvoker.",
+      "Interoperabilidad entre VarHandles y los genéricos de Java",
+      "Se puede obtener un VarHandle para una variable, como un campo, declarada con tipos genéricos de Java. Como con la API Core Reflection, el tipo de variable del VarHandle se construye a partir del borrado del tipo del código fuente. Al invocar un método de modo de acceso, los tipos de sus argumentos o el tipo de conversión del valor de retorno pueden ser tipos genéricos o instancias de tipo. En ese caso, el compilador sustituye esos tipos por sus borrados al construir el descriptor de tipo simbólico de la instrucción invokevirtual."
     ]
   },
   "web-java-se-java.lang.invoke.VarHandle%24VarHandleDesc.resolveConstantDesc": {
