@@ -34399,6 +34399,625 @@
     ],
     "returns": ["un Principal cuyo nombre es el nombre del sujeto."]
   },
+  "web-java-se-javax.security.sasl.SaslClient": {
+    "body": [
+      "Una biblioteca de protocolo, como una de LDAP, obtiene una instancia de esta clase para hacer la autenticación que define un mecanismo SASL concreto. Los métodos de SaslClient procesan los desafíos y crean las respuestas según el mecanismo SASL que implementa. Mientras avanza la autenticación, la instancia encapsula el estado del intercambio de autenticación del cliente SASL.",
+      "Este es un ejemplo de cómo podría usar SaslClient una biblioteca LDAP. Primero obtiene una instancia:",
+      "SaslClient sc = Sasl.createSaslClient(mechanisms, authorizationId, protocol, serverName, props, callbackHandler);",
+      "Después puede usar el cliente para autenticarse. Por ejemplo, una biblioteca LDAP podría usarlo así:",
+      "{@code // Get initial response and send to server byte[] response = (sc.hasInitialResponse() ? sc.evaluateChallenge(new byte[0]) : null); LdapResult res = ldap.sendBindRequest(dn, sc.getName(), response); while (!sc.isComplete() && (res.status == SASL_BIND_IN_PROGRESS || res.status == SUCCESS)) { response = sc.evaluateChallenge(res.getBytes()); if (res.status == SUCCESS) { // we're done; don't expect to send another BIND if (response != null) { throw new SaslException( \"Protocol error: attempting to send response after completion\"); } break; } res = ldap.sendBindRequest(dn, sc.getName(), response); } if (sc.isComplete() && res.status == SUCCESS) { String qop = (String) sc.getNegotiatedProperty(Sasl.QOP); if (qop != null && (qop.equalsIgnoreCase(\"auth-int\") || qop.equalsIgnoreCase(\"auth-conf\"))) {",
+      "// Use SaslClient.wrap() and SaslClient.unwrap() for future // communication with server ldap.in = new SecureInputStream(sc, ldap.in); ldap.out = new SecureOutputStream(sc, ldap.out); } } }",
+      "Si el mecanismo tiene respuesta inicial, la biblioteca llama a evaluateChallenge() con un desafío vacío para obtenerla. Los protocolos como IMAP4, que no incluyen respuesta inicial en su primer comando de autenticación, empiezan la autenticación sin llamar antes a hasInitialResponse() ni a evaluateChallenge(). Cuando el servidor responde al comando, envía un desafío inicial. En un mecanismo SASL en el que el cliente envía datos primero, el servidor debería haber enviado un desafío sin datos, lo que provoca una llamada (en el cliente) a evaluateChallenge() con un desafío vacío."
+    ]
+  },
+  "web-java-se-javax.security.sasl.SaslServer": {
+    "body": [
+      "Un servidor, como uno LDAP, obtiene una instancia de esta clase para hacer la autenticación que define un mecanismo SASL concreto. Los métodos de SaslServer generan desafíos según el mecanismo SASL que implementa. Mientras avanza la autenticación, la instancia encapsula el estado del intercambio de autenticación del servidor SASL.",
+      "Este es un ejemplo de cómo podría usar SaslServer un servidor LDAP. Primero obtiene una instancia para el mecanismo SASL que pide el cliente:",
+      "SaslServer ss = Sasl.createSaslServer(mechanism, \"ldap\", myFQDN, props, callbackHandler);",
+      "Después puede usar el servidor para la autenticación. Por ejemplo, supón que el servidor LDAP recibe una petición LDAP BIND con el nombre del mecanismo SASL y una respuesta inicial (opcional). Podría usar el servidor así:",
+      "{@code while (!ss.isComplete()) { try { byte[] challenge = ss.evaluateResponse(response); if (ss.isComplete()) { status = ldap.sendBindResponse(mechanism, challenge, SUCCESS); } else { status = ldap.sendBindResponse(mechanism, challenge, SASL_BIND_IN_PROGRESS); response = ldap.readBindRequest(); } } catch (SaslException e) { status = ldap.sendErrorResponse(e); break; } } if (ss.isComplete() && status == SUCCESS) { String qop = (String) sc.getNegotiatedProperty(Sasl.QOP); if (qop != null && (qop.equalsIgnoreCase(\"auth-int\") || qop.equalsIgnoreCase(\"auth-conf\"))) {",
+      "// Use SaslServer.wrap() and SaslServer.unwrap() for future // communication with client ldap.in = new SecureInputStream(ss, ldap.in); ldap.out = new SecureOutputStream(ss, ldap.out); } } }"
+    ]
+  },
+  "web-java-se-javax.smartcardio.CardChannel.transmit": {
+    "overloads": [
+      {
+        "intro": [
+          "Transmite la APDU de comando indicada a la tarjeta inteligente y devuelve la APDU de respuesta."
+        ],
+        "body": [
+          "El byte CLA de la APDU de comando se ajusta automáticamente al número de canal de este CardChannel.",
+          "Este método no puede usarse para transmitir APDU MANAGE CHANNEL. Los canales lógicos deben gestionarse con Card.openLogicalChannel y CardChannel.close().",
+          "Las implementaciones deben manejar de forma transparente los artefactos del protocolo de transmisión. Por ejemplo, con el protocolo T=0 debe hacerse este procesamiento, según ISO/IEC 7816-4:",
+          "si la APDU de respuesta tiene SW1 igual a 61, la implementación debe enviar un comando GET RESPONSE usando SW2 como campo Le. Se repite mientras se reciba SW1 igual a 61. Los cuerpos de respuesta de estos intercambios se concatenan para formar el cuerpo final.",
+          "si la APDU de respuesta es 6C XX, la implementación debe reenviar el comando usando XX como campo Le.",
+          "La ResponseAPDU que devuelve este método es el resultado tras este procesamiento."
+        ],
+        "parameters": [
+          {
+            "label": "command",
+            "detail": "la APDU de comando"
+          }
+        ],
+        "returns": ["la APDU de respuesta recibida de la tarjeta"],
+        "exceptions": [
+          {
+            "label": "IllegalStateException",
+            "detail": "si este canal está cerrado o la Card correspondiente se ha desconectado."
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si la APDU codifica un comando MANAGE CHANNEL"
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si command es null"
+          },
+          {
+            "label": "CardException",
+            "detail": "si falla la operación con la tarjeta"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Transmite la APDU de comando guardada en el ByteBuffer command y recibe la APDU de respuesta en el ByteBuffer response."
+        ],
+        "body": [
+          "El búfer command debe contener datos de APDU de comando válidos a partir de command.position(), y la APDU debe medir command.remaining() bytes. Al retornar, la posición del búfer command es igual a su límite, que no cambia. El búfer de salida habrá recibido los bytes de la APDU de respuesta, y su posición habrá avanzado tantos bytes como se hayan recibido, que es también el valor de retorno de este método.",
+          "El byte CLA de la APDU de comando se ajusta automáticamente al número de canal de este CardChannel.",
+          "Este método no puede usarse para transmitir APDU MANAGE CHANNEL. Los canales lógicos deben gestionarse con Card.openLogicalChannel y CardChannel.close().",
+          "Consulta transmit() para el manejo de las APDU de respuesta con SW1 igual a 61 o 6C."
+        ],
+        "parameters": [
+          {
+            "label": "command",
+            "detail": "el búfer con la APDU de comando"
+          },
+          {
+            "label": "response",
+            "detail": "el búfer que recibe la APDU de respuesta de la tarjeta"
+          }
+        ],
+        "returns": ["la longitud de la APDU de respuesta recibida"],
+        "exceptions": [
+          {
+            "label": "IllegalStateException",
+            "detail": "si este canal está cerrado o la Card correspondiente se ha desconectado."
+          },
+          {
+            "label": "NullPointerException",
+            "detail": "si command o response es null"
+          },
+          {
+            "label": "ReadOnlyBufferException",
+            "detail": "si el búfer response es de solo lectura"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si command y response son el mismo objeto, si response puede no tener espacio suficiente para la APDU de respuesta o si la APDU codifica un comando MANAGE CHANNEL"
+          },
+          {
+            "label": "CardException",
+            "detail": "si falla la operación con la tarjeta"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.smartcardio.CommandAPDU.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea una CommandAPDU a partir de un array de bytes con el contenido completo de la APDU (cabecera y cuerpo)."
+        ],
+        "body": [
+          "Los bytes de apdu se copian para protegerlos de modificaciones posteriores."
+        ],
+        "parameters": [
+          {
+            "label": "apdu",
+            "detail": "la APDU de comando completa"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si apdu es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si apdu no contiene una APDU de comando válida"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una CommandAPDU a partir de un array de bytes con el contenido completo de la APDU (cabecera y cuerpo). La APDU empieza en el índice apduOffset del array y mide apduLength bytes."
+        ],
+        "body": [
+          "Los bytes de apdu se copian para protegerlos de modificaciones posteriores."
+        ],
+        "parameters": [
+          {
+            "label": "apdu",
+            "detail": "la APDU de comando completa"
+          },
+          {
+            "label": "apduOffset",
+            "detail": "el desplazamiento del array en el que empiezan los datos de la APDU"
+          },
+          {
+            "label": "apduLength",
+            "detail": "la longitud de la APDU"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si apdu es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si apduOffset o apduLength son negativos, si apduOffset + apduLength es mayor que apdu.length, o si los bytes indicados no son una APDU válida"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una CommandAPDU a partir del ByteBuffer con el contenido completo de la APDU (cabecera y cuerpo). La posición del búfer debe estar al inicio de la APDU y su límite al final. Al retornar, la posición del búfer es igual a su límite, que no cambia."
+        ],
+        "body": [
+          "Los datos del ByteBuffer se copian para protegerlos de modificaciones posteriores."
+        ],
+        "parameters": [
+          {
+            "label": "apdu",
+            "detail": "el ByteBuffer con la APDU completa"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si apdu es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si apdu no contiene una APDU de comando válida"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una CommandAPDU a partir de los cuatro bytes de cabecera. Es el caso 1 de ISO 7816, sin cuerpo de comando."
+        ],
+        "parameters": [
+          {
+            "label": "cla",
+            "detail": "el byte de clase CLA"
+          },
+          {
+            "label": "ins",
+            "detail": "el byte de instrucción INS"
+          },
+          {
+            "label": "p1",
+            "detail": "el byte de parámetro P1"
+          },
+          {
+            "label": "p2",
+            "detail": "el byte de parámetro P2"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una CommandAPDU a partir de los cuatro bytes de cabecera y la longitud esperada de los datos de respuesta. Es el caso 2 de ISO 7816: campo de datos de comando vacío con Ne indicado. Si Ne es 0, la APDU se codifica como el caso 1 de ISO 7816."
+        ],
+        "parameters": [
+          {
+            "label": "cla",
+            "detail": "el byte de clase CLA"
+          },
+          {
+            "label": "ins",
+            "detail": "el byte de instrucción INS"
+          },
+          {
+            "label": "p1",
+            "detail": "el byte de parámetro P1"
+          },
+          {
+            "label": "p2",
+            "detail": "el byte de parámetro P2"
+          },
+          {
+            "label": "ne",
+            "detail": "el número máximo de bytes de datos esperados en una APDU de respuesta"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si ne es negativo o mayor que 65536"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una CommandAPDU a partir de los cuatro bytes de cabecera y los datos del comando. Es el caso 3 de ISO 7816: hay datos de comando y no hay Ne. Nc se toma como data.length. Si data es null o su longitud es 0, la APDU se codifica como el caso 1 de ISO 7816."
+        ],
+        "body": [
+          "Los bytes de data se copian para protegerlos de modificaciones posteriores."
+        ],
+        "parameters": [
+          {
+            "label": "cla",
+            "detail": "el byte de clase CLA"
+          },
+          {
+            "label": "ins",
+            "detail": "el byte de instrucción INS"
+          },
+          {
+            "label": "p1",
+            "detail": "el byte de parámetro P1"
+          },
+          {
+            "label": "p2",
+            "detail": "el byte de parámetro P2"
+          },
+          {
+            "label": "data",
+            "detail": "el array de bytes con los datos del cuerpo del comando"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si data.length es mayor que 65535"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una CommandAPDU a partir de los cuatro bytes de cabecera y los datos del comando. Es el caso 3 de ISO 7816: hay datos de comando y no hay Ne. Nc se toma como dataLength. Si dataLength es 0, la APDU se codifica como el caso 1 de ISO 7816."
+        ],
+        "body": [
+          "Los bytes de data se copian para protegerlos de modificaciones posteriores."
+        ],
+        "parameters": [
+          {
+            "label": "cla",
+            "detail": "el byte de clase CLA"
+          },
+          {
+            "label": "ins",
+            "detail": "el byte de instrucción INS"
+          },
+          {
+            "label": "p1",
+            "detail": "el byte de parámetro P1"
+          },
+          {
+            "label": "p2",
+            "detail": "el byte de parámetro P2"
+          },
+          {
+            "label": "data",
+            "detail": "el array de bytes con los datos del cuerpo del comando"
+          },
+          {
+            "label": "dataOffset",
+            "detail": "el desplazamiento del array en el que empiezan los datos del cuerpo del comando"
+          },
+          {
+            "label": "dataLength",
+            "detail": "el número de bytes de datos del cuerpo del comando"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si data es null y dataLength no es 0"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si dataOffset o dataLength son negativos, si dataOffset + dataLength es mayor que data.length o si dataLength es mayor que 65535"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una CommandAPDU a partir de los cuatro bytes de cabecera, los datos del comando y la longitud esperada de los datos de respuesta. Es el caso 4 de ISO 7816: hay datos de comando y Ne. Nc se toma como data.length si data no es null y como 0 si lo es. Si Ne o Nc son cero, la APDU se codifica como el caso 1, 2 o 3 de ISO 7816."
+        ],
+        "body": [
+          "Los bytes de data se copian para protegerlos de modificaciones posteriores."
+        ],
+        "parameters": [
+          {
+            "label": "cla",
+            "detail": "el byte de clase CLA"
+          },
+          {
+            "label": "ins",
+            "detail": "el byte de instrucción INS"
+          },
+          {
+            "label": "p1",
+            "detail": "el byte de parámetro P1"
+          },
+          {
+            "label": "p2",
+            "detail": "el byte de parámetro P2"
+          },
+          {
+            "label": "data",
+            "detail": "el array de bytes con los datos del cuerpo del comando"
+          },
+          {
+            "label": "ne",
+            "detail": "el número máximo de bytes de datos esperados en una APDU de respuesta"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si data.length es mayor que 65535 o si ne es negativo o mayor que 65536"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una CommandAPDU a partir de los cuatro bytes de cabecera, los datos del comando y la longitud esperada de los datos de respuesta. Es el caso 4 de ISO 7816: hay datos de comando y Le. Nc se toma como dataLength. Si Ne o Nc son cero, la APDU se codifica como el caso 1, 2 o 3 de ISO 7816."
+        ],
+        "body": [
+          "Los bytes de data se copian para protegerlos de modificaciones posteriores."
+        ],
+        "parameters": [
+          {
+            "label": "cla",
+            "detail": "el byte de clase CLA"
+          },
+          {
+            "label": "ins",
+            "detail": "el byte de instrucción INS"
+          },
+          {
+            "label": "p1",
+            "detail": "el byte de parámetro P1"
+          },
+          {
+            "label": "p2",
+            "detail": "el byte de parámetro P2"
+          },
+          {
+            "label": "data",
+            "detail": "el array de bytes con los datos del cuerpo del comando"
+          },
+          {
+            "label": "dataOffset",
+            "detail": "el desplazamiento del array en el que empiezan los datos del cuerpo del comando"
+          },
+          {
+            "label": "dataLength",
+            "detail": "el número de bytes de datos del cuerpo del comando"
+          },
+          {
+            "label": "ne",
+            "detail": "el número máximo de bytes de datos esperados en una APDU de respuesta"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si data es null y dataLength no es 0"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si dataOffset o dataLength son negativos, si dataOffset + dataLength es mayor que data.length, si ne es negativo o mayor que 65536, o si dataLength es mayor que 65535"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.smartcardio.ResponseAPDU.getSW": {
+    "intro": [
+      "Devuelve el valor de los bytes de estado SW1 y SW2 como una única palabra de estado SW, definida como (getSW1() << 8) | getSW2()"
+    ],
+    "returns": ["el valor de la palabra de estado SW."]
+  },
+  "web-java-se-javax.sound.midi.MidiChannel.controlChange": {
+    "body": [
+      "La especificación MIDI 1.0 define controladores de 7 y de 14 bits. Los controladores continuos, como ruedas y deslizadores, suelen tener 14 bits (dos bytes MIDI), mientras que los discretos, como interruptores, suelen tener 7 bits (un byte MIDI). Consulta la especificación para ver la resolución esperada de cada tipo de control.",
+      "Los controladores 64 a 95 (0x40 - 0x5F) tienen precisión de 7 bits, y su valor lo fija por completo el argumento value. Otro conjunto de controladores da precisión de 14 bits usando dos números de controlador, uno para los 7 bits más significativos y otro para los 7 menos significativos. Los números 0 a 31 (0x00 - 0x1F) controlan los 7 bits más significativos de los controladores de 14 bits, y los números 32 a 63 (0x20 - 0x3F), los 7 menos significativos. Por ejemplo, el controlador 7 (0x07) controla los 7 bits altos del volumen del canal, y el 39 (0x27), los 7 bajos. El valor de un controlador de 14 bits lo determina la combinación de ambas mitades. Al fijar los 7 bits más significativos (con los números 0 a 31), los 7 bajos se ponen automáticamente a 0; después puede usarse el número de controlador de los bits bajos para ajustar más el valor.",
+      "Es posible que el sintetizador subyacente no admita un mensaje de controlador concreto. Para comprobar que una llamada a controlChange ha tenido éxito, usa getController."
+    ],
+    "parameters": [
+      {
+        "label": "controller",
+        "detail": "el número de controlador (de 0 a 127; consulta la especificación MIDI 1.0 para su interpretación)"
+      },
+      {
+        "label": "value",
+        "detail": "el valor al que se cambia el controlador indicado (de 0 a 127)"
+      }
+    ]
+  },
+  "web-java-se-javax.sound.midi.MidiChannel.programChange": {
+    "overloads": [
+      {
+        "intro": [
+          "Cambia de programa (patch), es decir, selecciona un instrumento concreto del banco de instrumentos seleccionado."
+        ],
+        "body": [
+          "La especificación MIDI no dice si las notas que ya suenan deben pasar al nuevo instrumento (timbre) o seguir con el original hasta un note-off.",
+          "El número de programa empieza en cero (de 0 a 127). Las pantallas del hardware MIDI y la literatura sobre MIDI suelen usar el rango de 1 a 128.",
+          "Es posible que el sintetizador subyacente no admita un programa concreto. Para comprobar que una llamada a programChange ha tenido éxito, usa getProgram."
+        ],
+        "parameters": [
+          {
+            "label": "program",
+            "detail": "el número de programa al que se cambia (de 0 a 127)"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Cambia de programa usando números de banco y de programa (patch)."
+        ],
+        "body": [
+          "Es posible que el sintetizador subyacente no admita un banco o un programa concretos. Para comprobar que una llamada a programChange ha tenido éxito, usa getProgram y getController. Como los bancos se cambian con cambios de control, puedes comprobar el banco actual con esta sentencia:",
+          "int bank = (getController(0) * 128) + getController(32);"
+        ],
+        "parameters": [
+          {
+            "label": "bank",
+            "detail": "el número de banco al que se cambia (de 0 a 16383)"
+          },
+          {
+            "label": "program",
+            "detail": "el programa (patch) que se usa en el banco indicado (de 0 a 127)"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.sound.midi.MidiDevice": {
+    "body": [
+      "Un MidiDevice puede ser transmisor o receptor de eventos MIDI, o ambas cosas, así que puede ofrecer instancias de Transmitter o Receiver (o de ambos). Normalmente, los puertos MIDI IN ofrecen transmisores, y los puertos MIDI OUT y los sintetizadores, receptores. Un Sequencer suele ofrecer transmisores para reproducir y receptores para grabar.",
+      "Un MidiDevice puede abrirse y cerrarse explícita e implícitamente. Se abre explícitamente con open y se cierra con close sobre la instancia. Si una aplicación abre un MidiDevice explícitamente, debe cerrarlo explícitamente para liberar recursos y poder terminar limpiamente. Se abre implícitamente con MidiSystem.getReceiver y MidiSystem.getTransmitter. El MidiDevice que usan estos métodos depende de la implementación, salvo que se usen las propiedades javax.sound.midi.Receiver y javax.sound.midi.Transmitter (consulta la descripción de las propiedades para elegir proveedores predeterminados en MidiSystem). Un MidiDevice abierto implícitamente se cierra implícitamente al cerrar el Receiver o Transmitter que lo abrió. Si la aplicación obtuvo varios Receiver o Transmitter que lo abrieron implícitamente, el dispositivo se cierra tras cerrar el último. En cambio, llamar a getReceiver o getTransmitter directamente sobre el dispositivo no lo abre implícitamente, y cerrar esos Transmitter y Receiver no lo cierra. Para usar un dispositivo con Receiver o Transmitter obtenidos así, hay que abrirlo y cerrarlo explícitamente.",
+      "Si se mezclan aperturas y cierres implícitos y explícitos en el mismo MidiDevice, se aplican estas reglas:",
+      "Tras una apertura explícita (antes o después de las implícitas), el dispositivo no se cierra con un cierre implícito. La única forma de cerrar un dispositivo abierto explícitamente es un cierre explícito.",
+      "Un cierre explícito siempre cierra el dispositivo, aunque también se haya abierto implícitamente. Un cierre implícito posterior no tiene efecto.",
+      "Para saber si un MidiDevice representa un puerto MIDI de hardware, puede usarse esta técnica:",
+      "{@code MidiDevice device = ...; if (!(device instanceof Sequencer) && !(device instanceof Synthesizer)) { // we're now sure that device represents a MIDI port // ... } }",
+      "Un MidiDevice incluye un objeto Info con información del fabricante, etc."
+    ]
+  },
+  "web-java-se-javax.sound.midi.MidiSystem": {
+    "body": [
+      "La clase también tiene métodos para leer archivos, flujos y URL con datos de archivos MIDI estándar o bancos de sonido. Puedes consultar a MidiSystem el formato de un archivo MIDI.",
+      "No se puede instanciar MidiSystem; todos sus métodos son estáticos.",
+      "Pueden usarse propiedades para indicar los dispositivos MIDI predeterminados. Se tienen en cuenta las propiedades del sistema y un archivo de propiedades. El archivo \"sound.properties\" se lee de una ubicación propia de la implementación (normalmente el directorio conf de la instalación de Java). La propiedad del sistema opcional \"javax.sound.config.file\" permite indicar el archivo de propiedades que se lee como configuración inicial. Si una propiedad existe como propiedad del sistema y en el archivo, tiene prioridad la del sistema. Si no se indica ninguna, se elige un valor predeterminado adecuado entre los dispositivos disponibles. La sintaxis del archivo se especifica en Properties.load. Esta tabla lista las claves disponibles y qué métodos las usan:",
+      "Claves de propiedades del sistema MIDI",
+      "Clave de propiedad · Interfaz · Método afectado",
+      "javax.sound.midi.Receiver · Receiver · getReceiver",
+      "javax.sound.midi.Sequencer · Sequencer · getSequencer",
+      "javax.sound.midi.Synthesizer · Synthesizer · getSynthesizer",
+      "javax.sound.midi.Transmitter · Transmitter · getTransmitter",
+      "El valor de la propiedad está formado por el nombre de la clase del proveedor y el nombre del dispositivo, separados por almohadilla (\"#\"). El nombre de clase es el nombre completo de una clase concreta de proveedor de dispositivos MIDI. El nombre del dispositivo se compara con el String que devuelve getName de MidiDevice.Info. Puede omitirse cualquiera de los dos. Si solo se indica el nombre de clase, la almohadilla final es opcional.",
+      "Si se indica la clase del proveedor y puede obtenerse de los proveedores instalados, se obtiene de él la lista de MidiDevice.Info. Si no, o si esos dispositivos no dan coincidencia, la lista se obtiene de getMidiDeviceInfo, con todos los MidiDevice.Info disponibles.",
+      "Si se indica un nombre de dispositivo, se busca en la lista de MidiDevice.Info: se devuelve el primero cuyo nombre coincida y cuyo MidiDevice implemente la interfaz correspondiente. Si no se encuentra o no se indica nombre, se devuelve el primer dispositivo adecuado de la lista. Para Sequencer y Synthesizer, un dispositivo es adecuado si implementa la interfaz correspondiente; para Receiver y Transmitter, si no implementa Sequencer ni Synthesizer y ofrece al menos un Receiver o Transmitter, respectivamente.",
+      "Por ejemplo, la propiedad javax.sound.midi.Receiver con valor \"com.sun.media.sound.MidiProvider#SunMIDI1\" tiene estas consecuencias al llamar a getReceiver: si la clase com.sun.media.sound.MidiProvider está en la lista de proveedores de dispositivos MIDI instalados, se devuelve el primer dispositivo Receiver llamado \"SunMIDI1\". Si no se encuentra, se devuelve el primer Receiver de ese proveedor, sea cual sea su nombre. Si no hay ninguno, se devuelve el primer Receiver llamado \"SunMIDI1\" de la lista de todos los dispositivos (la que devuelve getMidiDeviceInfo) o, si no se encuentra, el primer Receiver de esa lista. Si eso también falla, se lanza MidiUnavailableException."
+    ]
+  },
+  "web-java-se-javax.sound.midi.MidiSystem.getSequencer": {
+    "overloads": [
+      {
+        "intro": [
+          "Obtiene el Sequencer predeterminado, conectado a un dispositivo predeterminado. El Sequencer devuelto está conectado al Synthesizer predeterminado, el que devuelve getSynthesizer. Si no hay Synthesizer disponible o el predeterminado no puede abrirse, el secuenciador se conecta al Receiver predeterminado, el que devuelve getReceiver. La conexión se hace obteniendo un Transmitter del Sequencer y fijando su Receiver. Cerrar y volver a abrir el secuenciador restaura la conexión con el dispositivo predeterminado."
+        ],
+        "body": [
+          "Este método equivale a llamar a getSequencer(true).",
+          "Si la propiedad del sistema javax.sound.midi.Sequencer está definida, o lo está en el archivo \"sound.properties\", se usa para identificar el secuenciador predeterminado. Para más detalles, consulta la descripción de la clase."
+        ],
+        "returns": [
+          "el secuenciador predeterminado, conectado a un Receiver predeterminado"
+        ],
+        "exceptions": [
+          {
+            "label": "MidiUnavailableException",
+            "detail": "si el secuenciador no está disponible por restricciones de recursos, si ningún MidiDevice instalado ofrece un Receiver, o si no hay ningún secuenciador instalado en el sistema"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Obtiene el Sequencer predeterminado, opcionalmente conectado a un dispositivo predeterminado."
+        ],
+        "body": [
+          "Si connected es true, el Sequencer devuelto está conectado al Synthesizer predeterminado, el que devuelve getSynthesizer. Si no hay Synthesizer disponible o el predeterminado no puede abrirse, el secuenciador se conecta al Receiver predeterminado, el que devuelve getReceiver. La conexión se hace obteniendo un Transmitter del Sequencer y fijando su Receiver. Cerrar y volver a abrir el secuenciador restaura la conexión con el dispositivo predeterminado.",
+          "Si connected es false, el Sequencer devuelto no está conectado y no tiene Transmitters abiertos. Para reproducir el secuenciador en un dispositivo MIDI o un Synthesizer, hay que obtener un Transmitter y fijar su Receiver.",
+          "Si la propiedad del sistema javax.sound.midi.Sequencer está definida, o lo está en el archivo \"sound.properties\", se usa para identificar el secuenciador predeterminado. Para más detalles, consulta la descripción de la clase."
+        ],
+        "parameters": [
+          {
+            "label": "connected",
+            "detail": "si el Sequencer devuelto se conecta al Synthesizer predeterminado"
+          }
+        ],
+        "returns": ["el secuenciador predeterminado"],
+        "exceptions": [
+          {
+            "label": "MidiUnavailableException",
+            "detail": "si el secuenciador no está disponible por restricciones de recursos, si no hay ningún secuenciador instalado en el sistema, o si connected es true y ningún MidiDevice instalado ofrece un Receiver"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.sound.midi.Sequencer.start": {
+    "intro": [
+      "Empieza a reproducir los datos MIDI de la secuencia cargada desde la posición actual. Si la reproducción llega al punto final del bucle y el contador de bucle es mayor que 0, sigue desde el punto inicial del bucle el número de repeticiones fijado con setLoopCount. Después, o si el contador es 0, sigue hasta el final de la secuencia."
+    ],
+    "body": [
+      "La implementación garantiza que el sintetizador queda en un estado coherente al saltar al punto inicial del bucle, enviando los controladores, el pitch bend y los cambios de programa adecuados."
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalStateException",
+        "detail": "si el Sequencer está cerrado"
+      }
+    ]
+  },
+  "web-java-se-javax.sound.sampled.AudioSystem": {
+    "body": [
+      "Pueden usarse propiedades para indicar el mezclador predeterminado de tipos de línea concretos. Se tienen en cuenta las propiedades del sistema y un archivo de propiedades. El archivo \"sound.properties\" se lee de una ubicación propia de la implementación (normalmente el directorio conf de la instalación de Java). La propiedad del sistema opcional \"javax.sound.config.file\" permite indicar el archivo de propiedades que se lee como configuración inicial. Si una propiedad existe como propiedad del sistema y en el archivo, tiene prioridad la del sistema. Si no se indica ninguna, se elige un valor predeterminado adecuado entre los dispositivos disponibles. La sintaxis del archivo se especifica en Properties.load. Esta tabla lista las claves disponibles y qué métodos las usan:",
+      "Claves de propiedades del sistema de audio",
+      "Clave de propiedad · Interfaz · Métodos afectados",
+      "javax.sound.sampled.Clip · Clip · getLine, getClip",
+      "javax.sound.sampled.Port · Port · getLine",
+      "javax.sound.sampled.SourceDataLine · SourceDataLine · getLine, getSourceDataLine",
+      "javax.sound.sampled.TargetDataLine · TargetDataLine · getLine, getTargetDataLine",
+      "El valor de la propiedad está formado por el nombre de la clase del proveedor y el nombre del mezclador, separados por almohadilla (\"#\"). El nombre de clase es el nombre completo de una clase concreta de proveedor de mezcladores. El nombre del mezclador se compara con el String que devuelve getName de Mixer.Info. Puede omitirse cualquiera de los dos. Si solo se indica el nombre de clase, la almohadilla final es opcional.",
+      "Si se indica la clase del proveedor y puede obtenerse de los proveedores instalados, se obtiene de él la lista de Mixer.Info. Si no, o si esos mezcladores no dan coincidencia, la lista se obtiene de getMixerInfo, con todos los Mixer.Info disponibles.",
+      "Si se indica un nombre de mezclador, se busca en la lista de Mixer.Info: se devuelve el primero cuyo nombre coincida y cuyo Mixer ofrezca la interfaz de línea correspondiente. Si no se encuentra o no se indica nombre, se devuelve el primer mezclador de la lista que ofrezca esa interfaz de línea.",
+      "Por ejemplo, la propiedad javax.sound.sampled.Clip con valor \"com.sun.media.sound.MixerProvider#SunClip\" tiene estas consecuencias al llamar a getLine pidiendo un Clip: si la clase com.sun.media.sound.MixerProvider está en la lista de proveedores de mezcladores instalados, se devuelve el primer Clip del primer mezclador llamado \"SunClip\". Si no se encuentra, se devuelve el primer Clip del primer mezclador de ese proveedor, sea cual sea su nombre. Si no hay ninguno, se devuelve el primer Clip del primer Mixer llamado \"SunClip\" de la lista de todos los mezcladores (la que devuelve getMixerInfo) o, si no se encuentra, el primer Clip del primer Mixer de esa lista. Si eso también falla, se lanza IllegalArgumentException."
+    ]
+  },
+  "web-java-se-javax.sound.sampled.ReverbType": {
+    "body": [
+      "La reverberación simula la reflexión del sonido en las paredes, el techo y el suelo de una sala. Según el tamaño de la sala y lo absorbentes o reflectantes que sean sus superficies, el sonido puede rebotar durante mucho tiempo antes de apagarse.",
+      "Los parámetros de reverberación de ReverbType son el retardo y la intensidad de las reflexiones tempranas, el retardo y la intensidad de las reflexiones tardías, y un tiempo de caída total. Las reflexiones tempranas son las primeras reflexiones individuales de bajo orden de la señal directa en las superficies de la sala. Las tardías son las reflexiones densas de alto orden que caracterizan la reverberación de la sala. Los retardos de inicio de ambos tipos dan al oyente una idea del tamaño y la complejidad de la forma y el contenido de la sala: cuanto más grande, más largos. Las intensidades de las reflexiones definen la ganancia (en decibelios) de las señales reflejadas frente a la directa, y dan una impresión de lo absorbentes que son las superficies y objetos de la sala. El tiempo de caída define cuánto tarda la reverberación en decaer exponencialmente hasta dejar de percibirse (\"cero efectivo\"); cuanto más grandes y menos absorbentes sean las superficies, más largo es.",
+      "Este conjunto de parámetros puede no incluir todos los aspectos de la reverberación que especifican algunos sistemas. Por ejemplo, la Midi Manufacturer's Association (MMA) tiene un Interactive Audio Special Interest Group (IASIG), con un 3-D Working Group que ha definido una especificación de nivel 2 (I3DL2). I3DL2 admite el filtrado de la reverberación y el control de su densidad, propiedades que no incluye la definición de control de reverberación de JavaSound 1.0. En ese caso, el sistema que lo implemente debe ampliar el control definido con parámetros adicionales o interpretar sus capacidades adicionales de forma que encajen en el modelo descrito aquí.",
+      "Si se implementa JavaSound en un dispositivo conforme a I3DL2:",
+      "El filtrado está desactivado (las atenuaciones de alta frecuencia se fijan a 0.0 dB)",
+      "Los parámetros de densidad se fijan a medio camino entre el mínimo y el máximo",
+      "Esta tabla muestra qué valores de parámetros podría usar una implementación para un conjunto representativo de ajustes de reverberación.",
+      "Tipos de reverberación y parámetros: tiempo de caída, intensidad tardía, retardo tardío, intensidad temprana y retardo temprano",
+      "Tipo · Tiempo de caída (ms) · Intensidad tardía (dB) · Retardo tardío (ms) · Intensidad temprana (dB) · Retardo temprano (ms)",
+      "Caverna · 2250 · -2.0 · 41.3 · -1.4 · 10.3",
+      "Mazmorra · 1600 · -1.0 · 10.3 · -0.7 · 2.6",
+      "Garaje · 900 · -6.0 · 14.7 · -4.0 · 3.9",
+      "Laboratorio acústico · 280 · -3.0 · 8.0 · -2.0 · 2.0",
+      "Armario · 150 · -10.0 · 2.5 · -7.0 · 0.6"
+    ]
+  },
+  "web-java-se-javax.sql.PooledConnection": {
+    "body": [
+      "Un programador de aplicaciones no usa directamente la interfaz PooledConnection; la usa una infraestructura de capa intermedia que gestiona el pool de conexiones.",
+      "Cuando una aplicación llama a DataSource.getConnection, obtiene un objeto Connection. Si se usa un pool de conexiones, ese Connection es en realidad un manejador de un PooledConnection, que es una conexión física.",
+      "El gestor del pool de conexiones, normalmente el servidor de aplicaciones, mantiene un pool de objetos PooledConnection. Si hay uno disponible en el pool, el gestor devuelve un Connection que es un manejador de esa conexión física. Si no hay ninguno, llama al método getPoolConnection de ConnectionPoolDataSource para crear una conexión física nueva. El driver JDBC que implementa ConnectionPoolDataSource crea un PooledConnection nuevo y devuelve un manejador de él.",
+      "Cuando una aplicación cierra una conexión, llama al método close de Connection. Si se usa un pool de conexiones, se avisa al gestor del pool, que se ha registrado como ConnectionEventListener con el método addConnectionEventListener de ConnectionPool. El gestor desactiva el manejador del PooledConnection y lo devuelve al pool para reutilizarlo. Así, cuando una aplicación cierra su conexión, la conexión física subyacente se recicla en lugar de cerrarse.",
+      "Si el gestor del pool envuelve o da un proxy del manejador lógico devuelto por PoolConnection.getConnection, debe hacer una de estas cosas al cerrar o devolver el PooledConnection al pool cuando la aplicación llama a Connection.close:",
+      "llamar a endRequest sobre el manejador Connection lógico",
+      "llamar a close sobre el manejador Connection lógico",
+      "La conexión física no se cierra hasta que el gestor del pool llama al método close de PooledConnection. Normalmente se llama para apagar el servidor de forma ordenada o si un error fatal ha dejado la conexión inservible.",
+      "Un gestor de pool de conexiones suele ser también un gestor de pool de sentencias, que mantiene un pool de PreparedStatement. Cuando una aplicación cierra una sentencia preparada, llama al método close de PreparedStatement. Si se usa un pool de sentencias, se avisa al gestor, que se ha registrado como StatementEventListener con el método addStatementEventListener de ConnectionPool. Así, cuando una aplicación cierra su PreparedStatement, la sentencia preparada subyacente se recicla en lugar de cerrarse."
+    ]
+  },
   "web-java-se-javax.swing.DefaultListModel.add": {
     "parameters": [
       {
