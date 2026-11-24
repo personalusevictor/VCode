@@ -2227,6 +2227,660 @@
       }
     ]
   },
+  "web-java-se-java.awt.color.ICC_ProfileGray.getGamma": {
+    "body": ["gamma PCSY = deviceGray"],
+    "returns": ["el valor gamma como float"],
+    "exceptions": [
+      {
+        "label": "ProfileDataException",
+        "detail": "si el perfil no indica la TRC como un único valor gamma"
+      }
+    ]
+  },
+  "web-java-se-java.awt.color.ICC_ProfileRGB.getGamma": {
+    "body": [
+      "Si el perfil representa la TRC del componente correspondiente como una tabla en lugar de un único valor gamma, se lanza una excepción. En ese caso la tabla puede obtenerse con el método getTRC(int). Con un valor gamma, el componente lineal (R, G o B) se calcula así:",
+      "gamma linearComponent = deviceComponent"
+    ],
+    "parameters": [
+      {
+        "label": "component",
+        "detail": "la constante de ICC_ProfileRGB que representa el componente cuya TRC quieres obtener"
+      }
+    ],
+    "returns": ["el valor gamma como float"],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si el componente no es REDCOMPONENT, GREENCOMPONENT ni BLUECOMPONENT"
+      },
+      {
+        "label": "ProfileDataException",
+        "detail": "si el perfil no indica la TRC correspondiente como un único valor gamma"
+      }
+    ]
+  },
+  "web-java-se-java.awt.datatransfer.DataFlavor.allHtmlFlavor": {
+    "body": ["representationClass = String mimeType = \"text/html\""]
+  },
+  "web-java-se-java.awt.datatransfer.DataFlavor.fragmentHtmlFlavor": {
+    "body": ["representationClass = String mimeType = \"text/html\""]
+  },
+  "web-java-se-java.awt.datatransfer.DataFlavor.isRepresentationClassByteBuffer": {
+    "returns": [
+      "si la clase de representación de este DataFlavor es java.nio.ByteBuffer o una subclase"
+    ]
+  },
+  "web-java-se-java.awt.datatransfer.DataFlavor.isRepresentationClassCharBuffer": {
+    "returns": [
+      "si la clase de representación de este DataFlavor es java.nio.CharBuffer o una subclase"
+    ]
+  },
+  "web-java-se-java.awt.datatransfer.DataFlavor.isRepresentationClassReader": {
+    "returns": [
+      "si la clase de representación de este DataFlavor es java.io.Reader o una subclase"
+    ]
+  },
+  "web-java-se-java.awt.datatransfer.DataFlavor.selectionHtmlFlavor": {
+    "body": ["representationClass = String mimeType = \"text/html\""]
+  },
+  "web-java-se-java.awt.datatransfer.FlavorTable.getNativesForFlavor": {
+    "parameters": [
+      {
+        "label": "flav",
+        "detail": "el DataFlavor cuyos nativos correspondientes se devuelven. Si es null, se devuelven todos los nativos que conoce este FlavorTable, en orden no determinista."
+      }
+    ],
+    "returns": [
+      "una java.util.List de objetos java.lang.String que son representaciones específicas de la plataforma de formatos de datos de la plataforma"
+    ]
+  },
+  "web-java-se-java.awt.datatransfer.SystemFlavorMap.addFlavorForUnencodedNative": {
+    "intro": [
+      "Añade una correspondencia de un único String nativo a un único DataFlavor. A diferencia de getFlavorsForNative, la correspondencia solo se establece en un sentido y el nativo no se codifica. Para establecerla en ambos sentidos, llama también a addUnencodedNativeForFlavor. La nueva correspondencia tiene menos prioridad que las existentes. Si ya existe una correspondencia del String nativo indicado al DataFlavor indicado o a uno igual, este método no hace nada."
+    ],
+    "parameters": [
+      {
+        "label": "nat",
+        "detail": "la clave String nativa de la correspondencia"
+      },
+      {
+        "label": "flav",
+        "detail": "el valor DataFlavor de la correspondencia"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si nat o flav es null"
+      }
+    ]
+  },
+  "web-java-se-java.awt.datatransfer.SystemFlavorMap.setFlavorsForNative": {
+    "intro": [
+      "Descarta las correspondencias actuales del String nativo indicado y crea otras nuevas hacia los DataFlavor indicados. A diferencia de getFlavorsForNative, solo se establecen en un sentido y los nativos no necesitan codificarse. Para establecerlas en ambos sentidos, llama también a setNativesForFlavor. El primer DataFlavor del array es la correspondencia de mayor prioridad y los siguientes tienen prioridad decreciente."
+    ],
+    "body": [
+      "Si el array contiene varios elementos que hacen referencia a DataFlavor iguales, este método establece correspondencias para el primero e ignora el resto.",
+      "Se recomienda que el código cliente no restablezca las correspondencias creadas por el subsistema de transferencia de datos. Este método solo debe usarse para correspondencias de la aplicación."
+    ],
+    "parameters": [
+      {
+        "label": "nat",
+        "detail": "la clave String nativa de las correspondencias"
+      },
+      {
+        "label": "flavors",
+        "detail": "los valores DataFlavor de las correspondencias"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si nat o flavors es null o si flavors contiene elementos null"
+      }
+    ]
+  },
+  "web-java-se-java.awt.datatransfer.Transferable.isDataFlavorSupported": {
+    "intro": ["Indica si este objeto admite el formato de datos indicado."],
+    "parameters": [
+      {
+        "label": "flavor",
+        "detail": "el formato pedido para los datos"
+      }
+    ],
+    "returns": ["boolean que indica si se admite el formato de datos"]
+  },
+  "web-java-se-java.awt.dnd.DnDConstants.ACTION_LINK": {
+    "body": [
+      "El verbo link existe en muchas, si no todas, las plataformas nativas de arrastrar y soltar, y la interpretación real de la semántica LINK depende de la plataforma y de la aplicación. En términos generales significa \"no copiar ni mover el operando, sino crear una referencia a él\". La ambigüedad aparece al definir qué es una \"referencia\".",
+      "El verbo se ofrece por completitud, pero no se recomienda usarlo en operaciones de arrastrar y soltar entre aplicaciones lógicamente distintas, donde una mala interpretación de su semántica podría dar resultados confusos para el usuario."
+    ]
+  },
+  "web-java-se-java.awt.dnd.DragSourceContext.addDragSourceListener": {
+    "intro": [
+      "Añade un DragSourceListener a este DragSourceContext si aún no se ha añadido ninguno. Si ya existe uno, este método lanza TooManyListenersException."
+    ],
+    "parameters": [
+      {
+        "label": "dsl",
+        "detail": "el DragSourceListener que se añade. Aunque null no está prohibido, no es un parámetro aceptable."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "TooManyListenersException",
+        "detail": "si ya se ha añadido un DragSourceListener"
+      }
+    ]
+  },
+  "web-java-se-java.awt.dnd.DragSourceDragEvent.getGestureModifiersEx": {
+    "intro": [
+      "Devuelve un int con el estado actual de los modificadores extendidos del dispositivo de entrada asociados al gesto del usuario. Consulta InputEvent.getModifiersEx"
+    ],
+    "body": [
+      "Si los modificadores pasados al constructor no son válidos, este método los devuelve sin cambios."
+    ],
+    "returns": [
+      "el estado actual de los modificadores extendidos del dispositivo de entrada"
+    ]
+  },
+  "web-java-se-java.awt.dnd.DropTarget.isActive": {
+    "intro": [
+      "Indica si este DropTarget está activo en este momento (listo para aceptar elementos soltados)."
+    ],
+    "returns": ["true si está activo, false si no"]
+  },
+  "web-java-se-java.awt.event.FocusEvent.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un FocusEvent con el estado temporal indicado, el Component opuesto y la causa Cause.UNKNOWN. El Component opuesto es el otro Component implicado en el cambio de foco: en un evento FOCUS_GAINED, el que perdió el foco; en un FOCUS_LOST, el que lo ganó. Si el cambio de foco se produce con una aplicación nativa, con una aplicación Java de otra VM o sin otro Component, el Component opuesto es null."
+        ],
+        "body": [
+          "Este método lanza IllegalArgumentException si source es null."
+        ],
+        "parameters": [
+          {
+            "label": "source",
+            "detail": "El Component que originó el evento"
+          },
+          {
+            "label": "id",
+            "detail": "Un entero que indica el tipo de evento. Para los valores admitidos, consulta la descripción de la clase FocusEvent"
+          },
+          {
+            "label": "temporary",
+            "detail": "Vale true si el cambio de foco es temporal; false en caso contrario"
+          },
+          {
+            "label": "opposite",
+            "detail": "El otro Component implicado en el cambio de foco, o null"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si source es null"
+          }
+        ]
+      },
+      {
+        "intro": ["Crea un FocusEvent e indica si el cambio es temporal."],
+        "body": [
+          "Este método lanza IllegalArgumentException si source es null."
+        ],
+        "parameters": [
+          {
+            "label": "source",
+            "detail": "El Component que originó el evento"
+          },
+          {
+            "label": "id",
+            "detail": "Un entero que indica el tipo de evento. Para los valores admitidos, consulta la descripción de la clase FocusEvent"
+          },
+          {
+            "label": "temporary",
+            "detail": "Vale true si el cambio de foco es temporal; false en caso contrario"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si source es null"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un FocusEvent y lo identifica como un cambio de foco permanente."
+        ],
+        "body": [
+          "Este método lanza IllegalArgumentException si source es null."
+        ],
+        "parameters": [
+          {
+            "label": "source",
+            "detail": "El Component que originó el evento"
+          },
+          {
+            "label": "id",
+            "detail": "Un entero que indica el tipo de evento. Para los valores admitidos, consulta la descripción de la clase FocusEvent"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si source es null"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un FocusEvent con el estado temporal indicado, el Component opuesto y la causa. El Component opuesto es el otro Component implicado en el cambio de foco: en un evento FOCUS_GAINED, el que perdió el foco; en un FOCUS_LOST, el que lo ganó. Si el cambio de foco se produce con una aplicación nativa, con una aplicación Java de otra VM o sin otro Component, el Component opuesto es null."
+        ],
+        "body": [
+          "Este método lanza IllegalArgumentException si source o cause es null."
+        ],
+        "parameters": [
+          {
+            "label": "source",
+            "detail": "El Component que originó el evento"
+          },
+          {
+            "label": "id",
+            "detail": "Un entero que indica el tipo de evento. Para los valores admitidos, consulta la descripción de la clase FocusEvent"
+          },
+          {
+            "label": "temporary",
+            "detail": "Vale true si el cambio de foco es temporal; false en caso contrario"
+          },
+          {
+            "label": "opposite",
+            "detail": "El otro Component implicado en el cambio de foco, o null"
+          },
+          {
+            "label": "cause",
+            "detail": "La causa del evento de foco."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si source es null o si cause es null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.event.InputEvent.getModifiersEx": {
+    "body": [
+      "Los modificadores extendidos son los que terminan con el sufijo _DOWN_MASK, como ALT_DOWN_MASK, BUTTON1_DOWN_MASK y otros.",
+      "Los modificadores extendidos representan el estado de todas las teclas modales, como ALT, CTRL, META y los botones del ratón, justo después de que ocurra el evento.",
+      "Por ejemplo, si el usuario pulsa el botón 1, luego el 2 y los suelta en el mismo orden, se genera esta secuencia de eventos:",
+      "MOUSE_PRESSED: BUTTON1_DOWN_MASK MOUSE_PRESSED: BUTTON1_DOWN_MASK | BUTTON2_DOWN_MASK MOUSE_RELEASED: BUTTON2_DOWN_MASK MOUSE_CLICKED: BUTTON2_DOWN_MASK MOUSE_RELEASED: MOUSE_CLICKED:",
+      "No se recomienda comparar el valor devuelto por este método con ==, porque en el futuro pueden añadirse modificadores nuevos. Por ejemplo, la forma correcta de comprobar que SHIFT y BUTTON1 están pulsados pero CTRL no es esta:",
+      "int onmask = SHIFT_DOWN_MASK | BUTTON1_DOWN_MASK; int offmask = CTRL_DOWN_MASK; if ((event.getModifiersEx() & (onmask | offmask)) == onmask) { ... }",
+      "Este código funciona aunque se añadan modificadores nuevos."
+    ],
+    "returns": ["la máscara de modificadores extendidos de este evento"]
+  },
+  "web-java-se-java.awt.event.KeyEvent": {
+    "body": [
+      "Este evento de bajo nivel lo genera un componente (como un campo de texto) cuando se pulsa, se suelta o se escribe una tecla. Se pasa a cada KeyListener o KeyAdapter registrado con el método addKeyListener del componente. (Los KeyAdapter implementan la interfaz KeyListener). Cada listener recibe este KeyEvent cuando ocurre el evento.",
+      "Los eventos \"key typed\" son de más alto nivel y, en general, no dependen de la plataforma ni de la distribución del teclado. Se generan al introducir un carácter Unicode y son la forma preferida de detectar la entrada de caracteres. En el caso más simple, un key typed lo produce una sola pulsación (p. ej. 'a'). Pero a menudo los caracteres se producen con varias pulsaciones (p. ej. 'shift' + 'a'), y la relación entre eventos key pressed y key typed puede ser de muchos a uno o de muchos a muchos. Normalmente no hace falta soltar la tecla para generar un key typed, pero hay casos en que no se genera hasta soltarla (p. ej. al introducir secuencias ASCII con Alt + teclado numérico en Windows). Las teclas que no generan caracteres Unicode (teclas de acción, modificadoras, etc.) no generan eventos key typed.",
+      "getKeyChar siempre devuelve un carácter Unicode válido o CHAR_UNDEFINED. La entrada de caracteres se notifica con eventos KEY_TYPED; los eventos KEY_PRESSED y KEY_RELEASED no tienen por qué estar asociados a entrada de caracteres. Por eso el resultado de getKeyChar solo tiene sentido garantizado en eventos KEY_TYPED.",
+      "En los eventos key pressed y key released, getKeyCode devuelve el keyCode del evento. En los key typed, getKeyCode siempre devuelve VK_UNDEFINED. getExtendedKeyCode también puede usarse con muchas distribuciones de teclado internacionales.",
+      "Los eventos \"key pressed\" y \"key released\" son de más bajo nivel y dependen de la plataforma y de la distribución del teclado. Se generan siempre que se pulsa o suelta una tecla, y son la única forma de detectar teclas que no generan caracteres (teclas de acción, modificadoras, etc.). La tecla pulsada o soltada la indican getKeyCode y getExtendedKeyCode, que devuelven un código de tecla virtual.",
+      "Los códigos de tecla virtual indican qué tecla física se ha pulsado, no el carácter generado por la combinación de una o más pulsaciones (como \"A\", que sale de shift y \"a\").",
+      "Por ejemplo, pulsar Shift genera un KEY_PRESSED con keyCode VK_SHIFT, y pulsar 'a' da keyCode VK_A. Al soltar 'a' se lanza un KEY_RELEASED con VK_A. Aparte, se genera un KEY_TYPED con keyChar 'A'.",
+      "Pulsar y soltar una tecla genera estos eventos (en orden):",
+      "KEY_PRESSED KEY_TYPED (solo se genera si puede producirse un carácter Unicode válido) KEY_RELEASED",
+      "Pero en algunos casos (p. ej. con autorrepetición o con un método de entrada activo) el orden puede ser distinto (y depender de la plataforma).",
+      "Notas:",
+      "Las combinaciones de teclas que no producen caracteres Unicode, como las teclas de acción F1 y HELP, no generan eventos KEY_TYPED.",
+      "No todos los teclados o sistemas pueden generar todos los códigos de tecla virtual. Java no intenta generar estas teclas artificialmente.",
+      "Los códigos de tecla virtual no identifican una tecla física: dependen de la plataforma y de la distribución del teclado. Por ejemplo, la tecla que genera VK_Q con distribución de EE. UU. genera VK_A con distribución francesa.",
+      "La tecla que genera VK_Q con distribución de EE. UU. también genera un código propio en las distribuciones rusa o hebrea. No hay constantes VK_ para estos y muchos otros códigos de distintas distribuciones. Pueden obtenerse con getExtendedKeyCode y se usan donde se usaría una constante VK_.",
+      "No todos los caracteres tienen un código de tecla asociado. Por ejemplo, no hay código para el signo de interrogación, porque no existe ningún teclado en el que aparezca en la capa principal.",
+      "Para manejar las teclas de acción de forma independiente de la plataforma, Java usa algunas constantes de tecla virtual adicionales para funciones que, si no, habría que reconocer interpretando códigos de tecla y modificadores. Por ejemplo, en los teclados Windows japoneses se devuelve VK_ALL_CANDIDATES en lugar de VK_CONVERT con el modificador ALT.",
+      "Tal como indica la especificación de foco, los eventos de teclado se envían por defecto al propietario del foco.",
+      "ADVERTENCIA: salvo las teclas definidas por el lenguaje Java (VK_ENTER, VK_BACK_SPACE y VK_TAB), no dependas de los valores de las constantes VK_. El responsable de la plataforma se reserva el derecho de cambiarlos si hace falta para admitir más teclados en el futuro.",
+      "El comportamiento no está especificado si el parámetro id de una instancia de KeyEvent no está en el rango de KEY_FIRST a KEY_LAST."
+    ]
+  },
+  "web-java-se-java.awt.event.MouseEvent": {
+    "body": [
+      "Por ejemplo, si se ha añadido un MouseListener a un componente o se ha llamado a enableEvents(AWTEvent.MOUSE_EVENT_MASK), todos los eventos definidos por MouseListener se envían al componente. En cambio, si no se ha añadido un MouseMotionListener ni se ha llamado a enableEvents con AWTEvent.MOUSE_MOTION_EVENT_MASK, los eventos de movimiento del ratón no se envían al componente, sino al primer ancestro que los tenga activados.",
+      "Este evento de bajo nivel lo genera un componente cuando:",
+      "Eventos de ratón",
+      "se pulsa un botón del ratón",
+      "se suelta un botón del ratón",
+      "se hace clic con un botón del ratón (pulsar y soltar)",
+      "el cursor entra en la parte no tapada de la geometría del componente",
+      "el cursor sale de la parte no tapada de la geometría del componente",
+      "Eventos de movimiento del ratón",
+      "se mueve el ratón",
+      "se arrastra el ratón",
+      "Se pasa un MouseEvent a cada MouseListener o MouseAdapter registrado con el método addMouseListener del componente para recibir los eventos de ratón \"interesantes\". (Los MouseAdapter implementan la interfaz MouseListener). Cada listener recibe un MouseEvent con el evento de ratón.",
+      "También se pasa un MouseEvent a cada MouseMotionListener o MouseMotionAdapter registrado con addMouseMotionListener para recibir eventos de movimiento. (Los MouseMotionAdapter implementan la interfaz MouseMotionListener). Cada listener recibe un MouseEvent con el evento de movimiento.",
+      "Al hacer clic con un botón del ratón, se generan eventos y se envían a los MouseListener registrados. El estado de las teclas modales puede obtenerse con InputEvent.getModifiers e InputEvent.getModifiersEx. La máscara de botones que devuelve InputEvent.getModifiers solo refleja el botón que cambió de estado, no el estado actual de todos. (Nota: por el solapamiento de valores entre ALT_MASK/BUTTON2_MASK y META_MASK/BUTTON3_MASK, esto no siempre se cumple en eventos de ratón con teclas modificadoras). Para obtener el estado de todos los botones y modificadores, usa InputEvent.getModifiersEx. El botón que cambió de estado lo devuelve MouseEvent.getButton",
+      "Por ejemplo, si se pulsa el primer botón del ratón, los eventos se envían en este orden:",
+      "id modifiers buttonMOUSE_PRESSED: BUTTON1_MASK BUTTON1 MOUSE_RELEASED: BUTTON1_MASK BUTTON1 MOUSE_CLICKED: BUTTON1_MASK BUTTON1",
+      "Cuando se pulsan varios botones, cada pulsación, liberación y clic produce un evento independiente.",
+      "Por ejemplo, si el usuario pulsa el botón 1, luego el 2 y los suelta en el mismo orden, se genera esta secuencia de eventos:",
+      "id modifiers buttonMOUSE_PRESSED: BUTTON1_MASK BUTTON1 MOUSE_PRESSED: BUTTON2_MASK BUTTON2 MOUSE_RELEASED: BUTTON1_MASK BUTTON1 MOUSE_CLICKED: BUTTON1_MASK BUTTON1 MOUSE_RELEASED: BUTTON2_MASK BUTTON2 MOUSE_CLICKED: BUTTON2_MASK BUTTON2",
+      "Si se suelta primero el botón 2, llega antes el par MOUSE_RELEASED/MOUSE_CLICKED de BUTTON2_MASK y luego el de BUTTON1_MASK.",
+      "Se añaden algunos botones extra para ampliar el conjunto estándar representado por las constantes BUTTON1, BUTTON2 y BUTTON3. Los botones extra no tienen constantes BUTTONx asignadas, ni sus máscaras tienen constantes BUTTONx_DOWN_MASK. Aun así, pueden usarse como números de botón los ordinales a partir de 4, y como máscaras los valores que devuelve getMaskForButton(button).",
+      "Los eventos MOUSE_DRAGGED se entregan al Component en el que se pulsó el botón hasta que se suelta (esté o no el ratón dentro de los límites del Component). Por las implementaciones de arrastrar y soltar dependientes de la plataforma, puede que no se entreguen eventos MOUSE_DRAGGED durante una operación nativa de arrastrar y soltar.",
+      "En un entorno multipantalla, los eventos de arrastre se entregan al Component aunque el ratón esté fuera de los límites del GraphicsConfiguration asociado. Sin embargo, la posición notificada en ese caso puede diferir de la real:",
+      "En un entorno multipantalla sin dispositivo virtual:",
+      "Las coordenadas notificadas en los eventos de arrastre se recortan a los límites del GraphicsConfiguration asociado al Component.",
+      "En un entorno multipantalla con dispositivo virtual:",
+      "Las coordenadas notificadas en los eventos de arrastre se recortan a los límites del dispositivo virtual asociado al Component.",
+      "El comportamiento no está especificado si el parámetro id de una instancia de MouseEvent no está en el rango de MOUSE_FIRST a MOUSE_LAST-1 (MOUSE_WHEEL no es válido)."
+    ]
+  },
+  "web-java-se-java.awt.event.MouseEvent.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un MouseEvent con el componente de origen, el tipo, el momento, los modificadores, las coordenadas, el número de clics, el indicador popupTrigger y el número de botón indicados."
+        ],
+        "body": [
+          "Crear un evento no válido (por ejemplo, usando más de una de las antiguas _MASK, o valores de modificador y botón que no coinciden) da un comportamiento no especificado. Una llamada de la forma MouseEvent(source, id, when, modifiers, x, y, clickCount, popupTrigger, button) se comporta exactamente igual que MouseEvent(Component, int, long, int, int, int, int, int, int, boolean, int) con MouseEvent(source, id, when, modifiers, x, y, xAbs, yAbs, clickCount, popupTrigger, button), donde xAbs e yAbs son la posición en pantalla del origen más las coordenadas relativas x e y. Si el origen no se está mostrando, xAbs e yAbs valen cero. Este método lanza IllegalArgumentException si source es null."
+        ],
+        "parameters": [
+          {
+            "label": "source",
+            "detail": "El Component que originó el evento"
+          },
+          {
+            "label": "id",
+            "detail": "Un entero que indica el tipo de evento. Para los valores admitidos, consulta la descripción de la clase MouseEvent"
+          },
+          {
+            "label": "when",
+            "detail": "Un entero largo con el momento en que ocurrió el evento. No se recomienda pasar valores negativos ni cero"
+          },
+          {
+            "label": "modifiers",
+            "detail": "una máscara de modificadores que describe las teclas modificadoras y botones del ratón (por ejemplo shift, ctrl, alt y meta) pulsados durante el evento. Solo se admiten modificadores extendidos (consulta InputEvent.getModifiersEx para su descripción). No se recomienda pasar valores negativos. Cero significa que no se pasa ningún modificador"
+          },
+          {
+            "label": "x",
+            "detail": "La coordenada horizontal x de la posición del ratón. Se admiten valores negativos"
+          },
+          {
+            "label": "y",
+            "detail": "La coordenada vertical y de la posición del ratón. Se admiten valores negativos"
+          },
+          {
+            "label": "clickCount",
+            "detail": "El número de clics asociados al evento. No se recomienda pasar valores negativos"
+          },
+          {
+            "label": "popupTrigger",
+            "detail": "Un boolean que vale true si este evento dispara un menú emergente"
+          },
+          {
+            "label": "button",
+            "detail": "Un entero que indica qué botón del ratón ha cambiado de estado. Se aplican estas reglas: si Java tiene desactivado el soporte de botones extendidos, solo pueden crearse MouseEvent con los botones estándar NOBUTTON, BUTTON1, BUTTON2 y BUTTON3. Si lo tiene activado, pueden crearse con los botones estándar y, además, con los botones del rango de 4 a MouseInfo.getNumberOfButtons() si el ratón tiene más de tres botones."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si button es menor que cero"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si source es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si button es mayor que BUTTON3 y Java tiene desactivado el soporte de botones extendidos"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si button es mayor que el número actual de botones y Java tiene activado el soporte de botones extendidos"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si se pasa un valor de botón no válido"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si source es null"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un MouseEvent con el componente de origen, el tipo, los modificadores, las coordenadas, el número de clics y el indicador popupTrigger indicados. Una llamada de la forma MouseEvent(source, id, when, modifiers, x, y, clickCount, popupTrigger) se comporta exactamente igual que MouseEvent(Component, int, long, int, int, int, int, int, int, boolean, int) con MouseEvent(source, id, when, modifiers, x, y, xAbs, yAbs, clickCount, popupTrigger, MouseEvent.NOBUTTON), donde xAbs e yAbs son la posición en pantalla del origen más las coordenadas relativas x e y. Si el origen no se está mostrando, xAbs e yAbs valen cero. Este método lanza IllegalArgumentException si source es null."
+        ],
+        "parameters": [
+          {
+            "label": "source",
+            "detail": "El Component que originó el evento"
+          },
+          {
+            "label": "id",
+            "detail": "Un entero que indica el tipo de evento. Para los valores admitidos, consulta la descripción de la clase MouseEvent"
+          },
+          {
+            "label": "when",
+            "detail": "Un entero largo con el momento en que ocurrió el evento. No se recomienda pasar valores negativos ni cero"
+          },
+          {
+            "label": "modifiers",
+            "detail": "una máscara de modificadores que describe las teclas modificadoras y botones del ratón (por ejemplo shift, ctrl, alt y meta) pulsados durante el evento. Solo se admiten modificadores extendidos (consulta InputEvent.getModifiersEx para su descripción). No se recomienda pasar valores negativos. Cero significa que no se pasa ningún modificador"
+          },
+          {
+            "label": "x",
+            "detail": "La coordenada horizontal x de la posición del ratón. Se admiten valores negativos"
+          },
+          {
+            "label": "y",
+            "detail": "La coordenada vertical y de la posición del ratón. Se admiten valores negativos"
+          },
+          {
+            "label": "clickCount",
+            "detail": "El número de clics asociados al evento. No se recomienda pasar valores negativos"
+          },
+          {
+            "label": "popupTrigger",
+            "detail": "Un boolean que vale true si este evento dispara un menú emergente"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si source es null"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un MouseEvent con el componente de origen, el tipo, el momento, los modificadores, las coordenadas, las coordenadas absolutas, el número de clics, el indicador popupTrigger y el número de botón indicados."
+        ],
+        "body": [
+          "Crear un evento no válido (por ejemplo, usando más de una de las antiguas _MASK, o valores de modificador y botón que no coinciden) da un comportamiento no especificado. Aunque se pasen coordenadas relativas y absolutas incoherentes, la instancia se crea igualmente y no se lanza ninguna excepción. Este método lanza IllegalArgumentException si source es null."
+        ],
+        "parameters": [
+          {
+            "label": "source",
+            "detail": "El Component que originó el evento"
+          },
+          {
+            "label": "id",
+            "detail": "Un entero que indica el tipo de evento. Para los valores admitidos, consulta la descripción de la clase MouseEvent"
+          },
+          {
+            "label": "when",
+            "detail": "Un entero largo con el momento en que ocurrió el evento. No se recomienda pasar valores negativos ni cero"
+          },
+          {
+            "label": "modifiers",
+            "detail": "una máscara de modificadores que describe las teclas modificadoras y botones del ratón (por ejemplo shift, ctrl, alt y meta) pulsados durante el evento. Solo se admiten modificadores extendidos (consulta InputEvent.getModifiersEx para su descripción). No se recomienda pasar valores negativos. Cero significa que no se pasa ningún modificador"
+          },
+          {
+            "label": "x",
+            "detail": "La coordenada horizontal x de la posición del ratón. Se admiten valores negativos"
+          },
+          {
+            "label": "y",
+            "detail": "La coordenada vertical y de la posición del ratón. Se admiten valores negativos"
+          },
+          {
+            "label": "xAbs",
+            "detail": "La coordenada horizontal absoluta x de la posición del ratón. Se admiten valores negativos"
+          },
+          {
+            "label": "yAbs",
+            "detail": "La coordenada vertical absoluta y de la posición del ratón. Se admiten valores negativos"
+          },
+          {
+            "label": "clickCount",
+            "detail": "El número de clics asociados al evento. No se recomienda pasar valores negativos"
+          },
+          {
+            "label": "popupTrigger",
+            "detail": "Un boolean que vale true si este evento dispara un menú emergente"
+          },
+          {
+            "label": "button",
+            "detail": "Un entero que indica qué botón del ratón ha cambiado de estado. Se aplican estas reglas: si Java tiene desactivado el soporte de botones extendidos, solo pueden crearse MouseEvent con los botones estándar NOBUTTON, BUTTON1, BUTTON2 y BUTTON3. Si lo tiene activado, pueden crearse con los botones estándar y, además, con los botones del rango de 4 a MouseInfo.getNumberOfButtons() si el ratón tiene más de tres botones."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si button es menor que cero"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si source es null"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si button es mayor que BUTTON3 y Java tiene desactivado el soporte de botones extendidos"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si button es mayor que el número actual de botones y Java tiene activado el soporte de botones extendidos"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si se pasa un valor de botón no válido"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si source es null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.event.MouseEvent.getModifiersEx": {
+    "body": [
+      "Los modificadores extendidos son los que terminan con el sufijo _DOWN_MASK, como ALT_DOWN_MASK, BUTTON1_DOWN_MASK y otros.",
+      "Los modificadores extendidos representan el estado de todas las teclas modales, como ALT, CTRL, META y los botones del ratón, justo después de que ocurra el evento.",
+      "Por ejemplo, si el usuario pulsa el botón 1, luego el 2 y los suelta en el mismo orden, se genera esta secuencia de eventos:",
+      "MOUSE_PRESSED: BUTTON1_DOWN_MASK MOUSE_PRESSED: BUTTON1_DOWN_MASK | BUTTON2_DOWN_MASK MOUSE_RELEASED: BUTTON2_DOWN_MASK MOUSE_CLICKED: BUTTON2_DOWN_MASK MOUSE_RELEASED: MOUSE_CLICKED:",
+      "No se recomienda comparar el valor devuelto por este método con ==, porque en el futuro pueden añadirse modificadores nuevos. Por ejemplo, la forma correcta de comprobar que SHIFT y BUTTON1 están pulsados pero CTRL no es esta:",
+      "int onmask = SHIFT_DOWN_MASK | BUTTON1_DOWN_MASK; int offmask = CTRL_DOWN_MASK; if ((event.getModifiersEx() & (onmask | offmask)) == onmask) { ... }",
+      "Este código funciona aunque se añadan modificadores nuevos."
+    ],
+    "returns": ["la máscara de modificadores extendidos de este evento"]
+  },
+  "web-java-se-java.awt.font.GlyphVector.getPixelBounds": {
+    "intro": [
+      "Devuelve los límites en píxeles de este GlyphVector al renderizarlo en un gráfico con el FontRenderContext dado en la posición dada. renderFRC no tiene por qué ser el FontRenderContext de este GlyphVector y puede ser null; en ese caso se usa el de este GlyphVector. La implementación predeterminada devuelve los límites visuales, desplazados a x, y y redondeados hacia fuera al entero siguiente (es decir, un rectángulo entero que encierra los límites visuales), e ignora el FRC. Las subclases deberían sobrescribir este método."
+    ],
+    "parameters": [
+      {
+        "label": "renderFRC",
+        "detail": "el FontRenderContext del Graphics."
+      },
+      {
+        "label": "x",
+        "detail": "la coordenada x en la que se renderiza este GlyphVector."
+      },
+      {
+        "label": "y",
+        "detail": "la coordenada y en la que se renderiza este GlyphVector."
+      }
+    ],
+    "returns": ["un Rectangle que delimita los píxeles afectados."]
+  },
+  "web-java-se-java.awt.font.LineBreakMeasurer": {
+    "body": [
+      "LineBreakMeasurer se construye con un iterador sobre texto con estilo. El rango del iterador debe ser un único párrafo. LineBreakMeasurer mantiene una posición en el texto para el inicio del siguiente segmento; al principio es el inicio del texto. A cada párrafo se le asigna una dirección general (izquierda a derecha o derecha a izquierda) según las reglas de formato bidireccional, y todos los segmentos de un párrafo tienen su misma dirección.",
+      "Los segmentos de texto se obtienen con el método nextLayout, que devuelve un TextLayout con el texto que cabe en la anchura de ajuste. nextLayout mueve la posición actual al final del layout devuelto.",
+      "LineBreakMeasurer implementa la política de salto de línea más habitual: cada palabra que cabe en la anchura de ajuste se coloca en la línea. Si la primera palabra no cabe, se colocan todos los caracteres que quepan. Cada línea tiene al menos un carácter.",
+      "Los TextLayout devueltos por LineBreakMeasurer tratan los tabuladores como espacios de anchura 0. Quien quiera obtener segmentos delimitados por tabuladores para colocarlos debe usar la sobrecarga de nextLayout que recibe un desplazamiento límite en el texto, que debe ser el primer carácter tras el tabulador. Los TextLayout devueltos terminan en ese límite (o antes, si el texto entre la posición actual y el límite no cabe entero en la anchura de ajuste).",
+      "Quien coloca texto delimitado por tabuladores necesita una política de salto ligeramente distinta tras colocar el primer segmento en una línea: en lugar de meter palabras partidas en el espacio restante, debe pasar las palabras que no quepan enteras a la línea siguiente. Este cambio de política se pide con la sobrecarga de nextLayout que recibe un boolean. Si es true, nextLayout devuelve null si la primera palabra no cabe en el espacio dado. Consulta el ejemplo de tabuladores más abajo.",
+      "En general, si cambia el texto usado para construir el LineBreakMeasurer, hay que crear uno nuevo que refleje el cambio. (El antiguo sigue funcionando, pero no se entera del cambio). Aun así, si el cambio es la inserción o eliminación de un solo carácter, puede \"actualizarse\" el existente con insertChar o deleteChar. Actualizarlo es mucho más rápido que crear uno nuevo. Quien modifique texto según lo que escribe el usuario debería aprovechar estos métodos.",
+      "Ejemplos:",
+      "Renderizar un párrafo en un componente",
+      "{@code public void paint(Graphics graphics) {",
+      "float dx = 0f, dy = 5f; Graphics2D g2d = (Graphics2D)graphics; FontRenderContext frc = g2d.getFontRenderContext();",
+      "AttributedString text = new AttributedString(\".....\"); AttributedCharacterIterator paragraph = text.getIterator();",
+      "LineBreakMeasurer measurer = new LineBreakMeasurer(paragraph, frc); measurer.setPosition(paragraph.getBeginIndex()); float wrappingWidth = (float)getSize().width;",
+      "while (measurer.getPosition() < paragraph.getEndIndex()) {",
+      "TextLayout layout = measurer.nextLayout(wrappingWidth);",
+      "dy += (layout.getAscent()); float dx = layout.isLeftToRight() ? 0 : (wrappingWidth - layout.getAdvance());",
+      "layout.draw(graphics, dx, dy); dy += layout.getDescent() + layout.getLeading(); } } }",
+      "Renderizar texto con tabuladores. Para simplificar, se supone que la dirección general del texto es de izquierda a derecha",
+      "{@code public void paint(Graphics graphics) {",
+      "float leftMargin = 10, rightMargin = 310; float[] tabStops = { 100, 250 };",
+      "// assume styledText is an AttributedCharacterIterator, and the number // of tabs in styledText is tabCount",
+      "int[] tabLocations = new int[tabCount+1];",
+      "int i = 0; for (char c = styledText.first(); c != styledText.DONE; c = styledText.next()) { if (c == '\\t') { tabLocations[i++] = styledText.getIndex(); } } tabLocations[tabCount] = styledText.getEndIndex() - 1;",
+      "// Now tabLocations has an entry for every tab's offset in // the text. For convenience, the last entry is tabLocations // is the offset of the last character in the text.",
+      "LineBreakMeasurer measurer = new LineBreakMeasurer(styledText); int currentTab = 0; float verticalPos = 20;",
+      "while (measurer.getPosition() < styledText.getEndIndex()) {",
+      "// Lay out and draw each line. All segments on a line // must be computed before any drawing can occur, since // we must know the largest ascent on the line. // TextLayouts are computed and stored in a Vector; // their horizontal positions are stored in a parallel // Vector.",
+      "// lineContainsText is true after first segment is drawn boolean lineContainsText = false; boolean lineComplete = false; float maxAscent = 0, maxDescent = 0; float horizontalPos = leftMargin; Vector layouts = new Vector(1); Vector penPositions = new Vector(1);",
+      "while (!lineComplete) { float wrappingWidth = rightMargin - horizontalPos; TextLayout layout = measurer.nextLayout(wrappingWidth, tabLocations[currentTab]+1, lineContainsText);",
+      "// layout can be null if lineContainsText is true if (layout != null) { layouts.addElement(layout); penPositions.addElement(Float.valueOf(horizontalPos)); horizontalPos += layout.getAdvance(); maxAscent = Math.max(maxAscent, layout.getAscent()); maxDescent = Math.max(maxDescent, layout.getDescent() + layout.getLeading()); } else { lineComplete = true; }",
+      "lineContainsText = true;",
+      "if (measurer.getPosition() == tabLocations[currentTab]+1) { currentTab++; }",
+      "if (measurer.getPosition() == styledText.getEndIndex()) lineComplete = true; else if (horizontalPos >= tabStops[tabStops.length-1]) lineComplete = true;",
+      "if (!lineComplete) { // move to next tab stop int j; for (j=0; horizontalPos >= tabStops[j]; j++) {} horizontalPos = tabStops[j]; } }",
+      "verticalPos += maxAscent;",
+      "Enumeration layoutEnum = layouts.elements(); Enumeration positionEnum = penPositions.elements();",
+      "// now iterate through layouts and draw them while (layoutEnum.hasMoreElements()) { TextLayout nextLayout = (TextLayout) layoutEnum.nextElement(); Float nextPosition = (Float) positionEnum.nextElement(); nextLayout.draw(graphics, nextPosition.floatValue(), verticalPos); }",
+      "verticalPos += maxDescent; } } }"
+    ]
+  },
+  "web-java-se-java.awt.font.NumericShaper": {
+    "body": [
+      "Las instancias de NumericShaper suelen aplicarse como atributo del texto con el atributo NUMERIC_SHAPING de la clase TextAttribute. Por ejemplo, este fragmento hace que un TextLayout convierta los dígitos europeos en árabes en un contexto árabe:",
+      "Map map = new HashMap(); map.put(TextAttribute.NUMERIC_SHAPING, NumericShaper.getContextualShaper(NumericShaper.ARABIC)); FontRenderContext frc = ...; TextLayout layout = new TextLayout(text, map, frc); layout.draw(g2d, x, y);",
+      "También se puede hacer la conversión de dígitos explícitamente con instancias de NumericShaper, como muestra este fragmento:",
+      "char[] text = ...; // shape all EUROPEAN digits (except zero) to ARABIC digits NumericShaper shaper = NumericShaper.getShaper(NumericShaper.ARABIC); shaper.shape(text, start, count);",
+      "// shape European digits to ARABIC digits if preceding text is Arabic, or // shape European digits to TAMIL digits if preceding text is Tamil, or // leave European digits alone if there is no preceding text, or // preceding text is neither Arabic nor Tamil NumericShaper shaper = NumericShaper.getContextualShaper(NumericShaper.ARABIC | NumericShaper.TAMIL, NumericShaper.EUROPEAN); shaper.shape(text, start, count);",
+      "Rangos Unicode basados en máscaras de bits y en enum",
+      "Esta clase ofrece dos interfaces de programación para representar los rangos Unicode de dígitos propios de cada escritura: las basadas en máscaras de bits, como NumericShaper.ARABIC, y las basadas en enum, como NumericShaper.Range.ARABIC. Pueden indicarse varios rangos combinando con OR las constantes de máscara, por ejemplo:",
+      "NumericShaper.ARABIC | NumericShaper.TAMIL",
+      "o creando un Set con las constantes de NumericShaper.Range, por ejemplo:",
+      "EnumSet.of(NumericShaper.Range.ARABIC, NumericShaper.Range.TAMIL)",
+      "Los rangos basados en enum son un superconjunto de los basados en máscaras de bits.",
+      "Si se mezclan ambas interfaces (incluida la serialización), los valores de rango se traducen a su equivalente cuando es posible, como NumericShaper.Range.ARABIC desde/hacia NumericShaper.ARABIC. Si se indican rangos sin equivalente, como NumericShaper.Range.BALINESE, se ignoran.",
+      "Prioridad de los dígitos decimales",
+      "Un rango Unicode puede tener más de un conjunto de dígitos decimales. Si se indican varios conjuntos para el mismo rango, uno tiene prioridad según esta tabla.",
+      "Prioridad de las constantes de NumericShaper",
+      "Rango Unicode · Constantes de NumericShaper · Prioridad",
+      "Árabe · NumericShaper.ARABIC",
+      "NumericShaper.EASTERN_ARABIC · NumericShaper.EASTERN_ARABIC",
+      "NumericShaper.Range.ARABIC",
+      "NumericShaper.Range.EASTERN_ARABIC · NumericShaper.Range.EASTERN_ARABIC",
+      "Tai Tham · NumericShaper.Range.TAI_THAM_HORA",
+      "NumericShaper.Range.TAI_THAM_THAM · NumericShaper.Range.TAI_THAM_THAM"
+    ]
+  },
   "web-java-se-java.awt.geom.Area.contains": {
     "overloads": [
       {
