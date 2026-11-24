@@ -264,5 +264,261 @@
     "body": [
       "Si la apertura falla, se activa failbit. Si tiene éxito, se limpian los indicadores de estado. Comprueba is_open() o el propio flujo después de llamarla."
     ]
+  },
+  "web-cpp20-std%3A%3Abasic_ifstream%3A%3Ardbuf": {
+    "intro": [
+      "Devuelve un puntero al std::basic_filebuf interno que lee del archivo."
+    ],
+    "body": [
+      "Oculta la versión de basic_ios: siempre devuelve el búfer propio del flujo, aunque se haya cambiado con basic_ios::rdbuf(sb). Sirve, por ejemplo, para copiar un archivo entero: std::cout << archivo.rdbuf();."
+    ],
+    "returns": ["Puntero al búfer de archivo interno."]
+  },
+  "web-cpp20-std%3A%3Abasic_ios": {
+    "body": [
+      "Guarda los indicadores de estado: good() indica que todo va bien, eof() que se llegó al final, fail() que una operación falló y bad() que hubo un error grave. clear() los restablece.",
+      "La conversión a bool equivale a !fail(), por eso se puede escribir while (std::getline(flujo, linea)). También guarda el carácter de relleno, el locale y el puntero al búfer."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_ios%3A%3Abasic_ios": {
+    "body": [
+      "Asocia el búfer indicado e inicializa el estado; si sb es nulo, se activa badbit. No se puede copiar: los flujos no comparten estado por copia."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_ios%3A%3Aexceptions": {
+    "intro": [
+      "Obtiene o establece la máscara de excepciones del flujo, que decide qué estados de error lanzan std::ios_base::failure."
+    ],
+    "body": [
+      "Por defecto la máscara está vacía y los errores solo activan los indicadores. Con flujo.exceptions(std::ios::failbit | std::ios::badbit), cualquier fallo de lectura o escritura lanza una excepción.",
+      "Si al cambiar la máscara el flujo ya está en uno de esos estados, la excepción se lanza inmediatamente."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_ios%3A%3Aoperator%3D": {
+    "body": [
+      "Los flujos no se pueden copiar ni asignar por copia; para copiar solo la configuración de formato de otro flujo, usa copyfmt()."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_ios%3A%3A~basic_ios": {
+    "intro": [
+      "Destruye el objeto basic_ios. El búfer devuelto por rdbuf() no se destruye."
+    ],
+    "body": [
+      "El búfer pertenece a la clase derivada o a quien lo creó, que es quien debe liberarlo."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_iostream": {
+    "body": [
+      "Hereda de basic_istream y basic_ostream, así que admite tanto >> como <<. La lectura y la escritura comparten el mismo búfer y, por tanto, la misma fuente de datos.",
+      "Lo usan std::fstream y std::stringstream, que permiten leer y escribir sobre el mismo archivo o cadena."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_istream": {
+    "body": [
+      "operator>> lee con formato, saltando los espacios en blanco iniciales; get(), getline(), read() e ignore() leen caracteres sin formato. gcount() devuelve cuántos caracteres leyó la última operación sin formato.",
+      "std::cin es un std::istream, es decir, basic_istream<char>."
+    ],
+    "caveats": [
+      "Si una lectura con >> falla, se activa failbit y las lecturas siguientes no hacen nada hasta llamar a clear()."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_istream%3A%3Abasic_istream": {
+    "body": [
+      "Llama a basic_ios::init(sb) e inicia gcount() a cero. El búfer no pasa a ser propiedad del flujo."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_ofstream": {
+    "body": [
+      "Se abre con el constructor o con open() y se escribe con <<: std::ofstream archivo(\"salida.txt\"); archivo << \"hola\\n\";. Por defecto trunca el archivo; con std::ios::app añade al final.",
+      "El archivo se cierra en el destructor, que también vacía el búfer. std::ofstream es basic_ofstream<char>."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_ofstream%3A%3Abasic_ofstream": {
+    "intro": ["Construye un nuevo flujo de escritura de archivo."],
+    "body": [
+      "El constructor por defecto no abre ningún archivo. Las demás versiones lo abren con el modo indicado, que siempre incluye ios_base::out; si falla, se activa failbit."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_ofstream%3A%3Aopen": {
+    "intro": ["Abre el archivo indicado y lo asocia al flujo."],
+    "body": [
+      "Si la apertura falla, se activa failbit; si tiene éxito, se limpian los indicadores de estado. Si el archivo no existe, se crea."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_ofstream%3A%3Ardbuf": {
+    "intro": [
+      "Devuelve un puntero al std::basic_filebuf interno que escribe en el archivo."
+    ],
+    "body": [
+      "Oculta la versión de basic_ios: siempre devuelve el búfer propio del flujo, aunque se haya cambiado con basic_ios::rdbuf(sb)."
+    ],
+    "returns": ["Puntero al búfer de archivo interno."]
+  },
+  "web-cpp20-std%3A%3Abasic_ostream": {
+    "body": [
+      "operator<< escribe con formato, y put() y write() escriben caracteres sin formato. flush() envía al destino lo que haya en el búfer.",
+      "std::cout y std::cerr son std::ostream. Para que tus tipos se puedan imprimir, sobrecarga std::ostream& operator<<(std::ostream&, const T&)."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_ostream%3A%3Abasic_ostream": {
+    "body": [
+      "Llama a basic_ios::init(sb). El búfer no pasa a ser propiedad del flujo."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_regex": {
+    "body": [
+      "Se construye con el patrón y opciones como std::regex::icase o una gramática (ECMAScript por defecto, o basic, extended, awk, grep y egrep). Se usa con std::regex_match, std::regex_search y std::regex_replace.",
+      "mark_count() devuelve el número de grupos de captura."
+    ],
+    "caveats": [
+      "Compilar un patrón es costoso: créalo una vez y reutilízalo. Un patrón no válido lanza std::regex_error."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_regex%3A%3Aswap": {
+    "intro": ["Intercambia el contenido de dos expresiones regulares."],
+    "body": [
+      "Intercambia los patrones compilados, las opciones y el locale sin volver a compilar."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_regex%3A%3A~basic_regex": {
+    "body": ["Libera la representación compilada del patrón."]
+  },
+  "web-cpp20-std%3A%3Abasic_streambuf": {
+    "body": [
+      "Es la base de los búferes que hay bajo cada flujo, como basic_filebuf o basic_stringbuf. Las funciones públicas, como sgetc(), sbumpc(), sputc() o sputn(), leen y escriben caracteres; las virtuales protegidas, como underflow() u overflow(), definen de dónde salen y a dónde van.",
+      "Crear una subclase permite conectar los flujos de la biblioteca a destinos propios, como un socket o un registro."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_streambuf%3A%3Apubseekoff": {
+    "body": [
+      "Llama a la función virtual seekoff(). way indica desde dónde se cuenta: el principio (beg), la posición actual (cur) o el final (end). Devuelve la nueva posición, o pos_type(off_type(-1)) si falla."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_streambuf%3A%3Apubseekpos": {
+    "body": [
+      "Llama a la función virtual seekpos(). Devuelve la nueva posición, o pos_type(off_type(-1)) si falla."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_streambuf%3A%3Apubsetbuf": {
+    "body": [
+      "En basic_filebuf, por ejemplo, pubsetbuf(nullptr, 0) suele desactivar el búfer. Normalmente debe llamarse antes de cualquier operación de E/S."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_streambuf%3A%3Asbumpc": {
+    "body": [
+      "Devuelve el carácter leído convertido a int_type, o traits::eof() si no quedan caracteres. sgetc() lee el mismo carácter sin avanzar."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_streambuf%3A%3Asgetn": {
+    "body": [
+      "Llama a la función virtual xsgetn(), que por defecto lee carácter a carácter. Es la forma eficiente de leer bloques de datos directamente del búfer."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_string": {
+    "body": [
+      "Gestiona su memoria y crece según se necesita. c_str() y data() dan un puntero a caracteres terminados en nulo, compatible con funciones de C.",
+      "append(), insert(), erase() y replace() modifican la cadena; find(), substr() y compare() la consultan. C++20 añade starts_with() y ends_with(). Las implementaciones suelen guardar las cadenas cortas dentro del propio objeto, sin reservar memoria."
+    ],
+    "caveats": [
+      "operator[] no comprueba límites; at() sí, y lanza std::out_of_range."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_string%3A%3Aempty": {
+    "intro": [
+      "Comprueba si la cadena no tiene caracteres, es decir, si begin() == end()."
+    ],
+    "body": [
+      "Equivale a size() == 0. Para vaciar la cadena se usa clear(), no empty()."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_string%3A%3Aget_allocator": {
+    "body": [
+      "Con el asignador por defecto, std::allocator<char>, apenas tiene uso; es útil con asignadores propios o polimórficos (std::pmr::string)."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_string%3A%3A~basic_string": {
+    "intro": [
+      "Destruye la cadena: se destruyen sus caracteres y se libera el almacenamiento que usaba."
+    ],
+    "body": [
+      "Cualquier puntero obtenido con c_str() o data() deja de ser válido."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_string_view": {
+    "body": [
+      "Es un puntero y una longitud: copiarlo es barato y se usa como parámetro para aceptar std::string, literales y otros textos sin copiarlos: void imprimir(std::string_view texto);.",
+      "Ofrece las operaciones de solo lectura de std::string, como find(), substr() o compare(); substr() devuelve otra vista, sin copiar. remove_prefix() y remove_suffix() acortan la vista."
+    ],
+    "caveats": [
+      "No pases data() a funciones que esperan una cadena terminada en nulo, y no guardes una vista de un std::string temporal: quedará colgando."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_string_view%3A%3Abegin": {
+    "body": [
+      "El iterador es de solo lectura, porque una vista nunca permite modificar los caracteres."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_string_view%3A%3Acbegin": {
+    "body": [
+      "Equivale a begin(), ya que los iteradores de una vista siempre son constantes."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_string_view%3A%3Aempty": {
+    "intro": [
+      "Comprueba si la vista no tiene caracteres, es decir, si size() == 0."
+    ],
+    "body": [
+      "Una vista construida por defecto está vacía y su data() es nullptr."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_string_view%3A%3Alength": {
+    "intro": [
+      "Devuelve el número de caracteres de la vista, es decir, std::distance(begin(), end())."
+    ],
+    "body": ["Equivale a size()."]
+  },
+  "web-cpp20-std%3A%3Abasic_string_view%3A%3Amax_size": {
+    "intro": [
+      "Devuelve el mayor número de caracteres al que puede referirse un basic_string_view."
+    ],
+    "body": [
+      "Es un límite teórico de la implementación; en la práctica, la memoria disponible limita mucho antes."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_string_view%3A%3Asize": {
+    "intro": [
+      "Devuelve el número de caracteres de la vista, es decir, std::distance(begin(), end())."
+    ],
+    "body": [
+      "No cuenta ningún terminador nulo: la vista no lo incluye aunque los datos originales lo tengan."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_string_view%3A%3Aswap": {
+    "intro": ["Intercambia la vista con s."],
+    "body": [
+      "Solo intercambia los punteros y las longitudes; los caracteres no se copian ni se mueven."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_stringstream": {
+    "body": [
+      "Permite escribir con << y leer con >> sobre una cadena en memoria. str() devuelve una copia del contenido o lo reemplaza, y desde C++20 view() da una std::string_view sin copiar.",
+      "Es útil para convertir valores a texto y viceversa, o para analizar una línea por partes. std::stringstream es basic_stringstream<char>."
+    ]
+  },
+  "web-cpp20-std%3A%3Abasic_stringstream%3A%3Ardbuf": {
+    "intro": ["Devuelve un puntero al std::basic_stringbuf interno."],
+    "returns": ["Puntero al búfer de cadena interno."]
+  },
+  "web-cpp20-std%3A%3Abitset": {
+    "body": [
+      "Se construye a partir de un entero o de una cadena de ceros y unos. set(), reset() y flip() cambian bits, test() y operator[] los leen, y count() cuenta los que están a uno.",
+      "Admite los operadores &, |, ^, ~, << y >>. to_ulong(), to_ullong() y to_string() lo convierten a entero o a texto."
+    ],
+    "caveats": [
+      "test() comprueba la posición y lanza std::out_of_range; operator[] no la comprueba."
+    ]
+  },
+  "web-cpp20-std%3A%3Abitset%3A%3Aall": {
+    "body": ["any() comprueba si hay al menos uno y none() si no hay ninguno."]
   }
 }
