@@ -36227,6 +36227,123 @@
       "Advertencia: los objetos serializados de esta clase no serán compatibles con futuras versiones de Swing. El soporte de serialización actual es adecuado para almacenamiento a corto plazo o RMI entre aplicaciones que ejecutan la misma versión de Swing. Desde la 1.4, el paquete java.beans incluye soporte para el almacenamiento a largo plazo de todos los JavaBeans. Consulta java.beans.XMLEncoder."
     ]
   },
+  "web-java-se-javax.swing.JPopupMenu.menuSelectionChanged": {
+    "intro": [
+      "Se invoca cuando cambia la selección de la barra de menús para activar o desactivar este menú. Implementa la interfaz javax.swing.MenuElement. Sobrescribe MenuElement.menuSelectionChanged."
+    ],
+    "parameters": [
+      {
+        "label": "isIncluded",
+        "detail": "true si este menú está activo, false si no lo está"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JProgressBar.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea una barra de progreso horizontal que muestra un borde pero no una cadena de progreso. Los valores inicial y mínimo son 0, y el máximo es 100."
+        ]
+      },
+      {
+        "intro": [
+          "Crea una barra de progreso con la orientación indicada, que puede ser SwingConstants.VERTICAL o SwingConstants.HORIZONTAL. Por defecto se pinta un borde, pero no una cadena de progreso. Los valores inicial y mínimo son 0, y el máximo es 100."
+        ],
+        "parameters": [
+          {
+            "label": "orient",
+            "detail": "la orientación deseada de la barra de progreso"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si orient es un valor no válido"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una barra de progreso horizontal con el mínimo y el máximo indicados. Establece el valor inicial de la barra al mínimo indicado. Por defecto se pinta un borde, pero no una cadena de progreso."
+        ],
+        "body": [
+          "El BoundedRangeModel que guarda los datos de la barra de progreso resuelve cualquier problema que pueda surgir al establecer incorrectamente los valores mínimo, inicial y máximo de la barra. Consulta la documentación de BoundedRangeModel para más detalles."
+        ],
+        "parameters": [
+          {
+            "label": "min",
+            "detail": "el valor mínimo de la barra de progreso"
+          },
+          {
+            "label": "max",
+            "detail": "el valor máximo de la barra de progreso"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una barra de progreso con la orientación, el mínimo y el máximo indicados. Por defecto se pinta un borde, pero no una cadena de progreso. Establece el valor inicial de la barra al mínimo indicado."
+        ],
+        "body": [
+          "El BoundedRangeModel que guarda los datos de la barra de progreso resuelve cualquier problema que pueda surgir al establecer incorrectamente los valores mínimo, inicial y máximo de la barra. Consulta la documentación de BoundedRangeModel para más detalles."
+        ],
+        "parameters": [
+          {
+            "label": "orient",
+            "detail": "la orientación deseada de la barra de progreso"
+          },
+          {
+            "label": "min",
+            "detail": "el valor mínimo de la barra de progreso"
+          },
+          {
+            "label": "max",
+            "detail": "el valor máximo de la barra de progreso"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si orient es un valor no válido"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una barra de progreso horizontal que usa el modelo indicado para guardar sus datos. Por defecto se pinta un borde, pero no una cadena de progreso."
+        ],
+        "parameters": [
+          {
+            "label": "newModel",
+            "detail": "el modelo de datos de la barra de progreso"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JSlider.setModel": {
+    "body": [
+      "Pasar un modelo null a este método produce un comportamiento indefinido y, muy probablemente, excepciones."
+    ],
+    "parameters": [
+      {
+        "label": "newModel",
+        "detail": "el nuevo BoundedRangeModel, no nulo, que se usará"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JSlider.setPaintLabels": {
+    "body": [
+      "Este método también configura una tabla de etiquetas. Si todavía no hay una tabla de etiquetas y el espaciado de las marcas principales es > 0, se genera una tabla de etiquetas estándar (llamando a createStandardLabels) con etiquetas en las marcas principales. Después, la tabla de etiquetas se asigna al slider llamando a setLabelTable.",
+      "Por defecto, esta propiedad es false."
+    ],
+    "parameters": [
+      {
+        "label": "b",
+        "detail": "si se pintan o no las etiquetas"
+      }
+    ]
+  },
   "web-java-se-javax.swing.JSpinner%24NumberEditor.setComponentOrientation": {
     "body": [
       "Al construirlo, la orientación de un componente es ComponentOrientation.UNKNOWN, lo que indica que no se ha fijado explícitamente. La orientación UNKNOWN se comporta igual que ComponentOrientation.LEFT_TO_RIGHT.",
@@ -36237,6 +36354,1128 @@
       {
         "label": "o",
         "detail": "la orientación que se va a fijar"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.getBackgroundAt": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice del elemento que se consulta"
+      }
+    ],
+    "returns": ["el Color del fondo de la pestaña en index"],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.getBoundsAt": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice que se consulta"
+      }
+    ],
+    "returns": [
+      "un Rectangle con los límites de la pestaña en index, o null si la pestaña en index no está visible actualmente en la UI o si este panel de pestañas no tiene UI establecida"
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.getComponentAt": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice del elemento que se consulta"
+      }
+    ],
+    "returns": ["el Component en index"],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.getDisabledIconAt": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice del elemento que se consulta"
+      }
+    ],
+    "returns": ["el icono en index"],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.getDisplayedMnemonicIndexAt": {
+    "parameters": [
+      {
+        "label": "tabIndex",
+        "detail": "el índice de la pestaña a la que se refiere el mnemónico"
+      }
+    ],
+    "returns": [
+      "índice que representa el carácter mnemónico si existe; en caso contrario devuelve -1"
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (tabIndex < 0 || tabIndex >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.getForegroundAt": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice del elemento que se consulta"
+      }
+    ],
+    "returns": ["el Color del primer plano de la pestaña en index"],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.getIconAt": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice del elemento que se consulta"
+      }
+    ],
+    "returns": ["el icono en index"],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.getMnemonicAt": {
+    "parameters": [
+      {
+        "label": "tabIndex",
+        "detail": "el índice de la pestaña a la que se refiere el mnemónico"
+      }
+    ],
+    "returns": [
+      "el código de tecla que representa el mnemónico; -1 si no se ha especificado un mnemónico para la pestaña"
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (tabIndex < 0 || tabIndex >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.getTabComponentAt": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice del elemento que se consulta"
+      }
+    ],
+    "returns": ["el componente de pestaña en index"],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.getTitleAt": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice del elemento que se consulta"
+      }
+    ],
+    "returns": ["el título en index"],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.getToolTipTextAt": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice del elemento que se consulta"
+      }
+    ],
+    "returns": ["una cadena con el texto de ayuda emergente en index"],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.insertTab": {
+    "parameters": [
+      {
+        "label": "title",
+        "detail": "el título que se mostrará en la pestaña"
+      },
+      {
+        "label": "icon",
+        "detail": "el icono que se mostrará en la pestaña"
+      },
+      {
+        "label": "component",
+        "detail": "el componente que se mostrará al hacer clic en esta pestaña."
+      },
+      {
+        "label": "tip",
+        "detail": "el texto de ayuda emergente que se mostrará para esta pestaña"
+      },
+      {
+        "label": "index",
+        "detail": "la posición en la que insertar la nueva pestaña (index >= 0 && index <= getTabCount())"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si el índice está fuera de rango (index < 0 || index > getTabCount())"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.isEnabledAt": {
+    "intro": ["Devuelve si la pestaña en index está habilitada actualmente."],
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice del elemento que se consulta"
+      }
+    ],
+    "returns": [
+      "true si la pestaña en index está habilitada; false en caso contrario"
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.remove": {
+    "overloads": [
+      {
+        "intro": [
+          "Elimina el Component indicado del JTabbedPane. El método no hace nada si el componente es null."
+        ],
+        "parameters": [
+          {
+            "label": "component",
+            "detail": "el componente que se elimina del panel de pestañas"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Elimina la pestaña y el componente que corresponden al índice indicado."
+        ],
+        "parameters": [
+          {
+            "label": "index",
+            "detail": "el índice del componente que se elimina del panel de pestañas"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.removeTabAt": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice de la pestaña que se elimina"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.setBackgroundAt": {
+    "body": [
+      "Depende del look and feel respetar esta propiedad; algunos pueden optar por ignorarla."
+    ],
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice de la pestaña cuyo fondo se establece"
+      },
+      {
+        "label": "background",
+        "detail": "el color que se mostrará en el fondo de la pestaña"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.setComponentAt": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice de la pestaña donde se coloca este componente"
+      },
+      {
+        "label": "component",
+        "detail": "el componente para la pestaña"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.setDisabledIconAt": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice de la pestaña cuyo icono deshabilitado se establece"
+      },
+      {
+        "label": "disabledIcon",
+        "detail": "el icono que se mostrará en la pestaña cuando esté deshabilitada"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.setDisplayedMnemonicIndexAt": {
+    "body": [
+      "Su valor se actualiza cuando cambian las propiedades relacionadas con el mnemónico (como el propio mnemónico, el texto...). Solo deberías tener que llamarlo si no quieres que se subraye el carácter predeterminado. Por ejemplo, si el texto de la pestaña de índice 3 fuera 'Apple Price', con un mnemónico 'p', y quisieras decorar la 'P' de 'Price', tendrías que invocar setDisplayedMnemonicIndex(3, 6) después de invocar setMnemonicAt(3, KeyEvent.VK_P).",
+      "Ten en cuenta que es responsabilidad del programador asegurarse de que cada pestaña tiene un mnemónico único; de lo contrario, los resultados pueden ser impredecibles."
+    ],
+    "parameters": [
+      {
+        "label": "tabIndex",
+        "detail": "el índice de la pestaña a la que se refiere el mnemónico"
+      },
+      {
+        "label": "mnemonicIndex",
+        "detail": "índice dentro del String del carácter que se subraya"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si tabIndex está fuera de rango (tabIndex < 0 || tabIndex >= número de pestañas)"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "se lanza si mnemonicIndex es >= la longitud del título de la pestaña, o < -1"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.setEnabledAt": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice de la pestaña que se habilita o deshabilita"
+      },
+      {
+        "label": "enabled",
+        "detail": "si la pestaña debe estar habilitada o no"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.setForegroundAt": {
+    "body": [
+      "Depende del look and feel respetar esta propiedad; algunos pueden optar por ignorarla."
+    ],
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice de la pestaña cuyo primer plano se establece"
+      },
+      {
+        "label": "foreground",
+        "detail": "el color que se mostrará como primer plano de la pestaña"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.setIconAt": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice de la pestaña cuyo icono se establece"
+      },
+      {
+        "label": "icon",
+        "detail": "el icono que se mostrará en la pestaña"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.setMnemonicAt": {
+    "body": [
+      "Un mnemónico debe corresponder a una única tecla del teclado y debe especificarse con uno de los códigos de tecla VK_XXX definidos en java.awt.event.KeyEvent o con uno de los códigos de tecla extendidos obtenidos mediante java.awt.event.KeyEvent.getExtendedKeyCodeForChar. Los mnemónicos no distinguen mayúsculas de minúsculas, así que un evento de teclado con el código de tecla correspondiente activa el botón tanto si se pulsó el modificador Mayús como si no.",
+      "Esto actualiza la propiedad del mnemónico mostrado para la pestaña indicada."
+    ],
+    "parameters": [
+      {
+        "label": "tabIndex",
+        "detail": "el índice de la pestaña a la que se refiere el mnemónico"
+      },
+      {
+        "label": "mnemonic",
+        "detail": "el código de tecla que representa el mnemónico"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si tabIndex está fuera de rango (tabIndex < 0 || tabIndex >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.setSelectedIndex": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice que se selecciona"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < -1 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.setTabComponentAt": {
+    "body": [
+      "Nota: el componente no debe ser uno que el desarrollador ya haya añadido al panel de pestañas."
+    ],
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice de la pestaña donde se establece el componente"
+      },
+      {
+        "label": "component",
+        "detail": "el componente que renderiza el título de la pestaña indicada"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si component ya se ha añadido a este JTabbedPane"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.setTitleAt": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice de la pestaña cuyo título se establece"
+      },
+      {
+        "label": "title",
+        "detail": "el título que se mostrará en la pestaña"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTabbedPane.setToolTipTextAt": {
+    "parameters": [
+      {
+        "label": "index",
+        "detail": "el índice de la pestaña cuyo texto de ayuda emergente se establece"
+      },
+      {
+        "label": "toolTipText",
+        "detail": "el texto de ayuda emergente que se mostrará para la pestaña"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si index está fuera de rango (index < 0 || index >= número de pestañas)"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTable": {
+    "body": [
+      "JTable tiene muchas facilidades que permiten personalizar su renderizado y edición, pero ofrece valores predeterminados para estas funciones, de modo que las tablas sencillas pueden configurarse fácilmente. Por ejemplo, para configurar una tabla de números de 10 filas y 10 columnas:",
+      "TableModel dataModel = new AbstractTableModel() { public int getColumnCount() { return 10; } public int getRowCount() { return 10;} public Object getValueAt(int row, int col) { return Integer.valueOf(row*col); } }; JTable table = new JTable(dataModel); JScrollPane scrollpane = new JScrollPane(table);",
+      "Los JTable suelen colocarse dentro de un JScrollPane. Por defecto, un JTable ajusta su ancho para que no haga falta una barra de desplazamiento horizontal. Para permitir una barra horizontal, invoca setAutoResizeMode con AUTO_RESIZE_OFF. Ten en cuenta que, si quieres usar un JTable en una vista independiente (fuera de un JScrollPane) y mostrar la cabecera, puedes obtenerla con getTableHeader y mostrarla por separado.",
+      "Para habilitar la ordenación y el filtrado de filas, usa un RowSorter. Puedes configurar un ordenador de filas de dos formas:",
+      "Establecer directamente el RowSorter. Por ejemplo: table.setRowSorter(new TableRowSorter(model)).",
+      "Poner la propiedad autoCreateRowSorter a true, para que el JTable cree un RowSorter por ti. Por ejemplo: setAutoCreateRowSorter(true).",
+      "Al diseñar aplicaciones que usan JTable, merece la pena prestar mucha atención a las estructuras de datos que representarán los datos de la tabla. DefaultTableModel es una implementación de modelo que usa un Vector de Vectors de Objects para almacenar los valores de las celdas. Además de copiar los datos de una aplicación en el DefaultTableModel, también es posible envolver los datos en los métodos de la interfaz TableModel para pasarlos directamente al JTable, como en el ejemplo anterior. Esto suele dar aplicaciones más eficientes, porque el modelo es libre de elegir la representación interna que mejor se adapte a los datos. Una buena regla general para decidir entre AbstractTableModel y DefaultTableModel es usar AbstractTableModel como clase base para crear subclases y DefaultTableModel cuando no haga falta heredar.",
+      "El directorio \"TableExample\" del área de demos de la distribución de código fuente incluye varios ejemplos completos de uso de JTable, que muestran cómo usar JTable para ofrecer una vista editable de datos obtenidos de una base de datos y cómo modificar las columnas mostradas para usar renderizadores y editores especializados.",
+      "JTable usa exclusivamente enteros para referirse tanto a las filas como a las columnas del modelo que muestra. JTable simplemente toma un rango tabular de celdas y usa getValueAt(int, int) para obtener los valores del modelo al pintar. Es importante recordar que los índices de columna y fila que devuelven los distintos métodos de JTable se expresan en términos del JTable (la vista) y no son necesariamente los mismos que usa el modelo.",
+      "Por defecto, las columnas pueden reordenarse en el JTable, de modo que las columnas de la vista aparezcan en un orden distinto al del modelo. Esto no afecta en absoluto a la implementación del modelo: cuando se reordenan las columnas, el JTable mantiene internamente el nuevo orden y convierte sus índices de columna antes de consultar al modelo.",
+      "Así que, al escribir un TableModel, no es necesario escuchar los eventos de reordenación de columnas, ya que el modelo se consultará en su propio sistema de coordenadas independientemente de lo que ocurra en la vista. En el área de ejemplos hay una demostración de un algoritmo de ordenación que usa precisamente esta técnica para interponer otro sistema de coordenadas más, en el que cambia el orden de las filas en lugar del de las columnas.",
+      "Del mismo modo, al usar la ordenación y el filtrado que ofrece RowSorter, el TableModel subyacente no necesita saber ordenar: de eso se encarga el RowSorter. Serán necesarias conversiones de coordenadas al usar los métodos de JTable basados en filas con el TableModel subyacente. Todos los métodos de JTable basados en filas se expresan en términos del RowSorter, que no coinciden necesariamente con los del TableModel subyacente. Por ejemplo, la selección siempre se expresa en términos del JTable, así que al usar RowSorter tendrás que convertirla con convertRowIndexToView o convertRowIndexToModel. Lo siguiente muestra cómo convertir coordenadas del JTable a las del modelo subyacente:",
+      "int[] selection = table.getSelectedRows(); for (int i = 0; i < selection.length; i++) { selection[i] = table.convertRowIndexToModel(selection[i]); } // selection is now in terms of the underlying TableModel",
+      "Por defecto, si la ordenación está habilitada, JTable conserva la selección y las alturas variables de fila en términos del modelo al ordenar. Por ejemplo, si la fila 0, en términos del modelo subyacente, está seleccionada, después de ordenar seguirá seleccionada la fila 0 en términos del modelo subyacente. Visualmente la selección puede cambiar, pero en términos del modelo subyacente seguirá siendo la misma. La única excepción es que el índice del modelo ya no sea visible o se haya eliminado. Por ejemplo, si la fila 0 del modelo se filtró, la selección quedará vacía tras ordenar.",
+      "J2SE 5 añade métodos a JTable para ofrecer un acceso cómodo a algunas necesidades de impresión habituales. Los nuevos métodos print() sencillos permiten añadir soporte de impresión a tu aplicación de forma rápida y fácil. Además, hay un nuevo método getPrintable para necesidades de impresión más avanzadas.",
+      "Como en todas las clases JComponent, puedes usar InputMap y ActionMap para asociar un objeto Action a un KeyStroke y ejecutar la acción en las condiciones indicadas.",
+      "Advertencia: Swing no es seguro para hilos. Para más información, consulta la política de hilos de Swing.",
+      "Advertencia: los objetos serializados de esta clase no serán compatibles con futuras versiones de Swing. El soporte de serialización actual es adecuado para almacenamiento a corto plazo o RMI entre aplicaciones que ejecutan la misma versión de Swing. Desde la 1.4, el paquete java.beans incluye soporte para el almacenamiento a largo plazo de todos los JavaBeans. Consulta java.beans.XMLEncoder."
+    ]
+  },
+  "web-java-se-javax.swing.JTable.getFillsViewportHeight": {
+    "intro": [
+      "Devuelve si esta tabla se hace siempre lo bastante grande para llenar la altura de un viewport contenedor."
+    ],
+    "returns": [
+      "si esta tabla se hace siempre lo bastante grande para llenar la altura de un viewport contenedor"
+    ]
+  },
+  "web-java-se-javax.swing.JTable.print": {
+    "overloads": [
+      {
+        "intro": [
+          "Método de conveniencia que muestra un diálogo de impresión y luego imprime este JTable en modo PrintMode.FIT_WIDTH, sin texto de cabecera ni de pie. Mientras dura la impresión se muestra un diálogo de progreso modal con opción de cancelar."
+        ],
+        "body": [
+          "Nota: en modo headless no se muestran diálogos y la impresión se realiza en la impresora predeterminada."
+        ],
+        "returns": ["true, salvo que el usuario cancele la impresión"],
+        "exceptions": [
+          {
+            "label": "SecurityException",
+            "detail": "si este hilo no tiene permiso para iniciar una solicitud de trabajo de impresión"
+          },
+          {
+            "label": "PrinterException",
+            "detail": "si un error del sistema de impresión hace que se cancele el trabajo"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Método de conveniencia que muestra un diálogo de impresión y luego imprime este JTable en el modo de impresión indicado, sin texto de cabecera ni de pie. Mientras dura la impresión se muestra un diálogo de progreso modal con opción de cancelar."
+        ],
+        "body": [
+          "Nota: en modo headless no se muestran diálogos y la impresión se realiza en la impresora predeterminada."
+        ],
+        "parameters": [
+          {
+            "label": "printMode",
+            "detail": "el modo de impresión que debe usar el Printable"
+          }
+        ],
+        "returns": ["true, salvo que el usuario cancele la impresión"],
+        "exceptions": [
+          {
+            "label": "SecurityException",
+            "detail": "si este hilo no tiene permiso para iniciar una solicitud de trabajo de impresión"
+          },
+          {
+            "label": "PrinterException",
+            "detail": "si un error del sistema de impresión hace que se cancele el trabajo"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Método de conveniencia que muestra un diálogo de impresión y luego imprime este JTable en el modo de impresión indicado, con los textos de cabecera y pie indicados. Mientras dura la impresión se muestra un diálogo de progreso modal con opción de cancelar."
+        ],
+        "body": [
+          "Nota: en modo headless no se muestran diálogos y la impresión se realiza en la impresora predeterminada."
+        ],
+        "parameters": [
+          {
+            "label": "printMode",
+            "detail": "el modo de impresión que debe usar el Printable"
+          },
+          {
+            "label": "headerFormat",
+            "detail": "un MessageFormat que especifica el texto que se usará al imprimir la cabecera, o null para ninguno"
+          },
+          {
+            "label": "footerFormat",
+            "detail": "un MessageFormat que especifica el texto que se usará al imprimir el pie, o null para ninguno"
+          }
+        ],
+        "returns": ["true, salvo que el usuario cancele la impresión"],
+        "exceptions": [
+          {
+            "label": "SecurityException",
+            "detail": "si este hilo no tiene permiso para iniciar una solicitud de trabajo de impresión"
+          },
+          {
+            "label": "PrinterException",
+            "detail": "si un error del sistema de impresión hace que se cancele el trabajo"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Imprime esta tabla tal como indica el método completo print(JTable.PrintMode, MessageFormat, MessageFormat, boolean, PrintRequestAttributeSet, boolean, PrintService), usando la impresora predeterminada como servicio de impresión."
+        ],
+        "parameters": [
+          {
+            "label": "printMode",
+            "detail": "el modo de impresión que debe usar el Printable"
+          },
+          {
+            "label": "headerFormat",
+            "detail": "un MessageFormat que especifica el texto que se usará al imprimir la cabecera, o null para ninguno"
+          },
+          {
+            "label": "footerFormat",
+            "detail": "un MessageFormat que especifica el texto que se usará al imprimir el pie, o null para ninguno"
+          },
+          {
+            "label": "showPrintDialog",
+            "detail": "si se muestra o no un diálogo de impresión"
+          },
+          {
+            "label": "attr",
+            "detail": "un PrintRequestAttributeSet que especifica atributos de impresión, o null para ninguno"
+          },
+          {
+            "label": "interactive",
+            "detail": "si se imprime o no en modo interactivo"
+          }
+        ],
+        "returns": ["true, salvo que el usuario cancele la impresión"],
+        "exceptions": [
+          {
+            "label": "HeadlessException",
+            "detail": "si se pide al método que muestre un diálogo de impresión o que se ejecute de forma interactiva, y GraphicsEnvironment.isHeadless devuelve true"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si este hilo no tiene permiso para iniciar una solicitud de trabajo de impresión"
+          },
+          {
+            "label": "PrinterException",
+            "detail": "si un error del sistema de impresión hace que se cancele el trabajo"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Imprime este JTable. Sigue los pasos que daría la mayoría de los desarrolladores para imprimir un JTable. En resumen, prepara la tabla, llama a getPrintable para obtener un Printable adecuado y luego lo envía a la impresora."
+        ],
+        "body": [
+          "Un parámetro boolean permite indicar si se muestra o no un diálogo de impresión al usuario. Si se muestra, el usuario puede usarlo para cambiar la impresora de destino o los atributos de impresión, o incluso para cancelar la impresión. Otros dos parámetros permiten especificar un PrintService y atributos de impresión. Estos parámetros pueden usarse para dar valores iniciales al diálogo de impresión o para especificar valores cuando el diálogo no se muestra.",
+          "Un segundo parámetro boolean permite indicar si la impresión se realiza en modo interactivo. Si es true, se muestra un diálogo de progreso modal con opción de cancelar mientras dura la impresión. Este diálogo también impide cualquier acción del usuario que pueda afectar a la tabla. Sin embargo, no puede impedir que el código modifique la tabla (por ejemplo, otro hilo que publique actualizaciones con SwingUtilities.invokeLater). Por tanto, es responsabilidad del desarrollador asegurarse de que ningún otro código modifica la tabla de ninguna forma durante la impresión (son modificaciones no válidas los cambios de tamaño, de renderizadores o de los datos subyacentes). El comportamiento de la impresión es indefinido si la tabla cambia durante la impresión.",
+          "Si se especifica false para este parámetro, no se muestra ningún diálogo y la impresión empieza inmediatamente en el hilo de despacho de eventos. Esto bloquea el procesamiento de cualquier otro evento, incluidos los repintados, hasta que termina la impresión. Aunque así se impide de hecho que la tabla cambie, no ofrece una buena experiencia de usuario. Por eso, especificar false solo se recomienda al imprimir desde una aplicación sin GUI visible.",
+          "Nota: intentar mostrar el diálogo de impresión o ejecutar de forma interactiva en modo headless provoca una HeadlessException.",
+          "Antes de obtener el Printable, este método termina limpiamente la edición, si es necesario, para evitar que aparezca un editor en el resultado impreso. Además, JTable prepara sus renderizadores durante la impresión de forma que no se indiquen la selección ni el foco. Para personalizar más el aspecto de la tabla impresa, los desarrolladores pueden proporcionar renderizadores personalizados o código de pintado que dependa del valor de javax.swing.JComponent.isPaintingForPrint().",
+          "Consulta getPrintable para obtener más detalles sobre cómo se imprime la tabla."
+        ],
+        "parameters": [
+          {
+            "label": "printMode",
+            "detail": "el modo de impresión que debe usar el Printable"
+          },
+          {
+            "label": "headerFormat",
+            "detail": "un MessageFormat que especifica el texto que se usará al imprimir la cabecera, o null para ninguno"
+          },
+          {
+            "label": "footerFormat",
+            "detail": "un MessageFormat que especifica el texto que se usará al imprimir el pie, o null para ninguno"
+          },
+          {
+            "label": "showPrintDialog",
+            "detail": "si se muestra o no un diálogo de impresión"
+          },
+          {
+            "label": "attr",
+            "detail": "un PrintRequestAttributeSet que especifica atributos de impresión, o null para ninguno"
+          },
+          {
+            "label": "interactive",
+            "detail": "si se imprime o no en modo interactivo"
+          },
+          {
+            "label": "service",
+            "detail": "el PrintService de destino, o null para usar la impresora predeterminada"
+          }
+        ],
+        "returns": ["true, salvo que el usuario cancele la impresión"],
+        "exceptions": [
+          {
+            "label": "HeadlessException",
+            "detail": "si se pide al método que muestre un diálogo de impresión o que se ejecute de forma interactiva, y GraphicsEnvironment.isHeadless devuelve true"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si existe un gestor de seguridad y su método java.lang.SecurityManager.checkPrintJobAccess impide a este hilo crear una solicitud de trabajo de impresión"
+          },
+          {
+            "label": "PrinterException",
+            "detail": "si un error del sistema de impresión hace que se cancele el trabajo"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTable.setDragEnabled": {
+    "body": [
+      "La tarea de respetar esta propiedad y reconocer el gesto de arrastre del usuario recae en la implementación del look and feel y, en particular, en el TableUI de la tabla. Cuando el arrastre automático está habilitado, la mayoría de los look and feels (incluidos los que heredan de BasicLookAndFeel) inician una operación de arrastrar y soltar cada vez que el usuario pulsa el botón del ratón sobre un elemento (en modo de selección simple) o sobre una selección (en los demás modos) y luego mueve el ratón unos píxeles. Por tanto, poner esta propiedad a true puede tener un efecto sutil en el comportamiento de las selecciones.",
+      "Si se usa un look and feel que ignora esta propiedad, aún puedes iniciar una operación de arrastrar y soltar llamando a exportAsDrag sobre el TransferHandler de la tabla."
+    ],
+    "parameters": [
+      {
+        "label": "b",
+        "detail": "si se habilita o no el arrastre automático"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "HeadlessException",
+        "detail": "si b es true y GraphicsEnvironment.isHeadless() devuelve true"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTable.setFillsViewportHeight": {
+    "parameters": [
+      {
+        "label": "fillsViewportHeight",
+        "detail": "si esta tabla se hace siempre lo bastante grande para llenar la altura de un viewport contenedor"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTextPane.getParagraphAttributes": {
+    "intro": [
+      "Obtiene los atributos de párrafo vigentes en la posición del cursor, o null si no hay ninguno."
+    ],
+    "returns": ["los atributos"]
+  },
+  "web-java-se-javax.swing.JTree": {
+    "body": [
+      "Un nodo concreto de un árbol puede identificarse mediante un TreePath (un objeto que encapsula un nodo y todos sus ancestros) o por su fila de visualización, donde cada fila del área de visualización muestra un nodo. Un nodo expandido es un nodo no hoja (según TreeModel.isLeaf(node) devuelva false) que muestra sus hijos cuando todos sus ancestros están expandidos. Un nodo contraído es uno que los oculta. Un nodo oculto es uno que está bajo un ancestro contraído. Todos los padres de un nodo visualizable están expandidos, pero pueden mostrarse o no. Un nodo mostrado es a la vez visualizable y está en el área de visualización, donde puede verse.",
+      "Los siguientes métodos de JTree usan \"visible\" con el sentido de \"mostrado\":",
+      "isRootVisible()",
+      "setRootVisible()",
+      "scrollPathToVisible()",
+      "scrollRowToVisible()",
+      "getVisibleRowCount()",
+      "setVisibleRowCount()",
+      "El siguiente grupo de métodos de JTree usa \"visible\" con el sentido de \"visualizable\" (bajo un padre expandido):",
+      "isVisible()",
+      "makeVisible()",
+      "Si te interesa saber cuándo cambia la selección, implementa la interfaz TreeSelectionListener y añade la instancia con el método addTreeSelectionListener. valueChanged se invoca cuando cambia la selección; es decir, si el usuario hace clic dos veces en el mismo nodo, valueChanged solo se invoca una vez.",
+      "Si te interesa detectar dobles clics o cuándo el usuario hace clic en un nodo, esté seleccionado o no, te recomendamos lo siguiente:",
+      "final JTree tree = ...;",
+      "MouseListener ml = new MouseAdapter() { public void mousePressed(MouseEvent e) { int selRow = tree.getRowForLocation(e.getX(), e.getY()); TreePath selPath = tree.getPathForLocation(e.getX(), e.getY()); if(selRow != -1) { if(e.getClickCount() == 1) { mySingleClick(selRow, selPath); } else if(e.getClickCount() == 2) { myDoubleClick(selRow, selPath); } } } }; tree.addMouseListener(ml);",
+      "NOTA: este ejemplo obtiene tanto la ruta como la fila, pero solo necesitas obtener la que te interese.",
+      "Para usar JTree con nodos compuestos (por ejemplo, nodos que contienen un icono y texto), crea una subclase de TreeCellRenderer y usa setCellRenderer para indicar al árbol que la use. Para editar esos nodos, crea una subclase de TreeCellEditor y usa setCellEditor.",
+      "Como en todas las clases JComponent, puedes usar InputMap y ActionMap para asociar un objeto Action a un KeyStroke y ejecutar la acción en las condiciones indicadas.",
+      "Advertencia: Swing no es seguro para hilos. Para más información, consulta la política de hilos de Swing.",
+      "Advertencia: los objetos serializados de esta clase no serán compatibles con futuras versiones de Swing. El soporte de serialización actual es adecuado para almacenamiento a corto plazo o RMI entre aplicaciones que ejecutan la misma versión de Swing. Desde la 1.4, el paquete java.beans incluye soporte para el almacenamiento a largo plazo de todos los JavaBeans. Consulta java.beans.XMLEncoder."
+    ]
+  },
+  "web-java-se-javax.swing.JTree.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve un JTree con un modelo de ejemplo. El modelo predeterminado del árbol define como nodo hoja cualquier nodo sin hijos."
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un JTree con cada elemento del array indicado como hijo de un nuevo nodo raíz que no se muestra. Por defecto, el árbol define como nodo hoja cualquier nodo sin hijos."
+        ],
+        "parameters": [
+          {
+            "label": "value",
+            "detail": "un array de Objects"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un JTree con cada elemento del Vector indicado como hijo de un nuevo nodo raíz que no se muestra. Por defecto, el árbol define como nodo hoja cualquier nodo sin hijos."
+        ],
+        "parameters": [
+          {
+            "label": "value",
+            "detail": "un Vector"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un JTree creado a partir de un Hashtable que no muestra la raíz. Cada valor de los pares clave/valor del Hashtable se convierte en hijo del nuevo nodo raíz. Por defecto, el árbol define como nodo hoja cualquier nodo sin hijos."
+        ],
+        "parameters": [
+          {
+            "label": "value",
+            "detail": "un Hashtable"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un JTree con el TreeNode indicado como raíz, que muestra el nodo raíz. Por defecto, el árbol define como nodo hoja cualquier nodo sin hijos."
+        ],
+        "parameters": [
+          {
+            "label": "root",
+            "detail": "un objeto TreeNode"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un JTree con el TreeNode indicado como raíz, que muestra el nodo raíz y que decide si un nodo es hoja de la forma indicada."
+        ],
+        "parameters": [
+          {
+            "label": "root",
+            "detail": "un objeto TreeNode"
+          },
+          {
+            "label": "asksAllowsChildren",
+            "detail": "si es false, cualquier nodo sin hijos es un nodo hoja; si es true, solo son nodos hoja los nodos que no admiten hijos"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve una instancia de JTree que muestra el nodo raíz; el árbol se crea con el modelo de datos indicado."
+        ],
+        "parameters": [
+          {
+            "label": "newModel",
+            "detail": "el TreeModel que se usará como modelo de datos"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JTree.setDragEnabled": {
+    "body": [
+      "La tarea de respetar esta propiedad y reconocer el gesto de arrastre del usuario recae en la implementación del look and feel y, en particular, en el TreeUI del árbol. Cuando el arrastre automático está habilitado, la mayoría de los look and feels (incluidos los que heredan de BasicLookAndFeel) inician una operación de arrastrar y soltar cada vez que el usuario pulsa el botón del ratón sobre un elemento y luego mueve el ratón unos píxeles. Por tanto, poner esta propiedad a true puede tener un efecto sutil en el comportamiento de las selecciones.",
+      "Si se usa un look and feel que ignora esta propiedad, aún puedes iniciar una operación de arrastrar y soltar llamando a exportAsDrag sobre el TransferHandler del árbol."
+    ],
+    "parameters": [
+      {
+        "label": "b",
+        "detail": "si se habilita o no el arrastre automático"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "HeadlessException",
+        "detail": "si b es true y GraphicsEnvironment.isHeadless() devuelve true"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.JViewport.getInsets": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve las dimensiones de los márgenes (borde) como (0,0,0,0), ya que JViewport no admite bordes."
+        ],
+        "returns": ["un Rectangle de dimensión cero y origen cero"]
+      },
+      {
+        "intro": [
+          "Devuelve un objeto Insets con los márgenes de este JViewport. El objeto Insets pasado se reinicializa y se sobrescriben todos sus valores existentes."
+        ],
+        "parameters": [
+          {
+            "label": "insets",
+            "detail": "el objeto Insets que puede reutilizarse"
+          }
+        ],
+        "returns": ["los márgenes de este viewport"]
+      }
+    ]
+  },
+  "web-java-se-javax.swing.KeyStroke.getKeyStroke": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve una instancia compartida de KeyStroke que representa un evento KEY_TYPED para el carácter indicado."
+        ],
+        "parameters": [
+          {
+            "label": "keyChar",
+            "detail": "el valor del carácter de una tecla"
+          }
+        ],
+        "returns": ["un objeto KeyStroke para esa tecla"]
+      },
+      {
+        "intro": [
+          "Devuelve una instancia de KeyStroke, indicando si la tecla se considera activada al pulsarse o al soltarse. A diferencia de todos los demás métodos de fábrica de esta clase, las instancias que devuelve este método no se almacenan en caché ni se comparten necesariamente."
+        ],
+        "parameters": [
+          {
+            "label": "keyChar",
+            "detail": "el valor del carácter de una tecla"
+          },
+          {
+            "label": "onKeyRelease",
+            "detail": "true si este KeyStroke corresponde a soltar una tecla; false en caso contrario."
+          }
+        ],
+        "returns": ["un objeto KeyStroke para esa tecla"],
+        "caveats": ["usa getKeyStroke(char)"]
+      },
+      {
+        "intro": [
+          "Devuelve una instancia compartida de KeyStroke que representa un evento KEY_TYPED para el objeto Character indicado y un conjunto de modificadores. Ten en cuenta que el primer parámetro es de tipo Character y no char. Así se evitan choques involuntarios con las llamadas a getKeyStroke(int keyCode, int modifiers)."
+        ],
+        "body": [
+          "Los modificadores son cualquier combinación de los siguientes:",
+          "java.awt.event.InputEvent.SHIFT_DOWN_MASK",
+          "java.awt.event.InputEvent.CTRL_DOWN_MASK",
+          "java.awt.event.InputEvent.META_DOWN_MASK",
+          "java.awt.event.InputEvent.ALT_DOWN_MASK",
+          "java.awt.event.InputEvent.ALT_GRAPH_DOWN_MASK",
+          "También pueden usarse los modificadores antiguos de abajo, pero se traducen a los modificadores _DOWN_.",
+          "java.awt.event.InputEvent.SHIFT_MASK",
+          "java.awt.event.InputEvent.CTRL_MASK",
+          "java.awt.event.InputEvent.META_MASK",
+          "java.awt.event.InputEvent.ALT_MASK",
+          "java.awt.event.InputEvent.ALT_GRAPH_MASK",
+          "también pueden usarse, pero se traducen a los modificadores _DOWN_.",
+          "Como todos estos números son potencias de dos distintas, cualquier combinación es un entero en el que cada bit representa una tecla modificadora distinta. Usa 0 para no indicar modificadores."
+        ],
+        "parameters": [
+          {
+            "label": "keyChar",
+            "detail": "el objeto Character de un carácter del teclado"
+          },
+          {
+            "label": "modifiers",
+            "detail": "una combinación OR bit a bit de modificadores"
+          }
+        ],
+        "returns": ["un objeto KeyStroke para esa tecla"],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si keyChar es null"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve una instancia compartida de KeyStroke a partir de un código de tecla numérico y un conjunto de modificadores, indicando si la tecla se activa al pulsarse o al soltarse."
+        ],
+        "body": [
+          "Para indicar el código de tecla pueden usarse las constantes de \"tecla virtual\" de java.awt.event.KeyEvent. Por ejemplo:",
+          "java.awt.event.KeyEvent.VK_ENTER",
+          "java.awt.event.KeyEvent.VK_TAB",
+          "java.awt.event.KeyEvent.VK_SPACE",
+          "También puede obtenerse el código de tecla con java.awt.event.KeyEvent.getExtendedKeyCodeForChar.",
+          "Los modificadores son cualquier combinación de:",
+          "java.awt.event.InputEvent.SHIFT_DOWN_MASK",
+          "java.awt.event.InputEvent.CTRL_DOWN_MASK",
+          "java.awt.event.InputEvent.META_DOWN_MASK",
+          "java.awt.event.InputEvent.ALT_DOWN_MASK",
+          "java.awt.event.InputEvent.ALT_GRAPH_DOWN_MASK",
+          "Los modificadores antiguos",
+          "java.awt.event.InputEvent.SHIFT_MASK",
+          "java.awt.event.InputEvent.CTRL_MASK",
+          "java.awt.event.InputEvent.META_MASK",
+          "java.awt.event.InputEvent.ALT_MASK",
+          "java.awt.event.InputEvent.ALT_GRAPH_MASK",
+          "también pueden usarse, pero se traducen a los modificadores _DOWN_.",
+          "Como todos estos números son potencias de dos distintas, cualquier combinación es un entero en el que cada bit representa una tecla modificadora distinta. Usa 0 para no indicar modificadores."
+        ],
+        "parameters": [
+          {
+            "label": "keyCode",
+            "detail": "un int con el código numérico de una tecla"
+          },
+          {
+            "label": "modifiers",
+            "detail": "una combinación OR bit a bit de modificadores"
+          },
+          {
+            "label": "onKeyRelease",
+            "detail": "true si el KeyStroke debe representar soltar una tecla; false en caso contrario."
+          }
+        ],
+        "returns": ["un objeto KeyStroke para esa tecla"]
+      },
+      {
+        "intro": [
+          "Devuelve una instancia compartida de KeyStroke a partir de un código de tecla numérico y un conjunto de modificadores. El KeyStroke devuelto corresponde a pulsar la tecla."
+        ],
+        "body": [
+          "Para indicar el código de tecla pueden usarse las constantes de \"tecla virtual\" de java.awt.event.KeyEvent. Por ejemplo:",
+          "java.awt.event.KeyEvent.VK_ENTER",
+          "java.awt.event.KeyEvent.VK_TAB",
+          "java.awt.event.KeyEvent.VK_SPACE",
+          "También puede obtenerse el código de tecla con java.awt.event.KeyEvent.getExtendedKeyCodeForChar.",
+          "Los modificadores son cualquier combinación de:",
+          "java.awt.event.InputEvent.SHIFT_DOWN_MASK",
+          "java.awt.event.InputEvent.CTRL_DOWN_MASK",
+          "java.awt.event.InputEvent.META_DOWN_MASK",
+          "java.awt.event.InputEvent.ALT_DOWN_MASK",
+          "java.awt.event.InputEvent.ALT_GRAPH_DOWN_MASK",
+          "Los modificadores antiguos",
+          "java.awt.event.InputEvent.SHIFT_MASK",
+          "java.awt.event.InputEvent.CTRL_MASK",
+          "java.awt.event.InputEvent.META_MASK",
+          "java.awt.event.InputEvent.ALT_MASK",
+          "java.awt.event.InputEvent.ALT_GRAPH_MASK",
+          "también pueden usarse, pero se traducen a los modificadores _DOWN_.",
+          "Como todos estos números son potencias de dos distintas, cualquier combinación es un entero en el que cada bit representa una tecla modificadora distinta. Usa 0 para no indicar modificadores."
+        ],
+        "parameters": [
+          {
+            "label": "keyCode",
+            "detail": "un int con el código numérico de una tecla"
+          },
+          {
+            "label": "modifiers",
+            "detail": "una combinación OR bit a bit de modificadores"
+          }
+        ],
+        "returns": ["un objeto KeyStroke para esa tecla"]
+      },
+      {
+        "intro": [
+          "Analiza una cadena y devuelve un KeyStroke. La cadena debe tener la siguiente sintaxis:"
+        ],
+        "body": [
+          "<modifiers>* (<typedID> | <pressedReleasedID>)",
+          "modifiers := shift | control | ctrl | meta | alt | altGraph typedID := typed <typedKey> typedKey := string of length 1 giving Unicode character. pressedReleasedID := (pressed | released) key key := KeyEvent key code name, i.e. the name following \"VK_\".",
+          "Si no se indica typed, pressed ni released, se supone pressed. Algunos ejemplos:",
+          "\"INSERT\" => getKeyStroke(KeyEvent.VK_INSERT, 0); \"control DELETE\" => getKeyStroke(KeyEvent.VK_DELETE, InputEvent.CTRL_MASK); \"alt shift X\" => getKeyStroke(KeyEvent.VK_X, InputEvent.ALT_MASK | InputEvent.SHIFT_MASK); \"alt shift released X\" => getKeyStroke(KeyEvent.VK_X, InputEvent.ALT_MASK | InputEvent.SHIFT_MASK, true); \"typed a\" => getKeyStroke('a');",
+          "Para mantener la compatibilidad hacia atrás, especificar un String null o un String con formato incorrecto devuelve null."
+        ],
+        "parameters": [
+          {
+            "label": "s",
+            "detail": "un String con el formato descrito arriba"
+          }
+        ],
+        "returns": [
+          "un objeto KeyStroke para ese String, o null si el String indicado es null o tiene un formato incorrecto"
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.swing.LayoutStyle.getPreferredGap": {
+    "body": [
+      "int gap = getPreferredGap(component1, component2, ComponentPlacement.RELATED, SwingConstants.NORTH, parent);",
+      "El parámetro type indica la relación entre los dos componentes. Si los dos componentes van a estar en el mismo padre y muestran elementos parecidos y relacionados lógicamente, usa RELATED. Si van a estar en el mismo padre pero muestran elementos sin relación lógica, usa UNRELATED. Algunos look and feels pueden no distinguir entre los tipos RELATED y UNRELATED.",
+      "El valor devuelto no pretende tener en cuenta el tamaño ni la posición actuales de component2 o component1. El valor devuelto puede considerar diversas propiedades de los componentes. Por ejemplo, el espacio puede variar según el tamaño de fuente o el tamaño preferido del componente."
+    ],
+    "parameters": [
+      {
+        "label": "component1",
+        "detail": "el JComponent respecto al que se coloca component2"
+      },
+      {
+        "label": "component2",
+        "detail": "el JComponent que se coloca"
+      },
+      {
+        "label": "position",
+        "detail": "la posición en la que se coloca component2 respecto a component1; una de SwingConstants.NORTH, SwingConstants.SOUTH, SwingConstants.EAST o SwingConstants.WEST"
+      },
+      {
+        "label": "type",
+        "detail": "cómo se colocan los dos componentes"
+      },
+      {
+        "label": "parent",
+        "detail": "el padre de component2; puede diferir del padre real y puede ser null"
+      }
+    ],
+    "returns": ["el espacio que se deja entre los dos componentes"],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si component1, component2 o type es null"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si position no es SwingConstants.NORTH, SwingConstants.SOUTH, SwingConstants.EAST ni SwingConstants.WEST"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.ListCellRenderer": {
+    "body": [
+      "{@code class MyCellRenderer extends JLabel implements ListCellRenderer { public MyCellRenderer() { setOpaque(true); }",
+      "public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {",
+      "setText(value.toString());",
+      "Color background; Color foreground;",
+      "// check if this cell represents the current DnD drop location JList.DropLocation dropLocation = list.getDropLocation(); if (dropLocation != null && !dropLocation.isInsert() && dropLocation.getIndex() == index) {",
+      "background = Color.BLUE; foreground = Color.WHITE;",
+      "// check if this cell is selected } else if (isSelected) { background = Color.RED; foreground = Color.WHITE;",
+      "// unselected, and not the DnD drop location } else { background = Color.WHITE; foreground = Color.BLACK; };",
+      "setBackground(background); setForeground(foreground);",
+      "return this; } } }"
+    ],
+    "parameters": [
+      {
+        "label": "<E>",
+        "detail": "el tipo de valores para los que puede usarse este renderizador"
       }
     ]
   },
@@ -36253,6 +37492,23 @@
         "label": "valueIsAdjusting",
         "detail": "el nuevo valor de la propiedad"
       }
+    ]
+  },
+  "web-java-se-javax.swing.LookAndFeel": {
+    "body": [
+      "Swing se basa en que cada subclase de JComponent tiene una implementación de una subclase concreta de ComponentUI. A la ComponentUI se la suele llamar \"la ui\", \"ui del componente\" o \"delegado del look and feel\". La subclase de ComponentUI se encarga de proporcionar la funcionalidad del componente específica del look and feel. Por ejemplo, JTree requiere una implementación de la subclase de ComponentUI TreeUI. La implementación de la subclase concreta de ComponentUI la proporciona el LookAndFeel. Cada subclase de JComponent identifica la subclase de ComponentUI que necesita mediante el método getUIClassID de JComponent.",
+      "Cada implementación de LookAndFeel debe proporcionar una implementación de la subclase de ComponentUI adecuada especificando un valor para cada uno de los ids de clase ui de Swing en el objeto UIDefaults que devuelve getDefaults. Por ejemplo, BasicLookAndFeel usa BasicTreeUI como implementación concreta de TreeUI. Esto se consigue porque BasicLookAndFeel incluye el par clave-valor \"TreeUI\"-\"javax.swing.plaf.basic.BasicTreeUI\" en el UIDefaults que devuelve getDefaults. Consulta UIDefaults.getUI(JComponent) para ver cómo se obtiene la implementación de la subclase de ComponentUI.",
+      "Cuando se instala un LookAndFeel, el UIManager no comprueba que exista una entrada para todos los ids de clase ui. Por eso se producirán excepciones aleatorias si el look and feel actual no ha proporcionado un valor para un id de clase ui concreto y se crea una instancia de la subclase de JComponent correspondiente.",
+      "Recomendaciones para los look and feels",
+      "Como se indica en UIManager, cada LookAndFeel tiene la oportunidad de proporcionar un conjunto de valores predeterminados que se combinan en capas con los del desarrollador y los del sistema. Algunos componentes de Swing requieren que el look and feel proporcione un conjunto concreto de valores predeterminados. Estos se documentan en las clases que los requieren.",
+      "ComponentUI y valores predeterminados",
+      "Normalmente, todas las ComponentUI necesitan establecer varias propiedades en el JComponent para el que proporcionan el look and feel. Esto suele hacerse cuando la ComponentUI se instala en el JComponent. Una propiedad solo debe establecerse si el desarrollador no la ha establecido. Para valores no primitivos, se recomienda que la ComponentUI solo cambie la propiedad del JComponent si el valor actual es null o implementa UIResource. Si el valor actual es null o implementa UIResource, eso indica que el desarrollador no ha establecido la propiedad y la ui es libre de cambiarla. Por ejemplo, BasicButtonUI.installDefaults solo cambia la fuente del JButton si el valor devuelto por button.getFont() es null o implementa UIResource. En cambio, si button.getFont() devolviera un valor no nulo que no implementara UIResource, BasicButtonUI.installDefaults no cambiaría la fuente del JButton.",
+      "Para valores primitivos, como opaque, debe invocarse el método installProperty. installProperty solo cambia la propiedad correspondiente si el desarrollador no ha cambiado su valor.",
+      "Las implementaciones de ComponentUI deberían usar los distintos métodos install que ofrece esta clase, ya que realizan las comprobaciones necesarias e instalan la propiedad siguiendo las pautas recomendadas.",
+      "Excepciones",
+      "Todos los métodos install que ofrece LookAndFeel necesitan acceder a los valores predeterminados si el valor de la propiedad que se cambia es null o un UIResource. Por ejemplo, instalar la fuente hace lo siguiente:",
+      "JComponent c; Font font = c.getFont(); if (font == null || (font instanceof UIResource)) { c.setFont(UIManager.getFont(\"fontKey\")); }",
+      "Si la fuente es null o un UIResource, se consulta la tabla de valores predeterminados con la clave fontKey. Todos los métodos get de UIDefaults lanzan una NullPointerException si se les pasa null. Por eso, salvo que se indique lo contrario, cada uno de los métodos install de LookAndFeel lanza una NullPointerException si el valor actual es null o un UIResource y la clave de valores predeterminados indicada es null. Además, salvo que se especifique lo contrario, todos los métodos install lanzan una NullPointerException si se les pasa un componente null."
     ]
   },
   "web-java-se-javax.swing.plaf.nimbus.State.toString": {
