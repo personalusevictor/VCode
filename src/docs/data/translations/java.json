@@ -30932,6 +30932,992 @@
       "Según el contexto, la OpenDataException o la InvalidObjectException puede ir envuelta en otra excepción, como RuntimeMBeanException o UndeclaredThrowableException. Para toda excepción lanzada se cumplirá la condición C: \"e es una OpenDataException o InvalidObjectException (según corresponda), o C se cumple para e.getCause()\"."
     ]
   },
+  "web-java-se-javax.management.ObjectName": {
+    "body": [
+      "Una instancia de esta clase puede representar:",
+      "Un nombre de objeto",
+      "Un patrón de nombre de objeto, en el contexto de una consulta",
+      "Un nombre de objeto tiene dos partes: el dominio y las propiedades clave.",
+      "El dominio es una cadena que no contiene el carácter dos puntos (:). Se recomienda que no contenga la cadena \"//\", reservada para uso futuro.",
+      "Si el dominio contiene al menos un carácter comodín asterisco (*) o interrogación (?), el nombre de objeto es un patrón. El asterisco coincide con cualquier secuencia de cero o más caracteres, y la interrogación con un único carácter cualquiera.",
+      "Si el dominio está vacío, en ciertos contextos se sustituye por el dominio predeterminado del MBean server en el que se usa el ObjectName.",
+      "Las propiedades clave son un conjunto no ordenado de claves y valores asociados.",
+      "Cada clave es una cadena no vacía que no puede contener coma (,), igual (=), dos puntos, asterisco ni interrogación. Una misma clave no puede aparecer dos veces en un ObjectName.",
+      "Cada valor asociado a una clave es una cadena, entre comillas o sin ellas.",
+      "Un valor sin comillas es una cadena, posiblemente vacía, que no puede contener coma, igual, dos puntos ni comillas.",
+      "Si el valor sin comillas contiene al menos un comodín asterisco o interrogación, el nombre de objeto es un patrón de valor de propiedad. El asterisco coincide con cualquier secuencia de cero o más caracteres, y la interrogación con un único carácter cualquiera.",
+      "Un valor entre comillas consta de una comilla (\"), una cadena posiblemente vacía y otra comilla. Dentro de la cadena, la barra invertida (\\) tiene un significado especial y debe ir seguida de uno de estos caracteres:",
+      "Otra barra invertida. La segunda no tiene significado especial y ambas representan una sola barra invertida.",
+      "El carácter 'n'. Ambos representan un salto de línea ('\\n' en Java).",
+      "Una comilla. Ambos representan una comilla, que no se considera el final del valor. Para que el valor sea válido debe haber una comilla de cierre.",
+      "Una interrogación (?) o un asterisco (*). Ambos representan una interrogación o un asterisco, respectivamente.",
+      "Una comilla no puede aparecer dentro de un valor entre comillas salvo inmediatamente después de un número impar de barras invertidas seguidas.",
+      "Las comillas que rodean un valor y las barras invertidas dentro de él se consideran parte del valor.",
+      "Si el valor entre comillas contiene al menos un asterisco o interrogación no precedido de barra invertida, se consideran comodines y el nombre de objeto es un patrón de valor de propiedad. El asterisco coincide con cualquier secuencia de cero o más caracteres, y la interrogación con un único carácter cualquiera.",
+      "Un ObjectName puede ser un patrón de lista de propiedades. En ese caso puede tener cero o más claves y valores asociados. Coincide con un ObjectName que no es patrón cuyo dominio coincide y que contiene las mismas claves y valores, y posiblemente otros.",
+      "Un ObjectName es un patrón de valor de propiedad cuando al menos uno de sus valores de propiedades clave, entre comillas o no, contiene los comodines asterisco o interrogación como se describe arriba. En ese caso tiene una o más claves con valores, y al menos un valor contiene comodines. Coincide con un ObjectName que no es patrón cuyo dominio coincide y que contiene las mismas claves con valores que coinciden; si además es un patrón de lista de propiedades, el ObjectName puede contener otras claves y valores.",
+      "Un ObjectName es un patrón de propiedades si es un patrón de lista de propiedades, un patrón de valor de propiedad o ambos.",
+      "Un ObjectName es un patrón si su dominio contiene un comodín o si es un patrón de propiedades.",
+      "Si un ObjectName no es un patrón, debe contener al menos una clave con su valor.",
+      "Ejemplos de patrones de ObjectName:",
+      "*:type=Foo,name=Bar coincide con nombres de cualquier dominio cuyo conjunto exacto de claves es type=Foo,name=Bar.",
+      "d:type=Foo,name=Bar,* coincide con nombres del dominio d que tienen las claves type=Foo,name=Bar y cero o más claves más.",
+      "*:type=Foo,name=Bar,* coincide con nombres de cualquier dominio que tienen las claves type=Foo,name=Bar y cero o más claves más.",
+      "d:type=F?o,name=Bar coincide, por ejemplo, con d:type=Foo,name=Bar y d:type=Fro,name=Bar.",
+      "d:type=F*o,name=Bar coincide, por ejemplo, con d:type=Fo,name=Bar y d:type=Frodo,name=Bar.",
+      "d:type=Foo,name=\"B*\" coincide, por ejemplo, con d:type=Foo,name=\"Bling\". Los comodines se reconocen incluso entre comillas y, como otros caracteres especiales, pueden escaparse con \\.",
+      "Un ObjectName puede escribirse como String con estos elementos en orden:",
+      "El dominio.",
+      "Dos puntos (:).",
+      "Una lista de propiedades clave, como se define abajo.",
+      "Una lista de propiedades clave escrita como String es una lista de elementos separados por comas. Cada elemento es un asterisco o una propiedad clave, que consta de una clave, un igual (=) y el valor asociado.",
+      "Como mucho un elemento de la lista puede ser un asterisco. Si lo hay, el ObjectName es un patrón de lista de propiedades.",
+      "Los espacios no tienen significado especial en un String que representa un ObjectName. Por ejemplo, el String:",
+      "domain: key1 = value1 , key2 = value2",
+      "representa un ObjectName con dos claves. Cada nombre de clave tiene seis caracteres, el primero y el último son espacios. El valor asociado a la clave \" key1 \" también empieza y termina con un espacio.",
+      "Además de las restricciones anteriores, ninguna parte de un ObjectName puede contener un salto de línea ('\\n'), ni el dominio ni una clave ni un valor, entre comillas o no. El salto de línea puede representarse en un valor entre comillas con la secuencia \\n.",
+      "Las reglas sobre caracteres especiales y comillas se aplican sea cual sea el constructor usado para crear el ObjectName.",
+      "Para evitar choques entre MBeans de distintos fabricantes, una convención útil es empezar el nombre de dominio con el nombre DNS invertido de la organización que define los MBeans, seguido de un punto y una cadena cuyo significado decide esa organización. Por ejemplo, los MBeans definidos por example.com tendrían dominios como com.example.MyDomain. Es básicamente la misma convención que la de los nombres de paquetes Java.",
+      "El serialVersionUID de esta clase es 1081892073854801359L."
+    ]
+  },
+  "web-java-se-javax.management.ObjectName.apply": {
+    "intro": [
+      "Comprueba si este ObjectName, que puede ser un patrón, coincide con otro. Si name es un patrón, el resultado es false. Si este ObjectName es un patrón, el resultado es true si y solo si name coincide con él. Si ninguno es un patrón, el resultado es true si y solo si son iguales según equals(Object)."
+    ],
+    "parameters": [
+      {
+        "label": "name",
+        "detail": "El nombre del MBean con el que se compara."
+      }
+    ],
+    "returns": ["true si name coincide con este ObjectName."],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si name es null."
+      }
+    ]
+  },
+  "web-java-se-javax.management.StandardMBean.postRegister": {
+    "body": [
+      "La implementación predeterminada no hace nada para los Standard MBeans. Para los MXBeans, deshace el trabajo de preRegister si el registro falla.",
+      "Es buena práctica que una subclase que sobrescriba este método llame al método sobrescrito con super.postRegister(...). Es necesario si el objeto es un MXBean al que hacen referencia atributos u operaciones de otros MXBeans."
+    ],
+    "parameters": [
+      {
+        "label": "registrationDone",
+        "detail": "Indica si el MBean se ha registrado correctamente en el MBean server. false significa que la fase de registro ha fallado."
+      }
+    ]
+  },
+  "web-java-se-javax.management.loading.MLet": {
+    "body": [
+      "La etiqueta MLET tiene esta sintaxis:",
+      "<MLET",
+      "CODE = class | OBJECT = serfile",
+      "ARCHIVE = \"archiveList\"",
+      "[CODEBASE = codebaseURL]",
+      "[NAME = mbeanname]",
+      "[VERSION = version]",
+      "[arglist]",
+      "</MLET>",
+      "donde:",
+      "CODE = class",
+      "Este atributo indica el nombre completo de la clase Java, incluido el paquete, del MBean que se obtiene. El archivo .class compilado del MBean debe estar en uno de los .jar indicados en el atributo ARCHIVE. Debe aparecer CODE u OBJECT.",
+      "OBJECT = serfile",
+      "Este atributo indica el archivo .ser con una representación serializada del MBean que se obtiene. El archivo debe estar en uno de los .jar indicados en el atributo ARCHIVE. Si el .jar contiene una jerarquía de directorios, indica la ruta del archivo dentro de ella; si no, no se encontrará. Debe aparecer CODE u OBJECT.",
+      "ARCHIVE = \"archiveList\"",
+      "Este atributo obligatorio indica uno o más archivos .jar con MBeans u otros recursos que usa el MBean que se obtiene. Uno de ellos debe contener el archivo indicado en CODE u OBJECT. Si archivelist contiene más de un archivo:",
+      "Cada archivo debe separarse del siguiente con una coma (,).",
+      "archivelist debe ir entre comillas dobles.",
+      "Todos los .jar de archivelist deben estar en el directorio indicado por la URL base del código.",
+      "CODEBASE = codebaseURL",
+      "Este atributo opcional indica la URL base del código del MBean que se obtiene, es decir, el directorio que contiene los .jar indicados en ARCHIVE. Solo debe indicarse si los .jar no están en el mismo directorio que el archivo de texto m-let. Si no se indica, se usa la URL base del archivo de texto m-let.",
+      "NAME = mbeanname",
+      "Este atributo opcional indica el nombre de objeto que se asigna a la instancia del MBean cuando el servicio m-let la registra. Si mbeanname empieza por dos puntos (:), la parte de dominio es el dominio predeterminado del MBean server, el que devuelve javax.management.MBeanServer.getDefaultDomain().",
+      "VERSION = version",
+      "Este atributo opcional indica el número de versión del MBean y de sus .jar. Puede usarse para indicar que los .jar se carguen del servidor para actualizar los guardados en la caché local la próxima vez que se cargue el archivo de texto m-let. version debe ser una serie de enteros decimales no negativos separados por puntos.",
+      "arglist",
+      "Este atributo opcional indica una lista de uno o más parámetros para el MBean que se instancia, es decir, los parámetros que se pasan a su constructor. Cada elemento de arglist se indica con esta sintaxis:",
+      "<ARG TYPE=argumentType VALUE=value>, donde:",
+      "argumentType es el tipo del argumento que se pasa como parámetro al constructor del MBean.",
+      "El tipo de los argumentos debe ser un tipo primitivo de Java o un tipo básico de Java (java.lang.Boolean, java.lang.Byte, java.lang.Short, java.lang.Long, java.lang.Integer, java.lang.Float, java.lang.Double, java.lang.String).",
+      "Al cargar un archivo de texto m-let, se crea y registra una instancia de cada MBean indicado en él.",
+      "El servicio m-let extiende java.net.URLClassLoader y puede usarse para cargar clases y archivos jar remotos en la VM del agente.",
+      "Nota: el cargador de clases MLet usa javax.management.MBeanServerFactory.getClassLoaderRepository(javax.management.MBeanServer) para cargar las clases que no encuentra en los jar cargados."
+    ],
+    "caveats": [
+      "Esta API forma parte de los Management Applets (m-lets), una funcionalidad heredada que permite cargar MBeans remotos. No puede usarse sin un Security Manager, que está obsoleto y se eliminará en una versión futura. Por eso esta API también está obsoleta y se eliminará. No hay sustituto."
+    ]
+  },
+  "web-java-se-javax.management.loading.MLet.postRegister": {
+    "parameters": [
+      {
+        "label": "registrationDone",
+        "detail": "Indica si el m-let se ha registrado correctamente en el MBean server. false significa que la fase de registro ha fallado."
+      }
+    ]
+  },
+  "web-java-se-javax.management.modelmbean.ModelMBeanAttributeInfo": {
+    "body": [
+      "Los campos del descriptor incluyen, entre otros, los siguientes. Cuando el tipo de la tabla es Number, también puede usarse un String con la representación decimal de un Long.",
+      "Campos de ModelMBeanAttributeInfo",
+      "Nombre · Tipo · Significado",
+      "name · String · Nombre del atributo.",
+      "descriptorType · String · Debe ser \"attribute\".",
+      "value · Object · Valor actual (guardado) del atributo.",
+      "default · Object · Valor predeterminado del atributo.",
+      "displayName · String · Nombre del atributo que se muestra.",
+      "getMethod · String · Nombre del descriptor de operación del método get.",
+      "setMethod · String · Nombre del descriptor de operación del método set.",
+      "protocolMap · Descriptor · Consulta la sección \"Protocol Map Support\" de la especificación JMX. Las correspondencias deben ser adecuadas para el atributo y las entradas pueden actualizarse o ampliarse en tiempo de ejecución.",
+      "persistPolicy · String · Uno de: OnUpdate|OnTimer|NoMoreOftenThan|OnUnregister|Always|Never. Consulta la sección \"MBean Descriptor Fields\" de la especificación JMX.",
+      "persistPeriod · Number · Frecuencia del ciclo de persistencia en segundos. Se usa cuando persistPolicy es \"OnTimer\" o \"NoMoreOftenThan\".",
+      "currencyTimeLimit · Number · Cuánto tiempo es válido el valor: <0 nunca, =0 siempre, >0 segundos.",
+      "lastUpdatedTimeStamp · Number · Cuándo se fijó el valor.",
+      "visibility · Number · 1-4, donde 1: siempre visible; 4: rara vez visible.",
+      "presentationString · String · Cadena en formato XML para presentar los datos.",
+      "El descriptor predeterminado contiene los campos name, descriptorType y displayName. El valor predeterminado de name y displayName es el nombre del atributo.",
+      "Nota: por incoherencias de versiones anteriores de esta especificación, se recomienda no usar valores negativos ni cero en currencyTimeLimit. Para indicar que un valor guardado nunca es válido, omite el campo; para indicar que siempre lo es, usa un número muy grande.",
+      "El serialVersionUID de esta clase es 6181543027787327345L."
+    ]
+  },
+  "web-java-se-javax.management.modelmbean.ModelMBeanInfo.getMBeanDescriptor": {
+    "body": [
+      "Los campos del descriptor incluyen, entre otros, los siguientes. Cuando el tipo de la tabla es Number, también puede usarse un String con la representación decimal de un Long.",
+      "Campos de ModelMBean",
+      "Nombre · Tipo · Significado",
+      "name · String · Nombre del MBean.",
+      "descriptorType · String · Debe ser \"mbean\".",
+      "displayName · String · Nombre del MBean que se muestra.",
+      "persistPolicy · String · Uno de: OnUpdate|OnTimer|NoMoreOftenThan|OnUnregister|Always|Never. Consulta la sección \"MBean Descriptor Fields\" de la especificación JMX.",
+      "persistLocation · String · Nombre completo del directorio en el que se persiste el MBean (si corresponde).",
+      "persistFile · String · Nombre del archivo en el que se persiste el MBean.",
+      "persistPeriod · Number · Frecuencia del ciclo de persistencia en segundos, para las PersistPolicy OnTime y NoMoreOftenThan",
+      "currencyTimeLimit · Number · Cuánto tiempo es válido el valor guardado: <0 nunca, =0 siempre, >0 segundos.",
+      "log · String · t: registrar todas las notificaciones; f: no registrar ninguna.",
+      "logfile · String · Nombre completo del archivo en el que se registran los eventos.",
+      "visibility · Number · 1-4, donde 1: siempre visible; 4: rara vez visible.",
+      "export · String · Nombre con el que se exporta o expone este MBean para que otros agentes JMX puedan encontrarlo.",
+      "presentationString · String · Cadena en formato XML para presentar los datos asociados al MBean.",
+      "El descriptor predeterminado es: name=className,descriptorType=\"mbean\", displayName=className, persistPolicy=\"never\",log=\"F\",visibility=\"1\". Si el descriptor no contiene todos estos campos, se añaden con estos valores predeterminados.",
+      "Nota: por incoherencias de versiones anteriores de esta especificación, se recomienda no usar valores negativos ni cero en currencyTimeLimit. Para indicar que un valor guardado nunca es válido, omite el campo; para indicar que siempre lo es, usa un número muy grande."
+    ],
+    "returns": ["el descriptor del MBean."],
+    "exceptions": [
+      {
+        "label": "MBeanException",
+        "detail": "Envuelve una excepción de comunicación distribuida."
+      },
+      {
+        "label": "RuntimeOperationsException",
+        "detail": "se produjo una RuntimeException al obtener el descriptor."
+      }
+    ]
+  },
+  "web-java-se-javax.management.modelmbean.ModelMBeanInfoSupport.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un ModelMBeanInfoSupport duplicado del ModelMBeanInfo dado. El objeto devuelto es una copia superficial: no se clonan ni el Descriptor ni los arrays que contiene (ModelMBeanAttributeInfo[], etc.). Sirve sobre todo para modificar el Descriptor de la instancia devuelta con setDescriptor sin afectar al del original."
+        ],
+        "parameters": [
+          {
+            "label": "mbi",
+            "detail": "la instancia de ModelMBeanInfo a partir de la que se inicializa el nuevo ModelMBeanInfo."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un ModelMBeanInfoSupport con la información dada y un descriptor predeterminado: name=className, descriptorType=\"mbean\", displayName=className, persistPolicy=\"never\", log=\"F\", visibility=\"1\""
+        ],
+        "parameters": [
+          {
+            "label": "className",
+            "detail": "nombre de clase del MBean"
+          },
+          {
+            "label": "description",
+            "detail": "descripción legible del ModelMBean"
+          },
+          {
+            "label": "attributes",
+            "detail": "array de objetos ModelMBeanAttributeInfo con descriptores"
+          },
+          {
+            "label": "constructors",
+            "detail": "array de objetos ModelMBeanConstructorInfo con descriptores"
+          },
+          {
+            "label": "operations",
+            "detail": "array de objetos ModelMBeanOperationInfo con descriptores"
+          },
+          {
+            "label": "notifications",
+            "detail": "array de objetos ModelMBeanNotificationInfo con descriptores"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un ModelMBeanInfoSupport con la información dada y el descriptor pasado como parámetro."
+        ],
+        "parameters": [
+          {
+            "label": "className",
+            "detail": "nombre de clase del MBean"
+          },
+          {
+            "label": "description",
+            "detail": "descripción legible del ModelMBean"
+          },
+          {
+            "label": "attributes",
+            "detail": "array de objetos ModelMBeanAttributeInfo con descriptores"
+          },
+          {
+            "label": "constructors",
+            "detail": "array de objetos ModelMBeanConstructorInfo con descriptor"
+          },
+          {
+            "label": "operations",
+            "detail": "array de objetos ModelMBeanOperationInfo con descriptor"
+          },
+          {
+            "label": "notifications",
+            "detail": "array de objetos ModelMBeanNotificationInfo con descriptor"
+          },
+          {
+            "label": "mbeandescriptor",
+            "detail": "el descriptor que se usa como MBeanDescriptor con la política general del MBean. Si es null, se crea uno predeterminado: name=className, descriptorType=\"mbean\", displayName=className, persistPolicy=\"never\", log=\"F\", visibility=\"1\". Si el descriptor no contiene todos estos campos, se añaden los que faltan con estos valores predeterminados."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "RuntimeOperationsException",
+            "detail": "Envuelve una IllegalArgumentException si el descriptor pasado no es válido. (Consulta getMBeanDescriptor para la definición de descriptor de MBean válido)."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.management.modelmbean.ModelMBeanInfoSupport.getMBeanDescriptor": {
+    "body": [
+      "Los campos del descriptor incluyen, entre otros, los siguientes. Cuando el tipo de la tabla es Number, también puede usarse un String con la representación decimal de un Long.",
+      "Campos de ModelMBean",
+      "Nombre · Tipo · Significado",
+      "name · String · Nombre del MBean.",
+      "descriptorType · String · Debe ser \"mbean\".",
+      "displayName · String · Nombre del MBean que se muestra.",
+      "persistPolicy · String · Uno de: OnUpdate|OnTimer|NoMoreOftenThan|OnUnregister|Always|Never. Consulta la sección \"MBean Descriptor Fields\" de la especificación JMX.",
+      "persistLocation · String · Nombre completo del directorio en el que se persiste el MBean (si corresponde).",
+      "persistFile · String · Nombre del archivo en el que se persiste el MBean.",
+      "persistPeriod · Number · Frecuencia del ciclo de persistencia en segundos, para las PersistPolicy OnTime y NoMoreOftenThan",
+      "currencyTimeLimit · Number · Cuánto tiempo es válido el valor guardado: <0 nunca, =0 siempre, >0 segundos.",
+      "log · String · t: registrar todas las notificaciones; f: no registrar ninguna.",
+      "logfile · String · Nombre completo del archivo en el que se registran los eventos.",
+      "visibility · Number · 1-4, donde 1: siempre visible; 4: rara vez visible.",
+      "export · String · Nombre con el que se exporta o expone este MBean para que otros agentes JMX puedan encontrarlo.",
+      "presentationString · String · Cadena en formato XML para presentar los datos asociados al MBean.",
+      "El descriptor predeterminado es: name=className,descriptorType=\"mbean\", displayName=className, persistPolicy=\"never\",log=\"F\",visibility=\"1\". Si el descriptor no contiene todos estos campos, se añaden con estos valores predeterminados.",
+      "Nota: por incoherencias de versiones anteriores de esta especificación, se recomienda no usar valores negativos ni cero en currencyTimeLimit. Para indicar que un valor guardado nunca es válido, omite el campo; para indicar que siempre lo es, usa un número muy grande."
+    ],
+    "returns": ["el descriptor del MBean."],
+    "exceptions": [
+      {
+        "label": "MBeanException",
+        "detail": "Envuelve una excepción de comunicación distribuida."
+      },
+      {
+        "label": "RuntimeOperationsException",
+        "detail": "se produjo una RuntimeException al obtener el descriptor."
+      }
+    ]
+  },
+  "web-java-se-javax.management.modelmbean.ModelMBeanNotificationBroadcaster.addAttributeChangeNotificationListener": {
+    "intro": [
+      "Registra como listener un objeto que implementa la interfaz NotificationListener. Su método 'handleNotification()' se invoca cada vez que el ModelMBean emite o hace pasar una attributeChangeNotification. Esto no incluye otras notificaciones, que deben registrarse por separado. Se generará una AttributeChangeNotification para este attributeName."
+    ],
+    "parameters": [
+      {
+        "label": "listener",
+        "detail": "El objeto listener que manejará las notificaciones emitidas por el MBean registrado."
+      },
+      {
+        "label": "attributeName",
+        "detail": "El nombre del atributo del ModelMBean del que se reciben notificaciones de cambio. Si es null, cualquier cambio de atributo emite una attributeChangeNotification."
+      },
+      {
+        "label": "handback",
+        "detail": "El contexto que se envía al listener con la notificación cuando se emite."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "El listener no puede ser null."
+      },
+      {
+        "label": "MBeanException",
+        "detail": "Envuelve una excepción de comunicación distribuida."
+      },
+      {
+        "label": "RuntimeOperationsException",
+        "detail": "Envuelve una IllegalArgumentException: el nombre de atributo pasado no existe."
+      }
+    ]
+  },
+  "web-java-se-javax.management.modelmbean.ModelMBeanNotificationInfo": {
+    "body": [
+      "Los campos del descriptor incluyen, entre otros, los siguientes. Cuando el tipo de la tabla es Number, también puede usarse un String con la representación decimal de un Long.",
+      "Campos de ModelMBeanNotificationInfo",
+      "Nombre · Tipo · Significado",
+      "name · String · Nombre de la notificación.",
+      "descriptorType · String · Debe ser \"notification\".",
+      "severity · Number · 0-6, donde 0: desconocida; 1: irrecuperable; 2: crítica, fallo; 3: grave, severa; 4: menor, marginal, error; 5: aviso; 6: normal, resuelta, informativa",
+      "messageID · String · Clave única del texto del mensaje (para traducción y análisis).",
+      "messageText · String · Texto de la notificación.",
+      "log · String · T: registrar el mensaje; F: no registrarlo.",
+      "logfile · String · nombre completo del archivo adecuado al sistema operativo.",
+      "visibility · Number · 1-4, donde 1: siempre visible; 4: rara vez visible.",
+      "presentationString · String · Cadena en formato XML para presentar los datos.",
+      "El descriptor predeterminado contiene los campos name, descriptorType, displayName y severity(=6). El valor predeterminado de name y displayName es el nombre de la clase Notification (indicado en el parámetro name del constructor de ModelMBeanNotificationInfo).",
+      "El serialVersionUID de esta clase es -7445681389570207141L."
+    ]
+  },
+  "web-java-se-javax.management.modelmbean.ModelMBeanOperationInfo": {
+    "body": [
+      "Los campos del descriptor incluyen, entre otros, los siguientes. Cuando el tipo de la tabla es Number, también puede usarse un String con la representación decimal de un Long.",
+      "Campos de ModelMBeanOperationInfo",
+      "Nombre · Tipo · Significado",
+      "name · String · Nombre de la operación.",
+      "descriptorType · String · Debe ser \"operation\".",
+      "class · String · Clase en la que se define el método (nombre completo).",
+      "role · String · Debe ser \"operation\", \"getter\" o \"setter\".",
+      "targetObject · Object · Objeto sobre el que se ejecuta este método.",
+      "targetType · String · Tipo de referencia de targetObject. Puede ser: ObjectReference | Handle | EJBHandle | IOR | RMIReference.",
+      "value · Object · Valor guardado de la operación.",
+      "displayName · String · Nombre legible de la operación que se muestra.",
+      "currencyTimeLimit · Number · Cuánto tiempo es válido el valor guardado.",
+      "lastUpdatedTimeStamp · Number · Cuándo se fijó el valor guardado.",
+      "visibility · Number · 1-4, donde 1: siempre visible; 4: rara vez visible.",
+      "presentationString · String · Cadena en formato XML que describe cómo presentar la operación",
+      "El descriptor predeterminado tiene fijados los campos name, descriptorType, displayName y role. El valor predeterminado de name y displayName es el nombre de la operación.",
+      "Nota: por incoherencias de versiones anteriores de esta especificación, se recomienda no usar valores negativos ni cero en currencyTimeLimit. Para indicar que un valor guardado nunca es válido, omite el campo; para indicar que siempre lo es, usa un número muy grande.",
+      "El serialVersionUID de esta clase es 6532732096650090465L."
+    ]
+  },
+  "web-java-se-javax.management.modelmbean.RequiredModelMBean.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": ["Crea un RequiredModelMBean con un ModelMBeanInfo vacío."],
+        "body": [
+          "El MBeanInfo y los Descriptors del RequiredModelMBean pueden personalizarse con setModelMBeanInfo. Una vez personalizados, el RequiredModelMBean puede registrarse en el MBeanServer."
+        ],
+        "exceptions": [
+          {
+            "label": "MBeanException",
+            "detail": "Envuelve una excepción de comunicación distribuida."
+          },
+          {
+            "label": "RuntimeOperationsException",
+            "detail": "Envuelve una RuntimeException producida al construir el objeto."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un RequiredModelMBean con el ModelMBeanInfo dado. Mientras no se registre en el MBeanServer, su MBeanInfo y sus Descriptors pueden personalizarse con setModelMBeanInfo. Una vez personalizados, el RequiredModelMBean puede registrarse en el MBeanServer."
+        ],
+        "parameters": [
+          {
+            "label": "mbi",
+            "detail": "El ModelMBeanInfo que usará el RequiredModelMBean. Se clona y se modifica como indica setModelMBeanInfo"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "MBeanException",
+            "detail": "Envuelve una excepción de comunicación distribuida."
+          },
+          {
+            "label": "RuntimeOperationsException",
+            "detail": "Envuelve una java.lang.IllegalArgumentException: el MBeanInfo pasado es null."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.management.modelmbean.RequiredModelMBean.addAttributeChangeNotificationListener": {
+    "intro": [
+      "Registra como listener un objeto que implementa la interfaz NotificationListener. Su método 'handleNotification()' se invoca cada vez que el ModelMBean emite o hace pasar una attributeChangeNotification. Esto no incluye otras notificaciones, que deben registrarse por separado. Se generará una AttributeChangeNotification para este attributeName."
+    ],
+    "parameters": [
+      {
+        "label": "listener",
+        "detail": "El objeto listener que manejará las notificaciones emitidas por el MBean registrado."
+      },
+      {
+        "label": "attributeName",
+        "detail": "El nombre del atributo del ModelMBean del que se reciben notificaciones de cambio. Si es null, cualquier cambio de atributo emite una attributeChangeNotification."
+      },
+      {
+        "label": "handback",
+        "detail": "El contexto que se envía al listener con la notificación cuando se emite."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "El listener no puede ser null."
+      },
+      {
+        "label": "MBeanException",
+        "detail": "Envuelve una excepción de comunicación distribuida."
+      },
+      {
+        "label": "RuntimeOperationsException",
+        "detail": "Envuelve una IllegalArgumentException: el nombre de atributo pasado no existe."
+      }
+    ]
+  },
+  "web-java-se-javax.management.modelmbean.RequiredModelMBean.postRegister": {
+    "body": [
+      "Para garantizar la semántica correcta en ejecución de RequiredModelMBean, cualquier subclase que sobrecargue o sobrescriba este método debe llamar a super.postRegister(registrationDone) en su propia implementación de postRegister."
+    ],
+    "parameters": [
+      {
+        "label": "registrationDone",
+        "detail": "Indica si el MBean se ha registrado correctamente en el MBean server. false significa que la fase de registro ha fallado."
+      }
+    ]
+  },
+  "web-java-se-javax.management.openmbean.ArrayType.getArrayType": {
+    "body": [
+      "Pueden construirse arrays multidimensionales llamando a este método tantas veces como haga falta.",
+      "Llamar dos veces a este método con los mismos parámetros puede devolver el mismo objeto o dos objetos iguales pero no idénticos.",
+      "Por ejemplo, este código:",
+      "ArrayType<String[]> t1 = ArrayType.getArrayType(SimpleType.STRING); ArrayType<String[][]> t2 = ArrayType.getArrayType(t1); ArrayType<String[][][]> t3 = ArrayType.getArrayType(t2); System.out.println(\"array class name = \" + t3.getClassName()); System.out.println(\"element class name = \" + t3.getElementOpenType().getClassName()); System.out.println(\"array type name = \" + t3.getTypeName()); System.out.println(\"array type description = \" + t3.getDescription());",
+      "produciría esta salida:",
+      "array class name = [[[Ljava.lang.String; element class name = java.lang.String array type name = [[[Ljava.lang.String; array type description = 3-dimension array of java.lang.String"
+    ],
+    "parameters": [
+      {
+        "label": "<E>",
+        "detail": "el tipo Java que deben tener las instancias descritas"
+      },
+      {
+        "label": "elementType",
+        "detail": "el tipo abierto de los elementos de los arrays que describe este ArrayType; debe ser una instancia de SimpleType, CompositeType, TabularType u otro ArrayType con un SimpleType, CompositeType o TabularType como elementType."
+      }
+    ],
+    "returns": ["una instancia de ArrayType"],
+    "exceptions": [
+      {
+        "label": "OpenDataException",
+        "detail": "si el className de elementType no es uno de los nombres de clase Java permitidos para datos abiertos."
+      }
+    ]
+  },
+  "web-java-se-javax.management.openmbean.CompositeDataInvocationHandler": {
+    "body": [
+      "Por ejemplo, supón que tienes una interfaz así:",
+      "public interface NamedNumber { public int getNumber(); public String getName(); }",
+      "y un CompositeData creado así:",
+      "CompositeData cd = new CompositeDataSupport( someCompositeType, new String[] {\"number\", \"name\"}, new Object[] {5, \"five\"} );",
+      "entonces puedes crear un objeto que implemente NamedNumber respaldado por cd así:",
+      "InvocationHandler handler = new CompositeDataInvocationHandler(cd); NamedNumber nn = (NamedNumber) Proxy.newProxyInstance(NamedNumber.class.getClassLoader(), new Class[] {NamedNumber.class}, handler);",
+      "Una llamada a nn.getNumber() devolverá 5.",
+      "Si la primera letra de la propiedad que define un getter es mayúscula, este manejador busca primero un elemento del CompositeData que empiece por mayúscula y, si no lo encuentra, uno que empiece por la minúscula o el punto de código correspondiente. Para un getter getNumber(), busca primero Number y luego number. Si el getter se llama getnumber(), el elemento debe llamarse number.",
+      "Si el método pasado a invoke es boolean equals(Object), heredado de Object, devuelve true si y solo si el argumento es un Proxy cuyo InvocationHandler también es un CompositeDataInvocationHandler y cuyo CompositeData es igual (no necesariamente idéntico) al de este objeto. Si el método es int hashCode(), heredado de Object, devuelve un valor coherente con esta definición de equals: si dos objetos son iguales según equals, tienen el mismo hashCode."
+    ]
+  },
+  "web-java-se-javax.management.openmbean.CompositeDataView": {
+    "body": [
+      "Un uso típico de esta clase es añadir elementos extra al CompositeData además de los declarados en el CompositeType que da el framework de MXBean. Para ello tienes que crear otro CompositeType con los mismos elementos más los extra.",
+      "Por ejemplo, supón que tienes una clase Measure formada por un String units y un valor que es long o double. Podría ser así:",
+      "public class Measure implements CompositeDataView { private String units; private Number value; // a Long or a Double",
+      "public Measure(String units, Number value) { this.units = units; this.value = value; }",
+      "public static Measure from(CompositeData cd) { return new Measure((String) cd.get(\"units\"), (Number) cd.get(\"value\")); }",
+      "public String getUnits() { return units; }",
+      "// Can't be called getValue(), because Number is not a valid type // in an MXBean, so the implied \"value\" property would be rejected. public Number _getValue() { return value; }",
+      "public CompositeData toCompositeData(CompositeType ct) { try { List<String> itemNames = new ArrayList<String>(ct.keySet()); List<String> itemDescriptions = new ArrayList<String>(); List<OpenType<?>> itemTypes = new ArrayList<OpenType<?>>(); for (String item : itemNames) { itemDescriptions.add(ct.getDescription(item)); itemTypes.add(ct.getType(item)); } itemNames.add(\"value\"); itemDescriptions.add(\"long or double value of the measure\"); itemTypes.add((value instanceof Long) ? SimpleType.LONG : SimpleType.DOUBLE); CompositeType xct = new CompositeType(ct.getTypeName(), ct.getDescription(), itemNames.toArray(new String[0]), itemDescriptions.toArray(new String[0]), itemTypes.toArray(new OpenType<?>[0])); CompositeData cd = new CompositeDataSupport(xct, new String[] {\"units\", \"value\"}, new Object[] {units, value}); assert ct.isValue(cd); // check we've done it right return cd; } catch (Exception e) { throw new RuntimeException(e); } } }",
+      "El CompositeType que aparezca en el campo openType del Descriptor de un atributo u operación de este tipo solo mostrará el elemento units, pero el CompositeData generado tendrá units y value."
+    ]
+  },
+  "web-java-se-javax.management.openmbean.OpenMBeanAttributeInfoSupport.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un OpenMBeanAttributeInfoSupport que describe el atributo de un open MBean con el nombre, openType y descripción indicados, y las propiedades de acceso de lectura/escritura indicadas."
+        ],
+        "parameters": [
+          {
+            "label": "name",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "description",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "openType",
+            "detail": "no puede ser null."
+          },
+          {
+            "label": "isReadable",
+            "detail": "true si el atributo tiene un getter expuesto para gestión."
+          },
+          {
+            "label": "isWritable",
+            "detail": "true si el atributo tiene un setter expuesto para gestión."
+          },
+          {
+            "label": "isIs",
+            "detail": "true si el getter del atributo tiene la forma isXXX."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si name o description es null o una cadena vacía, o si openType es null."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un OpenMBeanAttributeInfoSupport que describe el atributo de un open MBean con el nombre, openType, descripción, propiedades de acceso de lectura/escritura y Descriptor indicados."
+        ],
+        "body": [
+          "El descriptor puede contener entradas que definen los valores que devuelven ciertos métodos de esta clase, como se explica en la descripción del paquete."
+        ],
+        "parameters": [
+          {
+            "label": "name",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "description",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "openType",
+            "detail": "no puede ser null."
+          },
+          {
+            "label": "isReadable",
+            "detail": "true si el atributo tiene un getter expuesto para gestión."
+          },
+          {
+            "label": "isWritable",
+            "detail": "true si el atributo tiene un setter expuesto para gestión."
+          },
+          {
+            "label": "isIs",
+            "detail": "true si el getter del atributo tiene la forma isXXX."
+          },
+          {
+            "label": "descriptor",
+            "detail": "El descriptor del atributo. Puede ser null, que equivale a un descriptor vacío."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si name o description es null o una cadena vacía, si openType es null o si las entradas del descriptor no son válidas según la descripción del paquete."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un OpenMBeanAttributeInfoSupport que describe el atributo de un open MBean con el nombre, openType, descripción y defaultValue indicados, y las propiedades de acceso de lectura/escritura indicadas."
+        ],
+        "parameters": [
+          {
+            "label": "name",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "description",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "openType",
+            "detail": "no puede ser null."
+          },
+          {
+            "label": "isReadable",
+            "detail": "true si el atributo tiene un getter expuesto para gestión."
+          },
+          {
+            "label": "isWritable",
+            "detail": "true si el atributo tiene un setter expuesto para gestión."
+          },
+          {
+            "label": "isIs",
+            "detail": "true si el getter del atributo tiene la forma isXXX."
+          },
+          {
+            "label": "defaultValue",
+            "detail": "debe ser un valor válido para el openType de este atributo; no se admite valor predeterminado para ArrayType ni TabularType; puede ser null, lo que significa que no hay valor predeterminado."
+          },
+          {
+            "label": "<T>",
+            "detail": "permite al compilador comprobar que defaultValue, si no es null, tiene el tipo Java correcto para el openType dado."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si name o description es null o una cadena vacía, o si openType es null."
+          },
+          {
+            "label": "OpenDataException",
+            "detail": "si defaultValue no es válido para el openType indicado, o si defaultValue no es null y openType es un ArrayType o un TabularType."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un OpenMBeanAttributeInfoSupport que describe el atributo de un open MBean con el nombre, openType, descripción, defaultValue y legalValues indicados, y las propiedades de acceso de lectura/escritura indicadas."
+        ],
+        "body": [
+          "El contenido de legalValues se copia, así que las modificaciones posteriores del array no afectan a esta instancia de OpenMBeanAttributeInfoSupport."
+        ],
+        "parameters": [
+          {
+            "label": "name",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "description",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "openType",
+            "detail": "no puede ser null."
+          },
+          {
+            "label": "isReadable",
+            "detail": "true si el atributo tiene un getter expuesto para gestión."
+          },
+          {
+            "label": "isWritable",
+            "detail": "true si el atributo tiene un setter expuesto para gestión."
+          },
+          {
+            "label": "isIs",
+            "detail": "true si el getter del atributo tiene la forma isXXX."
+          },
+          {
+            "label": "defaultValue",
+            "detail": "debe ser un valor válido para el openType de este atributo; no se admite valor predeterminado para ArrayType ni TabularType; puede ser null, lo que significa que no hay valor predeterminado."
+          },
+          {
+            "label": "legalValues",
+            "detail": "cada valor debe ser válido para el openType de este atributo; no se admiten valores válidos para ArrayType ni TabularType; puede ser null o vacío."
+          },
+          {
+            "label": "<T>",
+            "detail": "permite al compilador comprobar que defaultValue y legalValues, si no son null, tienen el tipo Java correcto para el openType dado."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si name o description es null o una cadena vacía, o si openType es null."
+          },
+          {
+            "label": "OpenDataException",
+            "detail": "si defaultValue no es válido para el openType indicado, si algún valor de legalValues no es válido para él, si defaultValue no es null y openType es un ArrayType o un TabularType, si legalValues no es null ni vacío y openType es un ArrayType o un TabularType, o si legalValues no es null ni vacío y defaultValue no está en legalValues."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un OpenMBeanAttributeInfoSupport que describe el atributo de un open MBean con el nombre, openType, descripción, defaultValue, minValue y maxValue indicados."
+        ],
+        "body": [
+          "Solo pueden indicarse valores mínimo y máximo para un tipo abierto cuyos valores sean Comparable."
+        ],
+        "parameters": [
+          {
+            "label": "name",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "description",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "openType",
+            "detail": "no puede ser null."
+          },
+          {
+            "label": "isReadable",
+            "detail": "true si el atributo tiene un getter expuesto para gestión."
+          },
+          {
+            "label": "isWritable",
+            "detail": "true si el atributo tiene un setter expuesto para gestión."
+          },
+          {
+            "label": "isIs",
+            "detail": "true si el getter del atributo tiene la forma isXXX."
+          },
+          {
+            "label": "defaultValue",
+            "detail": "debe ser un valor válido para el openType de este atributo; no se admite valor predeterminado para ArrayType ni TabularType; puede ser null, lo que significa que no hay valor predeterminado."
+          },
+          {
+            "label": "minValue",
+            "detail": "debe ser válido para el openType de este atributo; puede ser null, lo que significa que no hay valor mínimo."
+          },
+          {
+            "label": "maxValue",
+            "detail": "debe ser válido para el openType de este atributo; puede ser null, lo que significa que no hay valor máximo."
+          },
+          {
+            "label": "<T>",
+            "detail": "permite al compilador comprobar que defaultValue, minValue y maxValue, si no son null, tienen el tipo Java correcto para el openType dado."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si name o description es null o una cadena vacía, o si openType es null."
+          },
+          {
+            "label": "OpenDataException",
+            "detail": "si defaultValue, minValue o maxValue no son válidos para el openType indicado, si defaultValue no es null y openType es un ArrayType o un TabularType, si minValue y maxValue no son null y minValue.compareTo(maxValue) > 0, si defaultValue y minValue no son null y minValue.compareTo(defaultValue) > 0, o si defaultValue y maxValue no son null y defaultValue.compareTo(maxValue) > 0."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.management.openmbean.OpenMBeanParameterInfoSupport.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un OpenMBeanParameterInfoSupport que describe el parámetro usado en una o más operaciones o constructores de una clase de open MBeans, con el nombre, openType y descripción indicados."
+        ],
+        "parameters": [
+          {
+            "label": "name",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "description",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "openType",
+            "detail": "no puede ser null."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si name o description es null o una cadena vacía, o si openType es null."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un OpenMBeanParameterInfoSupport que describe el parámetro usado en una o más operaciones o constructores de una clase de open MBeans, con el nombre, openType, descripción y descriptor indicados."
+        ],
+        "body": [
+          "El descriptor puede contener entradas que definen los valores que devuelven ciertos métodos de esta clase, como se explica en la descripción del paquete."
+        ],
+        "parameters": [
+          {
+            "label": "name",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "description",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "openType",
+            "detail": "no puede ser null."
+          },
+          {
+            "label": "descriptor",
+            "detail": "El descriptor del parámetro. Puede ser null, que equivale a un descriptor vacío."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si name o description es null o una cadena vacía, si openType es null o si las entradas del descriptor no son válidas según la descripción del paquete."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un OpenMBeanParameterInfoSupport que describe el parámetro usado en una o más operaciones o constructores de una clase de open MBeans, con el nombre, openType, descripción y defaultValue indicados."
+        ],
+        "parameters": [
+          {
+            "label": "name",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "description",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "openType",
+            "detail": "no puede ser null."
+          },
+          {
+            "label": "defaultValue",
+            "detail": "debe ser un valor válido para el openType de este parámetro; no se admite valor predeterminado para ArrayType ni TabularType; puede ser null, lo que significa que no hay valor predeterminado."
+          },
+          {
+            "label": "<T>",
+            "detail": "permite al compilador comprobar que defaultValue, si no es null, tiene el tipo Java correcto para el openType dado."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si name o description es null o una cadena vacía, o si openType es null."
+          },
+          {
+            "label": "OpenDataException",
+            "detail": "si defaultValue no es válido para el openType indicado, o si defaultValue no es null y openType es un ArrayType o un TabularType."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un OpenMBeanParameterInfoSupport que describe el parámetro usado en una o más operaciones o constructores de una clase de open MBeans, con el nombre, openType, descripción, defaultValue y legalValues indicados."
+        ],
+        "body": [
+          "El contenido de legalValues se copia, así que las modificaciones posteriores del array no afectan a esta instancia de OpenMBeanParameterInfoSupport."
+        ],
+        "parameters": [
+          {
+            "label": "name",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "description",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "openType",
+            "detail": "no puede ser null."
+          },
+          {
+            "label": "defaultValue",
+            "detail": "debe ser un valor válido para el openType de este parámetro; no se admite valor predeterminado para ArrayType ni TabularType; puede ser null, lo que significa que no hay valor predeterminado."
+          },
+          {
+            "label": "legalValues",
+            "detail": "cada valor debe ser válido para el openType de este parámetro; no se admiten valores válidos para ArrayType ni TabularType; puede ser null o vacío."
+          },
+          {
+            "label": "<T>",
+            "detail": "permite al compilador comprobar que defaultValue y legalValues, si no son null, tienen el tipo Java correcto para el openType dado."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si name o description es null o una cadena vacía, o si openType es null."
+          },
+          {
+            "label": "OpenDataException",
+            "detail": "si defaultValue no es válido para el openType indicado, si algún valor de legalValues no es válido para él, si defaultValue no es null y openType es un ArrayType o un TabularType, si legalValues no es null ni vacío y openType es un ArrayType o un TabularType, o si legalValues no es null ni vacío y defaultValue no está en legalValues."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un OpenMBeanParameterInfoSupport que describe el parámetro usado en una o más operaciones o constructores de una clase de open MBeans, con el nombre, openType, descripción, defaultValue, minValue y maxValue indicados."
+        ],
+        "body": [
+          "Solo pueden indicarse valores mínimo y máximo para un tipo abierto cuyos valores sean Comparable."
+        ],
+        "parameters": [
+          {
+            "label": "name",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "description",
+            "detail": "no puede ser null ni una cadena vacía."
+          },
+          {
+            "label": "openType",
+            "detail": "no puede ser null."
+          },
+          {
+            "label": "defaultValue",
+            "detail": "debe ser un valor válido para el openType de este parámetro; no se admite valor predeterminado para ArrayType ni TabularType; puede ser null, lo que significa que no hay valor predeterminado."
+          },
+          {
+            "label": "minValue",
+            "detail": "debe ser válido para el openType de este parámetro; puede ser null, lo que significa que no hay valor mínimo."
+          },
+          {
+            "label": "maxValue",
+            "detail": "debe ser válido para el openType de este parámetro; puede ser null, lo que significa que no hay valor máximo."
+          },
+          {
+            "label": "<T>",
+            "detail": "permite al compilador comprobar que defaultValue, minValue y maxValue, si no son null, tienen el tipo Java correcto para el openType dado."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si name o description es null o una cadena vacía, o si openType es null."
+          },
+          {
+            "label": "OpenDataException",
+            "detail": "si defaultValue, minValue o maxValue no son válidos para el openType indicado, si defaultValue no es null y openType es un ArrayType o un TabularType, si minValue y maxValue no son null y minValue.compareTo(maxValue) > 0, si defaultValue y minValue no son null y minValue.compareTo(defaultValue) > 0, o si defaultValue y maxValue no son null y defaultValue.compareTo(maxValue) > 0."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.management.openmbean.OpenType.getClassName": {
+    "intro": [
+      "Devuelve el nombre completo de la clase Java de los valores de datos abiertos que describe este tipo abierto. Los únicos nombres de clase posibles están en ALLOWED_CLASSNAMES_LIST. También se permite un array multidimensional de cualquiera de esas clases o de sus tipos primitivos, en cuyo caso el nombre sigue las reglas de getName() de java.lang.Class. Por ejemplo, un array tridimensional de String tiene el nombre de clase \"[[[Ljava.lang.String;\" (sin comillas), uno de Integer \"[[[Ljava.lang.Integer;\" y uno de int \"[[[I\""
+    ],
+    "returns": ["el nombre de clase."]
+  },
+  "web-java-se-javax.management.openmbean.TabularData.put": {
+    "intro": [
+      "Añade value a este TabularData. El tipo compuesto de value debe ser el tipo de fila de esta instancia (el que devuelve this.getTabularType().getRowType()), y no debe existir ya en este TabularData un valor con el mismo índice que el calculado para value. El índice se calcula según la definición del TabularType de esta instancia (consulta TabularType.getIndexNames())."
+    ],
+    "parameters": [
+      {
+        "label": "value",
+        "detail": "el valor compuesto que se añade como fila nueva; debe ser del tipo de fila de esta instancia; no debe ser null."
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si value es null"
+      },
+      {
+        "label": "InvalidOpenTypeException",
+        "detail": "si value no se ajusta a la definición del tipo de fila de este TabularData."
+      },
+      {
+        "label": "KeyAlreadyExistsException",
+        "detail": "si el índice de value, calculado según la definición del TabularType, ya corresponde a un valor existente en el HashMap subyacente."
+      }
+    ]
+  },
   "web-java-se-javax.management.relation.RelationService.postRegister": {
     "body": [
       "Si la implementación de este método lanza una RuntimeException o un Error, el MBean Server los vuelve a lanzar dentro de una RuntimeMBeanException o RuntimeErrorException, respectivamente. Pero lanzar una excepción en postRegister no cambia el estado del MBean: si ya estaba registrado (registrationDone es true), sigue registrado.",
@@ -30956,6 +31942,360 @@
       }
     ]
   },
+  "web-java-se-javax.management.relation.RoleInfo.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": ["Constructor."],
+        "parameters": [
+          {
+            "label": "roleName",
+            "detail": "nombre del rol."
+          },
+          {
+            "label": "mbeanClassName",
+            "detail": "nombre de la clase de los MBeans que se espera referenciar en el rol. Si un MBean M está en este rol, el MBean server debe devolver true para isInstanceOf(M, mbeanClassName)."
+          },
+          {
+            "label": "read",
+            "detail": "indicador de si el rol puede leerse"
+          },
+          {
+            "label": "write",
+            "detail": "indicador de si el rol puede fijarse"
+          },
+          {
+            "label": "min",
+            "detail": "grado mínimo del rol, es decir, número mínimo de MBeans en el rol. Debe ser menor o igual que max. (ROLE_CARDINALITY_INFINITY para ilimitado)"
+          },
+          {
+            "label": "max",
+            "detail": "grado máximo del rol, es decir, número máximo de MBeans en el rol. Debe ser mayor o igual que min. (ROLE_CARDINALITY_INFINITY para ilimitado)"
+          },
+          {
+            "label": "descr",
+            "detail": "descripción del rol (puede ser null)"
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si algún parámetro es null"
+          },
+          {
+            "label": "InvalidRoleInfoException",
+            "detail": "si el grado mínimo es mayor que el máximo."
+          },
+          {
+            "label": "ClassNotFoundException",
+            "detail": "Desde JMX 1.2 esta excepción ya no puede lanzarse. Se mantiene en la declaración de esta clase por compatibilidad con el código existente."
+          },
+          {
+            "label": "NotCompliantMBeanException",
+            "detail": "si la clase mbeanClassName no es una clase MBean."
+          }
+        ]
+      },
+      {
+        "intro": ["Constructor."],
+        "parameters": [
+          {
+            "label": "roleName",
+            "detail": "nombre del rol"
+          },
+          {
+            "label": "mbeanClassName",
+            "detail": "nombre de la clase de los MBeans que se espera referenciar en el rol. Si un MBean M está en este rol, el MBean server debe devolver true para isInstanceOf(M, mbeanClassName)."
+          },
+          {
+            "label": "read",
+            "detail": "indicador de si el rol puede leerse"
+          },
+          {
+            "label": "write",
+            "detail": "indicador de si el rol puede fijarse. Los grados mínimo y máximo son 1 por defecto y la descripción del rol es null por defecto."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si algún parámetro es null"
+          },
+          {
+            "label": "ClassNotFoundException",
+            "detail": "Desde JMX 1.2 esta excepción ya no puede lanzarse. Se mantiene en la declaración de esta clase por compatibilidad con el código existente."
+          },
+          {
+            "label": "NotCompliantMBeanException",
+            "detail": "Desde JMX 1.2 esta excepción ya no puede lanzarse. Se mantiene en la declaración de esta clase por compatibilidad con el código existente."
+          }
+        ]
+      },
+      {
+        "intro": ["Constructor."],
+        "parameters": [
+          {
+            "label": "roleName",
+            "detail": "nombre del rol"
+          },
+          {
+            "label": "mbeanClassName",
+            "detail": "nombre de la clase de los MBeans que se espera referenciar en el rol. Si un MBean M está en este rol, el MBean server debe devolver true para isInstanceOf(M, mbeanClassName). IsReadable e IsWritable son true por defecto, los grados mínimo y máximo son 1 y la descripción es null."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si algún parámetro es null"
+          },
+          {
+            "label": "ClassNotFoundException",
+            "detail": "Desde JMX 1.2 esta excepción ya no puede lanzarse. Se mantiene en la declaración de esta clase por compatibilidad con el código existente."
+          },
+          {
+            "label": "NotCompliantMBeanException",
+            "detail": "Desde JMX 1.2 esta excepción ya no puede lanzarse. Se mantiene en la declaración de esta clase por compatibilidad con el código existente."
+          }
+        ]
+      },
+      {
+        "intro": ["Constructor de copia."],
+        "parameters": [
+          {
+            "label": "roleInfo",
+            "detail": "la instancia de RoleInfo que se copia."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si algún parámetro es null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.management.relation.RoleUnresolvedList.add": {
+    "overloads": [
+      {
+        "intro": [
+          "Añade el RoleUnresolved indicado como último elemento de la lista."
+        ],
+        "parameters": [
+          {
+            "label": "role",
+            "detail": "el rol no resuelto que se añade."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el rol no resuelto es null."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Inserta el rol no resuelto indicado como elemento en la posición indicada. Los elementos con índice mayor o igual que la posición actual se desplazan una posición."
+        ],
+        "parameters": [
+          {
+            "label": "index",
+            "detail": "La posición de la lista en la que se inserta el nuevo RoleUnresolved."
+          },
+          {
+            "label": "role",
+            "detail": "El objeto RoleUnresolved que se inserta."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el rol no resuelto es null."
+          },
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "si el índice está fuera de rango (index < 0 || index > size())."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.management.relation.RoleUnresolvedList.addAll": {
+    "overloads": [
+      {
+        "intro": [
+          "Añade al final de la lista todos los elementos de la RoleUnresolvedList indicada, en el orden en que los devuelve su Iterator."
+        ],
+        "parameters": [
+          {
+            "label": "roleList",
+            "detail": "Los elementos que se insertan en la lista (puede ser null)."
+          }
+        ],
+        "returns": [
+          "true si la lista ha cambiado como resultado de la llamada."
+        ],
+        "exceptions": [
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "si se accede con un índice fuera de la lista."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Inserta en esta lista todos los elementos de la RoleUnresolvedList indicada, a partir de la posición indicada, en el orden en que los devuelve su Iterator."
+        ],
+        "parameters": [
+          {
+            "label": "index",
+            "detail": "La posición en la que se inserta el primer elemento de la RoleUnresolvedList indicada."
+          },
+          {
+            "label": "roleList",
+            "detail": "Los elementos que se insertan en la lista."
+          }
+        ],
+        "returns": [
+          "true si la lista ha cambiado como resultado de la llamada."
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el rol es null."
+          },
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "si el índice está fuera de rango (index < 0 || index > size())."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.management.relation.RoleUnresolvedList.set": {
+    "overloads": [
+      {
+        "intro": [
+          "Sustituye el elemento de la posición indicada por el rol no resuelto indicado. Se descarta el elemento anterior."
+        ],
+        "parameters": [
+          {
+            "label": "index",
+            "detail": "La posición indicada."
+          },
+          {
+            "label": "role",
+            "detail": "El valor al que se fija el elemento de rol no resuelto."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si el rol no resuelto es null."
+          },
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "si el índice está fuera de rango (index < 0 || index >= size())."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.management.remote.JMXConnectorFactory": {
+    "body": [
+      "Las conexiones suelen hacerse con el método connect de esta clase. Las aplicaciones más avanzadas pueden separar la creación del cliente del conector, con newJMXConnector(JMXServiceURL, Map), del establecimiento de la conexión, con JMXConnector.connect(Map).",
+      "Cada cliente lo crea una instancia de JMXConnectorProvider, que se busca así. Supón que el JMXServiceURL dado es \"service:jmx:protocol:remainder\". La fábrica intentará encontrar el JMXConnectorProvider adecuado para protocol. Cada + o - de protocol se sustituye por . o _, respectivamente.",
+      "La lista de paquetes de proveedores se busca así:",
+      "Si el parámetro environment de newJMXConnector(JMXServiceURL, Map) contiene la clave jmx.remote.protocol.provider.pkgs, su valor es la lista de paquetes de proveedores.",
+      "Si no, si existe la propiedad del sistema jmx.remote.protocol.provider.pkgs, su valor es la lista.",
+      "Si no, no hay lista de paquetes de proveedores.",
+      "La lista es una cadena que se interpreta como nombres de paquetes Java no vacíos separados por barras verticales (|). Si la cadena está vacía, la lista también. Si la lista no es un String o contiene un elemento vacío, se lanza JMXProviderException.",
+      "Si la lista existe y no está vacía, para cada elemento pkg la fábrica intentará cargar la clase",
+      "pkg.protocol.ClientProvider",
+      "Si el parámetro environment de newJMXConnector(JMXServiceURL, Map) contiene la clave jmx.remote.protocol.provider.class.loader, su valor es el cargador de clases con el que se carga el proveedor. Si no es una instancia de java.lang.ClassLoader, se lanza java.lang.IllegalArgumentException.",
+      "Si la clave jmx.remote.protocol.provider.class.loader no está en environment, se usa el cargador de clases de contexto del hilo que llama.",
+      "Si al cargar la clase se produce ClassNotFoundException, la búsqueda continúa con el siguiente elemento de la lista.",
+      "Si no, un problema con el proveedor encontrado se indica con una JMXProviderException cuya causa es la excepción subyacente:",
+      "si al cargar la clase se produce una excepción distinta de ClassNotFoundException, esa es la causa;",
+      "si Class.newInstance() produce una excepción, esa es la causa.",
+      "Si con estos pasos no se encuentra proveedor, incluido el caso en que no hay lista de paquetes, la implementación usa su propio proveedor para protocol o lanza MalformedURLException si no lo tiene. Una implementación puede buscar proveedores por otros medios; por ejemplo, puede admitir proveedores de servicios cuya interfaz sea JMXConnectorProvider.",
+      "Toda implementación debe admitir el protocolo de conector RMI con el transporte RMI predeterminado, indicado con la cadena rmi.",
+      "Una vez encontrado el proveedor, el resultado de newJMXConnector es el resultado de llamar a newJMXConnector sobre el proveedor.",
+      "El Map que se pasa al JMXConnectorProvider es un Map nuevo de solo lectura con todas las entradas del parámetro environment de JMXConnectorFactory.newJMXConnector, si lo había. Además, si la clave jmx.remote.protocol.provider.class.loader no estaba en environment, se añade, con el cargador de clases de contexto del hilo que llama como valor."
+    ]
+  },
+  "web-java-se-javax.management.remote.JMXConnectorFactory.PROTOCOL_PROVIDER_PACKAGES": {
+    "intro": [
+      "Nombre del atributo que indica los paquetes de proveedores que se consultan al buscar el manejador de un protocolo. Su valor es una cadena con nombres de paquete separados por barras verticales (|)."
+    ]
+  },
+  "web-java-se-javax.management.remote.JMXConnectorFactory.connect": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea una conexión con el servidor de conectores de la dirección dada."
+        ],
+        "body": ["Este método equivale a connect(serviceURL, null)."],
+        "parameters": [
+          {
+            "label": "serviceURL",
+            "detail": "la dirección del servidor de conectores al que conectarse."
+          }
+        ],
+        "returns": ["un JMXConnector sobre el que ya se ha llamado a connect."],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si serviceURL es null."
+          },
+          {
+            "label": "IOException",
+            "detail": "si no puede crearse el cliente del conector o la conexión por un problema de comunicación."
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si no puede hacerse la conexión por motivos de seguridad."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una conexión con el servidor de conectores de la dirección dada."
+        ],
+        "body": [
+          "Este método equivale a:",
+          "JMXConnector conn = JMXConnectorFactory.newJMXConnector(serviceURL, environment); conn.connect(environment);"
+        ],
+        "parameters": [
+          {
+            "label": "serviceURL",
+            "detail": "la dirección del servidor de conectores al que conectarse."
+          },
+          {
+            "label": "environment",
+            "detail": "un conjunto de atributos que determinan cómo se hace la conexión. Puede ser null. Las claves deben ser String, y el tipo adecuado de cada valor depende del atributo. Esta llamada no modifica el contenido de environment."
+          }
+        ],
+        "returns": [
+          "un JMXConnector que representa la conexión recién creada. Cada llamada correcta produce un objeto distinto."
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si serviceURL es null."
+          },
+          {
+            "label": "IOException",
+            "detail": "si no puede crearse el cliente del conector o la conexión por un problema de comunicación."
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si no puede hacerse la conexión por motivos de seguridad."
+          }
+        ]
+      }
+    ]
+  },
   "web-java-se-javax.management.remote.JMXConnectorServer.postRegister": {
     "body": [
       "Si la implementación de este método lanza una RuntimeException o un Error, el MBean Server los vuelve a lanzar dentro de una RuntimeMBeanException o RuntimeErrorException, respectivamente. Pero lanzar una excepción en postRegister no cambia el estado del MBean: si ya estaba registrado (registrationDone es true), sigue registrado.",
@@ -30965,6 +32305,624 @@
       {
         "label": "registrationDone",
         "detail": "Indica si el MBean se ha registrado correctamente en el MBean server. false significa que la fase de registro ha fallado."
+      }
+    ]
+  },
+  "web-java-se-javax.management.remote.JMXConnectorServerFactory": {
+    "body": [
+      "Cada servidor de conectores lo crea una instancia de JMXConnectorServerProvider, que se busca así. Supón que el JMXServiceURL dado es \"service:jmx:protocol:remainder\". La fábrica intentará encontrar el JMXConnectorServerProvider adecuado para protocol. Cada + o - de protocol se sustituye por . o _, respectivamente.",
+      "La lista de paquetes de proveedores se busca así:",
+      "Si el parámetro environment de newJMXConnectorServer contiene la clave jmx.remote.protocol.provider.pkgs, su valor es la lista de paquetes de proveedores.",
+      "Si no, si existe la propiedad del sistema jmx.remote.protocol.provider.pkgs, su valor es la lista.",
+      "Si no, no hay lista de paquetes de proveedores.",
+      "La lista es una cadena que se interpreta como nombres de paquetes Java no vacíos separados por barras verticales (|). Si la cadena está vacía, la lista también. Si la lista no es un String o contiene un elemento vacío, se lanza JMXProviderException.",
+      "Si la lista existe y no está vacía, para cada elemento pkg la fábrica intentará cargar la clase",
+      "pkg.protocol.ServerProvider",
+      "Si el parámetro environment de newJMXConnectorServer(JMXServiceURL, Map, MBeanServer) contiene la clave jmx.remote.protocol.provider.class.loader, su valor es el cargador de clases con el que se carga el proveedor. Si no es una instancia de java.lang.ClassLoader, se lanza java.lang.IllegalArgumentException.",
+      "Si la clave jmx.remote.protocol.provider.class.loader no está en environment, se usa el cargador de clases de contexto del hilo que llama.",
+      "Si al cargar la clase se produce ClassNotFoundException, la búsqueda continúa con el siguiente elemento de la lista.",
+      "Si no, un problema con el proveedor encontrado se indica con una JMXProviderException cuya causa es la excepción subyacente:",
+      "si al cargar la clase se produce una excepción distinta de ClassNotFoundException, esa es la causa;",
+      "si Class.newInstance() produce una excepción, esa es la causa.",
+      "Si con estos pasos no se encuentra proveedor, incluido el caso en que no hay lista de paquetes, la implementación usa su propio proveedor para protocol o lanza MalformedURLException si no lo tiene. Una implementación puede buscar proveedores por otros medios; por ejemplo, puede admitir proveedores de servicios cuya interfaz sea JMXConnectorServerProvider.",
+      "Toda implementación debe admitir el protocolo de conector RMI con el transporte RMI predeterminado, indicado con la cadena rmi.",
+      "Una vez encontrado el proveedor, el resultado de newJMXConnectorServer es el resultado de llamar a newJMXConnectorServer(JMXServiceURL, Map, MBeanServer) sobre el proveedor.",
+      "El Map que se pasa al JMXConnectorServerProvider es un Map nuevo de solo lectura con todas las entradas del parámetro environment de JMXConnectorServerFactory.newJMXConnectorServer, si lo había. Además, si la clave jmx.remote.protocol.provider.class.loader no estaba en environment, se añade, con el cargador de clases de contexto del hilo que llama como valor."
+    ]
+  },
+  "web-java-se-javax.management.remote.JMXConnectorServerFactory.PROTOCOL_PROVIDER_PACKAGES": {
+    "intro": [
+      "Nombre del atributo que indica los paquetes de proveedores que se consultan al buscar el manejador de un protocolo. Su valor es una cadena con nombres de paquete separados por barras verticales (|)."
+    ]
+  },
+  "web-java-se-javax.management.remote.JMXServiceURL": {
+    "body": [
+      "La dirección es una Abstract Service URL de SLP, según RFC 2609 y su modificación RFC 3111. Debe tener esta forma:",
+      "service:jmx:protocol:sap",
+      "protocol es el protocolo de transporte con el que conectarse al servidor de conectores. Es una cadena de uno o más caracteres ASCII, cada uno letra, dígito, + o -. El primero debe ser una letra. Las mayúsculas se convierten a minúsculas.",
+      "sap es la dirección en la que está el servidor de conectores. Usa un subconjunto de la sintaxis de RFC 2609 para protocolos basados en IP; es un subconjunto porque no se admite la sintaxis user@host.",
+      "Esta clase no admite actualmente las demás sintaxis de RFC 2609.",
+      "La sintaxis admitida es:",
+      "//[host[:port]][url-path]",
+      "Los corchetes [] indican partes opcionales de la dirección. No todos los protocolos reconocen todas las partes opcionales.",
+      "host es un nombre de máquina, una dirección IPv4 numérica o una dirección IPv6 numérica entre corchetes.",
+      "port es un número de puerto decimal. 0 significa un puerto predeterminado o anónimo, según el protocolo.",
+      "host y port pueden omitirse. No puede darse port sin host.",
+      "url-path, si lo hay, empieza por barra (/) o punto y coma (;) y llega hasta el final de la dirección. Puede contener atributos con la sintaxis de punto y coma de RFC 2609. Esta clase no los analiza ni detecta si su sintaxis es incorrecta.",
+      "Aunque según RFC 2609 es válido que url-path empiece por punto y coma, no todas las implementaciones de SLP lo permiten, así que se recomienda evitarlo.",
+      "No se distinguen mayúsculas en la cadena inicial service:jmx:protocol ni en la parte host. Según el protocolo, sí pueden distinguirse en url-path."
+    ]
+  },
+  "web-java-se-javax.management.remote.rmi.RMIConnectorServer.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un RMIConnectorServer. Equivale a llamar a RMIConnectorServer(directoryURL,environment,null,null)"
+        ],
+        "parameters": [
+          {
+            "label": "url",
+            "detail": "la URL que define cómo crear el servidor de conectores. No puede ser null."
+          },
+          {
+            "label": "environment",
+            "detail": "atributos que rigen la creación y el almacenamiento del objeto RMI. Puede ser null, que equivale a un Map vacío."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si url es null."
+          },
+          {
+            "label": "MalformedURLException",
+            "detail": "si url no sigue la sintaxis de un conector RMI o esta implementación no reconoce su protocolo. Con este constructor solo es válido \"rmi\"."
+          },
+          {
+            "label": "IOException",
+            "detail": "si no puede crearse el servidor de conectores por algún motivo o si es inevitable que su método start falle."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un RMIConnectorServer para el MBean server dado. Equivale a llamar a RMIConnectorServer(directoryURL,environment,null,mbeanServer)"
+        ],
+        "parameters": [
+          {
+            "label": "url",
+            "detail": "la URL que define cómo crear el servidor de conectores. No puede ser null."
+          },
+          {
+            "label": "environment",
+            "detail": "atributos que rigen la creación y el almacenamiento del objeto RMI. Puede ser null, que equivale a un Map vacío."
+          },
+          {
+            "label": "mbeanServer",
+            "detail": "el MBean server al que se conecta el nuevo servidor de conectores, o null si se conectará al registrarse como MBean en el MBean server."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si url es null."
+          },
+          {
+            "label": "MalformedURLException",
+            "detail": "si url no sigue la sintaxis de un conector RMI o esta implementación no reconoce su protocolo. Con este constructor solo es válido \"rmi\"."
+          },
+          {
+            "label": "IOException",
+            "detail": "si no puede crearse el servidor de conectores por algún motivo o si es inevitable que su método start falle."
+          }
+        ]
+      },
+      {
+        "intro": ["Crea un RMIConnectorServer para el MBean server dado."],
+        "parameters": [
+          {
+            "label": "url",
+            "detail": "la URL que define cómo crear el servidor de conectores. No puede ser null."
+          },
+          {
+            "label": "environment",
+            "detail": "atributos que rigen la creación y el almacenamiento del objeto RMI. Puede ser null, que equivale a un Map vacío."
+          },
+          {
+            "label": "rmiServerImpl",
+            "detail": "Una implementación de la interfaz RMIServer coherente con el tipo de protocolo indicado en url. Si no es null, el tipo de protocolo de url no está restringido y se supone válido. Si es null, solo se reconoce \"rmi\"."
+          },
+          {
+            "label": "mbeanServer",
+            "detail": "el MBean server al que se conecta el nuevo servidor de conectores, o null si se conectará al registrarse como MBean en el MBean server."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si url es null."
+          },
+          {
+            "label": "MalformedURLException",
+            "detail": "si url no sigue la sintaxis de un conector RMI o esta implementación no reconoce su protocolo. Si rmiServerImpl es null, solo se reconoce \"rmi\"."
+          },
+          {
+            "label": "IOException",
+            "detail": "si no puede crearse el servidor de conectores por algún motivo o si es inevitable que su método start falle."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.management.timer.Timer.addNotification": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea una nueva notificación de temporizador con el tipo, mensaje y userData indicados y la inserta en la lista de notificaciones con la fecha, periodo y número de repeticiones dados."
+        ],
+        "body": [
+          "Si la notificación que se inserta tiene una fecha anterior a la actual, el método se comporta como si la fecha indicada fuera la actual.",
+          "Las notificaciones únicas se entregan de inmediato.",
+          "En las periódicas, la primera se entrega de inmediato y las siguientes se espacian según el parámetro period.",
+          "Una vez añadida a la lista, no pueden actualizarse la fecha, el periodo ni el número de repeticiones de la notificación.",
+          "En una notificación periódica, el parámetro fixedRate indica el esquema de ejecución, como en java.util.Timer."
+        ],
+        "parameters": [
+          {
+            "label": "type",
+            "detail": "El tipo de la notificación de temporizador."
+          },
+          {
+            "label": "message",
+            "detail": "El mensaje detallado de la notificación."
+          },
+          {
+            "label": "userData",
+            "detail": "El objeto de datos de usuario de la notificación."
+          },
+          {
+            "label": "date",
+            "detail": "La fecha en que ocurre la notificación."
+          },
+          {
+            "label": "period",
+            "detail": "El periodo de la notificación (en milisegundos)."
+          },
+          {
+            "label": "nbOccurences",
+            "detail": "El número total de veces que se emitirá la notificación."
+          },
+          {
+            "label": "fixedRate",
+            "detail": "Si es true y la notificación es periódica, se planifica con un esquema de ejecución de frecuencia fija. Si es false y es periódica, con un esquema de retraso fijo. Se ignora si la notificación no es periódica."
+          }
+        ],
+        "returns": ["El identificador de la notificación recién creada."],
+        "exceptions": [
+          {
+            "label": "java.lang.IllegalArgumentException",
+            "detail": "La fecha es null o el periodo o el número de repeticiones es negativo."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una nueva notificación de temporizador con el tipo, mensaje y userData indicados y la inserta en la lista de notificaciones con la fecha, periodo y número de repeticiones dados."
+        ],
+        "body": [
+          "Si la notificación que se inserta tiene una fecha anterior a la actual, el método se comporta como si la fecha indicada fuera la actual.",
+          "Las notificaciones únicas se entregan de inmediato.",
+          "En las periódicas, la primera se entrega de inmediato y las siguientes se espacian según el parámetro period.",
+          "Una vez añadida a la lista, no pueden actualizarse la fecha, el periodo ni el número de repeticiones de la notificación.",
+          "En una notificación periódica, usa un esquema de ejecución de retraso fijo, como en java.util.Timer. Para usar frecuencia fija, usa addNotification(String, String, Object, Date, long, long, boolean)."
+        ],
+        "parameters": [
+          {
+            "label": "type",
+            "detail": "El tipo de la notificación de temporizador."
+          },
+          {
+            "label": "message",
+            "detail": "El mensaje detallado de la notificación."
+          },
+          {
+            "label": "userData",
+            "detail": "El objeto de datos de usuario de la notificación."
+          },
+          {
+            "label": "date",
+            "detail": "La fecha en que ocurre la notificación."
+          },
+          {
+            "label": "period",
+            "detail": "El periodo de la notificación (en milisegundos)."
+          },
+          {
+            "label": "nbOccurences",
+            "detail": "El número total de veces que se emitirá la notificación."
+          }
+        ],
+        "returns": ["El identificador de la notificación recién creada."],
+        "exceptions": [
+          {
+            "label": "java.lang.IllegalArgumentException",
+            "detail": "La fecha es null o el periodo o el número de repeticiones es negativo."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una nueva notificación de temporizador con el tipo, mensaje y userData indicados y la inserta en la lista de notificaciones con la fecha y el periodo dados y un número de repeticiones nulo."
+        ],
+        "body": [
+          "La notificación se repetirá indefinidamente con el periodo del temporizador y un esquema de retraso fijo, como en java.util.Timer. Para usar frecuencia fija, usa addNotification(String, String, Object, Date, long, long, boolean).",
+          "Si la notificación que se inserta tiene una fecha anterior a la actual, el método se comporta como si la fecha indicada fuera la actual. La primera notificación se entrega de inmediato y las siguientes se espacian según el parámetro period."
+        ],
+        "parameters": [
+          {
+            "label": "type",
+            "detail": "El tipo de la notificación de temporizador."
+          },
+          {
+            "label": "message",
+            "detail": "El mensaje detallado de la notificación."
+          },
+          {
+            "label": "userData",
+            "detail": "El objeto de datos de usuario de la notificación."
+          },
+          {
+            "label": "date",
+            "detail": "La fecha en que ocurre la notificación."
+          },
+          {
+            "label": "period",
+            "detail": "El periodo de la notificación (en milisegundos)."
+          }
+        ],
+        "returns": ["El identificador de la notificación recién creada."],
+        "exceptions": [
+          {
+            "label": "java.lang.IllegalArgumentException",
+            "detail": "La fecha es null o el periodo es negativo."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una nueva notificación de temporizador con el tipo, mensaje y userData indicados y la inserta en la lista de notificaciones con la fecha dada y periodo y número de repeticiones nulos."
+        ],
+        "body": [
+          "La notificación se gestionará una vez en la fecha indicada.",
+          "Si la notificación que se inserta tiene una fecha anterior a la actual, el método se comporta como si la fecha indicada fuera la actual y la notificación se entrega de inmediato."
+        ],
+        "parameters": [
+          {
+            "label": "type",
+            "detail": "El tipo de la notificación de temporizador."
+          },
+          {
+            "label": "message",
+            "detail": "El mensaje detallado de la notificación."
+          },
+          {
+            "label": "userData",
+            "detail": "El objeto de datos de usuario de la notificación."
+          },
+          {
+            "label": "date",
+            "detail": "La fecha en que ocurre la notificación."
+          }
+        ],
+        "returns": ["El identificador de la notificación recién creada."],
+        "exceptions": [
+          {
+            "label": "java.lang.IllegalArgumentException",
+            "detail": "La fecha es null."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.management.timer.TimerMBean.addNotification": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea una nueva notificación de temporizador con el tipo, mensaje y userData indicados y la inserta en la lista de notificaciones con la fecha, periodo y número de repeticiones dados."
+        ],
+        "body": [
+          "Si la notificación que se inserta tiene una fecha anterior a la actual, el método se comporta como si la fecha indicada fuera la actual.",
+          "Las notificaciones únicas se entregan de inmediato.",
+          "En las periódicas, la primera se entrega de inmediato y las siguientes se espacian según el parámetro period.",
+          "Una vez añadida a la lista, no pueden actualizarse la fecha, el periodo ni el número de repeticiones de la notificación.",
+          "En una notificación periódica, el parámetro fixedRate indica el esquema de ejecución, como en java.util.Timer."
+        ],
+        "parameters": [
+          {
+            "label": "type",
+            "detail": "El tipo de la notificación de temporizador."
+          },
+          {
+            "label": "message",
+            "detail": "El mensaje detallado de la notificación."
+          },
+          {
+            "label": "userData",
+            "detail": "El objeto de datos de usuario de la notificación."
+          },
+          {
+            "label": "date",
+            "detail": "La fecha en que ocurre la notificación."
+          },
+          {
+            "label": "period",
+            "detail": "El periodo de la notificación (en milisegundos)."
+          },
+          {
+            "label": "nbOccurences",
+            "detail": "El número total de veces que se emitirá la notificación."
+          },
+          {
+            "label": "fixedRate",
+            "detail": "Si es true y la notificación es periódica, se planifica con un esquema de ejecución de frecuencia fija. Si es false y es periódica, con un esquema de retraso fijo. Se ignora si la notificación no es periódica."
+          }
+        ],
+        "returns": ["El identificador de la notificación recién creada."],
+        "exceptions": [
+          {
+            "label": "java.lang.IllegalArgumentException",
+            "detail": "La fecha es null o el periodo o el número de repeticiones es negativo."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una nueva notificación de temporizador con el tipo, mensaje y userData indicados y la inserta en la lista de notificaciones con la fecha, periodo y número de repeticiones dados."
+        ],
+        "body": [
+          "Si la notificación que se inserta tiene una fecha anterior a la actual, el método se comporta como si la fecha indicada fuera la actual.",
+          "Las notificaciones únicas se entregan de inmediato.",
+          "En las periódicas, la primera se entrega de inmediato y las siguientes se espacian según el parámetro period.",
+          "Una vez añadida a la lista, no pueden actualizarse la fecha, el periodo ni el número de repeticiones de la notificación.",
+          "En una notificación periódica, usa un esquema de ejecución de retraso fijo, como en java.util.Timer. Para usar frecuencia fija, usa addNotification(String, String, Object, Date, long, long, boolean)."
+        ],
+        "parameters": [
+          {
+            "label": "type",
+            "detail": "El tipo de la notificación de temporizador."
+          },
+          {
+            "label": "message",
+            "detail": "El mensaje detallado de la notificación."
+          },
+          {
+            "label": "userData",
+            "detail": "El objeto de datos de usuario de la notificación."
+          },
+          {
+            "label": "date",
+            "detail": "La fecha en que ocurre la notificación."
+          },
+          {
+            "label": "period",
+            "detail": "El periodo de la notificación (en milisegundos)."
+          },
+          {
+            "label": "nbOccurences",
+            "detail": "El número total de veces que se emitirá la notificación."
+          }
+        ],
+        "returns": ["El identificador de la notificación recién creada."],
+        "exceptions": [
+          {
+            "label": "java.lang.IllegalArgumentException",
+            "detail": "La fecha es null o el periodo o el número de repeticiones es negativo."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una nueva notificación de temporizador con el tipo, mensaje y userData indicados y la inserta en la lista de notificaciones con la fecha y el periodo dados y un número de repeticiones nulo."
+        ],
+        "body": [
+          "La notificación se repetirá indefinidamente con el periodo del temporizador y un esquema de retraso fijo, como en java.util.Timer. Para usar frecuencia fija, usa addNotification(String, String, Object, Date, long, long, boolean).",
+          "Si la notificación que se inserta tiene una fecha anterior a la actual, el método se comporta como si la fecha indicada fuera la actual. La primera notificación se entrega de inmediato y las siguientes se espacian según el parámetro period."
+        ],
+        "parameters": [
+          {
+            "label": "type",
+            "detail": "El tipo de la notificación de temporizador."
+          },
+          {
+            "label": "message",
+            "detail": "El mensaje detallado de la notificación."
+          },
+          {
+            "label": "userData",
+            "detail": "El objeto de datos de usuario de la notificación."
+          },
+          {
+            "label": "date",
+            "detail": "La fecha en que ocurre la notificación."
+          },
+          {
+            "label": "period",
+            "detail": "El periodo de la notificación (en milisegundos)."
+          }
+        ],
+        "returns": ["El identificador de la notificación recién creada."],
+        "exceptions": [
+          {
+            "label": "java.lang.IllegalArgumentException",
+            "detail": "La fecha es null o el periodo es negativo."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea una nueva notificación de temporizador con el tipo, mensaje y userData indicados y la inserta en la lista de notificaciones con la fecha dada y periodo y número de repeticiones nulos."
+        ],
+        "body": [
+          "La notificación se gestionará una vez en la fecha indicada.",
+          "Si la notificación que se inserta tiene una fecha anterior a la actual, el método se comporta como si la fecha indicada fuera la actual y la notificación se entrega de inmediato."
+        ],
+        "parameters": [
+          {
+            "label": "type",
+            "detail": "El tipo de la notificación de temporizador."
+          },
+          {
+            "label": "message",
+            "detail": "El mensaje detallado de la notificación."
+          },
+          {
+            "label": "userData",
+            "detail": "El objeto de datos de usuario de la notificación."
+          },
+          {
+            "label": "date",
+            "detail": "La fecha en que ocurre la notificación."
+          }
+        ],
+        "returns": ["El identificador de la notificación recién creada."],
+        "exceptions": [
+          {
+            "label": "java.lang.IllegalArgumentException",
+            "detail": "La fecha es null."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.naming.CompositeName.get": {
+    "parameters": [
+      {
+        "label": "posn",
+        "detail": "El índice, empezando en 0, del componente que se obtiene. Debe estar en el rango [0,size())."
+      }
+    ],
+    "returns": ["El componente no null del índice posn."],
+    "exceptions": [
+      {
+        "label": "ArrayIndexOutOfBoundsException",
+        "detail": "si posn está fuera del rango indicado."
+      }
+    ]
+  },
+  "web-java-se-javax.naming.CompositeName.remove": {
+    "parameters": [
+      {
+        "label": "posn",
+        "detail": "El índice del componente que se elimina. Debe estar en el rango [0,size())."
+      }
+    ],
+    "returns": ["El componente eliminado (un String)."],
+    "exceptions": [
+      {
+        "label": "ArrayIndexOutOfBoundsException",
+        "detail": "Si posn está fuera del rango indicado (incluido el caso en que el nombre compuesto está vacío)."
+      },
+      {
+        "label": "InvalidNameException",
+        "detail": "Si eliminar el componente incumpliría la sintaxis del nombre."
+      }
+    ]
+  },
+  "web-java-se-javax.naming.CompoundName.get": {
+    "parameters": [
+      {
+        "label": "posn",
+        "detail": "El índice, empezando en 0, del componente que se obtiene. Debe estar en el rango [0,size())."
+      }
+    ],
+    "returns": ["El componente del índice posn."],
+    "exceptions": [
+      {
+        "label": "ArrayIndexOutOfBoundsException",
+        "detail": "si posn está fuera del rango indicado."
+      }
+    ]
+  },
+  "web-java-se-javax.naming.CompoundName.remove": {
+    "parameters": [
+      {
+        "label": "posn",
+        "detail": "El índice del componente que se elimina. Debe estar en el rango [0,size())."
+      }
+    ],
+    "returns": ["El componente eliminado (un String)."],
+    "exceptions": [
+      {
+        "label": "ArrayIndexOutOfBoundsException",
+        "detail": "Si posn está fuera del rango indicado (incluido el caso en que el nombre compuesto está vacío)."
+      },
+      {
+        "label": "InvalidNameException",
+        "detail": "Si eliminar el componente incumpliría la sintaxis del nombre compuesto."
+      }
+    ]
+  },
+  "web-java-se-javax.naming.Context": {
+    "body": [
+      "Nombres",
+      "Cada nombre que se pasa como argumento a un método de Context es relativo a ese contexto. El nombre vacío se usa para nombrar al propio contexto. Un parámetro de nombre nunca puede ser null.",
+      "La mayoría de los métodos tienen versiones sobrecargadas, una con parámetro Name y otra con String. Son equivalentes: si el Name y el String representan el mismo nombre, las versiones sobrecargadas se comportan igual. En las descripciones de abajo solo se documenta completamente una versión; la otra enlaza a la primera, y la documentación vale para ambas.",
+      "En los sistemas que admiten federación, los argumentos String de los métodos de Context son nombres compuestos. Los argumentos Name que son instancias de CompositeName se tratan como nombres compuestos, y los que no, como nombres compuestos jerárquicos (que pueden ser instancias de CompoundName u otras implementaciones). Así, los resultados de NameParser.parse() pueden usarse como argumentos de los métodos de Context. Antes de JNDI 1.2, todos los argumentos de nombre se trataban como nombres compuestos.",
+      "Además, en los sistemas que admiten federación, todos los nombres que devuelven list() y listBindings() en un NamingEnumeration son nombres compuestos representados como cadenas. Consulta CompositeName para la sintaxis de cadena de los nombres.",
+      "En los sistemas que no admiten federación, los argumentos de nombre (Name o String) y los nombres devueltos en NamingEnumeration pueden ser nombres de su propio espacio de nombres en lugar de un espacio compuesto, a criterio del proveedor de servicios.",
+      "Excepciones",
+      "Todos los métodos de esta interfaz pueden lanzar NamingException o cualquiera de sus subclases. Consulta NamingException y sus subclases para los detalles de cada excepción.",
+      "Acceso concurrente",
+      "No se garantiza que una instancia de Context esté sincronizada frente al acceso concurrente de varios hilos. Los hilos que necesiten acceder a la vez a una misma instancia deben sincronizarse entre sí. Varios hilos que manejen instancias distintas no necesitan sincronizarse. El método lookup, si recibe un nombre vacío, devuelve una nueva instancia de Context que representa el mismo contexto de nombres.",
+      "A efectos de control de concurrencia, una operación de Context que devuelve un NamingEnumeration no se considera completada mientras la enumeración siga en uso o mientras se sigan referencias generadas por esa operación.",
+      "Parámetros",
+      "El proveedor de servicios no modifica los parámetros Name que se pasan a los métodos de Context o de sus subinterfaces. Puede guardar una referencia mientras dura la operación, incluida cualquier enumeración de resultados y el procesamiento de las referencias generadas. Quien llama no debe modificar el objeto durante ese tiempo. Un Name devuelto por estos métodos pertenece a quien llama, que puede modificarlo después; el proveedor no.",
+      "Propiedades del entorno",
+      "Las aplicaciones JNDI necesitan comunicar preferencias y propiedades que definen el entorno en que se accede a los servicios de nombres y directorio. Por ejemplo, un contexto puede requerir credenciales de seguridad para acceder al servicio, y otro, información de configuración del servidor. Esto se llama el entorno de un contexto. La interfaz Context ofrece métodos para obtenerlo y actualizarlo.",
+      "El entorno se hereda del contexto padre a medida que los métodos pasan de un contexto a otro. Los cambios en el entorno de un contexto no afectan directamente a los de otros.",
+      "Cuándo se usan las propiedades del entorno o se comprueba su validez depende de la implementación. Por ejemplo, los proveedores usan algunas propiedades de seguridad para \"iniciar sesión\" en el directorio, lo que puede ocurrir al crear el contexto o la primera vez que se invoca un método sobre él. Cuándo ocurre, y si ocurre, depende de la implementación. Al añadir o quitar propiedades del entorno, la comprobación de validez de los cambios también depende de la implementación: puede hacerse al cambiar, en la siguiente operación o nunca.",
+      "Cualquier objeto con una referencia a un contexto puede examinar su entorno. No debe guardarse información sensible como contraseñas en texto plano salvo que se sepa que la implementación la protege.",
+      "Archivos de recursos",
+      "Para simplificar la configuración del entorno que necesita una aplicación JNDI, los componentes de aplicación y los proveedores de servicios pueden distribuirse con archivos de recursos. Un archivo de recursos JNDI tiene formato de archivo de propiedades (consulta java.util.Properties) y contiene una lista de pares clave/valor. La clave es el nombre de la propiedad (p. ej. \"java.naming.factory.object\") y el valor una cadena en el formato de esa propiedad. Este es un ejemplo de archivo de recursos JNDI:",
+      "java.naming.factory.object=com.sun.jndi.ldap.AttrsToCorba:com.wiz.from.Person java.naming.factory.state=com.sun.jndi.ldap.CorbaToAttrs:com.wiz.from.Person java.naming.factory.control=com.sun.jndi.ldap.ResponseControlFactory",
+      "La biblioteca de clases JNDI lee los archivos de recursos y deja sus valores disponibles libremente. Por eso deben considerarse \"legibles por todos\" y no debe guardarse en ellos información sensible como contraseñas en texto plano.",
+      "Hay dos tipos de archivos de recursos JNDI: de proveedor y de aplicación.",
+      "Archivos de recursos de proveedor",
+      "Cada proveedor de servicios tiene un recurso opcional que lista sus propiedades específicas. Se llama:",
+      "[prefix/]jndiprovider.properties",
+      "donde prefix es el nombre del paquete de las implementaciones de contexto del proveedor, con cada punto (\".\") convertido en barra (\"/\").",
+      "Por ejemplo, si un proveedor define una implementación de contexto con nombre de clase com.sun.jndi.ldap.LdapCtx, su recurso de proveedor se llama com/sun/jndi/ldap/jndiprovider.properties. Si la clase no está en un paquete, el recurso se llama simplemente jndiprovider.properties.",
+      "Algunos métodos de la biblioteca JNDI usan las propiedades JNDI estándar que indican listas de fábricas JNDI:",
+      "java.naming.factory.object",
+      "java.naming.factory.state",
+      "java.naming.factory.control",
+      "java.naming.factory.url.pkgs",
+      "La biblioteca JNDI consulta el archivo de recursos del proveedor para determinar estas propiedades. El proveedor puede fijar otras propiedades en su archivo a su criterio; su documentación debe indicar claramente cuáles se permiten. Las demás se ignoran.",
+      "Archivos de recursos de aplicación",
+      "Al desplegar una aplicación, normalmente tiene varios directorios de código y JAR en su classpath. JNDI localiza (con ClassLoader.getResources()) todos los archivos de recursos de aplicación llamados jndi.properties en el classpath. Además, si el directorio de instalación de Java contiene un archivo de propiedades integrado, normalmente conf/jndi.properties, JNDI lo trata como un archivo de recursos de aplicación adicional. Todas las propiedades de estos archivos se colocan en el entorno del contexto inicial, que después heredan los demás contextos.",
+      "Para cada propiedad que aparece en más de un archivo de recursos de aplicación, JNDI usa el primer valor encontrado o, en algunos casos en que tiene sentido, concatena todos los valores (ver detalles abajo). Por ejemplo, si \"java.naming.factory.object\" aparece en tres archivos jndi.properties, la lista de fábricas de objetos es la concatenación de los valores de los tres. Así, cada componente desplegable se encarga de listar las fábricas que exporta, y JNDI recoge y usa automáticamente todas esas listas al buscar clases de fábrica.",
+      "Algoritmo de búsqueda de propiedades",
+      "Cuando JNDI crea un contexto inicial, su entorno se inicializa con las propiedades del parámetro environment pasado al constructor, las propiedades del sistema y los archivos de recursos de aplicación. Consulta InitialContext para más detalles. Este entorno inicial lo heredan después las demás instancias de contexto.",
+      "Cuando la biblioteca JNDI necesita el valor de una propiedad, combina los valores de estas dos fuentes, en orden:",
+      "El entorno del contexto sobre el que se opera.",
+      "El archivo de recursos de proveedor (jndiprovider.properties) del contexto sobre el que se opera.",
+      "Para cada propiedad presente en ambas fuentes, JNDI determina su valor así: si es una de las propiedades JNDI estándar que indican una lista de fábricas (listadas arriba), concatena los valores en una única lista separada por dos puntos; para las demás, solo usa el primer valor encontrado.",
+      "Cuando un proveedor de servicios necesita el valor de una propiedad, normalmente lo toma directamente del entorno. Puede definir propiedades específicas en su propio archivo de recursos; en ese caso debe combinar los valores como se describe en el párrafo anterior.",
+      "Así, cada desarrollador de proveedores puede indicar una lista de fábricas que usar con su proveedor. Quien despliega la aplicación puede modificarlas con los recursos de aplicación, y el usuario, a su vez, puede modificar estos."
+    ]
+  },
+  "web-java-se-javax.naming.ldap.LdapName.get": {
+    "parameters": [
+      {
+        "label": "posn",
+        "detail": "El índice, empezando en 0, del componente que se obtiene. Debe estar en el rango [0,size())."
+      }
+    ],
+    "returns": ["El componente no null del índice posn."],
+    "exceptions": [
+      {
+        "label": "IndexOutOfBoundsException",
+        "detail": "si posn está fuera del rango indicado."
       }
     ]
   },
