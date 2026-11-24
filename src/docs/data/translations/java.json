@@ -18549,6 +18549,12 @@
     ],
     "returns": ["el número de segundos desde la época 1970-01-01T00:00:00Z"]
   },
+  "web-java-se-java.time.chrono.ChronoZonedDateTime.toEpochSecond": {
+    "body": [
+      "Usa la fecha-hora local y el desfase para calcular el segundo de época, es decir, el número de segundos transcurridos desde 1970-01-01T00:00:00Z. Los instantes posteriores a la época son positivos y los anteriores, negativos."
+    ],
+    "returns": ["el número de segundos desde la época 1970-01-01T00:00:00Z"]
+  },
   "web-java-se-java.time.chrono.Chronology": {
     "body": [
       "La API principal de fecha y hora se basa en el sistema de calendario ISO. La cronología trabaja entre bastidores para representar el concepto general de sistema de calendario, como el japonés, el Minguo, el budista tailandés y otros.",
@@ -18575,6 +18581,326 @@
       "Esta interfaz debe implementarse con cuidado para que las demás clases funcionen bien. Todas las implementaciones instanciables deben ser final, inmutables y seguras con hilos. Las subclases deberían ser Serializable siempre que sea posible."
     ]
   },
+  "web-java-se-java.time.chrono.Chronology.range": {
+    "body": [
+      "Todos los campos pueden expresarse como un entero long. Este método devuelve un objeto que describe el rango válido de ese valor.",
+      "El resultado solo describe los valores mínimo y máximo válidos; no conviene sacar más conclusiones de ellos. Por ejemplo, puede haber valores dentro del rango que no sean válidos para el campo.",
+      "Este método devuelve un resultado tanto si la cronología admite el campo como si no."
+    ],
+    "parameters": [
+      {
+        "label": "field",
+        "detail": "el campo cuyo rango se obtiene; no null"
+      }
+    ],
+    "returns": ["el rango de valores válidos del campo; no null"],
+    "exceptions": [
+      {
+        "label": "DateTimeException",
+        "detail": "si no se puede obtener el rango del campo"
+      }
+    ]
+  },
+  "web-java-se-java.time.chrono.HijrahChronology.range": {
+    "body": [
+      "Todos los campos pueden expresarse como un entero long. Este método devuelve un objeto que describe el rango válido de ese valor.",
+      "El resultado solo describe los valores mínimo y máximo válidos; no conviene sacar más conclusiones de ellos. Por ejemplo, puede haber valores dentro del rango que no sean válidos para el campo.",
+      "Este método devuelve un resultado tanto si la cronología admite el campo como si no."
+    ],
+    "parameters": [
+      {
+        "label": "field",
+        "detail": "el campo cuyo rango se obtiene; no null"
+      }
+    ],
+    "returns": ["el rango de valores válidos del campo; no null"],
+    "exceptions": [
+      {
+        "label": "DateTimeException",
+        "detail": "si no se puede obtener el rango del campo"
+      }
+    ]
+  },
+  "web-java-se-java.time.chrono.HijrahDate": {
+    "body": [
+      "Esta fecha funciona con una de las variantes del calendario de la Hégira.",
+      "El calendario de la Hégira tiene un número total de días al año distinto del gregoriano, y la duración de cada mes se basa en el periodo de una revolución completa de la Luna alrededor de la Tierra (entre lunas nuevas sucesivas). Consulta HijrahChronology para las variantes admitidas.",
+      "Cada HijrahDate se crea ligado a una HijrahChronology concreta, y la misma cronología se propaga a cada HijrahDate calculado a partir de la fecha. Para usar otra variante de la Hégira, puede usarse su HijrahChronology para crear nuevas instancias de HijrahDate. También puede usarse el método withVariant para convertir a una nueva HijrahChronology.",
+      "Es una clase basada en valores: las instancias iguales deben tratarse como intercambiables y no deben usarse para sincronizar, o el comportamiento puede ser impredecible. Por ejemplo, la sincronización podría fallar en una versión futura. Para comparar, usa equals."
+    ],
+    "caveats": ["Esta clase es inmutable y segura entre hilos."]
+  },
+  "web-java-se-java.time.chrono.HijrahDate.equals": {
+    "body": [
+      "Compara este HijrahDate con otro comprobando que la fecha sea la misma.",
+      "Solo se comparan objetos de tipo HijrahDate; con otros tipos devuelve false. Para comparar las fechas de dos TemporalAccessor, incluidas fechas de cronologías distintas, usa ChronoField.EPOCH_DAY como comparador."
+    ],
+    "parameters": [
+      {
+        "label": "obj",
+        "detail": "el objeto que se comprueba; null devuelve false"
+      }
+    ],
+    "returns": [
+      "true si esta fecha es igual a la otra y las cronologías son iguales"
+    ]
+  },
+  "web-java-se-java.time.chrono.IsoChronology.range": {
+    "body": [
+      "Todos los campos pueden expresarse como un entero long. Este método devuelve un objeto que describe el rango válido de ese valor.",
+      "El resultado solo describe los valores mínimo y máximo válidos; no conviene sacar más conclusiones de ellos. Por ejemplo, puede haber valores dentro del rango que no sean válidos para el campo.",
+      "Este método devuelve un resultado tanto si la cronología admite el campo como si no."
+    ],
+    "parameters": [
+      {
+        "label": "field",
+        "detail": "el campo cuyo rango se obtiene; no null"
+      }
+    ],
+    "returns": ["el rango de valores válidos del campo; no null"],
+    "exceptions": [
+      {
+        "label": "DateTimeException",
+        "detail": "si no se puede obtener el rango del campo"
+      }
+    ]
+  },
+  "web-java-se-java.time.chrono.JapaneseChronology.date": {
+    "overloads": [
+      {
+        "intro": [
+          "Obtiene una fecha local del calendario japonés a partir de los campos era, año de la era, mes del año y día del mes."
+        ],
+        "body": [
+          "El mes y el día del mes japoneses son los mismos que en el calendario ISO. No se reinician al cambiar de era. Por ejemplo:",
+          "6th Jan Showa 64 = ISO 1989-01-06 7th Jan Showa 64 = ISO 1989-01-07 8th Jan Heisei 1 = ISO 1989-01-08 9th Jan Heisei 1 = ISO 1989-01-09"
+        ],
+        "parameters": [
+          {
+            "label": "era",
+            "detail": "la era japonesa; no null"
+          },
+          {
+            "label": "yearOfEra",
+            "detail": "el año de la era"
+          },
+          {
+            "label": "month",
+            "detail": "el mes del año"
+          },
+          {
+            "label": "dayOfMonth",
+            "detail": "el día del mes"
+          }
+        ],
+        "returns": ["la fecha local japonesa; no null"],
+        "exceptions": [
+          {
+            "label": "DateTimeException",
+            "detail": "si no se puede crear la fecha"
+          },
+          {
+            "label": "ClassCastException",
+            "detail": "si la era no es una JapaneseEra"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Obtiene una fecha local del calendario japonés a partir de los campos año proléptico, mes del año y día del mes."
+        ],
+        "body": [
+          "El año proléptico, el mes y el día del mes japoneses son los mismos que en el calendario ISO. No se reinician al cambiar de era."
+        ],
+        "parameters": [
+          {
+            "label": "prolepticYear",
+            "detail": "el año proléptico"
+          },
+          {
+            "label": "month",
+            "detail": "el mes del año"
+          },
+          {
+            "label": "dayOfMonth",
+            "detail": "el día del mes"
+          }
+        ],
+        "returns": ["la fecha local japonesa; no null"],
+        "exceptions": [
+          {
+            "label": "DateTimeException",
+            "detail": "si no se puede crear la fecha"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.time.chrono.JapaneseChronology.dateYearDay": {
+    "overloads": [
+      {
+        "intro": [
+          "Obtiene una fecha local del calendario japonés a partir de los campos era, año de la era y día del año."
+        ],
+        "body": [
+          "En esta fábrica, el día del año se expresa respecto al inicio del año de la era. Esta definición solo cambia el significado normal del día del año en los años en que el año de la era se reinicia a uno por un cambio de era. Por ejemplo:",
+          "6th Jan Showa 64 = day-of-year 6 7th Jan Showa 64 = day-of-year 7 8th Jan Heisei 1 = day-of-year 1 9th Jan Heisei 1 = day-of-year 2"
+        ],
+        "parameters": [
+          {
+            "label": "era",
+            "detail": "la era japonesa; no null"
+          },
+          {
+            "label": "yearOfEra",
+            "detail": "el año de la era"
+          },
+          {
+            "label": "dayOfYear",
+            "detail": "el día del año"
+          }
+        ],
+        "returns": ["la fecha local japonesa; no null"],
+        "exceptions": [
+          {
+            "label": "DateTimeException",
+            "detail": "si no se puede crear la fecha"
+          },
+          {
+            "label": "ClassCastException",
+            "detail": "si la era no es una JapaneseEra"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Obtiene una fecha local del calendario japonés a partir de los campos año proléptico y día del año."
+        ],
+        "body": [
+          "En esta fábrica, el día del año se expresa respecto al inicio del año proléptico. El año proléptico y el día del año japoneses son los mismos que en el calendario ISO. No se reinician al cambiar de era."
+        ],
+        "parameters": [
+          {
+            "label": "prolepticYear",
+            "detail": "el año proléptico"
+          },
+          {
+            "label": "dayOfYear",
+            "detail": "el día del año"
+          }
+        ],
+        "returns": ["la fecha local japonesa; no null"],
+        "exceptions": [
+          {
+            "label": "DateTimeException",
+            "detail": "si no se puede crear la fecha"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.time.chrono.JapaneseChronology.range": {
+    "body": [
+      "Todos los campos pueden expresarse como un entero long. Este método devuelve un objeto que describe el rango válido de ese valor.",
+      "El resultado solo describe los valores mínimo y máximo válidos; no conviene sacar más conclusiones de ellos. Por ejemplo, puede haber valores dentro del rango que no sean válidos para el campo.",
+      "Este método devuelve un resultado tanto si la cronología admite el campo como si no."
+    ],
+    "parameters": [
+      {
+        "label": "field",
+        "detail": "el campo cuyo rango se obtiene; no null"
+      }
+    ],
+    "returns": ["el rango de valores válidos del campo; no null"],
+    "exceptions": [
+      {
+        "label": "DateTimeException",
+        "detail": "si no se puede obtener el rango del campo"
+      }
+    ]
+  },
+  "web-java-se-java.time.chrono.JapaneseDate.equals": {
+    "body": [
+      "Compara este JapaneseDate con otro comprobando que la fecha sea la misma.",
+      "Solo se comparan objetos de tipo JapaneseDate; con otros tipos devuelve false. Para comparar las fechas de dos TemporalAccessor, incluidas fechas de cronologías distintas, usa ChronoField.EPOCH_DAY como comparador."
+    ],
+    "parameters": [
+      {
+        "label": "obj",
+        "detail": "el objeto que se comprueba; null devuelve false"
+      }
+    ],
+    "returns": ["true si es igual a la otra fecha"]
+  },
+  "web-java-se-java.time.chrono.JapaneseDate.of": {
+    "overloads": [
+      {
+        "intro": [
+          "Obtiene un JapaneseDate que representa una fecha del calendario japonés a partir de los campos era, año de la era, mes del año y día del mes."
+        ],
+        "body": [
+          "Devuelve un JapaneseDate con los campos indicados. El día debe ser válido para el año y el mes; si no, se lanza una excepción.",
+          "El mes y el día del mes japoneses son los mismos que en el calendario ISO. No se reinician al cambiar de era. Por ejemplo:",
+          "6th Jan Showa 64 = ISO 1989-01-06 7th Jan Showa 64 = ISO 1989-01-07 8th Jan Heisei 1 = ISO 1989-01-08 9th Jan Heisei 1 = ISO 1989-01-09"
+        ],
+        "parameters": [
+          {
+            "label": "era",
+            "detail": "la era japonesa; no null"
+          },
+          {
+            "label": "yearOfEra",
+            "detail": "el año de la era japonés"
+          },
+          {
+            "label": "month",
+            "detail": "el mes del año japonés, de 1 a 12"
+          },
+          {
+            "label": "dayOfMonth",
+            "detail": "el día del mes japonés, de 1 a 31"
+          }
+        ],
+        "returns": ["la fecha en el calendario japonés; no null"],
+        "exceptions": [
+          {
+            "label": "DateTimeException",
+            "detail": "si algún campo está fuera de rango, si el día del mes no es válido para el mes y el año, o si la fecha no corresponde a una era japonesa"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Obtiene un JapaneseDate que representa una fecha del calendario japonés a partir de los campos año proléptico, mes del año y día del mes."
+        ],
+        "body": [
+          "Devuelve un JapaneseDate con los campos indicados. El día debe ser válido para el año y el mes; si no, se lanza una excepción.",
+          "El año proléptico, el mes y el día del mes japoneses son los mismos que en el calendario ISO. No se reinician al cambiar de era."
+        ],
+        "parameters": [
+          {
+            "label": "prolepticYear",
+            "detail": "el año proléptico japonés"
+          },
+          {
+            "label": "month",
+            "detail": "el mes del año japonés, de 1 a 12"
+          },
+          {
+            "label": "dayOfMonth",
+            "detail": "el día del mes japonés, de 1 a 31"
+          }
+        ],
+        "returns": ["la fecha en el calendario japonés; no null"],
+        "exceptions": [
+          {
+            "label": "DateTimeException",
+            "detail": "si algún campo está fuera de rango o si el día del mes no es válido para el mes y el año"
+          }
+        ]
+      }
+    ]
+  },
   "web-java-se-java.time.chrono.JapaneseEra.toString": {
     "returns": ["una representación en cadena del objeto."],
     "caveats": [
@@ -18582,6 +18908,98 @@
       "El toString de Object devuelve una cadena con el nombre de la clase de la que el objeto es instancia, el carácter arroba '@' y la representación hexadecimal sin signo del código hash del objeto. Es decir, devuelve una cadena igual al valor de:",
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
     ]
+  },
+  "web-java-se-java.time.chrono.MinguoChronology.range": {
+    "body": [
+      "Todos los campos pueden expresarse como un entero long. Este método devuelve un objeto que describe el rango válido de ese valor.",
+      "El resultado solo describe los valores mínimo y máximo válidos; no conviene sacar más conclusiones de ellos. Por ejemplo, puede haber valores dentro del rango que no sean válidos para el campo.",
+      "Este método devuelve un resultado tanto si la cronología admite el campo como si no."
+    ],
+    "parameters": [
+      {
+        "label": "field",
+        "detail": "el campo cuyo rango se obtiene; no null"
+      }
+    ],
+    "returns": ["el rango de valores válidos del campo; no null"],
+    "exceptions": [
+      {
+        "label": "DateTimeException",
+        "detail": "si no se puede obtener el rango del campo"
+      }
+    ]
+  },
+  "web-java-se-java.time.chrono.MinguoDate.equals": {
+    "body": [
+      "Compara este MinguoDate con otro comprobando que la fecha sea la misma.",
+      "Solo se comparan objetos de tipo MinguoDate; con otros tipos devuelve false. Para comparar las fechas de dos TemporalAccessor, incluidas fechas de cronologías distintas, usa ChronoField.EPOCH_DAY como comparador."
+    ],
+    "parameters": [
+      {
+        "label": "obj",
+        "detail": "el objeto que se comprueba; null devuelve false"
+      }
+    ],
+    "returns": ["true si es igual a la otra fecha"]
+  },
+  "web-java-se-java.time.chrono.MinguoEra": {
+    "body": [
+      "El calendario Minguo tiene dos eras. La actual, para los años desde el 1 en adelante, es la era de la \"República de China\". Todos los años anteriores, cero o menores en el recuento proléptico o uno y mayores en el recuento del año de la era, pertenecen a la era \"Antes de la República de China\".",
+      "Años y eras Minguo",
+      "año de la era · era · año proléptico · año proléptico ISO",
+      "2 · ROC · 2 · 1913",
+      "1 · ROC · 1 · 1912",
+      "1 · BEFORE_ROC · 0 · 1911",
+      "2 · BEFORE_ROC · -1 · 1910",
+      "No uses ordinal() para obtener la representación numérica de MinguoEra. Usa getValue()."
+    ],
+    "caveats": ["Es un enum inmutable y seguro con hilos."]
+  },
+  "web-java-se-java.time.chrono.ThaiBuddhistChronology.range": {
+    "body": [
+      "Todos los campos pueden expresarse como un entero long. Este método devuelve un objeto que describe el rango válido de ese valor.",
+      "El resultado solo describe los valores mínimo y máximo válidos; no conviene sacar más conclusiones de ellos. Por ejemplo, puede haber valores dentro del rango que no sean válidos para el campo.",
+      "Este método devuelve un resultado tanto si la cronología admite el campo como si no."
+    ],
+    "parameters": [
+      {
+        "label": "field",
+        "detail": "el campo cuyo rango se obtiene; no null"
+      }
+    ],
+    "returns": ["el rango de valores válidos del campo; no null"],
+    "exceptions": [
+      {
+        "label": "DateTimeException",
+        "detail": "si no se puede obtener el rango del campo"
+      }
+    ]
+  },
+  "web-java-se-java.time.chrono.ThaiBuddhistDate.equals": {
+    "body": [
+      "Compara este ThaiBuddhistDate con otro comprobando que la fecha sea la misma.",
+      "Solo se comparan objetos de tipo ThaiBuddhistDate; con otros tipos devuelve false. Para comparar las fechas de dos TemporalAccessor, incluidas fechas de cronologías distintas, usa ChronoField.EPOCH_DAY como comparador."
+    ],
+    "parameters": [
+      {
+        "label": "obj",
+        "detail": "el objeto que se comprueba; null devuelve false"
+      }
+    ],
+    "returns": ["true si es igual a la otra fecha"]
+  },
+  "web-java-se-java.time.chrono.ThaiBuddhistEra": {
+    "body": [
+      "El calendario budista tailandés tiene dos eras. La actual, para los años desde el 1 en adelante, es la era \"budista\". Todos los años anteriores, cero o menores en el recuento proléptico o uno y mayores en el recuento del año de la era, pertenecen a la era \"Antes de la era budista\".",
+      "Años y eras budistas",
+      "año de la era · era · año proléptico · año proléptico ISO",
+      "2 · BE · 2 · -542",
+      "1 · BE · 1 · -543",
+      "1 · BEFORE_BE · 0 · -544",
+      "2 · BEFORE_BE · -1 · -545",
+      "No uses ordinal() para obtener la representación numérica de ThaiBuddhistEra. Usa getValue()."
+    ],
+    "caveats": ["Es un enum inmutable y seguro con hilos."]
   },
   "web-java-se-java.time.format.DateTimeFormatter.ISO_DATE": {
     "intro": [
@@ -18994,6 +19412,209 @@
       "Este método es idéntico a appendZoneId() salvo en el mecanismo para obtener la zona. Además, el análisis acepta desfases, aunque al formatear nunca se produzca uno."
     ],
     "returns": ["this, para encadenar, no null"]
+  },
+  "web-java-se-java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH": {
+    "body": [
+      "Representa el recuento de días dentro de una semana cuando las semanas están alineadas con el inicio del mes. Suele usarse con ALIGNED_WEEK_OF_MONTH.",
+      "Por ejemplo, en un calendario con semanas de siete días, la primera semana alineada del mes empieza el día 1, la segunda el día 8, y así sucesivamente. Dentro de cada semana alineada, los días se numeran del 1 al 7, y ese es el valor de este campo. Así, los días 1 a 7 del mes tienen valores de día de la semana alineado del 1 al 7, y los días 8 a 14 repiten los valores del 1 al 7.",
+      "Los calendarios sin semanas de siete días deberían implementar este campo de la misma forma, pero con su propia duración de semana."
+    ]
+  },
+  "web-java-se-java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR": {
+    "body": [
+      "Representa el recuento de días dentro de una semana cuando las semanas están alineadas con el inicio del año. Suele usarse con ALIGNED_WEEK_OF_YEAR.",
+      "Por ejemplo, en un calendario con semanas de siete días, la primera semana alineada del año empieza el día 1 del año, la segunda el día 8, y así sucesivamente. Dentro de cada semana alineada, los días se numeran del 1 al 7, y ese es el valor de este campo. Así, los días 1 a 7 del año tienen valores de día de la semana alineado del 1 al 7, y los días 8 a 14 repiten los valores del 1 al 7.",
+      "Los calendarios sin semanas de siete días deberían implementar este campo de la misma forma, pero con su propia duración de semana."
+    ]
+  },
+  "web-java-se-java.time.temporal.ChronoField.ALIGNED_WEEK_OF_MONTH": {
+    "body": [
+      "Representa el recuento de semanas dentro de un mes cuando las semanas están alineadas con el inicio del mes. Suele usarse con ALIGNED_DAY_OF_WEEK_IN_MONTH.",
+      "Por ejemplo, en un calendario con semanas de siete días, la primera semana alineada del mes empieza el día 1, la segunda el día 8, y así sucesivamente. Así, los días 1 a 7 están en la semana alineada 1, los días 8 a 14 en la 2, etc.",
+      "Los calendarios sin semanas de siete días deberían implementar este campo de la misma forma, pero con su propia duración de semana."
+    ]
+  },
+  "web-java-se-java.time.temporal.ChronoField.ALIGNED_WEEK_OF_YEAR": {
+    "body": [
+      "Representa el recuento de semanas dentro de un año cuando las semanas están alineadas con el inicio del año. Suele usarse con ALIGNED_DAY_OF_WEEK_IN_YEAR.",
+      "Por ejemplo, en un calendario con semanas de siete días, la primera semana alineada del año empieza el día 1 del año, la segunda el día 8, y así sucesivamente. Así, los días 1 a 7 del año están en la semana alineada 1, los días 8 a 14 en la 2, etc.",
+      "Los calendarios sin semanas de siete días deberían implementar este campo de la misma forma, pero con su propia duración de semana."
+    ]
+  },
+  "web-java-se-java.time.temporal.JulianFields": {
+    "body": [
+      "El día juliano es una forma estándar de expresar fecha y hora muy usada en la comunidad científica. Se expresa como un número decimal de días completos, en el que los días empiezan a mediodía. Esta clase representa variantes del día juliano que cuentan días completos desde medianoche.",
+      "Los campos se implementan respecto a EPOCH_DAY. Están admitidos, y pueden consultarse y fijarse, si EPOCH_DAY está disponible. Funcionan con todas las cronologías."
+    ],
+    "caveats": ["Es una clase inmutable y segura con hilos."]
+  },
+  "web-java-se-java.time.temporal.JulianFields.JULIAN_DAY": {
+    "body": [
+      "Es una versión entera del número de día juliano. El día juliano es un sistema conocido que cuenta los días completos desde el día 0, definido como el 1 de enero de 4713 a. C. en el calendario juliano, y -4713-11-24 en el gregoriano. El campo tiene \"JulianDay\" como 'name' y 'DAYS' como 'baseUnit'. Siempre se refiere a la fecha-hora local, ignorando el desfase o la zona.",
+      "Para fechas-hora, 'JULIAN_DAY.getFrom()' toma el mismo valor desde medianoche hasta justo antes de la siguiente medianoche. Cuando se aplica 'JULIAN_DAY.adjustInto()' a una fecha-hora, la parte de la hora no cambia. 'JULIAN_DAY.adjustInto()' y 'JULIAN_DAY.getFrom()' solo se aplican a objetos Temporal convertibles a ChronoField.EPOCH_DAY. Con cualquier otro tipo se lanza UnsupportedTemporalTypeException.",
+      "En la fase de resolución del análisis, puede crearse una fecha a partir de un campo de día juliano. En los modos estricto e inteligente se valida el valor contra el rango válido. En el modo permisivo no se valida.",
+      "Notas astronómicas y científicas",
+      "La definición astronómica estándar usa una fracción para indicar la hora del día, y cada día se cuenta de mediodía a mediodía. Por ejemplo, una fracción de 0 representa el mediodía, 0.25 las 18:00, 0.5 la medianoche y 0.75 las 06:00.",
+      "En cambio, esta implementación no tiene parte fraccionaria y cuenta los días de medianoche a medianoche. Usa un entero y días que empiezan a medianoche. El valor entero del número de día juliano es el día juliano astronómico al mediodía de la fecha en cuestión. Equivale al día juliano astronómico redondeado a entero: JDN = floor(JD + 0.5).",
+      "| ISO date | Julian Day Number | Astronomical Julian Day | | 1970-01-01T00:00 | 2,440,588 | 2,440,587.5 | | 1970-01-01T06:00 | 2,440,588 | 2,440,587.75 | | 1970-01-01T12:00 | 2,440,588 | 2,440,588.0 | | 1970-01-01T18:00 | 2,440,588 | 2,440,588.25 | | 1970-01-02T00:00 | 2,440,589 | 2,440,588.5 | | 1970-01-02T06:00 | 2,440,589 | 2,440,588.75 | | 1970-01-02T12:00 | 2,440,589 | 2,440,589.0 |",
+      "A veces se entiende que los días julianos implican tiempo universal o UTC, pero esta implementación siempre usa el número de día juliano de la fecha local, sea cual sea el desfase o la zona horaria."
+    ]
+  },
+  "web-java-se-java.time.temporal.JulianFields.MODIFIED_JULIAN_DAY": {
+    "body": [
+      "Es una versión entera del número de día juliano modificado. El día juliano modificado (MJD) es un sistema conocido que cuenta los días de forma continua. Se define respecto al día juliano astronómico como MJD = JD - 2400000.5. Cada día juliano modificado va de medianoche a medianoche. El campo siempre se refiere a la fecha-hora local, ignorando el desfase o la zona.",
+      "Para fechas-hora, 'MODIFIED_JULIAN_DAY.getFrom()' toma el mismo valor desde medianoche hasta justo antes de la siguiente medianoche. Cuando se aplica 'MODIFIED_JULIAN_DAY.adjustInto()' a una fecha-hora, la parte de la hora no cambia. 'MODIFIED_JULIAN_DAY.adjustInto()' y 'MODIFIED_JULIAN_DAY.getFrom()' solo se aplican a objetos Temporal convertibles a ChronoField.EPOCH_DAY. Con cualquier otro tipo se lanza UnsupportedTemporalTypeException.",
+      "Esta implementación es una versión entera del MJD con la parte decimal redondeada hacia abajo.",
+      "En la fase de resolución del análisis, puede crearse una fecha a partir de un campo de día juliano modificado. En los modos estricto e inteligente se valida el valor contra el rango válido. En el modo permisivo no se valida.",
+      "Notas astronómicas y científicas",
+      "| ISO date | Modified Julian Day | Decimal MJD | | 1970-01-01T00:00 | 40,587 | 40,587.0 | | 1970-01-01T06:00 | 40,587 | 40,587.25 | | 1970-01-01T12:00 | 40,587 | 40,587.5 | | 1970-01-01T18:00 | 40,587 | 40,587.75 | | 1970-01-02T00:00 | 40,588 | 40,588.0 | | 1970-01-02T06:00 | 40,588 | 40,588.25 | | 1970-01-02T12:00 | 40,588 | 40,588.5 |",
+      "A veces se entiende que los días julianos modificados implican tiempo universal o UTC, pero esta implementación siempre usa el día juliano modificado de la fecha local, sea cual sea el desfase o la zona horaria."
+    ]
+  },
+  "web-java-se-java.time.temporal.TemporalAccessor.query": {
+    "body": [
+      "Consulta esta fecha-hora con el objeto de estrategia de consulta indicado.",
+      "Las consultas son una herramienta clave para extraer información de las fechas-hora. Existen para externalizar el proceso de consulta y permitir distintos enfoques, según el patrón de diseño estrategia. Por ejemplo, una consulta que compruebe si la fecha es el día anterior al 29 de febrero en un año bisiesto, o que calcule los días hasta tu próximo cumpleaños.",
+      "Las implementaciones de consulta más habituales son referencias a métodos, como LocalDate::from y ZoneId::from. Hay implementaciones adicionales como métodos estáticos de TemporalQuery."
+    ],
+    "parameters": [
+      {
+        "label": "<R>",
+        "detail": "el tipo del resultado"
+      },
+      {
+        "label": "query",
+        "detail": "la consulta que se invoca; no null"
+      }
+    ],
+    "returns": [
+      "el resultado de la consulta; puede devolver null (lo define la consulta)"
+    ],
+    "exceptions": [
+      {
+        "label": "DateTimeException",
+        "detail": "si no se puede consultar"
+      },
+      {
+        "label": "ArithmeticException",
+        "detail": "si se produce un desbordamiento numérico"
+      }
+    ],
+    "caveats": [
+      "La implementación predeterminada debe comportarse como este código:",
+      "if (query == TemporalQueries.zoneId() || query == TemporalQueries.chronology() || query == TemporalQueries.precision()) { return null; } return query.queryFrom(this);",
+      "Las versiones futuras pueden añadir más consultas a la sentencia if.",
+      "Todas las clases que implementan esta interfaz y sobrescriben este método deben llamar a TemporalAccessor.super.query(query). Las clases del JDK pueden evitar llamar a super si ofrecen un comportamiento equivalente al predeterminado, pero las clases ajenas al JDK no pueden usar esta optimización y deben llamar a super.",
+      "Si la implementación puede dar un valor para alguna de las consultas del if de la implementación predeterminada, debe hacerlo. Por ejemplo, una clase HourMin definida por la aplicación que guarda la hora y el minuto debe sobrescribir este método así:",
+      "if (query == TemporalQueries.precision()) { return MINUTES; } return TemporalAccessor.super.query(query);",
+      "Las implementaciones deben garantizar que este método de solo lectura no altere ningún estado observable."
+    ]
+  },
+  "web-java-se-java.time.temporal.WeekFields": {
+    "body": [
+      "Una semana estándar tiene siete días, pero las culturas tienen definiciones distintas para otros aspectos de la semana. Esta clase representa la definición de la semana, para ofrecer instancias de TemporalField.",
+      "WeekFields ofrece cinco campos, dayOfWeek(), weekOfMonth(), weekOfYear(), weekOfWeekBasedYear() y weekBasedYear(), que dan acceso a los valores de cualquier objeto temporal.",
+      "Los cálculos del día de la semana, la semana del mes y la semana del año se basan en el año proléptico, el mes del año, el día del mes y el día de la semana ISO, que a su vez se basan en el día de época y la cronología. Según la Chronology, los valores pueden no estar alineados con el año de la era.",
+      "Una semana se define por:",
+      "El primer día de la semana. Por ejemplo, la norma ISO-8601 considera el lunes el primer día de la semana.",
+      "El número mínimo de días de la primera semana. Por ejemplo, la norma ISO-8601 exige al menos 4 días en la primera semana.",
+      "Juntos, estos dos valores permiten dividir un año o un mes en semanas.",
+      "Semana del mes",
+      "Se usa un campo: la semana del mes. El cálculo garantiza que las semanas nunca crucen el límite de un mes. El mes se divide en periodos que empiezan en el primer día de la semana definido. El primer periodo es la semana 0 si tiene menos días que el mínimo y la semana 1 si tiene al menos el mínimo.",
+      "Ejemplos de WeekFields",
+      "Fecha · Día de la semana · Primer día: lunes",
+      "Días mínimos: 4 · Primer día: lunes",
+      "Días mínimos: 5",
+      "2008-12-31 · miércoles · semana 5 de diciembre de 2008 · semana 5 de diciembre de 2008",
+      "2009-01-01 · jueves · semana 1 de enero de 2009 · semana 0 de enero de 2009",
+      "2009-01-04 · domingo · semana 1 de enero de 2009 · semana 0 de enero de 2009",
+      "2009-01-05 · lunes · semana 2 de enero de 2009 · semana 1 de enero de 2009",
+      "Semana del año",
+      "Se usa un campo: la semana del año. El cálculo garantiza que las semanas nunca crucen el límite de un año. El año se divide en periodos que empiezan en el primer día de la semana definido. El primer periodo es la semana 0 si tiene menos días que el mínimo y la semana 1 si tiene al menos el mínimo.",
+      "Año basado en semanas",
+      "Se usan dos campos: la semana del año basado en semanas y el año basado en semanas. En un año basado en semanas, cada semana pertenece a un único año. La semana 1 de un año es la primera que empieza en el primer día de la semana y tiene al menos el número mínimo de días. La primera y la última semana de un año pueden contener días del año natural anterior o siguiente, respectivamente.",
+      "Ejemplos de WeekFields para el año basado en semanas",
+      "Fecha · Día de la semana · Primer día: lunes",
+      "Días mínimos: 4 · Primer día: lunes",
+      "Días mínimos: 5",
+      "2008-12-31 · miércoles · semana 1 de 2009 · semana 53 de 2008",
+      "2009-01-01 · jueves · semana 1 de 2009 · semana 53 de 2008",
+      "2009-01-04 · domingo · semana 1 de 2009 · semana 53 de 2008",
+      "2009-01-05 · lunes · semana 2 de 2009 · semana 1 de 2009"
+    ],
+    "caveats": ["Esta clase es inmutable y segura entre hilos."]
+  },
+  "web-java-se-java.time.temporal.WeekFields.weekOfMonth": {
+    "body": [
+      "Representa el recuento de semanas dentro del mes cuando las semanas empiezan en un día fijo, como el lunes. Suele usarse con WeekFields.dayOfWeek().",
+      "La semana uno (1) es la que empieza en WeekFields.getFirstDayOfWeek y tiene al menos WeekFields.getMinimalDaysInFirstWeek() días en el mes. Así, la semana uno puede empezar hasta minDays días antes del inicio del mes. Si la primera semana empieza después del inicio del mes, el periodo anterior es la semana cero (0).",
+      "Por ejemplo:",
+      "- si el día 1 del mes es lunes, la semana uno empieza el día 1 y no hay semana cero",
+      "- si el día 2 del mes es lunes, la semana uno empieza el día 2 y el día 1 está en la semana cero",
+      "- si el día 4 del mes es lunes, la semana uno empieza el día 4 y los días 1 a 3 están en la semana cero",
+      "- si el día 5 del mes es lunes, la semana dos empieza el día 5 y los días 1 a 4 están en la semana uno",
+      "Este campo puede usarse con cualquier sistema de calendario.",
+      "En la fase de resolución del análisis, puede crearse una fecha a partir de un año, una semana del mes, un mes del año y un día de la semana.",
+      "En el modo estricto, se validan los cuatro campos contra su rango válido. La semana del mes se valida para que el mes resultante sea el pedido.",
+      "En el modo inteligente, se validan los cuatro campos contra su rango válido. La semana del mes se valida de 0 a 6, así que la fecha resultante puede estar en un mes distinto del indicado.",
+      "En el modo permisivo, se validan el año y el día de la semana contra su rango válido. La fecha resultante se calcula como en estos cuatro pasos: primero, se crea una fecha en el primer día de la primera semana de enero del año pedido; después, se toma el mes del año, se le resta uno y se suma esa cantidad de meses; luego, se toma la semana del mes, se le resta uno y se suma esa cantidad de semanas; por último, se ajusta al día de la semana correcto dentro de la semana localizada."
+    ],
+    "returns": ["un campo que da acceso a la semana del mes; no null"]
+  },
+  "web-java-se-java.time.temporal.WeekFields.weekOfWeekBasedYear": {
+    "body": [
+      "Representa el recuento de semanas dentro del año cuando las semanas empiezan en un día fijo, como el lunes, y cada semana pertenece exactamente a un año. Suele usarse con WeekFields.dayOfWeek() y WeekFields.weekBasedYear().",
+      "La semana uno (1) es la que empieza en WeekFields.getFirstDayOfWeek y tiene al menos WeekFields.getMinimalDaysInFirstWeek() días en el año. Si la primera semana empieza después del inicio del año, el periodo anterior está en la última semana del año anterior.",
+      "Por ejemplo:",
+      "- si el día 1 del año es lunes, la semana uno empieza el día 1",
+      "- si el día 2 del año es lunes, la semana uno empieza el día 2 y el día 1 está en la última semana del año anterior",
+      "- si el día 4 del año es lunes, la semana uno empieza el día 4 y los días 1 a 3 están en la última semana del año anterior",
+      "- si el día 5 del año es lunes, la semana dos empieza el día 5 y los días 1 a 4 están en la semana uno",
+      "Este campo puede usarse con cualquier sistema de calendario.",
+      "En la fase de resolución del análisis, puede crearse una fecha a partir de un año basado en semanas, una semana del año y un día de la semana.",
+      "En el modo estricto, se validan los tres campos contra su rango válido. La semana del año se valida para que el año basado en semanas resultante sea el pedido.",
+      "En el modo inteligente, se validan los tres campos contra su rango válido. La semana del año basado en semanas se valida de 1 a 53, así que la fecha resultante puede estar en el año basado en semanas siguiente al indicado.",
+      "En el modo permisivo, se validan el año y el día de la semana contra su rango válido. La fecha resultante se calcula como en estos tres pasos: primero, se crea una fecha en el primer día de la primera semana del año basado en semanas pedido; después, se toma la semana del año basado en semanas, se le resta uno y se suma esa cantidad de semanas; por último, se ajusta al día de la semana correcto dentro de la semana localizada."
+    ],
+    "returns": [
+      "un campo que da acceso a la semana del año basado en semanas; no null"
+    ]
+  },
+  "web-java-se-java.time.temporal.WeekFields.weekOfYear": {
+    "body": [
+      "Representa el recuento de semanas dentro del año cuando las semanas empiezan en un día fijo, como el lunes. Suele usarse con WeekFields.dayOfWeek().",
+      "La semana uno (1) es la que empieza en WeekFields.getFirstDayOfWeek y tiene al menos WeekFields.getMinimalDaysInFirstWeek() días en el año. Así, la semana uno puede empezar hasta minDays días antes del inicio del año. Si la primera semana empieza después del inicio del año, el periodo anterior es la semana cero (0).",
+      "Por ejemplo:",
+      "- si el día 1 del año es lunes, la semana uno empieza el día 1 y no hay semana cero",
+      "- si el día 2 del año es lunes, la semana uno empieza el día 2 y el día 1 está en la semana cero",
+      "- si el día 4 del año es lunes, la semana uno empieza el día 4 y los días 1 a 3 están en la semana cero",
+      "- si el día 5 del año es lunes, la semana dos empieza el día 5 y los días 1 a 4 están en la semana uno",
+      "Este campo puede usarse con cualquier sistema de calendario.",
+      "En la fase de resolución del análisis, puede crearse una fecha a partir de un año, una semana del año y un día de la semana.",
+      "En el modo estricto, se validan los tres campos contra su rango válido. La semana del año se valida para que el año resultante sea el pedido.",
+      "En el modo inteligente, se validan los tres campos contra su rango válido. La semana del año se valida de 0 a 54, así que la fecha resultante puede estar en un año distinto del indicado.",
+      "En el modo permisivo, se validan el año y el día de la semana contra su rango válido. La fecha resultante se calcula como en estos tres pasos: primero, se crea una fecha en el primer día de la primera semana del año pedido; después, se toma la semana del año, se le resta uno y se suma esa cantidad de semanas; por último, se ajusta al día de la semana correcto dentro de la semana localizada."
+    ],
+    "returns": ["un campo que da acceso a la semana del año; no null"]
+  },
+  "web-java-se-java.time.zone.ZoneRules.getValidOffsets": {
+    "body": [
+      "La correspondencia entre una fecha-hora local y un desfase no es directa. Hay tres casos:",
+      "Normal, con un desfase válido. Durante la gran mayoría del año se da el caso normal, con un único desfase válido para la fecha-hora local.",
+      "Hueco, sin desfases válidos. Ocurre cuando los relojes se adelantan, normalmente por el cambio de horario de primavera de \"invierno\" a \"verano\". En un hueco hay fechas-hora locales sin desfase válido.",
+      "Solapamiento, con dos desfases válidos. Ocurre cuando los relojes se atrasan, normalmente por el cambio de horario de otoño de \"verano\" a \"invierno\". En un solapamiento hay fechas-hora locales con dos desfases válidos.",
+      "Así, para una fecha-hora local puede haber cero, uno o dos desfases válidos. Este método devuelve esa lista de desfases válidos, de tamaño 0, 1 o 2. Si hay dos, el anterior está en el índice 0 y el posterior en el 1.",
+      "Hay varias formas de manejar la conversión desde un LocalDateTime. Una técnica, usando este método, sería:",
+      "List<ZoneOffset> validOffsets = rules.getValidOffsets(localDT); if (validOffsets.size() == 1) { // Normal case: only one valid offset zoneOffset = validOffsets.get(0); } else { // Gap or Overlap: determine what to do from transition (which will be non-null) ZoneOffsetTransition trans = rules.getTransition(localDT); }",
+      "En teoría, podría haber más de dos desfases válidos, si los relojes se atrasaran más de una vez en poco tiempo. Esto nunca ha ocurrido en la historia de las zonas horarias, así que no tiene tratamiento especial. Pero si ocurriera, la lista tendría más de 2 elementos."
+    ],
+    "parameters": [
+      {
+        "label": "localDateTime",
+        "detail": "la fecha-hora local cuyos desfases válidos se consultan; no null, aunque puede ignorarse null si las reglas tienen un único desfase para todos los instantes"
+      }
+    ],
+    "returns": ["la lista de desfases válidos; puede ser inmutable; no null"]
   },
   "web-java-se-java.util.AbstractList": {
     "body": [
@@ -26348,6 +26969,78 @@
         "label": "<E>",
         "detail": "el tipo de los elementos de esta cola"
       }
+    ]
+  },
+  "web-java-se-java.util.concurrent.atomic.AtomicInteger.doubleValue": {
+    "intro": [
+      "Devuelve el valor actual de este AtomicInteger como double tras una conversión primitiva de ampliación, con los efectos de memoria de VarHandle.getVolatile. @jls 5.1.2 Widening Primitive Conversion"
+    ]
+  },
+  "web-java-se-java.util.concurrent.atomic.AtomicInteger.floatValue": {
+    "intro": [
+      "Devuelve el valor actual de este AtomicInteger como float tras una conversión primitiva de ampliación, con los efectos de memoria de VarHandle.getVolatile. @jls 5.1.2 Widening Primitive Conversion"
+    ]
+  },
+  "web-java-se-java.util.concurrent.atomic.AtomicInteger.longValue": {
+    "intro": [
+      "Devuelve el valor actual de este AtomicInteger como long tras una conversión primitiva de ampliación, con los efectos de memoria de VarHandle.getVolatile. @jls 5.1.2 Widening Primitive Conversion"
+    ]
+  },
+  "web-java-se-java.util.concurrent.atomic.AtomicLong.doubleValue": {
+    "intro": [
+      "Devuelve el valor actual de este AtomicLong como double tras una conversión primitiva de ampliación, con los efectos de memoria de VarHandle.getVolatile. @jls 5.1.2 Widening Primitive Conversion"
+    ]
+  },
+  "web-java-se-java.util.concurrent.atomic.AtomicLong.floatValue": {
+    "intro": [
+      "Devuelve el valor actual de este AtomicLong como float tras una conversión primitiva de ampliación, con los efectos de memoria de VarHandle.getVolatile. @jls 5.1.2 Widening Primitive Conversion"
+    ]
+  },
+  "web-java-se-java.util.concurrent.atomic.AtomicLong.intValue": {
+    "intro": [
+      "Devuelve el valor actual de este AtomicLong como int tras una conversión primitiva de reducción, con los efectos de memoria de VarHandle.getVolatile. @jls 5.1.3 Narrowing Primitive Conversion"
+    ]
+  },
+  "web-java-se-java.util.concurrent.locks.AbstractQueuedSynchronizer": {
+    "body": [
+      "Las subclases deben definirse como clases auxiliares internas no públicas que implementan las propiedades de sincronización de la clase que las contiene. AbstractQueuedSynchronizer no implementa ninguna interfaz de sincronización. En su lugar, define métodos como acquireInterruptibly que los locks concretos y sincronizadores relacionados pueden invocar para implementar sus métodos públicos.",
+      "Esta clase admite un modo exclusivo predeterminado, un modo compartido o ambos. Cuando se adquiere en modo exclusivo, los intentos de adquisición de otros hilos no pueden tener éxito. Las adquisiciones en modo compartido de varios hilos pueden (pero no tienen por qué) tener éxito. Esta clase no \"entiende\" estas diferencias salvo en el sentido mecánico de que, cuando una adquisición compartida tiene éxito, el siguiente hilo en espera (si lo hay) también debe comprobar si puede adquirir. Los hilos que esperan en los distintos modos comparten la misma cola FIFO. Normalmente las subclases solo admiten uno de los modos, pero ambos pueden intervenir, por ejemplo, en un ReadWriteLock. Las subclases que solo admiten un modo no necesitan definir los métodos del modo no usado.",
+      "Esta clase define una clase anidada ConditionObject que las subclases con modo exclusivo pueden usar como implementación de Condition, siempre que isHeldExclusively indique si la sincronización la tiene en exclusiva el hilo actual, que release invocado con el valor actual de getState libere por completo este objeto, y que acquire, con ese valor guardado, acabe restaurando el objeto a su estado adquirido anterior. Ningún otro método de AbstractQueuedSynchronizer crea una condición así, de modo que si no puede cumplirse esta restricción, no la uses. El comportamiento de ConditionObject depende, claro, de la semántica de la implementación de su sincronizador.",
+      "Esta clase ofrece métodos de inspección, instrumentación y monitorización de la cola interna, y métodos parecidos para los objetos de condición. Pueden exportarse como se quiera en clases que usen un AbstractQueuedSynchronizer para su mecánica de sincronización.",
+      "La serialización de esta clase solo guarda el entero atómico subyacente que mantiene el estado, así que los objetos deserializados tienen colas de hilos vacías. Las subclases típicas que necesitan ser serializables definen un método readObject que restaura un estado inicial conocido al deserializar.",
+      "Uso",
+      "Para usar esta clase como base de un sincronizador, redefine los siguientes métodos, según corresponda, consultando y/o modificando el estado de sincronización con getState, setState y/o compareAndSetState:",
+      "tryAcquire",
+      "tryRelease",
+      "tryAcquireShared",
+      "tryReleaseShared",
+      "isHeldExclusively",
+      "Por defecto, cada uno de estos métodos lanza UnsupportedOperationException. Sus implementaciones deben ser seguras con hilos internamente y, en general, cortas y sin bloqueos. Definirlos es la única forma admitida de usar esta clase. Todos los demás métodos son final porque no pueden cambiarse de forma independiente.",
+      "También pueden serte útiles los métodos heredados de AbstractOwnableSynchronizer para saber qué hilo posee un sincronizador exclusivo. Se recomienda usarlos: así las herramientas de monitorización y diagnóstico pueden ayudar a saber qué hilos tienen locks.",
+      "Aunque esta clase se basa en una cola FIFO interna, no impone automáticamente políticas de adquisición FIFO. El núcleo de la sincronización exclusiva tiene esta forma:",
+      "Acquire: while (!tryAcquire(arg)) { enqueue thread if it is not already queued; possibly block current thread; }",
+      "Release: if (tryRelease(arg)) unblock the first queued thread;",
+      "(El modo compartido es parecido, pero puede implicar señales en cascada).",
+      "Como las comprobaciones de acquire se hacen antes de encolar, un hilo que adquiere nuevo puede colarse por delante de otros bloqueados y encolados. Aun así, si quieres, puedes definir tryAcquire y/o tryAcquireShared para impedirlo llamando internamente a uno o más métodos de inspección, y así ofrecer un orden de adquisición FIFO justo. En concreto, la mayoría de los sincronizadores justos pueden definir tryAcquire para que devuelva false si hasQueuedPredecessors (un método pensado específicamente para sincronizadores justos) devuelve true. Hay otras variantes posibles.",
+      "El rendimiento y la escalabilidad suelen ser máximos con la estrategia predeterminada de colarse (también llamada codiciosa, de renuncia o de evitación de convoyes). Aunque no se garantiza que sea justa ni libre de inanición, los hilos encolados antes pueden volver a competir antes que los encolados después, y cada nueva competición tiene una probabilidad imparcial de éxito frente a los hilos que llegan. Además, aunque las adquisiciones no \"giran\" en el sentido habitual, pueden hacer varias llamadas a tryAcquire intercaladas con otros cálculos antes de bloquearse. Esto da casi todas las ventajas del giro cuando la sincronización exclusiva se mantiene poco tiempo, sin la mayoría de sus inconvenientes cuando no. Si quieres, puedes mejorarlo precediendo las llamadas a los métodos acquire de comprobaciones de \"vía rápida\", quizá comprobando antes hasContended y/o hasQueuedThreads para hacerlo solo si es probable que el sincronizador no esté en disputa.",
+      "Esta clase ofrece una base eficiente y escalable para la sincronización, en parte porque se especializa en sincronizadores que pueden basarse en un estado int, parámetros de adquisición y liberación, y una cola de espera FIFO interna. Si esto no basta, puedes construir sincronizadores a más bajo nivel con clases atómicas, tus propias clases java.util.Queue y el soporte de bloqueo de LockSupport.",
+      "Ejemplos de uso",
+      "Esta es una clase de lock de exclusión mutua no reentrante que usa el valor cero para el estado desbloqueado y uno para el bloqueado. Aunque un lock no reentrante no necesita estrictamente registrar el hilo propietario actual, esta clase lo hace para que su uso sea más fácil de monitorizar. También admite condiciones y expone algunos métodos de instrumentación:",
+      "{@code class Mutex implements Lock, java.io.Serializable {",
+      "// Our internal helper class private static class Sync extends AbstractQueuedSynchronizer { // Acquires the lock if state is zero public boolean tryAcquire(int acquires) { assert acquires == 1; // Otherwise unused if (compareAndSetState(0, 1)) { setExclusiveOwnerThread(Thread.currentThread()); return true; } return false; }",
+      "// Releases the lock by setting state to zero protected boolean tryRelease(int releases) { assert releases == 1; // Otherwise unused if (!isHeldExclusively()) throw new IllegalMonitorStateException(); setExclusiveOwnerThread(null); setState(0); return true; }",
+      "// Reports whether in locked state public boolean isLocked() { return getState() != 0; }",
+      "public boolean isHeldExclusively() { // a data race, but safe due to out-of-thin-air guarantees return getExclusiveOwnerThread() == Thread.currentThread(); }",
+      "// Provides a Condition public Condition newCondition() { return new ConditionObject(); }",
+      "// Deserializes properly private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException { s.defaultReadObject(); setState(0); // reset to unlocked state } }",
+      "// The sync object does all the hard work. We just forward to it. private final Sync sync = new Sync();",
+      "public void lock() { sync.acquire(1); } public boolean tryLock() { return sync.tryAcquire(1); } public void unlock() { sync.release(1); } public Condition newCondition() { return sync.newCondition(); } public boolean isLocked() { return sync.isLocked(); } public boolean isHeldByCurrentThread() { return sync.isHeldExclusively(); } public boolean hasQueuedThreads() { return sync.hasQueuedThreads(); } public void lockInterruptibly() throws InterruptedException { sync.acquireInterruptibly(1); } public boolean tryLock(long timeout, TimeUnit unit) throws InterruptedException { return sync.tryAcquireNanos(1, unit.toNanos(timeout)); } }}",
+      "Esta es una clase latch parecida a CountDownLatch, salvo que solo necesita una señal para dispararse. Como un latch no es exclusivo, usa los métodos de adquisición y liberación compartidos.",
+      "{@code class BooleanLatch {",
+      "private static class Sync extends AbstractQueuedSynchronizer { boolean isSignalled() { return getState() != 0; }",
+      "protected int tryAcquireShared(int ignore) { return isSignalled() ? 1 : -1; }",
+      "protected boolean tryReleaseShared(int ignore) { setState(1); return true; } }",
+      "private final Sync sync = new Sync(); public boolean isSignalled() { return sync.isSignalled(); } public void signal() { sync.releaseShared(1); } public void await() throws InterruptedException { sync.acquireSharedInterruptibly(1); } }}"
     ]
   },
   "web-java-se-java.util.regex.Matcher.useAnchoringBounds": {
