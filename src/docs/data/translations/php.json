@@ -2319,6 +2319,251 @@
       "push() añade un dato y pop() lo saca. En las versiones actuales de Swoole se usa Swoole\\Coroutine\\Channel para comunicar corrutinas; comprueba la documentación de la versión que uses."
     ]
   },
+  "php-class-swoole-client": {
+    "summary": "Cliente TCP o UDP de Swoole.",
+    "description": [
+      "connect() abre la conexión con un host y un puerto, send() envía datos, recv() los recibe y close() cierra. Dentro de corrutinas, Swoole\\Coroutine\\Client ofrece lo mismo sin bloquear el proceso.",
+      "Pertenece a la extensión PECL swoole. La documentación de php.net corresponde a versiones antiguas; comprueba la de tu versión."
+    ]
+  },
+  "php-class-swoole-connection-iterator": {
+    "summary": "Iterador sobre las conexiones abiertas de un Swoole\\Server.",
+    "description": [
+      "Se obtiene con la propiedad connections del servidor y se recorre con foreach; cada elemento es el descriptor de una conexión. Es útil, por ejemplo, para enviar un mensaje a todos los clientes."
+    ]
+  },
+  "php-class-swoole-coroutine": {
+    "summary": "Funciones para crear y controlar corrutinas de Swoole.",
+    "description": [
+      "Coroutine::create() o la función go() lanzan una corrutina; dentro, las operaciones de red y Coroutine::sleep() ceden el control a otras corrutinas en lugar de bloquear el proceso.",
+      "getCid() devuelve el identificador de la corrutina actual. Fuera de un servidor, el código con corrutinas se ejecuta dentro de Swoole\\Coroutine\\run()."
+    ]
+  },
+  "php-class-swoole-coroutine-client": {
+    "summary": "Cliente TCP o UDP que no bloquea dentro de corrutinas.",
+    "description": [
+      "Tiene la misma API que Swoole\\Client (connect(), send(), recv(), close()), pero mientras espera datos la corrutina cede el control y el proceso sigue atendiendo otras tareas."
+    ]
+  },
+  "php-class-swoole-coroutine-http-client": {
+    "summary": "Cliente HTTP que no bloquea dentro de corrutinas.",
+    "description": [
+      "Se crea con el host y el puerto. get() y post() hacen la petición y, al terminar, las propiedades statusCode, headers y body contienen la respuesta.",
+      "setHeaders() y set() configuran cabeceras y opciones como el tiempo de espera."
+    ]
+  },
+  "php-class-swoole-coroutine-mysql": {
+    "summary": "Cliente MySQL que no bloquea dentro de corrutinas.",
+    "description": [
+      "connect() recibe un array con el host, el usuario, la contraseña y la base de datos; query() ejecuta consultas y prepare() crea consultas preparadas.",
+      "En versiones recientes de Swoole se recomienda usar PDO o mysqli con los hooks de Swoole\\Runtime, que los convierten en no bloqueantes."
+    ]
+  },
+  "php-class-swoole-coroutine-mysql-exception": {
+    "summary": "Excepción que lanza Swoole\\Coroutine\\MySQL cuando falla una operación.",
+    "description": ["Hereda de Exception."]
+  },
+  "php-class-swoole-event": {
+    "description": [
+      "El módulo Event es de bajo nivel, ya que es un encapsulamiento básico de epoll. Los usuarios deberían tener experiencia en programación con multiplexación de E/S.",
+      "Swoole\\Event::add() registra un socket con funciones de lectura y escritura, del() lo quita y wait() ejecuta el bucle hasta que no quedan eventos."
+    ]
+  },
+  "php-class-swoole-exception": {
+    "summary": "Excepción base de la extensión swoole.",
+    "description": ["Hereda de Exception."]
+  },
+  "php-class-swoole-http-client": {
+    "summary": "Cliente HTTP asíncrono basado en funciones de retrollamada.",
+    "description": [
+      "Corresponde a versiones antiguas de Swoole. En las actuales se usa Swoole\\Coroutine\\Http\\Client, que permite escribir el código de forma secuencial."
+    ]
+  },
+  "php-class-swoole-http-request": {
+    "summary": "Petición HTTP recibida por un Swoole\\Http\\Server.",
+    "description": [
+      "Sus propiedades header, server, get, post, cookie y files contienen los datos de la petición, y rawContent() devuelve el cuerpo sin procesar.",
+      "No uses $_GET ni $_POST: en un servidor Swoole no se rellenan con cada petición."
+    ]
+  },
+  "php-class-swoole-http-response": {
+    "summary": "Respuesta HTTP que envía un Swoole\\Http\\Server.",
+    "description": [
+      "status() fija el código, header() y cookie() añaden cabeceras y cookies, write() envía partes del cuerpo y end() termina la respuesta, opcionalmente con el contenido final."
+    ]
+  },
+  "php-class-swoole-http-server": {
+    "summary": "Servidor HTTP de Swoole.",
+    "description": [
+      "Se crea con la dirección y el puerto, se registra la función de la petición con on('request', function ($peticion, $respuesta) {...}) y se arranca con start().",
+      "El proceso se queda en memoria entre peticiones, así que las variables globales y estáticas conservan su valor: hay que tenerlo en cuenta para no mezclar datos de usuarios distintos."
+    ]
+  },
+  "php-class-swoole-lock": {
+    "summary": "Cerrojo para sincronizar procesos de Swoole.",
+    "description": [
+      "El constructor recibe el tipo de cerrojo, como mutex, lectura/escritura o spinlock. lock() espera a obtenerlo, trylock() lo intenta sin esperar y unlock() lo libera.",
+      "Se crea antes de arrancar el servidor para que lo compartan todos los procesos."
+    ]
+  },
+  "php-class-swoole-mmap": {
+    "summary": "Acceso a archivos mapeados en memoria.",
+    "description": [
+      "Swoole\\Mmap::open() mapea un archivo y devuelve un flujo que se lee y escribe con las funciones habituales. Corresponde a versiones antiguas de Swoole."
+    ]
+  },
+  "php-class-swoole-module": {
+    "summary": "Carga de módulos de Swoole.",
+    "description": [
+      "Corresponde a versiones antiguas de Swoole. Comprueba la documentación de la versión que uses."
+    ]
+  },
+  "php-class-swoole-mysql": {
+    "summary": "Cliente MySQL asíncrono basado en funciones de retrollamada.",
+    "description": [
+      "Corresponde a versiones antiguas de Swoole. En las actuales se usa PDO o mysqli con los hooks de Swoole\\Runtime dentro de corrutinas."
+    ]
+  },
+  "php-class-swoole-mysql-exception": {
+    "summary": "Excepción que lanza Swoole\\MySQL cuando falla una operación.",
+    "description": ["Hereda de Exception."]
+  },
+  "php-class-swoole-process": {
+    "summary": "Proceso hijo gestionado por Swoole.",
+    "description": [
+      "Se crea con la función que ejecutará el hijo y se lanza con start(). write() y read() comunican padre e hijo por una tubería, y Swoole\\Process::wait() recoge los hijos que terminan.",
+      "Swoole\\Process::signal() asocia funciones a señales del sistema."
+    ]
+  },
+  "php-class-swoole-redis-server": {
+    "summary": "Servidor que habla el protocolo de Redis.",
+    "description": [
+      "Hereda de Swoole\\Server. setHandler() asocia una función a cada comando, como GET o SET, y format() prepara la respuesta en el formato de Redis. Permite que cualquier cliente de Redis se conecte a tu servicio."
+    ]
+  },
+  "php-class-swoole-runtime": {
+    "description": [
+      "Swoole\\Runtime::enableCoroutine() activa los hooks; con SWOOLE_HOOK_ALL, funciones como file_get_contents(), sleep(), PDO, mysqli o curl ceden el control dentro de corrutinas en lugar de bloquear el proceso.",
+      "Así se puede aprovechar Swoole con bibliotecas existentes sin reescribirlas."
+    ]
+  },
+  "php-class-swoole-serialize": {
+    "summary": "Serializador rápido de Swoole.",
+    "description": [
+      "Swoole\\Serialize::pack() y unpack() convertían valores de PHP a binario y de vuelta. Corresponde a versiones antiguas de Swoole y ya no existe en las actuales."
+    ]
+  },
+  "php-class-swoole-server": {
+    "summary": "Servidor TCP o UDP de Swoole.",
+    "description": [
+      "Se crea con la dirección, el puerto, el modo y el tipo de socket. set() configura opciones como worker_num, on() registra funciones para eventos como connect, receive o close, y start() arranca el servidor.",
+      "send() envía datos a una conexión por su descriptor. Los procesos trabajadores se quedan en memoria y atienden muchas conexiones a la vez."
+    ]
+  },
+  "php-class-swoole-server-port": {
+    "summary": "Puerto adicional en el que escucha un Swoole\\Server.",
+    "description": [
+      "Lo devuelve Server::listen() o Server::addListener(). Puede tener sus propias opciones con set() y sus propias funciones de eventos con on(), por ejemplo para servir HTTP y TCP en el mismo servidor."
+    ]
+  },
+  "php-class-swoole-table": {
+    "summary": "Tabla en memoria compartida entre los procesos de Swoole.",
+    "description": [
+      "Se crea con el número máximo de filas; column() define cada columna con su tipo y create() reserva la memoria. set(), get(), del() e incr() trabajan con filas por clave de forma segura entre procesos.",
+      "Debe crearse antes de arrancar el servidor para que todos los trabajadores la compartan."
+    ]
+  },
+  "php-class-swoole-websocket-frame": {
+    "summary": "Mensaje WebSocket recibido por un Swoole\\WebSocket\\Server.",
+    "description": [
+      "Sus propiedades fd, data, opcode y finish dan la conexión de origen, el contenido, el tipo de mensaje y si es el último fragmento."
+    ]
+  },
+  "php-class-swoole-websocket-server": {
+    "summary": "Servidor WebSocket de Swoole.",
+    "description": [
+      "Hereda de Swoole\\Http\\Server. on('open'), on('message') y on('close') reciben los eventos de cada conexión, y push() envía un mensaje a un cliente por su descriptor.",
+      "Como también es un servidor HTTP, puede atender peticiones normales en el mismo puerto."
+    ]
+  },
+  "php-class-sysvmessagequeue": {
+    "description": [
+      "La devuelve msg_get_queue() y la reciben msg_send(), msg_receive() y msg_remove_queue(). Permite intercambiar mensajes entre procesos del mismo sistema."
+    ]
+  },
+  "php-class-sysvsemaphore": {
+    "description": [
+      "La devuelve sem_get(). sem_acquire() espera a obtener el semáforo y sem_release() lo libera, lo que permite que varios procesos no accedan a la vez a un recurso compartido."
+    ]
+  },
+  "php-class-sysvsharedmemory": {
+    "description": [
+      "La devuelve shm_attach(). shm_put_var() guarda una variable de PHP en el segmento y shm_get_var() la lee desde cualquier proceso que lo tenga abierto."
+    ]
+  },
+  "php-class-threaded": {
+    "description": [
+      "Los objetos Threaded proporcionan seguridad nativa para el desarrollador; todas las operaciones son thread-safe dentro del ámbito del objeto.",
+      "synchronized() ejecuta código con el bloqueo del objeto, y wait() y notify() permiten que unos hilos esperen a otros. La extensión pthreads ya no se mantiene; para código nuevo, usa parallel."
+    ]
+  },
+  "php-class-throwable": {
+    "summary": "Throwable es la interfaz base para cualquier objeto que pueda ser lanzado mediante una sentencia throw, incluyendo Error y Exception.",
+    "description": [
+      "Las clases de PHP no pueden implementar la interfaz Throwable directamente, por lo que deben extender en su lugar Exception.",
+      "catch (Throwable $e) captura tanto excepciones como errores del motor, lo que es útil en el punto más externo de la aplicación para registrar cualquier fallo."
+    ]
+  },
+  "php-class-tidy": {
+    "summary": "Representa un documento HTML analizado por Tidy.",
+    "description": [
+      "parseString() y parseFile() analizan el HTML con una configuración opcional, y cleanRepair() lo corrige. Convertir el objeto en cadena devuelve el HTML reparado.",
+      "root(), html(), head() y body() devuelven objetos tidyNode para recorrer el árbol, y la propiedad errorBuffer contiene los avisos encontrados."
+    ]
+  },
+  "php-class-tidynode": {
+    "description": [
+      "Sus propiedades name, value, type, attribute y child dan el nombre de la etiqueta, el contenido, el tipo de nodo, los atributos y los hijos. line y column indican su posición en el original.",
+      "Métodos como isComment(), isText() o isPhp() identifican el tipo de nodo."
+    ]
+  },
+  "php-class-transliterator": {
+    "description": [
+      "Transliterator::create() recibe un identificador ICU que puede encadenar transformaciones. Por ejemplo, 'Any-Latin; Latin-ASCII; Lower()' convierte 'Ñandú' en 'nandu', útil para generar slugs.",
+      "createFromRules() define transformaciones propias, createInverse() obtiene la inversa y listIDs() devuelve los identificadores disponibles."
+    ]
+  },
+  "php-class-traversable": {
+    "summary": "Interfaz para detectar si una clase puede recorrerse mediante foreach.",
+    "description": [
+      "Una interfaz abstracta base no puede ser implementada sola. En su lugar, debe ser implementada con IteratorAggregate o con Iterator.",
+      "Los arrays no son Traversable. Para aceptar arrays y objetos recorribles, usa el tipo iterable o la función is_iterable()."
+    ]
+  },
+  "php-class-typeerror": {
+    "description": [
+      "Desde PHP 8.0, las funciones internas también la lanzan cuando reciben un argumento de un tipo que no se puede convertir. Con declare(strict_types=1) no se convierten los escalares, así que pasar '5' donde se espera int también la lanza.",
+      "Hereda de Error. ArgumentCountError hereda de ella."
+    ]
+  },
+  "php-class-uconverter": {
+    "summary": "Convierte texto entre codificaciones con ICU.",
+    "description": [
+      "UConverter::transcode($texto, 'UTF-8', 'ISO-8859-1') convierte en una sola llamada. Para varias conversiones con la misma configuración, crea un objeto con la codificación de destino y la de origen y usa convert().",
+      "setSubstChars() fija el carácter que sustituye a los que no existen en la codificación de destino, y getAvailable() lista las codificaciones soportadas."
+    ]
+  },
+  "php-class-ui-area": {
+    "description": [
+      "Se usa creando una subclase que implementa onDraw() para dibujar con un UI\\Draw\\Pen, y opcionalmente onMouse() y onKey() para responder a la entrada. redraw() pide que se vuelva a dibujar.",
+      "Pertenece a la extensión PECL ui, basada en libui."
+    ]
+  },
+  "php-class-ui-control": {
+    "description": [
+      "Define lo que comparten todos los controles: show() y hide() los muestran u ocultan, enable() y disable() los activan o desactivan, y getParent() devuelve el control que los contiene."
+    ]
+  },
   "php-function-fann_set_activation_function": {
     "description": [
       "Establece la función de activación para la neurona número neuron en la capa número layer, contando al capa de entrada como capa 0.",
