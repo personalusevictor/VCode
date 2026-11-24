@@ -38317,6 +38317,405 @@
       }
     ]
   },
+  "web-java-se-javax.swing.table.TableRowSorter.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": ["Crea un TableRowSorter con un modelo vacío."]
+      },
+      {
+        "intro": [
+          "Crea un TableRowSorter que usa model como TableModel subyacente."
+        ],
+        "parameters": [
+          {
+            "label": "model",
+            "detail": "el TableModel subyacente que se usará; null se trata como un modelo vacío"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-javax.swing.text.AbstractDocument.getListeners": {
+    "body": [
+      "Puedes especificar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los listeners de documento de un documento d con el siguiente código:",
+      "DocumentListener[] mls = (DocumentListener[])(d.getListeners(DocumentListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de listener"
+      },
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners solicitados"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este componente, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.text.DefaultCaret.getListeners": {
+    "body": [
+      "Puedes especificar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los listeners de cambios de un DefaultCaret c con el siguiente código:",
+      "ChangeListener[] cls = (ChangeListener[])(c.getListeners(ChangeListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de listener"
+      },
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners solicitados"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este componente, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.text.DefaultCaret.mouseClicked": {
+    "intro": [
+      "Se llama cuando se hace clic con el ratón. Si el clic se generó con el botón 1, un doble clic selecciona una palabra y un triple clic, la línea actual."
+    ],
+    "parameters": [
+      {
+        "label": "e",
+        "detail": "el evento de ratón"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.text.DefaultFormatter.getAllowsInvalid": {
+    "intro": [
+      "Devuelve si se permite que el valor que se está editando sea no válido durante un tiempo."
+    ],
+    "returns": ["false si el valor editado debe ser siempre válido"]
+  },
+  "web-java-se-javax.swing.text.DefaultFormatter.setAllowsInvalid": {
+    "intro": [
+      "Establece si se permite que el valor que se está editando sea no válido durante un tiempo (es decir, que stringToValue lance una ParseException). A menudo conviene permitir que el usuario introduzca temporalmente un valor no válido."
+    ],
+    "parameters": [
+      {
+        "label": "allowsInvalid",
+        "detail": "Indica si el valor editado debe ser siempre válido"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.text.DefaultFormatter.stringToValue": {
+    "intro": [
+      "Convierte el String pasado en una instancia de getValueClass mediante el constructor que recibe un argumento String. Si getValueClass devuelve null, se usa la Class del valor actual del JFormattedTextField. Si también es null, se devuelve un String. Si el constructor lanza una excepción, se lanza una ParseException. Si no hay un constructor con un único argumento String, se devuelve string."
+    ],
+    "parameters": [
+      {
+        "label": "string",
+        "detail": "String que se convierte"
+      }
+    ],
+    "returns": ["Representación en Object del texto"],
+    "exceptions": [
+      {
+        "label": "ParseException",
+        "detail": "si hay un error en la conversión"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.text.Document": {
+    "body": [
+      "Contenido",
+      "En el nivel más simple, el texto puede modelarse como una secuencia lineal de caracteres. Para admitir la internacionalización, el modelo de texto de Swing usa caracteres Unicode. A la secuencia de caracteres que se muestra en un componente de texto se la suele llamar contenido del componente.",
+      "Para referirse a posiciones dentro de la secuencia, las coordenadas que se usan son la posición entre dos caracteres. Como muestra el diagrama siguiente, una posición en un documento de texto puede denominarse posición o desplazamiento. Esta posición empieza en cero.",
+      "En el ejemplo, si el contenido de un documento es la secuencia \"The quick brown fox,\" como se ve en el diagrama anterior, la posición justo antes de la palabra \"The\" es 0, y la posición tras la palabra \"The\" y antes del espacio que la sigue es 3. Toda la secuencia de caracteres de \"The\" se denomina rango.",
+      "Los siguientes métodos dan acceso a los datos de caracteres que forman el contenido.",
+      "getLength()",
+      "Container.add(java.awt.Component, int)",
+      "getText(int, int, javax.swing.text.Segment)",
+      "Estructura",
+      "El texto rara vez se representa como un contenido sin más. Lo habitual es que tenga algún tipo de estructura asociada. Qué estructura se modela exactamente depende de cada implementación de Document. Puede ser tan simple como no tener estructura (por ejemplo, un campo de texto sencillo) o algo como el diagrama siguiente.",
+      "La unidad de estructura (es decir, un nodo del árbol) se representa con la interfaz Element. Cada Element puede etiquetarse con un conjunto de atributos. Estos atributos (pares nombre/valor) se definen con la interfaz AttributeSet.",
+      "Los siguientes métodos dan acceso a la estructura del documento.",
+      "getDefaultRootElement()",
+      "getRootElements()",
+      "Mutaciones",
+      "Todos los documentos deben poder añadir y eliminar texto simple. Normalmente, el texto se inserta y elimina mediante gestos de teclado o ratón. Qué efecto tiene la inserción o eliminación sobre la estructura del documento depende por completo de la implementación del documento.",
+      "Los siguientes métodos están relacionados con la mutación del contenido del documento:",
+      "insertString(int, java.lang.String, javax.swing.text.AttributeSet)",
+      "Container.add(java.awt.Component, int)",
+      "createPosition(int)",
+      "Notificación",
+      "Las mutaciones del Document deben comunicarse a los observadores interesados. La notificación de cambios sigue las pautas del modelo de eventos especificado para JavaBeans. En el modelo de eventos de JavaBeans, una vez despachada una notificación de evento, hay que notificar a todos los listeners antes de que se produzca cualquier otra mutación en el origen del evento. Además, el orden de entrega no está garantizado.",
+      "La notificación se proporciona como dos eventos separados: DocumentEvent y UndoableEditEvent. Si se muta un Document a través de su API, se envía un DocumentEvent a todos los DocumentListener registrados. Si la implementación de Document admite deshacer/rehacer, se envía un UndoableEditEvent a todos los UndoableEditListener registrados. Si se deshace una edición deshacible, el Document debe lanzar un DocumentEvent para indicar que ha vuelto a cambiar. Sin embargo, en este caso no debe generarse ningún UndoableEditEvent, ya que esa edición es en realidad el origen del cambio y no una mutación del Document hecha a través de su API.",
+      "Volviendo al diagrama anterior, supón que el componente de la izquierda muta el objeto documento representado por el rectángulo azul. El documento responde despachando un DocumentEvent a las vistas de ambos componentes y envía un UndoableEditEvent a la lógica que escucha, que mantiene un búfer de historial.",
+      "Ahora supón que el componente de la derecha muta el mismo documento. De nuevo, el documento despacha un DocumentEvent a las vistas de ambos componentes y envía un UndoableEditEvent a la lógica que mantiene el búfer de historial.",
+      "Si después se retrocede el búfer de historial (es decir, se deshace el último UndoableEdit), se envía un DocumentEvent a ambas vistas para que reflejen la mutación deshecha del documento (es decir, la eliminación de la mutación del componente de la derecha). Si el búfer de historial vuelve a retroceder otro cambio, se envía otro DocumentEvent a ambas vistas para que reflejen la mutación deshecha, es decir, la eliminación de la mutación del componente de la izquierda.",
+      "Los métodos relacionados con la observación de mutaciones del documento son:",
+      "addDocumentListener(DocumentListener)",
+      "removeDocumentListener(DocumentListener)",
+      "addUndoableEditListener(UndoableEditListener)",
+      "removeUndoableEditListener(UndoableEditListener)",
+      "Propiedades",
+      "Las implementaciones de Document suelen tener asociado un conjunto de propiedades en tiempo de ejecución. Dos propiedades conocidas son StreamDescriptionProperty, que puede usarse para describir de dónde procede el Document, y TitleProperty, que puede usarse para darle nombre. Los métodos relacionados con las propiedades son:",
+      "getProperty(java.lang.Object)",
+      "putProperty(java.lang.Object, java.lang.Object)",
+      "Visión general y consejos de programación",
+      "javax.swing.text.Element es una interfaz importante en la construcción de un Document. Permite describir diversas partes estructurales de un documento, como párrafos, líneas de texto o incluso (en documentos HTML) elementos de listas. Conceptualmente, la interfaz Element recoge parte del espíritu de un documento SGML. Así que, si conoces SGML, puede que ya entiendas en parte la interfaz Element de Swing.",
+      "En el modelo de documento de la API de texto de Swing, la interfaz Element define una pieza estructural de un Document, como un párrafo, una línea de texto o un elemento de lista en un documento HTML.",
+      "Cada Element es una rama o una hoja. Si un elemento es una rama, el método isLeaf() devuelve false. Si es una hoja, isLeaf() devuelve true.",
+      "Las ramas pueden tener cualquier número de hijos. Las hojas no tienen hijos. Para saber cuántos hijos tiene una rama, puedes llamar a getElementCount(). Para obtener el padre de un Element, puedes llamar a getParentElement(). Los elementos raíz no tienen padre, así que llamar a getParentElement() sobre una raíz devuelve null.",
+      "Un Element representa una región concreta de un Document que empieza en startOffset y termina justo antes de endOffset. El desplazamiento inicial de un Element rama suele ser el de su primer hijo. Del mismo modo, el desplazamiento final de un Element rama suele ser el de su último hijo.",
+      "Cada Element está asociado a un AttributeSet al que puedes acceder llamando a getAttributes(). En un Element, un AttributeSet es esencialmente un conjunto de pares clave/valor. Estos pares se usan generalmente para marcado, como determinar el color de primer plano o el tamaño de fuente del Element. Pero corresponde al modelo, y al desarrollador, decidir qué se guarda en el AttributeSet.",
+      "Puedes obtener el Element raíz (o los Elements raíz) de un Document llamando a los métodos getDefaultRootElement() y getRootElements(), definidos en la interfaz Document.",
+      "La interfaz Document se encarga de traducir una vista lineal de los caracteres a operaciones sobre Elements. Cada implementación de Document define cuál es la estructura de Elements.",
+      "La clase PlainDocument",
+      "La clase javax.swing.text.PlainDocument define una estructura de Elements en la que el nodo raíz tiene un nodo hijo por cada línea de texto del modelo. La figura 1 muestra cómo modelaría un PlainDocument dos líneas de texto",
+      "La figura 2 muestra cómo podrían corresponder esas mismas dos líneas de texto al contenido real:",
+      "Insertar texto en un PlainDocument",
+      "Como se acaba de mencionar, un PlainDocument contiene un Element raíz, que a su vez contiene un Element por cada línea de texto. Cuando se inserta texto en un PlainDocument, este crea los Elements necesarios para que exista un Element por cada salto de línea. Por ejemplo, supón que quieres insertar un salto de línea en el desplazamiento 2 de la figura 2. Para ello, podrías usar el método insertString() de Document con esta sintaxis:",
+      "document.insertString(2, \"\\n\", null);",
+      "Tras invocar el método insertString(), la estructura de Elements quedaría como la de la figura 3.",
+      "Como otro ejemplo, supón que quieres insertar el patrón \"new\\ntext\\n\" en el desplazamiento 2, como en la figura 2. Esta operación daría el resultado de la figura 4.",
+      "En las ilustraciones anteriores, el nombre de los Elements de línea cambia tras la inserción para coincidir con los números de línea. Pero observa que, al hacerlo, los AttributeSet se mantienen. Por ejemplo, el AttributeSet de la línea 2 en la figura 2 coincide con el AttributeSet de la línea 4 en la figura 4.",
+      "Eliminar texto de un PlainDocument",
+      "Eliminar texto produce un cambio de estructura si la eliminación abarca más de una línea. Considera la eliminación de siete caracteres a partir del desplazamiento 1 de la figura 3. En este caso, el Element que representa la línea 2 se elimina por completo, ya que la región que representa está contenida en la región eliminada. Los Elements que representan las líneas 1 y 3 se unen, ya que están parcialmente contenidos en la región eliminada. Así obtenemos el resultado:",
+      "La clase DefaultStyledDocument",
+      "La clase javax.swing.text.DefaultStyledDocument, usada para texto con estilo, contiene otro nivel de Elements. Este nivel extra es necesario para que cada párrafo pueda contener estilos de texto distintos. En los dos párrafos de la figura 6, el primero contiene dos estilos y el segundo, tres.",
+      "La figura 7 muestra cómo podrían corresponder esos mismos Elements al contenido.",
+      "Insertar texto en un DefaultStyledDocument",
+      "Como se ha mencionado, DefaultStyledDocument mantiene una estructura de Elements en la que el Element raíz contiene un Element hijo por cada párrafo. A su vez, cada uno de estos Elements de párrafo contiene un Element por cada estilo de texto del párrafo. Por ejemplo, supón que tienes un documento con un párrafo y que ese párrafo contiene dos estilos, como en la figura 8.",
+      "Si después quisieras insertar un salto de línea en el desplazamiento 2, volverías a usar el método insertString(), así:",
+      "styledDocument.insertString(2, \"\\n\", styledDocument.getCharacterElement(0).getAttributes());",
+      "Esta operación daría el resultado de la figura 9.",
+      "Es importante observar que el AttributeSet pasado a insertString() coincide con los atributos de Style 1. Si el AttributeSet pasado a insertString() no coincidiera, el resultado sería la situación de la figura 10.",
+      "Eliminar texto de un DefaultStyledDocument",
+      "Eliminar texto de un DefaultStyledDocument es parecido a eliminarlo de un PlainDocument. La única diferencia es el nivel extra de Elements. Considera qué pasaría si eliminaras dos caracteres en el desplazamiento 1 de la figura 10. Como el segundo Element del párrafo 1 está completamente contenido en la región eliminada, se eliminaría. Suponiendo que los atributos del primer hijo del párrafo 1 coincidieran con los del primer hijo del párrafo 2, el resultado sería el de la figura 11.",
+      "Si los atributos no coincidieran, obtendríamos el resultado de la figura 12.",
+      "La clase StyledDocument",
+      "La clase javax.swing.text.StyledDocument ofrece un método llamado setCharacterAttributes(), que permite establecer los atributos de los Elements de carácter de un rango dado:",
+      "public void setCharacterAttributes (int offset, int length, AttributeSet s, boolean replace);",
+      "Recuerda que, en los diagramas de la sección anterior, todos los Elements hoja dibujados eran también Elements de carácter. Eso significa que el método setCharacterAttributes() podría usarse para establecer sus atributos.",
+      "El método setCharacterAttributes() recibe cuatro argumentos. El primero y el segundo identifican la región del Document que se va a cambiar. El tercero especifica los nuevos atributos (como AttributeSet), y el cuarto determina si los nuevos atributos deben añadirse a los existentes (valor false) o si el Element de carácter debe reemplazar sus atributos existentes por los nuevos (valor true).",
+      "Por ejemplo, supón que quieres cambiar los atributos de los tres primeros caracteres de la figura 9. Los dos primeros argumentos pasados a setCharacterAttributes() serían 0 y 3. El tercero sería el AttributeSet con los nuevos atributos. En el ejemplo que consideramos, da igual cuál sea el cuarto argumento.",
+      "Como los desplazamientos inicial y final de la región cambiada (0 y 3) caen en los límites de Elements de carácter, no hace falta ningún cambio de estructura. Es decir, solo cambian los atributos del Element de carácter style 1.",
+      "Veamos ahora un ejemplo que requiere un cambio de estructura. En lugar de cambiar los tres primeros caracteres de la figura 9, cambiemos los dos primeros. Como el desplazamiento final del cambio (2) no cae en un límite de Element de carácter, el Element del desplazamiento 2 debe dividirse de forma que el desplazamiento 2 sea el límite entre dos Elements. Invocar setCharacterAttributes() con un desplazamiento inicial de 0 y una longitud de 2 da el resultado mostrado antes en la figura 10.",
+      "Cambiar los atributos de párrafo en un StyledDocument",
+      "La clase StyledDocument ofrece un método llamado setParagraphAttributes(), que puede usarse para cambiar los atributos de un Element de párrafo:",
+      "public void setParagraphAttributes (int offset, int length, AttributeSet s, boolean replace);",
+      "Este método es parecido a setCharacterAttributes(), pero permite cambiar los atributos de los Elements de párrafo. Cada implementación de StyledDocument define qué Elements son párrafos. DefaultStyledDocument interpreta que los Elements de párrafo son el Element padre del Element de carácter. Invocar este método no produce ningún cambio de estructura; solo cambian los atributos del Element de párrafo.",
+      "Se recomienda consultar javax.swing.text.EditorKit y javax.swing.text.View. View se encarga de renderizar un Element concreto, y EditorKit se encarga de una ViewFactory capaz de decidir qué View debe crearse a partir de un Element."
+    ]
+  },
+  "web-java-se-javax.swing.text.JTextComponent": {
+    "body": [
+      "Cambios del cursor",
+      "El cursor (caret) es un objeto intercambiable en los componentes de texto de Swing. Las notificaciones de cambios en la posición del cursor y en la selección se envían a las implementaciones de la interfaz CaretListener registradas en el componente de texto. La UI instala un cursor predeterminado salvo que se haya establecido uno personalizado.",
+      "Por defecto, el cursor sigue todos los cambios del documento realizados en el hilo de despacho de eventos y actualiza su posición en consecuencia si se produce una inserción antes o en la posición del cursor, o una eliminación antes de ella. DefaultCaret intenta hacerse visible, lo que puede provocar el desplazamiento de un componente de texto dentro de un JScrollPane. El comportamiento predeterminado del cursor puede cambiarse con el método DefaultCaret.setUpdatePolicy.",
+      "Nota: los componentes de texto no editables también tienen cursor, aunque puede que no se pinte.",
+      "Comandos",
+      "Los componentes de texto ofrecen varios comandos que pueden usarse para manipularlos. Es básicamente la forma en que el componente expresa sus capacidades. Se expresan mediante la interfaz Action de Swing, usando la implementación TextAction. El conjunto de comandos que admite el componente de texto puede obtenerse con el método getActions. Estas acciones pueden vincularse a eventos de teclado, lanzarse desde botones, etc.",
+      "Entrada de texto",
+      "Los componentes de texto admiten una entrada de texto flexible e internacionalizada, mediante mapas de teclas y el framework de métodos de entrada, manteniendo la compatibilidad con el modelo de listeners de AWT.",
+      "Un javax.swing.text.Keymap permite a una aplicación vincular pulsaciones de teclas a acciones. Para que los mapas de teclas puedan compartirse entre varios componentes de texto, pueden usar acciones que extiendan TextAction. TextAction puede determinar qué JTextComponent tiene o tuvo el foco más recientemente y, por tanto, es el objeto de la acción (en caso de que el ActionEvent enviado a la acción no contenga el componente de texto destino como origen).",
+      "El framework de métodos de entrada permite a los componentes de texto interactuar con métodos de entrada: componentes de software independientes que preprocesan los eventos para que los usuarios puedan introducir miles de caracteres distintos con teclados de muchas menos teclas. JTextComponent es un cliente activo del framework, así que implementa la interfaz de usuario preferida para interactuar con métodos de entrada. En consecuencia, algunos eventos de teclado no llegan al componente de texto porque los gestiona un método de entrada, y parte de la entrada de texto llega al componente como texto confirmado dentro de un java.awt.event.InputMethodEvent en lugar de como evento de teclado. La entrada de texto completa es la combinación de los caracteres de los eventos keyTyped y del texto confirmado en los eventos de método de entrada.",
+      "El modelo de listeners de AWT permite a las aplicaciones asociar listeners de eventos a los componentes para vincular eventos a acciones. Swing fomenta el uso de mapas de teclas en lugar de listeners, pero mantiene la compatibilidad con estos dándoles la oportunidad de quedarse con un evento consumiéndolo.",
+      "Los eventos de teclado y de método de entrada se gestionan en las siguientes etapas, y cada etapa puede consumir el evento:",
+      "Etapas de la gestión de eventos de teclado y de método de entrada",
+      "Etapa · KeyEvent · InputMethodEvent",
+      "1. · métodos de entrada · (se genera aquí)",
+      "2. · gestor de foco",
+      "3. · listeners de teclado registrados · listeners de método de entrada registrados",
+      "4. · · gestión de métodos de entrada en JTextComponent",
+      "5. · gestión del mapa de teclas con el mapa de teclas actual",
+      "6. · gestión del teclado en JComponent (por ejemplo, aceleradores, navegación entre componentes, etc.)",
+      "Para mantener la compatibilidad con aplicaciones que escuchan eventos de teclado pero no conocen los eventos de método de entrada, la gestión de métodos de entrada de la etapa 4 ofrece un modo de compatibilidad para los componentes que no procesan eventos de método de entrada. Para estos componentes, el texto confirmado se convierte en eventos keyTyped y se procesa en la cadena de eventos de teclado a partir de la etapa 3, en lugar de en la cadena de eventos de método de entrada.",
+      "Por defecto, el componente crea un mapa de teclas (llamado DEFAULT_KEYMAP) que comparten todas las instancias de JTextComponent como mapa predeterminado. Normalmente, una implementación de look and feel instala un mapa de teclas distinto que recurre al predeterminado para los vínculos que no encuentra en él. Los vínculos mínimos incluyen:",
+      "insertar contenido en el editor con las teclas imprimibles.",
+      "eliminar contenido con las teclas de retroceso y suprimir.",
+      "mover el cursor hacia delante y hacia atrás",
+      "Separación modelo/vista",
+      "Los componentes de texto tienen una separación modelo-vista. Un componente de texto reúne los objetos que representan el modelo, la vista y el controlador. El modelo de documento de texto puede compartirse con otras vistas que actúan como observadores del modelo (por ejemplo, un documento puede compartirse entre varios componentes).",
+      "El modelo se define con la interfaz Document. Está pensada para ofrecer un mecanismo flexible de almacenamiento de texto que registre los cambios durante las ediciones y pueda extenderse a modelos más sofisticados. Las interfaces del modelo pretenden recoger la capacidad expresiva de SGML, un sistema usado para expresar una gran variedad de contenidos. Cada modificación del documento provoca que se envíe a todos los observadores una notificación con los detalles del cambio en forma de DocumentEvent, lo que permite a las vistas mantenerse al día con el modelo. Este evento se envía a los observadores que han implementado la interfaz DocumentListener y se han registrado en el modelo observado.",
+      "Información de posición",
+      "Se ofrece la capacidad de determinar la posición del texto en la vista. Hay dos métodos para obtener esta información: modelToView y viewToModel.",
+      "Soporte de deshacer/rehacer",
+      "Se ofrece soporte para un mecanismo de historial de ediciones que permite deshacer/rehacer. Por defecto, el componente de texto no proporciona el búfer de historial, pero sí los registros UndoableEdit que pueden usarse junto con un búfer de historial para ofrecer deshacer/rehacer. Este soporte lo proporciona el modelo Document, que permite asociar implementaciones de UndoableEditListener.",
+      "Seguridad entre hilos",
+      "Los componentes de texto de Swing ofrecen cierto soporte para operaciones seguras entre hilos. Debido al alto grado de configurabilidad de los componentes de texto, es posible sortear la protección que ofrecen. La protección procede principalmente del modelo, así que la documentación de AbstractDocument describe los supuestos de esa protección. Los métodos que es seguro llamar de forma asíncrona están marcados con comentarios.",
+      "Saltos de línea",
+      "Para ver cómo se tratan los saltos de línea, consulta DefaultEditorKit.",
+      "Soporte de impresión",
+      "Se ofrecen varios métodos print para la impresión básica de documentos. Si necesitas una impresión más avanzada, usa el método getPrintable.",
+      "Advertencia: los objetos serializados de esta clase no serán compatibles con futuras versiones de Swing. El soporte de serialización actual es adecuado para almacenamiento a corto plazo o RMI entre aplicaciones que ejecutan la misma versión de Swing. Desde la 1.4, el paquete java.beans incluye soporte para el almacenamiento a largo plazo de todos los JavaBeans. Consulta java.beans.XMLEncoder."
+    ]
+  },
+  "web-java-se-javax.swing.text.JTextComponent.getKeymap": {
+    "overloads": [
+      {
+        "intro": [
+          "Obtiene el mapa de teclas activo actualmente en este componente de texto."
+        ],
+        "returns": ["el mapa de teclas"]
+      },
+      {
+        "intro": [
+          "Obtiene un mapa de teclas con nombre añadido previamente al documento. No funciona con mapas de teclas de nombre null."
+        ],
+        "parameters": [
+          {
+            "label": "nm",
+            "detail": "el nombre del mapa de teclas"
+          }
+        ],
+        "returns": ["el mapa de teclas"]
+      }
+    ]
+  },
+  "web-java-se-javax.swing.text.JTextComponent.getPrintable": {
+    "body": [
+      "El Printable devuelto comparte el documento con este JTextComponent. Es responsabilidad del desarrollador asegurarse de que el documento no se modifica mientras se usa este Printable. El comportamiento de la impresión es indefinido si el documento se modifica durante la impresión.",
+      "Se pueden añadir textos de cabecera y pie de página a la salida proporcionando argumentos MessageFormat. El código de impresión pide Strings a los formatos y les proporciona un único elemento que puede incluirse en la cadena formateada: un Integer con el número de página actual.",
+      "El Printable devuelto, al imprimirse, formatea el contenido del documento de forma adecuada al tamaño de página. Para que el ajuste de línea sea correcto, el ancho imprimible de todas las páginas debe ser el mismo. Consulta java.awt.print.PageFormat.getImageableWidth.",
+      "Este método es seguro entre hilos, aunque la mayoría de los métodos de Swing no lo son. Consulta Concurrency in Swing para más información.",
+      "El Printable devuelto puede imprimirse en cualquier hilo.",
+      "El Printable que devuelve esta implementación realiza todo el pintado en el hilo de despacho de eventos, sea cual sea el hilo en que se use."
+    ],
+    "parameters": [
+      {
+        "label": "headerFormat",
+        "detail": "el texto, en MessageFormat, que se usará como cabecera, o null para no tener cabecera"
+      },
+      {
+        "label": "footerFormat",
+        "detail": "el texto, en MessageFormat, que se usará como pie, o null para no tener pie"
+      }
+    ],
+    "returns": [
+      "un Printable para imprimir el contenido de este JTextComponent"
+    ]
+  },
+  "web-java-se-javax.swing.text.JTextComponent.print": {
+    "overloads": [
+      {
+        "intro": [
+          "Método print de conveniencia que muestra un diálogo de impresión y luego imprime este JTextComponent en modo interactivo, sin texto de cabecera ni de pie. Nota: este método bloquea hasta que termina la impresión."
+        ],
+        "body": [
+          "Nota: en modo headless no se muestra ningún diálogo.",
+          "Este método llama al método completo print(MessageFormat, MessageFormat, boolean, PrintService, PrintRequestAttributeSet, boolean) para realizar la impresión."
+        ],
+        "returns": ["true, salvo que el usuario cancele la impresión"],
+        "exceptions": [
+          {
+            "label": "PrinterException",
+            "detail": "si un error del sistema de impresión hace que se cancele el trabajo"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si este hilo no tiene permiso para iniciar una solicitud de trabajo de impresión"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Método print de conveniencia que muestra un diálogo de impresión y luego imprime este JTextComponent en modo interactivo con los textos de cabecera y pie indicados. Nota: este método bloquea hasta que termina la impresión."
+        ],
+        "body": [
+          "Nota: en modo headless no se muestra ningún diálogo.",
+          "Este método llama al método completo print(MessageFormat, MessageFormat, boolean, PrintService, PrintRequestAttributeSet, boolean) para realizar la impresión."
+        ],
+        "parameters": [
+          {
+            "label": "headerFormat",
+            "detail": "el texto, en MessageFormat, que se usará como cabecera, o null para no tener cabecera"
+          },
+          {
+            "label": "footerFormat",
+            "detail": "el texto, en MessageFormat, que se usará como pie, o null para no tener pie"
+          }
+        ],
+        "returns": ["true, salvo que el usuario cancele la impresión"],
+        "exceptions": [
+          {
+            "label": "PrinterException",
+            "detail": "si un error del sistema de impresión hace que se cancele el trabajo"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si este hilo no tiene permiso para iniciar una solicitud de trabajo de impresión"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Imprime el contenido de este JTextComponent. Nota: este método bloquea hasta que termina la impresión."
+        ],
+        "body": [
+          "Se pueden añadir textos de cabecera y pie de página a la salida proporcionando argumentos MessageFormat. El código de impresión pide Strings a los formatos y les proporciona un único elemento que puede incluirse en la cadena formateada: un Integer con el número de página actual.",
+          "El parámetro boolean showPrintDialog permite indicar si se muestra un diálogo de impresión al usuario. Si se muestra, el usuario puede usarlo para cambiar los atributos de impresión o incluso cancelar la impresión.",
+          "service permite proporcionar el PrintService inicial del diálogo de impresión o especificar el PrintService en el que imprimir cuando no se muestra el diálogo.",
+          "attributes puede usarse para dar los valores iniciales del diálogo de impresión o para aportar los atributos necesarios cuando no se muestra el diálogo. attributes puede usarse para controlar cómo se imprimirá el trabajo, por ejemplo a doble cara o a una cara.",
+          "El parámetro boolean interactive permite indicar si la impresión se realiza en modo interactivo. Si es true, se muestra un diálogo de progreso con opción de cancelar mientras dura la impresión. Este diálogo es modal cuando print se invoca en el hilo de despacho de eventos y no modal en otro caso. Advertencia: llamar a este método en el hilo de despacho de eventos con interactive a false bloquea el procesamiento de todos los eventos, incluidos los repintados, hasta que termina la impresión. Solo se recomienda al imprimir desde una aplicación sin GUI visible.",
+          "Nota: en modo headless, los parámetros showPrintDialog e interactive se ignoran y no se muestra ningún diálogo.",
+          "Este método garantiza que el documento no se modifica durante la impresión. Para indicarlo visualmente, se establece setEnabled(false) mientras dura la impresión.",
+          "Este método usa getPrintable para renderizar el contenido del documento.",
+          "Este método es seguro entre hilos, aunque la mayoría de los métodos de Swing no lo son. Consulta Concurrency in Swing para más información.",
+          "Ejemplo de uso. Este fragmento de código muestra un diálogo de impresión multiplataforma y luego imprime el JTextComponent en modo interactivo, salvo que el usuario cancele el diálogo:",
+          "textComponent.print(new MessageFormat(\"My text component header\"), new MessageFormat(\"Footer. Page - {0}\"), true, null, null, true);",
+          "Ejecutar este código fuera del hilo de despacho de eventos realiza la impresión en segundo plano. Para imprimir en segundo plano podría usarse el siguiente patrón:",
+          "FutureTask<Boolean> future = new FutureTask<Boolean>( new Callable<Boolean>() { public Boolean call() { return textComponent.print(.....); } }); executor.execute(future);"
+        ],
+        "parameters": [
+          {
+            "label": "headerFormat",
+            "detail": "el texto, en MessageFormat, que se usará como cabecera, o null para no tener cabecera"
+          },
+          {
+            "label": "footerFormat",
+            "detail": "el texto, en MessageFormat, que se usará como pie, o null para no tener pie"
+          },
+          {
+            "label": "showPrintDialog",
+            "detail": "true para mostrar un diálogo de impresión; false en caso contrario"
+          },
+          {
+            "label": "service",
+            "detail": "PrintService inicial, o null para el predeterminado"
+          },
+          {
+            "label": "attributes",
+            "detail": "los atributos que se aplican al trabajo de impresión, o null para ninguno"
+          },
+          {
+            "label": "interactive",
+            "detail": "si se imprime en modo interactivo"
+          }
+        ],
+        "returns": ["true, salvo que el usuario cancele la impresión"],
+        "exceptions": [
+          {
+            "label": "PrinterException",
+            "detail": "si un error del sistema de impresión hace que se cancele el trabajo"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "si este hilo no tiene permiso para iniciar una solicitud de trabajo de impresión"
+          }
+        ]
+      }
+    ]
+  },
   "web-java-se-javax.swing.text.JTextComponent.setComponentOrientation": {
     "body": [
       "Al construirlo, la orientación de un componente es ComponentOrientation.UNKNOWN, lo que indica que no se ha fijado explícitamente. La orientación UNKNOWN se comporta igual que ComponentOrientation.LEFT_TO_RIGHT.",
@@ -38328,6 +38727,53 @@
         "label": "o",
         "detail": "la orientación que se va a fijar"
       }
+    ]
+  },
+  "web-java-se-javax.swing.text.JTextComponent.setDragEnabled": {
+    "body": [
+      "La tarea de respetar esta propiedad y reconocer el gesto de arrastre del usuario recae en la implementación del look and feel y, en particular, en el TextUI del componente. Cuando el arrastre automático está habilitado, la mayoría de los look and feels (incluidos los que heredan de BasicLookAndFeel) inician una operación de arrastrar y soltar cada vez que el usuario pulsa el botón del ratón sobre una selección y luego mueve el ratón unos píxeles. Por tanto, poner esta propiedad a true puede tener un efecto sutil en el comportamiento de las selecciones.",
+      "Si se usa un look and feel que ignora esta propiedad, aún puedes iniciar una operación de arrastrar y soltar llamando a exportAsDrag sobre el TransferHandler del componente."
+    ],
+    "parameters": [
+      {
+        "label": "b",
+        "detail": "si se habilita o no el arrastre automático"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "HeadlessException",
+        "detail": "si b es true y GraphicsEnvironment.isHeadless() devuelve true"
+      }
+    ]
+  },
+  "web-java-se-javax.swing.text.MaskFormatter": {
+    "body": [
+      "Caracteres válidos y su descripción",
+      "Carácter · Descripción",
+      "# · Cualquier número válido; usa Character.isDigit.",
+      "' · Carácter de escape, que se usa para escapar cualquiera de los caracteres especiales de formato.",
+      "U · Cualquier carácter (Character.isLetter). Todas las minúsculas se convierten a mayúsculas.",
+      "L · Cualquier carácter (Character.isLetter). Todas las mayúsculas se convierten a minúsculas.",
+      "A · Cualquier carácter o número (Character.isLetter o Character.isDigit).",
+      "? · Cualquier carácter (Character.isLetter).",
+      "* · Cualquier cosa.",
+      "H · Cualquier carácter hexadecimal (0-9, a-f o A-F).",
+      "Normalmente cada carácter corresponde a un char, pero en ciertos idiomas no es así. La máscara funciona carácter a carácter, así que se ajusta para abarcar tantos chars como hagan falta.",
+      "Puedes restringir aún más los caracteres que se pueden introducir con los métodos setInvalidCharacters y setValidCharacters. setInvalidCharacters permite especificar qué caracteres no son válidos. setValidCharacters permite especificar qué caracteres son válidos. Por ejemplo, el siguiente bloque de código equivale a una máscara '0xHHH' sin caracteres válidos/no válidos:",
+      "MaskFormatter formatter = new MaskFormatter(\"0x***\"); formatter.setValidCharacters(\"0123456789abcdefABCDEF\");",
+      "Al formatear inicialmente un valor, si la longitud de la cadena es menor que la de la máscara, pueden pasar dos cosas: se usa la cadena de relleno o se usa el carácter de relleno. Tiene prioridad la cadena de relleno. Por ejemplo:",
+      "MaskFormatter formatter = new MaskFormatter(\"###-####\"); formatter.setPlaceholderCharacter('_'); System.out.println(formatter.valueToString(\"123\"));",
+      "Daría como resultado la cadena '123-____'. Si se invocara setPlaceholder(\"555-1212\"), el resultado sería '123-1212'. La cadena de relleno solo se usa en el formateo inicial; en los siguientes solo se usa el carácter de relleno.",
+      "Si un MaskFormatter está configurado para permitir solo caracteres válidos (setAllowsInvalid(false)), los caracteres literales se saltan cuando es necesario al editar. Considera un MaskFormatter con la máscara \"###-####\" y el valor actual \"555-1212\". Usar la flecha derecha para recorrer el campo da como resultado (| indica la posición del cursor):",
+      "El '-' es un carácter literal (no editable) y se salta.",
+      "Al editar se produce un comportamiento similar. Considera insertar las cadenas '123-45' y '12345' en el MaskFormatter del ejemplo anterior. Ambas inserciones darán el mismo String, '123-45__'. Cuando MaskFormatter procesa la inserción en la posición 3 (el '-'), pueden pasar dos cosas:",
+      "Si el carácter insertado es '-', se acepta.",
+      "Si el carácter insertado coincide con la máscara del siguiente carácter no literal, se acepta en la nueva posición.",
+      "Cualquier otra cosa produce una edición no válida",
+      "Por defecto, MaskFormatter no permite ediciones no válidas (puedes cambiarlo con el método setAllowsInvalid) y confirma las ediciones cuando son válidas (usa setCommitsOnValidEdit para cambiarlo).",
+      "Por defecto, MaskFormatter está en modo sobrescritura. Es decir, al escribir caracteres no se inserta uno nuevo, sino que el carácter de la posición actual se reemplaza por el que se acaba de escribir. Puedes cambiar este comportamiento con el método setOverwriteMode.",
+      "Advertencia: los objetos serializados de esta clase no serán compatibles con futuras versiones de Swing. El soporte de serialización actual es adecuado para almacenamiento a corto plazo o RMI entre aplicaciones que ejecutan la misma versión de Swing. Desde la 1.4, el paquete java.beans incluye soporte para el almacenamiento a largo plazo de todos los JavaBeans. Consulta java.beans.XMLEncoder."
     ]
   },
   "web-java-se-javax.swing.text.TabStop.toString": {
