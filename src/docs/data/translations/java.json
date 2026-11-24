@@ -1,4 +1,95 @@
 {
+  "java-api-Stream.reduce()": {
+    "overloads": [
+      {
+        "intro": [
+          "Hace una reducción sobre los elementos de este flujo con el valor identidad y una función de acumulación asociativa, y devuelve el valor reducido. Equivale a:"
+        ],
+        "body": [
+          "T result = identity; for (T element : this stream) result = accumulator.apply(result, element) return result;",
+          "pero no tiene por qué ejecutarse de forma secuencial.",
+          "El valor identidad debe ser una identidad para la función de acumulación: para todo t, accumulator.apply(identity, t) es igual a t. La función de acumulación debe ser asociativa.",
+          "Es una operación terminal."
+        ],
+        "parameters": [
+          {
+            "label": "identity",
+            "detail": "el valor identidad de la función de acumulación"
+          },
+          {
+            "label": "accumulator",
+            "detail": "una función asociativa, sin interferencias y sin estado para combinar dos valores"
+          }
+        ],
+        "returns": ["el resultado de la reducción"],
+        "caveats": [
+          "La suma, el mínimo, el máximo, la media y la concatenación de cadenas son casos especiales de reducción. Sumar un flujo de números se puede expresar así:",
+          "Integer sum = integers.reduce(0, (a, b) -> a+b);",
+          "o bien:",
+          "Integer sum = integers.reduce(0, Integer::sum);",
+          "Aunque pueda parecer más rebuscado que ir modificando un total en un bucle, las operaciones de reducción se paralelizan mejor, sin sincronización adicional y con mucho menos riesgo de condiciones de carrera."
+        ]
+      },
+      {
+        "intro": [
+          "Hace una reducción sobre los elementos de este flujo con una función de acumulación asociativa y devuelve un Optional con el valor reducido, si lo hay. Equivale a:"
+        ],
+        "body": [
+          "{@code boolean foundAny = false; T result = null; for (T element : this stream) { if (!foundAny) { foundAny = true; result = element; } else result = accumulator.apply(result, element); } return foundAny ? Optional.of(result) : Optional.empty(); }",
+          "pero no tiene por qué ejecutarse de forma secuencial.",
+          "La función de acumulación debe ser asociativa.",
+          "Es una operación terminal."
+        ],
+        "parameters": [
+          {
+            "label": "accumulator",
+            "detail": "una función asociativa, sin interferencias y sin estado para combinar dos valores"
+          }
+        ],
+        "returns": ["un Optional con el resultado de la reducción"],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si el resultado de la reducción es null"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Hace una reducción sobre los elementos de este flujo con la identidad y las funciones de acumulación y combinación indicadas. Equivale a:"
+        ],
+        "body": [
+          "U result = identity; for (T element : this stream) result = accumulator.apply(result, element) return result;",
+          "pero no tiene por qué ejecutarse de forma secuencial.",
+          "El valor identidad debe ser una identidad para la función combinadora: para todo u, combiner(identity, u) es igual a u. Además, la combinadora debe ser compatible con la de acumulación; para todo u y t debe cumplirse:",
+          "combiner.apply(u, accumulator.apply(identity, t)) == accumulator.apply(u, t)",
+          "Es una operación terminal."
+        ],
+        "parameters": [
+          {
+            "label": "<U>",
+            "detail": "El tipo del resultado"
+          },
+          {
+            "label": "identity",
+            "detail": "el valor identidad de la función combinadora"
+          },
+          {
+            "label": "accumulator",
+            "detail": "una función asociativa, sin interferencias y sin estado para incorporar un elemento más a un resultado"
+          },
+          {
+            "label": "combiner",
+            "detail": "una función asociativa, sin interferencias y sin estado para combinar dos valores, que debe ser compatible con la función de acumulación"
+          }
+        ],
+        "returns": ["el resultado de la reducción"],
+        "caveats": [
+          "Muchas reducciones de esta forma se pueden expresar de forma más sencilla combinando explícitamente map y reduce. La función de acumulación actúa como un mapeador y acumulador fusionados, lo que a veces es más eficiente que mapear y reducir por separado, por ejemplo si conocer el valor reducido anterior permite ahorrar cálculos."
+        ]
+      }
+    ]
+  },
   "web-java-se-java.awt.BufferCapabilities%24FlipContents.toString": {
     "returns": ["una representación en cadena del objeto."],
     "caveats": [
@@ -4173,6 +4264,663 @@
       "@jvms 5.4.3 Resolution @jvms 5.4.4 Access Control"
     ]
   },
+  "web-java-se-java.math.BigDecimal.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Convierte la representación en array de caracteres de un BigDecimal en un BigDecimal. Acepta la misma secuencia de caracteres que el constructor BigDecimal(String) y permite indicar un subarray."
+        ],
+        "parameters": [
+          {
+            "label": "in",
+            "detail": "array de char del que se toman los caracteres."
+          },
+          {
+            "label": "offset",
+            "detail": "primer carácter del array que se examina."
+          },
+          {
+            "label": "len",
+            "detail": "número de caracteres que se tienen en cuenta."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NumberFormatException",
+            "detail": "si in no es una representación válida de un BigDecimal o el subarray no está entero dentro de in."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Convierte la representación en array de caracteres de un BigDecimal en un BigDecimal. Acepta la misma secuencia de caracteres que el constructor BigDecimal(String), permite indicar un subarray y redondea según la configuración del contexto."
+        ],
+        "parameters": [
+          {
+            "label": "in",
+            "detail": "array de char del que se toman los caracteres."
+          },
+          {
+            "label": "offset",
+            "detail": "primer carácter del array que se examina."
+          },
+          {
+            "label": "len",
+            "detail": "número de caracteres que se tienen en cuenta."
+          },
+          {
+            "label": "mc",
+            "detail": "el contexto que se usa."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NumberFormatException",
+            "detail": "si in no es una representación válida de un BigDecimal o el subarray no está entero dentro de in."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Convierte la representación en array de caracteres de un BigDecimal en un BigDecimal. Acepta la misma secuencia de caracteres que el constructor BigDecimal(String)."
+        ],
+        "parameters": [
+          {
+            "label": "in",
+            "detail": "array de char del que se toman los caracteres."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NumberFormatException",
+            "detail": "si in no es una representación válida de un BigDecimal."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Convierte la representación en array de caracteres de un BigDecimal en un BigDecimal. Acepta la misma secuencia de caracteres que el constructor BigDecimal(String) y redondea según la configuración del contexto."
+        ],
+        "parameters": [
+          {
+            "label": "in",
+            "detail": "array de char del que se toman los caracteres."
+          },
+          {
+            "label": "mc",
+            "detail": "el contexto que se usa."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NumberFormatException",
+            "detail": "si in no es una representación válida de un BigDecimal."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Convierte la representación en cadena de un BigDecimal en un BigDecimal. La cadena tiene un signo opcional, '+' ('\\u002B') o '-' ('\\u002D'), seguido de una secuencia de cero o más dígitos decimales («la parte entera»), opcionalmente seguida de una parte decimal y, opcionalmente, de un exponente."
+        ],
+        "body": [
+          "La parte decimal es un punto decimal seguido de cero o más dígitos. La cadena debe tener al menos un dígito en la parte entera o en la decimal. El número formado por el signo, la parte entera y la parte decimal se llama mantisa.",
+          "El exponente es el carácter 'e' ('\\u0065') o 'E' ('\\u0045') seguido de uno o más dígitos decimales.",
+          "Más formalmente, las cadenas que acepta se describen con esta gramática:",
+          "BigDecimalString: Signopt Significand Exponentopt Sign: + - Significand: IntegerPart . FractionPartopt . FractionPart IntegerPart IntegerPart: Digits FractionPart: Digits Exponent: ExponentIndicator SignedInteger ExponentIndicator: e E SignedInteger: Signopt Digits Digits: Digit Digits Digit Digit: cualquier carácter para el que Character.isDigit devuelve true, incluidos 0, 1, 2 ...",
+          "La escala del BigDecimal devuelto es el número de dígitos de la parte decimal, o cero si no hay punto decimal, ajustada por el exponente: si hay exponente, se resta de la escala. La escala resultante debe estar entre Integer.MIN_VALUE e Integer.MAX_VALUE, ambos incluidos.",
+          "La correspondencia entre caracteres y dígitos la da java.lang.Character.digit en base 10. El String no puede contener caracteres ajenos (por ejemplo, espacios).",
+          "Ejemplos:",
+          "El valor del BigDecimal devuelto es mantisa × 10^exponente. Para cada cadena de la izquierda, se muestra a la derecha la representación resultante [BigInteger, escala]."
+        ],
+        "parameters": [
+          {
+            "label": "val",
+            "detail": "Representación en String del BigDecimal."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NumberFormatException",
+            "detail": "si val no es una representación válida de un BigDecimal."
+          }
+        ],
+        "caveats": [
+          "Para los valores float y double distintos de NaN e ±Infinity, este constructor es compatible con los valores que devuelven Float.toString y Double.toString. Suele ser la forma preferida de convertir un float o double en BigDecimal, porque no tiene la imprevisibilidad del constructor BigDecimal(double)."
+        ]
+      },
+      {
+        "intro": [
+          "Convierte la representación en cadena de un BigDecimal en un BigDecimal. Acepta las mismas cadenas que el constructor BigDecimal(String) y redondea según la configuración del contexto."
+        ],
+        "parameters": [
+          {
+            "label": "val",
+            "detail": "representación en cadena de un BigDecimal."
+          },
+          {
+            "label": "mc",
+            "detail": "el contexto que se usa."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NumberFormatException",
+            "detail": "si val no es una representación válida de un BigDecimal."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Convierte un double en un BigDecimal que es la representación decimal exacta de su valor binario de coma flotante. La escala del BigDecimal devuelto es el menor valor tal que (10^escala × val) es un entero."
+        ],
+        "body": [
+          "Notas:",
+          "Los resultados de este constructor pueden ser algo imprevisibles. Se podría pensar que new BigDecimal(0.1) crea un BigDecimal exactamente igual a 0.1 (valor sin escala 1 y escala 1), pero en realidad es igual a 0.1000000000000000055511151231257827021181583404541015625. Esto ocurre porque 0.1 no se puede representar exactamente como double (ni como fracción binaria de longitud finita). Así que el valor que recibe el constructor no es exactamente 0.1, aunque lo parezca.",
+          "El constructor con String, en cambio, es perfectamente previsible: new BigDecimal(\"0.1\") crea un BigDecimal exactamente igual a 0.1, como cabe esperar. Por eso, en general se recomienda usar el constructor con String en lugar de este.",
+          "Si hay que usar un double como origen, este constructor hace una conversión exacta; no da el mismo resultado que convertir el double en String con Double.toString(double) y usar después BigDecimal(String). Para obtener ese resultado, usa el método estático valueOf(double)."
+        ],
+        "parameters": [
+          {
+            "label": "val",
+            "detail": "el valor double que se convierte en BigDecimal."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NumberFormatException",
+            "detail": "si val es infinito o NaN."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Convierte un double en un BigDecimal, redondeando según la configuración del contexto. La escala del BigDecimal es el menor valor tal que (10^escala × val) es un entero."
+        ],
+        "body": [
+          "Los resultados de este constructor pueden ser algo imprevisibles y en general no se recomienda usarlo; consulta las notas del constructor BigDecimal(double)."
+        ],
+        "parameters": [
+          {
+            "label": "val",
+            "detail": "el valor double que se convierte en BigDecimal."
+          },
+          {
+            "label": "mc",
+            "detail": "el contexto que se usa."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NumberFormatException",
+            "detail": "si val es infinito o NaN."
+          }
+        ]
+      },
+      {
+        "intro": ["Convierte un BigInteger en un BigDecimal con escala cero."],
+        "parameters": [
+          {
+            "label": "val",
+            "detail": "el valor BigInteger que se convierte en BigDecimal."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Convierte un BigInteger en un BigDecimal, redondeando según la configuración del contexto. La escala del BigDecimal es cero."
+        ],
+        "parameters": [
+          {
+            "label": "val",
+            "detail": "el valor BigInteger que se convierte en BigDecimal."
+          },
+          {
+            "label": "mc",
+            "detail": "el contexto que se usa."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Convierte un valor sin escala BigInteger y una escala int en un BigDecimal, cuyo valor es (unscaledVal × 10^-escala)."
+        ],
+        "parameters": [
+          {
+            "label": "unscaledVal",
+            "detail": "el valor sin escala del BigDecimal."
+          },
+          {
+            "label": "scale",
+            "detail": "la escala del BigDecimal."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Convierte un valor sin escala BigInteger y una escala int en un BigDecimal, redondeando según la configuración del contexto. Su valor es (unscaledVal × 10^-escala), redondeado según la precisión y el modo de redondeo."
+        ],
+        "parameters": [
+          {
+            "label": "unscaledVal",
+            "detail": "el valor sin escala del BigDecimal."
+          },
+          {
+            "label": "scale",
+            "detail": "la escala del BigDecimal."
+          },
+          {
+            "label": "mc",
+            "detail": "el contexto que se usa."
+          }
+        ]
+      },
+      {
+        "intro": ["Convierte un int en un BigDecimal con escala cero."],
+        "parameters": [
+          {
+            "label": "val",
+            "detail": "el valor int que se convierte en BigDecimal."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Convierte un int en un BigDecimal, redondeando según la configuración del contexto. La escala, antes de redondear, es cero."
+        ],
+        "parameters": [
+          {
+            "label": "val",
+            "detail": "el valor int que se convierte en BigDecimal."
+          },
+          {
+            "label": "mc",
+            "detail": "el contexto que se usa."
+          }
+        ]
+      },
+      {
+        "intro": ["Convierte un long en un BigDecimal con escala cero."],
+        "parameters": [
+          {
+            "label": "val",
+            "detail": "el valor long que se convierte en BigDecimal."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Convierte un long en un BigDecimal, redondeando según la configuración del contexto. La escala, antes de redondear, es cero."
+        ],
+        "parameters": [
+          {
+            "label": "val",
+            "detail": "el valor long que se convierte en BigDecimal."
+          },
+          {
+            "label": "mc",
+            "detail": "el contexto que se usa."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.math.BigDecimal.doubleValue": {
+    "returns": [
+      "este BigDecimal convertido a double. @jls 5.1.3 Narrowing Primitive Conversion"
+    ]
+  },
+  "web-java-se-java.math.BigDecimal.equals": {
+    "intro": [
+      "Compara este BigDecimal con el Object indicado. A diferencia de compareTo, solo considera iguales dos BigDecimal si tienen el mismo valor y la misma escala. Por eso 2.0 no es igual a 2.00 con este método: el primero tiene los componentes [BigInteger, escala] [20, 1] y el segundo [200, 2]."
+    ],
+    "parameters": [
+      {
+        "label": "x",
+        "detail": "el Object con el que se compara este BigDecimal."
+      }
+    ],
+    "returns": [
+      "true si y solo si el Object es un BigDecimal con el mismo valor y la misma escala que este."
+    ],
+    "caveats": [
+      "Un ejemplo de que 2.0 y 2.00 no son intercambiables en algunas operaciones aritméticas son estas dos expresiones:",
+      "new BigDecimal(\"2.0\" ).divide(BigDecimal.valueOf(3), HALF_UP), que da 0.7, y",
+      "new BigDecimal(\"2.00\").divide(BigDecimal.valueOf(3), HALF_UP), que da 0.67. Este método se comporta de forma análoga a comprobar la equivalencia de representación de valores double."
+    ]
+  },
+  "web-java-se-java.math.BigDecimal.floatValue": {
+    "returns": [
+      "este BigDecimal convertido a float. @jls 5.1.3 Narrowing Primitive Conversion"
+    ]
+  },
+  "web-java-se-java.math.BigDecimal.longValue": {
+    "intro": [
+      "Convierte este BigDecimal en long. Es análogo a la conversión primitiva de reducción de double a short de la especificación del lenguaje Java: se descarta la parte decimal y, si el «BigInteger» resultante no cabe en un long, solo se devuelven los 64 bits de menor orden. Esta conversión puede perder información sobre la magnitud y la precisión del valor, e incluso devolver un resultado con el signo contrario."
+    ],
+    "returns": [
+      "este BigDecimal convertido a long. @jls 5.1.3 Narrowing Primitive Conversion"
+    ]
+  },
+  "web-java-se-java.math.BigDecimal.toBigInteger": {
+    "body": [
+      "Para que se lance una excepción si la conversión no es exacta (es decir, si se descarta una parte decimal distinta de cero), usa toBigIntegerExact()."
+    ],
+    "returns": [
+      "este BigDecimal convertido a BigInteger. @jls 5.1.3 Narrowing Primitive Conversion"
+    ]
+  },
+  "web-java-se-java.math.BigInteger.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Convierte un array de bytes con la representación binaria en complemento a dos de un BigInteger en un BigInteger. Se supone que el array está en orden big-endian (el byte más significativo es el elemento cero) y que no cambia durante la llamada al constructor."
+        ],
+        "parameters": [
+          {
+            "label": "val",
+            "detail": "representación binaria en complemento a dos, big-endian, de un BigInteger."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NumberFormatException",
+            "detail": "val tiene longitud cero."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Convierte la representación signo-magnitud de un BigInteger en un BigInteger. El signo es un entero signum: -1 para negativo, 0 para cero y 1 para positivo. La magnitud es un array de bytes en orden big-endian (el byte más significativo es el elemento cero). Se permite una magnitud de longitud cero, que da un BigInteger de valor 0 sea cual sea signum. Se supone que el array no cambia durante la llamada al constructor."
+        ],
+        "parameters": [
+          {
+            "label": "signum",
+            "detail": "signo del número (-1 para negativo, 0 para cero, 1 para positivo)."
+          },
+          {
+            "label": "magnitude",
+            "detail": "representación binaria big-endian de la magnitud del número."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NumberFormatException",
+            "detail": "signum no es uno de los tres valores válidos (-1, 0 y 1), o es 0 y la magnitud contiene algún byte distinto de cero."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Convierte la representación en String de un BigInteger en la base indicada en un BigInteger. La cadena tiene un signo menos o más opcional seguido de uno o más dígitos de esa base. La correspondencia entre caracteres y dígitos la da Character.digit(char, int). El String no puede contener caracteres ajenos (por ejemplo, espacios)."
+        ],
+        "parameters": [
+          {
+            "label": "val",
+            "detail": "representación en String del BigInteger."
+          },
+          {
+            "label": "radix",
+            "detail": "la base con la que se interpreta val."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NumberFormatException",
+            "detail": "val no es una representación válida de un BigInteger en la base indicada, o la base está fuera del rango de Character.MIN_RADIX a Character.MAX_RADIX, ambos incluidos."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Convierte la representación decimal en String de un BigInteger en un BigInteger. La cadena tiene un signo menos o más opcional seguido de uno o más dígitos decimales. La correspondencia entre caracteres y dígitos la da Character.digit(char, int). El String no puede contener caracteres ajenos (por ejemplo, espacios)."
+        ],
+        "parameters": [
+          {
+            "label": "val",
+            "detail": "representación decimal en String del BigInteger."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NumberFormatException",
+            "detail": "val no es una representación válida de un BigInteger."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Construye un BigInteger aleatorio, distribuido uniformemente entre 0 y (2^numBits - 1), ambos incluidos. La uniformidad supone que rnd es una fuente justa de bits aleatorios. Este constructor siempre crea un BigInteger no negativo."
+        ],
+        "parameters": [
+          {
+            "label": "numBits",
+            "detail": "bitLength máximo del nuevo BigInteger."
+          },
+          {
+            "label": "rnd",
+            "detail": "la fuente de aleatoriedad con la que se calcula el nuevo BigInteger."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "numBits es negativo."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Construye un BigInteger positivo aleatorio, probablemente primo, con el bitLength indicado."
+        ],
+        "parameters": [
+          {
+            "label": "bitLength",
+            "detail": "bitLength del BigInteger devuelto."
+          },
+          {
+            "label": "certainty",
+            "detail": "una medida de la incertidumbre que tolera el llamante. La probabilidad de que el nuevo BigInteger sea primo supera (1 - 1/2^certainty). El tiempo de ejecución es proporcional a este valor."
+          },
+          {
+            "label": "rnd",
+            "detail": "la fuente de bits aleatorios con la que se eligen los candidatos cuya primalidad se comprueba."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "ArithmeticException",
+            "detail": "bitLength < 2 o bitLength es demasiado grande."
+          }
+        ],
+        "caveats": [
+          "Se recomienda usar probablePrime en lugar de este constructor, salvo que haga falta indicar una certeza."
+        ]
+      },
+      {
+        "intro": [
+          "Convierte un subarray de bytes con la representación binaria en complemento a dos de un BigInteger en un BigInteger. El subarray se indica con un desplazamiento y una longitud. Se supone que está en orden big-endian (el byte más significativo es el del índice off) y que el array val no cambia durante la llamada al constructor."
+        ],
+        "body": [
+          "Se lanza IndexOutOfBoundsException si la longitud de val no es cero y off es negativo, len es negativo u off+len es mayor que la longitud de val."
+        ],
+        "parameters": [
+          {
+            "label": "val",
+            "detail": "array de bytes con un subarray que es la representación binaria en complemento a dos, big-endian, de un BigInteger."
+          },
+          {
+            "label": "off",
+            "detail": "el desplazamiento inicial de la representación binaria."
+          },
+          {
+            "label": "len",
+            "detail": "el número de bytes que se usan."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NumberFormatException",
+            "detail": "val tiene longitud cero."
+          },
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "si el desplazamiento y la longitud indicados harían que un índice del array fuera negativo o mayor o igual que su longitud."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Convierte la representación signo-magnitud de un BigInteger en un BigInteger. El signo es un entero signum: -1 para negativo, 0 para cero y 1 para positivo. La magnitud es un subarray de un array de bytes en orden big-endian (el byte más significativo es el del índice off). Se permite len igual a cero, que da un BigInteger de valor 0 sea cual sea signum. Se supone que el array no cambia durante la llamada al constructor."
+        ],
+        "body": [
+          "Se lanza IndexOutOfBoundsException si la longitud de magnitude no es cero y off es negativo, len es negativo u off+len es mayor que la longitud de magnitude."
+        ],
+        "parameters": [
+          {
+            "label": "signum",
+            "detail": "signo del número (-1 para negativo, 0 para cero, 1 para positivo)."
+          },
+          {
+            "label": "magnitude",
+            "detail": "representación binaria big-endian de la magnitud del número."
+          },
+          {
+            "label": "off",
+            "detail": "el desplazamiento inicial de la representación binaria."
+          },
+          {
+            "label": "len",
+            "detail": "el número de bytes que se usan."
+          }
+        ],
+        "exceptions": [
+          {
+            "label": "NumberFormatException",
+            "detail": "signum no es uno de los tres valores válidos (-1, 0 y 1), o es 0 y la magnitud contiene algún byte distinto de cero."
+          },
+          {
+            "label": "IndexOutOfBoundsException",
+            "detail": "si el desplazamiento y la longitud indicados harían que un índice del array fuera negativo o mayor o igual que su longitud."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.math.BigInteger.clearBit": {
+    "parameters": [
+      {
+        "label": "n",
+        "detail": "el índice del bit que se borra."
+      }
+    ],
+    "returns": ["this & ~(1<<n)"],
+    "exceptions": [
+      {
+        "label": "ArithmeticException",
+        "detail": "n es negativo."
+      }
+    ]
+  },
+  "web-java-se-java.math.BigInteger.compareTo": {
+    "intro": [],
+    "overloads": [
+      {
+        "intro": [
+          "Compara este BigInteger con el indicado. Se ofrece en lugar de un método por cada uno de los seis operadores de comparación (<, ==, >, >=, !=, <=). El patrón sugerido es (x.compareTo(y) <op> 0), donde <op> es uno de los seis operadores."
+        ],
+        "parameters": [
+          {
+            "label": "val",
+            "detail": "el BigInteger con el que se compara este."
+          }
+        ],
+        "returns": [
+          "-1, 0 o 1 según este BigInteger sea numéricamente menor, igual o mayor que val."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.math.BigInteger.doubleValue": {
+    "returns": [
+      "este BigInteger convertido a double. @jls 5.1.3 Narrowing Primitive Conversion"
+    ]
+  },
+  "web-java-se-java.math.BigInteger.floatValue": {
+    "returns": [
+      "este BigInteger convertido a float. @jls 5.1.3 Narrowing Primitive Conversion"
+    ]
+  },
+  "web-java-se-java.math.BigInteger.longValue": {
+    "intro": [
+      "Convierte este BigInteger en long. Es análogo a la conversión primitiva de reducción de long a int de la especificación del lenguaje Java: si no cabe en un long, solo se devuelven los 64 bits de menor orden. Esta conversión puede perder información sobre la magnitud del valor e incluso devolver un resultado con el signo contrario."
+    ],
+    "returns": ["este BigInteger convertido a long."]
+  },
+  "web-java-se-java.math.BigInteger.or": {
+    "intro": [
+      "Devuelve un BigInteger cuyo valor es (this | val). (Devuelve un BigInteger negativo si y solo si this o val es negativo.)"
+    ],
+    "parameters": [
+      {
+        "label": "val",
+        "detail": "el valor con el que se hace el OR con este BigInteger."
+      }
+    ],
+    "returns": ["this | val"]
+  },
+  "web-java-se-java.math.BigInteger.setBit": {
+    "intro": [
+      "Devuelve un BigInteger equivalente a este con el bit indicado activado. (Calcula (this | (1<<n)).)"
+    ],
+    "parameters": [
+      {
+        "label": "n",
+        "detail": "el índice del bit que se activa."
+      }
+    ],
+    "returns": ["this | (1<<n)"],
+    "exceptions": [
+      {
+        "label": "ArithmeticException",
+        "detail": "n es negativo."
+      }
+    ]
+  },
+  "web-java-se-java.math.BigInteger.shiftLeft": {
+    "intro": [
+      "Devuelve un BigInteger cuyo valor es (this << n). La distancia n puede ser negativa, en cuyo caso se desplaza a la derecha. (Calcula floor(this * 2^n).)"
+    ],
+    "parameters": [
+      {
+        "label": "n",
+        "detail": "la distancia de desplazamiento, en bits."
+      }
+    ],
+    "returns": ["this << n"]
+  },
+  "web-java-se-java.math.BigInteger.testBit": {
+    "intro": [
+      "Devuelve true si y solo si el bit indicado está activado. (Calcula ((this & (1<<n)) != 0).)"
+    ],
+    "parameters": [
+      {
+        "label": "n",
+        "detail": "el índice del bit que se comprueba."
+      }
+    ],
+    "returns": ["true si y solo si el bit indicado está activado."],
+    "exceptions": [
+      {
+        "label": "ArithmeticException",
+        "detail": "n es negativo."
+      }
+    ]
+  },
+  "web-java-se-java.math.MathContext.DECIMAL128": {
+    "intro": [
+      "Un MathContext con la precisión del formato decimal128 de IEEE 754-2019, 34 dígitos, y modo de redondeo HALF_EVEN. El rango de exponentes de decimal128 no se usa para redondear."
+    ]
+  },
   "web-java-se-java.net.CookieManager": {
     "body": [
       "La gestión de cookies HTTP del paquete java.net tiene este aspecto:",
@@ -6341,6 +7089,120 @@
         "label": "time",
         "detail": "milisegundos desde el 1 de enero de 1970 a las 00:00:00 GMT; un número negativo indica milisegundos antes de esa fecha"
       }
+    ]
+  },
+  "web-java-se-java.text.BreakIterator": {
+    "body": [
+      "Los métodos de fábrica de esta clase crean distintos tipos de iteradores de límites. En concreto, getWordInstance, getLineInstance, getSentenceInstance y getCharacterInstance crean BreakIterator que analizan los límites de palabras, líneas, frases y caracteres, respectivamente. Cada BreakIterator solo trabaja con una unidad (palabra, línea, frase, etc.), así que necesitas uno distinto para cada tipo de análisis.",
+      "El análisis de límites de línea determina dónde se puede partir un texto al ajustar líneas. Trata correctamente la puntuación y las palabras con guion. El salto de línea real también debe tener en cuenta el ancho disponible y lo gestiona software de más alto nivel.",
+      "El análisis de límites de frase permite seleccionar interpretando correctamente los puntos en números y abreviaturas, y los signos de puntuación finales, como comillas y paréntesis.",
+      "El análisis de límites de palabra lo usan las funciones de buscar y sustituir, y los editores de texto que permiten seleccionar palabras con doble clic. Interpreta correctamente los signos de puntuación dentro y después de las palabras. Los caracteres que no forman parte de una palabra, como símbolos o signos de puntuación, tienen límites de palabra a ambos lados.",
+      "El análisis de límites de carácter permite interactuar con los caracteres como espera el usuario, por ejemplo al mover el cursor por un texto. Ofrece una navegación correcta sea cual sea la forma en que se guarda el carácter. Los límites pueden ser los de caracteres suplementarios, secuencias de caracteres combinados o grupos de ligaduras. Por ejemplo, un carácter acentuado puede guardarse como un carácter base y una marca diacrítica. Lo que el usuario considera un carácter puede variar entre idiomas."
+    ],
+    "caveats": [
+      "La implementación por defecto del análisis de límites de carácter sigue los límites de grupos de grafemas extendidos del Consorcio Unicode. Para más detalles, consulta la",
+      "sección Grapheme Cluster Boundaries del anexo 29 del estándar Unicode.",
+      "Los BreakIterator que devuelven los métodos de fábrica están pensados solo para lenguajes naturales, no para texto de lenguajes de programación. Aun así, se pueden definir subclases que dividan en tokens un lenguaje de programación.",
+      "Ejemplos:",
+      "Crear y usar límites de texto:",
+      "{@snippet lang=java : public static void main(String args[]) { if (args.length == 1) { String stringToExamine = args[0]; //print each word in order BreakIterator boundary = BreakIterator.getWordInstance(); boundary.setText(stringToExamine); printEachForward(boundary, stringToExamine); //print each sentence in reverse order boundary = BreakIterator.getSentenceInstance(Locale.US); boundary.setText(stringToExamine); printEachBackward(boundary, stringToExamine); printFirst(boundary, stringToExamine); printLast(boundary, stringToExamine); } } }",
+      "Imprimir cada elemento en orden:",
+      "{@snippet lang=java : public static void printEachForward(BreakIterator boundary, String source) { int start = boundary.first(); for (int end = boundary.next(); end != BreakIterator.DONE; start = end, end = boundary.next()) { System.out.println(source.substring(start,end)); } } }",
+      "Imprimir cada elemento en orden inverso:",
+      "{@snippet lang=java : public static void printEachBackward(BreakIterator boundary, String source) { int end = boundary.last(); for (int start = boundary.previous(); start != BreakIterator.DONE; end = start, start = boundary.previous()) { System.out.println(source.substring(start,end)); } } }",
+      "Imprimir el primer elemento:",
+      "{@snippet lang=java : public static void printFirst(BreakIterator boundary, String source) { int start = boundary.first(); int end = boundary.next(); System.out.println(source.substring(start,end)); } }",
+      "Imprimir el último elemento:",
+      "{@snippet lang=java : public static void printLast(BreakIterator boundary, String source) { int end = boundary.last(); int start = boundary.previous(); System.out.println(source.substring(start,end)); } }",
+      "Imprimir el elemento de una posición concreta:",
+      "{@snippet lang=java : public static void printAt(BreakIterator boundary, int pos, String source) { int end = boundary.following(pos); int start = boundary.previous(); System.out.println(source.substring(start,end)); } }",
+      "Encontrar la siguiente palabra:",
+      "{@snippet lang=java : public static int nextWordStartAfter(int pos, String text) { BreakIterator wb = BreakIterator.getWordInstance(); wb.setText(text); int last = wb.following(pos); int current = wb.next(); while (current != BreakIterator.DONE) { for (int p = last; p < current; p++) { if (Character.isLetter(text.codePointAt(p))) return last; } last = current; current = wb.next(); } return BreakIterator.DONE; } } (El iterador que devuelve BreakIterator.getWordInstance() es especial: sus posiciones de corte no representan a la vez el inicio y el final de lo que se recorre. Un iterador de frases devuelve cortes que representan el final de una frase y el inicio de la siguiente, pero con el de palabras, los caracteres entre dos límites pueden ser una palabra o la puntuación o el espacio entre dos palabras. El código anterior usa una heurística sencilla para saber qué límite es el inicio de una palabra: si los caracteres entre este límite y el siguiente incluyen al menos una letra (alfabética, un ideograma CJK, una sílaba hangul, un carácter kana, etc.), el texto entre ellos es una palabra; si no, es lo que hay entre palabras.)"
+    ]
+  },
+  "web-java-se-java.text.CharacterIterator": {
+    "body": [
+      "Los iteradores mantienen un índice de carácter actual, con rango válido de getBeginIndex() a getEndIndex(); getEndIndex() se incluye para poder manejar rangos de texto de longitud cero y por motivos históricos. El índice actual se obtiene con getIndex() y se establece directamente con setIndex(), first() y last().",
+      "previous() y next() sirven para recorrer. Devuelven DONE si se saldrían del rango de getBeginIndex() a getEndIndex() -1, lo que indica que se ha llegado al final de la secuencia. Otros métodos también devuelven DONE para indicar que el índice actual está fuera de ese rango.",
+      "Ejemplos:",
+      "Recorrer el texto del principio al final {@snippet lang=java : public void traverseForward(CharacterIterator iter) { for (char c = iter.first(); c != CharacterIterator.DONE; c = iter.next()) { processChar(c); } } }",
+      "Recorrer el texto hacia atrás, del final al principio {@snippet lang=java : public void traverseBackward(CharacterIterator iter) { for (char c = iter.last(); c != CharacterIterator.DONE; c = iter.previous()) { processChar(c); } } }",
+      "Recorrer hacia delante y hacia atrás desde una posición del texto. Las llamadas a notBoundary() de este ejemplo representan algún criterio de parada adicional. {@snippet lang=java : public void traverseOut(CharacterIterator iter, int pos) { for (char c = iter.setIndex(pos); c != CharacterIterator.DONE && notBoundary(c); c = iter.next()) { } int end = iter.getIndex(); for (char c = iter.setIndex(pos); c != CharacterIterator.DONE && notBoundary(c); c = iter.previous()) { } int start = iter.getIndex(); processSection(start, end); } }"
+    ]
+  },
+  "web-java-se-java.text.CollationElementIterator.next": {
+    "body": [
+      "Este iterador recorre una secuencia de elementos de intercalación construidos a partir de la cadena. Como no hay necesariamente una correspondencia uno a uno entre caracteres y elementos de intercalación, no equivale a «devolver el elemento de intercalación [o la prioridad de orden] del siguiente carácter de la cadena».",
+      "Devuelve el elemento de intercalación al que apunta el iterador y después avanza el puntero interno al siguiente. previous() primero mueve el puntero y después devuelve el elemento. Por eso, si cambias de dirección (llamas a next() y luego a previous(), o al revés), obtienes el mismo elemento dos veces."
+    ],
+    "returns": ["el siguiente elemento de intercalación"]
+  },
+  "web-java-se-java.text.Collator.getInstance": {
+    "overloads": [
+      {
+        "intro": [
+          "Obtiene el Collator del locale por defecto actual, que determina Locale.getDefault()."
+        ],
+        "returns": ["el Collator del locale por defecto (por ejemplo, en_US)"]
+      },
+      {
+        "intro": [
+          "Obtiene el Collator del locale deseado. Si el locale tiene las opciones de intercalación Unicode \"ks\" o \"kk\""
+        ],
+        "body": [
+          "este método llama a setStrength(int) o setDecomposition(int) sobre la instancia creada, si reconoce esas opciones según estas correspondencias:",
+          "Correspondencias de fuerza y descomposición",
+          "Valores BCP 47 de fuerza (ks) · Constantes de fuerza de Collator",
+          "level1 · PRIMARY",
+          "level2 · SECONDARY",
+          "level3 · TERTIARY*",
+          "identic · IDENTICAL",
+          "Valores BCP 47 de normalización (kk) · Constantes de descomposición de Collator",
+          "true · CANONICAL_DECOMPOSITION",
+          "false · NO_DECOMPOSITION*",
+          "El asterisco (*) indica el valor por defecto. Si no se reconoce el valor indicado, la fuerza o la descomposición no se cambian, como si el locale no tuviera opciones de intercalación BCP 47."
+        ],
+        "parameters": [
+          {
+            "label": "desiredLocale",
+            "detail": "el locale deseado."
+          }
+        ],
+        "returns": ["el Collator del locale deseado."],
+        "caveats": [
+          "Las implementaciones de Collator pueden devolver instancias distintas según el identificador de intercalación Unicode \"co\"",
+          "de desiredLocale. Por ejemplo:",
+          "puede devolver un Collator con la ordenación tradicional sueca, que da a 'v' y 'w' el mismo orden, mientras que el Collator del locale sueco sin identificador \"co\" distingue 'v' y 'w'."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.text.CompactNumberFormat": {
+    "body": [
+      "El formato compacto de números está pensado para entornos con poco espacio, en los que la cadena formateada debe caber en ese espacio limitado. Lo define la especificación LDML de",
+      "formatos compactos de números. Consiste en representar un número de forma más corta según los patrones de un locale.",
+      "Por ejemplo:",
+      "En el locale de EE. UU., 1000 se puede formatear como \"1K\" y 1000000 como \"1M\", según el estilo.",
+      "En el locale \"hi_IN\", 1000 se puede formatear como \"1 हज़ार\" y 50000000 como \"5 क.\", según el estilo.",
+      "Para obtener un CompactNumberFormat de un locale, usa uno de los métodos de fábrica de NumberFormat para formato compacto, como NumberFormat.getCompactNumberInstance(Locale, NumberFormat.Style).",
+      "Estilo",
+      "Un número se puede formatear de forma compacta con dos estilos: SHORT y LONG. Usa NumberFormat.getCompactNumberInstance(Locale, NumberFormat.Style) para formatear y analizar en forma compacta SHORT o LONG, según el Style que indiques. Una instancia SHORT en el locale de EE. UU. formatea 10000 como \"10K\", mientras que una LONG en el mismo locale lo formatea como \"10 thousand\".",
+      "Patrones de números compactos",
+      "Los patrones de números compactos son una serie de patrones en la que cada uno formatea un rango de números. Un ejemplo de patrones SHORT para el locale de EE. UU. es {@code {\"\", \"\", \"\", \"0K\", \"00K\", \"000K\", \"0M\", \"00M\", \"000M\", \"0B\", \"00B\", \"000B\", \"0T\", \"00T\", \"000T\"}}, de 10^0 a 10^14. Puede haber cualquier número de patrones y se indexan estrictamente empezando por el rango 10^0. Por ejemplo, en los patrones anteriores, el del índice 3 (\"0K\") formatea los números >= 1000 y < 10000, el del índice 4 (\"00K\") los >= 10000 y < 100000, y así sucesivamente. En la mayoría de locales, los patrones de los rangos 10^0-10^2 son cadenas vacías, lo que implica el patrón especial \"0\". Este patrón especial se usa en cualquier rango sin patrón compacto; puede aparecer explícitamente o considerarse el patrón por defecto de una cadena vacía.",
+      "Un patrón compacto tiene un subpatrón positivo y otro negativo separados por ';' (U+003B), por ejemplo \"0K;-0K\". Cada subpatrón tiene un prefijo, un mínimo de dígitos enteros y un sufijo. El negativo es opcional: si falta, se usa el positivo precedido del signo menos ('-' U+002D HYPHEN-MINUS). Es decir, \"0K\" equivale a \"0K;-0K\". Si hay un subpatrón negativo explícito, solo sirve para indicar el prefijo y el sufijo negativos; el mínimo de dígitos enteros y demás características son los del positivo. Así, \"0K;-00K\" se comporta exactamente igual que \"0K;-0K\".",
+      "Muchos caracteres de un patrón compacto se toman literalmente: se comparan al analizar y se escriben sin cambios al formatear. Los caracteres especiales, en cambio, representan otros caracteres, cadenas o clases de caracteres, y deben ir entre comillas simples ' (U+0027), salvo que se indique lo contrario, si deben aparecer literalmente en el prefijo o el sufijo. Por ejemplo, 0क'.'.",
+      "Plurales",
+      "Si alguna localización requiere patrones distintos para los plurales, cada patrón singular y plural se puede enumerar entre llaves '{' (U+007B) y '}' (U+007D), separados por un espacio ' ' (U+0020). Con este formato, cada patrón debe ir precedido de su categoría y dos puntos ':' (U+003A). Si el patrón contiene espacios literales, deben ir entre comillas.",
+      "Por ejemplo, el patrón compacto de los millones en alemán se puede indicar como {@code \"{one:0' 'Million other:0' 'Millionen}\"}. Las categorías siguen las",
+      "reglas de plural de los idiomas de LDML.",
+      "Un patrón compacto tiene esta sintaxis:",
+      "Pattern: SimplePattern '{' PluralPattern [' ' PluralPattern]optional '}' SimplePattern: PositivePattern PositivePattern [; NegativePattern]optional PluralPattern: Count:SimplePattern Count: \"zero\" / \"one\" / \"two\" / \"few\" / \"many\" / \"other\" PositivePattern: Prefixoptional MinimumInteger Suffixoptional NegativePattern: Prefixoptional MinimumInteger Suffixoptional Prefix: cualquier carácter Unicode salvo U+FFFE, U+FFFF y los caracteres especiales. Suffix: cualquier carácter Unicode salvo U+FFFE, U+FFFF y los caracteres especiales. MinimumInteger: 0 0 MinimumInteger",
+      "Formato",
+      "Por defecto, la cadena formateada no tiene dígitos decimales, aunque se puede incluir la parte decimal con setMinimumFractionDigits(int). El número 1000.0 o 1000 se formatea como \"1K\", no \"1.00K\" (en el locale de EE. UU.). Por eso, los patrones solo contienen el mínimo de dígitos enteros, el prefijo o el sufijo, sin parte decimal; por ejemplo, {@code {\"\", \"\", \"\", 0K, 00K, ...}}. Si el patrón elegido es \"0\" (el especial), explícito o por defecto, se usa el formato general de números de DecimalFormat para el locale.",
+      "Análisis",
+      "Por defecto, no se permite el separador de grupos hasta que se activa con setGroupingUsed(boolean). El análisis de la parte decimal depende de isParseIntegerOnly(); por ejemplo, si solo se analizan enteros, se salta la parte decimal.",
+      "Redondeo",
+      "CompactNumberFormat ofrece para formatear los modos de redondeo de java.math.RoundingMode. Por defecto usa RoundingMode.HALF_EVEN."
     ]
   },
   "web-java-se-java.time.DayOfWeek.adjustInto": {
@@ -13736,6 +14598,91 @@
       }
     ]
   },
+  "web-java-se-java.util.concurrent.CompletionService": {
+    "intro": [
+      "Un servicio que desacopla la producción de tareas asíncronas del consumo de los resultados de las tareas completadas. Los productores envían tareas para ejecutarlas y los consumidores toman las completadas y procesan sus resultados en el orden en que terminan. Por ejemplo, un CompletionService puede servir para gestionar E/S asíncrona: las tareas de lectura se envían en una parte del programa y se procesan en otra cuando terminan, quizá en un orden distinto del pedido."
+    ],
+    "body": [
+      "Normalmente, un CompletionService delega la ejecución de las tareas en un Executor aparte y solo gestiona una cola interna de completadas. La clase ExecutorCompletionService implementa este enfoque.",
+      "Efectos de coherencia de memoria: las acciones de un hilo antes de enviar una tarea a un CompletionService ocurren-antes que las acciones de esa tarea, que a su vez ocurren-antes que las acciones posteriores a la vuelta correcta del take() correspondiente."
+    ],
+    "parameters": [
+      {
+        "label": "<V>",
+        "detail": "el tipo de los valores que producen y consumen las tareas de este servicio"
+      }
+    ]
+  },
+  "web-java-se-java.util.concurrent.ConcurrentHashMap.replaceAll": {
+    "intro": [],
+    "caveats": [
+      "La implementación por defecto equivale, para este mapa, a:",
+      "{@code for (Map.Entry entry : map.entrySet()) { K k; V v; do { k = entry.getKey(); v = entry.getValue(); } while (!map.replace(k, v, function.apply(k, v))); }}",
+      "La implementación por defecto puede repetir estos pasos si varios hilos intentan actualizar a la vez, lo que puede llamar a la función varias veces para una misma clave.",
+      "Esta implementación supone que el ConcurrentMap no puede contener valores null y que si get() devuelve null es inequívocamente que la clave no está. Las implementaciones que admitan null deben sobrescribirla."
+    ]
+  },
+  "web-java-se-java.util.concurrent.ConcurrentHashMap.toString": {
+    "intro": [
+      "Devuelve una representación en cadena de este mapa: una lista de pares clave-valor (sin un orden concreto) entre llaves (\"{@code {}}\"). Los pares se separan con \", \" (coma y espacio). Cada par se escribe como la clave, un signo igual (\"=\") y el valor."
+    ],
+    "returns": ["una representación en cadena de este mapa"]
+  },
+  "web-java-se-java.util.concurrent.ConcurrentMap.compute": {
+    "intro": [],
+    "caveats": [
+      "La implementación por defecto equivale a hacer estos pasos sobre el mapa:",
+      "{@code for (;;) { V oldValue = map.get(key); V newValue = remappingFunction.apply(key, oldValue); if (newValue != null) { if ((oldValue != null) ? map.replace(key, oldValue, newValue) : map.putIfAbsent(key, newValue) == null) return newValue; } else if (oldValue == null || map.remove(key, oldValue)) { return null; } }}",
+      "Si varios hilos intentan actualizar a la vez, las operaciones del mapa y la función de reasignación pueden llamarse varias veces.",
+      "Esta implementación supone que el ConcurrentMap no puede contener valores null y que si get() devuelve null es inequívocamente que la clave no está. Las implementaciones que admitan null deben sobrescribirla."
+    ]
+  },
+  "web-java-se-java.util.concurrent.ConcurrentMap.computeIfAbsent": {
+    "intro": [],
+    "caveats": [
+      "La implementación por defecto equivale a estos pasos para este mapa:",
+      "V oldValue, newValue; return ((oldValue = map.get(key)) == null && (newValue = mappingFunction.apply(key)) != null && (oldValue = map.putIfAbsent(key, newValue)) == null) ? newValue : oldValue;",
+      "Esta implementación supone que el ConcurrentMap no puede contener valores null y que si get() devuelve null es inequívocamente que la clave no está. Las implementaciones que admitan null deben sobrescribirla."
+    ]
+  },
+  "web-java-se-java.util.concurrent.ConcurrentMap.forEach": {
+    "intro": [],
+    "caveats": [
+      "La implementación por defecto equivale, para este mapa, a:",
+      "{@code for (Map.Entry entry : map.entrySet()) { action.accept(entry.getKey(), entry.getValue()); }}"
+    ]
+  },
+  "web-java-se-java.util.concurrent.ConcurrentMap.replaceAll": {
+    "intro": [],
+    "caveats": [
+      "La implementación por defecto equivale, para este mapa, a:",
+      "{@code for (Map.Entry entry : map.entrySet()) { K k; V v; do { k = entry.getKey(); v = entry.getValue(); } while (!map.replace(k, v, function.apply(k, v))); }}",
+      "La implementación por defecto puede repetir estos pasos si varios hilos intentan actualizar a la vez, lo que puede llamar a la función varias veces para una misma clave.",
+      "Esta implementación supone que el ConcurrentMap no puede contener valores null y que si get() devuelve null es inequívocamente que la clave no está. Las implementaciones que admitan null deben sobrescribirla."
+    ]
+  },
+  "web-java-se-java.util.concurrent.ConcurrentNavigableMap.descendingKeySet": {
+    "intro": [
+      "Devuelve una vista NavigableSet en orden inverso de las claves de este mapa. Su iterador devuelve las claves en orden descendente. El conjunto está respaldado por el mapa: los cambios en uno se reflejan en el otro. Admite eliminar elementos, lo que elimina el par correspondiente del mapa, con Iterator.remove, Set.remove, removeAll, retainAll y clear. No admite add ni addAll."
+    ],
+    "body": [
+      "Los iteradores y spliterators de la vista son débilmente coherentes."
+    ],
+    "returns": [
+      "una vista de conjunto navegable en orden inverso de las claves de este mapa"
+    ]
+  },
+  "web-java-se-java.util.concurrent.ConcurrentSkipListMap.descendingKeySet": {
+    "intro": [
+      "Devuelve una vista NavigableSet en orden inverso de las claves de este mapa. Su iterador devuelve las claves en orden descendente. El conjunto está respaldado por el mapa: los cambios en uno se reflejan en el otro. Admite eliminar elementos, lo que elimina el par correspondiente del mapa, con Iterator.remove, Set.remove, removeAll, retainAll y clear. No admite add ni addAll."
+    ],
+    "body": [
+      "Los iteradores y spliterators de la vista son débilmente coherentes."
+    ],
+    "returns": [
+      "una vista de conjunto navegable en orden inverso de las claves de este mapa"
+    ]
+  },
   "web-java-se-java.util.concurrent.CopyOnWriteArrayList.get": {
     "parameters": [
       {
@@ -13751,12 +14698,375 @@
       }
     ]
   },
+  "web-java-se-java.util.concurrent.CountDownLatch.await": {
+    "overloads": [
+      {
+        "intro": [
+          "Hace que el hilo actual espere hasta que el contador del cerrojo llegue a cero, salvo que el hilo se interrumpa."
+        ],
+        "body": [
+          "Si el contador actual es cero, vuelve de inmediato.",
+          "Si es mayor que cero, el hilo actual deja de ser planificable y queda inactivo hasta que ocurra una de dos cosas:",
+          "El contador llega a cero por llamadas a countDown; o",
+          "Otro hilo interrumpe al hilo actual.",
+          "Si el hilo actual:",
+          "tiene el estado de interrupción activado al entrar en el método; o",
+          "se interrumpe mientras espera,",
+          "se lanza InterruptedException y se borra su estado de interrupción."
+        ],
+        "exceptions": [
+          {
+            "label": "InterruptedException",
+            "detail": "si el hilo actual se interrumpe mientras espera"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Hace que el hilo actual espere hasta que el contador del cerrojo llegue a cero, salvo que el hilo se interrumpa o pase el tiempo de espera indicado."
+        ],
+        "body": [
+          "Si el contador actual es cero, vuelve de inmediato con true.",
+          "Si es mayor que cero, el hilo actual deja de ser planificable y queda inactivo hasta que ocurra una de tres cosas:",
+          "El contador llega a cero por llamadas a countDown; o",
+          "Otro hilo interrumpe al hilo actual; o",
+          "Pasa el tiempo de espera indicado.",
+          "Si el contador llega a cero, devuelve true.",
+          "Si el hilo actual:",
+          "tiene el estado de interrupción activado al entrar en el método; o",
+          "se interrumpe mientras espera,",
+          "se lanza InterruptedException y se borra su estado de interrupción.",
+          "Si pasa el tiempo de espera, devuelve false. Si el tiempo es menor o igual que cero, no espera."
+        ],
+        "parameters": [
+          {
+            "label": "timeout",
+            "detail": "el tiempo máximo de espera"
+          },
+          {
+            "label": "unit",
+            "detail": "la unidad de tiempo del argumento timeout"
+          }
+        ],
+        "returns": [
+          "true si el contador llegó a cero y false si pasó el tiempo de espera antes"
+        ],
+        "exceptions": [
+          {
+            "label": "InterruptedException",
+            "detail": "si el hilo actual se interrumpe mientras espera"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.util.concurrent.CountedCompleter": {
+    "intro": [
+      "Un ForkJoinTask con una acción de finalización que se ejecuta al activarse cuando no quedan acciones pendientes. En general, los CountedCompleter resisten mejor los atascos y bloqueos de subtareas que otros ForkJoinTask, pero son menos intuitivos de programar. Se usan como otros componentes basados en finalización (como java.nio.channels.CompletionHandler), salvo que pueden hacer falta varias finalizaciones pendientes, no solo una, para activar la acción onCompletion(CountedCompleter). Salvo que se inicialice de otra forma, el contador de pendientes empieza en cero, pero se puede cambiar (de forma atómica) con setPendingCount, addToPendingCount y compareAndSetPendingCount. Al invocar tryComplete, si el contador no es cero se decrementa; si no, se ejecuta la acción de finalización y, si este completer tiene a su vez un completer, el proceso continúa con él. Como en componentes de sincronización relacionados, como Phaser y Semaphore, estos métodos solo afectan a contadores internos; no llevan ningún registro adicional. En particular, no se guardan las identidades de las tareas pendientes. Como se muestra más abajo, puedes crear subclases que registren algunas o todas las tareas pendientes o sus resultados, y también hay métodos auxiliares para personalizar el recorrido de las finalizaciones. Sin embargo, como los CountedCompleter solo ofrecen mecanismos básicos de sincronización, puede ser útil crear subclases abstractas que mantengan enlaces, campos y métodos de apoyo adecuados para un conjunto de usos relacionados."
+    ],
+    "body": [
+      "Una clase CountedCompleter concreta debe definir compute, que en la mayoría de los casos (como se muestra más abajo) debería invocar tryComplete() una vez antes de volver. También puede sobrescribir onCompletion(CountedCompleter) para hacer algo al terminar normalmente, y onExceptionalCompletion(Throwable, CountedCompleter) para hacer algo ante cualquier excepción.",
+      "Los CountedCompleter casi nunca devuelven resultados; en ese caso se declaran como CountedCompleter<Void> y siempre devuelven null. Si no, hay que sobrescribir getRawResult para que join(), invoke() y métodos relacionados devuelvan un resultado. En general, debería devolver el valor de un campo (o una función de uno o varios campos) del CountedCompleter que guarda el resultado al terminar. Por defecto, setRawResult no tiene ningún papel en los CountedCompleter. Se puede sobrescribir, aunque rara vez tiene sentido, para mantener otros objetos o campos con datos del resultado.",
+      "Un CountedCompleter sin completer propio (getCompleter devuelve null) se puede usar como un ForkJoinTask normal con esta funcionalidad añadida. En cambio, cualquier completer que tenga otro completer solo sirve como ayudante interno para otros cálculos, así que su propio estado (el que informan métodos como ForkJoinTask.isDone) es arbitrario; solo cambia con llamadas explícitas a complete, ForkJoinTask.cancel, ForkJoinTask.completeExceptionally(Throwable) o si compute termina con una excepción. Ante cualquier finalización excepcional, la excepción puede transmitirse al completer de la tarea (y al de este, etc.), si existe y no ha terminado ya. Del mismo modo, cancelar un CountedCompleter interno solo tiene efecto local, así que no suele ser útil.",
+      "Ejemplos de uso.",
+      "Descomposición recursiva paralela. Los CountedCompleter se pueden organizar en árboles parecidos a los que se usan con RecursiveAction, aunque su construcción suele variar. Aquí, el completer de cada tarea es su padre en el árbol de cálculo. Aunque requieren algo más de registro, pueden ser mejor opción al aplicar una operación potencialmente lenta (que no se puede subdividir) a cada elemento de un array o colección, sobre todo si tarda mucho más en unos elementos que en otros, por variación intrínseca (por ejemplo, E/S) o por efectos secundarios como la recolección de basura. Como los CountedCompleter aportan sus propias continuaciones, las demás tareas no tienen que bloquearse esperando.",
+      "Por ejemplo, esta es una primera versión de un método auxiliar que divide el trabajo por la mitad de forma recursiva hasta piezas sueltas (tareas hoja). Aunque el trabajo se divida en llamadas individuales, las técnicas en árbol suelen ser preferibles a bifurcar directamente las tareas hoja, porque reducen la comunicación entre hilos y mejoran el reparto de carga. En el caso recursivo, la segunda de cada par de subtareas que termina activa la finalización de su padre (como no se combinan resultados, no se sobrescribe la implementación por defecto, vacía, de onCompletion). El método prepara la tarea raíz y la invoca (aquí, usando implícitamente ForkJoinPool.commonPool()). Poner siempre el contador de pendientes al número de hijas y llamar a tryComplete() justo antes de volver es sencillo y fiable (aunque no óptimo).",
+      "{@code public static void forEach(E[] array, Consumer action) { class Task extends CountedCompleter { final int lo, hi; Task(Task parent, int lo, int hi) { super(parent); this.lo = lo; this.hi = hi; }",
+      "public void compute() { if (hi - lo >= 2) { int mid = (lo + hi) >>> 1; // must set pending count before fork setPendingCount(2); new Task(this, mid, hi).fork(); // right child new Task(this, lo, mid).fork(); // left child } else if (hi > lo) action.accept(array[lo]); tryComplete(); } } new Task(null, 0, array.length).invoke(); }}",
+      "Se puede mejorar observando que, en el caso recursivo, la tarea no tiene nada que hacer tras bifurcar la de la derecha, así que puede invocar directamente la de la izquierda antes de volver. (Es el equivalente a eliminar la recursión de cola.) Además, cuando lo último que hace una tarea es bifurcar o invocar una subtarea (una «llamada de cola»), se puede eliminar la llamada a tryComplete(), a costa de que el contador de pendientes parezca «desfasado en uno».",
+      "{@code public void compute() { if (hi - lo >= 2) { int mid = (lo + hi) >>> 1; setPendingCount(1); // looks off by one, but correct! new Task(this, mid, hi).fork(); // right child new Task(this, lo, mid).compute(); // direct invoke } else { if (hi > lo) action.accept(array[lo]); tryComplete(); } }}",
+      "Como optimización adicional, la tarea de la izquierda ni siquiera tiene que existir: en lugar de crear una nueva, se puede seguir con la original y sumar uno al contador por cada bifurcación. Además, como ninguna tarea de este árbol implementa onCompletion(CountedCompleter), tryComplete se puede sustituir por propagateCompletion.",
+      "{@code public void compute() { int n = hi - lo; for (; n >= 2; n /= 2) { addToPendingCount(1); new Task(this, lo + n/2, lo + n).fork(); } if (n > 0) action.accept(array[lo]); propagateCompletion(); }}",
+      "Si los contadores de pendientes se pueden calcular de antemano, se pueden establecer en el constructor:",
+      "{@code public static void forEach(E[] array, Consumer action) { class Task extends CountedCompleter { final int lo, hi; Task(Task parent, int lo, int hi) { super(parent, 31 - Integer.numberOfLeadingZeros(hi - lo)); this.lo = lo; this.hi = hi; }",
+      "public void compute() { for (int n = hi - lo; n >= 2; n /= 2) new Task(this, lo + n/2, lo + n).fork(); action.accept(array[lo]); propagateCompletion(); } } if (array.length > 0) new Task(null, 0, array.length).invoke(); }}",
+      "Otras optimizaciones posibles serían especializar clases para los pasos hoja, dividir en cuatro en lugar de dos por iteración y usar un umbral adaptativo en lugar de dividir siempre hasta elementos sueltos.",
+      "Búsqueda. Un árbol de CountedCompleter puede buscar un valor o una propiedad en distintas partes de una estructura de datos e informar del resultado en un AtomicReference en cuanto lo encuentra. Las demás tareas pueden consultar el resultado para evitar trabajo innecesario. (También podrías cancelarlas, pero suele ser más sencillo y eficiente dejar que vean que ya hay resultado y se salten el resto.) De nuevo con un array y partición completa (en la práctica, las tareas hoja casi siempre procesan más de un elemento):",
+      "{@code class Searcher extends CountedCompleter { final E[] array; final AtomicReference result; final int lo, hi; Searcher(CountedCompleter p, E[] array, AtomicReference result, int lo, int hi) { super(p); this.array = array; this.result = result; this.lo = lo; this.hi = hi; } public E getRawResult() { return result.get(); } public void compute() { // similar to ForEach version 3 int l = lo, h = hi; while (result.get() == null && h >= l) { if (h - l >= 2) { int mid = (l + h) >>> 1; addToPendingCount(1); new Searcher(this, array, result, mid, h).fork(); h = mid; } else { E x = array[l]; if (matches(x) && result.compareAndSet(null, x)) quietlyCompleteRoot(); // root task is now joinable break; } } tryComplete(); // normally complete whether or not found } boolean matches(E e) { ... } // return true if found",
+      "public static E search(E[] array) { return new Searcher(null, array, new AtomicReference(), 0, array.length).invoke(); } }}",
+      "En este ejemplo, y en otros en los que las tareas solo hacen compareAndSet sobre un resultado común, la llamada final incondicional a tryComplete podría hacerse condicional (if (result.get() == null) tryComplete();), porque una vez terminada la tarea raíz no hace falta más registro para gestionar las finalizaciones.",
+      "Registro de subtareas. Las tareas CountedCompleter que combinan los resultados de varias subtareas suelen necesitar acceder a ellos en onCompletion(CountedCompleter). Como muestra la siguiente clase (que hace una forma simplificada de map-reduce en la que todo es de tipo E), una forma de hacerlo en diseños de divide y vencerás es que cada subtarea registre a su hermana, para poder acceder a ella en onCompletion. Sirve para reducciones en las que no importa el orden de combinación de los resultados izquierdo y derecho; las reducciones ordenadas requieren indicar explícitamente izquierda y derecha. También pueden aplicarse variantes de las simplificaciones de los ejemplos anteriores.",
+      "{@code class MyMapper { E apply(E v) { ... } } class MyReducer { E apply(E x, E y) { ... } } class MapReducer extends CountedCompleter { final E[] array; final MyMapper mapper; final MyReducer reducer; final int lo, hi; MapReducer sibling; E result; MapReducer(CountedCompleter p, E[] array, MyMapper mapper, MyReducer reducer, int lo, int hi) { super(p); this.array = array; this.mapper = mapper; this.reducer = reducer; this.lo = lo; this.hi = hi; } public void compute() { if (hi - lo >= 2) { int mid = (lo + hi) >>> 1; MapReducer left = new MapReducer(this, array, mapper, reducer, lo, mid); MapReducer right = new MapReducer(this, array, mapper, reducer, mid, hi); left.sibling = right; right.sibling = left; setPendingCount(1); // only right is pending right.fork(); left.compute(); // directly execute left } else { if (hi > lo) result = mapper.apply(array[lo]); tryComplete(); } } public void onCompletion(CountedCompleter caller) { if (caller != this) { MapReducer child = (MapReducer)caller; MapReducer sib = child.sibling; if (sib == null || sib.result == null) result = child.result; else result = reducer.apply(child.result, sib.result); } } public E getRawResult() { return result; }",
+      "public static E mapReduce(E[] array, MyMapper mapper, MyReducer reducer) { return new MapReducer(null, array, mapper, reducer, 0, array.length).invoke(); } }}",
+      "Aquí, onCompletion tiene una forma habitual en los diseños que combinan resultados. Este método de retrollamada se activa una vez por tarea, en cualquiera de los dos contextos en que el contador de pendientes es o pasa a ser cero: (1) por la propia tarea, si su contador es cero al invocar tryComplete, o (2) por cualquiera de sus subtareas al terminar y decrementar el contador a cero. El argumento caller distingue los casos. Casi siempre, si caller es this, no hay que hacer nada. Si no, caller se puede usar (normalmente con una conversión) para aportar un valor (o enlaces a otros valores) que combinar. Si los contadores se usan bien, las acciones de onCompletion ocurren (una vez) al terminar una tarea y sus subtareas. No hace falta sincronización adicional dentro de este método para acceder con seguridad a los campos de esta tarea o de otras ya terminadas.",
+      "Recorridos de finalización. Si usar onCompletion no es aplicable o resulta incómodo, puedes usar firstComplete y nextComplete para crear recorridos personalizados. Por ejemplo, para definir un MapReducer que solo separe las tareas de la derecha, como en el tercer ejemplo de ForEach, las finalizaciones deben reducir de forma cooperativa a lo largo de los enlaces de subtareas no agotados, así:",
+      "{@code class MapReducer extends CountedCompleter { // version 2 final E[] array; final MyMapper mapper; final MyReducer reducer; final int lo, hi; MapReducer forks, next; // record subtask forks in list E result; MapReducer(CountedCompleter p, E[] array, MyMapper mapper, MyReducer reducer, int lo, int hi, MapReducer next) { super(p); this.array = array; this.mapper = mapper; this.reducer = reducer; this.lo = lo; this.hi = hi; this.next = next; } public void compute() { int l = lo, h = hi; while (h - l >= 2) { int mid = (l + h) >>> 1; addToPendingCount(1); (forks = new MapReducer(this, array, mapper, reducer, mid, h, forks)).fork(); h = mid; } if (h > l) result = mapper.apply(array[l]); // process completions by reducing along and advancing subtask links for (CountedCompleter c = firstComplete(); c != null; c = c.nextComplete()) { for (MapReducer t = (MapReducer)c, s = t.forks; s != null; s = t.forks = s.next) t.result = reducer.apply(t.result, s.result); } } public E getRawResult() { return result; }",
+      "public static E mapReduce(E[] array, MyMapper mapper, MyReducer reducer) { return new MapReducer(null, array, mapper, reducer, 0, array.length, null).invoke(); } }}",
+      "Disparadores. Algunos CountedCompleter nunca se bifurcan: sirven como piezas de conexión en otros diseños, incluidos aquellos en los que la finalización de una o varias tareas asíncronas dispara otra. Por ejemplo:",
+      "{@code class HeaderBuilder extends CountedCompleter<...> { ... } class BodyBuilder extends CountedCompleter<...> { ... } class PacketSender extends CountedCompleter<...> { PacketSender(...) { super(null, 1); ... } // trigger on second completion public void compute() { } // never called public void onCompletion(CountedCompleter caller) { sendPacket(); } } // sample use: PacketSender p = new PacketSender(); new HeaderBuilder(p, ...).fork(); new BodyBuilder(p, ...).fork();}"
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo del resultado del completer"
+      }
+    ]
+  },
+  "web-java-se-java.util.concurrent.CyclicBarrier": {
+    "body": [
+      "Un CyclicBarrier admite un comando Runnable opcional que se ejecuta una vez por punto de barrera, después de que llegue el último hilo del grupo y antes de liberar a ninguno. Esta acción de barrera es útil para actualizar el estado compartido antes de que continúen los participantes.",
+      "Ejemplo de uso: una barrera en un diseño de descomposición paralela:",
+      "{@code class Solver { final int N; final float[][] data; final CyclicBarrier barrier;",
+      "class Worker implements Runnable { int myRow; Worker(int row) { myRow = row; } public void run() { while (!done()) { processRow(myRow);",
+      "try { barrier.await(); } catch (InterruptedException ex) { return; } catch (BrokenBarrierException ex) { return; } } } }",
+      "public Solver(float[][] matrix) { data = matrix; N = matrix.length; Runnable barrierAction = () -> mergeRows(...); barrier = new CyclicBarrier(N, barrierAction);",
+      "List threads = new ArrayList<>(N); for (int i = 0; i < N; i++) { Thread thread = new Thread(new Worker(i)); threads.add(thread); thread.start(); }",
+      "// wait until done for (Thread thread : threads) try { thread.join(); } catch (InterruptedException ex) { } } }}",
+      "Aquí, cada hilo procesa una fila de la matriz y espera en la barrera hasta que se hayan procesado todas. Entonces se ejecuta la acción de barrera, que combina las filas. Si la combinación determina que se ha encontrado una solución, done() devolverá true y cada hilo terminará.",
+      "Si la acción de barrera no depende de que los participantes estén suspendidos al ejecutarse, cualquier hilo del grupo podría ejecutarla al liberarse. Para facilitarlo, cada llamada a await devuelve el índice de llegada de ese hilo a la barrera, y así puedes elegir qué hilo la ejecuta, por ejemplo:",
+      "{@code if (barrier.await() == 0) { // log the completion of this iteration }}",
+      "CyclicBarrier usa un modelo de ruptura de todo o nada ante intentos de sincronización fallidos: si un hilo abandona antes de tiempo un punto de barrera por interrupción, fallo o tiempo agotado, todos los demás que esperan en ese punto también salen de forma anómala con BrokenBarrierException (o InterruptedException si también se interrumpieron más o menos a la vez).",
+      "Efectos de coherencia de memoria: las acciones de un hilo antes de llamar a await() ocurren-antes que las acciones de la acción de barrera, que a su vez ocurren-antes que las acciones posteriores a la vuelta correcta del await() correspondiente en otros hilos."
+    ]
+  },
+  "web-java-se-java.util.concurrent.ExecutorCompletionService": {
+    "body": [
+      "Ejemplos de uso.",
+      "Supón que tienes varios solucionadores para un problema, cada uno devuelve un valor de tipo Result y quieres ejecutarlos a la vez, procesando en un método use(Result r) los resultados no nulos. Podrías escribirlo así:",
+      "{@code void solve(Executor e, Collection> solvers) throws InterruptedException, ExecutionException { CompletionService cs = new ExecutorCompletionService<>(e); solvers.forEach(cs::submit); for (int i = solvers.size(); i > 0; i--) { Result r = cs.take().get(); if (r != null) use(r); } }}",
+      "Supón en cambio que quieres usar el primer resultado no nulo, ignorar las tareas que lancen excepciones y cancelar las demás en cuanto la primera esté lista:",
+      "{@code void solve(Executor e, Collection> solvers) throws InterruptedException { CompletionService cs = new ExecutorCompletionService<>(e); int n = solvers.size(); List> futures = new ArrayList<>(n); Result result = null; try { solvers.forEach(solver -> futures.add(cs.submit(solver))); for (int i = n; i > 0; i--) { try { Result r = cs.take().get(); if (r != null) { result = r; break; } } catch (ExecutionException ignore) {} } } finally { futures.forEach(future -> future.cancel(true)); }",
+      "if (result != null) use(result); }}"
+    ],
+    "parameters": [
+      {
+        "label": "<V>",
+        "detail": "el tipo de los valores que producen y consumen las tareas de este servicio"
+      }
+    ]
+  },
+  "web-java-se-java.util.concurrent.Flow": {
+    "body": [
+      "Estas interfaces corresponden a la especificación reactive-streams. Se aplican tanto en entornos asíncronos concurrentes como distribuidos: los siete métodos se definen con el estilo de mensaje «unidireccional» void. La comunicación se basa en una forma sencilla de control de flujo (el método Subscription.request) que evita problemas de gestión de recursos que pueden aparecer en sistemas basados en «push».",
+      "Ejemplos. Un Publisher suele definir su propia implementación de Subscription: crea una en subscribe y se la entrega al Subscriber llamante. Publica los elementos de forma asíncrona, normalmente con un Executor. Por ejemplo, este es un publicador muy sencillo que solo emite (cuando se le pide) un único elemento TRUE a un único suscriptor. Como el suscriptor solo recibe un elemento, la clase no usa el búfer ni el control de orden que necesitan la mayoría de implementaciones (como SubmissionPublisher).",
+      "{@code class OneShotPublisher implements Publisher { private final ExecutorService executor = ForkJoinPool.commonPool(); // daemon-based private boolean subscribed; // true after first subscribe public synchronized void subscribe(Subscriber subscriber) { if (subscribed) subscriber.onError(new IllegalStateException()); // only one allowed else { subscribed = true; subscriber.onSubscribe(new OneShotSubscription(subscriber, executor)); } } static class OneShotSubscription implements Subscription { private final Subscriber subscriber; private final ExecutorService executor; private Future future; // to allow cancellation private boolean completed; OneShotSubscription(Subscriber subscriber, ExecutorService executor) { this.subscriber = subscriber; this.executor = executor; } public synchronized void request(long n) { if (!completed) { completed = true; if (n <= 0) { IllegalArgumentException ex = new IllegalArgumentException(); executor.execute(() -> subscriber.onError(ex)); } else { future = executor.submit(() -> { subscriber.onNext(Boolean.TRUE); subscriber.onComplete(); }); } } } public synchronized void cancel() { completed = true; if (future != null) future.cancel(false); } } }}",
+      "Un Subscriber se encarga de pedir y procesar los elementos. Los elementos (llamadas a Subscriber.onNext) solo se emiten si se piden, aunque se pueden pedir varios. Muchas implementaciones lo hacen como en este ejemplo, donde un tamaño de búfer de 1 avanza paso a paso y tamaños mayores suelen permitir un procesamiento solapado más eficiente con menos comunicación; por ejemplo, con 64, las peticiones pendientes se mantienen entre 32 y 64. Como las llamadas a los métodos de Subscriber para una Subscription están estrictamente ordenadas, no necesitan bloqueos ni volatile, salvo que un Subscriber mantenga varias Subscription (en cuyo caso es mejor definir varios Subscriber, cada uno con la suya).",
+      "{@code class SampleSubscriber implements Subscriber { final Consumer consumer; Subscription subscription; final long bufferSize; long count; SampleSubscriber(long bufferSize, Consumer consumer) { this.bufferSize = bufferSize; this.consumer = consumer; } public void onSubscribe(Subscription subscription) { long initialRequestSize = bufferSize; count = bufferSize - bufferSize / 2; // re-request when half consumed (this.subscription = subscription).request(initialRequestSize); } public void onNext(T item) { if (--count <= 0) subscription.request(count = bufferSize - bufferSize / 2); consumer.accept(item); } public void onError(Throwable ex) { ex.printStackTrace(); } public void onComplete() {} }}",
+      "El valor por defecto de defaultBufferSize puede ser un buen punto de partida para elegir los tamaños de petición y capacidades de los componentes Flow según el ritmo, los recursos y el uso esperados. O, si nunca hace falta control de flujo, un suscriptor puede pedir al principio un número prácticamente ilimitado de elementos, como en:",
+      "{@code class UnboundedSubscriber implements Subscriber { public void onSubscribe(Subscription subscription) { subscription.request(Long.MAX_VALUE); // effectively unbounded } public void onNext(T item) { use(item); } public void onError(Throwable ex) { ex.printStackTrace(); } public void onComplete() {} void use(T item) { ... } }}"
+    ]
+  },
+  "web-java-se-java.util.concurrent.ForkJoinPool": {
+    "body": [
+      "Un ForkJoinPool se diferencia de otros ExecutorService sobre todo por usar robo de trabajo: todos sus hilos intentan encontrar y ejecutar las tareas enviadas al pool o creadas por otras tareas activas (y se bloquean esperando trabajo si no hay). Así se procesa de forma eficiente cuando la mayoría de tareas generan subtareas (como la mayoría de ForkJoinTask) y cuando clientes externos envían muchas tareas pequeñas. Sobre todo con asyncMode a true en los constructores, también puede servir para tareas de tipo evento que nunca se esperan con join. Todos los hilos de trabajo se inicializan con Thread.isDaemon a true.",
+      "Hay un commonPool() estático adecuado para la mayoría de aplicaciones. Lo usa cualquier ForkJoinTask que no se envíe explícitamente a un pool concreto. Usar el pool común suele reducir el consumo de recursos (sus hilos se recuperan poco a poco cuando no se usan y se restablecen al volver a usarse).",
+      "Para las aplicaciones que necesitan pools separados o personalizados, se puede construir un ForkJoinPool con un nivel de paralelismo objetivo; por defecto, el número de procesadores disponibles. El pool intenta mantener suficientes hilos activos (o disponibles) añadiendo, suspendiendo o reanudando hilos de forma dinámica, aunque algunas tareas estén paradas esperando a otras. Pero no se garantizan esos ajustes ante E/S bloqueada u otra sincronización no gestionada. La interfaz anidada ManagedBlocker permite ampliar los tipos de sincronización admitidos. Las políticas por defecto se pueden sustituir con un constructor cuyos parámetros corresponden a los documentados en ThreadPoolExecutor.",
+      "Además de los métodos de ejecución y de control del ciclo de vida, la clase ofrece métodos de consulta de estado (como getStealCount) pensados para desarrollar, ajustar y supervisar aplicaciones fork/join. Además, toString devuelve indicaciones del estado del pool en una forma cómoda para una supervisión informal.",
+      "Como en otros ExecutorService, hay tres métodos principales de ejecución, que resume la tabla siguiente. Están pensados sobre todo para clientes que no participan ya en cálculos fork/join del pool actual. Sus formas principales aceptan ForkJoinTask, pero hay sobrecargas que permiten ejecutar también actividades basadas en Runnable o Callable. Sin embargo, las tareas que ya se ejecutan en un pool deberían usar las formas de dentro del cálculo de la tabla, salvo que sean tareas asíncronas de tipo evento que no se suelen esperar, en cuyo caso da igual qué método se elija.",
+      "Resumen de los métodos de ejecución de tareas",
+      "Llamada desde clientes que no son fork/join · Llamada desde dentro de cálculos fork/join",
+      "Programar ejecución asíncrona · execute(ForkJoinTask) · ForkJoinTask.fork",
+      "Esperar y obtener el resultado · invoke(ForkJoinTask) · ForkJoinTask.invoke",
+      "Programar la ejecución y obtener un Future · submit(ForkJoinTask) · ForkJoinTask.fork (los ForkJoinTask son Future)",
+      "Los parámetros con los que se construye el pool común se pueden controlar con estas propiedades del sistema:",
+      "java.util.concurrent.ForkJoinPool.common.parallelism - el nivel de paralelismo, un entero no negativo",
+      "java.util.concurrent.ForkJoinPool.common.threadFactory - el nombre de clase de un ForkJoinWorkerThreadFactory, que se carga con el cargador de clases del sistema.",
+      "java.util.concurrent.ForkJoinPool.common.exceptionHandler - el nombre de clase de un UncaughtExceptionHandler, que se carga con el cargador de clases del sistema.",
+      "java.util.concurrent.ForkJoinPool.common.maximumSpares - el número máximo de hilos adicionales permitidos para mantener el paralelismo objetivo (por defecto, 256).",
+      "Si no se indica una fábrica de hilos con una propiedad del sistema, el pool común usa una fábrica que pone el cargador de clases del sistema como cargador de contexto de los hilos. Además, si hay un SecurityManager, usa una fábrica que crea hilos sin permisos y que no garantiza conservar los valores de java.lang.ThreadLocal entre tareas.",
+      "Si hay algún error al aplicar esta configuración, se usan los parámetros por defecto. Se puede desactivar o limitar el uso de hilos en el pool común poniendo el paralelismo a cero o usando una fábrica que pueda devolver null. Pero así puede que algunas tareas que no se esperan con join nunca lleguen a ejecutarse."
+    ]
+  },
+  "web-java-se-java.util.concurrent.ForkJoinPool%24ManagedBlocker": {
+    "body": [
+      "Un ManagedBlocker tiene dos métodos. isReleasable debe devolver true si no hace falta bloquearse. block bloquea el hilo actual si hace falta (quizá invocando internamente isReleasable antes de bloquearse). Estas acciones las hace cualquier hilo que invoque ForkJoinPool.managedBlock(ManagedBlocker). Estos métodos poco habituales sirven para sincronizadores que pueden bloquearse mucho tiempo, aunque no suelan hacerlo, y permiten gestionar mejor los casos en que pueden hacer falta, aunque no suela pasar, hilos de trabajo adicionales para mantener el paralelismo. Por eso, isReleasable debe admitir llamadas repetidas. Ninguno de los dos se invoca después de que isReleasable o block hayan devuelto true.",
+      "Por ejemplo, este es un ManagedBlocker basado en un ReentrantLock:",
+      "{@code class ManagedLocker implements ManagedBlocker { final ReentrantLock lock; boolean hasLock = false; ManagedLocker(ReentrantLock lock) { this.lock = lock; } public boolean block() { if (!hasLock) lock.lock(); return true; } public boolean isReleasable() { return hasLock || (hasLock = lock.tryLock()); } }}",
+      "Y esta es una clase que puede bloquearse esperando un elemento de una cola:",
+      "{@code class QueueTaker implements ManagedBlocker { final BlockingQueue queue; volatile E item = null; QueueTaker(BlockingQueue q) { this.queue = q; } public boolean block() throws InterruptedException { if (item == null) item = queue.take(); return true; } public boolean isReleasable() { return item != null || (item = queue.poll()) != null; } public E getItem() { // call after pool.managedBlock completes return item; } }}"
+    ]
+  },
+  "web-java-se-java.util.concurrent.ForkJoinTask": {
+    "body": [
+      "Un ForkJoinTask «principal» empieza a ejecutarse cuando se envía explícitamente a un ForkJoinPool o, si no participa ya en un cálculo ForkJoin, cuando se inicia en ForkJoinPool.commonPool() con fork, invoke o métodos relacionados. Una vez iniciado, suele iniciar a su vez otras subtareas. Como indica el nombre de la clase, muchos programas solo usan fork y join, o derivados como invokeAll. Pero la clase también ofrece otros métodos para usos avanzados y mecanismos de ampliación para admitir nuevas formas de procesamiento fork/join.",
+      "Un ForkJoinTask es una forma ligera de Future. Su eficiencia se debe a una serie de restricciones (solo en parte comprobables estáticamente) que reflejan su uso principal: tareas de cálculo que evalúan funciones puras u operan sobre objetos totalmente aislados. Los mecanismos principales de coordinación son fork, que programa la ejecución asíncrona, y join, que no continúa hasta que se calcula el resultado. Lo ideal es evitar métodos o bloques synchronized y reducir al mínimo cualquier otra sincronización bloqueante, salvo esperar a otras tareas o usar sincronizadores como Phaser que cooperan con la planificación fork/join. Las tareas subdivisibles tampoco deberían hacer E/S bloqueante y, idealmente, deberían usar variables totalmente independientes de las de otras tareas. Estas pautas se imponen de forma laxa al no permitir excepciones comprobadas como IOException. Aun así, los cálculos pueden encontrar excepciones no comprobadas, que se vuelven a lanzar a quien intente esperar con join. Pueden incluir RejectedExecutionException por agotamiento de recursos internos, como no poder reservar las colas de tareas. Las excepciones relanzadas se comportan como las normales, pero, cuando es posible, contienen las trazas (las que muestra, por ejemplo, ex.printStackTrace()) del hilo que inició el cálculo y del que encontró la excepción; como mínimo, la de este último.",
+      "Se pueden definir y usar ForkJoinTask que se bloqueen, pero hay que tener en cuenta tres cosas: (1) pocas tareas, o ninguna, deberían depender de una que se bloquea por sincronización externa o E/S. Las tareas asíncronas de tipo evento que nunca se esperan (por ejemplo, las que heredan de CountedCompleter) suelen estar en este caso. (2) Para reducir el impacto en recursos, las tareas deberían ser pequeñas; idealmente, solo la acción (posiblemente) bloqueante. (3) Salvo que se use la API ForkJoinPool.ManagedBlocker, o se sepa que el número de tareas posiblemente bloqueadas es menor que el nivel ForkJoinPool.getParallelism del pool, este no puede garantizar suficientes hilos para avanzar o rendir bien.",
+      "El método principal para esperar a que termine una tarea y obtener su resultado es join, pero hay variantes: los métodos Future.get admiten esperas interrumpibles o con tiempo límite y devuelven los resultados con las convenciones de Future. invoke equivale semánticamente a fork(); join(), pero siempre intenta empezar a ejecutarse en el hilo actual. Las formas «quiet» de estos métodos no obtienen resultados ni informan de excepciones; son útiles cuando se ejecuta un conjunto de tareas y hay que aplazar el procesamiento de resultados o excepciones hasta que terminen todas. invokeAll (con varias versiones) hace la forma más habitual de invocación paralela: bifurcar un conjunto de tareas y esperar a todas.",
+      "En los usos más típicos, un par fork-join actúa como la llamada (fork) y el retorno (join) de una función recursiva paralela. Como en otras llamadas recursivas, los retornos (join) deben hacerse empezando por los más internos. Por ejemplo, a.fork(); b.fork(); b.join(); a.join(); probablemente sea bastante más eficiente que esperar a a antes que a b.",
+      "El estado de ejecución de las tareas se puede consultar con distintos niveles de detalle: isDone es true si la tarea terminó de cualquier forma (incluido el caso de que se cancelara sin ejecutarse); isCompletedNormally es true si terminó sin cancelarse ni encontrar una excepción; isCancelled es true si se canceló (y entonces getException devuelve una CancellationException); e isCompletedAbnormally es true si se canceló o encontró una excepción, en cuyo caso getException devuelve la excepción encontrada o una CancellationException.",
+      "No suele heredarse directamente de ForkJoinTask, sino de una de las clases abstractas que admiten un estilo concreto de procesamiento fork/join: normalmente RecursiveAction para los cálculos que no devuelven resultado, RecursiveTask para los que sí y CountedCompleter para aquellos en que las acciones terminadas disparan otras. Normalmente, una subclase concreta declara campos con sus parámetros, que se establecen en un constructor, y define un método compute que usa los métodos de control de esta clase base.",
+      "join y sus variantes solo son adecuados cuando las dependencias de finalización son acíclicas, es decir, cuando el cálculo paralelo se puede describir como un grafo dirigido acíclico (DAG). Si no, puede producirse una especie de interbloqueo con tareas que se esperan cíclicamente. Sin embargo, el framework admite otros métodos y técnicas (como Phaser, helpQuiesce y complete) útiles para construir subclases para problemas que no tienen una estructura estática de DAG. Para ello, un ForkJoinTask se puede etiquetar de forma atómica con un valor short mediante setForkJoinTaskTag o compareAndSetForkJoinTaskTag y consultar con getForkJoinTaskTag. La implementación de ForkJoinTask no usa estos métodos protegidos ni las etiquetas, pero pueden servir para construir subclases especializadas. Por ejemplo, los recorridos paralelos de grafos pueden usarlos para no volver a visitar nodos o tareas ya procesados. (Los nombres de estos métodos son largos en parte para animar a definir métodos que reflejen sus patrones de uso.)",
+      "La mayoría de métodos de apoyo base son final, para impedir sobrescribir implementaciones ligadas intrínsecamente al framework ligero de planificación de tareas. Quien cree nuevos estilos básicos de procesamiento fork/join debería implementar como mínimo los métodos protegidos exec, setRawResult y getRawResult, e introducir un método de cálculo abstracto que puedan implementar sus subclases, quizá apoyándose en otros métodos protegidos de esta clase.",
+      "Los ForkJoinTask deberían hacer cantidades de cálculo relativamente pequeñas. Las tareas grandes deben dividirse en subtareas más pequeñas, normalmente por descomposición recursiva. Como regla muy aproximada, una tarea debería hacer más de 100 y menos de 10000 pasos de cálculo básicos y evitar los bucles indefinidos. Si las tareas son demasiado grandes, el paralelismo no mejora el rendimiento; si son demasiado pequeñas, el coste de memoria y de mantenimiento interno puede superar al del procesamiento.",
+      "La clase ofrece métodos adapt para Runnable y Callable, útiles para mezclar la ejecución de ForkJoinTask con otros tipos de tareas. Si todas las tareas son de ese tipo, considera usar un pool construido en asyncMode.",
+      "Los ForkJoinTask son Serializable, así que se pueden usar en ampliaciones como frameworks de ejecución remota. Tiene sentido serializarlos antes o después de ejecutarse, pero no durante. La ejecución no depende de la serialización."
+    ],
+    "parameters": [
+      {
+        "label": "<V>",
+        "detail": "el tipo del resultado de la tarea"
+      }
+    ]
+  },
+  "web-java-se-java.util.concurrent.Phaser": {
+    "body": [
+      "Registro. A diferencia de otras barreras, el número de participantes registrados en un Phaser puede variar con el tiempo. Las tareas se pueden registrar en cualquier momento (con register, bulkRegister o los constructores que fijan un número inicial) y, opcionalmente, darse de baja al llegar (con arriveAndDeregister). Como en la mayoría de construcciones básicas de sincronización, el registro y la baja solo afectan a contadores internos y no llevan ningún registro adicional, así que las tareas no pueden consultar si están registradas. (Aunque puedes añadirlo heredando de esta clase.)",
+      "Sincronización. Como un CyclicBarrier, un Phaser se puede esperar repetidamente. arriveAndAwaitAdvance tiene un efecto análogo a CyclicBarrier.await. Cada generación de un Phaser tiene un número de fase asociado, que empieza en cero, avanza cuando llegan todos los participantes y vuelve a cero tras llegar a Integer.MAX_VALUE. Los números de fase permiten controlar por separado las acciones al llegar y al esperar a los demás, con dos tipos de métodos que puede invocar cualquier participante registrado:",
+      "Llegada. arrive y arriveAndDeregister registran la llegada. No se bloquean, sino que devuelven el número de fase de llegada, es decir, el de la fase a la que se aplica la llegada. Cuando llega el último participante de una fase, se ejecuta una acción opcional y la fase avanza. Esa acción la hace el participante que provoca el avance y se define sobrescribiendo onAdvance(int, int), que también controla la terminación. Sobrescribir este método se parece a dar una acción de barrera a un CyclicBarrier, pero es más flexible.",
+      "Espera. awaitAdvance recibe un número de fase de llegada y vuelve cuando el Phaser pasa a (o ya está en) una fase distinta. A diferencia de construcciones parecidas con CyclicBarrier, awaitAdvance sigue esperando aunque el hilo se interrumpa. También hay versiones interrumpibles y con tiempo límite, pero las excepciones que surjan en ellas no cambian el estado del Phaser. Si hace falta, puedes hacer la recuperación necesaria en los manejadores de esas excepciones, a menudo tras invocar forceTermination. Las tareas que se ejecutan en un ForkJoinPool también pueden usar Phaser; se garantiza el avance si el paralelismo del pool admite el número máximo de participantes bloqueados a la vez.",
+      "Terminación. Un Phaser puede entrar en estado terminado, que se consulta con isTerminated. Tras terminar, todos los métodos de sincronización vuelven de inmediato sin esperar al avance, lo que indican con un valor de retorno negativo. Del mismo modo, intentar registrarse no tiene efecto. La terminación se produce cuando una llamada a onAdvance devuelve true. La implementación por defecto devuelve true si una baja ha dejado a cero el número de participantes. Como se muestra más abajo, cuando un Phaser controla acciones con un número fijo de iteraciones, suele convenir sobrescribir este método para que termine cuando la fase llegue a un umbral. También existe forceTermination para liberar de golpe a los hilos que esperan y dejar que terminen.",
+      "Niveles. Los Phaser se pueden organizar en niveles (es decir, en estructuras de árbol) para reducir la contención. Los Phaser con muchos participantes, que sufrirían un alto coste de contención, se pueden organizar para que grupos de sub-phasers compartan un padre común. Esto puede aumentar mucho el rendimiento, aunque cada operación cueste más.",
+      "En un árbol de Phaser por niveles, el registro y la baja de los hijos en su padre se gestionan automáticamente. Cuando el número de participantes de un hijo pasa a ser distinto de cero (con el constructor Phaser(Phaser, int), register o bulkRegister), el hijo se registra en su padre. Cuando pasa a ser cero por una llamada a arriveAndDeregister, el hijo se da de baja de su padre.",
+      "Supervisión. Aunque los métodos de sincronización solo los pueden invocar los participantes registrados, cualquiera puede consultar el estado de un Phaser. En cada momento hay getRegisteredParties participantes en total, de los que getArrivedParties han llegado a la fase actual (getPhase). Cuando llegan los restantes (getUnarrivedParties), la fase avanza. Los valores que devuelven estos métodos pueden reflejar estados transitorios, así que en general no sirven para controlar la sincronización. toString devuelve una instantánea de estas consultas en una forma cómoda para una supervisión informal.",
+      "Efectos de coherencia de memoria: las acciones anteriores a cualquier forma de arrive ocurren-antes que el avance de fase correspondiente y las acciones de onAdvance (si las hay), que a su vez ocurren-antes que las acciones posteriores al avance.",
+      "Ejemplos de uso:",
+      "Un Phaser puede sustituir a un CountDownLatch para controlar una acción única con un número variable de participantes. Lo habitual es que el método que lo prepara se registre primero, inicie todas las acciones y después se dé de baja, como en:",
+      "{@code void runTasks(List tasks) { Phaser startingGate = new Phaser(1); // \"1\" to register self // create and start threads for (Runnable task : tasks) { startingGate.register(); new Thread(() -> { startingGate.arriveAndAwaitAdvance(); task.run(); }).start(); }",
+      "// deregister self to allow threads to proceed startingGate.arriveAndDeregister(); }}",
+      "Una forma de que varios hilos repitan acciones durante un número dado de iteraciones es sobrescribir onAdvance:",
+      "{@code void startTasks(List tasks, int iterations) { Phaser phaser = new Phaser() { protected boolean onAdvance(int phase, int registeredParties) { return phase >= iterations - 1 || registeredParties == 0; } }; phaser.register(); for (Runnable task : tasks) { phaser.register(); new Thread(() -> { do { task.run(); phaser.arriveAndAwaitAdvance(); } while (!phaser.isTerminated()); }).start(); } // allow threads to proceed; don't wait for them phaser.arriveAndDeregister(); }}",
+      "Si la tarea principal debe esperar después a la terminación, puede volver a registrarse y ejecutar un bucle parecido:",
+      "// ... phaser.register(); while (!phaser.isTerminated()) phaser.arriveAndAwaitAdvance();",
+      "Se pueden usar construcciones parecidas para esperar a números de fase concretos cuando se sabe que la fase nunca superará Integer.MAX_VALUE. Por ejemplo:",
+      "{@code void awaitPhase(Phaser phaser, int phase) { int p = phaser.register(); // assumes caller not already registered while (p < phase) { if (phaser.isTerminated()) // ... deal with unexpected termination else p = phaser.arriveAndAwaitAdvance(); } phaser.arriveAndDeregister(); }}",
+      "Para crear n tareas con un árbol de Phaser, podrías usar un código como este, suponiendo una clase Task con un constructor que recibe un Phaser y se registra en él. Tras invocar build(new Task[n], 0, n, new Phaser()), las tareas se podrían iniciar, por ejemplo enviándolas a un pool:",
+      "{@code void build(Task[] tasks, int lo, int hi, Phaser ph) { if (hi - lo > TASKS_PER_PHASER) { for (int i = lo; i < hi; i += TASKS_PER_PHASER) { int j = Math.min(i + TASKS_PER_PHASER, hi); build(tasks, i, j, new Phaser(ph)); } } else { for (int i = lo; i < hi; ++i) tasks[i] = new Task(ph); // assumes new Task(ph) performs ph.register() } }}",
+      "El mejor valor de TASKS_PER_PHASER depende sobre todo del ritmo de sincronización esperado. Puede ser tan bajo como cuatro para cuerpos de tarea por fase muy pequeños (y por tanto ritmos altos), o llegar a cientos para cuerpos muy grandes.",
+      "Notas de implementación: esta implementación limita el número máximo de participantes a 65535. Intentar registrar más lanza IllegalStateException. Sin embargo, puedes y debes crear Phaser por niveles para admitir conjuntos de participantes arbitrariamente grandes."
+    ]
+  },
+  "web-java-se-java.util.concurrent.RecursiveAction": {
+    "body": [
+      "Ejemplos de uso. Esta es una ordenación ForkJoin sencilla pero completa de un array long[]:",
+      "{@code static class SortTask extends RecursiveAction { final long[] array; final int lo, hi; SortTask(long[] array, int lo, int hi) { this.array = array; this.lo = lo; this.hi = hi; } SortTask(long[] array) { this(array, 0, array.length); } protected void compute() { if (hi - lo < THRESHOLD) sortSequentially(lo, hi); else { int mid = (lo + hi) >>> 1; invokeAll(new SortTask(array, lo, mid), new SortTask(array, mid, hi)); merge(lo, mid, hi); } } // implementation details follow: static final int THRESHOLD = 1000; void sortSequentially(int lo, int hi) { Arrays.sort(array, lo, hi); } void merge(int lo, int mid, int hi) { long[] buf = Arrays.copyOfRange(array, lo, mid); for (int i = 0, j = lo, k = mid; i < buf.length; j++) array[j] = (k == hi || buf[i] < array[k]) ? buf[i++] : array[k++]; } }}",
+      "Después podrías ordenar anArray creando new SortTask(anArray) e invocándolo en un ForkJoinPool. Un ejemplo sencillo más concreto: esta tarea incrementa cada elemento de un array:",
+      "{@code class IncrementTask extends RecursiveAction { final long[] array; final int lo, hi; IncrementTask(long[] array, int lo, int hi) { this.array = array; this.lo = lo; this.hi = hi; } protected void compute() { if (hi - lo < THRESHOLD) { for (int i = lo; i < hi; ++i) array[i]++; } else { int mid = (lo + hi) >>> 1; invokeAll(new IncrementTask(array, lo, mid), new IncrementTask(array, mid, hi)); } } }}",
+      "El siguiente ejemplo muestra algunos refinamientos y patrones que pueden mejorar el rendimiento: los RecursiveAction no tienen por qué ser totalmente recursivos, siempre que mantengan el enfoque de divide y vencerás. Esta clase suma los cuadrados de los elementos de un array de double separando solo las mitades derechas de divisiones sucesivas por dos y siguiéndolas con una cadena de referencias next. Usa un umbral dinámico basado en getSurplusQueuedTaskCount, pero compensa el posible exceso de particiones ejecutando directamente las acciones hoja de las tareas no robadas en lugar de seguir dividiendo.",
+      "{@code double sumOfSquares(ForkJoinPool pool, double[] array) { int n = array.length; Applyer a = new Applyer(array, 0, n, null); pool.invoke(a); return a.result; }",
+      "class Applyer extends RecursiveAction { final double[] array; final int lo, hi; double result; Applyer next; // keeps track of right-hand-side tasks Applyer(double[] array, int lo, int hi, Applyer next) { this.array = array; this.lo = lo; this.hi = hi; this.next = next; }",
+      "double atLeaf(int l, int h) { double sum = 0; for (int i = l; i < h; ++i) // perform leftmost base step sum += array[i] * array[i]; return sum; }",
+      "protected void compute() { int l = lo; int h = hi; Applyer right = null; while (h - l > 1 && getSurplusQueuedTaskCount() <= 3) { int mid = (l + h) >>> 1; right = new Applyer(array, mid, h, right); right.fork(); h = mid; } double sum = atLeaf(l, h); while (right != null) { if (right.tryUnfork()) // directly calculate if not stolen sum += right.atLeaf(right.lo, right.hi); else { right.join(); sum += right.result; } right = right.next; } result = sum; } }}"
+    ]
+  },
+  "web-java-se-java.util.concurrent.RecursiveTask": {
+    "body": [
+      "Por ejemplo, este es un programa basado en tareas para calcular factoriales:",
+      "{@code import java.util.concurrent.RecursiveTask; import java.math.BigInteger; public class Factorial { static class FactorialTask extends RecursiveTask { private final int from, to; FactorialTask(int from, int to) { this.from = from; this.to = to; } protected BigInteger compute() { int range = to - from; if (range == 0) { // base case return BigInteger.valueOf(from); } else if (range == 1) { // too small to parallelize return BigInteger.valueOf(from).multiply(BigInteger.valueOf(to)); } else { // split in half int mid = from + range / 2; FactorialTask leftTask = new FactorialTask(from, mid); leftTask.fork(); // perform about half the work locally return new FactorialTask(mid + 1, to).compute() .multiply(leftTask.join()); } } } static BigInteger factorial(int n) { // uses ForkJoinPool.commonPool() return (n <= 1) ? BigInteger.ONE : new FactorialTask(1, n).invoke(); } public static void main(String[] args) { System.out.println(factorial(Integer.parseInt(args[0]))); } }}"
+    ],
+    "parameters": [
+      {
+        "label": "<V>",
+        "detail": "el tipo del resultado de la tarea"
+      }
+    ]
+  },
+  "web-java-se-java.util.concurrent.Semaphore": {
+    "body": [
+      "Los semáforos suelen usarse para limitar el número de hilos que pueden acceder a un recurso (físico o lógico). Por ejemplo, esta clase usa un semáforo para controlar el acceso a un conjunto de elementos:",
+      "{@code class Pool { private static final int MAX_AVAILABLE = 100; private final Semaphore available = new Semaphore(MAX_AVAILABLE, true);",
+      "public Object getItem() throws InterruptedException { available.acquire(); return getNextAvailableItem(); }",
+      "public void putItem(Object x) { if (markAsUnused(x)) available.release(); }",
+      "// Not a particularly efficient data structure; just for demo",
+      "protected Object[] items = ...; // whatever kinds of items being managed protected boolean[] used = new boolean[MAX_AVAILABLE];",
+      "protected synchronized Object getNextAvailableItem() { for (int i = 0; i < MAX_AVAILABLE; ++i) { if (!used[i]) { used[i] = true; return items[i]; } } return null; // not reached }",
+      "protected synchronized boolean markAsUnused(Object item) { for (int i = 0; i < MAX_AVAILABLE; ++i) { if (item == items[i]) { if (used[i]) { used[i] = false; return true; } else return false; } } return false; } }}",
+      "Antes de obtener un elemento, cada hilo debe adquirir un permiso del semáforo, lo que garantiza que hay un elemento disponible. Cuando termina con él, lo devuelve al conjunto y devuelve un permiso al semáforo, para que otro hilo pueda adquirirlo. Al llamar a acquire no se mantiene ningún bloqueo de sincronización, porque eso impediría devolver elementos al conjunto. El semáforo encapsula la sincronización necesaria para limitar el acceso, por separado de la que haga falta para mantener coherente el propio conjunto.",
+      "Un semáforo inicializado a uno y usado de modo que solo tenga como mucho un permiso disponible puede servir como bloqueo de exclusión mutua. Se suele llamar semáforo binario, porque solo tiene dos estados: un permiso disponible o ninguno. Usado así, tiene la propiedad (a diferencia de muchas implementaciones de java.util.concurrent.locks.Lock) de que el «bloqueo» lo puede liberar un hilo distinto del propietario (los semáforos no tienen concepto de propiedad). Puede ser útil en contextos especializados, como la recuperación de interbloqueos.",
+      "El constructor acepta opcionalmente un parámetro de equidad. Con false, la clase no garantiza el orden en que los hilos adquieren permisos. En particular, se permite colarse: un hilo que invoca acquire puede recibir un permiso antes que otro que ya esperaba; lógicamente, el nuevo se pone al principio de la cola. Con true, el semáforo garantiza que los hilos que invocan cualquier acquire obtienen los permisos en el orden en que se procesaron sus llamadas (FIFO). El orden FIFO se aplica necesariamente a puntos internos concretos de la ejecución de estos métodos, así que un hilo puede invocar acquire antes que otro pero llegar después al punto de ordenación, y lo mismo al volver. Además, los tryAcquire sin tiempo límite no respetan la equidad: toman cualquier permiso disponible.",
+      "En general, los semáforos que controlan el acceso a recursos deberían ser equitativos, para que ningún hilo se quede sin acceder nunca. Para otros tipos de control de sincronización, la ventaja de rendimiento del orden no equitativo suele pesar más que la equidad.",
+      "La clase también ofrece métodos de conveniencia para adquirir y liberar varios permisos a la vez, que suelen ser más eficientes que los bucles. Pero no establecen ningún orden de preferencia. Por ejemplo, si el hilo A invoca s.acquire(3) y el B s.acquire(2), y quedan dos permisos libres, no se garantiza que los obtenga B, salvo que su acquire llegara primero y el semáforo s sea equitativo.",
+      "Efectos de coherencia de memoria: las acciones de un hilo antes de llamar a un método de «liberación» como release() ocurren-antes que las acciones posteriores a un método de «adquisición» correcto como acquire() en otro hilo."
+    ]
+  },
+  "web-java-se-java.util.concurrent.StructuredTaskScope": {
+    "body": [
+      "Funcionamiento básico",
+      "Un StructuredTaskScope se crea con uno de sus constructores públicos. Define fork para iniciar un hilo que ejecute una subtarea, join para esperar a que terminen todas y close para cerrar el ámbito. La API está pensada para usarse con try-with-resources: el código del bloque try usa fork para bifurcar hilos que ejecuten las subtareas, espera a que terminen con join y después procesa los resultados. fork devuelve un Subtask que representa la subtarea bifurcada; tras join, el Subtask permite obtener el resultado si terminó bien o la excepción si falló. {@snippet lang=java : Callable task1 = ... Callable task2 = ...",
+      "try (var scope = new StructuredTaskScope()) {",
+      "Subtask subtask1 = scope.fork(task1); // @highlight substring=\"fork\" Subtask subtask2 = scope.fork(task2); // @highlight substring=\"fork\"",
+      "scope.join(); // @highlight substring=\"join\"",
+      "... process results/exceptions ...",
+      "} // close // @highlight substring=\"close\" }",
+      "El siguiente ejemplo bifurca una colección de subtareas homogéneas, espera a que terminen todas con join y usa Subtask.State para dividirlas en las que terminaron bien y las que fallaron. {@snippet lang=java : List> callables = ...",
+      "try (var scope = new StructuredTaskScope()) {",
+      "List> subtasks = callables.stream().map(scope::fork).toList();",
+      "scope.join();",
+      "Map>> map = subtasks.stream() .collect(Collectors.partitioningBy(h -> h.state() == Subtask.State.SUCCESS, Collectors.toSet()));",
+      "} // close }",
+      "Para garantizar un uso correcto, join y close solo los puede invocar el propietario (el hilo que abrió o creó el ámbito), y close lanza una excepción tras cerrar si el propietario no invocó join después de bifurcar.",
+      "StructuredTaskScope define shutdown para apagar un ámbito sin cerrarlo. shutdown() cancela todas las subtareas sin terminar interrumpiendo sus hilos e impide que se inicien hilos nuevos en el ámbito. Si el propietario está esperando en join, se despierta.",
+      "El apagado sirve para cortocircuitar y permite que las subclases implementen políticas que no exigen que terminen todas las subtareas.",
+      "Subclases con políticas para casos habituales",
+      "Hay dos subclases de StructuredTaskScope con políticas para casos habituales:",
+      "ShutdownOnSuccess captura el resultado de la primera subtarea que termina bien y entonces apaga el ámbito para interrumpir los hilos sin terminar y despertar al propietario. Está pensada para cuando sirve el resultado de cualquier subtarea («invocar cualquiera») y no hace falta esperar a las demás. Define métodos para obtener el primer resultado o lanzar una excepción si fallan todas.",
+      "ShutdownOnFailure captura la excepción de la primera subtarea que falla y entonces apaga el ámbito para interrumpir los hilos sin terminar y despertar al propietario. Está pensada para cuando se necesitan los resultados de todas («invocar todas»): si alguna falla, ya no hacen falta los resultados de las demás. Define métodos para lanzar una excepción si falla alguna.",
+      "Estos son dos ejemplos con ambas clases. En los dos se bifurcan dos subtareas para obtener recursos de dos URL, \"left\" y \"right\". El primero crea un ShutdownOnSuccess que captura el resultado de la primera subtarea que termina bien y cancela la otra apagando el ámbito. La tarea principal espera en join hasta que una termina con resultado o fallan las dos, e invoca result(Function) para obtener el resultado capturado. Si fallan las dos, ese método lanza una WebApplicationException con la excepción de una de ellas como causa. {@snippet lang=java : try (var scope = new StructuredTaskScope.ShutdownOnSuccess()) {",
+      "scope.fork(() -> fetch(left)); scope.fork(() -> fetch(right));",
+      "scope.join();",
+      "// @link regex=\"result(?=\\()\" target=\"ShutdownOnSuccess#result\" : String result = scope.result(e -> new WebApplicationException(e));",
+      "... } } El segundo crea un ShutdownOnFailure que captura la excepción de la primera subtarea que falla y cancela la otra apagando el ámbito. La tarea principal espera en joinUntil(Instant) hasta que las dos terminan con resultado, falla alguna o se alcanza el plazo, e invoca throwIfFailed(Function) para lanzar una excepción si falla alguna (no hace nada si las dos terminan bien). El ejemplo usa Supplier.get() para obtener el resultado de cada subtarea. Es preferible usar Supplier en lugar de Subtask en los casos habituales en que el objeto que devuelve fork solo se usa para obtener el resultado de una subtarea que terminó bien. {@snippet lang=java : Instant deadline = ...",
+      "try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {",
+      "Supplier supplier1 = scope.fork(() -> query(left)); Supplier supplier2 = scope.fork(() -> query(right));",
+      "scope.joinUntil(deadline);",
+      "// @link substring=\"throwIfFailed\" target=\"ShutdownOnFailure#throwIfFailed\" : scope.throwIfFailed(e -> new WebApplicationException(e));",
+      "// both subtasks completed successfully String result = Stream.of(supplier1, supplier2) .map(Supplier::get) .collect(Collectors.joining(\", \", \"{ \", \" }\"));",
+      "Ampliar StructuredTaskScope",
+      "StructuredTaskScope se puede ampliar, sobrescribiendo handleComplete, para implementar políticas distintas de las de ShutdownOnSuccess y ShutdownOnFailure. Por ejemplo, una subclase puede recoger los resultados de las subtareas que terminan bien e ignorar las que fallan, recoger las excepciones de las que fallan o invocar shutdown para apagar y despertar a join cuando se cumpla alguna condición.",
+      "Una subclase suele definir métodos para poner los resultados, el estado u otros datos a disposición del código que se ejecuta tras join. Una que recoge resultados e ignora los fallos puede definir un método que los devuelva; una que apaga al fallar una subtarea puede definir un método para obtener la excepción de la primera que falló.",
+      "Este es un ejemplo de una implementación sencilla que recoge las subtareas homogéneas que terminan bien. Define el método \"completedSuccessfully()\", que la tarea principal puede invocar tras join. {@snippet lang=java : class CollectingScope extends StructuredTaskScope { private final Queue> subtasks = new LinkedTransferQueue<>();",
+      "@Override protected void handleComplete(Subtask subtask) { if (subtask.state() == Subtask.State.SUCCESS) { subtasks.add(subtask); } }",
+      "@Override public CollectingScope join() throws InterruptedException { super.join(); return this; }",
+      "public Stream> completedSuccessfully() { // @link substring=\"ensureOwnerAndJoined\" target=\"ensureOwnerAndJoined\" : super.ensureOwnerAndJoined(); return subtasks.stream(); } } }",
+      "La implementación de completedSuccessfully() del ejemplo invoca ensureOwnerAndJoined() para garantizar que solo la invoca el hilo propietario y solo después de join.",
+      "Estructura en árbol",
+      "Los ámbitos de tareas forman un árbol en el que las relaciones padre-hijo se establecen implícitamente al abrir un ámbito nuevo:",
+      "Se establece una relación padre-hijo cuando un hilo iniciado en un ámbito abre su propio ámbito. Un hilo iniciado en el ámbito \"A\" que abre el ámbito \"B\" hace que \"A\" sea el padre de \"B\".",
+      "También se establece por anidamiento. Si un hilo abre el ámbito \"B\" y después el \"C\" (antes de cerrar \"B\"), el ámbito contenedor \"B\" es el padre del anidado \"C\".",
+      "Los descendientes de un ámbito son sus ámbitos hijos más, recursivamente, los descendientes de estos.",
+      "La estructura en árbol permite:",
+      "Heredar valores con ámbito entre hilos.",
+      "Comprobaciones de confinamiento. En las descripciones de los métodos, «hilos contenidos en el ámbito» significa los hilos iniciados en el ámbito o en sus descendientes.",
+      "El siguiente ejemplo muestra la herencia de un valor con ámbito. El valor USERNAME se enlaza a \"duke\". Se crea un StructuredTaskScope y se invoca fork para iniciar un hilo que ejecute childTask. El hilo hereda los enlaces de valores con ámbito capturados al crear el ámbito, así que el código de childTask lee el valor \"duke\". {@snippet lang=java : private static final ScopedValue USERNAME = ScopedValue.newInstance();",
+      "// @link substring=\"runWhere\" target=\"ScopedValue#runWhere(ScopedValue, Object, Runnable)\" : ScopedValue.runWhere(USERNAME, \"duke\", () -> { try (var scope = new StructuredTaskScope()) {",
+      "scope.fork(() -> childTask()); // @highlight substring=\"fork\" ... } });",
+      "String childTask() { // @link substring=\"get\" target=\"ScopedValue#get()\" : String name = USERNAME.get(); // \"duke\" ... } }",
+      "De momento, StructuredTaskScope no define API que expongan la estructura en árbol.",
+      "Salvo que se indique lo contrario, pasar null a un constructor o método de esta clase provoca NullPointerException.",
+      "Efectos de coherencia de memoria",
+      "Las acciones del hilo propietario del ámbito, o de un hilo contenido en él, antes de bifurcar una subtarea",
+      "ocurren-antes que cualquier acción de esa subtarea, que a su vez ocurre-antes que la obtención de su resultado o que cualquier acción de un hilo tras el join del ámbito.",
+      "@jls 17.4.5 Happens-before Order"
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo del resultado de las tareas que se ejecutan en el ámbito"
+      }
+    ]
+  },
   "web-java-se-java.util.concurrent.StructuredTaskScope.toString": {
     "returns": ["una representación en cadena del objeto."],
     "caveats": [
       "En general, toString devuelve una cadena que «representa textualmente» el objeto. Debería ser una representación concisa pero informativa y fácil de leer. Se recomienda que todas las subclases sobrescriban este método. La cadena no tiene por qué ser estable en el tiempo ni entre ejecuciones de la JVM.",
       "El toString de Object devuelve una cadena con el nombre de la clase de la que el objeto es instancia, el carácter arroba '@' y la representación hexadecimal sin signo del código hash del objeto. Es decir, devuelve una cadena igual al valor de:",
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
+    ]
+  },
+  "web-java-se-java.util.concurrent.SubmissionPublisher": {
+    "body": [
+      "Un SubmissionPublisher usa el Executor que recibe en el constructor para entregar los elementos a los suscriptores. El mejor Executor depende del uso esperado. Si los generadores de elementos se ejecutan en hilos separados y se puede estimar el número de suscriptores, considera usar Executors.newFixedThreadPool. Si no, usa el valor por defecto, normalmente ForkJoinPool.commonPool.",
+      "El búfer permite que productores y consumidores trabajen temporalmente a ritmos distintos. Cada suscriptor usa un búfer independiente, que se crea al usarse por primera vez y crece según haga falta hasta el máximo indicado. (La capacidad real puede redondearse a la potencia de dos más cercana o limitarse al máximo que admite la implementación.) Las llamadas a request no hacen crecer directamente el búfer, pero pueden saturarlo si las peticiones sin atender superan la capacidad máxima. El valor por defecto de Flow.defaultBufferSize() puede ser un buen punto de partida para elegir una capacidad según el ritmo, los recursos y el uso esperados.",
+      "Un mismo SubmissionPublisher se puede compartir entre varias fuentes. Las acciones de un hilo fuente antes de publicar un elemento o emitir una señal ocurren-antes que las acciones posteriores al acceso correspondiente de cada suscriptor. Pero las estimaciones de retraso y demanda están pensadas para supervisar, no para controlar la sincronización, y pueden reflejar una visión desactualizada o inexacta del avance.",
+      "Los métodos de publicación admiten distintas políticas para cuando los búferes se saturan. submit se bloquea hasta que hay recursos; es lo más sencillo, pero lo menos reactivo. Los métodos offer pueden descartar elementos (de inmediato o tras un tiempo límite), pero permiten intercalar un manejador y volver a intentarlo.",
+      "Si cualquier método de un Subscriber lanza una excepción, se cancela su suscripción. Si se pasa un manejador al constructor, se invoca antes de cancelar cuando la excepción ocurre en onNext; las de onSubscribe, onError y onComplete no se registran ni se gestionan antes de cancelar. Si el Executor lanza RejectedExecutionException (u otra RuntimeException o Error) al intentar ejecutar una tarea, o un manejador de descartes lanza una excepción al procesar un elemento descartado, la excepción se vuelve a lanzar. En esos casos, puede que no todos los suscriptores hayan recibido el elemento publicado; suele ser buena práctica llamar entonces a closeExceptionally.",
+      "consume(Consumer) simplifica un caso habitual en el que lo único que hace un suscriptor es pedir y procesar todos los elementos con una función.",
+      "Esta clase también puede servir de base cómoda para subclases que generan elementos y los publican con sus métodos. Por ejemplo, esta clase publica periódicamente los elementos que genera un proveedor. (En la práctica podrías añadir métodos para iniciar y detener la generación por separado, compartir Executor entre publicadores, etc., o usar un SubmissionPublisher como componente en lugar de como superclase.)",
+      "{@code class PeriodicPublisher extends SubmissionPublisher { final ScheduledFuture periodicTask; final ScheduledExecutorService scheduler; PeriodicPublisher(Executor executor, int maxBufferCapacity, Supplier supplier, long period, TimeUnit unit) { super(executor, maxBufferCapacity); scheduler = new ScheduledThreadPoolExecutor(1); periodicTask = scheduler.scheduleAtFixedRate( () -> submit(supplier.get()), 0, period, unit); } public void close() { periodicTask.cancel(false); scheduler.shutdown(); super.close(); } }}",
+      "Este es un ejemplo de implementación de Flow.Processor. Para simplificar, pide los elementos de uno en uno a su publicador. Una versión más adaptativa podría supervisar el flujo con la estimación de retraso que devuelve submit y otros métodos auxiliares.",
+      "{@code class TransformProcessor extends SubmissionPublisher implements Flow.Processor { final Function function; Flow.Subscription subscription; TransformProcessor(Executor executor, int maxBufferCapacity, Function function) { super(executor, maxBufferCapacity); this.function = function; } public void onSubscribe(Flow.Subscription subscription) { (this.subscription = subscription).request(1); } public void onNext(S item) { subscription.request(1); submit(function.apply(item)); } public void onError(Throwable ex) { closeExceptionally(ex); } public void onComplete() { close(); } }}"
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de los elementos publicados"
+      }
+    ]
+  },
+  "web-java-se-java.util.concurrent.ThreadFactory": {
+    "body": [
+      "La implementación más sencilla de esta interfaz es:",
+      "{@code class SimpleThreadFactory implements ThreadFactory { public Thread newThread(Runnable r) { return new Thread(r); } }}",
+      "Executors.defaultThreadFactory ofrece una implementación sencilla más útil, que deja el contexto del hilo creado en valores conocidos antes de devolverlo."
     ]
   },
   "web-java-se-java.util.concurrent.ThreadLocalRandom.ints": {
@@ -13945,6 +15255,676 @@
           }
         ]
       }
+    ]
+  },
+  "web-java-se-java.util.concurrent.ThreadLocalRandom.nextDouble": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve el siguiente double pseudoaleatorio, distribuido uniformemente entre 0.0 y 1.0, de la secuencia de este generador."
+        ],
+        "body": [
+          "El contrato general de nextDouble es generar de forma pseudoaleatoria y devolver un double elegido de forma (aproximadamente) uniforme entre 0.0d (incluido) y 1.0d (excluido)."
+        ],
+        "returns": [
+          "el siguiente double pseudoaleatorio, distribuido uniformemente entre 0.0 y 1.0, de la secuencia de este generador"
+        ],
+        "caveats": [
+          "La clase Random implementa nextDouble como si fuera:",
+          "{@code public double nextDouble() { return (((long)next(26) << 27) + next(27)) / (double)(1L << 53); }}",
+          "Se dice «aproximadamente» solo porque next es una fuente de bits independientes y sin sesgo solo de forma aproximada. Si fuera una fuente perfecta de bits aleatorios, el algoritmo mostrado elegiría los double del rango indicado con uniformidad perfecta.",
+          "[En las primeras versiones de Java, el resultado se calculaba incorrectamente como:",
+          "return (((long)next(27) << 27) + next(27)) / (double)(1L << 54);",
+          "Puede parecer equivalente, o incluso mejor, pero en realidad introducía una gran falta de uniformidad por el sesgo del redondeo de coma flotante: ¡el bit menos significativo de la mantisa tenía tres veces más probabilidades de ser 0 que 1! Probablemente no importa mucho en la práctica, pero aspiramos a la perfección.]"
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un double pseudoaleatorio entre cero (incluido) y el límite indicado (excluido)."
+        ],
+        "parameters": [
+          {
+            "label": "bound",
+            "detail": "el límite superior (excluido) del valor devuelto. Debe ser positivo y finito"
+          }
+        ],
+        "returns": [
+          "un double pseudoaleatorio entre cero (incluido) y el límite (excluido)"
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si bound no es positivo y finito"
+          }
+        ],
+        "caveats": [
+          "La implementación por defecto comprueba que bound es un double positivo y finito. Después invoca nextDouble() y escala el resultado para que quede entre 0.0 (incluido) y bound (excluido)."
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un double pseudoaleatorio entre el origen indicado (incluido) y el límite indicado (excluido)."
+        ],
+        "parameters": [
+          {
+            "label": "origin",
+            "detail": "el menor valor que se puede devolver"
+          },
+          {
+            "label": "bound",
+            "detail": "el límite superior (excluido) del valor devuelto"
+          }
+        ],
+        "returns": [
+          "un double pseudoaleatorio entre el origen (incluido) y el límite (excluido)"
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si origin o bound no es finito, o si origin es mayor o igual que bound"
+          }
+        ],
+        "caveats": [
+          "La implementación por defecto comprueba que el origen y el límite son válidos y después invoca nextDouble(), escalando y desplazando el resultado para que quede entre el origen y el límite (excluido)."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.util.concurrent.ThreadLocalRandom.nextLong": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve el siguiente long pseudoaleatorio, distribuido uniformemente, de la secuencia de este generador. El contrato general de nextLong es generar de forma pseudoaleatoria y devolver un valor long."
+        ],
+        "returns": [
+          "el siguiente long pseudoaleatorio, distribuido uniformemente, de la secuencia de este generador"
+        ],
+        "caveats": [
+          "La clase Random implementa nextLong como si fuera:",
+          "{@code public long nextLong() { return ((long)next(32) << 32) + next(32); }}",
+          "Como Random usa una semilla de solo 48 bits, este algoritmo no devuelve todos los long posibles."
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un long pseudoaleatorio entre cero (incluido) y el límite indicado (excluido)."
+        ],
+        "parameters": [
+          {
+            "label": "bound",
+            "detail": "el límite superior (excluido) del valor devuelto. Debe ser positivo."
+          }
+        ],
+        "returns": [
+          "un long pseudoaleatorio entre cero (incluido) y el límite (excluido)"
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si bound no es positivo"
+          }
+        ],
+        "caveats": [
+          "La implementación por defecto comprueba que bound es un long positivo. Después invoca nextLong() y limita el resultado para que sea mayor o igual que cero y menor que bound. Si bound es potencia de dos, basta con una máscara; si no, se vuelve a llamar a nextLong() hasta que el resultado sea mayor o igual que cero y menor que bound."
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un long pseudoaleatorio entre el origen indicado (incluido) y el límite indicado (excluido)."
+        ],
+        "parameters": [
+          {
+            "label": "origin",
+            "detail": "el menor valor que se puede devolver"
+          },
+          {
+            "label": "bound",
+            "detail": "el límite superior (excluido) del valor devuelto"
+          }
+        ],
+        "returns": [
+          "un long pseudoaleatorio entre el origen (incluido) y el límite (excluido)"
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si origin es mayor o igual que bound"
+          }
+        ],
+        "caveats": [
+          "La implementación por defecto comprueba que el origen y el límite son long positivos. Después invoca nextLong() y limita el resultado para que sea mayor o igual que el origen y menor que el límite. Si el límite es potencia de dos, basta con una máscara; si no, se vuelve a llamar a nextLong() hasta que el resultado sea mayor o igual que el origen y menor que el límite."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.util.concurrent.ThreadPoolExecutor": {
+    "body": [
+      "Los pools de hilos resuelven dos problemas: suelen mejorar el rendimiento al ejecutar muchas tareas asíncronas, porque reducen el coste de invocación por tarea, y permiten acotar y gestionar los recursos (incluidos los hilos) que se consumen al ejecutar un conjunto de tareas. Cada ThreadPoolExecutor también mantiene algunas estadísticas básicas, como el número de tareas completadas.",
+      "Para ser útil en muchos contextos, la clase ofrece muchos parámetros ajustables y puntos de ampliación. Sin embargo, se recomienda usar los métodos de fábrica más cómodos de Executors: Executors.newCachedThreadPool (pool ilimitado con recuperación automática de hilos), Executors.newFixedThreadPool (pool de tamaño fijo) y Executors.newSingleThreadExecutor (un único hilo en segundo plano), que ya vienen configurados para los casos más habituales. Si no, sigue esta guía para configurar y ajustar la clase a mano:",
+      "Tamaños básico y máximo del pool",
+      "Un ThreadPoolExecutor ajusta automáticamente el tamaño del pool (consulta getPoolSize) según los límites corePoolSize (consulta getCorePoolSize) y maximumPoolSize (consulta getMaximumPoolSize).",
+      "Cuando se envía una tarea con execute(Runnable), si hay menos de corePoolSize hilos en ejecución, se crea un hilo nuevo para atenderla, aunque haya otros inactivos. Si hay menos de maximumPoolSize, solo se crea un hilo nuevo si la cola está llena. Con corePoolSize y maximumPoolSize iguales, el pool tiene tamaño fijo. Con maximumPoolSize prácticamente ilimitado, como Integer.MAX_VALUE, el pool admite cualquier número de tareas concurrentes. Normalmente estos tamaños se fijan al construirlo, pero también se pueden cambiar dinámicamente con setCorePoolSize y setMaximumPoolSize.",
+      "Construcción bajo demanda",
+      "Por defecto, incluso los hilos básicos solo se crean e inician al llegar tareas nuevas, pero se puede cambiar con prestartCoreThread o prestartAllCoreThreads. Probablemente quieras iniciarlos de antemano si construyes el pool con una cola no vacía.",
+      "Creación de hilos",
+      "Los hilos nuevos se crean con un ThreadFactory. Si no se indica otro, se usa Executors.defaultThreadFactory, que crea todos los hilos en el mismo ThreadGroup, con prioridad NORM_PRIORITY y no daemon. Con otro ThreadFactory puedes cambiar el nombre, el grupo, la prioridad, el estado daemon, etc. Si el ThreadFactory no logra crear un hilo y devuelve null desde newThread, el executor sigue funcionando, pero puede que no logre ejecutar ninguna tarea. Los hilos deberían tener el RuntimePermission \"modifyThread\"; si los hilos del pool u otros que lo usan no lo tienen, el servicio puede degradarse: los cambios de configuración pueden no aplicarse a tiempo y un pool apagado puede quedarse en un estado en que la terminación es posible pero no se completa.",
+      "Tiempos de vida",
+      "Si el pool tiene más de corePoolSize hilos, los sobrantes terminan si llevan inactivos más de keepAliveTime (consulta getKeepAliveTime(TimeUnit)). Así se reduce el consumo de recursos cuando no se usa activamente; si después vuelve a tener actividad, se crean hilos nuevos. Este parámetro también se puede cambiar dinámicamente con setKeepAliveTime(long, TimeUnit). Con Long.MAX_VALUE TimeUnit.NANOSECONDS se impide en la práctica que los hilos inactivos terminen antes del apagado. Por defecto, esta política solo se aplica cuando hay más de corePoolSize hilos, pero allowCoreThreadTimeOut(boolean) permite aplicarla también a los hilos básicos, siempre que keepAliveTime no sea cero.",
+      "Colas",
+      "Se puede usar cualquier BlockingQueue para transferir y guardar las tareas enviadas. Su uso interactúa con el tamaño del pool:",
+      "Si hay menos de corePoolSize hilos en ejecución, el Executor siempre prefiere añadir un hilo a encolar.",
+      "Si hay corePoolSize o más, siempre prefiere encolar la petición a añadir un hilo.",
+      "Si no se puede encolar, se crea un hilo nuevo, salvo que se supere maximumPoolSize, en cuyo caso la tarea se rechaza.",
+      "Hay tres estrategias generales de encolado:",
+      "Traspasos directos. Una buena opción por defecto es un SynchronousQueue, que traspasa las tareas a los hilos sin guardarlas. Aquí, encolar falla si no hay un hilo disponible de inmediato, así que se crea uno nuevo. Esta política evita bloqueos al atender peticiones que pueden tener dependencias internas. Los traspasos directos suelen requerir maximumPoolSize ilimitado para no rechazar tareas nuevas, lo que a su vez permite que los hilos crezcan sin límite si las tareas llegan de media más rápido de lo que se procesan.",
+      "Colas ilimitadas. Con una cola ilimitada (por ejemplo, un LinkedBlockingQueue sin capacidad predefinida), las tareas nuevas esperan en la cola cuando todos los corePoolSize hilos están ocupados. Así nunca se crean más de corePoolSize hilos (y maximumPoolSize no tiene efecto). Puede ser adecuado cuando cada tarea es totalmente independiente de las demás, como en un servidor de páginas web. Aunque suaviza ráfagas transitorias de peticiones, permite que la cola crezca sin límite si las tareas llegan de media más rápido de lo que se procesan.",
+      "Colas acotadas. Una cola acotada (por ejemplo, un ArrayBlockingQueue) ayuda a evitar el agotamiento de recursos con maximumPoolSize finito, pero puede ser más difícil de ajustar. El tamaño de la cola y el máximo del pool se compensan: colas grandes y pools pequeños reducen el uso de CPU, los recursos del sistema y los cambios de contexto, pero pueden dar un rendimiento artificialmente bajo. Si las tareas se bloquean a menudo (por ejemplo, por E/S), el sistema podría atender más hilos de los que permites. Las colas pequeñas suelen requerir pools más grandes, que mantienen las CPU más ocupadas, pero pueden tener un coste de planificación inaceptable que también reduce el rendimiento.",
+      "Tareas rechazadas",
+      "Las tareas enviadas con execute(Runnable) se rechazan cuando el Executor se ha apagado, y también cuando tiene límites finitos de hilos y de capacidad de la cola y está saturado. En ambos casos, execute invoca el método rejectedExecution(Runnable, ThreadPoolExecutor) de su RejectedExecutionHandler. Hay cuatro políticas predefinidas:",
+      "Con ThreadPoolExecutor.AbortPolicy, la predeterminada, el manejador lanza una RejectedExecutionException de ejecución al rechazar.",
+      "Con ThreadPoolExecutor.CallerRunsPolicy, el propio hilo que invoca execute ejecuta la tarea. Es un mecanismo sencillo de control por realimentación que reduce el ritmo al que se envían tareas nuevas.",
+      "Con ThreadPoolExecutor.DiscardPolicy, la tarea que no se puede ejecutar simplemente se descarta. Solo está pensada para los raros casos en que nunca se depende de que las tareas terminen.",
+      "Con ThreadPoolExecutor.DiscardOldestPolicy, si el executor no está apagado, se descarta la tarea al principio de la cola y se vuelve a intentar la ejecución (que puede volver a fallar y repetirse). Esta política rara vez es aceptable. En casi todos los casos también deberías cancelar la tarea, para provocar una excepción en cualquier componente que espere a que termine, o registrar el fallo, como se muestra en la documentación de ThreadPoolExecutor.DiscardOldestPolicy.",
+      "Se pueden definir y usar otras clases RejectedExecutionHandler, con cuidado, sobre todo si las políticas solo funcionan con determinadas capacidades o políticas de encolado.",
+      "Métodos de enganche",
+      "La clase ofrece los métodos protegidos y sobrescribibles beforeExecute(Thread, Runnable) y afterExecute(Runnable, Throwable), que se llaman antes y después de ejecutar cada tarea. Sirven para manipular el entorno de ejecución; por ejemplo, reinicializar ThreadLocal, recoger estadísticas o añadir entradas al registro. Además, se puede sobrescribir terminated para hacer cualquier procesamiento especial cuando el Executor haya terminado por completo.",
+      "Si los métodos de enganche, las retrollamadas o los métodos de BlockingQueue lanzan excepciones, los hilos internos pueden fallar, terminar de golpe y quizá ser sustituidos.",
+      "Mantenimiento de la cola",
+      "getQueue() da acceso a la cola de trabajo para supervisar y depurar. Se desaconseja totalmente usarlo con cualquier otro fin. remove(Runnable) y purge ayudan a recuperar memoria cuando se cancelan muchas tareas encoladas.",
+      "Recuperación",
+      "Un pool al que el programa ya no hace referencia Y que no tiene hilos puede recuperarse (recolectarse como basura) sin apagarlo explícitamente. Puedes configurarlo para que todos los hilos sin usar acaben terminando con tiempos de vida adecuados, con un mínimo de cero hilos básicos o con allowCoreThreadTimeOut(boolean).",
+      "Ejemplo de ampliación. La mayoría de ampliaciones sobrescriben uno o varios métodos de enganche protegidos. Por ejemplo, esta subclase añade una función sencilla de pausa y reanudación:",
+      "{@code class PausableThreadPoolExecutor extends ThreadPoolExecutor { private boolean isPaused; private ReentrantLock pauseLock = new ReentrantLock(); private Condition unpaused = pauseLock.newCondition();",
+      "public PausableThreadPoolExecutor(...) { super(...); }",
+      "protected void beforeExecute(Thread t, Runnable r) { super.beforeExecute(t, r); pauseLock.lock(); try { while (isPaused) unpaused.await(); } catch (InterruptedException ie) { t.interrupt(); } finally { pauseLock.unlock(); } }",
+      "public void pause() { pauseLock.lock(); try { isPaused = true; } finally { pauseLock.unlock(); } }",
+      "public void resume() { pauseLock.lock(); try { isPaused = false; unpaused.signalAll(); } finally { pauseLock.unlock(); } } }}"
+    ]
+  },
+  "web-java-se-java.util.concurrent.TransferQueue": {
+    "intro": [
+      "Una BlockingQueue en la que los productores pueden esperar a que los consumidores reciban los elementos. Puede ser útil, por ejemplo, en aplicaciones de paso de mensajes en las que los productores a veces (con transfer) esperan a que los consumidores reciban los elementos con take o poll, y otras veces los encolan (con put) sin esperar. También hay versiones no bloqueantes y con tiempo límite de tryTransfer. Además, con hasWaitingConsumer se puede consultar si hay hilos esperando elementos, que es la operación inversa de peek."
+    ],
+    "body": [
+      "Como otras colas bloqueantes, un TransferQueue puede tener capacidad limitada. En ese caso, una transferencia puede bloquearse primero esperando espacio y después esperando a que la reciba un consumidor. En una cola de capacidad cero, como SynchronousQueue, put y transfer son en la práctica sinónimos.",
+      "Esta interfaz forma parte del",
+      "Java Collections Framework."
+    ],
+    "parameters": [
+      {
+        "label": "<E>",
+        "detail": "el tipo de los elementos de esta cola"
+      }
+    ]
+  },
+  "web-java-se-java.util.stream.Collectors.toMap": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve un Collector que acumula los elementos en un Map cuyas claves y valores son el resultado de aplicar las funciones de mapeo a los elementos de entrada."
+        ],
+        "body": [
+          "Si hay claves duplicadas (según Object.equals(Object)), se lanza IllegalStateException al hacer la operación de recolección. Si puede haber duplicados, usa toMap(Function, Function, BinaryOperator).",
+          "No hay garantías sobre el tipo, la mutabilidad, la serializabilidad ni la seguridad entre hilos del Map devuelto."
+        ],
+        "parameters": [
+          {
+            "label": "<T>",
+            "detail": "el tipo de los elementos de entrada"
+          },
+          {
+            "label": "<K>",
+            "detail": "el tipo de salida de la función de mapeo de claves"
+          },
+          {
+            "label": "<U>",
+            "detail": "el tipo de salida de la función de mapeo de valores"
+          },
+          {
+            "label": "keyMapper",
+            "detail": "una función de mapeo que produce las claves"
+          },
+          {
+            "label": "valueMapper",
+            "detail": "una función de mapeo que produce los valores"
+          }
+        ],
+        "returns": [
+          "un Collector que recoge los elementos en un Map cuyas claves y valores son el resultado de aplicar las funciones de mapeo a los elementos de entrada"
+        ],
+        "caveats": [
+          "Es habitual que la clave o el valor sean los propios elementos de entrada. En ese caso puede ser útil java.util.function.Function.identity(). Por ejemplo, esto produce un Map de estudiantes a su nota media:",
+          "Map<Student, Double> studentToGPA = students.stream().collect( toMap(Function.identity(), student -> computeGPA(student)));",
+          "Y esto produce un Map de un identificador único a cada estudiante:",
+          "Map<String, Student> studentIdToStudent = students.stream().collect( toMap(Student::getId, Function.identity()));"
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un Collector que acumula los elementos en un Map cuyas claves y valores son el resultado de aplicar las funciones de mapeo a los elementos de entrada."
+        ],
+        "body": [
+          "Si hay claves duplicadas (según Object.equals(Object)), se aplica la función de mapeo de valores a cada elemento igual y los resultados se combinan con la función de combinación indicada.",
+          "No hay garantías sobre el tipo, la mutabilidad, la serializabilidad ni la seguridad entre hilos del Map devuelto."
+        ],
+        "parameters": [
+          {
+            "label": "<T>",
+            "detail": "el tipo de los elementos de entrada"
+          },
+          {
+            "label": "<K>",
+            "detail": "el tipo de salida de la función de mapeo de claves"
+          },
+          {
+            "label": "<U>",
+            "detail": "el tipo de salida de la función de mapeo de valores"
+          },
+          {
+            "label": "keyMapper",
+            "detail": "una función de mapeo que produce las claves"
+          },
+          {
+            "label": "valueMapper",
+            "detail": "una función de mapeo que produce los valores"
+          },
+          {
+            "label": "mergeFunction",
+            "detail": "una función de combinación que resuelve las colisiones entre valores asociados a la misma clave, como la que se pasa a Map.merge(Object, Object, BiFunction)"
+          }
+        ],
+        "returns": [
+          "un Collector que recoge los elementos en un Map cuyas claves son el resultado de aplicar la función de mapeo de claves y cuyos valores son el resultado de aplicar la de valores a todos los elementos con esa clave y combinarlos con la función de combinación"
+        ],
+        "caveats": [
+          "Hay varias formas de tratar las colisiones de varios elementos con la misma clave. Las otras formas de toMap usan una función de combinación que siempre lanza una excepción, pero es fácil escribir políticas más flexibles. Por ejemplo, si tienes un flujo de Person y quieres una «guía telefónica» de nombres a direcciones, pero dos personas pueden tener el mismo nombre, puedes tratar las colisiones así y obtener un Map de nombres a una lista concatenada de direcciones:",
+          "Map<String, String> phoneBook = people.stream().collect( toMap(Person::getName, Person::getAddress, (s, a) -> s + \", \" + a));"
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un Collector que acumula los elementos en un Map cuyas claves y valores son el resultado de aplicar las funciones de mapeo a los elementos de entrada."
+        ],
+        "body": [
+          "Si hay claves duplicadas (según Object.equals(Object)), se aplica la función de mapeo de valores a cada elemento igual y los resultados se combinan con la función de combinación indicada. El Map lo crea la función proveedora indicada."
+        ],
+        "parameters": [
+          {
+            "label": "<T>",
+            "detail": "el tipo de los elementos de entrada"
+          },
+          {
+            "label": "<K>",
+            "detail": "el tipo de salida de la función de mapeo de claves"
+          },
+          {
+            "label": "<U>",
+            "detail": "el tipo de salida de la función de mapeo de valores"
+          },
+          {
+            "label": "<M>",
+            "detail": "el tipo del Map resultante"
+          },
+          {
+            "label": "keyMapper",
+            "detail": "una función de mapeo que produce las claves"
+          },
+          {
+            "label": "valueMapper",
+            "detail": "una función de mapeo que produce los valores"
+          },
+          {
+            "label": "mergeFunction",
+            "detail": "una función de combinación que resuelve las colisiones entre valores asociados a la misma clave, como la que se pasa a Map.merge(Object, Object, BiFunction)"
+          },
+          {
+            "label": "mapFactory",
+            "detail": "un proveedor que devuelve un Map nuevo y vacío en el que se insertan los resultados"
+          }
+        ],
+        "returns": [
+          "un Collector que recoge los elementos en un Map cuyas claves son el resultado de aplicar la función de mapeo de claves y cuyos valores son el resultado de aplicar la de valores a todos los elementos con esa clave y combinarlos con la función de combinación"
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.util.stream.DoubleStream.concat": {
+    "body": [
+      "Trabaja sobre los dos flujos de entrada y enlaza cada uno con su origen. Por eso, las modificaciones posteriores de un origen pueden no reflejarse en el flujo concatenado."
+    ],
+    "parameters": [
+      {
+        "label": "a",
+        "detail": "el primer flujo"
+      },
+      {
+        "label": "b",
+        "detail": "el segundo flujo"
+      }
+    ],
+    "returns": ["la concatenación de los dos flujos de entrada"],
+    "caveats": [
+      "Para mantener las posibilidades de optimización, enlaza cada flujo con su origen y solo acepta dos flujos. Por ejemplo, se puede calcular el tamaño exacto del origen concatenado si se conoce el de cada uno. Para concatenar más flujos sin enlazarlos, o sin llamadas anidadas, prueba a crear un flujo de flujos y aplanarlo con la función identidad, por ejemplo:",
+      "DoubleStream concat = Stream.of(s1, s2, s3, s4).flatMapToDouble(s -> s);"
+    ]
+  },
+  "web-java-se-java.util.stream.DoubleStream.reduce": {
+    "overloads": [
+      {
+        "intro": [
+          "Hace una reducción sobre los elementos de este flujo con el valor identidad y una función de acumulación asociativa, y devuelve el valor reducido. Equivale a:"
+        ],
+        "body": [
+          "double result = identity; for (double element : this stream) result = accumulator.applyAsDouble(result, element) return result;",
+          "pero no tiene por qué ejecutarse de forma secuencial.",
+          "El valor identidad debe ser una identidad para la función de acumulación: para todo x, accumulator.apply(identity, x) es igual a x. La función de acumulación debe ser asociativa.",
+          "Es una operación terminal."
+        ],
+        "parameters": [
+          {
+            "label": "identity",
+            "detail": "el valor identidad de la función de acumulación"
+          },
+          {
+            "label": "op",
+            "detail": "una función asociativa, sin interferencias y sin estado para combinar dos valores"
+          }
+        ],
+        "returns": ["el resultado de la reducción"],
+        "caveats": [
+          "La suma, el mínimo, el máximo y la media son casos especiales de reducción. Sumar un flujo de números se puede expresar así:",
+          "double sum = numbers.reduce(0, (a, b) -> a+b);",
+          "o, de forma más compacta:",
+          "double sum = numbers.reduce(0, Double::sum);",
+          "Aunque pueda parecer más rebuscado que ir modificando un total en un bucle, las operaciones de reducción se paralelizan mejor, sin sincronización adicional y con mucho menos riesgo de condiciones de carrera."
+        ]
+      },
+      {
+        "intro": [
+          "Hace una reducción sobre los elementos de este flujo con una función de acumulación asociativa y devuelve un OptionalDouble con el valor reducido, si lo hay. Equivale a:"
+        ],
+        "body": [
+          "{@code boolean foundAny = false; double result = null; for (double element : this stream) { if (!foundAny) { foundAny = true; result = element; } else result = accumulator.applyAsDouble(result, element); } return foundAny ? OptionalDouble.of(result) : OptionalDouble.empty(); }",
+          "pero no tiene por qué ejecutarse de forma secuencial.",
+          "La función de acumulación debe ser asociativa.",
+          "Es una operación terminal."
+        ],
+        "parameters": [
+          {
+            "label": "op",
+            "detail": "una función asociativa, sin interferencias y sin estado para combinar dos valores"
+          }
+        ],
+        "returns": ["el resultado de la reducción"]
+      }
+    ]
+  },
+  "web-java-se-java.util.stream.IntStream.concat": {
+    "body": [
+      "Trabaja sobre los dos flujos de entrada y enlaza cada uno con su origen. Por eso, las modificaciones posteriores de un origen pueden no reflejarse en el flujo concatenado."
+    ],
+    "parameters": [
+      {
+        "label": "a",
+        "detail": "el primer flujo"
+      },
+      {
+        "label": "b",
+        "detail": "el segundo flujo"
+      }
+    ],
+    "returns": ["la concatenación de los dos flujos de entrada"],
+    "caveats": [
+      "Para mantener las posibilidades de optimización, enlaza cada flujo con su origen y solo acepta dos flujos. Por ejemplo, se puede calcular el tamaño exacto del origen concatenado si se conoce el de cada uno. Para concatenar más flujos sin enlazarlos, o sin llamadas anidadas, prueba a crear un flujo de flujos y aplanarlo con la función identidad, por ejemplo:",
+      "IntStream concat = Stream.of(s1, s2, s3, s4).flatMapToInt(s -> s);"
+    ]
+  },
+  "web-java-se-java.util.stream.IntStream.reduce": {
+    "overloads": [
+      {
+        "intro": [
+          "Hace una reducción sobre los elementos de este flujo con el valor identidad y una función de acumulación asociativa, y devuelve el valor reducido. Equivale a:"
+        ],
+        "body": [
+          "int result = identity; for (int element : this stream) result = accumulator.applyAsInt(result, element) return result;",
+          "pero no tiene por qué ejecutarse de forma secuencial.",
+          "El valor identidad debe ser una identidad para la función de acumulación: para todo x, accumulator.apply(identity, x) es igual a x. La función de acumulación debe ser asociativa.",
+          "Es una operación terminal."
+        ],
+        "parameters": [
+          {
+            "label": "identity",
+            "detail": "el valor identidad de la función de acumulación"
+          },
+          {
+            "label": "op",
+            "detail": "una función asociativa, sin interferencias y sin estado para combinar dos valores"
+          }
+        ],
+        "returns": ["el resultado de la reducción"],
+        "caveats": [
+          "La suma, el mínimo y el máximo son casos especiales de reducción que se pueden expresar con este método. Por ejemplo, sumar un flujo se puede expresar así:",
+          "int sum = integers.reduce(0, (a, b) -> a+b);",
+          "o, de forma más compacta:",
+          "int sum = integers.reduce(0, Integer::sum);",
+          "Aunque pueda parecer más rebuscado que ir modificando un total en un bucle, las operaciones de reducción se paralelizan mejor, sin sincronización adicional y con mucho menos riesgo de condiciones de carrera."
+        ]
+      },
+      {
+        "intro": [
+          "Hace una reducción sobre los elementos de este flujo con una función de acumulación asociativa y devuelve un OptionalInt con el valor reducido, si lo hay. Equivale a:"
+        ],
+        "body": [
+          "{@code boolean foundAny = false; int result = null; for (int element : this stream) { if (!foundAny) { foundAny = true; result = element; } else result = accumulator.applyAsInt(result, element); } return foundAny ? OptionalInt.of(result) : OptionalInt.empty(); }",
+          "pero no tiene por qué ejecutarse de forma secuencial.",
+          "La función de acumulación debe ser asociativa.",
+          "Es una operación terminal."
+        ],
+        "parameters": [
+          {
+            "label": "op",
+            "detail": "una función asociativa, sin interferencias y sin estado para combinar dos valores"
+          }
+        ],
+        "returns": ["el resultado de la reducción"]
+      }
+    ]
+  },
+  "web-java-se-java.util.stream.LongStream.concat": {
+    "body": [
+      "Trabaja sobre los dos flujos de entrada y enlaza cada uno con su origen. Por eso, las modificaciones posteriores de un origen pueden no reflejarse en el flujo concatenado."
+    ],
+    "parameters": [
+      {
+        "label": "a",
+        "detail": "el primer flujo"
+      },
+      {
+        "label": "b",
+        "detail": "el segundo flujo"
+      }
+    ],
+    "returns": ["la concatenación de los dos flujos de entrada"],
+    "caveats": [
+      "Para mantener las posibilidades de optimización, enlaza cada flujo con su origen y solo acepta dos flujos. Por ejemplo, se puede calcular el tamaño exacto del origen concatenado si se conoce el de cada uno. Para concatenar más flujos sin enlazarlos, o sin llamadas anidadas, prueba a crear un flujo de flujos y aplanarlo con la función identidad, por ejemplo:",
+      "LongStream concat = Stream.of(s1, s2, s3, s4).flatMapToLong(s -> s);"
+    ]
+  },
+  "web-java-se-java.util.stream.LongStream.reduce": {
+    "overloads": [
+      {
+        "intro": [
+          "Hace una reducción sobre los elementos de este flujo con el valor identidad y una función de acumulación asociativa, y devuelve el valor reducido. Equivale a:"
+        ],
+        "body": [
+          "long result = identity; for (long element : this stream) result = accumulator.applyAsLong(result, element) return result;",
+          "pero no tiene por qué ejecutarse de forma secuencial.",
+          "El valor identidad debe ser una identidad para la función de acumulación: para todo x, accumulator.apply(identity, x) es igual a x. La función de acumulación debe ser asociativa.",
+          "Es una operación terminal."
+        ],
+        "parameters": [
+          {
+            "label": "identity",
+            "detail": "el valor identidad de la función de acumulación"
+          },
+          {
+            "label": "op",
+            "detail": "una función asociativa, sin interferencias y sin estado para combinar dos valores"
+          }
+        ],
+        "returns": ["el resultado de la reducción"],
+        "caveats": [
+          "La suma, el mínimo, el máximo y la media son casos especiales de reducción. Sumar un flujo de números se puede expresar así:",
+          "long sum = integers.reduce(0, (a, b) -> a+b);",
+          "o, de forma más compacta:",
+          "long sum = integers.reduce(0, Long::sum);",
+          "Aunque pueda parecer más rebuscado que ir modificando un total en un bucle, las operaciones de reducción se paralelizan mejor, sin sincronización adicional y con mucho menos riesgo de condiciones de carrera."
+        ]
+      },
+      {
+        "intro": [
+          "Hace una reducción sobre los elementos de este flujo con una función de acumulación asociativa y devuelve un OptionalLong con el valor reducido, si lo hay. Equivale a:"
+        ],
+        "body": [
+          "{@code boolean foundAny = false; long result = null; for (long element : this stream) { if (!foundAny) { foundAny = true; result = element; } else result = accumulator.applyAsLong(result, element); } return foundAny ? OptionalLong.of(result) : OptionalLong.empty(); }",
+          "pero no tiene por qué ejecutarse de forma secuencial.",
+          "La función de acumulación debe ser asociativa.",
+          "Es una operación terminal."
+        ],
+        "parameters": [
+          {
+            "label": "op",
+            "detail": "una función asociativa, sin interferencias y sin estado para combinar dos valores"
+          }
+        ],
+        "returns": ["el resultado de la reducción"]
+      }
+    ]
+  },
+  "web-java-se-java.util.stream.Stream.collect": {
+    "overloads": [
+      {
+        "intro": [
+          "Hace una reducción mutable sobre los elementos de este flujo. En una reducción mutable, el valor reducido es un contenedor de resultados mutable, como un ArrayList, y los elementos se incorporan actualizando su estado en lugar de sustituirlo. El resultado equivale a:"
+        ],
+        "body": [
+          "R result = supplier.get(); for (T element : this stream) accumulator.accept(result, element); return result;",
+          "Como reduce(Object, BinaryOperator), las operaciones collect se pueden paralelizar sin sincronización adicional.",
+          "Es una operación terminal."
+        ],
+        "parameters": [
+          {
+            "label": "<R>",
+            "detail": "el tipo del contenedor de resultados mutable"
+          },
+          {
+            "label": "supplier",
+            "detail": "una función que crea un nuevo contenedor de resultados mutable. En ejecución paralela puede llamarse varias veces y debe devolver un valor nuevo cada vez."
+          },
+          {
+            "label": "accumulator",
+            "detail": "una función asociativa, sin interferencias y sin estado que incorpora un elemento a un contenedor de resultados."
+          },
+          {
+            "label": "combiner",
+            "detail": "una función asociativa, sin interferencias y sin estado que recibe dos contenedores de resultados parciales y los combina, y que debe ser compatible con la de acumulación. Debe incorporar los elementos del segundo contenedor al primero."
+          }
+        ],
+        "returns": ["el resultado de la reducción"],
+        "caveats": [
+          "Muchas clases del JDK tienen firmas muy adecuadas para usarlas como referencias a métodos en collect(). Por ejemplo, esto acumula cadenas en un ArrayList:",
+          "List<String> asList = stringStream.collect(ArrayList::new, ArrayList::add, ArrayList::addAll);",
+          "Y esto toma un flujo de cadenas y las concatena en una sola:",
+          "String concat = stringStream.collect(StringBuilder::new, StringBuilder::append, StringBuilder::append) .toString();"
+        ]
+      },
+      {
+        "intro": [
+          "Hace una reducción mutable sobre los elementos de este flujo con un Collector. Un Collector encapsula las funciones que se pasan como argumentos a collect(Supplier, BiConsumer, BiConsumer), lo que permite reutilizar estrategias de recolección y componer operaciones collect, como agrupaciones o particiones en varios niveles."
+        ],
+        "body": [
+          "Si el flujo es paralelo, el Collector es concurrente y el flujo o el collector no tienen orden, se hace una reducción concurrente (consulta Collector para más detalles).",
+          "Es una operación terminal.",
+          "En ejecución paralela, pueden crearse, llenarse y combinarse varios resultados intermedios para mantener aislados los datos mutables. Por eso, aunque se use en paralelo con estructuras no seguras entre hilos (como ArrayList), no hace falta sincronización adicional."
+        ],
+        "parameters": [
+          {
+            "label": "<R>",
+            "detail": "el tipo del resultado"
+          },
+          {
+            "label": "<A>",
+            "detail": "el tipo de acumulación intermedio del Collector"
+          },
+          {
+            "label": "collector",
+            "detail": "el Collector que describe la reducción"
+          }
+        ],
+        "returns": ["el resultado de la reducción"],
+        "caveats": [
+          "Esto acumula cadenas en una List:",
+          "List<String> asList = stringStream.collect(Collectors.toList());",
+          "Esto clasifica objetos Person por ciudad:",
+          "Map<String, List<Person>> peopleByCity = personStream.collect(Collectors.groupingBy(Person::getCity));",
+          "Esto clasifica objetos Person por estado y ciudad, encadenando dos Collector:",
+          "Map<String, Map<String, List<Person>>> peopleByStateAndCity = personStream.collect(Collectors.groupingBy(Person::getState, Collectors.groupingBy(Person::getCity)));"
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.util.stream.Stream.concat": {
+    "body": [
+      "Trabaja sobre los dos flujos de entrada y enlaza cada uno con su origen. Por eso, las modificaciones posteriores de un origen pueden no reflejarse en el flujo concatenado."
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "El tipo de los elementos del flujo"
+      },
+      {
+        "label": "a",
+        "detail": "el primer flujo"
+      },
+      {
+        "label": "b",
+        "detail": "el segundo flujo"
+      }
+    ],
+    "returns": ["la concatenación de los dos flujos de entrada"],
+    "caveats": [
+      "Para mantener las posibilidades de optimización, enlaza cada flujo con su origen y solo acepta dos flujos. Por ejemplo, se puede calcular el tamaño exacto del origen concatenado si se conoce el de cada uno. Para concatenar más flujos sin enlazarlos, o sin llamadas anidadas, prueba a crear un flujo de flujos y aplanarlo con la función identidad, por ejemplo:",
+      "Stream<T> concat = Stream.of(s1, s2, s3, s4).flatMap(s -> s);"
+    ]
+  },
+  "web-java-se-java.util.stream.Stream.mapMulti": {
+    "body": [
+      "Es una operación intermedia.",
+      "Si el consumidor se usa fuera del ámbito de su aplicación en la función de mapeo, el resultado no está definido."
+    ],
+    "parameters": [
+      {
+        "label": "<R>",
+        "detail": "El tipo de los elementos del nuevo flujo"
+      },
+      {
+        "label": "mapper",
+        "detail": "una función sin interferencias y sin estado que genera los elementos de sustitución"
+      }
+    ],
+    "returns": ["el nuevo flujo"],
+    "caveats": [
+      "La implementación por defecto invoca flatMap sobre este flujo con una función que hace lo siguiente: primero llama al mapeador con un Consumer que acumula los elementos de sustitución en un búfer interno nuevo; cuando el mapeador termina, crea un flujo a partir del búfer; y por último devuelve ese flujo a flatMap.",
+      "Es parecido a flatMap en que aplica una transformación de uno a muchos a los elementos del flujo y aplana los resultados en un nuevo flujo. Es preferible a flatMap en estos casos:",
+      "Al sustituir cada elemento por un número pequeño (quizá cero) de elementos. Así se evita el coste de crear un nuevo Stream por cada grupo de resultados, como exige flatMap.",
+      "Cuando es más fácil generar los resultados de forma imperativa que devolverlos en forma de Stream.",
+      "Si el mapeador es una expresión lambda, puede hacer falta información de tipos adicional para inferir el tipo de elemento <R> del flujo devuelto. Se puede dar declarando explícitamente los tipos de los parámetros de la lambda o con un argumento de tipo explícito en la llamada a mapMulti.",
+      "Ejemplos",
+      "Dado un flujo de objetos Number, esto produce una lista solo con los Integer:",
+      "{@code Stream numbers = ... ; List integers = numbers.mapMulti((number, consumer) -> { if (number instanceof Integer i) consumer.accept(i); }) .collect(Collectors.toList()); }",
+      "Si tenemos un Iterable<Object> y hay que expandir de forma recursiva sus elementos que también son Iterable, podemos usar mapMulti así:",
+      "{@code class C { static void expandIterable(Object e, Consumer c) { if (e instanceof Iterable elements) { for (Object ie : elements) { expandIterable(ie, c); } } else if (e != null) { c.accept(e); } }",
+      "public static void main(String[] args) { var nestedList = List.of(1, List.of(2, List.of(3, 4)), 5); Stream expandedStream = nestedList.stream().mapMulti(C::expandIterable); } } }"
     ]
   },
   "web-java-se-javax.management.ImmutableDescriptor.toString": {
