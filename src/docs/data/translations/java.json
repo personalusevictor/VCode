@@ -90,12 +90,479 @@
       }
     ]
   },
+  "web-java-se-java.awt.AWTEventMulticaster": {
+    "body": [
+      "El siguiente ejemplo muestra cómo usar esta clase:",
+      "public myComponent extends Component { ActionListener actionListener = null;",
+      "public synchronized void addActionListener(ActionListener l) { actionListener = AWTEventMulticaster.add(actionListener, l); } public synchronized void removeActionListener(ActionListener l) { actionListener = AWTEventMulticaster.remove(actionListener, l); } public void processEvent(AWTEvent e) { // when event occurs which causes \"action\" semantic ActionListener listener = actionListener; if (listener != null) { listener.actionPerformed(new ActionEvent()); } } }",
+      "Lo importante es que el primer argumento de los métodos add y remove es el campo que mantiene los listeners. Además, debes asignar el resultado de add y remove a ese mismo campo.",
+      "AWTEventMulticaster se implementa como un par de EventListeners fijados en la construcción. AWTEventMulticaster es inmutable. Los métodos add y remove no lo modifican en absoluto; si hace falta, se crea un AWTEventMulticaster nuevo. Así es seguro añadir y quitar listeners durante el despacho de un evento. Sin embargo, los listeners añadidos durante el despacho no reciben el evento que se está despachando en ese momento.",
+      "Todos los métodos add admiten argumentos null. Si el primero es null, se devuelve el segundo. Si el primero no es null y el segundo sí, se devuelve el primero. Si ninguno es null, se crea y devuelve un AWTEventMulticaster nuevo con los dos argumentos.",
+      "Los métodos remove de dos argumentos devuelven:",
+      "null, si el primer argumento es null o los argumentos son iguales según ==.",
+      "el primer argumento, si no es una instancia de AWTEventMulticaster.",
+      "el resultado de llamar a remove(EventListener) sobre el primer argumento, pasándole el segundo argumento.",
+      "Swing usa EventListenerList para una lógica similar. Consúltala para más detalles."
+    ]
+  },
+  "web-java-se-java.awt.AWTKeyStroke.getAWTKeyStroke": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve una instancia compartida de AWTKeyStroke que representa un evento KEY_TYPED para el carácter indicado."
+        ],
+        "parameters": [
+          {
+            "label": "keyChar",
+            "detail": "el valor del carácter de una tecla"
+          }
+        ],
+        "returns": ["un objeto AWTKeyStroke para esa tecla"]
+      },
+      {
+        "intro": [
+          "Devuelve una instancia compartida de AWTKeyStroke que representa un evento KEY_TYPED para el objeto Character indicado y un conjunto de modificadores. El primer parámetro es de tipo Character y no char para evitar choques involuntarios con las llamadas a getAWTKeyStroke(int keyCode, int modifiers)."
+        ],
+        "body": [
+          "Los modificadores son cualquier combinación de los siguientes:",
+          "java.awt.event.InputEvent.SHIFT_DOWN_MASK",
+          "java.awt.event.InputEvent.CTRL_DOWN_MASK",
+          "java.awt.event.InputEvent.META_DOWN_MASK",
+          "java.awt.event.InputEvent.ALT_DOWN_MASK",
+          "java.awt.event.InputEvent.ALT_GRAPH_DOWN_MASK",
+          "También pueden usarse los modificadores antiguos de abajo, pero se traducen a los modificadores _DOWN_.",
+          "java.awt.event.InputEvent.SHIFT_MASK",
+          "java.awt.event.InputEvent.CTRL_MASK",
+          "java.awt.event.InputEvent.META_MASK",
+          "java.awt.event.InputEvent.ALT_MASK",
+          "java.awt.event.InputEvent.ALT_GRAPH_MASK",
+          "también pueden usarse, pero se traducen a los modificadores _DOWN_.",
+          "Como todos estos números son potencias de dos distintas, cualquier combinación es un entero en el que cada bit representa una tecla modificadora distinta. Usa 0 para no indicar modificadores."
+        ],
+        "parameters": [
+          {
+            "label": "keyChar",
+            "detail": "el objeto Character de un carácter del teclado"
+          },
+          {
+            "label": "modifiers",
+            "detail": "una combinación OR bit a bit de modificadores"
+          }
+        ],
+        "returns": ["un objeto AWTKeyStroke para esa tecla"],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si keyChar es null"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve una instancia compartida de AWTKeyStroke a partir de un código de tecla numérico y un conjunto de modificadores, indicando si la tecla se activa al pulsarla o al soltarla."
+        ],
+        "body": [
+          "Para indicar el código de tecla pueden usarse las constantes de \"tecla virtual\" de java.awt.event.KeyEvent. Por ejemplo:",
+          "java.awt.event.KeyEvent.VK_ENTER",
+          "java.awt.event.KeyEvent.VK_TAB",
+          "java.awt.event.KeyEvent.VK_SPACE",
+          "También puede obtenerse el código de tecla con java.awt.event.KeyEvent.getExtendedKeyCodeForChar.",
+          "Los modificadores son cualquier combinación de:",
+          "java.awt.event.InputEvent.SHIFT_DOWN_MASK",
+          "java.awt.event.InputEvent.CTRL_DOWN_MASK",
+          "java.awt.event.InputEvent.META_DOWN_MASK",
+          "java.awt.event.InputEvent.ALT_DOWN_MASK",
+          "java.awt.event.InputEvent.ALT_GRAPH_DOWN_MASK",
+          "Los modificadores antiguos",
+          "java.awt.event.InputEvent.SHIFT_MASK",
+          "java.awt.event.InputEvent.CTRL_MASK",
+          "java.awt.event.InputEvent.META_MASK",
+          "java.awt.event.InputEvent.ALT_MASK",
+          "java.awt.event.InputEvent.ALT_GRAPH_MASK",
+          "también pueden usarse, pero se traducen a los modificadores _DOWN_.",
+          "Como todos estos números son potencias de dos distintas, cualquier combinación es un entero en el que cada bit representa una tecla modificadora distinta. Usa 0 para no indicar modificadores."
+        ],
+        "parameters": [
+          {
+            "label": "keyCode",
+            "detail": "un int con el código numérico de una tecla"
+          },
+          {
+            "label": "modifiers",
+            "detail": "una combinación OR bit a bit de modificadores"
+          },
+          {
+            "label": "onKeyRelease",
+            "detail": "true si el AWTKeyStroke debe representar la liberación de una tecla; false en caso contrario"
+          }
+        ],
+        "returns": ["un objeto AWTKeyStroke para esa tecla"]
+      },
+      {
+        "intro": [
+          "Devuelve una instancia compartida de AWTKeyStroke a partir de un código de tecla numérico y un conjunto de modificadores. El AWTKeyStroke devuelto corresponde a la pulsación de la tecla."
+        ],
+        "body": [
+          "Para indicar el código de tecla pueden usarse las constantes de \"tecla virtual\" de java.awt.event.KeyEvent. Por ejemplo:",
+          "java.awt.event.KeyEvent.VK_ENTER",
+          "java.awt.event.KeyEvent.VK_TAB",
+          "java.awt.event.KeyEvent.VK_SPACE",
+          "Los modificadores son cualquier combinación de:",
+          "java.awt.event.InputEvent.SHIFT_DOWN_MASK",
+          "java.awt.event.InputEvent.CTRL_DOWN_MASK",
+          "java.awt.event.InputEvent.META_DOWN_MASK",
+          "java.awt.event.InputEvent.ALT_DOWN_MASK",
+          "java.awt.event.InputEvent.ALT_GRAPH_DOWN_MASK",
+          "Los modificadores antiguos",
+          "java.awt.event.InputEvent.SHIFT_MASK",
+          "java.awt.event.InputEvent.CTRL_MASK",
+          "java.awt.event.InputEvent.META_MASK",
+          "java.awt.event.InputEvent.ALT_MASK",
+          "java.awt.event.InputEvent.ALT_GRAPH_MASK",
+          "también pueden usarse, pero se traducen a los modificadores _DOWN_.",
+          "Como todos estos números son potencias de dos distintas, cualquier combinación es un entero en el que cada bit representa una tecla modificadora distinta. Usa 0 para no indicar modificadores."
+        ],
+        "parameters": [
+          {
+            "label": "keyCode",
+            "detail": "un int con el código numérico de una tecla"
+          },
+          {
+            "label": "modifiers",
+            "detail": "una combinación OR bit a bit de modificadores"
+          }
+        ],
+        "returns": ["un objeto AWTKeyStroke para esa tecla"]
+      },
+      {
+        "intro": [
+          "Analiza una cadena y devuelve un AWTKeyStroke. La cadena debe tener esta sintaxis:"
+        ],
+        "body": [
+          "<modifiers>* (<typedID> | <pressedReleasedID>)",
+          "modifiers := shift | control | ctrl | meta | alt | altGraph typedID := typed <typedKey> typedKey := string of length 1 giving Unicode character. pressedReleasedID := (pressed | released) key key := KeyEvent key code name, i.e. the name following \"VK_\".",
+          "Si no se indica typed, pressed ni released, se supone pressed. Algunos ejemplos:",
+          "\"INSERT\" => getAWTKeyStroke(KeyEvent.VK_INSERT, 0); \"control DELETE\" => getAWTKeyStroke(KeyEvent.VK_DELETE, InputEvent.CTRL_MASK); \"alt shift X\" => getAWTKeyStroke(KeyEvent.VK_X, InputEvent.ALT_MASK | InputEvent.SHIFT_MASK); \"alt shift released X\" => getAWTKeyStroke(KeyEvent.VK_X, InputEvent.ALT_MASK | InputEvent.SHIFT_MASK, true); \"typed a\" => getAWTKeyStroke('a');"
+        ],
+        "parameters": [
+          {
+            "label": "s",
+            "detail": "un String con el formato descrito arriba"
+          }
+        ],
+        "returns": ["un objeto AWTKeyStroke para ese String"],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si s es null o tiene un formato incorrecto"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.awt.AlphaComposite": {
+    "body": [
+      "Esta clase amplía las ecuaciones estándar definidas por Porter y Duff con un factor adicional. Una instancia de AlphaComposite puede contener un valor alfa que se usa para modificar la opacidad o cobertura de cada píxel de origen antes de usarlo en las ecuaciones de mezcla.",
+      "Es importante saber que las ecuaciones del artículo de Porter y Duff están definidas para operar sobre componentes de color premultiplicados por su componente alfa. Como las clases ColorModel y Raster permiten guardar los píxeles en forma premultiplicada o no, todos los datos de entrada deben normalizarse a forma premultiplicada antes de aplicar las ecuaciones, y los resultados pueden necesitar volver a ajustarse a la forma que requiere el destino antes de guardar los valores de los píxeles.",
+      "Ten en cuenta también que esta clase solo define las ecuaciones para combinar valores de color y alfa en un sentido puramente matemático. Su aplicación precisa depende de cómo se obtienen los datos de los orígenes y se guardan en los destinos. Consulta las Salvedades de implementación para más información.",
+      "Los siguientes factores se usan en la descripción de la ecuación de mezcla del artículo de Porter y Duff:",
+      "Factores",
+      "Factor · Definición",
+      "As · el componente alfa del píxel de origen",
+      "Cs · un componente de color del píxel de origen en forma premultiplicada",
+      "Ad · el componente alfa del píxel de destino",
+      "Cd · un componente de color del píxel de destino en forma premultiplicada",
+      "Fs · la fracción del píxel de origen que contribuye a la salida",
+      "Fd · la fracción del píxel de destino que contribuye a la salida",
+      "Ar · el componente alfa del resultado",
+      "Cr · un componente de color del resultado en forma premultiplicada",
+      "Con estos factores, Porter y Duff definen 12 maneras de elegir los factores de mezcla Fs y Fd para producir 12 efectos visuales útiles. Las ecuaciones para obtener Fs y Fd aparecen en las descripciones de los 12 campos estáticos que indican los efectos visuales. Por ejemplo, la descripción de SRC_OVER indica que Fs = 1 y Fd = (1-As). Una vez conocidas las ecuaciones de los factores de mezcla, se aplican a cada píxel para producir un resultado con estas ecuaciones:",
+      "Fs = f(Ad) Fd = f(As) Ar = As*Fs + Ad*Fd Cr = Cs*Fs + Cd*Fd",
+      "Los siguientes factores se usan para explicar nuestras ampliaciones de la ecuación de mezcla de Porter y Duff:",
+      "Factores",
+      "Factor · Definición",
+      "Csr · uno de los componentes de color sin procesar del píxel de origen",
+      "Cdr · uno de los componentes de color sin procesar del píxel de destino",
+      "Aac · el componente alfa \"extra\" de la instancia de AlphaComposite",
+      "Asr · el componente alfa sin procesar del píxel de origen",
+      "Adr · el componente alfa sin procesar del píxel de destino",
+      "Adf · el componente alfa final guardado en el destino",
+      "Cdf · el componente de color final sin procesar guardado en el destino",
+      "Preparación de las entradas",
+      "La clase AlphaComposite define un valor alfa adicional que se aplica al alfa de origen. Se aplica como si primero se aplicara una regla SRC_IN implícita al píxel de origen frente a un píxel con el alfa indicado, multiplicando tanto el alfa como los colores sin procesar del origen por el alfa del AlphaComposite. Esto da la siguiente ecuación para el alfa usado en la ecuación de mezcla de Porter y Duff:",
+      "As = Asr * Aac",
+      "Todos los componentes de color sin procesar del origen deben multiplicarse por el alfa de la instancia de AlphaComposite. Además, si el origen no estaba premultiplicado, los componentes de color también deben multiplicarse por el alfa de origen. Por eso la ecuación de los componentes de color de origen depende de si los píxeles de origen están premultiplicados:",
+      "Cs = Csr * Asr * Aac (if source is not premultiplied) Cs = Csr * Aac (if source is premultiplied)",
+      "No hace falta ajustar el alfa de destino:",
+      "Ad = Adr",
+      "Los componentes de color de destino solo deben ajustarse si no están en forma premultiplicada:",
+      "Cd = Cdr * Ad (if destination is not premultiplied) Cd = Cdr (if destination is premultiplied)",
+      "Aplicación de la ecuación de mezcla",
+      "Los valores ajustados As, Ad, Cs y Cd se usan en las ecuaciones estándar de Porter y Duff para calcular los factores de mezcla Fs y Fd y después los componentes premultiplicados resultantes Ar y Cr.",
+      "Preparación de los resultados",
+      "Los resultados solo necesitan ajustarse si se van a guardar en un búfer de destino con datos no premultiplicados, con estas ecuaciones:",
+      "Adf = Ar Cdf = Cr (if dest is premultiplied) Cdf = Cr / Ar (if dest is not premultiplied)",
+      "Como la división no está definida si el alfa resultante es cero, en ese caso se omite para evitar la \"división por cero\" y los componentes de color se dejan a cero.",
+      "Consideraciones de rendimiento",
+      "Por rendimiento, es preferible que los Raster pasados al método compose de un CompositeContext creado por AlphaComposite tengan datos premultiplicados. Aun así, si el Raster de origen o el de destino no están premultiplicados, se hacen las conversiones adecuadas antes y después de la composición.",
+      "Salvedades de implementación",
+      "Muchos orígenes, como algunos de los tipos de imagen opacos de la clase BufferedImage, no guardan valores alfa para sus píxeles. Esos orígenes dan un alfa de 1.0 para todos sus píxeles.",
+      "Muchos destinos tampoco tienen dónde guardar los valores alfa que resultan de los cálculos de mezcla de esta clase. Por tanto, descartan implícitamente esos valores alfa. Se recomienda que esos destinos traten sus colores guardados como no premultiplicados y dividan los colores resultantes por el alfa resultante antes de guardarlos y descartar el alfa.",
+      "La precisión de los resultados depende de cómo se guardan los píxeles en el destino. Un formato de imagen con al menos 8 bits por componente de color y alfa es adecuado como destino para una secuencia de unas pocas hasta una docena de composiciones. Un formato con menos de 8 bits por componente solo sirve para una o dos composiciones antes de que los errores de redondeo dominen el resultado. Un formato que no guarda los componentes de color por separado no es buen candidato para ninguna mezcla translúcida. Por ejemplo, BufferedImage.TYPE_BYTE_INDEXED no debería usarse como destino de una mezcla, porque cada operación puede introducir errores grandes al tener que elegir un píxel de una paleta limitada que se ajuste al resultado de las ecuaciones.",
+      "Casi todos los formatos guardan los píxeles como enteros discretos en lugar de los valores en coma flotante de las ecuaciones de referencia. La implementación puede escalar los valores enteros a coma flotante en el rango 0.0 a 1.0 o usar versiones ligeramente modificadas de las ecuaciones que operan solo con enteros y producen resultados análogos.",
+      "Normalmente los valores enteros se relacionan con los de coma flotante de modo que el entero 0 equivale a 0.0 y el entero 2^n-1 (donde n es el número de bits de la representación) equivale a 1.0. Con 8 bits, 0x00 representa 0.0 y 0xff representa 1.0.",
+      "La implementación interna puede aproximar algunas ecuaciones y también omitir pasos para evitar operaciones innecesarias. Por ejemplo, piensa en una imagen de enteros discretos con alfa no premultiplicado y 8 bits por componente. Los valores guardados de un rojo oscurecido casi transparente podrían ser:",
+      "(A, R, G, B) = (0x01, 0xb0, 0x00, 0x00)",
+      "Si se usara aritmética entera y este valor se compusiera en modo SRC sin alfa extra, el cálculo daría como resultado (en formato entero):",
+      "Fíjate en que los valores intermedios, que siempre están premultiplicados, solo permitirían que el componente rojo entero fuera 0x00 o 0x01. Al guardar este resultado en un destino no premultiplicado, dividir por el alfa deja muy pocas opciones para el rojo no premultiplicado. En este caso, una implementación que calcula con enteros sin atajos probablemente acabe con estos valores finales:",
+      "(A, R, G, B) = (0x01, 0xff, 0x00, 0x00)",
+      "(0x01 dividido entre 0x01 da 1.0, que equivale a 0xff en un formato de 8 bits).",
+      "En cambio, una implementación con coma flotante podría dar resultados más precisos y volver al valor original del píxel con poco o ningún error de redondeo. O una implementación con enteros podría decidir que, como en coma flotante las ecuaciones se reducen prácticamente a no hacer nada sobre los colores, puede copiar el píxel tal cual al destino y evitarse todo el cálculo.",
+      "Todas estas implementaciones intentan respetar las mismas ecuaciones, pero hacen distintos compromisos entre aritmética entera y de coma flotante y entre ecuaciones reducidas o completas. Para tener en cuenta estas diferencias, lo mejor es esperar solo que coincida la forma premultiplicada de los resultados entre implementaciones y formatos de imagen. En este caso, ambas respuestas expresadas en forma premultiplicada equivaldrían a:",
+      "y por tanto coincidirían todas.",
+      "Por la técnica de simplificar las ecuaciones para calcular más rápido, algunas implementaciones pueden comportarse de forma distinta cuando el alfa resultante es 0.0 en un destino no premultiplicado. La simplificación de quitar la división por alfa en la regla SRC no es técnicamente válida si el denominador (alfa) es 0. Pero, como los resultados solo deben ser precisos vistos en forma premultiplicada, un alfa resultante de 0 hace irrelevantes los componentes de color, así que no debe esperarse un comportamiento exacto en este caso."
+    ]
+  },
+  "web-java-se-java.awt.BasicStroke": {
+    "body": [
+      "width: el grosor del trazo, medido perpendicularmente a su trayectoria. end caps: la decoración aplicada a los extremos de los subtrayectos no cerrados y de los segmentos de guiones. Los subtrayectos que empiezan y terminan en el mismo punto se consideran no cerrados si no tienen un segmento CLOSE; consulta SEG_CLOSE para más información. Las tres decoraciones son CAP_BUTT, CAP_ROUND y CAP_SQUARE. line joins: la decoración aplicada en la intersección de dos segmentos y en la unión de los extremos de un subtrayecto cerrado con SEG_CLOSE. Las tres decoraciones son JOIN_BEVEL, JOIN_MITER y JOIN_ROUND. miter limit: el límite para recortar una unión con decoración JOIN_MITER. Una unión se recorta cuando la relación entre la longitud del inglete y el grosor del trazo supera miterlimit. La longitud del inglete es la diagonal del inglete, es decir, la distancia entre la esquina interior y la exterior de la intersección. Cuanto menor es el ángulo entre dos segmentos, más largo es el inglete y más afilada la intersección. El valor predeterminado de miterlimit, 10.0f, recorta todos los ángulos menores de 11 grados. Recortar un inglete convierte la decoración de la unión en bisel. dash attributes: la definición de cómo crear un patrón de guiones alternando tramos opacos y transparentes.",
+      "Todos los atributos que indican medidas y distancias que controlan la forma del contorno devuelto se miden en el mismo sistema de coordenadas que el Shape original sin trazar. Cuando un Graphics2D usa un Stroke para redefinir un trayecto durante uno de sus métodos draw, la geometría se le pasa en su forma original, antes de aplicar el atributo de transformación del Graphics2D. Por eso atributos como el grosor del trazo se interpretan en el espacio de usuario del Graphics2D y se ven afectados por el escalado y la inclinación de la transformación de espacio de usuario a espacio de dispositivo de ese Graphics2D. Por ejemplo, el grosor del contorno de una forma dibujada no depende solo del atributo width de este BasicStroke, sino también de la transformación del Graphics2D. Considera este código:",
+      "// sets the Graphics2D object's Transform attribute g2d.scale(10, 10); // sets the Graphics2D object's Stroke attribute g2d.setStroke(new BasicStroke(1.5f));",
+      "Suponiendo que no se añaden otras transformaciones de escala al Graphics2D, la línea resultante tendrá unos 15 píxeles de grosor. Como muestra el ejemplo, una línea en coma flotante da más precisión, sobre todo con transformaciones grandes en un Graphics2D. Cuando una línea es diagonal, el grosor exacto depende de cómo el pipeline de renderizado elige qué píxeles rellenar al recorrer el contorno ensanchado teórico. Esa elección se ve afectada por el atributo de antialiasing, porque el pipeline con antialiasing puede colorear píxeles parcialmente cubiertos.",
+      "Para más información sobre el espacio de usuario y el proceso de renderizado, consulta los comentarios de la clase Graphics2D."
+    ]
+  },
+  "web-java-se-java.awt.BorderLayout": {
+    "body": [
+      "Panel p = new Panel(); p.setLayout(new BorderLayout()); p.add(new Button(\"Okay\"), BorderLayout.SOUTH);",
+      "Por comodidad, BorderLayout interpreta la ausencia de cadena igual que la constante CENTER:",
+      "Panel p2 = new Panel(); p2.setLayout(new BorderLayout()); p2.add(new TextArea()); // Same as p.add(new TextArea(), BorderLayout.CENTER);",
+      "Además, BorderLayout admite las constantes de posición relativa PAGE_START, PAGE_END, LINE_START y LINE_END. En un contenedor cuyo ComponentOrientation es ComponentOrientation.LEFT_TO_RIGHT, equivalen a NORTH, SOUTH, WEST y EAST, respectivamente.",
+      "Por compatibilidad con versiones anteriores, BorderLayout incluye también las constantes relativas BEFORE_FIRST_LINE, AFTER_LAST_LINE, BEFORE_LINE_BEGINS y AFTER_LINE_ENDS, equivalentes a PAGE_START, PAGE_END, LINE_START y LINE_END respectivamente. Por coherencia con las constantes relativas de otros componentes, se prefieren estas últimas.",
+      "Mezclar constantes de posición absoluta y relativa puede dar resultados impredecibles. Si usas ambas, tienen prioridad las relativas. Por ejemplo, si añades componentes con NORTH y con PAGE_START en un contenedor con orientación LEFT_TO_RIGHT, solo se colocará el de PAGE_START.",
+      "NOTA: actualmente BorderLayout no admite orientaciones verticales. No se respeta el valor isVertical del ComponentOrientation del contenedor.",
+      "Los componentes se colocan según su tamaño preferido y las restricciones del tamaño del contenedor. Los componentes NORTH y SOUTH pueden estirarse en horizontal; EAST y WEST, en vertical; y CENTER puede estirarse en ambos sentidos para ocupar el espacio restante.",
+      "Este es un ejemplo de cinco botones en un applet colocados con el gestor BorderLayout:",
+      "El código de este applet es el siguiente:",
+      "import java.awt.*; import java.applet.Applet;",
+      "public class buttonDir extends Applet { public void init() { setLayout(new BorderLayout()); add(new Button(\"North\"), BorderLayout.NORTH); add(new Button(\"South\"), BorderLayout.SOUTH); add(new Button(\"East\"), BorderLayout.EAST); add(new Button(\"West\"), BorderLayout.WEST); add(new Button(\"Center\"), BorderLayout.CENTER); } }"
+    ]
+  },
   "web-java-se-java.awt.BufferCapabilities%24FlipContents.toString": {
     "returns": ["una representación en cadena del objeto."],
     "caveats": [
       "En general, toString devuelve una cadena que «representa textualmente» el objeto. Debería ser una representación concisa pero informativa y fácil de leer. Se recomienda que todas las subclases sobrescriban este método. La cadena no tiene por qué ser estable en el tiempo ni entre ejecuciones de la JVM.",
       "El toString de Object devuelve una cadena con el nombre de la clase de la que el objeto es instancia, el carácter arroba '@' y la representación hexadecimal sin signo del código hash del objeto. Es decir, devuelve una cadena igual al valor de:",
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
+    ]
+  },
+  "web-java-se-java.awt.Button.getListeners": {
+    "body": [
+      "Puedes indicar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los action listeners de un Button b con este código:",
+      "ActionListener[] als = (ActionListener[])(b.getListeners(ActionListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este botón, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-java.awt.Checkbox.getListeners": {
+    "body": [
+      "Puedes indicar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los item listeners de un Checkbox c con este código:",
+      "ItemListener[] ils = (ItemListener[])(c.getListeners(ItemListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en esta casilla, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-java.awt.CheckboxMenuItem.getListeners": {
+    "body": [
+      "Puedes indicar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los item listeners de un CheckboxMenuItem c con este código:",
+      "ItemListener[] ils = (ItemListener[])(c.getListeners(ItemListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este elemento de menú con casilla, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-java.awt.Choice.getListeners": {
+    "body": [
+      "Puedes indicar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los item listeners de un Choice c con este código:",
+      "ItemListener[] ils = (ItemListener[])(c.getListeners(ItemListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este Choice, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      }
+    ]
+  },
+  "web-java-se-java.awt.Component%24BaselineResizeBehavior": {
+    "intro": [
+      "Enumeración de las formas habituales en que la línea base de un componente puede cambiar al cambiar su tamaño. Está pensada sobre todo para los gestores de disposición que necesitan saber cómo se mueve la línea base cuando cambia el tamaño del componente. En general, este comportamiento es válido para tamaños mayores o iguales que el tamaño mínimo (el mínimo real, no uno fijado por el desarrollador). Para tamaños menores, la línea base puede cambiar de otra forma. Del mismo modo, cuando el tamaño se acerca a Integer.MAX_VALUE o Short.MAX_VALUE, la línea base puede cambiar de forma distinta a la indicada."
+    ]
+  },
+  "web-java-se-java.awt.Component.getBaseline": {
+    "intro": [
+      "Devuelve la línea base, medida desde la parte superior del componente. Este método está pensado sobre todo para que los LayoutManagers alineen componentes por su línea base. Un valor menor que 0 indica que el componente no tiene una línea base razonable y que los LayoutManagers no deben alinearlo por ella."
+    ],
+    "body": [
+      "La implementación predeterminada devuelve -1. Las subclases que admitan línea base deben sobrescribirlo. Si se devuelve un valor >= 0, el componente tiene una línea base válida para cualquier tamaño >= el tamaño mínimo, y getBaselineResizeBehavior permite saber cómo cambia la línea base con el tamaño."
+    ],
+    "parameters": [
+      {
+        "label": "width",
+        "detail": "la anchura para la que se obtiene la línea base"
+      },
+      {
+        "label": "height",
+        "detail": "la altura para la que se obtiene la línea base"
+      }
+    ],
+    "returns": ["la línea base, o < 0 si no hay una línea base razonable"],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si width o height es < 0"
+      }
+    ]
+  },
+  "web-java-se-java.awt.Component.getIgnoreRepaint": {
+    "intro": [
+      "Indica si deben ignorarse los mensajes de pintado recibidos del sistema operativo."
+    ],
+    "returns": [
+      "si deben ignorarse los mensajes de pintado recibidos del sistema operativo"
+    ]
+  },
+  "web-java-se-java.awt.Component.getListeners": {
+    "body": [
+      "Puedes indicar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los mouse listeners de un Component c con este código:",
+      "MouseListener[] mls = (MouseListener[])(c.getListeners(MouseListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de los listeners"
+      },
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este componente, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "si listenerType es null"
+      }
+    ]
+  },
+  "web-java-se-java.awt.Component.setComponentOrientation": {
+    "body": [
+      "Al construirlo, la orientación de un componente es ComponentOrientation.UNKNOWN, lo que indica que no se ha fijado explícitamente. La orientación UNKNOWN se comporta igual que ComponentOrientation.LEFT_TO_RIGHT.",
+      "Usa este método para fijar la orientación de un único componente. Para fijarla en toda una jerarquía de componentes, usa applyComponentOrientation.",
+      "Este método cambia información relacionada con la disposición y, por tanto, invalida la jerarquía de componentes."
+    ],
+    "parameters": [
+      {
+        "label": "o",
+        "detail": "la orientación que se va a fijar"
+      }
+    ]
+  },
+  "web-java-se-java.awt.Container.getListeners": {
+    "body": [
+      "Puedes indicar el argumento listenerType con un literal de clase, como FooListener.class. Por ejemplo, puedes consultar los container listeners de un Container c con este código:",
+      "ContainerListener[] cls = (ContainerListener[])(c.getListeners(ContainerListener.class));",
+      "Si no hay listeners de ese tipo, este método devuelve un array vacío."
+    ],
+    "parameters": [
+      {
+        "label": "listenerType",
+        "detail": "el tipo de listeners pedido; debe ser una interfaz que descienda de java.util.EventListener"
+      }
+    ],
+    "returns": [
+      "un array con todos los objetos registrados como FooListeners en este contenedor, o un array vacío si no se ha añadido ninguno"
+    ],
+    "exceptions": [
+      {
+        "label": "ClassCastException",
+        "detail": "si listenerType no indica una clase o interfaz que implemente java.util.EventListener"
+      },
+      {
+        "label": "NullPointerException",
+        "detail": "si listenerType es null"
+      }
+    ]
+  },
+  "web-java-se-java.awt.Container.setFocusCycleRoot": {
+    "intro": [
+      "Indica si este Container es la raíz de un ciclo de recorrido del foco. Una vez que el foco entra en un ciclo, normalmente no puede salir de él con el recorrido del foco salvo que se pulse una de las teclas de subir o bajar de ciclo. El recorrido normal se limita a este Container y a todos sus descendientes que no lo sean de raíces de ciclo de foco inferiores. Aun así, una FocusTraversalPolicy puede saltarse estas restricciones; por ejemplo, ContainerOrderFocusTraversalPolicy admite el descenso implícito de ciclo."
+    ],
+    "body": [
+      "La otra forma de indicar el orden de recorrido de los hijos de este Container es convertirlo en proveedor de política de recorrido del foco."
+    ],
+    "parameters": [
+      {
+        "label": "focusCycleRoot",
+        "detail": "indica si este Container es la raíz de un ciclo de recorrido del foco"
+      }
     ]
   },
   "web-java-se-java.awt.DisplayMode.toString": {
@@ -7203,6 +7670,356 @@
       "Por defecto, no se permite el separador de grupos hasta que se activa con setGroupingUsed(boolean). El análisis de la parte decimal depende de isParseIntegerOnly(); por ejemplo, si solo se analizan enteros, se salta la parte decimal.",
       "Redondeo",
       "CompactNumberFormat ofrece para formatear los modos de redondeo de java.math.RoundingMode. Por defecto usa RoundingMode.HALF_EVEN."
+    ]
+  },
+  "web-java-se-java.text.DateFormat.hashCode": {
+    "intro": ["Sobrescribe hashCode"]
+  },
+  "web-java-se-java.text.DateFormatSymbols.getMonths": {
+    "intro": [
+      "Obtiene los nombres de los meses. Por ejemplo: \"January\", \"February\", etc. Devuelve un array de 12 o 13 elementos según se admita o no Calendar.UNDECIMBER. Usa Calendar.JANUARY, Calendar.FEBRUARY, etc. como índices del array resultante."
+    ],
+    "body": [
+      "Si el idioma necesita formas distintas para el formateo y para el uso independiente, este método devuelve los nombres de mes en la forma de formateo. Por ejemplo, el nombre preferido de enero en checo es ledna en la forma de formateo y leden en la forma independiente. En ese caso este método devuelve \"ledna\". Consulta los Calendar Elements de la especificación Unicode Locale Data Markup Language (LDML) para más detalles."
+    ],
+    "returns": ["los nombres de los meses."],
+    "caveats": [
+      "Este método devuelve 13 elementos porque se admite Calendar.UNDECIMBER."
+    ]
+  },
+  "web-java-se-java.text.DateFormatSymbols.getShortMonths": {
+    "intro": [
+      "Obtiene los nombres abreviados de los meses. Por ejemplo: \"Jan\", \"Feb\", etc. Devuelve un array de 12 o 13 elementos según se admita o no Calendar.UNDECIMBER. Usa Calendar.JANUARY, Calendar.FEBRUARY, etc. como índices del array resultante."
+    ],
+    "body": [
+      "Si el idioma necesita formas distintas para el formateo y para el uso independiente, este método devuelve las abreviaturas de mes en la forma de formateo. Por ejemplo, la abreviatura preferida de enero en catalán es de gen. en la forma de formateo y gen. en la forma independiente. En ese caso este método devuelve \"de gen.\". Consulta los Calendar Elements de la especificación Unicode Locale Data Markup Language (LDML) para más detalles."
+    ],
+    "returns": ["los nombres abreviados de los meses."],
+    "caveats": [
+      "Este método devuelve 13 elementos porque se admite Calendar.UNDECIMBER."
+    ]
+  },
+  "web-java-se-java.text.DecimalFormat": {
+    "body": [
+      "Para obtener un NumberFormat para una configuración regional concreta, incluida la predeterminada, llama a uno de los métodos de fábrica de NumberFormat, como getInstance(). En general no llames directamente a los constructores de DecimalFormat, porque los métodos de fábrica de NumberFormat pueden devolver subclases distintas de DecimalFormat. Si necesitas personalizar el objeto de formato, haz algo así:",
+      "{@snippet lang=java : NumberFormat numFormat = NumberFormat.getInstance(loc); if (numFormat instanceof DecimalFormat decFormat) { decFormat.setDecimalSeparatorAlwaysShown(true); } }",
+      "Un DecimalFormat se compone de un patrón y un conjunto de símbolos. El patrón puede fijarse directamente con applyPattern() o indirectamente con los métodos de la API. Los símbolos se guardan en un objeto DecimalFormatSymbols. Al usar los métodos de fábrica de NumberFormat, el patrón y los símbolos se leen de ResourceBundles localizados.",
+      "Patrones",
+      "Los patrones de DecimalFormat tienen la siguiente sintaxis:",
+      "Pattern: PositivePattern PositivePattern ; NegativePattern PositivePattern: Prefixopt Number Suffixopt NegativePattern: Prefixopt Number Suffixopt Prefix: any Unicode characters except U+FFFE, U+FFFF, and special characters Suffix: any Unicode characters except U+FFFE, U+FFFF, and special characters Number: Integer Exponentopt Integer . Fraction Exponentopt Integer: MinimumInteger # # Integer # , Integer MinimumInteger: 0 0 MinimumInteger 0 , MinimumInteger Fraction: MinimumFractionopt OptionalFractionopt MinimumFraction: 0 MinimumFractionopt OptionalFraction: # OptionalFractionopt Exponent: E MinimumExponent MinimumExponent: 0 MinimumExponentopt",
+      "Un patrón de DecimalFormat contiene un subpatrón positivo y otro negativo, por ejemplo \"#,##0.00;(#,##0.00)\". Cada subpatrón tiene un prefijo, una parte numérica y un sufijo. El subpatrón negativo es opcional; si falta, se usa como subpatrón negativo el positivo precedido del signo menos ('-' U+002D HYPHEN-MINUS). Es decir, \"0.00\" por sí solo equivale a \"0.00;-0.00\". Si hay un subpatrón negativo explícito, solo sirve para indicar el prefijo y el sufijo negativos; el número de dígitos, los dígitos mínimos y demás características son las mismas que en el patrón positivo. Por eso \"#,##0.0#;(#)\" se comporta exactamente igual que \"#,##0.0#;(#,##0.0#)\".",
+      "Los prefijos, los sufijos y los distintos símbolos de infinito, dígitos, separadores de grupo, separadores decimales, etc. pueden tener cualquier valor y aparecerán correctamente al formatear. Sin embargo, hay que evitar que los símbolos y las cadenas entren en conflicto, o el análisis no será fiable. Por ejemplo, los prefijos positivo y negativo, o bien los sufijos, deben ser distintos para que DecimalFormat.parse() pueda distinguir valores positivos de negativos. (Si son idénticos, DecimalFormat se comportará como si no se hubiera indicado subpatrón negativo). Otro ejemplo: el separador decimal y el separador de grupo deben ser caracteres distintos, o el análisis será imposible.",
+      "El separador de grupo suele usarse para los millares, pero en algunos países separa las decenas de millar. El tamaño de grupo es un número fijo de dígitos entre separadores, como 3 en 100,000,000 o 4 en 1,0000,0000. Si das un patrón con varios separadores de grupo, se usa el intervalo entre el último y el final de la parte entera. Así, \"#,##,###,####\" == \"######,####\" == \"##,####,####\".",
+      "Caracteres especiales del patrón",
+      "Muchos caracteres de un patrón se toman literalmente: se comparan al analizar y se copian sin cambios al formatear. Los caracteres especiales, en cambio, representan otros caracteres, cadenas o clases de caracteres. Salvo que se indique lo contrario, deben ir entre comillas si han de aparecer como literales en el prefijo o el sufijo.",
+      "Los caracteres listados aquí se usan en patrones no localizados. Los patrones localizados usan en su lugar los caracteres correspondientes del objeto DecimalFormatSymbols de este formateador, y estos caracteres pierden su significado especial. Hay dos excepciones, el signo de moneda y la comilla, que no se localizan.",
+      "Tabla con el símbolo, su ubicación, si se localiza y su significado.",
+      "Símbolo · Ubicación · ¿Localizado? · Significado",
+      "0 · Número · Sí · Dígito",
+      "# · Número · Sí · Dígito; el cero se muestra como ausente",
+      ". · Número · Sí · Separador decimal o separador decimal monetario",
+      "- · Número · Sí · Signo menos",
+      ", · Número · Sí · Separador de grupo o separador de grupo monetario",
+      "E · Número · Sí · Separa mantisa y exponente en notación científica. No necesita comillas en el prefijo ni en el sufijo.",
+      "; · Límite de subpatrón · Sí · Separa los subpatrones positivo y negativo",
+      "% · Prefijo o sufijo · Sí · Multiplica por 100 y muestra como porcentaje",
+      "U+2030 · Prefijo o sufijo · Sí · Multiplica por 1000 y muestra como valor por mil",
+      "¤ (U+00A4) · Prefijo o sufijo · No · Signo de moneda, sustituido por el símbolo de la moneda. Si va duplicado, se sustituye por el símbolo internacional de la moneda. Si aparece en un patrón, se usan los separadores decimal y de grupo monetarios en lugar de los normales.",
+      "' · Prefijo o sufijo · No · Sirve para entrecomillar caracteres especiales en un prefijo o sufijo; por ejemplo, \"'#'#\" formatea 123 como \"#123\". Para una comilla simple, escribe dos seguidas: \"# o''clock\".",
+      "Notación científica",
+      "Los números en notación científica se expresan como el producto de una mantisa por una potencia de diez; por ejemplo, 1234 puede expresarse como 1.234 x 10^3. La mantisa suele estar en el rango 1.0 ≤ x < 10.0, aunque no es obligatorio. DecimalFormat solo puede formatear y analizar notación científica mediante un patrón; actualmente no hay ningún método de fábrica que cree un formato científico. En un patrón, el carácter de exponente seguido inmediatamente de uno o más caracteres de dígito indica notación científica. Ejemplo: \"0.###E0\" formatea el número 1234 como \"1.234E3\".",
+      "El número de caracteres de dígito tras el carácter de exponente indica el número mínimo de dígitos del exponente. No hay máximo. Los exponentes negativos se formatean con el signo menos localizado, no con el prefijo y el sufijo del patrón. Esto permite patrones como \"0.###E0 m/s\".",
+      "El máximo de dígitos enteros es la suma de los '0' y '#' antes del punto decimal. El mínimo de dígitos enteros es la suma de los '0' antes del punto decimal. El máximo y el mínimo de dígitos fraccionarios siguen las mismas reglas, pero se aplican a los dígitos tras el punto decimal y antes del exponente. Por ejemplo, el patrón \"#00.0####E0\" tendría un mínimo de dígitos enteros = 2 (\"00\") y un máximo de dígitos enteros = 3 (\"#00\"). Tendría un mínimo de dígitos fraccionarios = 1 (\"0\") y un máximo de dígitos fraccionarios = 5 (\"0####\").",
+      "El mínimo y el máximo de dígitos enteros se interpretan conjuntamente:",
+      "Si el máximo de dígitos enteros es mayor que el mínimo y mayor que 1, obliga a que el exponente sea múltiplo del máximo de dígitos enteros, y el mínimo de dígitos enteros se interpreta como 1. El uso más habitual es generar notación de ingeniería, en la que el exponente es múltiplo de tres, p. ej. \"##0.#####E0\". Con este patrón, 12345 se formatea como \"12.345E3\" y 123456 como \"123.456E3\".",
+      "En otro caso, el mínimo de dígitos enteros se consigue ajustando el exponente. Ejemplo: 0.00123 formateado con \"00.###E0\" da \"12.3E-4\".",
+      "Para un número dado, la cantidad de dígitos significativos de la mantisa se calcula así",
+      "Mantissa Digits: min(max(Minimum Pattern Digits, Original Number Digits), Maximum Pattern Digits) Minimum pattern Digits: Minimum Integer Digits + Minimum Fraction Digits Maximum pattern Digits: Maximum Integer Digits + Maximum Fraction Digits Original Number Digits: The amount of significant digits in the number to be formatted",
+      "Esto significa que, en general, la mantisa tendrá como mucho la suma de los máximos de dígitos enteros y fraccionarios, si el número original tiene suficientes dígitos significativos. Pero si hay más dígitos mínimos en el patrón que dígitos significativos en el número original, la mantisa tendrá tantos dígitos significativos como la suma de los mínimos de dígitos enteros y fraccionarios. El número de dígitos significativos no afecta al análisis.",
+      "Conviene saber que la parte entera de la mantisa cede los dígitos sobrantes a la parte fraccionaria, ya sea por precisión o para alcanzar el total de dígitos mínimos combinados.",
+      "Este comportamiento se ve en el siguiente ejemplo,",
+      "Los patrones exponenciales no pueden contener separadores de grupo.",
+      "Redondeo",
+      "DecimalFormat ofrece para el formateo los modos de redondeo definidos en java.math.RoundingMode. Por defecto usa RoundingMode.HALF_EVEN.",
+      "Dígitos",
+      "Para formatear, DecimalFormat usa como dígitos los diez caracteres consecutivos que empiezan en el dígito cero localizado definido en el objeto DecimalFormatSymbols. Para analizar, se reconocen estos dígitos y además todos los dígitos decimales Unicode, tal como los define Character.digit.",
+      "Valores especiales",
+      "Not a Number (NaN) se formatea como una cadena que normalmente tiene un único carácter U+FFFD. Esa cadena la determina el objeto DecimalFormatSymbols. Es el único valor al que no se aplican prefijos ni sufijos.",
+      "El infinito se formatea como una cadena que normalmente tiene un único carácter U+221E, con los prefijos y sufijos positivos o negativos aplicados. La cadena de infinito la determina el objeto DecimalFormatSymbols.",
+      "El cero negativo (\"-0\") se analiza como",
+      "BigDecimal(0) si isParseBigDecimal() es true,",
+      "Long(0) si isParseBigDecimal() es false e isParseIntegerOnly() es true,",
+      "Double(-0.0) si isParseBigDecimal() e isParseIntegerOnly() son ambos false.",
+      "Sincronización",
+      "Los formatos decimales no suelen estar sincronizados. Se recomienda crear instancias de formato separadas para cada hilo. Si varios hilos acceden a un formato a la vez, debe sincronizarse externamente.",
+      "Ejemplo",
+      "{@snippet lang=java : // Print out a number using the localized number, integer, currency, // and percent format for each locale Locale[] locales = NumberFormat.getAvailableLocales(); double myNumber = -1234.56; NumberFormat form; for (int j = 0; j < 4; ++j) { System.out.println(\"FORMAT\"); for (Locale locale : locales) { if (locale.getCountry().length() == 0) { continue; // Skip language-only locales } System.out.print(locale.getDisplayName()); form = switch (j) { case 0 -> NumberFormat.getInstance(locale); case 1 -> NumberFormat.getIntegerInstance(locale); case 2 -> NumberFormat.getCurrencyInstance(locale); default -> NumberFormat.getPercentInstance(locale); }; if (form instanceof DecimalFormat decForm) { System.out.print(\": \" + decForm.toPattern()); } System.out.print(\" -> \" + form.format(myNumber)); try { System.out.println(\" -> \" + form.parse(form.format(myNumber))); } catch (ParseException e) {} } } }"
+    ]
+  },
+  "web-java-se-java.text.DecimalFormat.applyLocalizedPattern": {
+    "body": [
+      "Esta rutina no fija ningún límite de dígitos enteros, porque es lo que normalmente quiere el usuario final; usa setMaximumIntegerDigits si quieres fijar un valor real. Para números negativos, usa un segundo patrón separado por punto y coma",
+      "Ejemplo \"#,#00.0#\" → 1,234.56",
+      "Esto significa un mínimo de 2 dígitos enteros, 1 dígito fraccionario y un máximo de 2 dígitos fraccionarios.",
+      "Ejemplo: \"#,#00.0#;(#,#00.0#)\" para negativos entre paréntesis.",
+      "En los patrones negativos se ignoran los recuentos mínimo y máximo; se supone que vienen fijados en el patrón positivo."
+    ],
+    "parameters": [
+      {
+        "label": "pattern",
+        "detail": "un patrón nuevo"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si pattern es null"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si el patrón dado no es válido."
+      }
+    ]
+  },
+  "web-java-se-java.text.DecimalFormat.applyPattern": {
+    "body": [
+      "Esta rutina no fija ningún límite de dígitos enteros, porque es lo que normalmente quiere el usuario final; usa setMaximumIntegerDigits si quieres fijar un valor real. Para números negativos, usa un segundo patrón separado por punto y coma",
+      "Ejemplo \"#,#00.0#\" → 1,234.56",
+      "Esto significa un mínimo de 2 dígitos enteros, 1 dígito fraccionario y un máximo de 2 dígitos fraccionarios.",
+      "Ejemplo: \"#,#00.0#;(#,#00.0#)\" para negativos entre paréntesis.",
+      "En los patrones negativos se ignoran los recuentos mínimo y máximo; se supone que vienen fijados en el patrón positivo."
+    ],
+    "parameters": [
+      {
+        "label": "pattern",
+        "detail": "un patrón nuevo"
+      }
+    ],
+    "exceptions": [
+      {
+        "label": "NullPointerException",
+        "detail": "si pattern es null"
+      },
+      {
+        "label": "IllegalArgumentException",
+        "detail": "si el patrón dado no es válido."
+      }
+    ]
+  },
+  "web-java-se-java.text.DecimalFormat.hashCode": {
+    "intro": ["Sobrescribe hashCode"]
+  },
+  "web-java-se-java.text.DecimalFormat.isDecimalSeparatorAlwaysShown": {
+    "body": [
+      "Ejemplo: decimal activado: 12345 → 12345.; desactivado: 12345 → 12345"
+    ],
+    "returns": [
+      "true si el separador decimal se muestra siempre; false en caso contrario"
+    ]
+  },
+  "web-java-se-java.text.DecimalFormat.setDecimalSeparatorAlwaysShown": {
+    "body": [
+      "Ejemplo: decimal activado: 12345 → 12345.; desactivado: 12345 → 12345"
+    ],
+    "parameters": [
+      {
+        "label": "newValue",
+        "detail": "true si el separador decimal se muestra siempre; false en caso contrario"
+      }
+    ]
+  },
+  "web-java-se-java.text.MessageFormat": {
+    "body": [
+      "MessageFormat toma un conjunto de objetos, los formatea e inserta las cadenas formateadas en el patrón en los lugares adecuados.",
+      "Nota: MessageFormat se diferencia de las demás clases Format en que el objeto se crea con uno de sus constructores (no con un método de fábrica del estilo getInstance). Los métodos de fábrica no son necesarios porque MessageFormat por sí mismo no implementa comportamiento dependiente de la configuración regional. Cualquier comportamiento de ese tipo lo definen el patrón que proporcionas y los subformatos usados para los argumentos insertados.",
+      "Patrones y su interpretación",
+      "MessageFormat usa patrones de la siguiente forma:",
+      "MessageFormatPattern: String MessageFormatPattern FormatElement String",
+      "FormatElement: { ArgumentIndex } { ArgumentIndex , FormatType } { ArgumentIndex , FormatType , FormatStyle }",
+      "FormatType: one of number date time choice",
+      "FormatStyle: short medium long full integer currency percent SubformatPattern",
+      "Dentro de un String, un par de comillas simples sirve para entrecomillar cualquier carácter excepto la comilla simple. Por ejemplo, la cadena de patrón \"'{0}'\" representa la cadena \"{0}\", no un FormatElement. Una comilla simple debe representarse siempre con dos comillas simples '' dentro de un String. Por ejemplo, la cadena de patrón \"'{''}'\" se interpreta como la secuencia '{ (inicio del entrecomillado y llave de apertura), '' (una comilla simple) y }' (llave de cierre y fin del entrecomillado), no como '{' y '}' (llaves de apertura y cierre entrecomilladas): representa la cadena \"{'}\", no \"{}\".",
+      "Un SubformatPattern lo interpreta su subformato correspondiente, y se aplican las reglas de patrón de ese subformato. Por ejemplo, la cadena de patrón \"{1,number,$'#',##}\" (el SubformatPattern subrayado) producirá un formato numérico con la almohadilla entrecomillada, con un resultado como \"$#31,45\". Consulta la documentación de cada subclase de Format para más detalles.",
+      "Cualquier comilla sin cerrar se considera cerrada al final del patrón dado. Por ejemplo, la cadena de patrón {@code \"'{0}\"} se trata como el patrón {@code \"'{0}'\"}.",
+      "Las llaves dentro de un patrón sin entrecomillar deben estar equilibradas. Por ejemplo, \"ab {0} de\" y \"ab '}' de\" son patrones válidos, pero \"ab {0'}' de\", \"ab } de\" y \"''{''\" no lo son.",
+      "Advertencia: las reglas para usar comillas en los patrones de formato de mensajes han resultado ser algo confusas. En particular, para los traductores no siempre es evidente si hay que duplicar las comillas simples o no. Asegúrate de informar a los traductores de estas reglas y de indicarles (por ejemplo, con comentarios en los archivos fuente de los resource bundles) qué cadenas procesará MessageFormat. Ten en cuenta que los traductores pueden necesitar comillas simples en cadenas traducidas donde el original no las tiene.",
+      "El valor ArgumentIndex es un entero no negativo escrito con los dígitos '0' a '9', y representa un índice en el array de argumentos pasado a los métodos format o en el array resultado devuelto por los métodos parse.",
+      "Los valores FormatType y FormatStyle se usan para crear una instancia de Format para el elemento de formato. La siguiente tabla muestra cómo se corresponden los valores con instancias de Format. Las combinaciones que no aparecen en la tabla no son válidas. Un SubformatPattern debe ser una cadena de patrón válida para la subclase de Format usada.",
+      "Correspondencia de los valores FormatType y FormatStyle con instancias de Format",
+      "FormatType · FormatStyle · Subformato creado",
+      "(ninguno) · (ninguno) · null",
+      "number · (ninguno) · NumberFormat.getInstance(getLocale())",
+      "integer · NumberFormat.getIntegerInstance(getLocale())",
+      "currency · NumberFormat.getCurrencyInstance(getLocale())",
+      "percent · NumberFormat.getPercentInstance(getLocale())",
+      "SubformatPattern · new DecimalFormat(subformatPattern, DecimalFormatSymbols.getInstance(getLocale()))",
+      "date · (ninguno) · DateFormat.getDateInstance(DateFormat.DEFAULT, getLocale())",
+      "short · DateFormat.getDateInstance(DateFormat.SHORT, getLocale())",
+      "medium · DateFormat.getDateInstance(DateFormat.DEFAULT, getLocale())",
+      "long · DateFormat.getDateInstance(DateFormat.LONG, getLocale())",
+      "full · DateFormat.getDateInstance(DateFormat.FULL, getLocale())",
+      "SubformatPattern · new SimpleDateFormat(subformatPattern, getLocale())",
+      "time · (ninguno) · DateFormat.getTimeInstance(DateFormat.DEFAULT, getLocale())",
+      "short · DateFormat.getTimeInstance(DateFormat.SHORT, getLocale())",
+      "medium · DateFormat.getTimeInstance(DateFormat.DEFAULT, getLocale())",
+      "long · DateFormat.getTimeInstance(DateFormat.LONG, getLocale())",
+      "full · DateFormat.getTimeInstance(DateFormat.FULL, getLocale())",
+      "SubformatPattern · new SimpleDateFormat(subformatPattern, getLocale())",
+      "choice · SubformatPattern · new ChoiceFormat(subformatPattern)",
+      "Información de uso",
+      "Aquí tienes algunos ejemplos de uso. En programas internacionalizados reales, el patrón del mensaje y las demás cadenas estáticas se obtendrán, por supuesto, de resource bundles. Los demás parámetros se determinarán dinámicamente en tiempo de ejecución.",
+      "El primer ejemplo usa el método estático MessageFormat.format, que internamente crea un MessageFormat de un solo uso:",
+      "{@snippet lang=java : int planet = 7; String event = \"a disturbance in the Force\";",
+      "String result = MessageFormat.format( \"At {1,time} on {1,date}, there was {2} on planet {0,number,integer}.\", planet, new Date(), event); }",
+      "La salida es:",
+      "At 12:30 PM on Jul 3, 2053, there was a disturbance in the Force on planet 7.",
+      "El siguiente ejemplo crea una instancia de MessageFormat que puede usarse repetidamente:",
+      "{@snippet lang=java : int fileCount = 1273; String diskName = \"MyDisk\"; Object[] testArgs = {Long.valueOf(fileCount), diskName};",
+      "MessageFormat form = new MessageFormat( \"The disk \\\"{1}\\\" contains {0} file(s).\");",
+      "System.out.println(form.format(testArgs)); }",
+      "La salida con distintos valores de fileCount:",
+      "The disk \"MyDisk\" contains 0 file(s). The disk \"MyDisk\" contains 1 file(s). The disk \"MyDisk\" contains 1,273 file(s).",
+      "Para patrones más elaborados, puedes usar un ChoiceFormat que produzca las formas correctas de singular y plural:",
+      "{@snippet lang=java : MessageFormat form = new MessageFormat(\"The disk \\\"{1}\\\" contains {0}.\"); double[] filelimits = {0,1,2}; String[] filepart = {\"no files\",\"one file\",\"{0,number} files\"}; ChoiceFormat fileform = new ChoiceFormat(filelimits, filepart); form.setFormatByArgumentIndex(0, fileform);",
+      "int fileCount = 1273; String diskName = \"MyDisk\"; Object[] testArgs = {Long.valueOf(fileCount), diskName};",
+      "System.out.println(form.format(testArgs)); }",
+      "La salida con distintos valores de fileCount:",
+      "The disk \"MyDisk\" contains no files. The disk \"MyDisk\" contains one file. The disk \"MyDisk\" contains 1,273 files.",
+      "Puedes crear el ChoiceFormat mediante código, como en el ejemplo anterior, o con un patrón. Consulta ChoiceFormat para más información.",
+      "{@snippet lang=java : form.applyPattern( \"There {0,choice,0#are no files|1#is one file|1",
+      "Nota: como se ve arriba, la cadena producida por un ChoiceFormat dentro de MessageFormat se trata de forma especial; las apariciones de '{' indican subformatos y provocan recursión. Si creas tanto un MessageFormat como un ChoiceFormat mediante código (en lugar de con patrones de cadena), ten cuidado de no producir un formato que se llame a sí mismo, porque provocará un bucle infinito.",
+      "Cuando un mismo argumento se analiza más de una vez en la cadena, la última coincidencia es el resultado final del análisis. Por ejemplo,",
+      "{@snippet lang=java : MessageFormat mf = new MessageFormat(\"{0,number,#.##}, {0,number,#.#}\"); Object[] objs = {Double.valueOf(3.1415)}; String result = mf.format( objs ); // result now equals \"3.14, 3.1\" objs = mf.parse(result, new ParsePosition(0)); // objs now equals {Double.valueOf(3.1)} }",
+      "Del mismo modo, analizar con un MessageFormat cuyo patrón contiene varias apariciones del mismo argumento devuelve la última coincidencia. Por ejemplo,",
+      "{@snippet lang=java : MessageFormat mf = new MessageFormat(\"{0}, {0}, {0}\"); String forParsing = \"x, y, z\"; Object[] objs = mf.parse(forParsing, new ParsePosition(0)); // objs now equals {new String(\"z\")} }",
+      "Sincronización",
+      "Los formatos de mensaje no están sincronizados. Se recomienda crear instancias de formato separadas para cada hilo. Si varios hilos acceden a un formato a la vez, debe sincronizarse externamente."
+    ]
+  },
+  "web-java-se-java.text.RuleBasedCollator": {
+    "body": [
+      "Por eficiencia, RuleBasedCollator tiene las siguientes restricciones (para idiomas más complejos pueden usarse otras subclases):",
+      "Si se indica una regla de ordenación especial controlada por un <modifier>, se aplica a todo el objeto collator.",
+      "Todos los caracteres no mencionados van al final del orden de ordenación.",
+      "La tabla de ordenación se compone de una lista de reglas, cada una con una de estas tres formas:",
+      "<modifier> <relation> <text-argument> <reset> <text-argument>",
+      "Los elementos de las reglas se definen así:",
+      "Text-Argument: un text-argument es cualquier secuencia de caracteres excluyendo los caracteres especiales (es decir, los espacios en blanco habituales [0009-000D, 0020] y los caracteres de sintaxis de reglas [0021-002F, 003A-0040, 005B-0060, 007B-007E]). Si necesitas esos caracteres, puedes ponerlos entre comillas simples (p. ej. ampersand => '&'). Ten en cuenta que los espacios en blanco sin comillas se ignoran; p. ej. b c se trata como bc.",
+      "Modifier: actualmente hay dos modificadores que activan reglas de ordenación especiales.",
+      "'@' : activa la ordenación inversa de acentos (diferencias secundarias), como en francés.",
+      "'!' : activa el intercambio vocal-consonante del tailandés y el lao. Si esta regla está activa cuando una vocal tailandesa del rango \\U0E40-\\U0E44 precede a una consonante tailandesa del rango \\U0E01-\\U0E2E, O una vocal lao del rango \\U0EC0-\\U0EC4 precede a una consonante lao del rango \\U0E81-\\U0EAE, la vocal se coloca tras la consonante a efectos de ordenación.",
+      "'@' : indica que los acentos se ordenan a la inversa, como en francés.",
+      "Relation: las relaciones son las siguientes:",
+      "'<' : mayor, como diferencia de letra (primaria)",
+      "';' : mayor, como diferencia de acento (secundaria)",
+      "',' : mayor, como diferencia de mayúsculas/minúsculas (terciaria)",
+      "'=' : igual",
+      "Reset: hay un único reset, que se usa sobre todo para contracciones y expansiones, pero también para añadir una modificación al final de un conjunto de reglas.",
+      "'&' : indica que la siguiente regla va a continuación de la posición donde se ordenaría el text-argument del reset.",
+      "Parece más complicado de lo que es en la práctica. Por ejemplo, las siguientes son formas equivalentes de expresar lo mismo:",
+      "Fíjate en que el orden importa, porque el elemento siguiente va justo después del text-argument. Las siguientes no son equivalentes:",
+      "El text-argument debe estar ya presente en la secuencia, o bien alguna subcadena inicial suya. (p. ej. \"a < b & ae < e\" es válido porque \"a\" está en la secuencia antes del reset de \"ae\"). En este último caso, \"ae\" no se introduce ni se trata como un único carácter; en su lugar, \"e\" se ordena como si se expandiera a dos caracteres: \"a\" seguida de \"e\". Esta diferencia aparece en los idiomas naturales: en el español tradicional \"ch\" se trata como si se contrajera en un único carácter (expresado como \"c < ch < d\"), mientras que en el alemán tradicional la a con diéresis se trata como si se expandiera a dos caracteres (expresado como \"a,A < b,B ... &ae;\\u00e3&AE;\\u00c3\"). [\\u00e3 y \\u00c3 son, claro, las secuencias de escape de la a con diéresis].",
+      "Caracteres ignorables",
+      "Para los caracteres ignorables, la primera regla debe empezar con una relación (los ejemplos anteriores son en realidad fragmentos; \"a < b\" debería ser \"< a < b\"). Si la primera relación no es \"<\", todos los text-arguments hasta el primer \"<\" son ignorables. Por ejemplo, \", - < a < b\" hace que \"-\" sea ignorable, como vimos antes con la palabra \"black-birds\". En los ejemplos de distintos idiomas se ve que la mayoría de los acentos son ignorables.",
+      "Normalización y acentos",
+      "RuleBasedCollator procesa automáticamente su tabla de reglas para incluir tanto las versiones precompuestas como las de caracteres combinados de los caracteres acentuados. Aunque la cadena de reglas solo contenga caracteres base y acentos combinados separados, se introducirán en la tabla los caracteres acentuados precompuestos que correspondan a todas las combinaciones canónicas de caracteres de la cadena de reglas.",
+      "Esto permite usar un RuleBasedCollator para comparar cadenas acentuadas incluso con el collator en NO_DECOMPOSITION. Hay dos salvedades. Primera: si las cadenas a ordenar contienen secuencias combinadas que puedan no estar en orden canónico, debes poner el collator en CANONICAL_DECOMPOSITION o FULL_DECOMPOSITION para ordenar esas secuencias. Segunda: si las cadenas contienen caracteres con descomposiciones de compatibilidad (como las formas de ancho completo y medio ancho), debes usar FULL_DECOMPOSITION, porque las tablas de reglas solo incluyen correspondencias canónicas.",
+      "Errores",
+      "Son errores los siguientes:",
+      "Un text-argument contiene signos de puntuación sin comillas (p. ej. \"a < b-c < d\").",
+      "Un carácter de relación o de reset no seguido de un text-argument (p. ej. \"a < ,b\").",
+      "Un reset cuyo text-argument (o una subcadena inicial suya) no está ya en la secuencia (p. ej. \"a < b & e < f\").",
+      "Si produces alguno de estos errores, RuleBasedCollator lanza ParseException.",
+      "Ejemplos",
+      "Simple: \"< a < b < c < d\"",
+      "Noruego: \"< a, A < b, B < c, C < d, D < e, E < f, F < g, G < h, H < i, I < j, J < k, K < l, L < m, M < n, N < o, O < p, P < q, Q < r, R < s, S < t, T < u, U < v, V < w, W < x, X < y, Y < z, Z < \\u00E6, \\u00C6 < \\u00F8, \\u00D8 < \\u00E5 = a\\u030A, \\u00C5 = A\\u030A; aa, AA\"",
+      "Para crear un objeto RuleBasedCollator con reglas adaptadas a tus necesidades, constrúyelo con las reglas contenidas en un String. Por ejemplo:",
+      "String simple = \"< a< b< c< d\"; RuleBasedCollator mySimple = new RuleBasedCollator(simple);",
+      "O bien:",
+      "String Norwegian = \"< a, A < b, B < c, C < d, D < e, E < f, F < g, G < h, H < i, I\" + \"< j, J < k, K < l, L < m, M < n, N < o, O < p, P < q, Q < r, R\" + \"< s, S < t, T < u, U < v, V < w, W < x, X < y, Y < z, Z\" + \"< \\u00E6, \\u00C6\" + // Latin letter ae & AE \"< \\u00F8, \\u00D8\" + // Latin letter o & O with stroke \"< \\u00E5 = a\\u030A,\" + // Latin letter a with ring above \" \\u00C5 = A\\u030A;\" + // Latin letter A with ring above \" aa, AA\"; RuleBasedCollator myNorwegian = new RuleBasedCollator(Norwegian);",
+      "Se puede crear una nueva cadena de reglas concatenando cadenas de reglas. Por ejemplo, las reglas devueltas por getRules() pueden concatenarse para combinar varios RuleBasedCollator.",
+      "El siguiente ejemplo muestra cómo cambiar el orden de los acentos sin espacio,",
+      "// old rule String oldRules = \"=\\u0301;\\u0300;\\u0302;\\u0308\" // main accents + \";\\u0327;\\u0303;\\u0304;\\u0305\" // main accents + \";\\u0306;\\u0307;\\u0309;\\u030A\" // main accents + \";\\u030B;\\u030C;\\u030D;\\u030E\" // main accents + \";\\u030F;\\u0310;\\u0311;\\u0312\" // main accents + \"< a , A ; ae, AE ; \\u00e6 , \\u00c6\" + \"< b , B < c, C < e, E & C < d, D\"; // change the order of accent characters String addOn = \"& \\u0300 ; \\u0308 ; \\u0302\"; RuleBasedCollator myCollator = new RuleBasedCollator(oldRules + addOn);"
+    ]
+  },
+  "web-java-se-java.text.SimpleDateFormat": {
+    "body": [
+      "SimpleDateFormat te permite empezar eligiendo cualquier patrón definido por el usuario para formatear fechas y horas. Aun así, se recomienda crear el formateador con getTimeInstance, getDateInstance o getDateTimeInstance de DateFormat. Cada uno de estos métodos de clase puede devolver un formateador de fecha/hora inicializado con un patrón predeterminado. Puedes modificar el patrón con los métodos applyPattern si lo necesitas. Para más información sobre estos métodos, consulta DateFormat.",
+      "Patrones de fecha y hora",
+      "Los formatos de fecha y hora se indican con cadenas de patrón. Dentro de ellas, las letras sin comillas de la 'A' a la 'Z' y de la 'a' a la 'z' se interpretan como letras de patrón que representan los componentes de una fecha u hora. El texto puede entrecomillarse con comillas simples (') para evitar que se interprete. \"''\" representa una comilla simple. Los demás caracteres no se interpretan; simplemente se copian en la salida al formatear o se comparan con la entrada al analizar.",
+      "Están definidas las siguientes letras de patrón (todos los demás caracteres de la 'A' a la 'Z' y de la 'a' a la 'z' están reservados):",
+      "Tabla con las letras de patrón, el componente de fecha/hora, la presentación y ejemplos.",
+      "Letra · Componente de fecha u hora · Presentación · Ejemplos",
+      "G · Designador de era · Texto · AD",
+      "y · Año · Año · 1996; 96",
+      "Y · Año de semana · Año · 2009; 09",
+      "M · Mes del año (según contexto) · Mes · July; Jul; 07",
+      "L · Mes del año (forma independiente) · Mes · July; Jul; 07",
+      "w · Semana del año · Número · 27",
+      "W · Semana del mes · Número · 2",
+      "D · Día del año · Número · 189",
+      "d · Día del mes · Número · 10",
+      "F · Día de la semana en el mes · Número · 2",
+      "E · Nombre del día de la semana · Texto · Tuesday; Tue",
+      "u · Número del día de la semana (1 = lunes, ..., 7 = domingo) · Número · 1",
+      "a · Marcador am/pm · Texto · PM",
+      "H · Hora del día (0-23) · Número · 0",
+      "k · Hora del día (1-24) · Número · 24",
+      "K · Hora en am/pm (0-11) · Número · 0",
+      "h · Hora en am/pm (1-12) · Número · 12",
+      "m · Minuto de la hora · Número · 30",
+      "s · Segundo del minuto · Número · 55",
+      "S · Milisegundo · Número · 978",
+      "z · Zona horaria · Zona horaria general · Pacific Standard Time; PST; GMT-08:00",
+      "Z · Zona horaria · Zona horaria RFC 822 · -0800",
+      "X · Zona horaria · Zona horaria ISO 8601 · -08; -0800; -08:00",
+      "Las letras de patrón suelen repetirse, ya que su número determina la presentación exacta:",
+      "Texto: al formatear, si hay 4 o más letras de patrón se usa la forma completa; en otro caso se usa la forma corta o abreviada si existe. Al analizar se aceptan ambas formas, con independencia del número de letras.",
+      "Número: al formatear, el número de letras de patrón es el mínimo de dígitos, y los números más cortos se rellenan con ceros hasta esa cantidad. Al analizar, el número de letras se ignora salvo que haga falta para separar dos campos adyacentes.",
+      "Año: si el Calendar del formateador es el calendario gregoriano, se aplican las siguientes reglas.",
+      "Al formatear, si hay 2 letras de patrón, el año se trunca a 2 dígitos; en otro caso se interpreta como número.",
+      "Al analizar, si hay más de 2 letras de patrón, el año se interpreta literalmente, sea cual sea el número de dígitos. Así, con el patrón \"MM/dd/yyyy\", \"01/11/12\" se analiza como el 11 de enero del año 12 d. C.",
+      "Al analizar con el patrón de año abreviado (\"y\" o \"yy\"), SimpleDateFormat debe interpretar el año abreviado respecto a algún siglo. Para ello ajusta las fechas para que queden entre 80 años antes y 20 años después del momento en que se creó la instancia de SimpleDateFormat. Por ejemplo, con el patrón \"MM/dd/yy\" y una instancia creada el 1 de enero de 1997, la cadena \"01/11/12\" se interpretaría como el 11 de enero de 2012, y \"05/04/64\" como el 4 de mayo de 1964. Durante el análisis, solo las cadenas formadas exactamente por dos dígitos, según Character.isDigit(char), se llevan al siglo predeterminado. Cualquier otra cadena numérica, como una de un dígito, una de tres o más, o una de dos caracteres que no sean todos dígitos (por ejemplo \"-1\"), se interpreta literalmente. Así, \"01/02/3\" o \"01/02/003\" se analizan, con el mismo patrón, como el 2 de enero del año 3 d. C. Del mismo modo, \"01/02/-3\" se analiza como el 2 de enero del 4 a. C.",
+      "En otro caso, se aplican formas propias del sistema de calendario. Tanto al formatear como al analizar, si hay 4 o más letras de patrón se usa la forma larga del calendario; en otro caso, la forma corta o abreviada.",
+      "Si se indica el año de semana 'Y' y el calendario no admite años de semana, se usa en su lugar el año del calendario ('y'). Puedes comprobar si se admiten con getCalendar().isWeekDateSupported().",
+      "Mes: si hay 3 o más letras de patrón, el mes se interpreta como texto; en otro caso, como número.",
+      "La letra M produce nombres de mes según el contexto, como la forma integrada de los nombres. M depende del contexto en el sentido de que, usada en un patrón independiente como \"MMMM\", da la forma independiente del nombre del mes, y usada en un patrón con otros campos, como \"d MMMM\", da la forma de formateo. Por ejemplo, enero en catalán es \"de gener\" en la forma de formateo y \"gener\" en la forma independiente. En ese caso, \"MMMM\" producirá \"gener\" y la parte del mes de \"d MMMM\" producirá \"de gener\". Si se ha fijado explícitamente un DateFormatSymbols con el constructor SimpleDateFormat(String, DateFormatSymbols) o con setDateFormatSymbols(DateFormatSymbols), se usan los nombres de mes de ese DateFormatSymbols.",
+      "La letra L produce la forma independiente de los nombres de mes.",
+      "Zona horaria general: las zonas horarias se interpretan como texto si tienen nombre. Para las que representan un desfase respecto a GMT se usa la siguiente sintaxis:",
+      "GMTOffsetTimeZone: GMT Sign Hours : Minutes Sign: one of + - Hours: Digit Digit Digit Minutes: Digit Digit Digit: one of 0 1 2 3 4 5 6 7 8 9",
+      "Hours debe estar entre 0 y 23 y Minutes entre 00 y 59. El formato no depende de la configuración regional y los dígitos deben ser del bloque Basic Latin del estándar Unicode.",
+      "Al analizar también se aceptan zonas horarias RFC 822.",
+      "Zona horaria RFC 822: al formatear se usa el formato de zona horaria RFC 822 de 4 dígitos:",
+      "RFC822TimeZone: Sign TwoDigitHours Minutes TwoDigitHours: Digit Digit",
+      "TwoDigitHours debe estar entre 00 y 23. Las demás definiciones son como en las zonas horarias generales.",
+      "Al analizar también se aceptan zonas horarias generales.",
+      "Zona horaria ISO 8601: el número de letras de patrón indica el formato tanto para formatear como para analizar, así:",
+      "ISO8601TimeZone: OneLetterISO8601TimeZone TwoLetterISO8601TimeZone ThreeLetterISO8601TimeZone OneLetterISO8601TimeZone: Sign TwoDigitHours Z TwoLetterISO8601TimeZone: Sign TwoDigitHours Minutes Z ThreeLetterISO8601TimeZone: Sign TwoDigitHours : Minutes Z",
+      "Las demás definiciones son como en las zonas horarias generales o RFC 822.",
+      "Al formatear, si el desfase respecto a GMT es 0, se produce \"Z\". Si hay 1 letra de patrón, se ignora cualquier fracción de hora. Por ejemplo, si el patrón es \"X\" y la zona horaria es \"GMT+05:30\", se produce \"+05\".",
+      "Al analizar, \"Z\" se interpreta como el designador de la zona horaria UTC. No se aceptan zonas horarias generales.",
+      "Si hay 4 o más letras de patrón, se lanza IllegalArgumentException al construir un SimpleDateFormat o al aplicar un patrón.",
+      "SimpleDateFormat también admite cadenas de patrón de fecha y hora localizadas. En ellas, las letras de patrón descritas arriba pueden sustituirse por otras que dependen de la configuración regional. SimpleDateFormat no se encarga de localizar más texto que las letras de patrón; eso le corresponde al código cliente de la clase.",
+      "Ejemplos",
+      "Los siguientes ejemplos muestran cómo se interpretan los patrones de fecha y hora en la configuración regional de EE. UU. La fecha y hora usadas son 2001-07-04 12:08:56, hora local de la zona del Pacífico de EE. UU.",
+      "Ejemplos de patrones de fecha y hora interpretados en la configuración regional de EE. UU.",
+      "Patrón de fecha y hora · Resultado",
+      "\"yyyy.MM.dd G 'at' HH:mm:ss z\" · 2001.07.04 AD at 12:08:56 PDT",
+      "\"EEE, MMM d, ''yy\" · Wed, Jul 4, '01",
+      "\"h:mm a\" · 12:08 PM",
+      "\"hh 'o''clock' a, zzzz\" · 12 o'clock PM, Pacific Daylight Time",
+      "\"K:mm a, z\" · 0:08 PM, PDT",
+      "\"yyyyy.MMMMM.dd GGG hh:mm aaa\" · 02001.July.04 AD 12:08 PM",
+      "\"EEE, d MMM yyyy HH:mm:ss Z\" · Wed, 4 Jul 2001 12:08:56 -0700",
+      "\"yyMMddHHmmssZ\" · 010704120856-0700",
+      "\"yyyy-MM-dd'T'HH:mm:ss.SSSZ\" · 2001-07-04T12:08:56.235-0700",
+      "\"yyyy-MM-dd'T'HH:mm:ss.SSSXXX\" · 2001-07-04T12:08:56.235-07:00",
+      "\"YYYY-'W'ww-u\" · 2001-W27-3",
+      "Sincronización",
+      "Los formatos de fecha no están sincronizados. Se recomienda crear instancias de formato separadas para cada hilo. Si varios hilos acceden a un formato a la vez, debe sincronizarse externamente."
+    ],
+    "caveats": [
+      "Considera usar java.time.format.DateTimeFormatter como alternativa inmutable y segura para hilos."
     ]
   },
   "web-java-se-java.time.DayOfWeek.adjustInto": {
@@ -15457,6 +16274,79 @@
       }
     ]
   },
+  "web-java-se-java.util.regex.Matcher.useAnchoringBounds": {
+    "body": [
+      "Llamar a este método con true hace que este matcher use límites de anclaje. Si el argumento es false, se usarán límites sin anclaje.",
+      "Con límites de anclaje, los extremos de la región de este matcher coinciden con anclas como ^ y $.",
+      "Sin límites de anclaje, los extremos de la región de este matcher no coinciden con anclas como ^ y $.",
+      "Por defecto, un matcher usa límites de región con anclaje."
+    ],
+    "parameters": [
+      {
+        "label": "b",
+        "detail": "un boolean que indica si se usan límites de anclaje."
+      }
+    ],
+    "returns": ["este matcher"]
+  },
+  "web-java-se-java.util.regex.Pattern.matches": {
+    "body": [
+      "Una llamada a este método de conveniencia de la forma",
+      "Pattern.matches(regex, input);",
+      "se comporta exactamente igual que la expresión",
+      "Pattern.compile(regex).matcher(input).matches()",
+      "Si un patrón se va a usar varias veces, es más eficiente compilarlo una vez y reutilizarlo que llamar a este método cada vez."
+    ],
+    "parameters": [
+      {
+        "label": "regex",
+        "detail": "La expresión que se va a compilar"
+      },
+      {
+        "label": "input",
+        "detail": "La secuencia de caracteres que se va a comparar"
+      }
+    ],
+    "returns": ["si la expresión regular coincide o no con la entrada"],
+    "exceptions": [
+      {
+        "label": "PatternSyntaxException",
+        "detail": "Si la sintaxis de la expresión no es válida"
+      }
+    ]
+  },
+  "web-java-se-java.util.regex.Pattern.splitWithDelimiters": {
+    "body": [
+      "El array devuelto por este método contiene cada subcadena de la entrada terminada por otra subsecuencia que coincide con este patrón o por el final de la entrada. Cada subcadena va seguida inmediatamente de la subsecuencia (el delimitador) que coincide con este patrón, salvo la última, que no va seguida de nada. Las subcadenas y los delimitadores aparecen en el array en el orden en que aparecen en la entrada. Si este patrón no coincide con ninguna subsecuencia de la entrada, el array resultante tiene un solo elemento: la entrada en forma de cadena.",
+      "Si hay una coincidencia de anchura positiva al principio de la entrada, se incluye una subcadena inicial vacía al principio del array resultante. En cambio, una coincidencia de anchura cero al principio nunca produce esa subcadena inicial vacía ni el delimitador vacío.",
+      "El parámetro limit controla cuántas veces se aplica el patrón y, por tanto, la longitud del array.",
+      "Si limit es positivo, el patrón se aplica como mucho limit - 1 veces, el array no tiene más de 2 × limit - 1 elementos y el último contiene toda la entrada posterior al último delimitador encontrado.",
+      "Si el límite es cero, el patrón se aplica tantas veces como sea posible, el array puede tener cualquier longitud y se descartan las cadenas vacías finales, ya sean subcadenas o delimitadores.",
+      "Si limit es negativo, el patrón se aplica tantas veces como sea posible y el array puede tener cualquier longitud.",
+      "Por ejemplo, la entrada \"boo:::and::foo\" da estos resultados con estos parámetros:",
+      "Ejemplo de división con la expresión regular, el límite y el resultado",
+      "Expresión regular · Límite · Resultado",
+      ":+ · 2 · {@code { \"boo\", \":::\", \"and::foo\" }}",
+      "5 · {@code { \"boo\", \":::\", \"and\", \"::\", \"foo\" }}",
+      "-1 · {@code { \"boo\", \":::\", \"and\", \"::\", \"foo\" }}",
+      "o · 5 · {@code { \"b\", \"o\", \"\", \"o\", \":::and::f\", \"o\", \"\", \"o\", \"\" }}",
+      "-1 · {@code { \"b\", \"o\", \"\", \"o\", \":::and::f\", \"o\", \"\", \"o\", \"\" }}",
+      "0 · {@code { \"b\", \"o\", \"\", \"o\", \":::and::f\", \"o\", \"\", \"o\" }}"
+    ],
+    "parameters": [
+      {
+        "label": "input",
+        "detail": "La secuencia de caracteres que se va a dividir"
+      },
+      {
+        "label": "limit",
+        "detail": "El umbral del resultado, tal como se describe arriba"
+      }
+    ],
+    "returns": [
+      "El array de cadenas obtenido al dividir la entrada por las coincidencias de este patrón, alternando subcadenas y delimitadores coincidentes"
+    ]
+  },
   "web-java-se-java.util.stream.Collectors.toMap": {
     "overloads": [
       {
@@ -16001,12 +16891,38 @@
       }
     ]
   },
+  "web-java-se-javax.swing.JSpinner%24NumberEditor.setComponentOrientation": {
+    "body": [
+      "Al construirlo, la orientación de un componente es ComponentOrientation.UNKNOWN, lo que indica que no se ha fijado explícitamente. La orientación UNKNOWN se comporta igual que ComponentOrientation.LEFT_TO_RIGHT.",
+      "Usa este método para fijar la orientación de un único componente. Para fijarla en toda una jerarquía de componentes, usa applyComponentOrientation.",
+      "Este método cambia información relacionada con la disposición y, por tanto, invalida la jerarquía de componentes."
+    ],
+    "parameters": [
+      {
+        "label": "o",
+        "detail": "la orientación que se va a fijar"
+      }
+    ]
+  },
   "web-java-se-javax.swing.plaf.nimbus.State.toString": {
     "returns": ["una representación en cadena del objeto."],
     "caveats": [
       "En general, toString devuelve una cadena que «representa textualmente» el objeto. Debería ser una representación concisa pero informativa y fácil de leer. Se recomienda que todas las subclases sobrescriban este método. La cadena no tiene por qué ser estable en el tiempo ni entre ejecuciones de la JVM.",
       "El toString de Object devuelve una cadena con el nombre de la clase de la que el objeto es instancia, el carácter arroba '@' y la representación hexadecimal sin signo del código hash del objeto. Es decir, devuelve una cadena igual al valor de:",
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
+    ]
+  },
+  "web-java-se-javax.swing.text.JTextComponent.setComponentOrientation": {
+    "body": [
+      "Al construirlo, la orientación de un componente es ComponentOrientation.UNKNOWN, lo que indica que no se ha fijado explícitamente. La orientación UNKNOWN se comporta igual que ComponentOrientation.LEFT_TO_RIGHT.",
+      "Usa este método para fijar la orientación de un único componente. Para fijarla en toda una jerarquía de componentes, usa applyComponentOrientation.",
+      "Este método cambia información relacionada con la disposición y, por tanto, invalida la jerarquía de componentes."
+    ],
+    "parameters": [
+      {
+        "label": "o",
+        "detail": "la orientación que se va a fijar"
+      }
     ]
   },
   "web-java-se-javax.swing.text.TabStop.toString": {
