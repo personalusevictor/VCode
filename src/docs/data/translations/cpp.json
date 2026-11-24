@@ -2695,5 +2695,390 @@
   },
   "web-cpp20-std%3A%3Auniform_int_distribution%3A%3Amax": {
     "body": ["Coincide con b()."]
+  },
+  "web-cpp20-std%3A%3Auniform_int_distribution%3A%3Amin": {
+    "body": ["Coincide con a()."]
+  },
+  "web-cpp20-std%3A%3Auniform_int_distribution%3A%3Aoperator%28%29": {
+    "body": [
+      "Cada llamada consume uno o más valores del motor. La segunda sobrecarga usa otros parámetros solo para esa llamada, sin cambiar los de la distribución."
+    ]
+  },
+  "web-cpp20-std%3A%3Auniform_int_distribution%3A%3Aparam": {
+    "intro": ["Consulta o sustituye los parámetros de la distribución."],
+    "body": [
+      "param_type agrupa los límites a y b. Cambiarlos con param(p) equivale a crear una distribución nueva con esos límites."
+    ]
+  },
+  "web-cpp20-std%3A%3Auniform_real_distribution": {
+    "body": [
+      "Se construye con los límites a y b, por defecto 0 y 1, y se llama con un motor: std::uniform_real_distribution<double> d(0.0, 1.0); double x = d(motor);. El valor está en [a, b).",
+      "Solo admite float, double y long double; para enteros usa std::uniform_int_distribution."
+    ]
+  },
+  "web-cpp20-std%3A%3Auniform_real_distribution%3A%3Aa": {
+    "body": [
+      "Es el valor mínimo que puede devolver la distribución, incluido en el intervalo."
+    ]
+  },
+  "web-cpp20-std%3A%3Auniform_real_distribution%3A%3Ab": {
+    "body": [
+      "Es el límite superior del intervalo [a, b); la distribución no lo devuelve."
+    ]
+  },
+  "web-cpp20-std%3A%3Auniform_real_distribution%3A%3Amax": {
+    "body": [
+      "Coincide con b(), aunque b no forma parte de los valores generados."
+    ]
+  },
+  "web-cpp20-std%3A%3Auniform_real_distribution%3A%3Amin": {
+    "body": ["Coincide con a()."]
+  },
+  "web-cpp20-std%3A%3Auniform_real_distribution%3A%3Aoperator%28%29": {
+    "body": [
+      "La segunda sobrecarga usa otros parámetros solo para esa llamada, sin cambiar los de la distribución."
+    ]
+  },
+  "web-cpp20-std%3A%3Auniform_real_distribution%3A%3Aparam": {
+    "intro": ["Consulta o sustituye los parámetros de la distribución."],
+    "body": ["param_type agrupa los límites a y b."]
+  },
+  "web-cpp20-std%3A%3Aunique_lock": {
+    "body": [
+      "Como std::lock_guard, desbloquea el mutex al destruirse, pero además permite unlock() y lock() en medio, bloqueo diferido (std::defer_lock), intentos con std::try_to_lock y esperas con tiempo límite.",
+      "Es el bloqueo que necesita std::condition_variable::wait(). Se puede mover para transferir la propiedad del bloqueo, pero no copiar."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunique_lock%3A%3Alock": {
+    "intro": [
+      "Bloquea, es decir, toma la propiedad del mutex asociado. Equivale a mutex()->lock()."
+    ],
+    "body": [
+      "Lanza std::system_error si no hay mutex asociado o si ya lo posee."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunique_lock%3A%3Aowns_lock": {
+    "intro": ["Comprueba si *this posee un mutex bloqueado."],
+    "body": [
+      "Equivale a la conversión explícita a bool. Es útil tras un try_lock() o con std::try_to_lock."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunique_lock%3A%3Aswap": {
+    "intro": ["Intercambia el estado interno de dos objetos de bloqueo."],
+    "body": ["Se intercambian el mutex asociado y si se posee o no."]
+  },
+  "web-cpp20-std%3A%3Aunique_lock%3A%3A~unique_lock": {
+    "intro": [
+      "Destruye el bloqueo. Si *this tiene un mutex asociado y lo posee, lo desbloquea."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunique_ptr%3A%3Aget_deleter": {
+    "intro": [
+      "Devuelve el borrador que se usará para destruir el objeto gestionado."
+    ],
+    "returns": ["El borrador almacenado."],
+    "body": [
+      "Con el borrador por defecto, std::default_delete, apenas tiene uso; sirve sobre todo con borradores propios que guardan estado."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunique_ptr%3A%3Aoperator%20bool": {
+    "intro": [
+      "Comprueba si *this gestiona un objeto, es decir, si get() != nullptr."
+    ],
+    "body": [
+      "Es explícita, así que funciona en condiciones como if (ptr) pero no convierte el puntero a bool en otros contextos."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunique_ptr%3A%3Aoperator%3D": {
+    "body": [
+      "La asignación por copia está eliminada: para transferir la propiedad hay que usar std::move(). El objeto que tenía antes se destruye con el borrador."
+    ],
+    "returns": ["*this"]
+  },
+  "web-cpp20-std%3A%3Aunique_ptr%3A%3Aswap": {
+    "intro": [
+      "Intercambia los objetos gestionados y los borradores de *this y u."
+    ],
+    "body": ["No lanza excepciones ni destruye ningún objeto."]
+  },
+  "web-cpp20-std%3A%3Aunordered_map%3A%3Abucket_count": {
+    "intro": ["Devuelve el número de cubetas (buckets) del contenedor."],
+    "body": [
+      "Crece automáticamente cuando load_factor() supera max_load_factor(), lo que provoca un rehash. reserve() o rehash() permiten fijarlo de antemano."
+    ],
+    "returns": ["El número de cubetas del contenedor."]
+  },
+  "web-cpp20-std%3A%3Aunordered_map%3A%3Aempty": {
+    "intro": [
+      "Comprueba si el contenedor no tiene elementos, es decir, si begin() == end()."
+    ],
+    "body": ["Para vaciar el contenedor se usa clear(), no empty()."]
+  },
+  "web-cpp20-std%3A%3Aunordered_map%3A%3Afind": {
+    "body": [
+      "Si solo necesitas saber si la clave está, contains() (C++20) es más claro.",
+      "Las sobrecargas con plantilla (C++20) permiten buscar con otro tipo, como una std::string_view, si el hash y la comparación son transparentes."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_map%3A%3Aget_allocator": {
+    "intro": ["Devuelve el asignador asociado al contenedor."],
+    "body": [
+      "Es útil con asignadores con estado o polimórficos, como los de std::pmr."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_map%3A%3Ahash_function": {
+    "intro": ["Devuelve la función que calcula el hash de las claves."],
+    "body": [
+      "Es una copia del objeto hash indicado en la plantilla, std::hash<Key> por defecto."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_map%3A%3Akey_eq": {
+    "intro": ["Devuelve la función que compara si dos claves son iguales."],
+    "body": [
+      "Es una copia del predicado indicado en la plantilla, std::equal_to<Key> por defecto. Dos claves iguales deben tener el mismo hash."
+    ],
+    "returns": ["La función de comparación de claves."]
+  },
+  "web-cpp20-std%3A%3Aunordered_map%3A%3Aload_factor": {
+    "body": [
+      "Cuando supera max_load_factor() (1.0 por defecto), el contenedor aumenta el número de cubetas y redistribuye los elementos."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_map%3A%3Asize": {
+    "intro": [
+      "Devuelve el número de elementos del contenedor, es decir, std::distance(begin(), end())."
+    ],
+    "body": [
+      "Cada clave cuenta una sola vez, porque std::unordered_map no admite claves repetidas."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_multimap": {
+    "body": [
+      "Como std::unordered_map, pero admite varias entradas con la misma clave. No tiene operator[] ni at().",
+      "equal_range() devuelve todas las entradas de una clave, que siempre quedan juntas al recorrer el contenedor."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_multimap%3A%3Abucket_count": {
+    "intro": ["Devuelve el número de cubetas (buckets) del contenedor."],
+    "body": [
+      "Crece automáticamente cuando load_factor() supera max_load_factor(), lo que provoca un rehash. reserve() o rehash() permiten fijarlo de antemano."
+    ],
+    "returns": ["El número de cubetas del contenedor."]
+  },
+  "web-cpp20-std%3A%3Aunordered_multimap%3A%3Aempty": {
+    "intro": [
+      "Comprueba si el contenedor no tiene elementos, es decir, si begin() == end()."
+    ],
+    "body": ["Para vaciar el contenedor se usa clear(), no empty()."]
+  },
+  "web-cpp20-std%3A%3Aunordered_multimap%3A%3Afind": {
+    "body": [
+      "Si hay varios elementos con esa clave, puede devolver cualquiera de ellos. Para obtenerlos todos, usa equal_range().",
+      "Las sobrecargas con plantilla (C++20) permiten buscar con otro tipo, como una std::string_view, si el hash y la comparación son transparentes."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_multimap%3A%3Aget_allocator": {
+    "intro": ["Devuelve el asignador asociado al contenedor."],
+    "body": [
+      "Es útil con asignadores con estado o polimórficos, como los de std::pmr."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_multimap%3A%3Ahash_function": {
+    "intro": ["Devuelve la función que calcula el hash de las claves."],
+    "body": [
+      "Es una copia del objeto hash indicado en la plantilla, std::hash<Key> por defecto."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_multimap%3A%3Akey_eq": {
+    "intro": ["Devuelve la función que compara si dos claves son iguales."],
+    "body": [
+      "Es una copia del predicado indicado en la plantilla, std::equal_to<Key> por defecto. Dos claves iguales deben tener el mismo hash."
+    ],
+    "returns": ["La función de comparación de claves."]
+  },
+  "web-cpp20-std%3A%3Aunordered_multimap%3A%3Aload_factor": {
+    "body": [
+      "Cuando supera max_load_factor() (1.0 por defecto), el contenedor aumenta el número de cubetas y redistribuye los elementos."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_multimap%3A%3Asize": {
+    "intro": [
+      "Devuelve el número de elementos del contenedor, es decir, std::distance(begin(), end())."
+    ],
+    "body": [
+      "Cuenta todas las entradas, también las que repiten clave. Para contar las de una clave, usa count(clave)."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_multiset": {
+    "body": [
+      "Como std::unordered_set, pero admite valores repetidos. count() dice cuántas veces aparece un valor y equal_range() devuelve todos.",
+      "Los valores iguales quedan juntos al recorrerlo, pero el orden entre grupos no está especificado."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_multiset%3A%3Abucket_count": {
+    "intro": ["Devuelve el número de cubetas (buckets) del contenedor."],
+    "body": [
+      "Crece automáticamente cuando load_factor() supera max_load_factor(), lo que provoca un rehash. reserve() o rehash() permiten fijarlo de antemano."
+    ],
+    "returns": ["El número de cubetas del contenedor."]
+  },
+  "web-cpp20-std%3A%3Aunordered_multiset%3A%3Aempty": {
+    "intro": [
+      "Comprueba si el contenedor no tiene elementos, es decir, si begin() == end()."
+    ],
+    "body": ["Para vaciar el contenedor se usa clear(), no empty()."]
+  },
+  "web-cpp20-std%3A%3Aunordered_multiset%3A%3Afind": {
+    "body": [
+      "Si hay varios elementos con esa clave, puede devolver cualquiera de ellos. Para obtenerlos todos, usa equal_range().",
+      "Las sobrecargas con plantilla (C++20) permiten buscar con otro tipo, como una std::string_view, si el hash y la comparación son transparentes."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_multiset%3A%3Aget_allocator": {
+    "intro": ["Devuelve el asignador asociado al contenedor."],
+    "body": [
+      "Es útil con asignadores con estado o polimórficos, como los de std::pmr."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_multiset%3A%3Ahash_function": {
+    "intro": ["Devuelve la función que calcula el hash de las claves."],
+    "body": [
+      "Es una copia del objeto hash indicado en la plantilla, std::hash<Key> por defecto."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_multiset%3A%3Akey_eq": {
+    "intro": ["Devuelve la función que compara si dos claves son iguales."],
+    "body": [
+      "Es una copia del predicado indicado en la plantilla, std::equal_to<Key> por defecto. Dos claves iguales deben tener el mismo hash."
+    ],
+    "returns": ["La función de comparación de claves."]
+  },
+  "web-cpp20-std%3A%3Aunordered_multiset%3A%3Aload_factor": {
+    "body": [
+      "Cuando supera max_load_factor() (1.0 por defecto), el contenedor aumenta el número de cubetas y redistribuye los elementos."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_multiset%3A%3Asize": {
+    "intro": [
+      "Devuelve el número de elementos del contenedor, es decir, std::distance(begin(), end())."
+    ],
+    "body": ["Cuenta también los valores repetidos."]
+  },
+  "web-cpp20-std%3A%3Aunordered_set": {
+    "body": [
+      "insert() añade un valor solo si no existe; find(), contains() (C++20) y count() comprueban si está. Estas operaciones cuestan O(1) de media.",
+      "El tipo necesita std::hash y operator==, o un hash y un comparador propios. El orden de recorrido no está especificado y puede cambiar tras un rehash."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_set%3A%3Abucket_count": {
+    "intro": ["Devuelve el número de cubetas (buckets) del contenedor."],
+    "body": [
+      "Crece automáticamente cuando load_factor() supera max_load_factor(), lo que provoca un rehash. reserve() o rehash() permiten fijarlo de antemano."
+    ],
+    "returns": ["El número de cubetas del contenedor."]
+  },
+  "web-cpp20-std%3A%3Aunordered_set%3A%3Aempty": {
+    "intro": [
+      "Comprueba si el contenedor no tiene elementos, es decir, si begin() == end()."
+    ],
+    "body": ["Para vaciar el contenedor se usa clear(), no empty()."]
+  },
+  "web-cpp20-std%3A%3Aunordered_set%3A%3Afind": {
+    "body": [
+      "Si solo necesitas saber si la clave está, contains() (C++20) es más claro.",
+      "Las sobrecargas con plantilla (C++20) permiten buscar con otro tipo, como una std::string_view, si el hash y la comparación son transparentes."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_set%3A%3Aget_allocator": {
+    "intro": ["Devuelve el asignador asociado al contenedor."],
+    "body": [
+      "Es útil con asignadores con estado o polimórficos, como los de std::pmr."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_set%3A%3Ahash_function": {
+    "intro": ["Devuelve la función que calcula el hash de las claves."],
+    "body": [
+      "Es una copia del objeto hash indicado en la plantilla, std::hash<Key> por defecto."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_set%3A%3Akey_eq": {
+    "intro": ["Devuelve la función que compara si dos claves son iguales."],
+    "body": [
+      "Es una copia del predicado indicado en la plantilla, std::equal_to<Key> por defecto. Dos claves iguales deben tener el mismo hash."
+    ],
+    "returns": ["La función de comparación de claves."]
+  },
+  "web-cpp20-std%3A%3Aunordered_set%3A%3Aload_factor": {
+    "body": [
+      "Cuando supera max_load_factor() (1.0 por defecto), el contenedor aumenta el número de cubetas y redistribuye los elementos."
+    ]
+  },
+  "web-cpp20-std%3A%3Aunordered_set%3A%3Asize": {
+    "intro": [
+      "Devuelve el número de elementos del contenedor, es decir, std::distance(begin(), end())."
+    ],
+    "body": [
+      "Cada valor cuenta una sola vez, porque std::unordered_set no admite repetidos."
+    ]
+  },
+  "web-cpp20-std%3A%3Avector%3A%3Acapacity": {
+    "body": [
+      "Siempre es mayor o igual que size(). Mientras size() < capacity(), push_back() no reserva memoria ni invalida iteradores. reserve() la aumenta y shrink_to_fit() pide reducirla."
+    ]
+  },
+  "web-cpp20-std%3A%3Avector%3A%3Aclear": {
+    "body": [
+      "Después de la llamada, size() es 0 pero capacity() se mantiene. Para liberar también la memoria, llama después a shrink_to_fit() o intercambia con un vector vacío."
+    ]
+  },
+  "web-cpp20-std%3A%3Avector%3A%3Aempty": {
+    "intro": [
+      "Comprueba si el contenedor no tiene elementos, es decir, si begin() == end()."
+    ],
+    "body": ["Para vaciar el contenedor se usa clear(), no empty()."]
+  },
+  "web-cpp20-std%3A%3Avector%3A%3Aget_allocator": {
+    "intro": ["Devuelve el asignador asociado al contenedor."],
+    "body": [
+      "Es útil con asignadores con estado o polimórficos, como los de std::pmr::vector."
+    ]
+  },
+  "web-cpp20-std%3A%3Avector%3A%3Asize": {
+    "intro": [
+      "Devuelve el número de elementos del contenedor, es decir, std::distance(begin(), end())."
+    ],
+    "body": [
+      "Es de tipo sin signo; para comparar con enteros con signo, std::ssize() (C++20) devuelve el tamaño con signo."
+    ]
+  },
+  "web-cpp20-std%3A%3Aviews%3A%3Ajoin": {
+    "body": [
+      "Por ejemplo, std::vector<std::vector<int>>{{1, 2}, {3}} | std::views::join recorre 1, 2 y 3. Con un rango de cadenas, concatena sus caracteres."
+    ]
+  },
+  "web-cpp20-std%3A%3Aweak_ptr": {
+    "body": [
+      "Se crea a partir de un shared_ptr y no aumenta su contador de propietarios. lock() devuelve un shared_ptr si el objeto sigue vivo, o uno vacío si ya se destruyó; expired() lo comprueba.",
+      "Sirve para romper ciclos de referencias y para cachés u observadores que no deben mantener vivo el objeto."
+    ]
+  },
+  "web-cpp20-std%3A%3Aweak_ptr%3A%3Areset": {
+    "body": [
+      "Después de la llamada, expired() devuelve true y lock() devuelve un shared_ptr vacío."
+    ]
+  },
+  "web-cpp20-std%3A%3Aweak_ptr%3A%3Aswap": {
+    "intro": [
+      "Intercambia los punteros almacenados y la propiedad de *this y r. Los contadores de referencias no cambian."
+    ],
+    "body": ["No lanza excepciones."]
+  },
+  "web-cpp20-std%3A%3Aweak_ptr%3A%3A~weak_ptr": {
+    "intro": [
+      "Destruye el objeto weak_ptr. No tiene ningún efecto sobre el objeto gestionado."
+    ],
+    "body": [
+      "Solo reduce el contador de referencias débiles del bloque de control."
+    ]
   }
 }
