@@ -1640,6 +1640,241 @@
       "Se puede extender: PhpToken::tokenize() llamado sobre una subclase devuelve objetos de esa subclase."
     ]
   },
+  "php-class-pool": {
+    "description": [
+      "El pooling proporciona un nivel alto de abstracción sobre la funcionalidad Worker, incluyendo la gestión de referencias en el sentido requerido por pthreads.",
+      "submit() envía una tarea al siguiente Worker libre, collect() libera las tareas terminadas y shutdown() espera a que acaben todas. La extensión pthreads ya no se mantiene; para código nuevo, usa parallel."
+    ]
+  },
+  "php-class-pspell-config": {
+    "description": [
+      "La devuelve pspell_config_create() y se ajusta con funciones como pspell_config_mode() o pspell_config_personal(). Después se pasa a pspell_new_config() para abrir el diccionario.",
+      "Desde PHP 8.4, la extensión pspell ya no viene con PHP y se instala desde PECL."
+    ]
+  },
+  "php-class-pspell-dictionary": {
+    "description": [
+      "La devuelven pspell_new() y pspell_new_config(). pspell_check() comprueba si una palabra es correcta y pspell_suggest() devuelve sugerencias. Es final y no se crea con new."
+    ]
+  },
+  "php-class-quickhashinthash": {
+    "description": [
+      "Los hashes pueden ser iterados con foreach ya que la interfaz Iterator está también implementada. El orden en el que los elementos son devueltos no está garantizado.",
+      "Usa mucha menos memoria que un array de PHP con los mismos datos. saveToFile() y loadFromFile() guardan y cargan el hash en formato binario. Pertenece a la extensión PECL quickhash."
+    ]
+  },
+  "php-class-quickhashintset": {
+    "description": [
+      "Los conjuntos pueden ser utilizados para almacenar valores únicos con foreach ya que la interfaz Iterator está implementada. El orden en el que los elementos son devueltos no está garantizado.",
+      "add() añade un entero, exists() comprueba si está y delete() lo elimina. Es útil para comprobar pertenencia sobre millones de enteros con poca memoria."
+    ]
+  },
+  "php-class-quickhashintstringhash": {
+    "description": [
+      "Los hashes también pueden ser recorridos con foreach ya que la interfaz Iterator está implementada. El orden en el que los elementos son devueltos no está garantizado.",
+      "add() solo añade si la clave no existe, update() solo modifica si existe y set() hace lo que corresponda en cada caso."
+    ]
+  },
+  "php-class-quickhashstringinthash": {
+    "description": [
+      "Los hashes también pueden ser recorridos con foreach ya que la interfaz Iterator está implementada. El orden en el que los elementos son devueltos no está garantizado.",
+      "add() solo añade si la clave no existe, update() solo modifica si existe y set() hace lo que corresponda en cada caso."
+    ]
+  },
+  "php-class-rangeexception": {
+    "description": [
+      "Por ejemplo, cuando un cálculo produce un resultado fuera del intervalo que admite el programa. Hereda de RuntimeException."
+    ]
+  },
+  "php-class-rarentry": {
+    "description": [
+      "Se obtiene con RarArchive::getEntries() o RarArchive::getEntry(). extract() extrae la entrada a un directorio y getStream() devuelve un flujo para leer su contenido sin escribirlo en disco.",
+      "getName(), getUnpackedSize() e isDirectory() describen la entrada. Pertenece a la extensión PECL rar."
+    ]
+  },
+  "php-class-recursivearrayiterator": {
+    "description": [
+      "hasChildren() devuelve true cuando el valor actual es un array u objeto, y getChildren() devuelve un iterador para él.",
+      "Envuélvelo en un RecursiveIteratorIterator para recorrer todos los niveles de un array anidado con un solo foreach."
+    ]
+  },
+  "php-class-recursivecachingiterator": {
+    "summary": "Versión recursiva de CachingIterator.",
+    "description": [
+      "Va un elemento por delante en cada nivel, así que hasNext() permite saber si el elemento actual es el último entre sus hermanos. Es útil, por ejemplo, para dibujar árboles."
+    ]
+  },
+  "php-class-recursivecallbackfilteriterator": {
+    "summary": "Filtra un iterador recursivo con una función de retorno.",
+    "description": [
+      "La función recibe el valor, la clave y el iterador. Debe devolver true también para los elementos con hijos que quieras recorrer, porque si los descarta no se entra en ellos.",
+      "Se envuelve en un RecursiveIteratorIterator para recorrer el resultado."
+    ]
+  },
+  "php-class-recursivefilteriterator": {
+    "description": [
+      "El filtro se aplica en cada nivel: si accept() descarta un elemento con hijos, tampoco se recorren sus descendientes.",
+      "Para filtros sencillos, RecursiveCallbackFilterIterator evita crear la subclase."
+    ]
+  },
+  "php-class-recursiveiterator": {
+    "description": [
+      "hasChildren() indica si el elemento actual tiene hijos y getChildren() devuelve un RecursiveIterator para ellos.",
+      "RecursiveIteratorIterator usa estos métodos para convertir el recorrido recursivo en uno plano que funciona con foreach."
+    ]
+  },
+  "php-class-recursiveregexiterator": {
+    "description": [
+      "Aplica el mismo patrón en todos los niveles. Se envuelve en un RecursiveIteratorIterator para recorrer el resultado."
+    ]
+  },
+  "php-class-recursivetreeiterator": {
+    "description": [
+      "Cada elemento se devuelve como una línea con prefijos como '|-' o '\\-' que muestran su posición en el árbol. Es útil para depurar estructuras anidadas en la consola.",
+      "setPrefixPart() y setPostfix() cambian los caracteres que se dibujan."
+    ]
+  },
+  "php-class-reflection": {
+    "summary": "Utilidades estáticas de la API Reflection.",
+    "description": [
+      "getModifierNames() convierte un entero de modificadores, como el de ReflectionMethod::getModifiers(), en un array de nombres como ['public', 'static'].",
+      "Reflection::export() se eliminó en PHP 8.0; para obtener la descripción de un elemento, conviértelo en cadena."
+    ]
+  },
+  "php-class-reflectionattribute": {
+    "description": [
+      "Se obtiene con getAttributes() de ReflectionClass, ReflectionMethod, ReflectionProperty y otras clases de reflexión. getName() da el nombre de la clase del atributo y getArguments() sus argumentos.",
+      "newInstance() crea el objeto del atributo, lo que valida que la clase exista y admita ese destino. Existe desde PHP 8.0."
+    ]
+  },
+  "php-class-reflectionclass": {
+    "description": [
+      "Se crea con un nombre de clase o un objeto. getMethods(), getProperties() y getConstants() enumeran sus miembros, y getParentClass() o getInterfaceNames() su jerarquía.",
+      "newInstanceArgs() crea un objeto con argumentos y newInstanceWithoutConstructor() sin llamar al constructor. Los contenedores de inyección de dependencias y los frameworks de pruebas la usan mucho."
+    ]
+  },
+  "php-class-reflectionclassconstant": {
+    "description": [
+      "Se obtiene con ReflectionClass::getReflectionConstant() o getReflectionConstants(). getValue() da el valor y los métodos is* su visibilidad y si es final.",
+      "Existe desde PHP 7.1."
+    ]
+  },
+  "php-class-reflectionconstant": {
+    "description": [
+      "Se crea con el nombre de la constante, como new ReflectionConstant('PHP_VERSION'). getValue() da su valor e isDeprecated() indica si está obsoleta.",
+      "Existe desde PHP 8.4."
+    ]
+  },
+  "php-class-reflectionenum": {
+    "description": [
+      "getCases() devuelve los casos como objetos ReflectionEnumUnitCase o ReflectionEnumBackedCase, e isBacked() y getBackingType() indican si la enumeración tiene valores escalares y de qué tipo.",
+      "Existe desde PHP 8.1."
+    ]
+  },
+  "php-class-reflectionenumbackedcase": {
+    "description": [
+      "getBackingValue() devuelve el valor int o string del caso. Hereda de ReflectionEnumUnitCase, así que getValue() devuelve el propio caso."
+    ]
+  },
+  "php-class-reflectionenumunitcase": {
+    "description": [
+      "getValue() devuelve el objeto del caso y getEnum() la ReflectionEnum a la que pertenece. Hereda de ReflectionClassConstant, porque cada caso se almacena como una constante de la enumeración."
+    ]
+  },
+  "php-class-reflectionexception": {
+    "summary": "Excepción que lanzan las clases de reflexión cuando falla una operación.",
+    "description": [
+      "Se produce, por ejemplo, con new ReflectionClass('NoExiste') o al pedir un método o una propiedad que la clase no tiene. Hereda de Exception."
+    ]
+  },
+  "php-class-reflectionextension": {
+    "description": [
+      "Se crea con el nombre de la extensión, como new ReflectionExtension('json'). getFunctions(), getClasses() y getConstants() enumeran lo que aporta, y getVersion() da su versión.",
+      "getINIEntries() devuelve sus directivas de php.ini con los valores actuales."
+    ]
+  },
+  "php-class-reflectionfiber": {
+    "summary": "Información sobre el estado de una Fiber.",
+    "description": [
+      "Se crea con la fibra. getExecutingFile() y getExecutingLine() indican dónde está detenida y getTrace() su pila de llamadas; getCallable() devuelve la función con la que se creó.",
+      "Existe desde PHP 8.1. Es útil para depurar código asíncrono."
+    ]
+  },
+  "php-class-reflectionfunction": {
+    "description": [
+      "Se crea con el nombre de una función o un Closure. getParameters() describe sus parámetros e invoke() o invokeArgs() la llaman.",
+      "isAnonymous() indica si es un Closure y getClosure() devuelve un Closure para la función."
+    ]
+  },
+  "php-class-reflectionfunctionabstract": {
+    "summary": "Clase padre de ReflectionFunction y ReflectionMethod.",
+    "description": [
+      "Reúne lo que tienen en común funciones y métodos: getParameters(), getReturnType(), getDocComment(), getFileName(), getStartLine() o isVariadic(), entre otros."
+    ]
+  },
+  "php-class-reflectiongenerator": {
+    "description": [
+      "Se crea con un Generator que todavía no ha terminado. getExecutingLine() y getExecutingFile() indican dónde está detenido, getFunction() la función que lo creó y getTrace() su pila.",
+      "Existe desde PHP 7.0."
+    ]
+  },
+  "php-class-reflectionintersectiontype": {
+    "summary": "Representa un tipo intersección, como Countable&Iterator.",
+    "description": [
+      "getTypes() devuelve los tipos que lo forman como objetos ReflectionNamedType. Existe desde PHP 8.1."
+    ]
+  },
+  "php-class-reflectionmethod": {
+    "description": [
+      "Se crea con la clase y el nombre del método, o con ReflectionMethod::createFromMethodName('Clase::metodo'). invoke() lo llama sobre un objeto y getDeclaringClass() indica dónde se declaró.",
+      "Desde PHP 8.1, setAccessible() no hace nada: los métodos privados y protegidos se pueden invocar por reflexión directamente."
+    ]
+  },
+  "php-class-reflectionnamedtype": {
+    "summary": "Representa un tipo con un único nombre, como int, ?string o una clase.",
+    "description": [
+      "getName() devuelve el nombre sin el ? de los tipos anulables; allowsNull() indica si admite null. isBuiltin() distingue los tipos del lenguaje de las clases."
+    ]
+  },
+  "php-class-reflectionobject": {
+    "description": [
+      "Funciona como ReflectionClass pero sobre una instancia concreta, así que también ve las propiedades dinámicas que se han añadido a ese objeto."
+    ]
+  },
+  "php-class-reflectionproperty": {
+    "description": [
+      "getValue() y setValue() leen y escriben la propiedad de un objeto; getType() da su tipo e isInitialized() indica si una propiedad tipada ya tiene valor.",
+      "isReadOnly() y, desde PHP 8.4, los métodos de hooks describen las propiedades modernas. Desde PHP 8.1, setAccessible() no hace nada."
+    ]
+  },
+  "php-class-reflectionreference": {
+    "description": [
+      "fromArrayElement() devuelve un objeto si el elemento del array es una referencia, o null si no lo es. getId() da un identificador que coincide para todas las variables que apuntan a la misma referencia.",
+      "Existe desde PHP 7.4. Lo usan, por ejemplo, las herramientas que vuelcan estructuras y necesitan detectar referencias compartidas."
+    ]
+  },
+  "php-class-reflectiontype": {
+    "description": [
+      "allowsNull() indica si el tipo admite null y convertirlo en cadena da su forma en el código, como '?int'.",
+      "Lo devuelven métodos como ReflectionParameter::getType() o ReflectionFunctionAbstract::getReturnType(), que dan null si no hay tipo declarado."
+    ]
+  },
+  "php-class-reflectionuniontype": {
+    "summary": "Representa un tipo unión, como int|string.",
+    "description": [
+      "getTypes() devuelve los tipos que lo forman. Existe desde PHP 8.0; desde PHP 8.2 también puede contener intersecciones (tipos DNF)."
+    ]
+  },
+  "php-class-reflectionzendextension": {
+    "description": [
+      "Las extensiones Zend se cargan con zend_extension en php.ini, como OPcache o Xdebug. getVersion(), getAuthor() y getURL() dan sus datos."
+    ]
+  },
+  "php-class-reflector": {
+    "description": [
+      "Reflector::export() se eliminó en PHP 8.0. Desde entonces la interfaz solo exige que el objeto se pueda convertir en cadena, a través de Stringable."
+    ]
+  },
   "php-function-fann_set_activation_function": {
     "description": [
       "Establece la función de activación para la neurona número neuron en la capa número layer, contando al capa de entrada como capa 0.",
