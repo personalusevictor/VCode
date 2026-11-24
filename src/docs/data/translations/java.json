@@ -577,6 +577,95 @@
       "Salvo que se indique lo contrario, pasar null a un método de esta interfaz o de sus clases anidadas provoca NullPointerException."
     ]
   },
+  "web-java-se-java.io.ObjectInputFilter.checkInput": {
+    "intro": [
+      "Comprueba la clase, la longitud del array, el número de referencias a objetos, la profundidad, el tamaño del flujo y el resto de información de filtrado disponible. Las implementaciones comprueban el contenido del grafo de objetos que se crea al deserializar. El filtro devuelve Status.ALLOWED, Status.REJECTED o Status.UNDECIDED."
+    ],
+    "body": [
+      "Si filterInfo.serialClass() no es null, hay una clase que comprobar. Si es null, no hay clase y la información solo contiene métricas sobre la profundidad del grafo, el número de referencias y el tamaño del flujo leído."
+    ],
+    "parameters": [
+      {
+        "label": "filterInfo",
+        "detail": "información sobre el objeto que se está deserializando, si lo hay, y el estado del ObjectInputStream"
+      }
+    ],
+    "returns": [
+      "Status.ALLOWED si se acepta, Status.REJECTED si se rechaza y Status.UNDECIDED si no se decide."
+    ],
+    "caveats": [
+      "Todo filtro que implemente checkInput debe devolver uno de los valores de Status. Devolver null puede provocar NullPointerException u otro comportamiento impredecible."
+    ]
+  },
+  "web-java-se-java.io.ObjectOutputStream": {
+    "body": [
+      "Solo se pueden escribir en flujos los objetos que implementan java.io.Serializable. Se codifica la clase de cada objeto serializable, con su nombre y su firma, los valores de sus campos y arrays, y el cierre de los demás objetos a los que hacen referencia los objetos iniciales.",
+      "El método writeObject escribe un objeto en el flujo. Cualquier objeto, incluidos String y arrays, se escribe con writeObject. Se pueden escribir varios objetos o primitivos, pero deben leerse del ObjectInputStream correspondiente con los mismos tipos y en el mismo orden en que se escribieron.",
+      "Los tipos primitivos también se pueden escribir con los métodos correspondientes de DataOutput, y las cadenas con writeUTF.",
+      "El mecanismo de serialización por defecto escribe la clase del objeto, su firma y los valores de todos los campos que no son transient ni static. Las referencias a otros objetos (salvo en campos transient o static) hacen que también se escriban. Las referencias múltiples a un mismo objeto se codifican con un mecanismo de referencias compartidas, para que los grafos de objetos se restauren con la misma forma que tenían al escribirse.",
+      "Por ejemplo, para escribir un objeto que pueda leer el ejemplo de ObjectInputStream: {@snippet lang=\"java\": try (FileOutputStream fos = new FileOutputStream(\"t.tmp\"); ObjectOutputStream oos = new ObjectOutputStream(fos)) { oos.writeObject(\"Today\"); oos.writeObject(LocalDateTime.now()); } catch (Exception ex) { // handle exception } }",
+      "Las clases serializables que necesitan un tratamiento especial al serializar y deserializar deben implementar métodos con estas firmas:",
+      "El nombre, los modificadores, el tipo de retorno y el número y tipo de los parámetros deben coincidir exactamente para que la serialización o deserialización use el método. Solo deberían declarar excepciones comprobadas coherentes con estas firmas.",
+      "writeObject se encarga de escribir el estado del objeto para su clase concreta, de modo que el readObject correspondiente pueda restaurarlo. No tiene que ocuparse del estado de las superclases o subclases. El estado se guarda escribiendo cada campo en el ObjectOutputStream con writeObject o con los métodos para tipos primitivos de DataOutput.",
+      "La serialización no escribe los campos de ningún objeto que no implemente java.io.Serializable. Las subclases de clases no serializables pueden ser serializables; en ese caso, la clase no serializable debe tener un constructor sin argumentos para inicializar sus campos, y la subclase se encarga de guardar y restaurar el estado de la clase no serializable. A menudo sus campos son accesibles (public, de paquete o protected) o hay métodos get y set que permiten restaurar el estado.",
+      "Se puede impedir la serialización de un objeto implementando writeObject y readObject de modo que lancen NotSerializableException. El ObjectOutputStream captura la excepción y aborta el proceso.",
+      "Implementar Externalizable permite que el objeto controle por completo el contenido y el formato de su forma serializada. Para guardar y restaurar su estado se llaman sus métodos writeExternal y readExternal, que pueden usar todos los métodos de ObjectOutput y ObjectInput. Los objetos se encargan de gestionar las versiones.",
+      "Las constantes de enum se serializan de forma distinta a los objetos serializables o externalizables normales: su forma serializada es solo su nombre, sin los valores de sus campos. Para serializarlas, ObjectOutputStream escribe la cadena que devuelve name. Como otros objetos, pueden ser destino de referencias posteriores en el flujo. Su serialización no se puede personalizar: se ignoran los writeObject y writeReplace que definan los enum, así como las declaraciones de serialPersistentFields o serialVersionUID. Todos los enum tienen un serialVersionUID fijo de 0L.",
+      "Los datos primitivos, salvo los campos serializables y los datos externalizables, se escriben en el ObjectOutputStream en registros de bloque de datos, formados por una cabecera (un marcador y el número de bytes que siguen) y los datos. Las escrituras primitivas consecutivas se combinan en un solo registro de hasta 1024 bytes, que se escribe al llenarse o al terminar el modo de bloque de datos. Las llamadas a writeObject, defaultWriteObject y writeFields cierran primero cualquier registro abierto.",
+      "Los record se serializan de forma distinta a los objetos serializables o externalizables normales; consulta la serialización de record."
+    ]
+  },
+  "web-java-se-java.io.Serializable": {
+    "body": [
+      "Aviso: deserializar datos no fiables es intrínsecamente peligroso y debe evitarse. Los datos no fiables deben validarse con cuidado según la sección «Serialization and Deserialization» de las directrices de codificación segura de Java SE, que describen buenas prácticas para el uso defensivo de los filtros de serialización.",
+      "Las clases que no implementan esta interfaz no serializan ni deserializan nada de su estado. Todos los subtipos de una clase serializable son serializables. La interfaz no tiene métodos ni campos: solo sirve para identificar la semántica de ser serializable.",
+      "Se pueden serializar y deserializar subtipos de clases no serializables. Al serializar, no se escribe nada de los campos de las superclases no serializables. Al deserializar, esos campos se inicializan con el constructor sin argumentos de la primera superclase no serializable (la más baja), que debe ser accesible desde la subclase. Declarar una clase Serializable cuando no se cumple esto es un error que se detecta en ejecución. Un subtipo serializable puede encargarse de guardar y restaurar los campos public, protected y (si son accesibles) de paquete del supertipo no serializable. Consulta la sección 3.1 de la especificación de serialización de objetos de Java para el detalle del proceso, incluido el tratamiento de clases serializables y no serializables.",
+      "Al recorrer un grafo, puede aparecer un objeto que no implemente Serializable. En ese caso se lanza NotSerializableException, que identifica su clase.",
+      "Las clases que necesitan un tratamiento especial al serializar y deserializar deben implementar métodos especiales con exactamente estas firmas:",
+      "private void writeObject(java.io.ObjectOutputStream out) throws IOException private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException; private void readObjectNoData() throws ObjectStreamException;",
+      "writeObject se encarga de escribir el estado del objeto para su clase concreta, de modo que el readObject correspondiente pueda restaurarlo. El mecanismo por defecto para guardar los campos se invoca con out.defaultWriteObject. No tiene que ocuparse del estado de las superclases o subclases. El estado se guarda escribiendo cada campo en el ObjectOutputStream con writeObject o con los métodos para tipos primitivos de DataOutput.",
+      "readObject se encarga de leer del flujo y restaurar los campos de la clase. Puede llamar a in.defaultReadObject para usar el mecanismo por defecto, que restaura los campos no static y no transient. defaultReadObject usa la información del flujo para asignar los campos guardados a los campos con el mismo nombre del objeto actual, lo que resuelve el caso de que la clase haya evolucionado y tenga campos nuevos. No tiene que ocuparse del estado de las superclases o subclases. El estado se restaura leyendo del ObjectInputStream los datos de cada campo y asignándolos a los campos correspondientes. DataInput permite leer tipos primitivos.",
+      "readObjectNoData se encarga de inicializar el estado del objeto para su clase concreta si el flujo no incluye esa clase como superclase del objeto deserializado. Puede ocurrir si el receptor usa una versión de la clase distinta de la del emisor y la del receptor extiende clases que la del emisor no extiende. También puede ocurrir si el flujo se ha manipulado; por eso readObjectNoData sirve para inicializar correctamente los objetos aunque el flujo sea «hostil» o esté incompleto.",
+      "Las clases serializables que necesitan indicar un objeto alternativo al escribirse en el flujo deben implementar este método especial con exactamente esta firma:",
+      "ANY-ACCESS-MODIFIER Object writeReplace() throws ObjectStreamException;",
+      "La serialización invoca writeReplace si existe y sería accesible desde un método de la clase del objeto serializado. Por tanto, puede ser private, protected o de paquete. El acceso desde las subclases sigue las reglas de accesibilidad de Java.",
+      "Las clases que necesitan indicar un sustituto cuando se lee una instancia del flujo deben implementar este método especial con exactamente esta firma.",
+      "ANY-ACCESS-MODIFIER Object readResolve() throws ObjectStreamException;",
+      "readResolve sigue las mismas reglas de invocación y accesibilidad que writeReplace.",
+      "Todos los enum son serializables y reciben el tratamiento que define la especificación de serialización de objetos de Java. Se ignoran en ellos las declaraciones de los métodos especiales anteriores.",
+      "Los record pueden implementar Serializable y reciben el tratamiento que define la sección 1.13, «Serialization of Records», de la especificación de serialización de objetos de Java. Se ignoran en ellos las declaraciones de los métodos especiales anteriores.",
+      "El entorno de serialización asocia a cada clase serializable un número de versión, serialVersionUID, que se usa al deserializar para comprobar que el emisor y el receptor han cargado clases compatibles para ese objeto. Si el receptor ha cargado una clase con un serialVersionUID distinto del de la clase del emisor, la deserialización lanza InvalidClassException. Una clase serializable puede declarar su propio serialVersionUID con un campo llamado \"serialVersionUID\" que debe ser static, final y de tipo long:",
+      "ANY-ACCESS-MODIFIER static final long serialVersionUID = 42L;",
+      "Si una clase serializable no declara serialVersionUID, el entorno calcula uno por defecto a partir de varios aspectos de la clase, como describe la especificación de serialización (que fija en 0L el de los enum). Sin embargo, se recomienda encarecidamente que todas las clases serializables, salvo los enum, lo declaren explícitamente, porque el cálculo por defecto es muy sensible a detalles que pueden variar entre compiladores y puede provocar InvalidClassException inesperadas al deserializar. Para garantizar un valor coherente entre compiladores, la clase debe declararlo. También se aconseja que sea private siempre que se pueda, porque solo se aplica a la clase que lo declara: no sirve como miembro heredado. Las clases array no pueden declararlo y siempre tienen el valor calculado, pero para ellas no se exige que coincida."
+    ]
+  },
+  "web-java-se-java.io.StreamTokenizer.eolIsSignificant": {
+    "intro": [
+      "Indica si los finales de línea se tratan como tokens. Si flag es true, el tokenizador los trata como tokens: nextToken devuelve TT_EOL y también pone ese valor en ttype al leer un final de línea."
+    ],
+    "body": [
+      "Una línea es una secuencia de caracteres que termina en un retorno de carro ('\\r') o un salto de línea ('\\n'). Además, un retorno de carro seguido inmediatamente de un salto de línea se trata como un único token de final de línea.",
+      "Si flag es false, los finales de línea se tratan como espacio en blanco y solo sirven para separar tokens."
+    ],
+    "parameters": [
+      {
+        "label": "flag",
+        "detail": "true indica que los finales de línea son tokens separados; false, que son espacio en blanco."
+      }
+    ]
+  },
+  "web-java-se-java.io.StreamTokenizer.lowerCaseMode": {
+    "intro": [
+      "Indica si los tokens de palabra se pasan automáticamente a minúsculas. Si flag es true, el valor de sval se pasa a minúsculas cada vez que nextToken devuelve un token de palabra (ttype vale TT_WORD)."
+    ],
+    "body": ["Si flag es false, sval no se modifica."],
+    "parameters": [
+      {
+        "label": "fl",
+        "detail": "true indica que todos los tokens de palabra se pasan a minúsculas."
+      }
+    ]
+  },
   "web-java-se-java.lang.Byte.decode": {
     "body": [
       "DecodableString: Signopt DecimalNumeral Signopt 0x HexDigits Signopt 0X HexDigits Signopt # HexDigits Signopt 0 OctalDigits",
@@ -4092,6 +4181,691 @@
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
     ]
   },
+  "web-java-se-java.nio.Buffer.hasArray": {
+    "intro": ["Indica si este búfer está respaldado por un array accesible."],
+    "body": [
+      "Si devuelve true, se pueden invocar con seguridad array y arrayOffset."
+    ],
+    "returns": [
+      "true si y solo si este búfer está respaldado por un array y no es de solo lectura"
+    ]
+  },
+  "web-java-se-java.nio.Buffer.isReadOnly": {
+    "intro": ["Indica si este búfer es de solo lectura."],
+    "returns": ["true si y solo si este búfer es de solo lectura"]
+  },
+  "web-java-se-java.nio.ByteBuffer.compact": {
+    "body": [
+      "Los bytes entre la posición actual y el límite, si los hay, se copian al principio del búfer: el byte del índice p = position() se copia al índice cero, el de p + 1 al uno, y así hasta que el de limit() - 1 se copia al índice n = limit() - 1 - p. Después la posición pasa a n+1 y el límite a la capacidad. Se descarta la marca, si la hay.",
+      "La posición pasa a ser el número de bytes copiados, no cero, para que después se pueda invocar inmediatamente otro put relativo.",
+      "Invoca este método tras escribir datos desde un búfer por si la escritura fue incompleta. Por ejemplo, este bucle copia bytes de un canal a otro a través del búfer buf:",
+      "{@snippet lang=java : buf.clear(); // Prepare buffer for use while (in.read(buf) >= 0 || buf.position != 0) { buf.flip(); out.write(buf); buf.compact(); // In case of partial write } }"
+    ],
+    "returns": ["Este búfer"],
+    "exceptions": [
+      {
+        "label": "ReadOnlyBufferException",
+        "detail": "Si este búfer es de solo lectura"
+      }
+    ]
+  },
+  "web-java-se-java.nio.ByteBuffer.hasArray": {
+    "intro": [
+      "Indica si este búfer está respaldado por un array de bytes accesible."
+    ],
+    "body": [
+      "Si devuelve true, se pueden invocar con seguridad array y arrayOffset."
+    ],
+    "returns": [
+      "true si y solo si este búfer está respaldado por un array y no es de solo lectura"
+    ]
+  },
+  "web-java-se-java.nio.CharBuffer.hasArray": {
+    "intro": [
+      "Indica si este búfer está respaldado por un array de char accesible."
+    ],
+    "body": [
+      "Si devuelve true, se pueden invocar con seguridad array y arrayOffset."
+    ],
+    "returns": [
+      "true si y solo si este búfer está respaldado por un array y no es de solo lectura"
+    ]
+  },
+  "web-java-se-java.nio.DoubleBuffer.equals": {
+    "body": [
+      "Dos búferes de double son iguales si y solo si:",
+      "Tienen el mismo tipo de elemento,",
+      "Tienen el mismo número de elementos restantes, y",
+      "Las dos secuencias de elementos restantes, sin tener en cuenta su posición inicial, son iguales elemento a elemento.",
+      "Este método considera iguales dos double a y b si (a == b) || (Double.isNaN(a) && Double.isNaN(b)). A diferencia de Double.equals(Object), -0.0 y +0.0 se consideran iguales.",
+      "Un búfer de double no es igual a ningún otro tipo de objeto."
+    ],
+    "parameters": [
+      {
+        "label": "ob",
+        "detail": "El objeto con el que se compara este búfer"
+      }
+    ],
+    "returns": ["true si y solo si este búfer es igual al objeto indicado"]
+  },
+  "web-java-se-java.nio.DoubleBuffer.hasArray": {
+    "intro": [
+      "Indica si este búfer está respaldado por un array de double accesible."
+    ],
+    "body": [
+      "Si devuelve true, se pueden invocar con seguridad array y arrayOffset."
+    ],
+    "returns": [
+      "true si y solo si este búfer está respaldado por un array y no es de solo lectura"
+    ]
+  },
+  "web-java-se-java.nio.FloatBuffer.equals": {
+    "body": [
+      "Dos búferes de float son iguales si y solo si:",
+      "Tienen el mismo tipo de elemento,",
+      "Tienen el mismo número de elementos restantes, y",
+      "Las dos secuencias de elementos restantes, sin tener en cuenta su posición inicial, son iguales elemento a elemento.",
+      "Este método considera iguales dos float a y b si (a == b) || (Float.isNaN(a) && Float.isNaN(b)). A diferencia de Float.equals(Object), -0.0 y +0.0 se consideran iguales.",
+      "Un búfer de float no es igual a ningún otro tipo de objeto."
+    ],
+    "parameters": [
+      {
+        "label": "ob",
+        "detail": "El objeto con el que se compara este búfer"
+      }
+    ],
+    "returns": ["true si y solo si este búfer es igual al objeto indicado"]
+  },
+  "web-java-se-java.nio.FloatBuffer.hasArray": {
+    "intro": [
+      "Indica si este búfer está respaldado por un array de float accesible."
+    ],
+    "body": [
+      "Si devuelve true, se pueden invocar con seguridad array y arrayOffset."
+    ],
+    "returns": [
+      "true si y solo si este búfer está respaldado por un array y no es de solo lectura"
+    ]
+  },
+  "web-java-se-java.nio.IntBuffer.hasArray": {
+    "intro": [
+      "Indica si este búfer está respaldado por un array de int accesible."
+    ],
+    "body": [
+      "Si devuelve true, se pueden invocar con seguridad array y arrayOffset."
+    ],
+    "returns": [
+      "true si y solo si este búfer está respaldado por un array y no es de solo lectura"
+    ]
+  },
+  "web-java-se-java.nio.LongBuffer.hasArray": {
+    "intro": [
+      "Indica si este búfer está respaldado por un array de long accesible."
+    ],
+    "body": [
+      "Si devuelve true, se pueden invocar con seguridad array y arrayOffset."
+    ],
+    "returns": [
+      "true si y solo si este búfer está respaldado por un array y no es de solo lectura"
+    ]
+  },
+  "web-java-se-java.nio.MappedByteBuffer.compact": {
+    "body": [
+      "Los bytes entre la posición actual y el límite, si los hay, se copian al principio del búfer: el byte del índice p = position() se copia al índice cero, el de p + 1 al uno, y así hasta que el de limit() - 1 se copia al índice n = limit() - 1 - p. Después la posición pasa a n+1 y el límite a la capacidad. Se descarta la marca, si la hay.",
+      "La posición pasa a ser el número de bytes copiados, no cero, para que después se pueda invocar inmediatamente otro put relativo.",
+      "Invoca este método tras escribir datos desde un búfer por si la escritura fue incompleta. Por ejemplo, este bucle copia bytes de un canal a otro a través del búfer buf:",
+      "{@snippet lang=java : buf.clear(); // Prepare buffer for use while (in.read(buf) >= 0 || buf.position != 0) { buf.flip(); out.write(buf); buf.compact(); // In case of partial write } }"
+    ],
+    "returns": ["Este búfer"],
+    "exceptions": [
+      {
+        "label": "ReadOnlyBufferException",
+        "detail": "Si este búfer es de solo lectura"
+      }
+    ]
+  },
+  "web-java-se-java.nio.ShortBuffer.hasArray": {
+    "intro": [
+      "Indica si este búfer está respaldado por un array de short accesible."
+    ],
+    "body": [
+      "Si devuelve true, se pueden invocar con seguridad array y arrayOffset."
+    ],
+    "returns": [
+      "true si y solo si este búfer está respaldado por un array y no es de solo lectura"
+    ]
+  },
+  "web-java-se-java.nio.file.FileSystem.getFileStores": {
+    "body": [
+      "Los elementos del iterador son los FileStore de este sistema de archivos. Su orden no está definido y pueden cambiar durante la vida de la máquina virtual de Java. Si se produce un error de E/S, quizá porque un almacén no es accesible, el iterador no lo devuelve.",
+      "Con el proveedor por defecto y un gestor de seguridad instalado, se comprueba RuntimePermission(\"getFileStoreAttributes\"); si se deniega, el iterador no devuelve ningún almacén. Además, se invoca SecurityManager.checkRead(String) para comprobar el acceso de lectura al directorio superior de cada almacén; si se deniega, ese almacén no se devuelve. Depende del sistema que las comprobaciones se hagan al obtener el iterador o durante la iteración.",
+      "Ejemplo de uso: para imprimir el uso de espacio de todos los almacenes: {@snippet lang=java : for (FileStore store: FileSystems.getDefault().getFileStores()) { long total = store.getTotalSpace() / 1024; long used = (store.getTotalSpace() - store.getUnallocatedSpace()) / 1024; long avail = store.getUsableSpace() / 1024; System.out.format(\"%-20s %12d %12d %12d%n\", store, total, used, avail); } }"
+    ],
+    "returns": ["Un objeto para recorrer los almacenes de archivos subyacentes"]
+  },
+  "web-java-se-java.nio.file.FileSystem.getPathMatcher": {
+    "body": [
+      "El parámetro syntaxAndPattern identifica la sintaxis y el patrón, con la forma:",
+      "syntax:pattern",
+      "donde syntax es el nombre no vacío de la sintaxis, pattern es un patrón (puede estar vacío) y ':' se representa a sí mismo.",
+      "Una implementación de FileSystem admite las sintaxis \"glob\" y \"regex\", y puede admitir otras. El nombre de la sintaxis se compara sin distinguir mayúsculas.",
+      "Con la sintaxis \"glob\", la representación String de la ruta se compara con un lenguaje de patrones limitado, parecido a las expresiones regulares pero más sencillo. Por ejemplo:",
+      "Lenguaje de patrones",
+      "Ejemplo · Descripción",
+      "*.java · Coincide con una ruta cuyo nombre de archivo termina en .java",
+      "*.* · Coincide con nombres de archivo que contienen un punto",
+      "{@code *.{java,class}} · Coincide con nombres de archivo que terminan en .java o .class",
+      "foo.? · Coincide con nombres que empiezan por foo. y tienen una extensión de un carácter",
+      "/home/*/* · Coincide con /home/gus/data en UNIX",
+      "/home/** · Coincide con /home/gus y /home/gus/data en UNIX",
+      "C:\\\\* · Coincide con C:\\foo y C:\\bar en Windows (la barra invertida está escapada; como literal de cadena en Java el patrón sería \"C:\\\\\\\\*\")",
+      "Los patrones glob se interpretan con estas reglas:",
+      "* coincide con cero o más caracteres de un componente del nombre, sin cruzar límites de directorio.",
+      "** coincide con cero o más caracteres cruzando límites de directorio.",
+      "? coincide exactamente con un carácter de un componente del nombre.",
+      "La barra invertida (\\) escapa caracteres que, si no, se interpretarían como especiales. Por ejemplo, \\\\ coincide con una barra invertida y \"\\{\" con una llave izquierda.",
+      "[ ] forma una expresión entre corchetes que coincide con un único carácter de un conjunto. Por ejemplo, [abc] coincide con \"a\", \"b\" o \"c\". El guion (-) indica un rango, así que [a-z] coincide de \"a\" a \"z\" (incluidas). Se pueden mezclar: [abce-g] coincide con \"a\", \"b\", \"c\", \"e\", \"f\" o \"g\". Si tras [ va !, se niega: [!a-c] coincide con cualquier carácter salvo \"a\", \"b\" o \"c\".",
+      "Dentro de los corchetes, *, ? y \\ coinciden consigo mismos. El guion coincide consigo mismo si es el primer carácter tras [ o tras ! en una negación.",
+      "{@code { }} forma un grupo de subpatrones, que coincide si coincide cualquiera de ellos. Los subpatrones se separan con \",\". Los grupos no se pueden anidar.",
+      "Los puntos iniciales de un nombre de archivo se tratan como caracteres normales. Por ejemplo, el patrón \"*\" coincide con \".login\". Para saber si un archivo se considera oculto, usa Files.isHidden.",
+      "Todos los demás caracteres coinciden consigo mismos de una forma que depende de la implementación, incluidos los separadores de nombre.",
+      "La coincidencia de los componentes raíz depende mucho de la implementación y no se especifica.",
+      "Con la sintaxis \"regex\", el patrón es una expresión regular según la clase java.util.regex.Pattern.",
+      "En ambas sintaxis, los detalles de la coincidencia, como si distingue mayúsculas, dependen de la implementación y no se especifican."
+    ],
+    "parameters": [
+      {
+        "label": "syntaxAndPattern",
+        "detail": "La sintaxis y el patrón"
+      }
+    ],
+    "returns": [
+      "Un comparador de rutas con el que comprobar si las rutas coinciden con el patrón"
+    ],
+    "exceptions": [
+      {
+        "label": "IllegalArgumentException",
+        "detail": "Si el parámetro no tiene la forma syntax:pattern"
+      },
+      {
+        "label": "java.util.regex.PatternSyntaxException",
+        "detail": "Si el patrón no es válido"
+      },
+      {
+        "label": "UnsupportedOperationException",
+        "detail": "Si la implementación no conoce la sintaxis del patrón"
+      }
+    ]
+  },
+  "web-java-se-java.nio.file.FileVisitResult.TERMINATE": {
+    "intro": ["Terminar."]
+  },
+  "web-java-se-java.nio.file.FileVisitor": {
+    "body": [
+      "Ejemplos de uso: para eliminar un árbol de archivos, cada directorio debe eliminarse después de sus entradas. {@snippet lang=java : Path start = ... Files.walkFileTree(start, new SimpleFileVisitor() { @Override public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException { Files.delete(file); return FileVisitResult.CONTINUE; } @Override public FileVisitResult postVisitDirectory(Path dir, IOException e) throws IOException { if (e == null) { Files.delete(dir); return FileVisitResult.CONTINUE; } else { // directory iteration failed throw e; } } }); }",
+      "Y para copiar un árbol de archivos a otro lugar, hay que seguir los enlaces simbólicos y crear cada directorio de destino antes de copiar sus entradas. {@snippet lang=java : final Path source = ... final Path target = ...",
+      "Files.walkFileTree(source, EnumSet.of(FileVisitOption.FOLLOW_LINKS), Integer.MAX_VALUE, new SimpleFileVisitor() { @Override public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException { Path targetdir = target.resolve(source.relativize(dir)); try { Files.copy(dir, targetdir); } catch (FileAlreadyExistsException e) { if (!Files.isDirectory(targetdir)) throw e; } return CONTINUE; } @Override public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException { Files.copy(file, target.resolve(source.relativize(file))); return CONTINUE; } }); }"
+    ],
+    "parameters": [
+      {
+        "label": "<T>",
+        "detail": "el tipo de archivo o directorio"
+      }
+    ]
+  },
+  "web-java-se-java.nio.file.Files.move": {
+    "body": [
+      "Por defecto, intenta mover el archivo al destino y falla si el destino existe, salvo que origen y destino sean el mismo archivo, en cuyo caso no hace nada. Si el archivo es un enlace simbólico, se mueve el propio enlace, no su destino. Se puede usar para mover un directorio vacío. En algunas implementaciones, un directorio tiene entradas para archivos o enlaces especiales que se crean con él; ahí se considera vacío si solo tiene esas entradas. Si se mueve un directorio no vacío, se mueve si no hace falta mover sus entradas; por ejemplo, renombrar un directorio en el mismo FileStore normalmente no lo requiere. Si hace falta mover las entradas, el método falla (lanzando IOException). Mover un árbol de archivos puede implicar copiar los directorios en lugar de moverlos, lo que se puede hacer con el método copy junto con Files.walkFileTree.",
+      "El parámetro options puede incluir:",
+      "Opciones",
+      "Opción · Descripción",
+      "REPLACE_EXISTING · Sustituye un archivo existente. No se puede sustituir un directorio no vacío. Si el destino existe y es un enlace simbólico, se sustituye el propio enlace, no su destino.",
+      "ATOMIC_MOVE · El movimiento se hace como una operación atómica del sistema de archivos y se ignoran las demás opciones. Si el destino existe, depende de la implementación que se sustituya o que el método falle lanzando IOException. Si no se puede hacer de forma atómica, se lanza AtomicMoveNotSupportedException; puede ocurrir, por ejemplo, si el destino está en otro FileStore y habría que copiar el archivo, o si el destino está asociado a otro proveedor.",
+      "Una implementación de esta interfaz puede admitir opciones adicionales propias.",
+      "Al mover un archivo, se copia la hora de última modificación al destino si ambos almacenes lo admiten; la copia de marcas de tiempo puede perder precisión. La implementación también puede intentar copiar otros atributos, pero no está obligada a fallar si no puede. Si el movimiento no es atómico y se lanza IOException, el estado de los archivos no está definido: pueden existir ambos, el destino puede estar incompleto o puede que no se hayan copiado algunos atributos.",
+      "Ejemplos de uso: para renombrar un archivo a \"newname\" sin cambiarlo de directorio:",
+      "O, para moverlo a otro directorio con el mismo nombre, sustituyendo cualquier archivo con ese nombre en el directorio:"
+    ],
+    "parameters": [
+      {
+        "label": "source",
+        "detail": "la ruta del archivo que se mueve"
+      },
+      {
+        "label": "target",
+        "detail": "la ruta del archivo de destino (puede estar asociada a otro proveedor que la de origen)"
+      },
+      {
+        "label": "options",
+        "detail": "opciones que indican cómo hacer el movimiento"
+      }
+    ],
+    "returns": ["la ruta del archivo de destino"],
+    "exceptions": [
+      {
+        "label": "UnsupportedOperationException",
+        "detail": "si el array contiene una opción de copia no admitida"
+      },
+      {
+        "label": "FileAlreadyExistsException",
+        "detail": "si el destino existe, pero no se puede sustituir porque no se indicó REPLACE_EXISTING (excepción específica opcional)"
+      },
+      {
+        "label": "DirectoryNotEmptyException",
+        "detail": "se indicó REPLACE_EXISTING, pero el archivo no se puede sustituir porque es un directorio no vacío, o el origen es un directorio no vacío con entradas que habría que mover (excepciones específicas opcionales)"
+      },
+      {
+        "label": "AtomicMoveNotSupportedException",
+        "detail": "si options contiene ATOMIC_MOVE, pero el archivo no se puede mover como operación atómica del sistema de archivos."
+      },
+      {
+        "label": "IOException",
+        "detail": "si se produce un error de E/S"
+      },
+      {
+        "label": "SecurityException",
+        "detail": "Con el proveedor por defecto y un gestor de seguridad instalado, se invoca checkWrite para comprobar el acceso de escritura al origen y al destino."
+      }
+    ]
+  },
+  "web-java-se-java.nio.file.Files.newBufferedWriter": {
+    "overloads": [
+      {
+        "intro": [
+          "Abre o crea un archivo para escribir y devuelve un BufferedWriter con el que escribir texto de forma eficiente. options indica cómo se crea o abre. Si no hay opciones, funciona como si estuvieran CREATE, TRUNCATE_EXISTING y WRITE: abre el archivo para escribir, lo crea si no existe o, si existe y es un archivo normal, lo trunca a tamaño 0."
+        ],
+        "body": [
+          "Los métodos de Writer lanzan IOException si el texto no se puede codificar con el charset. Por el búfer, una IOException por un error de codificación (carácter no representable o entrada mal formada) puede lanzarse al escribir, vaciar o cerrar el escritor."
+        ],
+        "parameters": [
+          {
+            "label": "path",
+            "detail": "la ruta del archivo"
+          },
+          {
+            "label": "cs",
+            "detail": "el charset con el que se codifica"
+          },
+          {
+            "label": "options",
+            "detail": "opciones que indican cómo se abre el archivo"
+          }
+        ],
+        "returns": [
+          "un nuevo escritor con búfer, de tamaño por defecto, para escribir texto en el archivo"
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si options contiene una combinación de opciones no válida"
+          },
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S al abrir o crear el archivo"
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si se indica una opción no admitida"
+          },
+          {
+            "label": "FileAlreadyExistsException",
+            "detail": "Si ya existe un archivo con ese nombre y se indicó CREATE_NEW (excepción específica opcional)"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "Con el proveedor por defecto y un gestor de seguridad instalado, se invoca checkWrite para comprobar el acceso de escritura al archivo, y checkDelete para comprobar el permiso de eliminación si se abre con DELETE_ON_CLOSE."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Abre o crea un archivo para escribir y devuelve un BufferedWriter con el que escribir texto de forma eficiente. El texto se codifica en bytes con el charset UTF-8."
+        ],
+        "body": [
+          "Funciona como si invocarlo equivaliera a evaluar la expresión:",
+          "Files.newBufferedWriter(path, StandardCharsets.UTF_8, options)"
+        ],
+        "parameters": [
+          {
+            "label": "path",
+            "detail": "la ruta del archivo"
+          },
+          {
+            "label": "options",
+            "detail": "opciones que indican cómo se abre el archivo"
+          }
+        ],
+        "returns": [
+          "un nuevo escritor con búfer, de tamaño por defecto, para escribir texto en el archivo"
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si options contiene una combinación de opciones no válida"
+          },
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S al abrir o crear el archivo"
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "si se indica una opción no admitida"
+          },
+          {
+            "label": "FileAlreadyExistsException",
+            "detail": "Si ya existe un archivo con ese nombre y se indicó CREATE_NEW (excepción específica opcional)"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "Con el proveedor por defecto y un gestor de seguridad instalado, se invoca checkWrite para comprobar el acceso de escritura al archivo, y checkDelete para comprobar el permiso de eliminación si se abre con DELETE_ON_CLOSE."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.nio.file.Files.newDirectoryStream": {
+    "overloads": [
+      {
+        "intro": [
+          "Abre un directorio y devuelve un DirectoryStream para recorrer todas sus entradas. El iterador devuelve elementos de tipo Path, uno por entrada, obtenidos como si se resolviera el nombre de la entrada respecto a dir."
+        ],
+        "body": [
+          "Si no usas try-with-resources, llama a close del DirectoryStream al terminar de recorrerlo para liberar los recursos del directorio abierto.",
+          "Si la implementación admite operaciones sin condiciones de carrera sobre las entradas del directorio, el flujo devuelto es un SecureDirectoryStream."
+        ],
+        "parameters": [
+          {
+            "label": "dir",
+            "detail": "la ruta del directorio"
+          }
+        ],
+        "returns": ["un nuevo DirectoryStream abierto"],
+        "exceptions": [
+          {
+            "label": "NotDirectoryException",
+            "detail": "si no se pudo abrir porque no es un directorio (excepción específica opcional)"
+          },
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "Con el proveedor por defecto y un gestor de seguridad instalado, se invoca checkRead para comprobar el acceso de lectura al directorio."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Abre un directorio y devuelve un DirectoryStream para recorrer sus entradas. El iterador devuelve elementos de tipo Path, uno por entrada, obtenidos como si se resolviera el nombre de la entrada respecto a dir. Las entradas se filtran comparando la representación String de su nombre con el patrón glob indicado."
+        ],
+        "body": [
+          "Por ejemplo, para recorrer los archivos de un directorio que terminan en \".java\": {@snippet lang=java : Path dir = ... try (DirectoryStream stream = Files.newDirectoryStream(dir, \"*.java\")) { : } }",
+          "El patrón glob se especifica como en getPathMatcher.",
+          "Si no usas try-with-resources, llama a close del DirectoryStream al terminar de recorrerlo para liberar los recursos del directorio abierto.",
+          "Si la implementación admite operaciones sin condiciones de carrera sobre las entradas del directorio, el flujo devuelto es un SecureDirectoryStream."
+        ],
+        "parameters": [
+          {
+            "label": "dir",
+            "detail": "la ruta del directorio"
+          },
+          {
+            "label": "glob",
+            "detail": "el patrón glob"
+          }
+        ],
+        "returns": ["un nuevo DirectoryStream abierto"],
+        "exceptions": [
+          {
+            "label": "java.util.regex.PatternSyntaxException",
+            "detail": "si el patrón no es válido"
+          },
+          {
+            "label": "NotDirectoryException",
+            "detail": "si no se pudo abrir porque no es un directorio (excepción específica opcional)"
+          },
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "Con el proveedor por defecto y un gestor de seguridad instalado, se invoca checkRead para comprobar el acceso de lectura al directorio."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Abre un directorio y devuelve un DirectoryStream para recorrer sus entradas. El iterador devuelve elementos de tipo Path, uno por entrada, obtenidos como si se resolviera el nombre de la entrada respecto a dir. Las entradas se filtran con el filtro indicado."
+        ],
+        "body": [
+          "Si no usas try-with-resources, llama a close del DirectoryStream al terminar de recorrerlo para liberar los recursos del directorio abierto.",
+          "Si el filtro termina por un error no capturado o una excepción de ejecución, se propaga a hasNext o next. Si lanza IOException, hasNext o next lanzan DirectoryIteratorException con la IOException como causa.",
+          "Si la implementación admite operaciones sin condiciones de carrera sobre las entradas del directorio, el flujo devuelto es un SecureDirectoryStream.",
+          "Ejemplo de uso: para recorrer los archivos de un directorio de más de 8K. {@snippet lang=java : DirectoryStream.Filter filter = new DirectoryStream.Filter() { public boolean accept(Path file) throws IOException { return (Files.size(file) > 8192L); } }; Path dir = ... try (DirectoryStream stream = Files.newDirectoryStream(dir, filter)) { : } }"
+        ],
+        "parameters": [
+          {
+            "label": "dir",
+            "detail": "la ruta del directorio"
+          },
+          {
+            "label": "filter",
+            "detail": "el filtro del flujo de directorio"
+          }
+        ],
+        "returns": ["un nuevo DirectoryStream abierto"],
+        "exceptions": [
+          {
+            "label": "NotDirectoryException",
+            "detail": "si no se pudo abrir porque no es un directorio (excepción específica opcional)"
+          },
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "Con el proveedor por defecto y un gestor de seguridad instalado, se invoca checkRead para comprobar el acceso de lectura al directorio."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.nio.file.Files.probeContentType": {
+    "body": [
+      "Usa las implementaciones de FileTypeDetector instaladas para examinar el archivo y determinar su tipo de contenido. Invoca por turnos probeContentType de cada detector; si alguno reconoce el archivo, devuelve el tipo. Si ninguno lo reconoce, se invoca un detector por defecto del sistema para adivinarlo.",
+      "Cada ejecución de la máquina virtual de Java mantiene una lista de detectores de tipo para todo el sistema. Los instalados se cargan con el mecanismo de proveedores de servicios de ServiceLoader, usando el cargador de clases del sistema (o el de plataforma si no se encuentra). Normalmente se instalan en un JAR del classpath con un archivo de configuración llamado java.nio.file.spi.FileTypeDetector en META-INF/services, que lista uno o varios nombres completamente cualificados de subclases concretas de FileTypeDetector con constructor sin argumentos. Si falla la localización o creación de los detectores, se lanza un error no especificado. El orden en que se localizan depende de la implementación.",
+      "El valor devuelto es la forma en cadena de un tipo de contenido MIME (Multipurpose Internet Mail Extension) según RFC 2045: Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies. Se garantiza que se puede analizar según la gramática de ese RFC."
+    ],
+    "parameters": [
+      {
+        "label": "path",
+        "detail": "la ruta del archivo que se examina"
+      }
+    ],
+    "returns": [
+      "El tipo de contenido del archivo, o null si no se puede determinar"
+    ],
+    "exceptions": [
+      {
+        "label": "IOException",
+        "detail": "si se produce un error de E/S"
+      },
+      {
+        "label": "SecurityException",
+        "detail": "Si hay un gestor de seguridad instalado y deniega un permiso no especificado que necesita una implementación de detector."
+      }
+    ]
+  },
+  "web-java-se-java.nio.file.Files.readAllLines": {
+    "overloads": [
+      {
+        "intro": [
+          "Lee todas las líneas de un archivo. Garantiza que el archivo se cierra cuando se han leído todos los bytes o cuando se lanza un error de E/S u otra excepción de ejecución. Los bytes se decodifican en caracteres con el charset indicado."
+        ],
+        "body": [
+          "Reconoce como terminadores de línea:",
+          "\\u000D seguido de \\u000A, CARRIAGE RETURN seguido de LINE FEED",
+          "\\u000A, LINE FEED",
+          "\\u000D, CARRIAGE RETURN",
+          "En versiones futuras podrían reconocerse otros terminadores de línea Unicode.",
+          "Está pensado para casos sencillos en los que conviene leer todas las líneas de una vez. No está pensado para archivos grandes."
+        ],
+        "parameters": [
+          {
+            "label": "path",
+            "detail": "la ruta del archivo"
+          },
+          {
+            "label": "cs",
+            "detail": "el charset con el que se decodifica"
+          }
+        ],
+        "returns": [
+          "las líneas del archivo como List; si la List es modificable o no depende de la implementación y no se especifica"
+        ],
+        "exceptions": [
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S al leer el archivo o se lee una secuencia de bytes mal formada o no representable"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "Con el proveedor por defecto y un gestor de seguridad instalado, se invoca checkRead para comprobar el acceso de lectura al archivo."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Lee todas las líneas de un archivo. Los bytes se decodifican en caracteres con el charset UTF-8."
+        ],
+        "body": [
+          "Funciona como si invocarlo equivaliera a evaluar la expresión:",
+          "Files.readAllLines(path, StandardCharsets.UTF_8)"
+        ],
+        "parameters": [
+          {
+            "label": "path",
+            "detail": "la ruta del archivo"
+          }
+        ],
+        "returns": [
+          "las líneas del archivo como List; si la List es modificable o no depende de la implementación y no se especifica"
+        ],
+        "exceptions": [
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S al leer el archivo o se lee una secuencia de bytes mal formada o no representable"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "Con el proveedor por defecto y un gestor de seguridad instalado, se invoca checkRead para comprobar el acceso de lectura al archivo."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.nio.file.Files.walk": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve un Stream que se llena de forma perezosa con Path al recorrer el árbol de archivos que parte del archivo indicado. El árbol se recorre en profundidad y los elementos del flujo son Path obtenidos como si se resolviera la ruta relativa respecto a start."
+        ],
+        "body": [
+          "El flujo recorre el árbol a medida que se consumen los elementos. Se garantiza que tiene al menos un elemento: el propio archivo inicial. Para cada archivo visitado, intenta leer sus BasicFileAttributes. Si es un directorio y se puede abrir, sus entradas y sus descendientes aparecen en el flujo después del directorio, a medida que se encuentran. Cuando se han visitado todas las entradas, se cierra el directorio y el recorrido sigue por el siguiente hermano.",
+          "El flujo es débilmente coherente: no congela el árbol al recorrerlo, así que puede (o no) reflejar cambios posteriores a la llamada.",
+          "Por defecto, no sigue automáticamente los enlaces simbólicos. Si options contiene FOLLOW_LINKS, sí los sigue; y si no puede leer los atributos del destino, intenta obtener los BasicFileAttributes del enlace.",
+          "Si options contiene FOLLOW_LINKS, el flujo registra los directorios visitados para detectar ciclos. Hay un ciclo cuando una entrada de un directorio es antecesora de ese directorio. Se detecta guardando la clave de archivo de los directorios o, si no está disponible, comprobando con isSameFile si un directorio es el mismo archivo que un antecesor. Un ciclo se trata como un error de E/S con una instancia de FileSystemLoopException.",
+          "maxDepth es el número máximo de niveles de directorios que se visitan. 0 significa que solo se visita el archivo inicial, salvo que lo deniegue el gestor de seguridad. MAX_VALUE indica que se visitan todos los niveles.",
+          "Si hay un gestor de seguridad instalado y deniega el acceso a un archivo (o directorio), se ignora y no se incluye en el flujo.",
+          "El flujo devuelto contiene referencias a uno o varios directorios abiertos, que se cierran al cerrar el flujo.",
+          "Si se lanza IOException al acceder al directorio después de que el método haya terminado, se envuelve en UncheckedIOException, que lanza el método que provocó el acceso."
+        ],
+        "parameters": [
+          {
+            "label": "start",
+            "detail": "el archivo inicial"
+          },
+          {
+            "label": "maxDepth",
+            "detail": "el número máximo de niveles de directorios que se visitan"
+          },
+          {
+            "label": "options",
+            "detail": "opciones para configurar el recorrido"
+          }
+        ],
+        "returns": ["el Stream de Path"],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "si maxDepth es negativo"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "Si el gestor de seguridad deniega el acceso al archivo inicial. Con el proveedor por defecto, se invoca checkRead para comprobar el acceso de lectura al directorio."
+          },
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S al acceder al archivo inicial."
+          }
+        ],
+        "caveats": [
+          "Debe usarse dentro de una sentencia try-with-resources o una estructura similar para garantizar que los directorios abiertos del flujo se cierren en cuanto terminen sus operaciones."
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un Stream que se llena de forma perezosa con Path al recorrer el árbol de archivos que parte del archivo indicado. El árbol se recorre en profundidad y los elementos del flujo son Path obtenidos como si se resolviera la ruta relativa respecto a start."
+        ],
+        "body": [
+          "Funciona como si invocarlo equivaliera a evaluar la expresión:",
+          "Files.walk(start, Integer.MAX_VALUE, options)",
+          "Es decir, visita todos los niveles del árbol de archivos.",
+          "El flujo devuelto contiene referencias a uno o varios directorios abiertos, que se cierran al cerrar el flujo."
+        ],
+        "parameters": [
+          {
+            "label": "start",
+            "detail": "el archivo inicial"
+          },
+          {
+            "label": "options",
+            "detail": "opciones para configurar el recorrido"
+          }
+        ],
+        "returns": ["el Stream de Path"],
+        "exceptions": [
+          {
+            "label": "SecurityException",
+            "detail": "Si el gestor de seguridad deniega el acceso al archivo inicial. Con el proveedor por defecto, se invoca checkRead para comprobar el acceso de lectura al directorio."
+          },
+          {
+            "label": "IOException",
+            "detail": "si se produce un error de E/S al acceder al archivo inicial."
+          }
+        ],
+        "caveats": [
+          "Debe usarse dentro de una sentencia try-with-resources o una estructura similar para garantizar que los directorios abiertos del flujo se cierren en cuanto terminen sus operaciones."
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.nio.file.WatchKey": {
+    "body": [
+      "Una clave de vigilancia se crea al registrar un objeto vigilable en un servicio de vigilancia. Sigue siendo válida hasta que:",
+      "Se cancela explícitamente con su método cancel, o",
+      "Se cancela implícitamente porque el objeto ya no es accesible, o",
+      "Se cierra el servicio de vigilancia.",
+      "Una clave de vigilancia tiene un estado. Al crearse está lista. Cuando se detecta un evento, pasa a señalada y se pone en cola para obtenerla con poll o take del servicio. Una vez señalada, sigue así hasta que se invoca reset para devolverla al estado listo. Los eventos detectados mientras está señalada se acumulan, pero no la vuelven a poner en cola. Los eventos se obtienen con pollEvents de la clave, que obtiene y elimina todos los acumulados. Al crearse, no tiene eventos pendientes. Normalmente los eventos se obtienen con la clave señalada, con este patrón:",
+      "{@snippet lang=java : for (;;) { // retrieve key WatchKey key = watcher.take();",
+      "// process events for (WatchEvent event: key.pollEvents()) { : }",
+      "// reset the key boolean valid = key.reset(); if (!valid) { // object no longer registered } } }",
+      "Las claves de vigilancia son seguras para varios hilos a la vez. Si varios hilos obtienen claves señaladas de un servicio, hay que asegurarse de invocar reset solo después de procesar los eventos del objeto, para que en cada momento un solo hilo procese los eventos de un objeto."
+    ]
+  },
   "web-java-se-java.security.spec.MGF1ParameterSpec.toString": {
     "returns": ["una representación en cadena del objeto."],
     "caveats": [
@@ -4108,12 +4882,502 @@
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
     ]
   },
+  "web-java-se-java.time.DayOfWeek.adjustInto": {
+    "body": [
+      "Devuelve un objeto temporal del mismo tipo observable que la entrada, con el día de la semana cambiado al de este.",
+      "El ajuste equivale a usar Temporal.with(TemporalField, long) con ChronoField.DAY_OF_WEEK como campo. Ajusta hacia delante o hacia atrás dentro de una semana de lunes a domingo. Consulta java.time.temporal.WeekFields.dayOfWeek() para el inicio de semana localizado, y TemporalAdjuster para otros ajustadores con más control, como next(MONDAY).",
+      "En la mayoría de los casos queda más claro invertir la llamada con Temporal.with(TemporalAdjuster):",
+      "// these two lines are equivalent, but the second approach is recommended temporal = thisDayOfWeek.adjustInto(temporal); temporal = temporal.with(thisDayOfWeek);",
+      "Por ejemplo, con una fecha que cae en miércoles, se obtiene:",
+      "dateOnWed.with(MONDAY); // two days earlier dateOnWed.with(TUESDAY); // one day earlier dateOnWed.with(WEDNESDAY); // same date dateOnWed.with(THURSDAY); // one day later dateOnWed.with(FRIDAY); // two days later dateOnWed.with(SATURDAY); // three days later dateOnWed.with(SUNDAY); // four days later",
+      "Esta instancia es inmutable y la llamada no la modifica."
+    ],
+    "parameters": [
+      {
+        "label": "temporal",
+        "detail": "el objeto que se ajusta, no null"
+      }
+    ],
+    "returns": ["el objeto ajustado, no null"],
+    "exceptions": [
+      {
+        "label": "DateTimeException",
+        "detail": "si no se puede hacer el ajuste"
+      },
+      {
+        "label": "ArithmeticException",
+        "detail": "si se produce un desbordamiento numérico"
+      }
+    ]
+  },
+  "web-java-se-java.time.Duration.parse": {
+    "body": [
+      "Analiza una representación textual de una duración, incluida la cadena que produce toString(). Los formatos aceptados se basan en el formato de duración ISO-8601 PnDTnHnMn.nS, considerando que un día son exactamente 24 horas.",
+      "La cadena empieza por un signo opcional, el símbolo ASCII negativo o positivo; si es negativo, se niega todo el periodo. Después va la letra ASCII \"P\", en mayúscula o minúscula. Luego hay cuatro secciones, cada una con un número y un sufijo: \"D\", \"H\", \"M\" y \"S\" para días, horas, minutos y segundos, en mayúscula o minúscula y en ese orden. La letra ASCII \"T\" debe ir antes de la primera sección de horas, minutos o segundos, si la hay. Debe haber al menos una de las cuatro secciones y, si hay \"T\", al menos una después. El número de cada sección debe tener uno o más dígitos ASCII y puede llevar delante el símbolo negativo o positivo. Días, horas y minutos deben poder analizarse como long; los segundos, como long con parte decimal opcional. El separador decimal puede ser punto o coma, y la parte decimal puede tener de 0 a 9 dígitos.",
+      "El signo inicial y los valores negativos en otras unidades no forman parte del estándar ISO-8601.",
+      "Ejemplos:",
+      "\"PT20.345S\" -- se analiza como \"20,345 segundos\" \"PT15M\" -- se analiza como \"15 minutos\" (un minuto son 60 segundos) \"PT10H\" -- se analiza como \"10 horas\" (una hora son 3600 segundos) \"P2D\" -- se analiza como \"2 días\" (un día son 24 horas u 86400 segundos) \"P2DT3H4M\" -- se analiza como \"2 días, 3 horas y 4 minutos\" \"PT-6H3M\" -- se analiza como \"-6 horas y +3 minutos\" \"-PT6H3M\" -- se analiza como \"-6 horas y -3 minutos\" \"-PT-6H+3M\" -- se analiza como \"+6 horas y -3 minutos\""
+    ],
+    "parameters": [
+      {
+        "label": "text",
+        "detail": "el texto que se analiza, no null"
+      }
+    ],
+    "returns": ["la duración analizada, no null"],
+    "exceptions": [
+      {
+        "label": "DateTimeParseException",
+        "detail": "si el texto no se puede analizar como duración"
+      }
+    ]
+  },
+  "web-java-se-java.time.LocalDate.compareTo": {
+    "overloads": [
+      {
+        "intro": ["Compara esta fecha con otra."],
+        "body": [
+          "La comparación se basa principalmente en la fecha, de la más temprana a la más tardía. Es «coherente con equals», según la definición de Comparable.",
+          "Si todas las fechas comparadas son LocalDate, la comparación se basa solo en la fecha. Si alguna está en otra cronología, también se tiene en cuenta la cronología; consulta java.time.chrono.ChronoLocalDate.compareTo."
+        ],
+        "parameters": [
+          {
+            "label": "other",
+            "detail": "la otra fecha con la que se compara, no null"
+          }
+        ],
+        "returns": [
+          "el valor de comparación: compara primero esta fecha local con la otra y después esta cronología con la otra, y devuelve el primer resultado distinto de cero, o cero en caso contrario"
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.time.LocalDate.equals": {
+    "body": [
+      "Compara este LocalDate con otro para comprobar que la fecha es la misma.",
+      "Solo se comparan objetos LocalDate; con otros tipos devuelve false. Para comparar las fechas de dos TemporalAccessor, incluidas fechas de cronologías distintas, usa ChronoField.EPOCH_DAY como comparador."
+    ],
+    "parameters": [
+      {
+        "label": "obj",
+        "detail": "el objeto que se comprueba; null devuelve false"
+      }
+    ],
+    "returns": ["true si es igual a la otra fecha"]
+  },
+  "web-java-se-java.time.LocalDate.isAfter": {
+    "body": [
+      "Comprueba si esta fecha representa un punto de la línea temporal local posterior a la otra.",
+      "LocalDate a = LocalDate.of(2012, 6, 30); LocalDate b = LocalDate.of(2012, 7, 1); a.isAfter(b) == false a.isAfter(a) == false b.isAfter(a) == true",
+      "Solo tiene en cuenta la posición de las dos fechas en la línea temporal local, no la cronología ni el sistema de calendario. Es distinto de la comparación de compareTo(ChronoLocalDate), pero igual que ChronoLocalDate.timeLineOrder()."
+    ],
+    "parameters": [
+      {
+        "label": "other",
+        "detail": "la otra fecha con la que se compara, no null"
+      }
+    ],
+    "returns": ["true si esta fecha es posterior a la indicada"]
+  },
+  "web-java-se-java.time.LocalDate.isBefore": {
+    "body": [
+      "Comprueba si esta fecha representa un punto de la línea temporal local anterior a la otra.",
+      "LocalDate a = LocalDate.of(2012, 6, 30); LocalDate b = LocalDate.of(2012, 7, 1); a.isBefore(b) == true a.isBefore(a) == false b.isBefore(a) == false",
+      "Solo tiene en cuenta la posición de las dos fechas en la línea temporal local, no la cronología ni el sistema de calendario. Es distinto de la comparación de compareTo(ChronoLocalDate), pero igual que ChronoLocalDate.timeLineOrder()."
+    ],
+    "parameters": [
+      {
+        "label": "other",
+        "detail": "la otra fecha con la que se compara, no null"
+      }
+    ],
+    "returns": ["true si esta fecha es anterior a la indicada"]
+  },
+  "web-java-se-java.time.LocalDate.isEqual": {
+    "body": [
+      "Comprueba si esta fecha representa el mismo punto de la línea temporal local que la otra.",
+      "LocalDate a = LocalDate.of(2012, 6, 30); LocalDate b = LocalDate.of(2012, 7, 1); a.isEqual(b) == false a.isEqual(a) == true b.isEqual(a) == false",
+      "Solo tiene en cuenta la posición de las dos fechas en la línea temporal local, no la cronología ni el sistema de calendario. Es distinto de la comparación de compareTo(ChronoLocalDate), pero igual que ChronoLocalDate.timeLineOrder()."
+    ],
+    "parameters": [
+      {
+        "label": "other",
+        "detail": "la otra fecha con la que se compara, no null"
+      }
+    ],
+    "returns": ["true si esta fecha es igual a la indicada"]
+  },
+  "web-java-se-java.time.LocalDate.toEpochSecond": {
+    "body": [
+      "Combina esta fecha local con la hora y el desfase indicados para calcular el segundo de la época, es decir, los segundos transcurridos desde 1970-01-01T00:00:00Z. Los instantes posteriores a la época son positivos y los anteriores, negativos."
+    ],
+    "parameters": [
+      {
+        "label": "time",
+        "detail": "la hora local, no null"
+      },
+      {
+        "label": "offset",
+        "detail": "el desfase de zona, no null"
+      }
+    ],
+    "returns": [
+      "el número de segundos desde la época 1970-01-01T00:00:00Z; puede ser negativo"
+    ]
+  },
+  "web-java-se-java.time.LocalDateTime.toString": {
+    "body": [
+      "La salida tendrá uno de estos formatos ISO-8601:",
+      "uuuu-MM-dd'T'HH:mm",
+      "uuuu-MM-dd'T'HH:mm:ss",
+      "uuuu-MM-dd'T'HH:mm:ss.SSS",
+      "uuuu-MM-dd'T'HH:mm:ss.SSSSSS",
+      "uuuu-MM-dd'T'HH:mm:ss.SSSSSSSSS",
+      "Se usa el formato más corto que muestre el valor completo de la hora, suponiendo cero las partes omitidas."
+    ],
+    "returns": ["una representación en cadena de esta fecha y hora, no null"]
+  },
+  "web-java-se-java.time.LocalTime.MAX": {
+    "intro": [
+      "El LocalTime máximo admitido, '23:59:59.999999999': el instante justo antes de la medianoche al final del día."
+    ]
+  },
+  "web-java-se-java.time.LocalTime.atDate": {
+    "body": [
+      "Devuelve un LocalDateTime formado por esta hora en la fecha indicada. Todas las combinaciones de fecha y hora son válidas."
+    ],
+    "parameters": [
+      {
+        "label": "date",
+        "detail": "la fecha con la que se combina, no null"
+      }
+    ],
+    "returns": [
+      "la fecha y hora local formada por esta hora y la fecha indicada, no null"
+    ]
+  },
+  "web-java-se-java.time.LocalTime.equals": {
+    "body": [
+      "La comparación se basa en la posición de la hora en la línea temporal del día.",
+      "Solo se comparan objetos LocalTime; con otros tipos devuelve false. Para comparar las horas de dos TemporalAccessor, usa ChronoField.NANO_OF_DAY como comparador."
+    ],
+    "parameters": [
+      {
+        "label": "obj",
+        "detail": "el objeto que se comprueba; null devuelve false"
+      }
+    ],
+    "returns": ["true si es igual a la otra hora"]
+  },
+  "web-java-se-java.time.LocalTime.toEpochSecond": {
+    "body": [
+      "Combina esta hora local con la fecha y el desfase indicados para calcular el segundo de la época, es decir, los segundos transcurridos desde 1970-01-01T00:00:00Z. Los instantes posteriores a la época son positivos y los anteriores, negativos."
+    ],
+    "parameters": [
+      {
+        "label": "date",
+        "detail": "la fecha local, no null"
+      },
+      {
+        "label": "offset",
+        "detail": "el desfase de zona, no null"
+      }
+    ],
+    "returns": [
+      "el número de segundos desde la época 1970-01-01T00:00:00Z; puede ser negativo"
+    ]
+  },
+  "web-java-se-java.time.MonthDay": {
+    "body": [
+      "MonthDay es un objeto de fecha y hora inmutable que representa la combinación de un mes y un día del mes. Se puede obtener cualquier campo derivable de un mes y un día, como el trimestre del año.",
+      "No guarda ni representa año, hora ni zona horaria. Por ejemplo, el valor \"3 de diciembre\" se puede guardar en un MonthDay.",
+      "Como un MonthDay no tiene año, el 29 de febrero se considera válido.",
+      "Implementa TemporalAccessor en lugar de Temporal, porque sin información externa no se puede saber si el 29 de febrero es válido, lo que impide implementar plus/minus. Por lo mismo, MonthDay solo permite consultar y establecer los campos MONTH_OF_YEAR y DAY_OF_MONTH.",
+      "El sistema de calendario ISO-8601 es el calendario civil moderno que se usa hoy en la mayor parte del mundo. Equivale al calendario gregoriano proléptico, en el que las reglas actuales de los años bisiestos se aplican a todas las épocas. Para la mayoría de aplicaciones actuales es totalmente adecuado, pero no para las que usan fechas históricas y necesitan que sean exactas.",
+      "Es una clase basada en valores: las instancias iguales deben tratarse como intercambiables y no deben usarse para sincronizar, o el comportamiento puede ser impredecible. Por ejemplo, la sincronización podría fallar en una versión futura. Para comparar, usa equals."
+    ],
+    "caveats": ["Esta clase es inmutable y segura entre hilos."]
+  },
+  "web-java-se-java.time.OffsetDateTime.toString": {
+    "body": [
+      "La salida tendrá uno de estos formatos:",
+      "uuuu-MM-dd'T'HH:mmXXXXX",
+      "uuuu-MM-dd'T'HH:mm:ssXXXXX",
+      "uuuu-MM-dd'T'HH:mm:ss.SSSXXXXX",
+      "uuuu-MM-dd'T'HH:mm:ss.SSSSSSXXXXX",
+      "uuuu-MM-dd'T'HH:mm:ss.SSSSSSSSSXXXXX",
+      "Se usa el formato más corto que muestre el valor completo de la hora, suponiendo cero las partes omitidas. La salida es compatible con ISO 8601 si los segundos del desfase son cero."
+    ],
+    "returns": ["una representación en cadena de esta fecha y hora, no null"]
+  },
+  "web-java-se-java.time.OffsetTime.atDate": {
+    "body": [
+      "Devuelve un OffsetDateTime formado por esta hora y la fecha indicada. Todas las combinaciones de fecha y hora son válidas."
+    ],
+    "parameters": [
+      {
+        "label": "date",
+        "detail": "la fecha con la que se combina, no null"
+      }
+    ],
+    "returns": [
+      "la fecha y hora con desfase formada por esta hora y la fecha indicada, no null"
+    ]
+  },
+  "web-java-se-java.time.OffsetTime.equals": {
+    "body": [
+      "La comparación se basa en la hora local y el desfase. Para comparar si son el mismo instante de la línea temporal, usa isEqual(OffsetTime).",
+      "Solo se comparan objetos OffsetTime; con otros tipos devuelve false. Para comparar la hora local subyacente de dos TemporalAccessor, usa ChronoField.NANO_OF_DAY como comparador."
+    ],
+    "parameters": [
+      {
+        "label": "obj",
+        "detail": "el objeto que se comprueba; null devuelve false"
+      }
+    ],
+    "returns": ["true si es igual a la otra hora"]
+  },
+  "web-java-se-java.time.OffsetTime.toEpochSecond": {
+    "body": [
+      "Combina esta hora con desfase con la fecha indicada para calcular el segundo de la época, es decir, los segundos transcurridos desde 1970-01-01T00:00:00Z. Los instantes posteriores a la época son positivos y los anteriores, negativos."
+    ],
+    "parameters": [
+      {
+        "label": "date",
+        "detail": "la fecha local, no null"
+      }
+    ],
+    "returns": [
+      "el número de segundos desde la época 1970-01-01T00:00:00Z; puede ser negativo"
+    ]
+  },
+  "web-java-se-java.time.Period.parse": {
+    "body": [
+      "Analiza la cadena que produce toString(), basada en los formatos de periodo ISO-8601 PnYnMnD y PnW.",
+      "La cadena empieza por un signo opcional, el símbolo ASCII negativo o positivo; si es negativo, se niega todo el periodo. Después va la letra ASCII \"P\", en mayúscula o minúscula. Luego hay cuatro secciones, cada una con un número y un sufijo, y debe haber al menos una. Los sufijos son \"Y\", \"M\", \"W\" y \"D\" para años, meses, semanas y días, en mayúscula o minúscula y en ese orden. El número de cada sección debe tener dígitos ASCII, puede llevar delante el símbolo negativo o positivo y debe poder analizarse como int.",
+      "El signo inicial y los valores negativos en otras unidades no forman parte del estándar ISO-8601. Además, ISO-8601 no permite mezclar los formatos PnYnMnD y PnW. Cualquier valor en semanas se multiplica por 7 y se trata como días.",
+      "Por ejemplo, estas entradas son válidas:",
+      "\"P2Y\" -- Period.ofYears(2) \"P3M\" -- Period.ofMonths(3) \"P4W\" -- Period.ofWeeks(4) \"P5D\" -- Period.ofDays(5) \"P1Y2M3D\" -- Period.of(1, 2, 3) \"P1Y2M3W4D\" -- Period.of(1, 2, 25) \"P-1Y2M\" -- Period.of(-1, 2, 0) \"-P1Y2M\" -- Period.of(-1, -2, 0)"
+    ],
+    "parameters": [
+      {
+        "label": "text",
+        "detail": "el texto que se analiza, no null"
+      }
+    ],
+    "returns": ["el periodo analizado, no null"],
+    "exceptions": [
+      {
+        "label": "DateTimeParseException",
+        "detail": "si el texto no se puede analizar como periodo"
+      }
+    ]
+  },
+  "web-java-se-java.time.Year": {
+    "body": [
+      "Year es un objeto de fecha y hora inmutable que representa un año. Se puede obtener cualquier campo derivable de un año.",
+      "Los años de la cronología ISO solo coinciden con los del sistema gregoriano-juliano en los años modernos. Algunas partes de Rusia no adoptaron las reglas gregorianas/ISO modernas hasta 1920. Por eso, los años históricos deben tratarse con cuidado.",
+      "No guarda ni representa mes, día, hora ni zona horaria. Por ejemplo, el valor \"2007\" se puede guardar en un Year.",
+      "Los años de esta clase siguen el estándar ISO-8601 y la numeración proléptica: antes del año 1 va el año 0 y después el -1.",
+      "El sistema de calendario ISO-8601 es el calendario civil moderno que se usa hoy en la mayor parte del mundo. Equivale al calendario gregoriano proléptico, en el que las reglas actuales de los años bisiestos se aplican a todas las épocas. Para la mayoría de aplicaciones actuales es totalmente adecuado, pero no para las que usan fechas históricas y necesitan que sean exactas.",
+      "Es una clase basada en valores: las instancias iguales deben tratarse como intercambiables y no deben usarse para sincronizar, o el comportamiento puede ser impredecible. Por ejemplo, la sincronización podría fallar en una versión futura. Para comparar, usa equals."
+    ],
+    "caveats": ["Esta clase es inmutable y segura entre hilos."]
+  },
+  "web-java-se-java.time.YearMonth": {
+    "body": [
+      "YearMonth es un objeto de fecha y hora inmutable que representa la combinación de un año y un mes. Se puede obtener cualquier campo derivable de un año y un mes, como el trimestre del año.",
+      "No guarda ni representa día, hora ni zona horaria. Por ejemplo, el valor \"octubre de 2007\" se puede guardar en un YearMonth.",
+      "El sistema de calendario ISO-8601 es el calendario civil moderno que se usa hoy en la mayor parte del mundo. Equivale al calendario gregoriano proléptico, en el que las reglas actuales de los años bisiestos se aplican a todas las épocas. Para la mayoría de aplicaciones actuales es totalmente adecuado, pero no para las que usan fechas históricas y necesitan que sean exactas.",
+      "Es una clase basada en valores: las instancias iguales deben tratarse como intercambiables y no deben usarse para sincronizar, o el comportamiento puede ser impredecible. Por ejemplo, la sincronización podría fallar en una versión futura. Para comparar, usa equals."
+    ],
+    "caveats": ["Esta clase es inmutable y segura entre hilos."]
+  },
+  "web-java-se-java.time.ZoneId.SHORT_IDS": {
+    "body": [
+      "El uso de los ID de zona cortos está obsoleto en java.util.TimeZone. Este mapa permite seguir usándolos con el método de fábrica ZoneId.of(String, Map).",
+      "Contiene una correspondencia de ID acorde con TZDB 2005r y posteriores, en la que 'EST', 'MST' y 'HST' corresponden a ID sin horario de verano.",
+      "La correspondencia es:",
+      "EST - -05:00",
+      "HST - -10:00",
+      "MST - -07:00",
+      "ACT - Australia/Darwin",
+      "AET - Australia/Sydney",
+      "AGT - America/Argentina/Buenos_Aires",
+      "ART - Africa/Cairo",
+      "AST - America/Anchorage",
+      "BET - America/Sao_Paulo",
+      "BST - Asia/Dhaka",
+      "CAT - Africa/Harare",
+      "CNT - America/St_Johns",
+      "CST - America/Chicago",
+      "CTT - Asia/Shanghai",
+      "EAT - Africa/Addis_Ababa",
+      "ECT - Europe/Paris",
+      "IET - America/Indiana/Indianapolis",
+      "IST - Asia/Kolkata",
+      "JST - Asia/Tokyo",
+      "MIT - Pacific/Apia",
+      "NET - Asia/Yerevan",
+      "NST - Pacific/Auckland",
+      "PLT - Asia/Karachi",
+      "PNT - America/Phoenix",
+      "PRT - America/Puerto_Rico",
+      "PST - America/Los_Angeles",
+      "SST - Pacific/Guadalcanal",
+      "VST - Asia/Ho_Chi_Minh",
+      "El mapa no es modificable."
+    ]
+  },
+  "web-java-se-java.time.ZoneId.normalized": {
+    "body": [
+      "Devuelve un ZoneId normalizado que se puede usar en lugar de este. Tendrá unas ZoneRules equivalentes, aunque el ID que devuelve getId() puede ser distinto.",
+      "La normalización comprueba si las reglas de este ZoneId tienen un desfase fijo. Si lo tienen, devuelve el ZoneOffset igual a ese desfase; si no, devuelve this."
+    ],
+    "returns": ["el ID único de la zona horaria, no null"]
+  },
+  "web-java-se-java.time.ZoneOffset.compareTo": {
+    "overloads": [
+      {
+        "intro": ["Compara este desfase con otro en orden descendente."],
+        "body": [
+          "Los desfases se comparan en el orden en que ocurre la misma hora del día en el mundo. Así, +10:00 va antes que +09:00, y así sucesivamente hasta -18:00.",
+          "La comparación es «coherente con equals», según la definición de Comparable."
+        ],
+        "parameters": [
+          {
+            "label": "other",
+            "detail": "la otra fecha con la que se compara, no null"
+          }
+        ],
+        "returns": [
+          "el valor de comparación: menor que cero si totalSeconds de este es menor que el del otro, cero si son iguales y mayor que cero si es mayor"
+        ],
+        "exceptions": [
+          {
+            "label": "NullPointerException",
+            "detail": "si other es null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.time.ZoneOffset.normalized": {
+    "body": [
+      "Devuelve un ZoneId normalizado que se puede usar en lugar de este. Tendrá unas ZoneRules equivalentes, aunque el ID que devuelve getId() puede ser distinto.",
+      "La normalización comprueba si las reglas de este ZoneId tienen un desfase fijo. Si lo tienen, devuelve el ZoneOffset igual a ese desfase; si no, devuelve this."
+    ],
+    "returns": ["el ID único de la zona horaria, no null"]
+  },
+  "web-java-se-java.time.ZoneOffset.of": {
+    "body": [
+      "Analiza el ID en cadena de un ZoneOffset y devuelve una instancia. Acepta todos los formatos que genera getId(), más algunos adicionales:",
+      "Z - para UTC",
+      "+hh",
+      "+hh:mm",
+      "-hh:mm",
+      "+hhmm",
+      "-hhmm",
+      "+hh:mm:ss",
+      "-hh:mm:ss",
+      "+hhmmss",
+      "-hhmmss",
+      "± significa el signo más o el signo menos.",
+      "El ID del desfase devuelto se normaliza a uno de los formatos de getId().",
+      "El rango máximo admitido va de +18:00 a -18:00, ambos incluidos."
+    ],
+    "parameters": [
+      {
+        "label": "offsetId",
+        "detail": "el ID del desfase, no null"
+      }
+    ],
+    "returns": ["el desfase de zona, no null"],
+    "exceptions": [
+      {
+        "label": "DateTimeException",
+        "detail": "si el ID del desfase no es válido"
+      }
+    ]
+  },
+  "web-java-se-java.time.ZonedDateTime.getZone": {
+    "body": [
+      "Devuelve el ID de zona, que identifica las reglas de zona horaria que determinan cuándo y cómo cambia el desfase respecto a UTC/Greenwich.",
+      "El ID de zona puede ser el mismo que el desfase. En ese caso, los cálculos futuros, como sumas o restas, no tienen casos límite complejos por las reglas de zona horaria. Consulta también withFixedOffsetZone()."
+    ],
+    "returns": ["la zona horaria, no null"]
+  },
+  "web-java-se-java.time.ZonedDateTime.minusHours": {
+    "body": [
+      "Trabaja sobre la línea temporal de instantes, de modo que restar una hora siempre equivale a una duración de una hora antes. Esto puede hacer que la fecha y hora local cambie en algo distinto de una hora. Es un enfoque distinto del de días, meses y años: restar un día no es lo mismo que restar 24 horas.",
+      "Por ejemplo, en una zona horaria como 'Europe/Paris', el cambio de hora de otoño hace que las horas locales de 02:00 a 02:59 ocurran dos veces, al pasar del desfase +02:00 en verano a +01:00 en invierno.",
+      "Restar una hora a 03:30+01:00 da 02:30+01:00 (ambas en horario de invierno)",
+      "Restar una hora a 02:30+01:00 da 02:30+02:00 (se pasa del horario de invierno al de verano)",
+      "Restar una hora a 02:30+02:00 da 01:30+02:00 (ambas en horario de verano)",
+      "Restar tres horas a 03:30+01:00 da 01:30+02:00 (se pasa del horario de invierno al de verano)",
+      "Esta instancia es inmutable y la llamada no la modifica."
+    ],
+    "parameters": [
+      {
+        "label": "hours",
+        "detail": "las horas que se restan; puede ser negativo"
+      }
+    ],
+    "returns": [
+      "un ZonedDateTime basado en esta fecha y hora con las horas restadas, no null"
+    ],
+    "exceptions": [
+      {
+        "label": "DateTimeException",
+        "detail": "si el resultado supera el rango de fechas admitido"
+      }
+    ]
+  },
+  "web-java-se-java.time.ZonedDateTime.plusHours": {
+    "body": [
+      "Trabaja sobre la línea temporal de instantes, de modo que sumar una hora siempre equivale a una duración de una hora después. Esto puede hacer que la fecha y hora local cambie en algo distinto de una hora. Es un enfoque distinto del de días, meses y años: sumar un día no es lo mismo que sumar 24 horas.",
+      "Por ejemplo, en una zona horaria como 'Europe/Paris', el cambio de hora de otoño hace que las horas locales de 02:00 a 02:59 ocurran dos veces, al pasar del desfase +02:00 en verano a +01:00 en invierno.",
+      "Sumar una hora a 01:30+02:00 da 02:30+02:00 (ambas en horario de verano)",
+      "Sumar una hora a 02:30+02:00 da 02:30+01:00 (se pasa del horario de verano al de invierno)",
+      "Sumar una hora a 02:30+01:00 da 03:30+01:00 (ambas en horario de invierno)",
+      "Sumar tres horas a 01:30+02:00 da 03:30+01:00 (se pasa del horario de verano al de invierno)",
+      "Esta instancia es inmutable y la llamada no la modifica."
+    ],
+    "parameters": [
+      {
+        "label": "hours",
+        "detail": "las horas que se suman; puede ser negativo"
+      }
+    ],
+    "returns": [
+      "un ZonedDateTime basado en esta fecha y hora con las horas sumadas, no null"
+    ],
+    "exceptions": [
+      {
+        "label": "DateTimeException",
+        "detail": "si el resultado supera el rango de fechas admitido"
+      }
+    ]
+  },
   "web-java-se-java.time.chrono.JapaneseEra.toString": {
     "returns": ["una representación en cadena del objeto."],
     "caveats": [
       "En general, toString devuelve una cadena que «representa textualmente» el objeto. Debería ser una representación concisa pero informativa y fácil de leer. Se recomienda que todas las subclases sobrescriban este método. La cadena no tiene por qué ser estable en el tiempo ni entre ejecuciones de la JVM.",
       "El toString de Object devuelve una cadena con el nombre de la clase de la que el objeto es instancia, el carácter arroba '@' y la representación hexadecimal sin signo del código hash del objeto. Es decir, devuelve una cadena igual al valor de:",
       "getClass().getName() + '@' + Integer.toHexString(hashCode())"
+    ]
+  },
+  "web-java-se-java.time.format.DateTimeFormatter.ISO_DATE": {
+    "intro": [
+      "El formateador ISO de fechas que formatea o analiza una fecha con su desfase, si lo hay, como '2011-12-03' o '2011-12-03+01:00'."
+    ],
+    "body": [
+      "Devuelve un formateador inmutable capaz de formatear y analizar el formato de fecha extendido de ISO-8601. El formato consta de:",
+      "ISO_LOCAL_DATE",
+      "Si no hay desfase, el formato está completo.",
+      "El ID del desfase. Si el desfase tiene segundos, se gestionan aunque no formen parte de ISO-8601. El análisis no distingue mayúsculas.",
+      "Como este formateador tiene un elemento opcional, puede ser necesario analizar con DateTimeFormatter.parseBest.",
+      "El formateador devuelto tiene la cronología ISO para que las fechas de otros sistemas de calendario se conviertan correctamente. No tiene zona de sustitución y usa el estilo de resolución STRICT."
     ]
   },
   "web-java-se-java.util.AbstractList": {
