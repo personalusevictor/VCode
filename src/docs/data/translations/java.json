@@ -13618,6 +13618,20 @@
       }
     ]
   },
+  "web-java-se-java.lang.reflect.RecordComponent.getGenericSignature": {
+    "returns": [
+      "un String que describe la firma de tipo genérico de este componente de record",
+      "@jvms 4.7.9.1 Signatures"
+    ]
+  },
+  "web-java-se-java.lang.runtime.TemplateRuntime": {
+    "intro": [
+      "Gestiona los métodos bootstrap de las plantillas de cadena. Pueden usarlos, por ejemplo, las implementaciones del compilador de Java para crear instancias de StringTemplate. Por ejemplo, el compilador de Java traducirá este código: {@snippet : int x = 10; int y = 20; StringTemplate st = RAW.\"\\{x} + \\{y} = \\{x + y}\"; } a bytecode que invoca el método bootstrap java.lang.runtime.TemplateRuntime.newStringTemplate para crear un CallSite que acepta dos enteros y produce una nueva instancia de StringTemplate."
+    ],
+    "body": [
+      "Si la plantilla de cadena necesita más ranuras de valor que java.lang.invoke.StringConcatFactory.MAX_INDY_CONCAT_ARG_SLOTS, el compilador de Java usará en su lugar el método bootstrap java.lang.runtime.TemplateRuntime.newLargeStringTemplate. Por ejemplo, traducirá este código: {@snippet : int[] a = new int[1000], b = new int[1000]; ... StringTemplate st = \"\"\" \\{a[0]} - \\{b[0]} \\{a[1]} - \\{b[1]} ... \\{a[999]} - \\{b[999]} \"\"\"; } a bytecode que invoca el método bootstrap java.lang.runtime.TemplateRuntime.newLargeStringTemplate para crear un CallSite que acepta un array de enteros y produce una nueva instancia de StringTemplate. {@snippet : MethodType mt = MethodType.methodType(StringTemplate.class, String[].class, Object[].class); CallSite cs = TemplateRuntime.newStringTemplate(lookup, \"\", mt); ... int[] a = new int[1000], b = new int[1000]; ... StringTemplate st = (StringTemplate)cs.getTarget().invokeExact( new String[] { \"\", \" - \", \"\\n\", \" - \", \"\\n\", ... \" - \", \"\\n\" }, new Object[] { a[0], b[0], a[1], b[1], ..., a[999], b[999]} ); }"
+    ]
+  },
   "web-java-se-java.math.BigDecimal.%3Cinit%3E": {
     "overloads": [
       {
@@ -15224,6 +15238,28 @@
       "/a/b/c/* · sí"
     ]
   },
+  "web-java-se-java.net.http.HttpRequest%24BodyPublishers.ofFile": {
+    "body": [
+      "Las comprobaciones de permisos del gestor de seguridad se hacen en este método de fábrica, al crear el BodyPublisher. Hay que tener cuidado de no compartir el BodyPublisher con código no fiable."
+    ],
+    "parameters": [
+      {
+        "label": "path",
+        "detail": "la ruta del archivo que contiene el cuerpo"
+      }
+    ],
+    "returns": ["un BodyPublisher"],
+    "exceptions": [
+      {
+        "label": "java.io.FileNotFoundException",
+        "detail": "si no se encuentra la ruta"
+      },
+      {
+        "label": "SecurityException",
+        "detail": "si se deniega abrir el archivo para lectura (Files.newInputStream(Path, OpenOption...)): con el proveedor de sistema de archivos predeterminado y un gestor de seguridad instalado, se llama a checkRead para comprobar el acceso de lectura al archivo"
+      }
+    ]
+  },
   "web-java-se-java.nio.Buffer.hasArray": {
     "intro": ["Indica si este búfer está respaldado por un array accesible."],
     "body": [
@@ -15376,6 +15412,284 @@
     ],
     "returns": [
       "true si y solo si este búfer está respaldado por un array y no es de solo lectura"
+    ]
+  },
+  "web-java-se-java.nio.channels.AsynchronousChannelGroup.isShutdown": {
+    "intro": ["Indica si este grupo de canales asíncronos está cerrado."],
+    "returns": [
+      "true si este grupo de canales asíncronos está cerrado o marcado para cerrarse."
+    ]
+  },
+  "web-java-se-java.nio.channels.Channel": {
+    "body": [
+      "Un canal representa una conexión abierta con una entidad, como un dispositivo de hardware, un archivo, un socket de red o un componente de programa, capaz de hacer una o más operaciones de E/S, por ejemplo leer o escribir.",
+      "Un canal está abierto o cerrado. Se abre al crearlo y, una vez cerrado, sigue cerrado. Cualquier intento de hacer una operación de E/S sobre un canal cerrado lanza ClosedChannelException. Puede comprobarse si un canal está abierto con su método isOpen.",
+      "En general, los canales están pensados para ser seguros con acceso desde varios hilos, como se describe en las especificaciones de las interfaces y clases que extienden e implementan esta interfaz."
+    ]
+  },
+  "web-java-se-java.nio.channels.DatagramChannel.validOps": {
+    "body": [
+      "Los canales de datagramas admiten lectura y escritura, así que este método devuelve (SelectionKey.OP_READ | SelectionKey.OP_WRITE)."
+    ],
+    "returns": ["El conjunto de operaciones válidas"]
+  },
+  "web-java-se-java.nio.channels.FileLock.overlaps": {
+    "intro": ["Indica si este bloqueo se solapa con el rango dado."],
+    "parameters": [
+      {
+        "label": "position",
+        "detail": "La posición inicial del rango"
+      },
+      {
+        "label": "size",
+        "detail": "El tamaño del rango"
+      }
+    ],
+    "returns": [
+      "true si este bloqueo y el rango dado se solapan en al menos un byte; false si size es negativo o el rango no se solapa con este bloqueo"
+    ]
+  },
+  "web-java-se-java.nio.channels.MembershipKey": {
+    "body": [
+      "Una clave de pertenencia puede representar la pertenencia para recibir todos los datagramas enviados al grupo, o ser específica de un origen, es decir, recibir solo los datagramas de una dirección de origen concreta. Puede saberse si es específica de un origen con su método sourceAddress.",
+      "Una clave de pertenencia es válida al crearla y lo sigue siendo hasta que se abandona la pertenencia con el método drop o se cierra el canal. Puede comprobarse su validez con isValid.",
+      "Si una clave de pertenencia no es específica de un origen y el sistema operativo admite filtrado por origen, los métodos block y unblock permiten bloquear o desbloquear los datagramas multicast de direcciones de origen concretas."
+    ]
+  },
+  "web-java-se-java.nio.channels.MulticastChannel.join": {
+    "overloads": [
+      {
+        "intro": [
+          "Se une a un grupo multicast para empezar a recibir todos los datagramas enviados al grupo, y devuelve una clave de pertenencia."
+        ],
+        "body": [
+          "Si este canal ya es miembro del grupo en la interfaz dada para recibir todos los datagramas, se devuelve la clave que representa esa pertenencia. Si no, el canal se une al grupo y se devuelve la nueva clave. La clave resultante no es específica de un origen.",
+          "Un canal multicast puede unirse a varios grupos, incluido el mismo grupo en más de una interfaz. La implementación puede limitar el número de grupos a los que se puede pertenecer a la vez."
+        ],
+        "parameters": [
+          {
+            "label": "group",
+            "detail": "La dirección multicast a la que unirse"
+          },
+          {
+            "label": "interf",
+            "detail": "La interfaz de red en la que unirse al grupo"
+          }
+        ],
+        "returns": ["La clave de pertenencia"],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "Si group no es una dirección multicast o es un tipo de dirección que este canal no admite"
+          },
+          {
+            "label": "IllegalStateException",
+            "detail": "Si el canal ya tiene una pertenencia específica de un origen al grupo en esa interfaz"
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "Si el socket del canal no es un socket de Internet Protocol o la plataforma no admite multicast"
+          },
+          {
+            "label": "ClosedChannelException",
+            "detail": "Si este canal está cerrado"
+          },
+          {
+            "label": "IOException",
+            "detail": "Si se produce un error de E/S"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "Si hay un gestor de seguridad y su método checkMulticast deniega el acceso al grupo multicast"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Se une a un grupo multicast para empezar a recibir los datagramas enviados al grupo desde una dirección de origen dada."
+        ],
+        "body": [
+          "Si este canal ya es miembro del grupo en la interfaz dada para recibir datagramas de esa dirección de origen, se devuelve la clave que representa esa pertenencia. Si no, el canal se une al grupo y se devuelve la nueva clave. La clave resultante es específica de un origen.",
+          "La pertenencia es acumulativa: este método puede llamarse otra vez con el mismo grupo e interfaz para recibir también los datagramas que otras direcciones de origen envían al grupo."
+        ],
+        "parameters": [
+          {
+            "label": "group",
+            "detail": "La dirección multicast a la que unirse"
+          },
+          {
+            "label": "interf",
+            "detail": "La interfaz de red en la que unirse al grupo"
+          },
+          {
+            "label": "source",
+            "detail": "La dirección de origen"
+          }
+        ],
+        "returns": ["La clave de pertenencia"],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "Si group no es una dirección multicast, source no es una dirección unicast, group es un tipo de dirección que este canal no admite, o source no es del mismo tipo de dirección que group"
+          },
+          {
+            "label": "IllegalStateException",
+            "detail": "Si el canal ya es miembro del grupo en esa interfaz para recibir todos los datagramas"
+          },
+          {
+            "label": "UnsupportedOperationException",
+            "detail": "Si el socket del canal no es un socket de Internet Protocol, no se admite el filtrado por origen o la plataforma no admite multicast"
+          },
+          {
+            "label": "ClosedChannelException",
+            "detail": "Si este canal está cerrado"
+          },
+          {
+            "label": "IOException",
+            "detail": "Si se produce un error de E/S"
+          },
+          {
+            "label": "SecurityException",
+            "detail": "Si hay un gestor de seguridad y su método checkMulticast deniega el acceso al grupo multicast"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.nio.channels.SelectableChannel": {
+    "body": [
+      "Para usarse con un selector, una instancia de esta clase debe registrarse primero con el método register, que devuelve un SelectionKey nuevo que representa el registro del canal en el selector.",
+      "Una vez registrado en un selector, un canal sigue registrado hasta que se da de baja, lo que libera los recursos que el selector le asignó.",
+      "Un canal no puede darse de baja directamente; hay que cancelar la clave que representa su registro. Cancelar una clave pide que el canal se dé de baja en la siguiente operación de selección del selector. Una clave puede cancelarse explícitamente con su método cancel. Todas las claves de un canal se cancelan implícitamente al cerrarlo, ya sea con su método close o interrumpiendo un hilo bloqueado en una operación de E/S sobre él.",
+      "Si se cierra el propio selector, el canal se da de baja y la clave de su registro se invalida de inmediato.",
+      "Un canal puede registrarse como mucho una vez en un selector concreto.",
+      "Puede saberse si un canal está registrado en uno o más selectores con el método isRegistered.",
+      "Los canales seleccionables son seguros para usarlos desde varios hilos a la vez.",
+      "Modo bloqueante",
+      "Un canal seleccionable está en modo bloqueante o no bloqueante. En modo bloqueante, cada operación de E/S sobre el canal se bloquea hasta completarse. En modo no bloqueante, una operación nunca se bloquea y puede transferir menos bytes de los pedidos o ninguno. El modo puede consultarse con isBlocking.",
+      "Los canales seleccionables recién creados siempre están en modo bloqueante. El modo no bloqueante es más útil junto con la multiplexación basada en selectores. Un canal debe ponerse en modo no bloqueante antes de registrarse en un selector, y no puede volver al modo bloqueante hasta que se dé de baja."
+    ]
+  },
+  "web-java-se-java.nio.channels.ServerSocketChannel.getLocalAddress": {
+    "body": [
+      "Si el canal está ligado a una dirección de socket Unix Domain, la dirección es un UnixDomainSocketAddress. Si hay un gestor de seguridad, se llama a su método checkPermission con NetPermission(\"accessUnixDomainSocket\"). Si la operación no está permitida, se devuelve un UnixDomainSocketAddress sin nombre."
+    ],
+    "returns": [
+      "La SocketAddress a la que está ligado el socket, o una SocketAddress que representa la dirección de loopback o una ruta vacía si el gestor de seguridad lo deniega, o null si el socket del canal no está ligado"
+    ]
+  },
+  "web-java-se-java.nio.channels.SocketChannel.getLocalAddress": {
+    "body": [
+      "Si el canal está ligado a una dirección de socket Unix Domain, la dirección es un UnixDomainSocketAddress. Si hay un gestor de seguridad, se llama a su método checkPermission con NetPermission(\"accessUnixDomainSocket\"). Si la operación no está permitida, se devuelve un UnixDomainSocketAddress sin nombre."
+    ],
+    "returns": [
+      "La SocketAddress a la que está ligado el socket, o una SocketAddress que representa la dirección de loopback o una ruta vacía si el gestor de seguridad lo deniega, o null si el socket del canal no está ligado"
+    ]
+  },
+  "web-java-se-java.nio.channels.SocketChannel.validOps": {
+    "body": [
+      "Los canales de socket admiten conectar, leer y escribir, así que este método devuelve (SelectionKey.OP_CONNECT | SelectionKey.OP_READ | SelectionKey.OP_WRITE)."
+    ],
+    "returns": ["El conjunto de operaciones válidas"]
+  },
+  "web-java-se-java.nio.channels.spi.AbstractInterruptibleChannel": {
+    "body": [
+      "Esta clase encapsula la maquinaria de bajo nivel necesaria para implementar el cierre asíncrono y la interrupción de canales. Una clase de canal concreta debe llamar a begin y end antes y después, respectivamente, de una operación de E/S que pueda bloquearse indefinidamente. Para asegurarse de que siempre se llame a end, estos métodos deben usarse dentro de un bloque try ... finally:",
+      "{@snippet lang=java id=\"be\" : boolean completed = false; try { begin(); completed = ...; // Perform blocking I/O operation return ...; // Return result } finally { end(completed); } }",
+      "El argumento completed de end indica si la operación de E/S se completó realmente, es decir, si tuvo algún efecto visible para quien la invocó. En una operación que lee bytes, por ejemplo, debe ser true si y solo si se transfirieron bytes al búfer destino.",
+      "Una clase de canal concreta también debe implementar implCloseChannel de modo que, si se invoca mientras otro hilo está bloqueado en una operación de E/S nativa sobre el canal, esa operación retorne de inmediato, lanzando una excepción o de forma normal. Si un hilo se interrumpe o el canal en el que está bloqueado se cierra de forma asíncrona, el método end del canal lanza la excepción adecuada.",
+      "Esta clase hace la sincronización necesaria para implementar la especificación de java.nio.channels.Channel. Las implementaciones de implCloseChannel no necesitan sincronizarse con otros hilos que puedan intentar cerrar el canal."
+    ]
+  },
+  "web-java-se-java.nio.charset.Charset.canEncode": {
+    "intro": ["Indica si este juego de caracteres admite codificación."],
+    "body": [
+      "Casi todos los juegos de caracteres admiten codificación. Las excepciones principales son los juegos de autodetección de propósito especial, cuyos decodificadores averiguan cuál de varios esquemas de codificación se usa examinando la secuencia de bytes de entrada. Estos juegos no admiten codificación porque no hay forma de saber qué codificación usar en la salida. Sus implementaciones deben sobrescribir este método para devolver false."
+    ],
+    "returns": [
+      "true si y solo si este juego de caracteres admite codificación"
+    ]
+  },
+  "web-java-se-java.nio.charset.Charset.forName": {
+    "overloads": [
+      {
+        "intro": [
+          "Devuelve un objeto Charset para el juego de caracteres indicado."
+        ],
+        "parameters": [
+          {
+            "label": "charsetName",
+            "detail": "El nombre del juego de caracteres pedido; puede ser el canónico o un alias"
+          }
+        ],
+        "returns": ["Un objeto Charset para el juego de caracteres indicado"],
+        "exceptions": [
+          {
+            "label": "IllegalCharsetNameException",
+            "detail": "Si el nombre dado no es válido"
+          },
+          {
+            "label": "IllegalArgumentException",
+            "detail": "Si charsetName es null"
+          },
+          {
+            "label": "UnsupportedCharsetException",
+            "detail": "Si esta instancia de la máquina virtual Java no admite el juego de caracteres indicado"
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Devuelve un objeto Charset para el juego de caracteres indicado. Si no está disponible o charsetName no es un nombre válido, se devuelve fallback."
+        ],
+        "parameters": [
+          {
+            "label": "charsetName",
+            "detail": "El nombre del juego de caracteres pedido; puede ser el canónico o un alias"
+          },
+          {
+            "label": "fallback",
+            "detail": "juego de caracteres alternativo si el indicado no está disponible o charsetName no es un nombre válido. Puede ser null"
+          }
+        ],
+        "returns": [
+          "Un objeto Charset para el juego de caracteres indicado, o fallback si no está disponible o charsetName no es un nombre válido"
+        ],
+        "exceptions": [
+          {
+            "label": "IllegalArgumentException",
+            "detail": "Si charsetName es null"
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.nio.charset.Charset.isRegistered": {
+    "intro": [
+      "Indica si este juego de caracteres está registrado en el IANA Charset Registry."
+    ],
+    "returns": [
+      "true si y solo si quien lo implementa sabe que está registrado en la IANA"
+    ]
+  },
+  "web-java-se-java.nio.charset.MalformedInputException": {
+    "intro": [
+      "Excepción comprobada que se lanza cuando una secuencia de bytes no es válida para el juego de caracteres dado, o una secuencia de caracteres no es una secuencia Unicode de dieciséis bits válida."
+    ]
+  },
+  "web-java-se-java.nio.charset.StandardCharsets.UTF_16": {
+    "intro": [
+      "UCS Transformation Format de dieciséis bits, con el orden de bytes indicado por una marca de orden opcional."
+    ]
+  },
+  "web-java-se-java.nio.charset.StandardCharsets.UTF_16BE": {
+    "intro": [
+      "UCS Transformation Format de dieciséis bits, orden de bytes big-endian."
+    ]
+  },
+  "web-java-se-java.nio.charset.StandardCharsets.UTF_16LE": {
+    "intro": [
+      "UCS Transformation Format de dieciséis bits, orden de bytes little-endian."
     ]
   },
   "web-java-se-java.nio.file.FileSystem.getFileStores": {
@@ -15907,6 +16221,190 @@
       "// process events for (WatchEvent event: key.pollEvents()) { : }",
       "// reset the key boolean valid = key.reset(); if (!valid) { // object no longer registered } } }",
       "Las claves de vigilancia son seguras para varios hilos a la vez. Si varios hilos obtienen claves señaladas de un servicio, hay que asegurarse de invocar reset solo después de procesar los eventos del objeto, para que en cada momento un solo hilo procese los eventos de un objeto."
+    ]
+  },
+  "web-java-se-java.nio.file.attribute.AclFileAttributeView": {
+    "body": [
+      "Las ACL sirven para indicar los derechos de acceso a objetos del sistema de archivos. Una ACL es una lista ordenada de entradas de control de acceso, cada una con un UserPrincipal y su nivel de acceso. Esta vista de atributos define los métodos getAcl y setAcl para leer y escribir ACL según el modelo de RFC 3530: Network File System (NFS) version 4 Protocol. Está pensada para implementaciones de sistemas de archivos que admiten el modelo de ACL de NFSv4 o tienen una correspondencia bien definida entre ese modelo y el suyo. Los detalles de esa correspondencia dependen de la implementación y no están especificados.",
+      "Esta clase también extiende FileOwnerAttributeView para definir métodos que obtienen y fijan el propietario del archivo.",
+      "Si un sistema de archivos da acceso a un conjunto de sistemas no homogéneos, puede que solo algunos admitan ACL. El método supportsFileAttributeView permite comprobar si un sistema de archivos admite ACL.",
+      "Interoperabilidad",
+      "RFC 3530 permite usar identidades de usuario especiales en plataformas que admiten los permisos de acceso definidos por POSIX: \"OWNER@\", \"GROUP@\" y \"EVERYONE@\". Si se admiten AclFileAttributeView y PosixFileAttributeView, estas identidades pueden aparecer en las entradas de ACL que se leen o escriben. El UserPrincipalLookupService del sistema de archivos permite obtener un UserPrincipal que las represente con lookupPrincipalByName.",
+      "Ejemplo de uso: supón que queremos añadir una entrada a una ACL existente para dar acceso a \"joe\":",
+      "Acceso dinámico",
+      "Cuando se necesita acceso dinámico a los atributos del archivo, esta vista admite estos atributos:",
+      "Atributos admitidos",
+      "Nombre · Tipo",
+      "\"acl\" · List<AclEntry>",
+      "\"owner\" · UserPrincipal",
+      "El método getAttribute permite leer los atributos ACL o propietario como si se llamara a getAcl o getOwner.",
+      "El método setAttribute permite actualizar los atributos ACL o propietario como si se llamara a setAcl o setOwner.",
+      "Fijar la ACL al crear un archivo",
+      "Las implementaciones que admiten esta vista también pueden permitir fijar la ACL inicial al crear un archivo o directorio. Puede pasarse a métodos como createFile o createDirectory como un FileAttribute con nombre \"acl:acl\" y como valor la lista de objetos AclEntry.",
+      "Si una implementación admite un modelo de ACL distinto del de NFSv4, al fijar la ACL inicial debe traducirla al modelo del sistema de archivos. Los métodos que crean archivos deben rechazar (lanzando IOException) cualquier intento de crear un archivo que quedaría menos protegido por la traducción."
+    ]
+  },
+  "web-java-se-java.nio.file.attribute.FileTime.toString": {
+    "body": [
+      "YYYY-MM-DDThh:mm:ss[.s+]Z",
+      "donde \"[.s+]\" representa un punto seguido de uno o más dígitos con la fracción decimal de segundo. Solo aparece si esa fracción no es cero. Por ejemplo, FileTime.fromMillis(1234567890000L).toString() da \"2009-02-13T23:31:30Z\" y FileTime.fromMillis(1234567890123L).toString() da \"2009-02-13T23:31:30.123Z\".",
+      "Un FileTime está pensado sobre todo para representar la marca de tiempo de un archivo. Si se usa para valores extremos, con el año menor que \"0001\" o mayor que \"9999\", este método se aparta de ISO 8601 igual que el lenguaje XML Schema: el año puede tener más de cuatro dígitos y signo negativo. Si tiene más de cuatro dígitos, no lleva ceros a la izquierda. El año anterior a \"0001\" es \"-0001\"."
+    ],
+    "returns": ["la representación en cadena de este FileTime"]
+  },
+  "web-java-se-java.nio.file.spi.FileTypeDetector.probeContentType": {
+    "body": [
+      "La forma en que este método determina el tipo de archivo depende mucho de la implementación. Puede examinar el nombre, usar un atributo del archivo o examinar sus bytes.",
+      "El resultado es la forma de cadena de un tipo de contenido MIME (Multipurpose Internet Mail Extension) según RFC 2045: Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies. La cadena debe poder analizarse con la gramática de RFC 2045."
+    ],
+    "parameters": [
+      {
+        "label": "path",
+        "detail": "la ruta del archivo que se examina"
+      }
+    ],
+    "returns": [
+      "El tipo de contenido, o null si no se reconoce el tipo de archivo"
+    ],
+    "exceptions": [
+      {
+        "label": "IOException",
+        "detail": "Si se produce un error de E/S"
+      },
+      {
+        "label": "SecurityException",
+        "detail": "Si la implementación necesita acceder al archivo, hay un gestor de seguridad y deniega un permiso no especificado que requiere la implementación del proveedor de sistema de archivos. Si el archivo pertenece al proveedor predeterminado, se llama a SecurityManager.checkRead(String) para comprobar el acceso de lectura."
+      }
+    ]
+  },
+  "web-java-se-java.rmi.Naming": {
+    "body": [
+      "//host:port/name",
+      "donde host es la máquina (remota o local) donde está el registro, port es el puerto en el que el registro acepta llamadas y name es una cadena simple que el registro no interpreta. host y port son opcionales. Si se omite host, se usa la máquina local. Si se omite port, se usa el 1099, el puerto \"conocido\" que usa el registro de RMI, rmiregistry.",
+      "Enlazar un nombre a un objeto remoto es asociarle o registrarle un nombre con el que buscarlo más tarde. Un objeto remoto puede asociarse a un nombre con los métodos bind o rebind de la clase Naming.",
+      "Una vez registrado (enlazado) un objeto remoto en el registro RMI de la máquina local, los llamantes de una máquina remota (o local) pueden buscarlo por nombre, obtener su referencia e invocar sus métodos remotos. Un registro puede compartirse entre todos los servidores de una máquina, o un proceso servidor puede crear y usar el suyo propio (consulta java.rmi.registry.LocateRegistry.createRegistry)."
+    ]
+  },
+  "web-java-se-java.security.AccessControlContext": {
+    "body": [
+      "En concreto, encapsula un contexto y tiene un único método, checkPermission, equivalente al checkPermission de la clase AccessController con una diferencia: decide el acceso según el contexto que encapsula, no según el del hilo de ejecución actual.",
+      "Así, AccessControlContext sirve en los casos en que una comprobación de seguridad que debería hacerse en un contexto dado tiene que hacerse realmente desde otro (por ejemplo, desde un hilo de trabajo).",
+      "Un AccessControlContext se crea llamando a AccessController.getContext, que toma una \"instantánea\" del contexto de llamada actual y la devuelve en un AccessControlContext. Un ejemplo de llamada:",
+      "AccessControlContext acc = AccessController.getContext()",
+      "Después, código de otro contexto puede llamar a checkPermission sobre el AccessControlContext guardado. Un ejemplo de llamada:",
+      "acc.checkPermission(permission)"
+    ],
+    "caveats": [
+      "Esta clase solo es útil junto con el Security Manager, que está obsoleto y se eliminará en una versión futura. Por eso esta clase también está obsoleta y se eliminará. No hay sustituto para el Security Manager ni para esta clase."
+    ]
+  },
+  "web-java-se-java.security.AccessControlContext.equals": {
+    "intro": [
+      "Comprueba si dos AccessControlContext son iguales: que obj sea un AccessControlContext y tenga el mismo conjunto de ProtectionDomain que este contexto."
+    ],
+    "parameters": [
+      {
+        "label": "obj",
+        "detail": "el objeto con el que se comprueba la igualdad."
+      }
+    ],
+    "returns": [
+      "true si obj es un AccessControlContext con el mismo conjunto de ProtectionDomain que este contexto; false en caso contrario."
+    ]
+  },
+  "web-java-se-java.security.AccessController": {
+    "body": [
+      "En concreto, la clase AccessController sirve para tres cosas:",
+      "decidir si se permite o deniega el acceso a un recurso crítico del sistema, según la política de seguridad vigente,",
+      "marcar código como \"privilegiado\", lo que afecta a las decisiones de acceso posteriores, y",
+      "obtener una \"instantánea\" del contexto de llamada actual para tomar decisiones de acceso desde otro contexto respecto al contexto guardado.",
+      "El método checkPermission decide si se concede o deniega la petición de acceso indicada por un permiso. Abajo hay un ejemplo, en el que checkPermission decide si conceder acceso de lectura (\"read\") al archivo \"testFile\" del directorio \"/temp\".",
+      "FilePermission perm = new FilePermission(\"/temp/testFile\", \"read\"); AccessController.checkPermission(perm);",
+      "Si el acceso se permite, checkPermission retorna sin más. Si se deniega, lanza AccessControlException. También puede lanzarla si el permiso pedido es de un tipo incorrecto o tiene un valor no válido; en esos casos se da la información siempre que es posible.",
+      "Supón que el hilo actual ha pasado por m llamantes, en orden del llamante 1 al 2 hasta el m, y que el llamante m invoca checkPermission. checkPermission decide si concede o deniega el acceso con este algoritmo:",
+      "{@code for (int i = m; i > 0; i--) {",
+      "if (caller i's domain does not have the permission) throw AccessControlException",
+      "else if (caller i is marked as privileged) { if (a context was specified in the call to doPrivileged) context.checkPermission(permission) if (limited permissions were specified in the call to doPrivileged) { for (each limited permission) { if (the limited permission implies the requested permission) return; } } else return; } }",
+      "// Next, check the context inherited when the thread was created. // Whenever a new thread is created, the AccessControlContext at // that time is stored and associated with the new thread, as the // \"inherited\" context.",
+      "inheritedContext.checkPermission(permission); }",
+      "Un llamante puede marcarse como \"privilegiado\" (consulta doPrivileged y más abajo). Al tomar decisiones de acceso, checkPermission deja de comprobar si llega a un llamante marcado como privilegiado con una llamada a doPrivileged sin argumento de contexto (ver abajo). Si el dominio de ese llamante tiene el permiso indicado y al menos uno de los permisos limitadores (si los hay) implica el permiso pedido, no se comprueba nada más y checkPermission retorna sin más, indicando que el acceso se permite. Si el dominio no tiene el permiso, se lanza una excepción como siempre. Si el dominio tenía el permiso pero ninguno de los permisos limitadores de la llamada a doPrivileged lo implicaba, la comprobación sigue hasta que no queden llamantes o hasta que otra llamada a doPrivileged coincida con el permiso pedido y retorne normalmente.",
+      "El uso normal de la funcionalidad \"privilegiada\" es este. Si no necesitas devolver un valor desde el bloque privilegiado:",
+      "{@code somemethod() { ...normal code here... AccessController.doPrivileged(new PrivilegedAction() { public Void run() { // privileged code goes here, for example: System.loadLibrary(\"awt\"); return null; // nothing to return } }); ...normal code here... }}",
+      "PrivilegedAction es una interfaz con un único método, run. El ejemplo anterior crea una implementación de esa interfaz con una implementación concreta de run. Al llamar a doPrivileged se le pasa una instancia de la implementación de PrivilegedAction. doPrivileged llama a run tras activar los privilegios y devuelve su valor de retorno como valor de doPrivileged (que en este ejemplo se ignora).",
+      "Si necesitas devolver un valor, puedes hacer algo así:",
+      "{@code somemethod() { ...normal code here... String user = AccessController.doPrivileged( new PrivilegedAction() { public String run() { return System.getProperty(\"user.name\"); } }); ...normal code here... }}",
+      "Si la acción de tu método run puede lanzar una excepción comprobada (las de la cláusula throws de un método), debes usar la interfaz PrivilegedExceptionAction en lugar de PrivilegedAction:",
+      "{@code somemethod() throws FileNotFoundException { ...normal code here... try { FileInputStream fis = AccessController.doPrivileged( new PrivilegedExceptionAction() { public FileInputStream run() throws FileNotFoundException { return new FileInputStream(\"someFile\"); } }); } catch (PrivilegedActionException e) { // e.getException() should be an instance of FileNotFoundException, // as only \"checked\" exceptions will be \"wrapped\" in a // PrivilegedActionException. throw (FileNotFoundException) e.getException(); } ...normal code here... }}",
+      "Ten *muchísimo* cuidado al usar la construcción privilegiada y acuérdate siempre de que la sección de código privilegiado sea lo más pequeña posible. Puedes pasar argumentos Permission para limitar más el alcance del privilegio (ver abajo).",
+      "checkPermission siempre hace las comprobaciones de seguridad en el contexto del hilo que se está ejecutando. A veces una comprobación que debería hacerse en un contexto dado tiene que hacerse realmente desde otro (por ejemplo, desde un hilo de trabajo). Para esto están el método getContext y la clase AccessControlContext. getContext toma una \"instantánea\" del contexto de llamada actual y la devuelve en un AccessControlContext. Un ejemplo de llamada:",
+      "AccessControlContext acc = AccessController.getContext()",
+      "AccessControlContext tiene su propio método checkPermission, que decide el acceso según el contexto que encapsula, no según el del hilo actual. Así, código de otro contexto puede llamar a ese método sobre el AccessControlContext guardado. Un ejemplo de llamada:",
+      "acc.checkPermission(permission)",
+      "A veces no sabes de antemano con qué permisos comprobar el contexto. En esos casos puedes usar el doPrivileged que recibe un contexto. También puedes limitar el alcance del código privilegiado pasando parámetros Permission adicionales.",
+      "{@code somemethod() { AccessController.doPrivileged(new PrivilegedAction() { public Object run() { // Code goes here. Any permission checks within this // run method will require that the intersection of the // caller's protection domain and the snapshot's // context have the desired permission. If a requested // permission is not implied by the limiting FilePermission // argument then checking of the thread continues beyond the // caller of doPrivileged. } }, acc, new FilePermission(\"/temp/*\", read)); ...normal code here... }}",
+      "Pasar como permiso limitador una instancia de AllPermission equivale a llamar al doPrivileged equivalente sin permisos limitadores. Pasar un array de Permission vacío desactiva los privilegios del código, de modo que la comprobación siempre continúa más allá de quien llama a ese doPrivileged."
+    ],
+    "caveats": [
+      "Esta clase solo es útil junto con el Security Manager, que está obsoleto y se eliminará en una versión futura. Por eso esta clase también está obsoleta y se eliminará. No hay sustituto para el Security Manager ni para esta clase."
+    ]
+  },
+  "web-java-se-java.security.BasicPermission.equals": {
+    "intro": [
+      "Comprueba si dos BasicPermission son iguales: que la clase de obj sea la de este objeto y que tenga el mismo nombre."
+    ],
+    "parameters": [
+      {
+        "label": "obj",
+        "detail": "el objeto con el que se comprueba la igualdad."
+      }
+    ],
+    "returns": [
+      "true si la clase de obj es la de este objeto y tiene el mismo nombre que este BasicPermission; false en caso contrario."
+    ]
+  },
+  "web-java-se-java.security.CodeSource.%3Cinit%3E": {
+    "overloads": [
+      {
+        "intro": [
+          "Crea un CodeSource y lo asocia a la ubicación y el conjunto de certificados indicados."
+        ],
+        "parameters": [
+          {
+            "label": "url",
+            "detail": "la ubicación (URL). Puede ser null."
+          },
+          {
+            "label": "certs",
+            "detail": "los certificados. Puede ser null. El contenido del array se copia para protegerlo de modificaciones posteriores."
+          }
+        ]
+      },
+      {
+        "intro": [
+          "Crea un CodeSource y lo asocia a la ubicación y el conjunto de firmantes de código indicados."
+        ],
+        "parameters": [
+          {
+            "label": "url",
+            "detail": "la ubicación (URL). Puede ser null."
+          },
+          {
+            "label": "signers",
+            "detail": "los firmantes de código. Puede ser null. El contenido del array se copia para protegerlo de modificaciones posteriores."
+          }
+        ]
+      }
+    ]
+  },
+  "web-java-se-java.security.DomainCombiner": {
+    "body": [
+      "Un DomainCombiner se pasa como parámetro al constructor correspondiente de AccessControlContext. El contexto creado se pasa después a AccessController.doPrivileged(..., context) para ligar el contexto (y su DomainCombiner) al hilo de ejecución actual. Las llamadas posteriores a AccessController.getContext o AccessController.checkPermission hacen que se invoque DomainCombiner.combine.",
+      "El método combine recibe dos argumentos. El primero es un array con los ProtectionDomain del hilo actual desde la última llamada a AccessController.doPrivileged; si no se llamó a doPrivileged, contiene todos los ProtectionDomain del hilo actual. El segundo es un array de ProtectionDomain heredados, que puede ser null. Pueden heredarse de un hilo padre o de un contexto privilegiado. Si no se llamó a doPrivileged, el segundo argumento contiene los heredados del hilo padre. Si se hicieron una o más llamadas y la última fue doPrivileged(action, context), contiene los del contexto privilegiado. Si la última fue doPrivileged(action), no hay contexto privilegiado y el segundo argumento es null.",
+      "El método combine examina los dos arrays de ProtectionDomain y devuelve un único array con los ProtectionDomain actualizados. En el caso más simple, combina las dos pilas en una. En casos más complejos, devuelve una pila modificada, en la que puede haber añadido ProtectionDomain nuevos, quitado algunos o simplemente actualizado los existentes. También se permite reordenarlos y hacer otras optimizaciones. Normalmente combine basa sus cambios en la información que encapsula el DomainCombiner.",
+      "Cuando AccessController.getContext recibe del DomainCombiner la pila combinada de ProtectionDomain, devuelve un AccessControlContext nuevo con los ProtectionDomain combinados y el DomainCombiner."
+    ],
+    "caveats": [
+      "Esta clase solo es útil junto con el Security Manager, que está obsoleto y se eliminará en una versión futura. Por eso esta clase también está obsoleta y se eliminará. No hay sustituto para el Security Manager ni para esta clase."
     ]
   },
   "web-java-se-java.security.spec.MGF1ParameterSpec.toString": {
