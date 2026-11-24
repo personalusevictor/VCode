@@ -2778,6 +2778,233 @@
       "Identifican teclas como Escape, Insert, Delete, Home o las teclas de función F1 a F12. Las recibe UI\\Area::onKey() para saber qué tecla se pulsó."
     ]
   },
+  "php-class-ui-menu": {
+    "description": [
+      "El constructor recibe el título del menú. append() añade un elemento y devuelve un UI\\MenuItem; appendCheck(), appendSeparator(), appendQuit(), appendPreferences() y appendAbout() añaden elementos especiales.",
+      "Para que la ventana muestre la barra de menús, créala con el tercer argumento de UI\\Window a true."
+    ]
+  },
+  "php-class-ui-menuitem": {
+    "summary": "Elemento de un UI\\Menu. Solo se puede crear con los métodos append de UI\\Menu.",
+    "description": [
+      "enable() y disable() lo activan o desactivan, y setChecked() e isChecked() trabajan con los elementos de casilla. Sobrescribe onClick() en una subclase para reaccionar cuando se elige."
+    ]
+  },
+  "php-class-ui-point": {
+    "description": [
+      "Sus propiedades x e y contienen las coordenadas. Se usa, por ejemplo, al dibujar texto con UI\\Draw\\Pen::write() o al crear degradados."
+    ]
+  },
+  "php-class-ui-size": {
+    "description": [
+      "Sus propiedades width y height contienen el ancho y el alto. Se usa, por ejemplo, al crear una UI\\Window."
+    ]
+  },
+  "php-class-ui-window": {
+    "description": [
+      "El constructor recibe el título, un UI\\Size y si tiene barra de menús. add() pone el control principal, normalmente una UI\\Controls\\Box, y show() muestra la ventana.",
+      "msg() y error() muestran cuadros de diálogo, y open() y save() piden al usuario un archivo. Sobrescribe onClosing() para reaccionar al cierre. La aplicación arranca con UI\\run()."
+    ]
+  },
+  "php-class-underflowexception": {
+    "description": [
+      "Por ejemplo, al intentar sacar un elemento de una cola o pila vacía. Hereda de RuntimeException; su opuesto es OverflowException."
+    ]
+  },
+  "php-class-unexpectedvalueexception": {
+    "description": [
+      "Por ejemplo, cuando un dato leído de un archivo o una API no tiene el formato esperado. Hereda de RuntimeException."
+    ]
+  },
+  "php-class-unhandledmatcherror": {
+    "description": [
+      "Existe desde PHP 8.0. A diferencia de switch, match no ignora los valores sin brazo: añade un brazo default si quieres cubrir el resto de casos.",
+      "Hereda de Error. El mensaje incluye el valor que no se trató."
+    ]
+  },
+  "php-class-unitenum": {
+    "description": [
+      "cases() devuelve todos los casos en el orden en que se declararon, y cada caso tiene la propiedad de solo lectura name con su nombre.",
+      "Todas las enumeraciones la implementan, así que $valor instanceof UnitEnum comprueba si algo es un caso de enumeración. Las enumeraciones respaldadas también implementan BackedEnum."
+    ]
+  },
+  "php-class-v8js": {
+    "description": [
+      "Véase V8Js::__construct() para más información.",
+      "executeString() ejecuta código JavaScript con el motor V8 y devuelve su resultado convertido a PHP. Las propiedades que añadas al objeto V8Js quedan disponibles desde JavaScript dentro del objeto global PHP."
+    ]
+  },
+  "php-class-v8jsexception": {
+    "summary": "Excepción que lanza V8Js cuando falla el código JavaScript.",
+    "description": [
+      "getJsFileName(), getJsLineNumber() y getJsSourceLine() indican dónde se produjo el error en el código JavaScript, y getJsTrace() devuelve su pila de llamadas."
+    ]
+  },
+  "php-class-valueerror": {
+    "description": [
+      "Existe desde PHP 8.0, cuando muchas funciones internas pasaron de emitir advertencias a lanzar este error. Por ejemplo, str_repeat('a', -1) o array_chunk($array, 0) la lanzan.",
+      "Hereda de Error."
+    ]
+  },
+  "php-class-variant": {
+    "description": [
+      "El constructor recibe el valor y, opcionalmente, el tipo VARIANT (una constante VT_*) y la página de códigos. Es útil cuando un método COM necesita un tipo concreto que PHP no elegiría por sí solo.",
+      "Solo está disponible en Windows. com y dotnet heredan de ella."
+    ]
+  },
+  "php-class-varnishadmin": {
+    "summary": "Administra un servidor de caché Varnish a través de su interfaz de administración.",
+    "description": [
+      "connect() y auth() conectan y se autentican con la configuración indicada en el constructor. ban() y banUrl() invalidan contenido de la caché, start() y stop() controlan el proceso hijo y getParams() o setParam() trabajan con sus parámetros.",
+      "Pertenece a la extensión PECL varnish."
+    ]
+  },
+  "php-class-varnishexception": {
+    "summary": "Excepción que lanza la extensión varnish cuando falla una operación.",
+    "description": [
+      "Hereda de Exception. Se produce, por ejemplo, si no se puede conectar con la interfaz de administración."
+    ]
+  },
+  "php-class-varnishlog": {
+    "summary": "Lee el registro de actividad de Varnish.",
+    "description": [
+      "getLine() devuelve la siguiente entrada del registro y getTagName() el nombre de la etiqueta de un identificador numérico."
+    ]
+  },
+  "php-class-varnishstat": {
+    "summary": "Lee las estadísticas de Varnish.",
+    "description": [
+      "getSnapshot() devuelve un array con los contadores actuales, como aciertos y fallos de caché."
+    ]
+  },
+  "php-class-volatile": {
+    "description": [
+      "La extensión pthreads ya no se mantiene y no funciona con las versiones actuales de PHP. Para código concurrente nuevo, usa la extensión parallel."
+    ]
+  },
+  "php-class-vtiful-kernel-excel": {
+    "description": [
+      "El constructor recibe un array con la ruta del directorio de salida. fileName() empieza un archivo nuevo, header() y data() escriben filas y output() lo guarda; los métodos se pueden encadenar.",
+      "constMemory() activa un modo que escribe fila a fila con un consumo de memoria constante, útil para archivos muy grandes. Pertenece a la extensión PECL xlswriter."
+    ]
+  },
+  "php-class-vtiful-kernel-format": {
+    "description": [
+      "Se crea con el manejador de Excel::getHandle(). bold(), italic(), underline() y align() configuran el formato, que luego se aplica a celdas, filas o columnas."
+    ]
+  },
+  "php-class-weakmap": {
+    "description": [
+      "WeakMap implementa ArrayAccess, Traversable (vía IteratorAggregate), y Countable, de modo que, en la mayoría de los casos, puede ser utilizado de la misma manera que un array asociativo.",
+      "Existe desde PHP 8.0. Las claves deben ser objetos; usar otro tipo lanza TypeError."
+    ]
+  },
+  "php-class-weakreference": {
+    "description": [
+      "Las WeakReferences no pueden ser serializadas.",
+      "Se crea con WeakReference::create($objeto), no con new. Existe desde PHP 7.4. Para asociar datos a varios objetos sin retenerlos, WeakMap suele ser más cómodo."
+    ]
+  },
+  "php-class-win32service-rightinfo": {
+    "description": [
+      "getUsername(), getDomain() y getFullUsername() identifican al usuario o grupo, getRights() da los permisos sobre el servicio, e isGrantAccess() o isDenyAccess() indican si se conceden o se deniegan."
+    ]
+  },
+  "php-class-win32serviceexception": {
+    "description": [
+      "Hereda de Exception. Solo existe en Windows, con la extensión PECL win32service."
+    ]
+  },
+  "php-class-wkhtmltox-image-converter": {
+    "description": [
+      "Usa el motor de wkhtmltoimage. Pertenece a la extensión PECL wkhtmltox."
+    ]
+  },
+  "php-class-wkhtmltox-pdf-converter": {
+    "description": [
+      "Cada página de entrada se añade como un wkhtmltox\\PDF\\Object y la conversión genera un único PDF. Usa el motor de wkhtmltopdf y pertenece a la extensión PECL wkhtmltox."
+    ]
+  },
+  "php-class-wkhtmltox-pdf-object": {
+    "description": [
+      "Se añade a un wkhtmltox\\PDF\\Converter; cada objeto aporta una o varias páginas al PDF final."
+    ]
+  },
+  "php-class-xmldiff-base": {
+    "description": [
+      "diff() compara dos documentos y devuelve las diferencias, y merge() aplica un documento de diferencias a uno original para obtener la versión nueva.",
+      "Las subclases XMLDiff\\DOM, XMLDiff\\File y XMLDiff\\Memory trabajan con objetos DOMDocument, rutas de archivo y cadenas, respectivamente. Pertenece a la extensión PECL xmldiff."
+    ]
+  },
+  "php-class-xmldiff-dom": {
+    "summary": "Compara y combina documentos DOMDocument.",
+    "description": [
+      "diff() recibe dos DOMDocument y devuelve otro con las diferencias; merge() aplica ese documento de diferencias al original."
+    ]
+  },
+  "php-class-xmldiff-exception": {
+    "summary": "Excepción que lanza la extensión xmldiff cuando falla una operación.",
+    "description": ["Hereda de Exception."]
+  },
+  "php-class-xmldiff-file": {
+    "summary": "Compara y combina documentos XML guardados en archivos.",
+    "description": [
+      "diff() recibe dos rutas de archivo y devuelve las diferencias como cadena XML; merge() las aplica al documento original."
+    ]
+  },
+  "php-class-xmldiff-memory": {
+    "summary": "Compara y combina documentos XML guardados en cadenas.",
+    "description": [
+      "diff() recibe dos cadenas XML y devuelve las diferencias como cadena; merge() las aplica al documento original."
+    ]
+  },
+  "php-class-xmlparser": {
+    "description": [
+      "Lo devuelve xml_parser_create(). Se configura con funciones como xml_set_element_handler() y se alimenta con xml_parse(), que llama a esas funciones a medida que encuentra elementos. Es final y no se crea con new."
+    ]
+  },
+  "php-class-xmlreader": {
+    "description": [
+      "Lee el documento por partes, así que consume poca memoria aunque el archivo sea enorme. Se abre con open() o, desde PHP 8.4, con XMLReader::fromString() o fromUri(), y read() avanza al siguiente nodo.",
+      "Las propiedades nodeType, name y value describen el nodo actual. next() salta al siguiente hermano sin entrar en los hijos y expand() convierte el nodo actual en DOM para procesarlo con comodidad."
+    ]
+  },
+  "php-class-xmlwriter": {
+    "summary": "Escribe documentos XML de forma secuencial.",
+    "description": [
+      "openMemory() escribe en memoria y openUri() en un archivo o flujo. startDocument(), startElement(), writeAttribute(), text() y endElement() generan el documento en orden, y writeElement() escribe un elemento completo de una vez.",
+      "outputMemory() o flush() devuelven o vuelcan lo generado. setIndent() activa la sangría. Escapa automáticamente los caracteres especiales."
+    ]
+  },
+  "php-class-xsltprocessor": {
+    "summary": "Aplica hojas de estilo XSLT 1.0 a documentos XML.",
+    "description": [
+      "importStylesheet() carga la hoja XSL como DOMDocument, setParameter() le pasa parámetros y transformToXml(), transformToDoc() o transformToUri() aplican la transformación a un documento.",
+      "registerPHPFunctions() permite llamar a funciones PHP desde la hoja de estilo; setSecurityPrefs() controla operaciones como escribir archivos."
+    ]
+  },
+  "php-class-yaconf": {
+    "description": [
+      "Lee los archivos INI del directorio indicado en la directiva yaconf.directory. Yaconf::get('app.db.host') devuelve un valor y Yaconf::has() comprueba si existe, sin volver a leer los archivos en cada petición.",
+      "Pertenece a la extensión PECL yaconf."
+    ]
+  },
+  "php-class-yaf_action_abstract": {
+    "description": [
+      "Dado que debe haber un punto de entrada que pueda ser llamado por Yaf, debe implementar el método abstracto Yaf_Action_Abstract::execute en la clase de acción personalizada.",
+      "getController() devuelve el controlador que contiene la acción. Yaf es un framework MVC escrito en C que se instala desde PECL."
+    ]
+  },
+  "php-class-yaf_config_abstract": {
+    "description": [
+      "get() y set() leen y escriben valores, readonly() indica si se puede modificar y toArray() convierte la configuración en un array."
+    ]
+  },
+  "php-class-yaf_config_simple": {
+    "description": [
+      "El constructor recibe el array con la configuración y, opcionalmente, si debe ser de solo lectura. Se recorre con foreach y se accede como array o como propiedades anidadas."
+    ]
+  },
   "php-function-fann_set_activation_function": {
     "description": [
       "Establece la función de activación para la neurona número neuron en la capa número layer, contando al capa de entrada como capa 0.",
